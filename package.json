@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "scripts": {
+    "deploy": "cd services/test01 && AWS_ACCESS_KEY_ID=foobar AWS_SECRET_ACCESS_KEY=foobar SLS_DEBUG=* serverless deploy -v",
+    "deploy-function": "cd services/test01 && AWS_ACCESS_KEY_ID=foobar AWS_SECRET_ACCESS_KEY=foobar SLS_DEBUG=* serverless deploy function -f hello",
+    "invoke": "cd services/test01 && AWS_ACCESS_KEY_ID=foobar AWS_SECRET_ACCESS_KEY=foobar SLS_DEBUG=* serverless invoke -f hello -l",
+    "logs": "cd services/test01 && AWS_ACCESS_KEY_ID=foobar AWS_SECRET_ACCESS_KEY=foobar SLS_DEBUG=* serverless logs -f hello -t",
+    "remove": "cd services/test01 && AWS_ACCESS_KEY_ID=foobar AWS_SECRET_ACCESS_KEY=foobar SLS_DEBUG=* serverless remove"
+  },
+  "devDependencies": {
+    "serverless": "1.21.0",
+    "aws-sdk": "^2.7.13",
+    "bluebird": "^3.4.6"
+  }
+}
