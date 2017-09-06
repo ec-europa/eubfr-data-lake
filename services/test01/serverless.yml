@@ -14,13 +14,11 @@
 service: test01
 
 plugins:
-  - localstack
+  - serverless-offline
 
 custom:
-  localstack:
-    host: http://localhost
-    debug: true
-    endpoint: localstack_endpoints.json
+  serverless-offline:
+    port: 4000
 
 # You can pin your service to only deploy with a specific Serverless version
 # Check out our docs for more details
@@ -67,7 +65,9 @@ functions:
   hello:
     handler: handler.hello
     events: # All events associated with this function
-      - http: GET hello
+      - http:
+          path: hello
+          method: get
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
