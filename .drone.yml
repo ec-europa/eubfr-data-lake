@@ -24,8 +24,14 @@ pipeline:
     commands:
       - yarn test:lint
 
-  test-jest:
+  test-integration:
     image: node:latest
     group: test
     commands:
-      - yarn test:jest
+      - yarn test:integration
+
+  test-unit:
+    image: node:latest
+    group: test
+    commands:
+      - yarn test:unit

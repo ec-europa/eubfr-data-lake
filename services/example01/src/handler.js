@@ -2,7 +2,8 @@
 import getMessage from './message';
 
 export const hello = (event, context, callback) => {
-  console.log(event); // Contains incoming request data (e.g., query params, headers and more)
+  // Contains incoming request data (e.g., query params, headers and more)
+  // console.log(event);
 
   const { name } = event.pathParameters || { name: 'World' };
 

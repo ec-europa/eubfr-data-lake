@@ -7,8 +7,9 @@
     "offline": "lerna run --parallel offline",
     "postinstall": "npm run bootstrap",
     "precommit": "lint-staged",
+    "test:integration": "lerna run --parallel test:integration",
+    "test:unit": "lerna run --parallel test:unit",
     "test:lint": "npm run lint",
-    "test:jest": "jest",
     "test": "npm-run-all -p test:* -cn"
   },
   "lint-staged": {
@@ -21,7 +22,6 @@
     "eslint-plugin-import": "2.7.0",
     "eslint-plugin-prettier": "2.2.0",
     "husky": "0.14.3",
-    "jest": "21.0.1",
     "lerna": "2.1.2",
     "lint-staged": "4.1.3",
     "npm-run-all": "4.1.1",
