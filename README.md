@@ -2,4 +2,30 @@
 
 ## Requirements
 
+-   Node.js current (8.x)
+-   yarn >= 0.27.5
+
+We recommend you to use [Node Version Manager](https://github.com/creationix/nvm) with our local `.nvmrc`:
+
+```sh
+# Install node version corresponding to the one defined in .nvmrc
+# Use '--reinstall-packages-from=node' if you want to migrate npm packages from a previous version
+nvm install
+
+# Use the newly installed version
+nvm use
+```
+
 ## Getting started
+
+Setup your environment:
+
+```sh
+yarn
+```
+
+Test the services offline:
+
+```sh
+yarn offline
+```
