@@ -1,2 +1,4 @@
 .serverless
+.webpack
 node_modules
+*.log

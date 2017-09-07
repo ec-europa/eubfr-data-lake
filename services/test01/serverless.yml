@@ -14,11 +14,14 @@
 service: test01
 
 plugins:
+  - serverless-webpack
   - serverless-offline
 
 custom:
   serverless-offline:
     port: 4000
+  # Enable auto-packing of external modules
+  webpackIncludeModules: true
 
 # You can pin your service to only deploy with a specific Serverless version
 # Check out our docs for more details
@@ -63,7 +66,7 @@ provider:
 
 functions:
   hello:
-    handler: handler.hello
+    handler: src/handler.hello
     events: # All events associated with this function
       - http:
           path: hello

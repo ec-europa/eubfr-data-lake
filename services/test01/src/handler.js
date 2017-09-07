@@ -1,6 +1,7 @@
-// handler.js
+/* eslint-disable import/prefer-default-export, no-console */
+import getMessage from './message';
 
-module.exports.hello = function(event, context, callback) {
+export const hello = (event, context, callback) => {
   console.log(event); // Contains incoming request data (e.g., query params, headers and more)
 
   const response = {
@@ -8,7 +9,7 @@ module.exports.hello = function(event, context, callback) {
     headers: {
       'x-custom-header': 'My Header Value',
     },
-    body: JSON.stringify({ message: 'Hello World!' }),
+    body: JSON.stringify({ message: getMessage('World') }),
   };
 
   callback(null, response);
