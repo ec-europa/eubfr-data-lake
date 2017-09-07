@@ -18,7 +18,14 @@ pipeline:
     commands:
       - yarn install --frozen-lockfile
 
-  test:
+  test-lint:
     image: node:latest
+    group: test
     commands:
-      - yarn test
+      - yarn test:lint
+
+  test-jest:
+    image: node:latest
+    group: test
+    commands:
+      - yarn test:jest
