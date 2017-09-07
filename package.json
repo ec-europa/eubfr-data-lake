@@ -5,7 +5,8 @@
     "deploy": "lerna exec -- serverless deploy -v",
     "lint": "eslint .",
     "offline": "lerna run --parallel offline",
-    "postinstall": "npm run bootstrap"
+    "postinstall": "npm run bootstrap",
+    "test": "npm run lint"
   },
   "devDependencies": {
     "eslint": "4.6.1",
