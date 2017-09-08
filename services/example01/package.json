@@ -1,6 +1,7 @@
 {
   "private": true,
   "name": "example01",
+  "version": "0.0.1",
   "scripts": {
     "deploy-function":
       "AWS_ACCESS_KEY_ID=foobar AWS_SECRET_ACCESS_KEY=foobar SLS_DEBUG=* serverless deploy function -f hello",
