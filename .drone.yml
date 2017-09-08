@@ -14,27 +14,25 @@ clone:
 
 pipeline:
   install:
-    image: node:latest
+    image: yhuard/node:latest
     pull: true
-    environment:
-      - YARN_VERSION=1.0.1
     commands:
       - yarn install --frozen-lockfile
 
   test-lint:
-    image: node:latest
+    image: yhuard/node:latest
     group: test
     commands:
       - yarn test:lint
 
   test-integration:
-    image: node:latest
+    image: yhuard/node:latest
     group: test
     commands:
       - yarn test:integration
 
   test-unit:
-    image: node:latest
+    image: yhuard/node:latest
     group: test
     commands:
       - yarn test:unit
