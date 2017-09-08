@@ -3,7 +3,7 @@
 ## Requirements
 
 -   Node.js current (8.x)
--   yarn >= 0.27.5
+-   yarn >= 1.0.1
 
 We recommend you to use [Node Version Manager](https://github.com/creationix/nvm) with our local `.nvmrc`:
 
