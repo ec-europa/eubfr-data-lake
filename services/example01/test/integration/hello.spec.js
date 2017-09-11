@@ -18,6 +18,6 @@ it('works with promises', () => {
   const name = 'test';
 
   return request(`http://localhost:4000/hello/${name}`).then(data =>
-    expect(JSON.parse(data)).toEqual({ message: `Hello ${name}!` })
+    expect(JSON.parse(data)).toEqual({ message: `-- Hello ${name}! --` })
   );
 });
