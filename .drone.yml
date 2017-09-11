@@ -14,11 +14,25 @@ clone:
 
 pipeline:
   install:
-    image: node:latest
+    image: yhuard/node:latest
+    pull: true
     commands:
       - yarn install --frozen-lockfile
 
-  test:
-    image: node:latest
+  test-lint:
+    image: yhuard/node:latest
+    group: test
     commands:
-      - yarn test
+      - yarn test:lint
+
+  test-integration:
+    image: yhuard/node:latest
+    group: test
+    commands:
+      - yarn test:integration
+
+  test-unit:
+    image: yhuard/node:latest
+    group: test
+    commands:
+      - yarn test:unit
