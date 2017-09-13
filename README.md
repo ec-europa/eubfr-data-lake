@@ -41,3 +41,8 @@ yarn deploy -s [STAGE NAME]
 ```
 
 For example, it can be: `yarn deploy -s devUser1`.
+
+
+## Notes
+
+Deploy `services/storage` first. Keep the same stage name for every services so they can work together.

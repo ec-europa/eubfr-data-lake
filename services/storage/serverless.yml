@@ -1,0 +1,47 @@
+service: storage
+
+custom:
+  eubfrEnvironment: ${env:EUBFR_ENV, 'dev'}
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'eu-central-1'}
+  deploymentBucket:
+    name: eubfr-${self:custom.eubfrEnvironment}-deploy
+  stackTags:
+    ENV: ${self:custom.eubfrEnvironment}
+
+resources:
+  Resources:
+    SourceBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: eubfr-${self:provider.stage}
+        NotificationConfiguration:
+          TopicConfigurations:
+            -
+              Event: s3:ObjectCreated:*
+              Topic:
+                Ref: ChangeTopic
+    ChangeTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: ${self:provider.stage}-object-created
+    ChangeTopicPolicy:
+      Type: AWS::SNS::TopicPolicy
+      Properties:
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            -
+              Sid: AllowBucketToPushNotificationEffect
+              Effect: Allow
+              Principal:
+                Service: s3.amazonaws.com
+              Action: sns:Publish
+              Resource: "*"
+        Topics:
+          -
+            Ref: ChangeTopic
