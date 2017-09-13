@@ -3,6 +3,13 @@
   "name": "example01",
   "version": "0.0.1",
   "scripts": {
+    "deploy": "sls deploy -v",
+    "invoke":
+      "AWS_ACCESS_KEY_ID=foobar AWS_SECRET_ACCESS_KEY=foobar SLS_DEBUG=* serverless invoke -f hello -l",
+    "logs":
+      "AWS_ACCESS_KEY_ID=foobar AWS_SECRET_ACCESS_KEY=foobar SLS_DEBUG=* serverless logs -f hello -t",
+    "remove":
+      "AWS_ACCESS_KEY_ID=foobar AWS_SECRET_ACCESS_KEY=foobar SLS_DEBUG=* serverless remove",
     "test:integration":
       "serverless offline start --exec \"jest --testPathPattern=integration\"",
     "test:unit": "jest --testPathPattern=unit",

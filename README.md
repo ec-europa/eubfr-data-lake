@@ -29,3 +29,15 @@ Test the services offline:
 ```sh
 yarn offline
 ```
+
+## Deploy
+
+First, you need to [set up your AWS credentials](https://serverless.com/framework/docs/providers/aws/guide/credentials/).
+
+Then, go to the folder of the service you want to deploy and type:
+
+```sh
+yarn deploy -s [STAGE NAME]
+```
+
+For example, it can be: `yarn deploy -s devUser1`.

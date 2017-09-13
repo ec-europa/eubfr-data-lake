@@ -7,12 +7,21 @@ plugins:
 custom:
   serverless-offline:
     port: 4000
-  # Enable auto-packing of external modules
   webpackIncludeModules: true
+  eubfrEnvironment: ${env:EUBFR_ENV, 'dev'}
+
+package:
+  individually: true
 
 provider:
   name: aws
   runtime: nodejs6.10
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'eu-central-1'}
+  deploymentBucket:
+    name: eubfr-${self:custom.eubfrEnvironment}-deploy
+  stackTags:
+    ENV: ${self:custom.eubfrEnvironment}
 
 functions:
   hello-custom:
@@ -31,3 +40,6 @@ functions:
       - http:
           path: hello
           method: get
+      - sns:
+          topicName: ${self:provider.stage}-aggregate
+          displayName: Data aggregation pipeline
