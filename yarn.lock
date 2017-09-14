@@ -349,6 +349,21 @@ asynckit@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
 
+aws-sdk@2.115.0:
+  version "2.115.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.115.0.tgz#8373d7636cc412a04c333b27b1d211f478f276fa"
+  dependencies:
+    buffer "4.9.1"
+    crypto-browserify "1.0.9"
+    events "^1.1.1"
+    jmespath "0.15.0"
+    querystring "0.2.0"
+    sax "1.2.1"
+    url "0.10.3"
+    uuid "3.0.1"
+    xml2js "0.4.17"
+    xmlbuilder "4.2.1"
+
 aws-sdk@^2.75.0:
   version "2.111.0"
   resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.111.0.tgz#a834ce13ff440b348e45e047c8dc7bd696f1b26d"
