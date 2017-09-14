@@ -17,3 +17,10 @@ cd ../..
 # Deploy manager
 cd ./services/ingestion/manager
 ./node_modules/.bin/serverless deploy -v
+
+# Go to project root
+cd ../../..
+
+# Deploy ETL
+cd ./services/ingestion/etl/budg/csv
+./node_modules/.bin/serverless deploy -v

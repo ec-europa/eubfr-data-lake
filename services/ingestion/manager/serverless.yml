@@ -26,6 +26,8 @@ provider:
 functions:
   onCreate:
     handler: src/handler.onCreate
+    environment:
+      STAGE: ${self:provider.stage}
     events:
       - sns:
           arn:

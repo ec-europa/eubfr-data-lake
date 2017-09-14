@@ -6,15 +6,21 @@ export const onCreate = (event, context, callback) => {
   console.log('event', event);
   console.log('context', context);
 
+  // Get Account ID from lambda function arn in the context
+  const accountId = context.invokedFunctionArn.split(':')[4];
+
+  // Get stage from environment variables
+  const stage = process.env.STAGE;
+
   // Some logic here
+  const endpointArn = `arn:aws:sns:eu-central-1:${accountId}:${stage}-etl-budg-csv`;
 
   // Send SNS message
   const sns = new AWS.SNS();
-  const endpointArn = 'arn:aws:sns:eu-central-1:491621799026:test-huartya';
+
   const payload = {
     default: JSON.stringify({
       test: 'Hello',
-      records: event.Records,
     }),
   };
 
