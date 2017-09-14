@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "deploy": "lerna exec -- serverless deploy -v",
+    "deploy": "./scripts/deploy.sh",
     "lint": "eslint .",
     "offline": "lerna run --parallel offline",
     "precommit": "lint-staged",
