@@ -9,11 +9,12 @@ export const onCreate = (event, context, callback) => {
   // Get Account ID from lambda function arn in the context
   const accountId = context.invokedFunctionArn.split(':')[4];
 
-  // Get stage from environment variables
+  // Get stage and region from environment variables
   const stage = process.env.STAGE;
+  const region = process.env.REGION;
 
   // Some logic here
-  const endpointArn = `arn:aws:sns:eu-central-1:${accountId}:${stage}-etl-budg-csv`;
+  const endpointArn = `arn:aws:sns:${region}:${accountId}:${stage}-etl-budg-csv`;
 
   // Send SNS message
   const sns = new AWS.SNS();

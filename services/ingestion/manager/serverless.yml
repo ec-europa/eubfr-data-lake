@@ -28,6 +28,7 @@ functions:
     handler: src/handler.onCreate
     environment:
       STAGE: ${self:provider.stage}
+      REGION: ${self:provider.region}
     events:
       - sns:
           arn:
