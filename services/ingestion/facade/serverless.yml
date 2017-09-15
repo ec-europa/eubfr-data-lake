@@ -1,4 +1,4 @@
-service: EUBFs3Proxy
+service: ingestion-serverless
 
 plugins:
   - serverless-webpack
@@ -16,8 +16,8 @@ provider:
   name: aws
   role: EUBFs3ProxyRole
   runtime: nodejs6.10
-  stage: ${opt:stage, file(../../config.json):stage, 'dev'}
-  region: ${opt:region, file(../../config.json):region, 'eu-central-1'}
+  stage: ${opt:stage, file(../../../config.json):stage, 'dev'}
+  region: ${opt:region, file(../../../config.json):region, 'eu-central-1'}
   deploymentBucket:
     name: eubfr-${self:custom.eubfrEnvironment}-deploy
   stackTags:
