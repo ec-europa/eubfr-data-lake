@@ -10,15 +10,16 @@ package:
 custom:
   webpackIncludeModules: true
   eubfrEnvironment: ${env:EUBFR_ENV, 'dev'}
+  EUBFbucketName: EUBFs3Bucket
 
 provider:
   name: aws
   role: EUBFs3ProxyRole
   runtime: nodejs6.10
-  stage: ${opt:stage, 'dev'}
-  region: ${opt:region, 'us-east-1'}
+  stage: ${opt:stage, file(../../../config.json):stage, 'dev'}
+  region: ${opt:region, file(../../../config.json):region, 'us-east-1'}
   deploymentBucket:
-    name: eubfr-${self:custom.eubfrEnvironment}-deploy-1
+    name: eubfr-dev-deploy-1
   stackTags:
     ENV: ${self:custom.eubfrEnvironment}
   versionFunctions: false
@@ -29,6 +30,16 @@ provider:
       Resource: "*"
 resources:
   Resources:
+    EUBFs3Bucket:
+      Type: 'AWS::S3::Bucket'
+      Properties:
+        AccessControl: PublicReadWrite
+        BucketName: ${self:custom.eubfrEnvironment}${self:custom.EUBFbucketName}
+        VersioningConfiguration:
+          Status: Suspended
+        Tags:
+          - Key: Environment
+            Value: ${self:custom.eubfrEnvironment}
     EUBFs3ProxyRole:
       # read http://docs.aws.amazon.com/apigateway/latest/developerguide/integrating-api-with-aws-services-s3.html
       # read https://serverless.com/framework/docs/providers/aws/guide/iam/
@@ -98,7 +109,7 @@ resources:
             integration.request.header.x-amz-acl: method.request.header.x-amz-acl
             integration.request.path.key: method.request.querystring.key
           Type: AWS
-          Uri: arn:aws:apigateway:${self:provider.region}:s3:path/${self:custom.eubfrEnvironment}${self:provider.deploymentBucket.name}/{key}
+          Uri: arn:aws:apigateway:${self:provider.region}:s3:path/${self:custom.eubfrEnvironment}${self:custom.EUBFbucketName}/{key}
         MethodResponses:
           - StatusCode: 200
             ResponseParameters:
@@ -142,4 +153,4 @@ resources:
         "Fn::GetAtt": [ EUBFs3ProxyRole, Arn ]
       Export:
         # see Fn::ImportValue to use in other services and http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/outputs-section-structure.html
-        Name: ${self:service}:${opt:stage}:EUBFs3ProxyRoleArn
+        Name: ${self:service}:${self:provider.stage}:EUBFs3ProxyRoleArn
