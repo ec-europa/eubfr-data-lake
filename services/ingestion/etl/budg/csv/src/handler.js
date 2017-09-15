@@ -1,4 +1,6 @@
 /* eslint-disable import/prefer-default-export, no-console */
+const path = require('path');
+const parse = require('csv-parse');
 const AWS = require('aws-sdk');
 
 export const parseCsv = (event, context, callback) => {
@@ -15,70 +17,78 @@ export const parseCsv = (event, context, callback) => {
   }
 
   /*
-   * Extract information from the event
+   * Prepare file analysis
    */
 
   // Extract message
   const message = JSON.parse(snsRecord.Sns.Message);
 
-  // Get file
+  // Check file extension
+  if (path.extname(message.object.key) !== '.csv') {
+    return callback('File extension should be .csv');
+  }
+
   const s3 = new AWS.S3();
 
-  return s3.getObject(
-    {
+  /*
+   * Prepare message publishing
+   */
+
+  // Get Account ID from lambda function arn in the context
+  const accountId = context.invokedFunctionArn.split(':')[4];
+
+  // Get stage and region from environment variables
+  const stage = process.env.STAGE;
+  const region = process.env.REGION;
+
+  // Get the arn
+  const endpointArn = `arn:aws:sns:${region}:${accountId}:${stage}-db`;
+
+  const sns = new AWS.SNS();
+
+  /*
+   * Start the hard work
+   */
+
+  return s3
+    .getObject({
       Bucket: message.bucket.name,
       Key: message.object.key,
-    },
-    (err, data) => {
-      if (err) {
-        return callback(err);
-      }
-
-      // Parse it
-      // ...
-
-      /*
-       * Prepare the SNS message
-       */
-
-      // Fill the payload
-      const payload = {
-        default: JSON.stringify({
-          data: data.Body.toString(),
-        }),
-      };
-
-      // Get Account ID from lambda function arn in the context
-      const accountId = context.invokedFunctionArn.split(':')[4];
-
-      // Get stage and region from environment variables
-      const stage = process.env.STAGE;
-      const region = process.env.REGION;
-
-      // Get the arn
-      const endpointArn = `arn:aws:sns:${region}:${accountId}:${stage}-db`;
-
-      /*
-       * Send the SNS message
-       */
-
-      const sns = new AWS.SNS();
-
-      return sns.publish(
-        {
-          Message: JSON.stringify(payload),
-          MessageStructure: 'json',
-          TargetArn: endpointArn,
-        },
-        snsError => {
-          if (snsError) {
-            callback(snsError);
-            return;
-          }
-
-          callback(null, 'push sent');
+    })
+    .createReadStream()
+    .pipe(
+      parse({ columns: true }, (err, data) => {
+        if (err) {
+          return console.log(err);
         }
-      );
-    }
-  );
+
+        /*
+         * Prepare the SNS message
+         */
+
+        // Fill the payload
+        const payload = {
+          default: JSON.stringify({
+            data,
+          }),
+        };
+
+        /*
+         * Send the SNS message
+         */
+
+        return sns.publish(
+          {
+            Message: JSON.stringify(payload),
+            MessageStructure: 'json',
+            TargetArn: endpointArn,
+          },
+          snsError => {
+            if (snsError) {
+              console.log(snsError);
+            }
+          }
+        );
+      })
+    );
 };

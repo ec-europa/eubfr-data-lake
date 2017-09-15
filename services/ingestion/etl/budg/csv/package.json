@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "aws-sdk": "2.116.0",
-    "babel-runtime": "6.26.0"
+    "babel-runtime": "6.26.0",
+    "csv-parse": "^1.2.2"
   }
 }
