@@ -82,6 +82,8 @@ resources:
         HttpMethod: ANY
         Integration:
           IntegrationHttpMethod: ANY
+          Credentials:
+            "Fn::GetAtt": [ EUBFs3ProxyRole, Arn ]
           IntegrationResponses:
               - StatusCode: 200
                 ResponseParameters:
