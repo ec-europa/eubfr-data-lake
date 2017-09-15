@@ -1,0 +1,145 @@
+service: EUBFs3Proxy
+
+plugins:
+  - serverless-webpack
+
+# Webpack specifics
+package:
+  individually: true
+
+custom:
+  webpackIncludeModules: true
+  eubfrEnvironment: ${env:EUBFR_ENV, 'dev'}
+
+provider:
+  name: aws
+  role: EUBFs3ProxyRole
+  runtime: nodejs6.10
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'us-east-1'}
+  deploymentBucket:
+    name: eubfr-${self:custom.eubfrEnvironment}-deploy-1
+  stackTags:
+    ENV: ${self:custom.eubfrEnvironment}
+  versionFunctions: false
+  stackPolicy:
+    - Effect: Allow
+      Principal: "*"
+      Action: "Update:*"
+      Resource: "*"
+resources:
+  Resources:
+    EUBFs3ProxyRole:
+      # read http://docs.aws.amazon.com/apigateway/latest/developerguide/integrating-api-with-aws-services-s3.html
+      # read https://serverless.com/framework/docs/providers/aws/guide/iam/
+      # read https://forum.serverless.com/t/its-possible-to-create-trust-policy-document-with-serverless/1171/7
+      Type: AWS::IAM::Role
+      Properties:
+        AssumeRolePolicyDocument:
+          Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - apigateway.amazonaws.com
+            Action:
+            - sts:AssumeRole
+        Policies:
+          - PolicyName: ManageS3
+            PolicyDocument:
+              Version: '2017'
+              Statement:
+                - Effect: Allow
+                  Action: "s3:*"
+                  Resource: "*"
+    EUBFs3ProxyAPI:
+      Type: "AWS::ApiGateway::RestApi"
+      Properties:
+        BinaryMediaTypes:
+          - image/png
+          - image/jpg
+          - image/gif
+          - image/x-icon
+          - application/octet-stream
+        Description: S3 proxy service for EUBF ${self:custom.eubfrEnvironment} environment
+        FailOnWarnings: false
+        Name: EUBFs3Proxy
+    EUBFs3ProxyAnyMethod:
+      Type: "AWS::ApiGateway::Method"
+      Properties:
+        ApiKeyRequired: false
+        AuthorizationType: none
+        HttpMethod: ANY
+        Integration:
+          IntegrationHttpMethod: ANY
+          IntegrationResponses:
+              - StatusCode: 200
+                ResponseParameters:
+                  method.response.header.Content-Type: integration.response.header.Content-Type
+                  method.response.header.Content-Disposition: integration.response.header.Content-Disposition
+              - StatusCode: 400
+                SelectionPattern: "400"
+                ResponseParameters:
+                  method.response.header.Content-Type: integration.response.header.Content-Type
+                  method.response.header.Content-Disposition: integration.response.header.Content-Disposition
+              - StatusCode: 404
+                SelectionPattern: "404"
+                ResponseParameters:
+                  method.response.header.Content-Type: integration.response.header.Content-Type
+                  method.response.header.Content-Disposition: integration.response.header.Content-Disposition
+              - StatusCode: 500
+                SelectionPattern: '5\d{2}'
+                ResponseParameters:
+                  method.response.header.Content-Type: integration.response.header.Content-Type
+                  method.response.header.Content-Disposition: integration.response.header.Content-Disposition
+          PassthroughBehavior: WHEN_NO_MATCH
+          RequestParameters:
+            integration.request.header.Content-Disposition: method.request.header.Content-Disposition
+            integration.request.header.Content-Type: method.request.header.Content-Type
+            integration.request.header.x-amz-acl: method.request.header.x-amz-acl
+            integration.request.path.key: method.request.querystring.key
+          Type: AWS
+          Uri: arn:aws:apigateway:${self:provider.region}:s3:path/${self:custom.eubfrEnvironment}${self:provider.deploymentBucket.name}/{key}
+        MethodResponses:
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Content-Type: integration.response.header.Content-Type
+              method.response.header.Content-Disposition: integration.response.header.Content-Disposition
+          - StatusCode: 400
+            ResponseParameters:
+              method.response.header.Content-Type: integration.response.header.Content-Type
+              method.response.header.Content-Disposition: integration.response.header.Content-Disposition
+          - StatusCode: 404
+            ResponseParameters:
+              method.response.header.Content-Type: integration.response.header.Content-Type
+              method.response.header.Content-Disposition: integration.response.header.Content-Disposition
+          - StatusCode: 500
+            ResponseParameters:
+              method.response.header.Content-Type: integration.response.header.Content-Type
+              method.response.header.Content-Disposition: integration.response.header.Content-Disposition
+        RequestParameters:
+          method.request.header.Content-Disposition: false
+          method.request.header.Content-Type: false
+          method.request.header.x-amz-acl: false
+          method.request.querystring.key: false
+        ResourceId:
+          Fn::GetAtt:
+            - "EUBFs3ProxyAPI"
+            - "RootResourceId"
+        RestApiId:
+          Ref: "EUBFs3ProxyAPI"
+    EUBFApiGatewayDeployment:
+      Type: 'AWS::ApiGateway::Deployment'
+      Properties:
+        RestApiId:
+          Ref: "EUBFs3ProxyAPI"
+        StageName: ${self:custom.eubfrEnvironment}
+      DependsOn:
+        - s3ProxyAnyMethod
+  Outputs:
+    EUBFs3ProxyRoleArn:
+      Description: The ARN for the custom service role.
+      Value:
+        "Fn::GetAtt": [ EUBFs3ProxyRole, Arn ]
+      Export:
+        # see Fn::ImportValue to use in other services and http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/outputs-section-structure.html
+        Name: ${self:service}:${opt:stage}:EUBFs3ProxyRoleArn
