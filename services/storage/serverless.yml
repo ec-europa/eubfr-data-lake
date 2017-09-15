@@ -25,6 +25,26 @@ resources:
               Event: s3:ObjectCreated:*
               Topic:
                 Ref: ChangeTopic
+    SourceBucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket:
+          Ref: SourceBucket
+        PolicyDocument:
+          Statement:
+            -
+              Action:
+                - "s3:GetObject"
+              Effect: "Allow"
+              Resource:
+                Fn::Join:
+                  - ""
+                  -
+                    - "arn:aws:s3:::"
+                    -
+                      Ref: SourceBucket
+                    - "/*"
+              Principal: "*"
     ChangeTopic:
       Type: AWS::SNS::Topic
       Properties:

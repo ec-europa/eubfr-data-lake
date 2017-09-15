@@ -22,54 +22,63 @@ export const parseCsv = (event, context, callback) => {
   const message = JSON.parse(snsRecord.Sns.Message);
 
   // Get file
-  // message.arn + message.object.key
+  const s3 = new AWS.S3();
 
-  // Parse it
-  // ...
-
-  /*
-   * Prepare the SNS message
-   */
-
-  // Fill the payload
-  const payload = {
-    default: JSON.stringify({
-      time: message.eventTime,
-      bucket: message.bucket,
-      object: message.object,
-    }),
-  };
-
-  // Get Account ID from lambda function arn in the context
-  const accountId = context.invokedFunctionArn.split(':')[4];
-
-  // Get stage and region from environment variables
-  const stage = process.env.STAGE;
-  const region = process.env.REGION;
-
-  // Get the arn
-  const endpointArn = `arn:aws:sns:${region}:${accountId}:${stage}-db`;
-
-  /*
-   * Send the SNS message
-   */
-
-  const sns = new AWS.SNS();
-
-  return sns.publish(
+  return s3.getObject(
     {
-      Message: JSON.stringify(payload),
-      MessageStructure: 'json',
-      TargetArn: endpointArn,
+      Bucket: message.bucket.name,
+      Key: message.object.key,
     },
-    err => {
+    (err, data) => {
       if (err) {
-        console.log(err.stack);
-        callback(err);
-        return;
+        return callback(err);
       }
 
-      callback(null, 'push sent');
+      // Parse it
+      // ...
+
+      /*
+       * Prepare the SNS message
+       */
+
+      // Fill the payload
+      const payload = {
+        default: JSON.stringify({
+          data: data.Body.toString(),
+        }),
+      };
+
+      // Get Account ID from lambda function arn in the context
+      const accountId = context.invokedFunctionArn.split(':')[4];
+
+      // Get stage and region from environment variables
+      const stage = process.env.STAGE;
+      const region = process.env.REGION;
+
+      // Get the arn
+      const endpointArn = `arn:aws:sns:${region}:${accountId}:${stage}-db`;
+
+      /*
+       * Send the SNS message
+       */
+
+      const sns = new AWS.SNS();
+
+      return sns.publish(
+        {
+          Message: JSON.stringify(payload),
+          MessageStructure: 'json',
+          TargetArn: endpointArn,
+        },
+        snsError => {
+          if (snsError) {
+            callback(snsError);
+            return;
+          }
+
+          callback(null, 'push sent');
+        }
+      );
     }
   );
 };
