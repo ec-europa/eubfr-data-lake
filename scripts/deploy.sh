@@ -24,3 +24,10 @@ cd ../../..
 # Deploy ETL
 cd ./services/ingestion/etl/budg/csv
 ./node_modules/.bin/serverless deploy -v
+
+# Go to project root
+cd ../../../../..
+
+# Deploy DB service
+cd ./services/db
+./node_modules/.bin/serverless deploy -v

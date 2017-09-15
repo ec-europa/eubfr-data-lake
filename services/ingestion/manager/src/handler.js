@@ -2,9 +2,38 @@
 const AWS = require('aws-sdk');
 
 export const onCreate = (event, context, callback) => {
-  // Contains incoming request data (e.g., query params, headers and more)
-  console.log('event', event);
-  console.log('context', context);
+  /*
+   * Some checks here before going any further
+   */
+
+  // Only work on the first record
+  const snsRecord = event.Records[0];
+
+  // Was the lambda triggered correctly? Is the file extension supported? etc.
+  if (!snsRecord || snsRecord.EventSource !== 'aws:sns') {
+    return callback('Bad record');
+  }
+
+  /*
+   * Extract information from the event
+   */
+
+  // Extract S3 record
+  const s3record = JSON.parse(snsRecord.Sns.Message).Records[0];
+
+  // Fill the payload
+  const payload = {
+    default: JSON.stringify({
+      eventTime: s3record.eventTime,
+      userIdentity: s3record.userIdentity,
+      bucket: s3record.s3.bucket,
+      object: s3record.s3.object,
+    }),
+  };
+
+  /*
+   * Prepare the SNS message
+   */
 
   // Get Account ID from lambda function arn in the context
   const accountId = context.invokedFunctionArn.split(':')[4];
@@ -13,42 +42,29 @@ export const onCreate = (event, context, callback) => {
   const stage = process.env.STAGE;
   const region = process.env.REGION;
 
-  // Some logic here
+  // Get the arn
   const endpointArn = `arn:aws:sns:${region}:${accountId}:${stage}-etl-budg-csv`;
 
-  // Send SNS message
+  /*
+   * Send the SNS message
+   */
+
   const sns = new AWS.SNS();
 
-  const payload = {
-    default: JSON.stringify({
-      test: 'Hello',
-    }),
-  };
-
-  sns.publish(
+  return sns.publish(
     {
       Message: JSON.stringify(payload),
       MessageStructure: 'json',
       TargetArn: endpointArn,
     },
-    (err, data) => {
+    err => {
       if (err) {
         console.log(err.stack);
+        callback(err);
         return;
       }
 
-      console.log('push sent');
-      console.log(data);
-
-      const response = {
-        statusCode: 200,
-        headers: {
-          'x-custom-header': 'My Header Value',
-        },
-        body: JSON.stringify({ data }),
-      };
-
-      callback(null, response);
+      callback(null, 'push sent');
     }
   );
 };
