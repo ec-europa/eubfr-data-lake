@@ -7,7 +7,7 @@ export const parseCsv = (event, context, callback) => {
   const response = {
     statusCode: 200,
     headers: {
-      'x-custom-header': 'My Header Value',
+      'x-custom-header': 'BUDG CSV ETL',
     },
     body: JSON.stringify({ Hello: 'world!!!!!' }),
   };

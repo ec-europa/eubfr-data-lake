@@ -28,5 +28,36 @@ functions:
     handler: src/handler.parseCsv
     events:
       - sns:
+          arn:
+            Fn::Join:
+              - ""
+              - - "arn:aws:sns:"
+                - Ref: "AWS::Region"
+                - ":"
+                - Ref: "AWS::AccountId"
+                - ":${self:provider.stage}-etl-budg-csv"
           topicName: ${self:provider.stage}-etl-budg-csv
-          displayName: BUDG CSV ETL
+
+resources:
+  Resources:
+    SNSTopicBUDGCSV:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: ${self:provider.stage}-etl-budg-csv
+        DisplayName: BUDG CSV ETL
+    SNSTopicBUDGCSVPolicy:
+      Type: AWS::SNS::TopicPolicy
+      Properties:
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            -
+              Sid: AllowIngestionManagerToPushNotificationEffect
+              Action:
+                - sns:Publish
+              Effect: Allow
+              Resource: "*"
+              Principal: "*"
+        Topics:
+          -
+            Ref: SNSTopicBUDGCSV
