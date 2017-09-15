@@ -6,7 +6,7 @@ plugins:
 
 custom:
   serverless-offline:
-    port: 4000
+    port: 4110
   webpackIncludeModules: true
   eubfrEnvironment: ${env:EUBFR_ENV, 'dev'}
 
