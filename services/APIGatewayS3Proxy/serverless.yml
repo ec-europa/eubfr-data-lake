@@ -47,22 +47,21 @@ resources:
       # read https://forum.serverless.com/t/its-possible-to-create-trust-policy-document-with-serverless/1171/7
       Type: AWS::IAM::Role
       Properties:
+        Policies:
+          - PolicyName: ManageS3
+            PolicyDocument:
+              Statement:
+                - Effect: Allow
+                  Action: "s3:*"
+                  Resource: "*"
         AssumeRolePolicyDocument:
           Statement:
           - Effect: Allow
             Principal:
               Service:
+                - lambda.amazonaws.com
                 - apigateway.amazonaws.com
-            Action:
-            - sts:AssumeRole
-        Policies:
-          - PolicyName: ManageS3
-            PolicyDocument:
-              Version: '2017'
-              Statement:
-                - Effect: Allow
-                  Action: "s3:*"
-                  Resource: "*"
+            Action: "sts:AssumeRole"
     EUBFs3ProxyAPI:
       Type: "AWS::ApiGateway::RestApi"
       Properties:
