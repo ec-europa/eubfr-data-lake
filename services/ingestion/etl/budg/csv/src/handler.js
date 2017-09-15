@@ -47,6 +47,56 @@ export const parseCsv = (event, context, callback) => {
   const sns = new AWS.SNS();
 
   /*
+   * Configure the parser
+   */
+  const parser = parse({ columns: true });
+
+  parser.on('readable', () => {
+    let record;
+    // eslint-disable-next-line
+    while ((record = parser.read())) {
+      /*
+       * Transform message
+       */
+
+      /*
+       * Prepare the SNS message
+       */
+
+      // Fill the payload
+      const payload = {
+        default: JSON.stringify({
+          data: record,
+        }),
+      };
+
+      /*
+       * Send the SNS message
+       */
+      sns.publish(
+        {
+          Message: JSON.stringify(payload),
+          MessageStructure: 'json',
+          TargetArn: endpointArn,
+        },
+        snsError => {
+          if (snsError) {
+            console.log(snsError);
+          }
+        }
+      );
+    }
+  });
+
+  // Catch any error
+  parser.on('error', err => {
+    console.log(err.message);
+  });
+
+  // When we are done, test that the parsed output matched what expected
+  parser.on('finish', () => {});
+
+  /*
    * Start the hard work
    */
 
@@ -56,39 +106,5 @@ export const parseCsv = (event, context, callback) => {
       Key: message.object.key,
     })
     .createReadStream()
-    .pipe(
-      parse({ columns: true }, (err, data) => {
-        if (err) {
-          return console.log(err);
-        }
-
-        /*
-         * Prepare the SNS message
-         */
-
-        // Fill the payload
-        const payload = {
-          default: JSON.stringify({
-            data,
-          }),
-        };
-
-        /*
-         * Send the SNS message
-         */
-
-        return sns.publish(
-          {
-            Message: JSON.stringify(payload),
-            MessageStructure: 'json',
-            TargetArn: endpointArn,
-          },
-          snsError => {
-            if (snsError) {
-              console.log(snsError);
-            }
-          }
-        );
-      })
-    );
+    .pipe(parser);
 };
