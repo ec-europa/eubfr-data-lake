@@ -1,4 +1,4 @@
-service: ingestion-serverless
+service: ingestion-facade
 
 plugins:
   - serverless-webpack
@@ -10,7 +10,7 @@ package:
 custom:
   webpackIncludeModules: true
   eubfrEnvironment: ${env:EUBFR_ENV, 'dev'}
-  EUBFbucketName: eubfr-s3-bucket
+  EUBFbucketName: eubfr-${self:provider.stage}
 
 provider:
   name: aws
@@ -35,7 +35,7 @@ resources:
       Type: 'AWS::S3::Bucket'
       Properties:
         AccessControl: PublicReadWrite
-        BucketName: ${self:custom.eubfrEnvironment}${self:custom.EUBFbucketName}
+        BucketName: ${self:custom.EUBFbucketName}-proxytmp
         VersioningConfiguration:
           Status: Suspended
         Tags:
