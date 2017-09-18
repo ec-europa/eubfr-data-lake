@@ -7,6 +7,7 @@
     "test:unit": "jest --testPathPattern=unit"
   },
   "devDependencies": {
+    "aws-sdk": "2.117.0",
     "babel-core": "6.26.0",
     "babel-loader": "7.1.2",
     "babel-plugin-transform-runtime": "6.23.0",
@@ -19,7 +20,6 @@
     "webpack-node-externals": "1.6.0"
   },
   "dependencies": {
-    "aws-sdk": "2.117.0",
     "babel-runtime": "6.26.0",
     "csv-parse": "^1.2.2"
   }

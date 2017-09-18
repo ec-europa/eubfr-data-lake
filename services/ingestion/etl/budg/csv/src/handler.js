@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export, no-console */
 const path = require('path');
+const AWS = require('aws-sdk'); // eslint-disable-line import/no-extraneous-dependencies
 const parse = require('csv-parse');
-const AWS = require('aws-sdk');
 
 export const parseCsv = (event, context, callback) => {
   /*
