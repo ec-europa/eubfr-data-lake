@@ -1,17 +1,16 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const slsw = require('serverless-webpack');
-const nodeExternals = require('webpack-node-externals');
 const path = require('path');
 
 module.exports = {
   entry: slsw.lib.entries,
   target: 'node',
-  externals: [nodeExternals()],
+  externals: [{ 'aws-sdk': true }],
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
-        loaders: ['babel-loader'],
+        use: ['babel-loader'],
         include: __dirname,
         exclude: /node_modules/,
       },

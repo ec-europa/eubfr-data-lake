@@ -16,8 +16,7 @@
     "jest": "21.1.0",
     "serverless": "1.22.0",
     "serverless-webpack": "3.0.0",
-    "webpack": "3.6.0",
-    "webpack-node-externals": "1.6.0"
+    "webpack": "3.6.0"
   },
   "dependencies": {
     "babel-runtime": "6.26.0"
