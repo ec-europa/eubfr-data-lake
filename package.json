@@ -2,9 +2,8 @@
   "private": true,
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "deploy": "lerna exec -- serverless deploy -v",
+    "deploy": "./scripts/deploy.sh",
     "lint": "eslint .",
-    "offline": "lerna run --parallel offline",
     "precommit": "lint-staged",
     "test:integration": "lerna run --parallel test:integration",
     "test:unit": "lerna run --parallel test:unit",
@@ -20,12 +19,12 @@
     "eslint-config-prettier": "2.5.0",
     "eslint-plugin-import": "2.7.0",
     "eslint-plugin-jest": "21.1.0",
-    "eslint-plugin-prettier": "2.2.0",
+    "eslint-plugin-prettier": "2.3.0",
     "husky": "0.14.3",
     "lerna": "2.2.0",
     "lint-staged": "4.2.1",
     "npm-run-all": "4.1.1",
     "prettier": "1.7.0"
   },
-  "workspaces": ["services/*"]
+  "workspaces": ["services/**"]
 }
