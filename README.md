@@ -24,8 +24,39 @@ Setup your environment:
 yarn
 ```
 
-Test the services offline:
+## Configuration
+
+Copy `config.example.json` to `config.json` and set the values according to your environment.
+
+## Test
+
+Test the services:
 
 ```sh
-yarn offline
+yarn test
 ```
+
+## Deploy
+
+First, you need to [set up your AWS credentials](https://serverless.com/framework/docs/providers/aws/guide/credentials/).
+
+### All at once
+
+Go to the project's root and type:
+
+```sh
+yarn deploy
+```
+
+### Manually
+
+Go to the folder of the service you want to deploy and type:
+
+```sh
+yarn deploy
+```
+
+## Notes
+
+-   Deploy `services/storage` first.
+-   Keep the same stage name for every services so they can work together.
