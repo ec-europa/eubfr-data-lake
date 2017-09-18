@@ -2,11 +2,8 @@ service: ingestion-etl-budg-csv
 
 plugins:
   - serverless-webpack
-  - serverless-offline
 
 custom:
-  serverless-offline:
-    port: 4110
   webpackIncludeModules: true
   eubfrEnvironment: ${env:EUBFR_ENV, 'dev'}
 

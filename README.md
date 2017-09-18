@@ -30,10 +30,10 @@ Copy `config.example.json` to `config.json` and set the values according to your
 
 ## Test
 
-Test the services offline:
+Test the services:
 
 ```sh
-yarn offline
+yarn test
 ```
 
 ## Deploy

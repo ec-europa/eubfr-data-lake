@@ -4,7 +4,6 @@
     "bootstrap": "lerna bootstrap",
     "deploy": "./scripts/deploy.sh",
     "lint": "eslint .",
-    "offline": "lerna run --parallel offline",
     "precommit": "lint-staged",
     "test:integration": "lerna run --parallel test:integration",
     "test:unit": "lerna run --parallel test:unit",

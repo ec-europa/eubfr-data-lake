@@ -2,11 +2,8 @@ service: ingestion-manager
 
 plugins:
   - serverless-webpack
-  - serverless-offline
 
 custom:
-  serverless-offline:
-    port: 4100
   webpackIncludeModules: true
   eubfrEnvironment: ${env:EUBFR_ENV, 'dev'}
 

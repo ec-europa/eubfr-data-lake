@@ -2,11 +2,8 @@ service: db
 
 plugins:
   - serverless-webpack
-  - serverless-offline
 
 custom:
-  serverless-offline:
-    port: 4000
   webpackIncludeModules: true
   eubfrEnvironment: ${env:EUBFR_ENV, 'dev'}
 
