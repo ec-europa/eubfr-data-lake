@@ -9,76 +9,169 @@ schemes:
   - https
 paths:
   /:
-    post:
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: 200 response
-        '400':
-          description: 400 response
-        '500':
-          description: 500 response
     get:
+      operationId: getProject
+      description: Get a project
       produces:
         - application/json
+        - application/xml
+      parameters:
+        - in: query
+          name: key
+          description: File (project) name
+          required: true
+          type: string
+        - in: header
+          name: Content-Disposition
+          description: Possible override, read more http://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectGET.html
+          required: false
+          type: string
+        - in: header
+          name: Content-Type
+          description: >
+           The mime type of the file to be send by the client.
+             Acceptable types:
+            - image/png
+            - image/jpg
+            - image/gif
+            - image/x-icon
+            - application/octet-stream
+          required: false
+          type: string
       responses:
         '200':
           description: 200 response
+          headers:
+            Content-Disposition:
+              type: string
+            Content-Type:
+              type: string
         '400':
           description: 400 response
+          headers:
+            Content-Disposition:
+              type: string
+            Content-Type:
+              type: string
+        '404':
+          description: 404 response
+          headers:
+            Content-Disposition:
+              type: string
+            Content-Type:
+              type: string
         '500':
           description: 500 response
+          headers:
+            Content-Disposition:
+              type: string
+            Content-Type:
+              type: string
     put:
+      operationId: createProject
+      description: Add a new project to the data lake. If the file already exists, it will be overriden.
       produces:
         - application/json
+        - application/xml
+      parameters:
+        - in: query
+          name: key
+          description: File (project) name
+          required: true
+          type: string
+        - in: header
+          name: Content-Disposition
+          description: Possible override, read more http://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectGET.html
+          required: false
+          type: string
+        - in: header
+          name: Content-Type
+          description: >-
+           The mime type of the file to be send by the client.
+             Acceptable types:
+            - image/png
+            - image/jpg
+            - image/gif
+            - image/x-icon
+            - application/octet-stream
+          required: false
+          type: string
+        - in: header
+          name: x-amz-acl
+          description: >
+           The ACL for the file. Read more: http://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html
+          required: false
+          type: string
       responses:
         '200':
           description: 200 response
+          headers:
+            Content-Disposition:
+              type: string
+            Content-Type:
+              type: string
         '400':
           description: 400 response
+          headers:
+            Content-Disposition:
+              type: string
+            Content-Type:
+              type: string
+        '404':
+          description: 404 response
+          headers:
+            Content-Disposition:
+              type: string
+            Content-Type:
+              type: string
         '500':
           description: 500 response
-    patch:
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: 200 response
-        '400':
-          description: 400 response
-        '500':
-          description: 500 response
+          headers:
+            Content-Disposition:
+              type: string
+            Content-Type:
+              type: string
     delete:
+      operationId: deleteProject
+      description: Delete a file from the data lake.
       produces:
         - application/json
+        - application/xml
+      parameters:
+        - in: query
+          name: key
+          description: File (project) name
+          required: true
+          type: string
       responses:
         '200':
           description: 200 response
+          headers:
+            Content-Disposition:
+              type: string
+            Content-Type:
+              type: string
         '400':
           description: 400 response
+          headers:
+            Content-Disposition:
+              type: string
+            Content-Type:
+              type: string
+        '404':
+          description: 404 response
+          headers:
+            Content-Disposition:
+              type: string
+            Content-Type:
+              type: string
         '500':
           description: 500 response
-    head:
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: 200 response
-        '400':
-          description: 400 response
-        '500':
-          description: 500 response
-    options:
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: 200 response
-        '400':
-          description: 400 response
-        '500':
-          description: 500 response
+          headers:
+            Content-Disposition:
+              type: string
+            Content-Type:
+              type: string
     x-amazon-apigateway-any-method:
       parameters:
         - name: Content-Type
