@@ -34,7 +34,7 @@ export const parseCsv = (event, context, callback) => {
    * Configure the parser
    */
   const parser = parse({ columns: true });
-  const client = new AWS.DynamoDB.DocumentClient();
+  const dynamo = new AWS.DynamoDB();
 
   parser.on('readable', () => {
     let record;
@@ -51,28 +51,26 @@ export const parseCsv = (event, context, callback) => {
       // Map the fields
       const data = {
         source: message.object.key,
-        title: record.Name || ' ',
-        programme_name: record['Programme name'] || ' ',
-        description: record['Project description'] || ' ',
-        results: record.Results || ' ',
-        ec_priorities:
-          record['EC’s priorities'].split(',').map(item => item.trim()) || [],
-        coordinators:
-          record.Coordinators.split(',').map(item => item.trim()) || [],
-        eu_budget_contribution: record['EU Budget contribution'] || ' ',
-        partners: record.Partners.split(',').map(item => item.trim()) || [],
-        project_location: [
+        title: record.Name,
+        programme_name: record['Programme name'],
+        description: record['Project description'],
+        results: record.Results,
+        ec_priorities: record['EC’s priorities'].split(','),
+        coordinators: record.Coordinators.split(','),
+        eu_budget_contribution: record['EU Budget contribution'],
+        partners: record.Partners.split(','),
+        project_locations: [
           {
-            name: record['Project country(ies)'] || ' ',
+            name: record['Project country(ies)'],
             geolocation: {
-              lat: record['Project location latitude'] || ' ',
-              long: record['Project location longitude'] || ' ',
+              lat: record['Project location latitude'],
+              long: record['Project location longitude'],
             },
           },
         ],
         timeframe: {
-          from: record['Timeframe start'] || ' ',
-          to: record['Timeframe end'] || ' ',
+          from: record['Timeframe start'],
+          to: record['Timeframe end'],
         },
       };
 
@@ -80,7 +78,7 @@ export const parseCsv = (event, context, callback) => {
        * Save to DB
        */
 
-      saveToDB(client, process.env.TABLE, data, err => {
+      saveToDB(dynamo, process.env.TABLE, data, err => {
         if (err) {
           console.log(err);
         }
