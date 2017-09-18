@@ -10,11 +10,11 @@ package:
 custom:
   webpackIncludeModules: true
   eubfrEnvironment: ${env:EUBFR_ENV, 'dev'}
-  EUBFbucketName: eubfr-${self:provider.stage}
+  EUBFRbucketName: eubfr-${self:provider.stage}
 
 provider:
   name: aws
-  role: EUBFs3ProxyRole
+  role: EUBFRs3ProxyRole
   runtime: nodejs6.10
   stage: ${opt:stage, file(../../../config.json):stage, 'dev'}
   region: ${opt:region, file(../../../config.json):region, 'eu-central-1'}
@@ -31,17 +31,7 @@ provider:
 
 resources:
   Resources:
-    EUBFs3Bucket:
-      Type: 'AWS::S3::Bucket'
-      Properties:
-        AccessControl: PublicReadWrite
-        BucketName: ${self:custom.EUBFbucketName}-proxytmp
-        VersioningConfiguration:
-          Status: Suspended
-        Tags:
-          - Key: Environment
-            Value: ${self:custom.eubfrEnvironment}
-    EUBFs3ProxyRole:
+    EUBFRs3ProxyRole:
       # read http://docs.aws.amazon.com/apigateway/latest/developerguide/integrating-api-with-aws-services-s3.html
       # read https://serverless.com/framework/docs/providers/aws/guide/iam/
       # read https://forum.serverless.com/t/its-possible-to-create-trust-policy-document-with-serverless/1171/7
@@ -62,7 +52,7 @@ resources:
                 - lambda.amazonaws.com
                 - apigateway.amazonaws.com
             Action: "sts:AssumeRole"
-    EUBFs3ProxyAPI:
+    EUBFRs3ProxyAPI:
       Type: "AWS::ApiGateway::RestApi"
       Properties:
         BinaryMediaTypes:
@@ -71,10 +61,10 @@ resources:
           - image/gif
           - image/x-icon
           - application/octet-stream
-        Description: S3 proxy service for EUBF ${self:custom.eubfrEnvironment} environment
+        Description: S3 proxy service for EUBFR ${self:custom.eubfrEnvironment} environment
         FailOnWarnings: false
-        Name: EUBFs3Proxy
-    EUBFs3ProxyAnyMethod:
+        Name: EUBFRs3Proxy
+    EUBFRs3ProxyAnyMethod:
       Type: "AWS::ApiGateway::Method"
       Properties:
         ApiKeyRequired: false
@@ -83,7 +73,7 @@ resources:
         Integration:
           IntegrationHttpMethod: ANY
           Credentials:
-            "Fn::GetAtt": [ EUBFs3ProxyRole, Arn ]
+            "Fn::GetAtt": [ EUBFRs3ProxyRole, Arn ]
           IntegrationResponses:
               - StatusCode: 200
                 ResponseParameters:
@@ -111,7 +101,8 @@ resources:
             integration.request.header.x-amz-acl: method.request.header.x-amz-acl
             integration.request.path.key: method.request.querystring.key
           Type: AWS
-          Uri: arn:aws:apigateway:${self:provider.region}:s3:path/${self:custom.eubfrEnvironment}${self:custom.EUBFbucketName}/{key}
+          # Change with existing bucket created by other services for the specific producers.
+          Uri: arn:aws:apigateway:${self:provider.region}:s3:path/${self:provider.deploymentBucket.name}/{key}
         MethodResponses:
           - StatusCode: 200
             ResponseParameters:
@@ -136,23 +127,23 @@ resources:
           method.request.querystring.key: false
         ResourceId:
           Fn::GetAtt:
-            - "EUBFs3ProxyAPI"
+            - "EUBFRs3ProxyAPI"
             - "RootResourceId"
         RestApiId:
-          Ref: "EUBFs3ProxyAPI"
-    EUBFApiGatewayDeployment:
+          Ref: "EUBFRs3ProxyAPI"
+    EUBFRApiGatewayDeployment:
       Type: 'AWS::ApiGateway::Deployment'
       Properties:
         RestApiId:
-          Ref: "EUBFs3ProxyAPI"
+          Ref: "EUBFRs3ProxyAPI"
         StageName: ${self:custom.eubfrEnvironment}
       DependsOn:
-        - EUBFs3ProxyAnyMethod
+        - EUBFRs3ProxyAnyMethod
   Outputs:
-    EUBFs3ProxyRoleArn:
+    EUBFRs3ProxyRoleArn:
       Description: The ARN for the custom service role.
       Value:
-        "Fn::GetAtt": [ EUBFs3ProxyRole, Arn ]
+        "Fn::GetAtt": [ EUBFRs3ProxyRole, Arn ]
       Export:
         # see Fn::ImportValue to use in other services and http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/outputs-section-structure.html
-        Name: ${self:service}:${self:provider.stage}:EUBFs3ProxyRoleArn
+        Name: ${self:service}:${self:provider.stage}:EUBFRs3ProxyRoleArn
