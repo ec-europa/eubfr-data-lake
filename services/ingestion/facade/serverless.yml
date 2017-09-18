@@ -67,7 +67,7 @@ resources:
     EUBFRs3ProxyAnyMethod:
       Type: "AWS::ApiGateway::Method"
       Properties:
-        ApiKeyRequired: false
+        ApiKeyRequired: true
         AuthorizationType: none
         HttpMethod: ANY
         Integration:
@@ -101,8 +101,7 @@ resources:
             integration.request.header.x-amz-acl: method.request.header.x-amz-acl
             integration.request.path.key: method.request.querystring.key
           Type: AWS
-          # Change with existing bucket created by other services for the specific producers.
-          Uri: arn:aws:apigateway:${self:provider.region}:s3:path/${self:provider.deploymentBucket.name}/{key}
+          Uri: arn:aws:apigateway:${self:provider.region}:s3:path/eubfr-${self:custom.eubfrEnvironment}/{key}
         MethodResponses:
           - StatusCode: 200
             ResponseParameters:
