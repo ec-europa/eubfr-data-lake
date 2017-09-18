@@ -67,7 +67,11 @@ resources:
     EUBFRs3ProxyAnyMethod:
       Type: "AWS::ApiGateway::Method"
       Properties:
+        # When using a key, read https://aws.amazon.com/blogs/aws/new-usage-plans-for-amazon-api-gateway/
         ApiKeyRequired: true
+        # AuthorizationType could be AWS_IAM
+        # In case AWS_IAM: http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-use-postman-to-call-api.html
+        # Other option: http://docs.aws.amazon.com/apigateway/latest/developerguide/use-custom-authorizer.html
         AuthorizationType: none
         HttpMethod: ANY
         Integration:
