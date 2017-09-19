@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "ingestion-facade",
+  "name": "@eubfr/ingestion-facade",
   "description": "S3 proxy for EUBFR projects.",
   "version": "0.0.1",
   "scripts": {
@@ -8,8 +8,5 @@
   },
   "devDependencies": {
     "serverless": "1.22.0"
-  },
-  "dependencies": {
-    "babel-runtime": "6.26.0"
   }
 }
