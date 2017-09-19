@@ -14,6 +14,13 @@ cd ./services/storage
 # Go to project root
 cd ../..
 
+# Deploy DB
+cd ./services/db
+./node_modules/.bin/serverless deploy -v
+
+# Go to project root
+cd ../..
+
 # Deploy manager
 cd ./services/ingestion/manager
 ./node_modules/.bin/serverless deploy -v

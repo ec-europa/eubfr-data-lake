@@ -1,4 +1,6 @@
 /* eslint-disable import/prefer-default-export, no-console */
+import saveToDB from '@eubfr/dynamodb-helpers/save';
+
 const path = require('path');
 const AWS = require('aws-sdk'); // eslint-disable-line import/no-extraneous-dependencies
 const parse = require('csv-parse');
@@ -28,28 +30,11 @@ export const parseCsv = (event, context, callback) => {
     return callback('File extension should be .csv');
   }
 
-  const s3 = new AWS.S3();
-
-  /*
-   * Prepare message publishing
-   */
-
-  // Get Account ID from lambda function arn in the context
-  const accountId = context.invokedFunctionArn.split(':')[4];
-
-  // Get stage and region from environment variables
-  const stage = process.env.STAGE;
-  const region = process.env.REGION;
-
-  // Get the arn
-  const endpointArn = `arn:aws:sns:${region}:${accountId}:${stage}-db`;
-
-  const sns = new AWS.SNS();
-
   /*
    * Configure the parser
    */
   const parser = parse({ columns: true });
+  const dynamo = new AWS.DynamoDB();
 
   parser.on('readable', () => {
     let record;
@@ -60,31 +45,44 @@ export const parseCsv = (event, context, callback) => {
        */
 
       /*
-       * Prepare the SNS message
+       * Map fields
        */
 
-      // Fill the payload
-      const payload = {
-        default: JSON.stringify({
-          data: record,
-        }),
+      // Map the fields
+      const data = {
+        source: message.object.key,
+        title: record.Name,
+        programme_name: record['Programme name'],
+        description: record['Project description'],
+        results: record.Results,
+        ec_priorities: record['EC’s priorities'].split(','),
+        coordinators: record.Coordinators.split(','),
+        eu_budget_contribution: record['EU Budget contribution'],
+        partners: record.Partners.split(','),
+        project_locations: [
+          {
+            name: record['Project country(ies)'],
+            geolocation: {
+              lat: record['Project location latitude'],
+              long: record['Project location longitude'],
+            },
+          },
+        ],
+        timeframe: {
+          from: record['Timeframe start'],
+          to: record['Timeframe end'],
+        },
       };
 
       /*
-       * Send the SNS message
+       * Save to DB
        */
-      sns.publish(
-        {
-          Message: JSON.stringify(payload),
-          MessageStructure: 'json',
-          TargetArn: endpointArn,
-        },
-        snsError => {
-          if (snsError) {
-            console.log(snsError);
-          }
+
+      saveToDB(dynamo, process.env.TABLE, data, err => {
+        if (err) {
+          console.log(err);
         }
-      );
+      });
     }
   });
 
@@ -99,6 +97,7 @@ export const parseCsv = (event, context, callback) => {
   /*
    * Start the hard work
    */
+  const s3 = new AWS.S3();
 
   return s3
     .getObject({

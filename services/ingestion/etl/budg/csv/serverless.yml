@@ -6,6 +6,7 @@ plugins:
 custom:
   webpackIncludeModules: true
   eubfrEnvironment: ${env:EUBFR_ENV, 'dev'}
+  dynamoTable: ${file(../../../../db/serverless.yml):custom.DYNAMODB_TABLE}
 
 package:
   individually: true
@@ -13,12 +14,23 @@ package:
 provider:
   name: aws
   runtime: nodejs6.10
+  timeout: 60
   stage: ${opt:stage, file(../../../../../config.json):stage, 'dev'}
   region: ${opt:region, file(../../../../../config.json):region, 'eu-central-1'}
   deploymentBucket:
     name: eubfr-${self:custom.eubfrEnvironment}-deploy
   stackTags:
     ENV: ${self:custom.eubfrEnvironment}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.dynamoTable}"
 
 functions:
   parseCsv:
@@ -26,6 +38,7 @@ functions:
     environment:
       STAGE: ${self:provider.stage}
       REGION: ${self:provider.region}
+      TABLE: ${self:custom.dynamoTable}
     events:
       - sns:
           arn:
