@@ -28,6 +28,6 @@ resources:
             AttributeName: id
             KeyType: HASH
         ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
+          ReadCapacityUnits: 100
+          WriteCapacityUnits: 100
         TableName: ${self:custom.DYNAMODB_TABLE}
