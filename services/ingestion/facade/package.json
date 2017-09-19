@@ -4,8 +4,6 @@
   "version": "0.0.1",
   "scripts": {
     "deploy": "serverless deploy -v",
-    "test:integration":
-      "serverless offline start --exec \"jest --testPathPattern=integration\"",
     "test:unit": "jest --testPathPattern=unit"
   },
   "devDependencies": {
