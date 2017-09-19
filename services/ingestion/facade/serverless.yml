@@ -1,12 +1,5 @@
 service: ingestion-facade
 
-plugins:
-  - serverless-webpack
-
-# Webpack specifics
-package:
-  individually: true
-
 custom:
   webpackIncludeModules: true
   eubfrEnvironment: ${env:EUBFR_ENV, 'dev'}
@@ -61,6 +54,16 @@ resources:
         Description: S3 proxy service for EUBFR ${self:custom.eubfrEnvironment} environment
         FailOnWarnings: false
         Name: EUBFRs3Proxy
+    EUBFRs3ProxyProjects:
+      Type: "AWS::ApiGateway::Resource"
+      Properties:
+        ParentId:
+          Fn::GetAtt:
+            - "EUBFRs3ProxyAPI"
+            - "RootResourceId"
+        PathPart: projects
+        RestApiId:
+          Ref: "EUBFRs3ProxyAPI"
     EUBFRs3ProxyAnyMethod:
       Type: "AWS::ApiGateway::Method"
       Properties:
@@ -122,9 +125,7 @@ resources:
           method.request.header.x-amz-acl: false
           method.request.querystring.key: false
         ResourceId:
-          Fn::GetAtt:
-            - "EUBFRs3ProxyAPI"
-            - "RootResourceId"
+          Ref: "EUBFRs3ProxyProjects"
         RestApiId:
           Ref: "EUBFRs3ProxyAPI"
     EUBFRApiGatewayDeployment:
