@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export, no-console */
-import saveToDB from '../../../../../../lib/dynamodb/save';
+import saveToDB from '@eubfr/dynamodb-helpers/save';
 
 const path = require('path');
 const AWS = require('aws-sdk'); // eslint-disable-line import/no-extraneous-dependencies

@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "db",
+  "name": "@eubfr/db",
   "version": "0.0.1",
   "scripts": {
     "deploy": "sls deploy -v"
