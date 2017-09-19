@@ -1,0 +1,267 @@
+swagger: '2.0'
+info:
+  version: 'dev'
+  title: EUBFR Façade API
+  description: Façade API for feeding projects in a data lake.
+host: q3alj75rgi.execute-api.eu-central-1.amazonaws.com
+basePath: /dev
+schemes:
+  - https
+paths:
+  /projects:
+    get:
+      operationId: getProject
+      description: Get a project
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - in: query
+          name: key
+          description: File (project) name
+          required: true
+          type: string
+        - in: header
+          name: Content-Disposition
+          description: Possible override, read more http://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectGET.html
+          required: false
+          type: string
+        - in: header
+          name: Content-Type
+          description: >
+           The mime type of the file to be send by the client.
+             Acceptable types:
+            - image/png
+            - image/jpg
+            - image/gif
+            - image/x-icon
+            - application/octet-stream
+          required: false
+          type: string
+      responses:
+        '200':
+          description: 200 response
+          headers:
+            Content-Disposition:
+              type: string
+            Content-Type:
+              type: string
+        '400':
+          description: 400 response
+          headers:
+            Content-Disposition:
+              type: string
+            Content-Type:
+              type: string
+        '404':
+          description: 404 response
+          headers:
+            Content-Disposition:
+              type: string
+            Content-Type:
+              type: string
+        '500':
+          description: 500 response
+          headers:
+            Content-Disposition:
+              type: string
+            Content-Type:
+              type: string
+    put:
+      operationId: createProject
+      description: Add a new project to the data lake. If the file already exists, it will be overriden.
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - in: query
+          name: key
+          description: File (project) name
+          required: true
+          type: string
+        - in: header
+          name: Content-Disposition
+          description: Possible override, read more http://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectGET.html
+          required: false
+          type: string
+        - in: header
+          name: Content-Type
+          description: >-
+           The mime type of the file to be send by the client.
+             Acceptable types:
+            - image/png
+            - image/jpg
+            - image/gif
+            - image/x-icon
+            - application/octet-stream
+          required: false
+          type: string
+        - in: header
+          name: x-amz-acl
+          description: >
+           The ACL for the file. Read more: http://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html
+          required: false
+          type: string
+      responses:
+        '200':
+          description: 200 response
+          headers:
+            Content-Disposition:
+              type: string
+            Content-Type:
+              type: string
+        '400':
+          description: 400 response
+          headers:
+            Content-Disposition:
+              type: string
+            Content-Type:
+              type: string
+        '404':
+          description: 404 response
+          headers:
+            Content-Disposition:
+              type: string
+            Content-Type:
+              type: string
+        '500':
+          description: 500 response
+          headers:
+            Content-Disposition:
+              type: string
+            Content-Type:
+              type: string
+    delete:
+      operationId: deleteProject
+      description: Delete a file from the data lake.
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - in: query
+          name: key
+          description: File (project) name
+          required: true
+          type: string
+      responses:
+        '200':
+          description: 200 response
+          headers:
+            Content-Disposition:
+              type: string
+            Content-Type:
+              type: string
+        '400':
+          description: 400 response
+          headers:
+            Content-Disposition:
+              type: string
+            Content-Type:
+              type: string
+        '404':
+          description: 404 response
+          headers:
+            Content-Disposition:
+              type: string
+            Content-Type:
+              type: string
+        '500':
+          description: 500 response
+          headers:
+            Content-Disposition:
+              type: string
+            Content-Type:
+              type: string
+    x-amazon-apigateway-any-method:
+      parameters:
+        - name: Content-Type
+          in: header
+          required: false
+          type: string
+        - name: x-amz-acl
+          in: header
+          required: false
+          type: string
+        - name: key
+          in: query
+          required: false
+          type: string
+        - name: Content-Disposition
+          in: header
+          required: false
+          type: string
+      responses:
+        '200':
+          description: 200 response
+          headers:
+            Content-Disposition:
+              type: string
+            Content-Type:
+              type: string
+        '400':
+          description: 400 response
+          headers:
+            Content-Disposition:
+              type: string
+            Content-Type:
+              type: string
+        '404':
+          description: 404 response
+          headers:
+            Content-Disposition:
+              type: string
+            Content-Type:
+              type: string
+        '500':
+          description: 500 response
+          headers:
+            Content-Disposition:
+              type: string
+            Content-Type:
+              type: string
+      security:
+        - api_key: []
+      x-amazon-apigateway-integration:
+        credentials: >-
+          arn:aws:iam::491621799026:role/ingestion-facade-dev-chernka-EUBFRs3ProxyRole-XILQ3APEJ85F
+        responses:
+          '400':
+            statusCode: '400'
+            responseParameters:
+              method.response.header.Content-Disposition: integration.response.header.Content-Disposition
+              method.response.header.Content-Type: integration.response.header.Content-Type
+          '404':
+            statusCode: '404'
+            responseParameters:
+              method.response.header.Content-Disposition: integration.response.header.Content-Disposition
+              method.response.header.Content-Type: integration.response.header.Content-Type
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Content-Disposition: integration.response.header.Content-Disposition
+              method.response.header.Content-Type: integration.response.header.Content-Type
+          '5\d{2}':
+            statusCode: '500'
+            responseParameters:
+              method.response.header.Content-Disposition: integration.response.header.Content-Disposition
+              method.response.header.Content-Type: integration.response.header.Content-Type
+        requestParameters:
+          integration.request.header.Content-Disposition: method.request.header.Content-Disposition
+          integration.request.header.x-amz-acl: method.request.header.x-amz-acl
+          integration.request.path.key: method.request.querystring.key
+          integration.request.header.Content-Type: method.request.header.Content-Type
+        uri: 'arn:aws:apigateway:eu-central-1:s3:path/eubfr-dev/{key}'
+        passthroughBehavior: when_no_match
+        httpMethod: ANY
+        type: aws
+securityDefinitions:
+  api_key:
+    type: apiKey
+    name: x-api-key
+    in: header
+x-amazon-apigateway-binary-media-types:
+  - image/png
+  - image/jpg
+  - image/gif
+  - image/x-icon
+  - application/octet-stream
