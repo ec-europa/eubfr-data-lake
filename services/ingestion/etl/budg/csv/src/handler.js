@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export, no-console */
-import { saveProject } from '@eubfr/dynamodb-helpers/save';
+import { saveProject } from '@eubfr/dynamodb-helpers';
 
 const path = require('path');
 const AWS = require('aws-sdk'); // eslint-disable-line import/no-extraneous-dependencies
@@ -107,7 +107,7 @@ export const parseCsv = (event, context, callback) => {
         results: record.Results,
         ec_priorities: record['EC’s priorities'].split(';'),
         coordinators: record.Coordinators.split(';'),
-        eu_budget_contribution: record['EU Budget contribution'],
+        eu_budget_contribution: Number(record['EU Budget contribution']),
         partners: record.Partners.split(';'),
         project_locations: projectLocations,
         timeframe: {
