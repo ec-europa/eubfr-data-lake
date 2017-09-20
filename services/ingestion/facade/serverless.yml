@@ -8,7 +8,6 @@ custom:
 provider:
   name: aws
   role: EUBFRs3ProxyRole
-  runtime: nodejs6.10
   stage: ${opt:stage, file(../../../config.json):stage, 'dev'}
   region: ${opt:region, file(../../../config.json):region, 'eu-central-1'}
   deploymentBucket:

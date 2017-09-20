@@ -97,7 +97,7 @@ export const parseCsv = (event, context, callback) => {
       const data = {
         creation_date: message.eventTime, // already ISO-8601
         source: {
-          producer: message.userIdentity,
+          producer: message.userIdentity.principalId,
           object_key: message.object.key,
         },
         title: record.Name,
