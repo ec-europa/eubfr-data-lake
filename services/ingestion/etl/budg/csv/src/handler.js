@@ -1,9 +1,21 @@
 /* eslint-disable import/prefer-default-export, no-console */
+import path from 'path';
+import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
+import parse from 'csv-parse';
 import { saveProject } from '@eubfr/dynamodb-helpers';
+import transform from './transform';
 
-const path = require('path');
-const AWS = require('aws-sdk'); // eslint-disable-line import/no-extraneous-dependencies
-const parse = require('csv-parse');
+const onParseError = err => {
+  console.error(err.message);
+};
+
+const onSaveError = err => {
+  console.error(err);
+};
+
+const onParseFinish = () => {
+  console.info('Finished parsing');
+};
 
 export const parseCsv = (event, context, callback) => {
   /*
@@ -38,109 +50,38 @@ export const parseCsv = (event, context, callback) => {
 
   parser.on('readable', () => {
     let record;
+
+    /*
+     * Extract
+     */
     // eslint-disable-next-line
     while ((record = parser.read())) {
       /*
        * Transform message
        */
+      const data = transform(record);
 
       /*
-       * Map fields
+       * Load
        */
-
-      // Preprocess timeframe
-      let timeframeFrom = null;
-      let timeframeTo = null;
-
-      if (record['Timeframe start'].indexOf(' to ') !== -1) {
-        const timeframe = (record['Timeframe start'] || '').split(' to ');
-
-        if (Array.isArray(timeframe) && timeframe.length === 2) {
-          [timeframeFrom, timeframeTo] = timeframe;
-        }
-      } else {
-        timeframeFrom = record['Timeframe start'];
-        timeframeTo = record['Timeframe end'];
-      }
-
-      // Preprocess related links
-      const links = (record['Related links'] || '')
-        .split(';')
-        .map(link => {
-          const matches = link.match(/<a .*href="(.*)".*>(.*)<\/a>/i);
-
-          if (Array.isArray(matches) && matches.length === 3) {
-            return {
-              url: matches[1],
-              label: matches[2],
-            };
+      saveProject(
+        {
+          dynamo,
+          table: process.env.TABLE,
+          event: message,
+          data,
+        },
+        err => {
+          if (err) {
+            onSaveError(err);
           }
-
-          return null;
-        })
-        .filter(link => link !== null);
-
-      // Preprocess project locations
-      const latArray = record['Project location latitude'].split(';');
-      const longArray = record['Project location longitude'].split(';');
-      const projectLocations = record['Project country(ies)']
-        .split(';')
-        .map((country, index) => ({
-          name: country,
-          geolocation: {
-            lat: (Array.isArray(latArray) && latArray[index]) || null,
-            long: (Array.isArray(longArray) && longArray[index]) || null,
-          },
-        }));
-
-      // Map the fields
-      const data = {
-        creation_date: message.eventTime, // already ISO-8601
-        source: {
-          producer: message.userIdentity.principalId,
-          object_key: message.object.key,
-        },
-        title: record.Name,
-        cover_image: record.Visual,
-        programme_name: record['Programme name'],
-        description: record['Project description'],
-        results: record.Results,
-        ec_priorities: record['EC’s priorities'].split(';'),
-        coordinators: record.Coordinators.split(';'),
-        eu_budget_contribution: Number(record['EU Budget contribution']),
-        partners: record.Partners.split(';'),
-        project_locations: projectLocations,
-        timeframe: {
-          from:
-            timeframeFrom &&
-            new Date(parseInt(timeframeFrom, 10) * 1000).toISOString(),
-          to:
-            timeframeTo &&
-            new Date(parseInt(timeframeTo, 10) * 1000).toISOString(),
-        },
-        project_website: record['Project webpage'],
-        related_links: links,
-      };
-
-      /*
-       * Save to DB
-       */
-
-      saveProject(dynamo, process.env.TABLE, data, err => {
-        if (err) {
-          console.log(err);
         }
-      });
+      );
     }
   });
 
-  // Catch any error
-  parser.on('error', err => {
-    console.log(err.message);
-  });
-
-  // When we are done, test that the parsed output matched what expected
-  parser.on('finish', () => {});
+  parser.on('error', onParseError);
+  parser.on('finish', onParseFinish);
 
   /*
    * Start the hard work
