@@ -1,9 +1,21 @@
 /* eslint-disable import/prefer-default-export, no-console */
-import saveToDB from '@eubfr/dynamodb-helpers/save';
+import path from 'path';
+import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
+import parse from 'csv-parse';
+import { saveProject } from '@eubfr/dynamodb-helpers';
+import transform from './transform';
 
-const path = require('path');
-const AWS = require('aws-sdk'); // eslint-disable-line import/no-extraneous-dependencies
-const parse = require('csv-parse');
+const onParseError = err => {
+  console.error(err.message);
+};
+
+const onSaveError = err => {
+  console.error(err);
+};
+
+const onParseFinish = () => {
+  console.info('Finished parsing');
+};
 
 export const parseCsv = (event, context, callback) => {
   /*
@@ -38,61 +50,38 @@ export const parseCsv = (event, context, callback) => {
 
   parser.on('readable', () => {
     let record;
+
+    /*
+     * Extract
+     */
     // eslint-disable-next-line
     while ((record = parser.read())) {
       /*
        * Transform message
        */
+      const data = transform(record);
 
       /*
-       * Map fields
+       * Load
        */
-
-      // Map the fields
-      const data = {
-        source: message.object.key,
-        title: record.Name,
-        programme_name: record['Programme name'],
-        description: record['Project description'],
-        results: record.Results,
-        ec_priorities: record['EC’s priorities'].split(','),
-        coordinators: record.Coordinators.split(','),
-        eu_budget_contribution: record['EU Budget contribution'],
-        partners: record.Partners.split(','),
-        project_locations: [
-          {
-            name: record['Project country(ies)'],
-            geolocation: {
-              lat: record['Project location latitude'],
-              long: record['Project location longitude'],
-            },
-          },
-        ],
-        timeframe: {
-          from: record['Timeframe start'],
-          to: record['Timeframe end'],
+      saveProject(
+        {
+          dynamo,
+          table: process.env.TABLE,
+          event: message,
+          data,
         },
-      };
-
-      /*
-       * Save to DB
-       */
-
-      saveToDB(dynamo, process.env.TABLE, data, err => {
-        if (err) {
-          console.log(err);
+        err => {
+          if (err) {
+            onSaveError(err);
+          }
         }
-      });
+      );
     }
   });
 
-  // Catch any error
-  parser.on('error', err => {
-    console.log(err.message);
-  });
-
-  // When we are done, test that the parsed output matched what expected
-  parser.on('finish', () => {});
+  parser.on('error', onParseError);
+  parser.on('finish', onParseFinish);
 
   /*
    * Start the hard work

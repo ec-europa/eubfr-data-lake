@@ -1,6 +1,7 @@
 {
   "private": true,
   "name": "@eubfr/dynamodb-helpers",
+  "main": "index.js",
   "version": "0.0.1",
   "dependencies": {
     "uuid": "^3.1.0"
