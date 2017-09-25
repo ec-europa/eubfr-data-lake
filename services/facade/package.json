@@ -4,7 +4,7 @@
   "description": "RESTful API facade managing AWS services.",
   "version": "0.0.2",
   "scripts": {
-    "deploy": "serverless deploy -v",
+    "deploy": "./node_modules/.bin/sls deploy -v",
     "start": "./node_modules/.bin/sls offline start"
   },
   "dependencies": {
