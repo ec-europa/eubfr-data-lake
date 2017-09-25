@@ -17,7 +17,6 @@ package:
 provider:
   name: aws
   runtime: nodejs6.10
-  # role: EUBFRs3ProxyRole
   stage: ${opt:stage, file(../../config.json):stage, 'dev'}
   region: ${opt:region, file(../../config.json):region, 'eu-central-1'}
   deploymentBucket:
@@ -32,11 +31,43 @@ provider:
       Resource: "*"
 
 functions:
-  put-projects:
+  upsert-projects:
     handler: src/put.handler
     events:
       - http:
           path: projects
           method: put
+          private: true
+          cors: true
+  get-projects:
+    handler: src/get.handler
+    events:
+      - http:
+          path: projects
+          method: get
+          private: true
+          cors: true
+  get-single-project:
+    handler: src/getSingle.handler
+    events:
+      - http:
+          path: projects/{id}
+          method: get
+          request:
+            parameters:
+              paths:
+                id: true
+          private: true
+          cors: true
+  delete-single-project:
+    handler: src/deleteSingle.handler
+    events:
+      - http:
+          path: projects/{id}
+          method: delete
+          request:
+            parameters:
+              paths:
+                id: true
           private: true
           cors: true

@@ -12,7 +12,7 @@ export const handler = (event, context, callback) => {
     headers: {
       'x-custom-header': 'My Header Value',
     },
-    body: JSON.stringify({ message: 'Create or update projects' }),
+    body: JSON.stringify({ message: 'Get a single project' }),
   };
 
   callback(null, response);
