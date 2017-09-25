@@ -38,4 +38,5 @@ functions:
       - http:
           path: projects
           method: put
+          private: true
           cors: true
