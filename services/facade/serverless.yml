@@ -1,9 +1,18 @@
-service: ingestion-facade
+service: facade
+
+plugins:
+  - serverless-webpack
+  - serverless-offline #serverless-offline needs to be last in the list
 
 custom:
   webpackIncludeModules: true
   eubfrEnvironment: ${env:EUBFR_ENV, 'dev'}
   EUBFRbucketName: eubfr-${self:provider.stage}
+  serverless-offline:
+    port: 4000
+
+package:
+  individually: true
 
 provider:
   name: aws
@@ -20,6 +29,14 @@ provider:
       Principal: "*"
       Action: "Update:*"
       Resource: "*"
+
+functions:
+  put-projects:
+    handler: src/put.handler
+    events:
+      - http:
+          path: projects
+          method: put
 
 resources:
   Resources:

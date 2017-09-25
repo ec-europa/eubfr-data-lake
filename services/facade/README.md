@@ -1,6 +1,4 @@
-# Ingestion Facade
-
-This service is not only serverless, but functionless as well :)
+# Facade service
 
 ## Introduction
 

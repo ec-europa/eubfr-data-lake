@@ -21,6 +21,6 @@
   "dependencies": {
     "@eubfr/dynamodb-helpers": "0.0.1",
     "babel-runtime": "6.26.0",
-    "csv-parse": "^1.2.2"
+    "csv-parse": "1.2.2"
   }
 }
