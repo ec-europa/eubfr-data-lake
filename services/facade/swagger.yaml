@@ -17,7 +17,7 @@ paths:
           description: Bad request from producer.
         '403':
           description: Forbidden, you have to provide an API key.
-        '500':
+        '502':
           description: Internal server error.
       security:
         - api_key: []
@@ -36,7 +36,7 @@ paths:
           description: Bad request from producer.
         '403':
           description: Forbidden, you have to provide an API key.
-        '500':
+        '502':
           description: Internal server error.
       security:
         - api_key: []
@@ -61,7 +61,7 @@ paths:
           description: Bad request from producer.
         '403':
           description: Forbidden, you have to provide an API key.
-        '500':
+        '502':
           description: Internal server error.
       security:
         - api_key: []
@@ -85,7 +85,7 @@ paths:
           description: Bad request from producer.
         '403':
           description: Forbidden, you have to provide an API key.
-        '500':
+        '502':
           description: Internal server error.
       security:
         - api_key: []
