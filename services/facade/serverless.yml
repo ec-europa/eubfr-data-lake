@@ -21,7 +21,7 @@ provider:
   region: ${opt:region, file(../../config.json):region, 'eu-central-1'}
   # Variables for .js files
   environment:
-      REGION: ${opt:region, file(../../config.json):region, 'eu-central-1'}
+    REGION: ${opt:region, file(../../config.json):region, 'eu-central-1'}
   deploymentBucket:
     name: eubfr-${self:custom.eubfrEnvironment}-deploy
   stackTags:
