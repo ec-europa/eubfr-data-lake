@@ -13,7 +13,7 @@ export const handler = (event, context, callback) => {
 
   s3.createPresignedPost(params, (err, data) => {
     if (err) {
-      console.error('Presigning post data encountered an error', err);
+      callback(err, 'Presigning post data encountered an error');
     }
 
     const response = {
