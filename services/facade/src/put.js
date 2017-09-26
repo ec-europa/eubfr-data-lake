@@ -1,14 +1,25 @@
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 
-const s3 = new AWS.S3({
-  signatureVersion: 'v4',
-  region: 'eu-central-1',
-});
+const region = process.env.REGION;
+
+const s3 = new AWS.S3({ signatureVersion: 'v4', region });
 
 /* eslint-disable import/prefer-default-export, no-console */
 export const handler = (event, context, callback) => {
-  const file = event.headers.key;
+  const file = event.headers['x-amz-meta-producer-key'];
 
+  if (!file) {
+    const response = {
+      statusCode: 400,
+      body: JSON.stringify({
+        message: `Missing x-amz-meta-producer-key header`,
+      }),
+    };
+
+    callback(null, response);
+  }
+
+  // If producer has correctly submitted a key.
   const params = {
     Bucket: 'eubfr-dev',
     Key: file,

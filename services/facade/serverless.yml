@@ -19,6 +19,9 @@ provider:
   runtime: nodejs6.10
   stage: ${opt:stage, file(../../config.json):stage, 'dev'}
   region: ${opt:region, file(../../config.json):region, 'eu-central-1'}
+  # Variables for .js files
+  environment:
+      REGION: ${opt:region, file(../../config.json):region, 'eu-central-1'}
   deploymentBucket:
     name: eubfr-${self:custom.eubfrEnvironment}-deploy
   stackTags:
@@ -29,7 +32,11 @@ provider:
       Principal: "*"
       Action: "Update:*"
       Resource: "*"
-
+  iamRoleStatements:
+    -  Effect: "Allow"
+       Action:
+         - "s3:*"
+       Resource: "*"
 functions:
   upsert-projects:
     handler: src/put.handler
