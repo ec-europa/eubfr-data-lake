@@ -33,6 +33,7 @@ provider:
 functions:
   upsert-projects:
     handler: src/put.handler
+    memorySize: 128
     events:
       - http:
           path: projects
@@ -41,6 +42,7 @@ functions:
           cors: true
   get-projects:
     handler: src/get.handler
+    memorySize: 128
     events:
       - http:
           path: projects
@@ -49,6 +51,7 @@ functions:
           cors: true
   get-single-project:
     handler: src/getSingle.handler
+    memorySize: 128
     events:
       - http:
           path: projects/{id}
@@ -61,6 +64,7 @@ functions:
           cors: true
   delete-single-project:
     handler: src/deleteSingle.handler
+    memorySize: 128
     events:
       - http:
           path: projects/{id}
