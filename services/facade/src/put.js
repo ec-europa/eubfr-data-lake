@@ -1,6 +1,9 @@
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 
-const s3 = new AWS.S3({ signatureVersion: 'v4' });
+const s3 = new AWS.S3({
+  signatureVersion: 'v4',
+  region: 'eu-central-1',
+});
 
 /* eslint-disable import/prefer-default-export, no-console */
 export const handler = (event, context, callback) => {
