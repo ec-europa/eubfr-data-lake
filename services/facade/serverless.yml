@@ -69,16 +69,3 @@ functions:
                 id: true
           private: true
           cors: true
-  delete-single-project:
-    handler: src/deleteSingle.handler
-    memorySize: 128
-    events:
-      - http:
-          path: projects/{id}
-          method: delete
-          request:
-            parameters:
-              paths:
-                id: true
-          private: true
-          cors: true

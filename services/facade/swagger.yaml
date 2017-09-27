@@ -71,30 +71,6 @@ paths:
         passthroughBehavior: when_no_match
         httpMethod: POST
         type: aws_proxy
-    delete:
-      description: Delete a specific project.
-      parameters:
-        - name: id
-          in: path
-          required: true
-          type: string
-      responses:
-        '200':
-          description: Success
-        '400':
-          description: Bad request from producer.
-        '403':
-          description: Forbidden, you have to provide an API key.
-        '502':
-          description: Internal server error.
-      security:
-        - api_key: []
-      x-amazon-apigateway-integration:
-        uri: >-
-          arn:aws:apigateway:eu-central-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-central-1:491621799026:function:facade-devkc-delete-single-project/invocations
-        passthroughBehavior: when_no_match
-        httpMethod: POST
-        type: aws_proxy
 securityDefinitions:
   api_key:
     type: apiKey

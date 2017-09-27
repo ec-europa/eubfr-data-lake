@@ -28,7 +28,7 @@ export const handler = (event, context, callback) => {
 
   s3.getSignedUrl('putObject', params, (err, url) => {
     if (err) {
-      callback(err, 'Error creating a signed upload.');
+      callback(err);
     }
 
     const response = {
