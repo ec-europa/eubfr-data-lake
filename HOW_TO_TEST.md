@@ -51,12 +51,18 @@ Environment should be already configured, but to be sure, check that:
   - `key: x-api-key`
   - `value: <api_key_value>`
 
-- Add your data file
+- Add your data file in postman
   - In 'body' tab, select 'binary'
   - Select the file you want to send
 
-- Add target
-  - https://q67lpkp9ld.execute-api.eu-central-1.amazonaws.com/test/projects?key=<your_file_name>
+- Get API url
+  - Go to [AWS console](https://eu-central-1.console.aws.amazon.com/apigateway/home?region=eu-central-1#/apis)
+  - Open 'EUBFRs3Proxy' API
+  - In 'Steps', select 'test'
+  - API url is displayed at screen top
+  
+- Add target in postman
+  - <api_url>/projects?key=<your_file_name>
 
 Note: the file should be correctly formatted
 
