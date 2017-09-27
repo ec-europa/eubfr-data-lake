@@ -5,7 +5,7 @@ plugins:
 
 custom:
   webpackIncludeModules: true
-  eubfrEnvironment: ${env:EUBFR_ENV, 'dev'}
+  eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
 
 package:
   individually: true
