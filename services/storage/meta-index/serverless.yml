@@ -1,4 +1,4 @@
-service: sotrage-meta-index
+service: storage-meta-index
 
 plugins:
   - serverless-dynamodb-autoscaling
