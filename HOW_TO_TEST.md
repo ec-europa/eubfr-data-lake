@@ -28,6 +28,13 @@ You mainly need to get your AWS keys and set them up by using:
 
 It automatically creates everything you need (bucket, database, ...)
 
+## AWS configuration
+
+Environment should be already configured, but to be sure, check that:
+
+- API Gateway is correctly created, with a 'test' step
+- Use plan 'TEST' is correctly created, with API step and API key configured
+
 ## Send data
 
 - Install postman
@@ -39,7 +46,7 @@ It automatically creates everything you need (bucket, database, ...)
   - `value: <api_key_value>`
 
 - Get api url
-  - https://q3alj75rgi.execute-api.eu-central-1.amazonaws.com/dev
+  - https://04rsp7f5h2.execute-api.eu-central-1.amazonaws.com/test
 
 - Add your data file
   - In 'body' tab, select 'binary'
