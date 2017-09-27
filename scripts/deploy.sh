@@ -8,11 +8,11 @@ cd "$(dirname "$0")"
 cd ..
 
 # Deploy storage first
-cd ./services/storage
+cd ./services/storage/objects
 ./node_modules/.bin/serverless deploy -v
 
 # Go to project root
-cd ../..
+cd ../../..
 
 # Deploy DB
 cd ./services/db
