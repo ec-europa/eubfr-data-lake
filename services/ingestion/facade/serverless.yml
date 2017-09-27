@@ -100,7 +100,7 @@ resources:
             integration.request.header.x-amz-acl: method.request.header.x-amz-acl
             integration.request.path.key: method.request.querystring.key
           Type: AWS
-          Uri: arn:aws:apigateway:${self:provider.region}:s3:path/eubfr-${self:custom.eubfrEnvironment}/{key}
+          Uri: arn:aws:apigateway:${self:provider.region}:s3:path/eubfr-${self:provider.stage}/{key}
         MethodResponses:
           - StatusCode: 200
             ResponseParameters:
