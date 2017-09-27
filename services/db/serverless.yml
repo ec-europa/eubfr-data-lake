@@ -1,7 +1,7 @@
 service: db
 
 custom:
-  eubfrEnvironment: ${env:EUBFR_ENV, 'dev'}
+  eubfrEnvironment: ${opt:eubfr_env, file(../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
   DYNAMODB_TABLE: ${self:provider.stage}-projects
 
 provider:

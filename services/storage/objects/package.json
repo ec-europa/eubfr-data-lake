@@ -1,11 +1,11 @@
 {
   "private": true,
-  "name": "@eubfr/storage",
+  "name": "@eubfr/storage-objects",
   "version": "0.0.1",
   "scripts": {
     "deploy": "sls deploy -v"
   },
   "devDependencies": {
-    "serverless": "1.22.0"
+    "serverless": "1.23.0"
   }
 }
