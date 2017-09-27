@@ -25,6 +25,7 @@ You mainly need to get your AWS keys and set them up by using:
 - Deploy on root using 'test' tag:
   - go to root
   - EUBFR_ENV=test yarn deploy
+
 It automatically creates everything you need (bucket, database, ...)
 
 ## Send data
