@@ -1,5 +1,6 @@
 /* eslint-disable import/prefer-default-export, no-console */
-const AWS = require('aws-sdk'); // eslint-disable-line import/no-extraneous-dependencies
+import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
+import uuid from 'uuid';
 
 export const onObjectCreated = (event, context, callback) => {
   /*
@@ -32,15 +33,30 @@ export const onObjectCreated = (event, context, callback) => {
     (err, data) => {
       if (err) return callback(err); // an error occurred
 
-      console.log({
-        Bucket: s3record.s3.bucket.name,
-        Key: s3record.s3.object.key,
+      // Save record
+      const documentClient = new AWS.DynamoDB.DocumentClient({
+        apiVersion: '2012-08-10',
       });
-      console.log(JSON.stringify(data));
-      return callback(null, 'All fine');
+
+      const params = {
+        TableName: process.env.TABLE,
+        Item: {
+          id: uuid.v1(),
+          event_time: s3record.eventTime,
+          producer_id: s3record.userIdentity.principalId,
+          source_key: s3record.s3.object.key,
+          content_type: data.ContentType,
+          last_modified: data.LastModified.toISOString(), // ISO-8601 date
+          content_length: data.ContentLength,
+          metadata: data.Metadata,
+        },
+      };
+
+      return documentClient.put(params, dynamoErr => {
+        if (dynamoErr) return callback(dynamoErr);
+
+        return callback(null, 'All fine');
+      });
     }
   );
-
-  // Save record
-  // dynamodb
 };

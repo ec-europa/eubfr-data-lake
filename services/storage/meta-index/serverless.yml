@@ -1,11 +1,23 @@
 service: sotrage-meta-index
 
 plugins:
+  - serverless-dynamodb-autoscaling
   - serverless-webpack
 
 custom:
   webpackIncludeModules: true
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
+  DYNAMODB_TABLE: ${self:provider.stage}-meta
+  capacities:
+    - table: MetaIndexDynamoDbTable  # DynamoDB Resource
+      read:
+        minimum: 5        # Minimum read capacity
+        maximum: 1000     # Maximum read capacity
+        usage: 0.75       # Targeted usage percentage
+      write:
+        minimum: 5        # Minimum write capacity
+        maximum: 100      # Maximum write capacity
+        usage: 0.5        # Targeted usage percentage
 
 package:
   individually: true
@@ -19,6 +31,16 @@ provider:
     name: eubfr-${self:custom.eubfrEnvironment}-deploy
   stackTags:
     ENV: ${self:custom.eubfrEnvironment}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.DYNAMODB_TABLE}"
 
 functions:
   onObjectCreated:
@@ -26,6 +48,7 @@ functions:
     environment:
       STAGE: ${self:provider.stage}
       REGION: ${self:provider.region}
+      TABLE: ${self:custom.DYNAMODB_TABLE}
     events:
       - sns:
           arn:
@@ -38,3 +61,22 @@ functions:
                 - Ref: "AWS::AccountId"
                 - ":${self:provider.stage}-object-created"
           topicName: ${self:provider.stage}-object-created
+
+resources:
+  Resources:
+    MetaIndexDynamoDbTable:
+      Type: AWS::DynamoDB::Table
+      DeletionPolicy: Retain
+      Properties:
+        TableName: ${self:custom.DYNAMODB_TABLE}
+        AttributeDefinitions:
+          -
+            AttributeName: id
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
