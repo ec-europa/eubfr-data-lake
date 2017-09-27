@@ -51,9 +51,6 @@ Environment should be already configured, but to be sure, check that:
   - `key: x-api-key`
   - `value: <api_key_value>`
 
-- Get api url from AWS console
-  - https://q67lpkp9ld.execute-api.eu-central-1.amazonaws.com/test
-
 - Add your data file
   - In 'body' tab, select 'binary'
   - Select the file you want to send
