@@ -46,8 +46,6 @@ functions:
   onObjectCreated:
     handler: src/handler.onObjectCreated
     environment:
-      STAGE: ${self:provider.stage}
-      REGION: ${self:provider.region}
       TABLE: ${self:custom.DYNAMODB_TABLE}
     events:
       - sns:
@@ -61,6 +59,22 @@ functions:
                 - Ref: "AWS::AccountId"
                 - ":${self:provider.stage}-object-created"
           topicName: ${self:provider.stage}-object-created
+  onObjectRemoved:
+    handler: src/handler.onObjectRemoved
+    environment:
+      TABLE: ${self:custom.DYNAMODB_TABLE}
+    events:
+      - sns:
+          arn:
+            Fn::Join:
+              - ""
+              -
+                - "arn:aws:sns:"
+                - Ref: "AWS::Region"
+                - ":"
+                - Ref: "AWS::AccountId"
+                - ":${self:provider.stage}-object-removed"
+          topicName: ${self:provider.stage}-object-removed
 
 resources:
   Resources:
@@ -71,11 +85,11 @@ resources:
         TableName: ${self:custom.DYNAMODB_TABLE}
         AttributeDefinitions:
           -
-            AttributeName: id
+            AttributeName: computed_key
             AttributeType: S
         KeySchema:
           -
-            AttributeName: id
+            AttributeName: computed_key
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 5
