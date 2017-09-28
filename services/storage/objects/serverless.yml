@@ -15,6 +15,14 @@ provider:
 
 resources:
   Resources:
+    ObjectCreatedTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: ${self:provider.stage}-object-created
+    ObjectRemovedTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: ${self:provider.stage}-object-removed
     SourceBucket:
       Type: AWS::S3::Bucket
       Properties:
@@ -24,7 +32,11 @@ resources:
             -
               Event: s3:ObjectCreated:*
               Topic:
-                Ref: ChangeTopic
+                Ref: ObjectCreatedTopic
+            -
+              Event: s3:ObjectRemoved:*
+              Topic:
+                Ref: ObjectRemovedTopic
     SourceBucketPolicy:
       Type: AWS::S3::BucketPolicy
       Properties:
@@ -45,11 +57,7 @@ resources:
                       Ref: SourceBucket
                     - "/*"
               Principal: "*"
-    ChangeTopic:
-      Type: AWS::SNS::Topic
-      Properties:
-        TopicName: ${self:provider.stage}-object-created
-    ChangeTopicPolicy:
+    ObjectEventPolicy:
       Type: AWS::SNS::TopicPolicy
       Properties:
         PolicyDocument:
@@ -64,4 +72,6 @@ resources:
               Resource: "*"
         Topics:
           -
-            Ref: ChangeTopic
+            Ref: ObjectCreatedTopic
+          -
+            Ref: ObjectRemovedTopic

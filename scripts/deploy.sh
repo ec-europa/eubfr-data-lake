@@ -14,6 +14,13 @@ cd ./services/storage/objects
 # Go to project root
 cd ../../..
 
+# Deploy storage meta index
+cd ./services/storage/meta-index
+./node_modules/.bin/serverless deploy -v
+
+# Go to project root
+cd ../../..
+
 # Deploy DB
 cd ./services/db
 ./node_modules/.bin/serverless deploy -v
