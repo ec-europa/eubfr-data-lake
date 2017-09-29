@@ -29,6 +29,18 @@ provider:
      Resource: "*"
 
 functions:
+  docroot:
+    handler: src/docroot.handler
+    memorySize: 64
+    events:
+      - http:
+          path: /
+          method: get
+          cors: true
+      - http:
+          path: storage
+          method: get
+          cors: true
   upsert-objects:
     handler: src/upsert.handler
     memorySize: 128
