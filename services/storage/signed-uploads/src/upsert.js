@@ -1,6 +1,6 @@
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 
-const bucket = 'eubfr-dev'; // could be dynamic or calculated at a later stage
+const bucket = process.env.BUCKET;
 const region = process.env.REGION;
 
 const s3 = new AWS.S3({ signatureVersion: 'v4', region });

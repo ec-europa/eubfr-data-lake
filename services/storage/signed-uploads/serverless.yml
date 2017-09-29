@@ -17,6 +17,7 @@ provider:
   region: ${opt:region, file(../../../config.json):region, 'eu-central-1'}
   environment:
     REGION: ${self:provider.region}
+    BUCKET: eubfr-${self:provider.stage}
   deploymentBucket:
     name: eubfr-${self:custom.eubfrEnvironment}-deploy
   stackTags:
@@ -48,10 +49,5 @@ functions:
       - http:
           path: storage/signed_url
           method: put
-          private: true
-          cors: true
-      - http:
-          path: storage/signed_url
-          method: post
           private: true
           cors: true
