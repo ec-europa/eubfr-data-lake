@@ -11,11 +11,8 @@ cd ..
 cd ./services/storage/objects
 ./node_modules/.bin/serverless deploy -v
 
-# Go to project root
-cd ../../..
-
 # Deploy storage meta index
-cd ./services/storage/meta-index
+cd ../meta-index
 ./node_modules/.bin/serverless deploy -v
 
 # Go to project root
@@ -29,19 +26,13 @@ cd ./services/db
 cd ../..
 
 # Deploy manager
-cd ./services/ingestion/manager
+cd ./services/ingestion/store
 ./node_modules/.bin/serverless deploy -v
 
-# Go to project root
-cd ../../..
+# Deploy manager
+cd ../manager
+./node_modules/.bin/serverless deploy -v
 
 # Deploy ETL
-cd ./services/ingestion/etl/budg/csv
-./node_modules/.bin/serverless deploy -v
-
-# Go to project root
-cd ../../../../..
-
-# Deploy DB service
-cd ./services/db
+cd ../etl/budg/csv
 ./node_modules/.bin/serverless deploy -v

@@ -2,7 +2,8 @@
 import path from 'path';
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 import parse from 'csv-parse';
-import { saveProject } from '@eubfr/dynamodb-helpers';
+import uuid from 'uuid';
+
 import transform from './transform';
 
 const onParseError = err => {
@@ -46,7 +47,9 @@ export const parseCsv = (event, context, callback) => {
    * Configure the parser
    */
   const parser = parse({ columns: true });
-  const dynamo = new AWS.DynamoDB();
+  const documentClient = new AWS.DynamoDB.DocumentClient({
+    apiVersion: '2012-08-10',
+  });
 
   parser.on('readable', () => {
     let record;
@@ -64,19 +67,24 @@ export const parseCsv = (event, context, callback) => {
       /*
        * Load
        */
-      saveProject(
-        {
-          dynamo,
-          table: process.env.TABLE,
-          event: message,
+      const params = {
+        TableName: process.env.TABLE,
+        Item: {
+          computed_key: event.object.key,
+          part_id: record.Nid || uuid.v1(),
+          creation_date: event.eventTime, // already ISO-8601
+          producer: event.userIdentity.principalId,
           data,
         },
-        err => {
+      };
+
+      documentClient.putItem(params, err => {
+        if (err) {
           if (err) {
             onSaveError(err);
           }
         }
-      );
+      });
     }
   });
 

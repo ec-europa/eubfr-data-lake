@@ -6,7 +6,7 @@ plugins:
 custom:
   webpackIncludeModules: true
   eubfrEnvironment: ${opt:eubfr_env, file(../../../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
-  dynamoTable: ${file(../../../../db/serverless.yml):custom.DYNAMODB_TABLE}
+  dynamoTable: ${file(../../../store/serverless.yml):custom.DYNAMODB_TABLE}
 
 package:
   individually: true
