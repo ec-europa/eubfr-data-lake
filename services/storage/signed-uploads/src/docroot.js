@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export, no-console */
 export const handler = (event, context, cb) => {
   const response = {
     statusCode: 200,

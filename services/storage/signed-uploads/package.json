@@ -7,8 +7,10 @@
     "deploy": "./node_modules/.bin/sls deploy -v",
     "start": "./node_modules/.bin/sls offline start"
   },
+  "dependencies": {
+    "aws-sdk": "2.124.0"
+  },
   "devDependencies": {
-    "aws-sdk": "2.122.0",
     "babel-core": "6.26.0",
     "babel-loader": "7.1.2",
     "babel-plugin-transform-runtime": "6.23.0",
