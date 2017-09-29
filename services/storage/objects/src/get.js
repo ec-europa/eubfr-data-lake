@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export, no-console */
 export const handler = (event, context, callback) => {
   console.log(`---------------------------------------------------`);
   console.log(`Logging event`);
