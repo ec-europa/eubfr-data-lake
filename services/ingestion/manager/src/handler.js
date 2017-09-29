@@ -1,4 +1,5 @@
-import AWS from 'aws-sdk';
+/* eslint-disable import/prefer-default-export, no-console */
+const AWS = require('aws-sdk'); // eslint-disable-line import/no-extraneous-dependencies
 
 export const onCreate = (event, context, callback) => {
   /*

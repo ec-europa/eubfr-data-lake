@@ -1,4 +1,5 @@
-import AWS from 'aws-sdk';
+/* eslint-disable import/prefer-default-export, no-console */
+import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 
 export const onObjectCreated = (event, context, callback) => {
   /*

@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const slsw = require('serverless-webpack');
 const path = require('path');
 
