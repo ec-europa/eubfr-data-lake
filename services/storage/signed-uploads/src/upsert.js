@@ -1,10 +1,11 @@
 import AWS from 'aws-sdk';
 
+const bucket = 'eubfr-dev'; // could be dynamic or calculated at a later stage
 const region = process.env.REGION;
 
 const s3 = new AWS.S3({ signatureVersion: 'v4', region });
 
-export const handler = (event, context, callback) => {
+export const handler = (event, context, cb) => {
   const file = event.headers['x-amz-meta-producer-key'];
 
   if (!file) {
@@ -15,19 +16,19 @@ export const handler = (event, context, callback) => {
       }),
     };
 
-    callback(null, response);
+    cb(null, response);
   }
 
   // If producer has correctly submitted a key.
   const params = {
-    Bucket: 'eubfr-dev',
+    Bucket: bucket,
     Key: file,
     Expires: 30,
   };
 
   s3.getSignedUrl('putObject', params, (err, url) => {
     if (err) {
-      callback(err);
+      cb(err);
     }
 
     const response = {
@@ -39,6 +40,6 @@ export const handler = (event, context, callback) => {
       body: JSON.stringify(url),
     };
 
-    callback(null, response);
+    cb(null, response);
   });
 };
