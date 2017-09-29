@@ -26,38 +26,21 @@ provider:
   -  Effect: "Allow"
      Action:
        - "s3:*"
-     Resource: "*"
+     Resource: "*"    
 
 functions:
-  upsert-projects:
-    handler: src/put.handler
+  upsert-objects:
+    handler: src/upsert.handler
     memorySize: 128
     events:
       - http:
-          path: projects
+          path: storage/signed_url
           method: put
           private: true
           cors: true
-  get-projects:
-    handler: src/get.handler
-    memorySize: 128
-    events:
       - http:
-          path: projects
-          method: get
-          private: true
-          cors: true
-  get-single-project:
-    handler: src/getSingle.handler
-    memorySize: 128
-    events:
-      - http:
-          path: projects/{id}
-          method: get
-          request:
-            parameters:
-              paths:
-                id: true
+          path: storage/signed_url
+          method: post
           private: true
           cors: true
 
