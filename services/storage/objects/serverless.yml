@@ -5,7 +5,6 @@ custom:
 
 provider:
   name: aws
-  runtime: nodejs6.10
   stage: ${opt:stage, file(../../../config.json):stage, 'dev'}
   region: ${opt:region, file(../../../config.json):region, 'eu-central-1'}
   deploymentBucket:
@@ -23,6 +22,27 @@ resources:
       Type: AWS::SNS::Topic
       Properties:
         TopicName: ${self:provider.stage}-object-removed
+    ObjectEventsTopicPolicy:
+      Type: AWS::SNS::TopicPolicy
+      Properties:
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            -
+              Effect: Allow
+              Principal: '*'
+              Action: sns:Publish
+              Resource: '*'
+              Condition:
+                ArnLike:
+                  aws:SourceArn:
+                    Fn::Join:
+                    - ''
+                    - - 'arn:aws:s3:::'
+                      - eubfr-${self:provider.stage}
+        Topics:
+        - Ref: ObjectCreatedTopic
+        - Ref: ObjectRemovedTopic
     SourceBucket:
       Type: AWS::S3::Bucket
       Properties:
@@ -45,33 +65,13 @@ resources:
         PolicyDocument:
           Statement:
             -
-              Action:
-                - "s3:GetObject"
-              Effect: "Allow"
+              Effect: Allow
+              Principal: '*'
+              Action: s3:GetObject
               Resource:
                 Fn::Join:
-                  - ""
+                  - ''
                   -
-                    - "arn:aws:s3:::"
-                    -
-                      Ref: SourceBucket
-                    - "/*"
-              Principal: "*"
-    ObjectEventPolicy:
-      Type: AWS::SNS::TopicPolicy
-      Properties:
-        PolicyDocument:
-          Version: '2012-10-17'
-          Statement:
-            -
-              Sid: AllowBucketToPushNotificationEffect
-              Effect: Allow
-              Principal:
-                Service: s3.amazonaws.com
-              Action: sns:Publish
-              Resource: "*"
-        Topics:
-          -
-            Ref: ObjectCreatedTopic
-          -
-            Ref: ObjectRemovedTopic
+                    - 'arn:aws:s3:::'
+                    - eubfr-${self:provider.stage}
+                    - '/*'

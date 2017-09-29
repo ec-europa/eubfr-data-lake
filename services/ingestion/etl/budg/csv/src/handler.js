@@ -49,6 +49,7 @@ export const parseCsv = (event, context, callback) => {
   const parser = parse({ columns: true });
   const documentClient = new AWS.DynamoDB.DocumentClient({
     apiVersion: '2012-08-10',
+    convertEmptyValues: true,
   });
 
   parser.on('readable', () => {
@@ -70,15 +71,15 @@ export const parseCsv = (event, context, callback) => {
       const params = {
         TableName: process.env.TABLE,
         Item: {
-          computed_key: event.object.key,
+          computed_key: message.object.key,
           part_id: record.Nid || uuid.v1(),
-          creation_date: event.eventTime, // already ISO-8601
-          producer: event.userIdentity.principalId,
+          creation_date: message.eventTime, // already ISO-8601
+          producer: message.userIdentity.principalId,
           data,
         },
       };
 
-      documentClient.putItem(params, err => {
+      documentClient.put(params, err => {
         if (err) {
           if (err) {
             onSaveError(err);
