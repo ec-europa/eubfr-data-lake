@@ -1,8 +1,21 @@
 service: db
 
+plugins:
+  - serverless-dynamodb-autoscaling
+
 custom:
   eubfrEnvironment: ${opt:eubfr_env, file(../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
   DYNAMODB_TABLE: ${self:provider.stage}-projects
+  capacities:
+    - table: ProjectsDynamoDbTable
+      read:
+        minimum: 5        # Minimum read capacity
+        maximum: 1000     # Maximum read capacity
+        usage: 0.75       # Targeted usage percentage
+      write:
+        minimum: 5        # Minimum write capacity
+        maximum: 1000      # Maximum write capacity
+        usage: 0.5        # Targeted usage percentage
 
 provider:
   name: aws
@@ -16,9 +29,10 @@ provider:
 resources:
   Resources:
     ProjectsDynamoDbTable:
-      Type: 'AWS::DynamoDB::Table'
+      Type: AWS::DynamoDB::Table
       DeletionPolicy: Retain
       Properties:
+        TableName: ${self:custom.DYNAMODB_TABLE}
         AttributeDefinitions:
           -
             AttributeName: id
@@ -28,6 +42,5 @@ resources:
             AttributeName: id
             KeyType: HASH
         ProvisionedThroughput:
-          ReadCapacityUnits: 100
-          WriteCapacityUnits: 100
-        TableName: ${self:custom.DYNAMODB_TABLE}
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5

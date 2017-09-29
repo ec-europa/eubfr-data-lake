@@ -1,20 +1,76 @@
 service: storage-objects
 
+plugins:
+  - serverless-webpack
+  - serverless-offline #serverless-offline needs to be last in the list
+
 custom:
+  webpackIncludeModules: true
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
+  serverless-offline:
+    port: 4000
 
 provider:
   name: aws
   runtime: nodejs6.10
   stage: ${opt:stage, file(../../../config.json):stage, 'dev'}
   region: ${opt:region, file(../../../config.json):region, 'eu-central-1'}
+  environment:
+    REGION: ${self:provider.region}
   deploymentBucket:
     name: eubfr-${self:custom.eubfrEnvironment}-deploy
   stackTags:
     ENV: ${self:custom.eubfrEnvironment}
+  versionFunctions: false
+  iamRoleStatements:
+  -  Effect: "Allow"
+     Action:
+       - "s3:*"
+     Resource: "*"
+
+functions:
+  upsert-projects:
+    handler: src/put.handler
+    memorySize: 128
+    events:
+      - http:
+          path: projects
+          method: put
+          private: true
+          cors: true
+  get-projects:
+    handler: src/get.handler
+    memorySize: 128
+    events:
+      - http:
+          path: projects
+          method: get
+          private: true
+          cors: true
+  get-single-project:
+    handler: src/getSingle.handler
+    memorySize: 128
+    events:
+      - http:
+          path: projects/{id}
+          method: get
+          request:
+            parameters:
+              paths:
+                id: true
+          private: true
+          cors: true
 
 resources:
   Resources:
+    ObjectCreatedTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: ${self:provider.stage}-object-created
+    ObjectRemovedTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: ${self:provider.stage}-object-removed
     SourceBucket:
       Type: AWS::S3::Bucket
       Properties:
@@ -24,7 +80,11 @@ resources:
             -
               Event: s3:ObjectCreated:*
               Topic:
-                Ref: ChangeTopic
+                Ref: ObjectCreatedTopic
+            -
+              Event: s3:ObjectRemoved:*
+              Topic:
+                Ref: ObjectRemovedTopic
     SourceBucketPolicy:
       Type: AWS::S3::BucketPolicy
       Properties:
@@ -45,11 +105,7 @@ resources:
                       Ref: SourceBucket
                     - "/*"
               Principal: "*"
-    ChangeTopic:
-      Type: AWS::SNS::Topic
-      Properties:
-        TopicName: ${self:provider.stage}-object-created
-    ChangeTopicPolicy:
+    ObjectEventPolicy:
       Type: AWS::SNS::TopicPolicy
       Properties:
         PolicyDocument:
@@ -64,4 +120,6 @@ resources:
               Resource: "*"
         Topics:
           -
-            Ref: ChangeTopic
+            Ref: ObjectCreatedTopic
+          -
+            Ref: ObjectRemovedTopic
