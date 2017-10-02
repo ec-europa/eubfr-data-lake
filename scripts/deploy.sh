@@ -21,6 +21,13 @@ cd ./services/storage/meta-index
 # Go to project root
 cd ../../..
 
+# Signed uploads service
+cd ./services/storage/signed-uploads
+./node_modules/.bin/serverless deploy -v
+
+# Go to project root
+cd ../../..
+
 # Deploy DB
 cd ./services/db
 ./node_modules/.bin/serverless deploy -v
