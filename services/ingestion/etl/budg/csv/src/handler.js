@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export, no-console */
 import path from 'path';
-import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
+import AWS from 'aws-sdk';
 import parse from 'csv-parse';
 import { saveProject } from '@eubfr/dynamodb-helpers';
 import transform from './transform';

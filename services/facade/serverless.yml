@@ -1,15 +1,15 @@
-service: ingestion-facade
+service: facade
 
 custom:
   webpackIncludeModules: true
-  eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
+  eubfrEnvironment: ${opt:eubfr_env, file(../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
   EUBFRbucketName: eubfr-${self:provider.stage}
 
 provider:
   name: aws
   role: EUBFRs3ProxyRole
-  stage: ${opt:stage, file(../../../config.json):stage, 'dev'}
-  region: ${opt:region, file(../../../config.json):region, 'eu-central-1'}
+  stage: ${opt:stage, file(../../config.json):stage, 'dev'}
+  region: ${opt:region, file(../../config.json):region, 'eu-central-1'}
   deploymentBucket:
     name: eubfr-${self:custom.eubfrEnvironment}-deploy
   stackTags:
