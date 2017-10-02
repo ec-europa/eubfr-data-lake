@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export, no-console */
-const AWS = require('aws-sdk'); // eslint-disable-line import/no-extraneous-dependencies
+const AWS = require('aws-sdk');
 
 export const onCreate = (event, context, callback) => {
   /*
