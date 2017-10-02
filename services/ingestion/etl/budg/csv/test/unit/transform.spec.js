@@ -56,3 +56,36 @@ describe(`DG BUDG CSV transformer`, () => {
     expect(firstLocation.name).toBe(`AT`);
   });
 });
+
+describe(`DG BUDG transformer handling incomplete or inconsistent data`, () => {
+  const partialRecord = {
+    Name: 'Bulgaria’s capital expands metro network',
+    'Timeframe start': '1388530800',
+    'Timeframe end': '1420066800',
+    'Project location latitude': '42.73806663',
+    'Project location longitude': '23.40014509',
+    'Project country(ies)': '',
+    'EC’s priorities': '',
+    Coordinators: '',
+    Partners: '',
+    'Related links': '',
+  };
+
+  test(`Certain fields should always be present after transformation`, () => {
+    const partialResult = mapper(partialRecord);
+    expect(partialResult.cover_image).toBeFalsy();
+    expect(partialResult.programme_name).toBeFalsy();
+    expect(partialResult.description).toBeFalsy();
+    expect(partialResult.results).toBeFalsy();
+    expect(partialResult.ec_priorities).toBeDefined();
+    expect(partialResult.coordinators).toBeDefined();
+    expect(partialResult.eu_budget_contribution).toBeFalsy();
+    expect(partialResult.partners).toBeDefined();
+    expect(partialResult.project_locations).toBeDefined();
+    expect(partialResult.timeframe).toBeDefined();
+    expect(partialResult.timeframe.from).toBeDefined();
+    expect(partialResult.timeframe.to).toBeDefined();
+    expect(partialResult.project_website).toBeFalsy();
+    expect(partialResult.related_links).toBeDefined();
+  });
+});
