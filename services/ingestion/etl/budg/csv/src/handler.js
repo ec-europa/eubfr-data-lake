@@ -18,7 +18,6 @@ const onParseFinish = () => {
 };
 
 export const parseCsv = (event, context, callback) => {
-  let message;
   /*
    * Some checks here before going any further
    */
@@ -36,11 +35,7 @@ export const parseCsv = (event, context, callback) => {
    */
 
   // Extract message
-  try {
-    message = JSON.parse(snsRecord.Sns.Message);
-  } catch (e) {
-    return callback(e);
-  }
+  const message = JSON.parse(snsRecord.Sns.Message);
 
   // Check file extension
   if (path.extname(message.object.key) !== '.csv') {
