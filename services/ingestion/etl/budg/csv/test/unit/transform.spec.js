@@ -1,5 +1,5 @@
 import mapper from '../../src/transform';
-import testRecord from '../record.json';
+import testRecord from '../files/record.json';
 
 describe(`DG BUDG CSV transformer`, () => {
   let result = {};
