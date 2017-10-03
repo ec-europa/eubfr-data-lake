@@ -23,6 +23,7 @@ provider:
 functions:
   onCreate:
     handler: src/handler.onCreate
+    name: ${self:provider.stage}-${self:service}-onCreate
     environment:
       STAGE: ${self:provider.stage}
       REGION: ${self:provider.region}

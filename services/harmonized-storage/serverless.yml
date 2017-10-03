@@ -2,7 +2,7 @@ service: harmonized-storage
 
 custom:
   eubfrEnvironment: ${opt:eubfr_env, file(../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
-  bucketName: eubfr-harmonized-${self:provider.stage}
+  bucketName: eubfr-${self:provider.stage}-harmonized
 
 provider:
   name: aws

@@ -45,6 +45,7 @@ provider:
 functions:
   onObjectCreated:
     handler: src/handler.onObjectCreated
+    name: ${self:provider.stage}-${self:service}-onObjectCreated
     environment:
       TABLE: ${self:custom.DYNAMODB_TABLE}
     events:
@@ -61,6 +62,7 @@ functions:
           topicName: ${self:provider.stage}-object-created
   onObjectRemoved:
     handler: src/handler.onObjectRemoved
+    name: ${self:provider.stage}-${self:service}-onObjectRemoved
     environment:
       TABLE: ${self:custom.DYNAMODB_TABLE}
     events:

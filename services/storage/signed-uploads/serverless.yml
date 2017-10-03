@@ -32,6 +32,7 @@ provider:
 functions:
   docroot:
     handler: src/docroot.handler
+    name: ${self:provider.stage}-${self:service}-docroot
     memorySize: 128
     events:
       - http:
@@ -44,6 +45,7 @@ functions:
           cors: true
   upsert-objects:
     handler: src/upsert.handler
+    name: ${self:provider.stage}-${self:service}-upsert-objects
     memorySize: 128
     events:
       - http:
