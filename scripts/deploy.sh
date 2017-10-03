@@ -11,15 +11,16 @@ cd ..
 cd ./services/storage/objects
 ./node_modules/.bin/serverless deploy -v
 
+# Deploy signed uploads service
+cd ../signed-uploads
+./node_modules/.bin/serverless deploy -v
+
 # Deploy storage meta index
 cd ../meta-index
 ./node_modules/.bin/serverless deploy -v
 
-# Go to project root
-cd ../../..
-
 # Deploy harmonized storage
-cd ./services/harmonized-storage
+cd ../../harmonized-storage
 ./node_modules/.bin/serverless deploy -v
 
 # Deploy manager

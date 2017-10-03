@@ -1,9 +1,9 @@
 swagger: '2.0'
 info:
   version: 'dev'
-  title: EUBFR Façade API
+  title: S3 Proxy API
   description: Façade API for feeding projects in a data lake.
-host: q3alj75rgi.execute-api.eu-central-1.amazonaws.com
+host: API-ID.execute-api.API-REGION.amazonaws.com
 basePath: /dev
 schemes:
   - https

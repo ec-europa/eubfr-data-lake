@@ -1,7 +1,7 @@
 {
   "private": true,
-  "name": "@eubfr/ingestion-facade",
-  "description": "S3 proxy for EUBFR projects.",
+  "name": "@eubfr/facade",
+  "description": "S3 proxy.",
   "version": "0.0.1",
   "scripts": {
     "deploy": "serverless deploy -v"

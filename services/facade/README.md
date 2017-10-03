@@ -1,6 +1,8 @@
-# Ingestion Facade
+# Facade
 
-This service is not only serverless, but functionless as well :)
+WIP - the place for anything related to creating and serving a public-facing RESTful API.
+
+Currently, we proxy S3 as a direct integration, but in later stage this will change.
 
 ## Introduction
 
