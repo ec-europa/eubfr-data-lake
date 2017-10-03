@@ -1,12 +1,13 @@
-service: storage-objects
+service: harmonized-storage
 
 custom:
-  eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
+  eubfrEnvironment: ${opt:eubfr_env, file(../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
+  bucketName: eubfr-harmonized-${self:provider.stage}
 
 provider:
   name: aws
-  stage: ${opt:stage, file(../../../config.json):stage, 'dev'}
-  region: ${opt:region, file(../../../config.json):region, 'eu-central-1'}
+  stage: ${opt:stage, file(../../config.json):stage, 'dev'}
+  region: ${opt:region, file(../../config.json):region, 'eu-central-1'}
   deploymentBucket:
     name: eubfr-${self:custom.eubfrEnvironment}-deploy
   stackTags:
@@ -14,15 +15,15 @@ provider:
 
 resources:
   Resources:
-    ObjectCreatedTopic:
+    HarmonizedObjectCreatedTopic:
       Type: AWS::SNS::Topic
       Properties:
-        TopicName: ${self:provider.stage}-object-created
-    ObjectRemovedTopic:
+        TopicName: ${self:provider.stage}-harmonized-object-created
+    HarmonizedObjectRemovedTopic:
       Type: AWS::SNS::Topic
       Properties:
-        TopicName: ${self:provider.stage}-object-removed
-    ObjectEventsTopicPolicy:
+        TopicName: ${self:provider.stage}-harmonized-object-removed
+    HarmonizedObjectEventsTopicPolicy:
       Type: AWS::SNS::TopicPolicy
       Properties:
         PolicyDocument:
@@ -39,30 +40,29 @@ resources:
                     Fn::Join:
                     - ''
                     - - 'arn:aws:s3:::'
-                      - eubfr-${self:provider.stage}
+                      - ${self:custom.bucketName}
         Topics:
-        - Ref: ObjectCreatedTopic
-        - Ref: ObjectRemovedTopic
-    SourceBucket:
+        - Ref: HarmonizedObjectCreatedTopic
+        - Ref: HarmonizedObjectRemovedTopic
+    HarmonizedSourceBucket:
       Type: AWS::S3::Bucket
-      DependsOn: ObjectEventsTopicPolicy
       Properties:
-        BucketName: eubfr-${self:provider.stage}
+        BucketName: ${self:custom.bucketName}
         NotificationConfiguration:
           TopicConfigurations:
             -
               Event: s3:ObjectCreated:*
               Topic:
-                Ref: ObjectCreatedTopic
+                Ref: HarmonizedObjectCreatedTopic
             -
               Event: s3:ObjectRemoved:*
               Topic:
-                Ref: ObjectRemovedTopic
-    SourceBucketPolicy:
+                Ref: HarmonizedObjectRemovedTopic
+    HarmonizedSourceBucketPolicy:
       Type: AWS::S3::BucketPolicy
       Properties:
         Bucket:
-          Ref: SourceBucket
+          Ref: HarmonizedSourceBucket
         PolicyDocument:
           Statement:
             -
@@ -74,5 +74,5 @@ resources:
                   - ''
                   -
                     - 'arn:aws:s3:::'
-                    - eubfr-${self:provider.stage}
+                    - ${self:custom.bucketName}
                     - '/*'

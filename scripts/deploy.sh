@@ -18,12 +18,12 @@ cd ../meta-index
 # Go to project root
 cd ../../..
 
-# Deploy manager
-cd ./services/ingestion/store
+# Deploy harmonized storage
+cd ./services/harmonized-storage
 ./node_modules/.bin/serverless deploy -v
 
 # Deploy manager
-cd ../manager
+cd ../ingestion/manager
 ./node_modules/.bin/serverless deploy -v
 
 # Deploy ETL

@@ -1,22 +1,14 @@
 /* eslint-disable import/prefer-default-export, no-console */
 import path from 'path';
-import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
+import stream from 'stream';
+import AWS from 'aws-sdk';
 import parse from 'csv-parse';
-import uuid from 'uuid';
+import transform from 'stream-transform';
 
-import transform from './transform';
+import transformRecord from './transform';
 
-const onParseError = err => {
-  console.error(err.message);
-};
-
-const onSaveError = err => {
-  console.error(err);
-};
-
-const onParseFinish = () => {
-  console.info('Finished parsing');
-};
+// Destination bucket
+const { BUCKET } = process.env;
 
 export const parseCsv = (event, context, callback) => {
   /*
@@ -43,59 +35,46 @@ export const parseCsv = (event, context, callback) => {
     return callback('File extension should be .csv');
   }
 
+  const s3 = new AWS.S3();
+
   /*
-   * Configure the parser
+   * Configure the pipeline
    */
+
+  // Parse
   const parser = parse({ columns: true });
-  const documentClient = new AWS.DynamoDB.DocumentClient({
-    apiVersion: '2012-08-10',
-    convertEmptyValues: true,
-  });
 
-  parser.on('readable', () => {
-    let record;
+  // Transform
+  const transformer = transform(
+    (record, cb) => {
+      const data = transformRecord(record);
+      cb(null, `${JSON.stringify(data)}\r\n`);
+    },
+    { parallel: 10 }
+  );
 
-    /*
-     * Extract
-     */
-    // eslint-disable-next-line
-    while ((record = parser.read())) {
-      /*
-       * Transform message
-       */
-      const data = transform(record);
+  // Load
+  const uploadFromStream = () => {
+    const pass = new stream.PassThrough();
 
-      /*
-       * Load
-       */
-      const params = {
-        TableName: process.env.TABLE,
-        Item: {
-          computed_key: message.object.key,
-          part_id: record.Nid || uuid.v1(),
-          creation_date: message.eventTime, // already ISO-8601
-          producer: message.userIdentity.principalId,
-          data,
-        },
-      };
+    const params = {
+      Bucket: BUCKET,
+      Key: `${message.object.key}.data`,
+      Body: pass,
+    };
 
-      documentClient.put(params, err => {
-        if (err) {
-          if (err) {
-            onSaveError(err);
-          }
-        }
-      });
-    }
-  });
+    s3.upload(params, err => {
+      if (err) {
+        callback(err);
+      }
+    });
 
-  parser.on('error', onParseError);
-  parser.on('finish', onParseFinish);
+    return pass;
+  };
 
   /*
    * Start the hard work
    */
-  const s3 = new AWS.S3();
 
   return s3
     .getObject({
@@ -103,5 +82,7 @@ export const parseCsv = (event, context, callback) => {
       Key: message.object.key,
     })
     .createReadStream()
-    .pipe(parser);
+    .pipe(parser)
+    .pipe(transformer)
+    .pipe(uploadFromStream());
 };

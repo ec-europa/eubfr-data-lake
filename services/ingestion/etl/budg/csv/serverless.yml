@@ -6,7 +6,7 @@ plugins:
 custom:
   webpackIncludeModules: true
   eubfrEnvironment: ${opt:eubfr_env, file(../../../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
-  dynamoTable: ${file(../../../store/serverless.yml):custom.DYNAMODB_TABLE}
+  bucketName: ${file(../../../../harmonized-storage/serverless.yml):custom.bucketName, 'test'}
 
 package:
   individually: true
@@ -22,23 +22,21 @@ provider:
   stackTags:
     ENV: ${self:custom.eubfrEnvironment}
   iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - dynamodb:Query
-        - dynamodb:Scan
-        - dynamodb:GetItem
-        - dynamodb:PutItem
-        - dynamodb:UpdateItem
-        - dynamodb:DeleteItem
-      Resource: "arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.dynamoTable}"
+    -  Effect: "Allow"
+       Action:
+         - "s3:PutObject"
+       Resource:
+         Fn::Join:
+           - ""
+           - - "arn:aws:s3:::"
+             - ${self:custom.bucketName}
+             - "/*"
 
 functions:
   parseCsv:
     handler: src/handler.parseCsv
     environment:
-      STAGE: ${self:provider.stage}
-      REGION: ${self:provider.region}
-      TABLE: ${self:custom.dynamoTable}
+      BUCKET: ${self:custom.bucketName}
     events:
       - sns:
           arn:

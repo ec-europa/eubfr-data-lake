@@ -1,12 +1,11 @@
 {
   "private": true,
-  "name": "@eubfr/ingestion-store",
+  "name": "@eubfr/harmonized-storage",
   "version": "0.0.1",
   "scripts": {
     "deploy": "sls deploy -v"
   },
   "devDependencies": {
-    "serverless": "1.23.0",
-    "serverless-dynamodb-autoscaling": "0.6.2"
+    "serverless": "1.23.0"
   }
 }
