@@ -27,6 +27,10 @@ cd ../../harmonized-storage
 cd ../ingestion/manager
 ./node_modules/.bin/serverless deploy -v
 
+# Deploy cleaner
+cd ../cleaner
+./node_modules/.bin/serverless deploy -v
+
 # Deploy ETL
 cd ../etl/budg/csv
 ./node_modules/.bin/serverless deploy -v
