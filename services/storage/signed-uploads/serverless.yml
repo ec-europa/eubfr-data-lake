@@ -1,4 +1,4 @@
-service: signed-uploads
+service: storage-signed-uploads
 
 plugins:
   - serverless-webpack
