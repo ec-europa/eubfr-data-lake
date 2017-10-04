@@ -47,6 +47,7 @@ functions:
   onObjectCreated:
     handler: src/handler.onObjectCreated
     name: ${self:provider.stage}-${self:service}-onObjectCreated
+    memorySize: 256
     environment:
       TABLE: ${self:custom.DYNAMODB_TABLE}
     events:
