@@ -78,7 +78,68 @@ export const onObjectCreated = (event, context, callback) => {
 };
 
 export const onObjectRemoved = (event, context, callback) => {
-  // To be implemented
-  console.log(event);
-  return callback();
+  /*
+   * Some checks here before going any further
+   */
+
+  if (!event.Records) {
+    return callback('No record');
+  }
+
+  // Only work on the first record
+  const snsRecord = event.Records[0];
+
+  // Was the lambda triggered correctly? Is the file extension supported? etc.
+  if (!snsRecord || snsRecord.EventSource !== 'aws:sns') {
+    return callback('Bad record');
+  }
+
+  /*
+   * Extract information from the event
+   */
+
+  // Extract S3 record
+  const s3record = JSON.parse(snsRecord.Sns.Message).Records[0];
+
+  /*
+   * Get all records related to the S3 object
+   */
+  const documentClient = new AWS.DynamoDB.DocumentClient({
+    apiVersion: '2012-08-10',
+    convertEmptyValues: true,
+  });
+
+  const params = {
+    TableName: TABLE,
+    KeyConditionExpression: 'computed_key = :key',
+    ExpressionAttributeValues: {
+      ':key': s3record.s3.object.key,
+    },
+    ProjectionExpression: 'computed_key, project_id',
+  };
+
+  return documentClient.query(params, (err, data) => {
+    if (err) return callback(err); // an error occurred
+
+    // Bad: replace with BatchWrite
+    data.Items.forEach(item => {
+      documentClient.delete(
+        {
+          TableName: TABLE,
+          Key: {
+            computed_key: s3record.s3.object.key,
+            project_id: item.project_id,
+          },
+        },
+        deleteErr => {
+          if (err) console.log(deleteErr);
+          else
+            console.log('item removed', {
+              computed_key: s3record.s3.object.key,
+              project_id: item.project_id,
+            });
+        }
+      );
+    });
+  });
 };
