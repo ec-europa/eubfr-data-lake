@@ -1,4 +1,8 @@
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
+import through2 from 'through2';
+import split2 from 'split2';
+
+const { TABLE } = process.env;
 
 export const onObjectCreated = (event, context, callback) => {
   /*
@@ -27,6 +31,14 @@ export const onObjectCreated = (event, context, callback) => {
   // Retrieve file meta
   const s3 = new AWS.S3();
 
+  // Save record
+  const documentClient = new AWS.DynamoDB.DocumentClient({
+    apiVersion: '2012-08-10',
+    convertEmptyValues: true,
+  });
+
+  console.log(s3record.s3);
+
   return s3.headObject(
     {
       Bucket: s3record.s3.bucket.name,
@@ -35,30 +47,38 @@ export const onObjectCreated = (event, context, callback) => {
     (err, data) => {
       if (err) return callback(err); // an error occurred
 
-      // Save record
-      const documentClient = new AWS.DynamoDB.DocumentClient({
-        apiVersion: '2012-08-10',
-        convertEmptyValues: true,
-      });
+      return s3
+        .getObject({
+          Bucket: s3record.s3.bucket.name,
+          Key: s3record.s3.object.key,
+        })
+        .createReadStream()
+        .pipe(split2(JSON.parse))
+        .pipe(
+          through2.obj((chunk, enc, cb) => {
+            console.log('CHUNK\r\n');
+            console.log(chunk);
 
-      const params = {
-        TableName: process.env.TABLE,
-        Item: {
-          computed_key: s3record.s3.object.key,
-          event_time: s3record.eventTime,
-          producer_id: s3record.userIdentity.principalId,
-          content_type: data.ContentType,
-          last_modified: data.LastModified.toISOString(), // ISO-8601 date
-          content_length: data.ContentLength,
-          metadata: data.Metadata,
-        },
-      };
+            const params = {
+              TableName: TABLE,
+              Item: {
+                computed_key: s3record.s3.object.key,
+                producer_id: s3record.userIdentity.principalId,
+                last_modified: data.LastModified.toISOString(), // ISO-8601 date
+                ...chunk,
+              },
+            };
 
-      return documentClient.put(params, dynamoErr => {
-        if (dynamoErr) return callback(dynamoErr);
+            return documentClient.put(params, dynamoErr => {
+              if (dynamoErr) return cb(dynamoErr);
 
-        return callback(null, 'All fine');
-      });
+              console.log('chunk saved\n');
+
+              // return callback(null, 'All fine');
+              return cb(null, chunk);
+            });
+          })
+        );
     }
   );
 };

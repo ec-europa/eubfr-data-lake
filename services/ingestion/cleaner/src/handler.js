@@ -27,7 +27,7 @@ export const onObjectRemoved = (event, context, callback) => {
 
   const params = {
     Bucket: BUCKET,
-    Key: `${s3record.s3.object.key}.data`,
+    Key: `${s3record.s3.object.key}.ndjson`,
   };
   console.log('params', params);
 
