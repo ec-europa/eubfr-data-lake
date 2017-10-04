@@ -28,6 +28,8 @@ yarn
 
 Copy `config.example.json` to `config.json` and set the values according to your environment.
 
+Note: `stage` can only contain alphanumeric characters.
+
 ## Test
 
 Test the services:
