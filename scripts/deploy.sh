@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Exit the script on any command with non 0 return code
-set -e
+set -ex
 
 # Go to project root
 cd "$(dirname "$0")"
@@ -11,44 +11,26 @@ cd ..
 cd ./services/storage/objects
 ./node_modules/.bin/serverless deploy -v
 
-# Go to project root
-cd ../../..
+# Deploy signed uploads service
+cd ../signed-uploads
+./node_modules/.bin/serverless deploy -v
 
 # Deploy storage meta index
-cd ./services/storage/meta-index
+cd ../meta-index
 ./node_modules/.bin/serverless deploy -v
 
-# Go to project root
-cd ../../..
-
-# Signed uploads service
-cd ./services/storage/signed-uploads
+# Deploy harmonized storage
+cd ../../harmonized-storage
 ./node_modules/.bin/serverless deploy -v
-
-# Go to project root
-cd ../../..
-
-# Deploy DB
-cd ./services/db
-./node_modules/.bin/serverless deploy -v
-
-# Go to project root
-cd ../..
 
 # Deploy manager
-cd ./services/ingestion/manager
+cd ../ingestion/manager
 ./node_modules/.bin/serverless deploy -v
 
-# Go to project root
-cd ../../..
+# Deploy cleaner
+cd ../cleaner
+./node_modules/.bin/serverless deploy -v
 
 # Deploy ETL
-cd ./services/ingestion/etl/budg/csv
-./node_modules/.bin/serverless deploy -v
-
-# Go to project root
-cd ../../../../..
-
-# Deploy DB service
-cd ./services/db
+cd ../etl/budg/csv
 ./node_modules/.bin/serverless deploy -v

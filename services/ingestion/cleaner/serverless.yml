@@ -1,4 +1,4 @@
-service: ingestion-manager
+service: ingestion-cleaner
 
 plugins:
   - serverless-webpack
@@ -6,6 +6,7 @@ plugins:
 custom:
   webpackIncludeModules: true
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
+  outputBucketName: ${file(../../harmonized-storage/serverless.yml):custom.bucketName}
 
 package:
   individually: true
@@ -19,14 +20,23 @@ provider:
     name: eubfr-${self:custom.eubfrEnvironment}-deploy
   stackTags:
     ENV: ${self:custom.eubfrEnvironment}
+  iamRoleStatements:
+    -  Effect: "Allow"
+       Action:
+         - "s3:DeleteObject"
+       Resource:
+         Fn::Join:
+           - ""
+           - - "arn:aws:s3:::"
+             - ${self:custom.outputBucketName}
+             - "/*"
 
 functions:
-  onCreate:
-    handler: src/handler.onCreate
-    name: ${self:provider.stage}-${self:service}-onCreate
+  onObjectRemoved:
+    handler: src/handler.onObjectRemoved
+    name: ${self:provider.stage}-${self:service}-onObjectRemoved
     environment:
-      STAGE: ${self:provider.stage}
-      REGION: ${self:provider.region}
+      BUCKET: ${self:custom.outputBucketName}
     events:
       - sns:
           arn:
@@ -37,5 +47,5 @@ functions:
                 - Ref: "AWS::Region"
                 - ":"
                 - Ref: "AWS::AccountId"
-                - ":${self:provider.stage}-object-created"
-          topicName: ${self:provider.stage}-object-created
+                - ":${self:provider.stage}-object-removed"
+          topicName: ${self:provider.stage}-object-removed
