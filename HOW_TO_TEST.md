@@ -15,17 +15,26 @@ If the environment has already been setup, you can skip to [Send data](#send-dat
 
 - see https://serverless.com/framework/docs/providers/aws/guide/credentials/
 
-You mainly need to get your AWS keys and set them up by using:
+Firstly, you need to have a AWS account, and a pair of keys associated to it
+- we use a shared AWS account, with several users
+- once you have your user access, you need to [create your user's access key](http://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html)
+- that will give you an access key and a private key
+
+Then, you need to setup your pair of keys by typing in a terminal:
 - `export AWS_ACCESS_KEY_ID=<your_access_key>`
 - `export AWS_SECRET_ACCESS_KEY=<your_secret_key>`
 
+For more information about access key setup, see [this serverless guide](https://serverless.com/framework/docs/providers/aws/guide/credentials/)
+
 ## Deploy
+
+- Make sure your local environment meets the [requirements](https://github.com/ec-europa/eubfr-data-lake#requirements)
 
 - Make sure your environment is ready
   - `yarn`
 
 - Deploy on root
-  - go to root
+  - go to root of the project
   - `yarn deploy`
 
 - Deploy the facade
@@ -60,7 +69,7 @@ Environment should be already configured, but to be sure, check that:
   - Open 'EUBFRs3Proxy' API
   - In 'Steps', select 'test'
   - API url is displayed at screen top
-  
+
 - Add target in postman
   - <api_url>/projects?key=<your_file_name>
 
