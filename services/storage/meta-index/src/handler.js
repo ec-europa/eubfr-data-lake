@@ -38,6 +38,7 @@ export const onObjectCreated = (event, context, callback) => {
       // Save record
       const documentClient = new AWS.DynamoDB.DocumentClient({
         apiVersion: '2012-08-10',
+        convertEmptyValues: true,
       });
 
       const params = {

@@ -341,22 +341,7 @@ asynckit@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
 
-aws-sdk@2.125.0:
-  version "2.125.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.125.0.tgz#c0c3131b57eef4a051c7266cc3b47a704e7e36ab"
-  dependencies:
-    buffer "4.9.1"
-    crypto-browserify "1.0.9"
-    events "^1.1.1"
-    jmespath "0.15.0"
-    querystring "0.2.0"
-    sax "1.2.1"
-    url "0.10.3"
-    uuid "3.0.1"
-    xml2js "0.4.17"
-    xmlbuilder "4.2.1"
-
-aws-sdk@^2.7.10, aws-sdk@^2.75.0:
+aws-sdk@2.127.0, aws-sdk@^2.7.10, aws-sdk@^2.75.0:
   version "2.127.0"
   resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.127.0.tgz#3d70e8f868c234a212f7b62d5a0452561a63b4dc"
   dependencies:
@@ -540,6 +525,13 @@ babel-jest@^19.0.0:
     babel-core "^6.0.0"
     babel-plugin-istanbul "^4.0.0"
     babel-preset-jest "^19.0.0"
+
+babel-jest@^21.2.0:
+  version "21.2.0"
+  resolved "https://registry.yarnpkg.com/babel-jest/-/babel-jest-21.2.0.tgz#2ce059519a9374a2c46f2455b6fbef5ad75d863e"
+  dependencies:
+    babel-plugin-istanbul "^4.0.0"
+    babel-preset-jest "^21.2.0"
 
 babel-loader@7.1.2:
   version "7.1.2"
@@ -1000,7 +992,7 @@ block-stream@*:
   dependencies:
     inherits "~2.0.0"
 
-bluebird@^3.4.0, bluebird@^3.4.1, bluebird@^3.5.0:
+bluebird@^3.4.0, bluebird@^3.5.0:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.1.tgz#d9551f9de98f1fcda1e683d17ee91a0602ee2eb9"
 
@@ -2597,7 +2589,7 @@ fs-extra@^3.0.0:
     jsonfile "^3.0.0"
     universalify "^0.1.0"
 
-fs-extra@^4.0.1:
+fs-extra@^4.0.1, fs-extra@^4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-4.0.2.tgz#f91704c53d1b461f893452b0c307d9997647ab6b"
   dependencies:
@@ -4754,12 +4746,6 @@ npm-path@^2.0.2:
   dependencies:
     which "^1.2.10"
 
-npm-programmatic@^0.0.7:
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/npm-programmatic/-/npm-programmatic-0.0.7.tgz#f6e22cc7e351275b748d8f479ab266a685df49ae"
-  dependencies:
-    bluebird "^3.4.1"
-
 npm-run-all@4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/npm-run-all/-/npm-run-all-4.1.1.tgz#3095cf3f3cacf57fcb662b210ab10c609af6ddbb"
@@ -5130,9 +5116,9 @@ preserve@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
 
-prettier@1.7.3:
-  version "1.7.3"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.7.3.tgz#8e6974725273914b1c47439959dd3d3ba53664b6"
+prettier@1.7.4:
+  version "1.7.4"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.7.4.tgz#5e8624ae9363c80f95ec644584ecdf55d74f93fa"
 
 pretty-format@^19.0.0:
   version "19.0.0"
@@ -5647,17 +5633,16 @@ serverless-offline@3.16.0:
     lodash "^4.17.4"
     velocityjs "^0.9.3"
 
-serverless-webpack@3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/serverless-webpack/-/serverless-webpack-3.1.0.tgz#f4113a061a7b48ddbe72acd7e1babab816192715"
+serverless-webpack@3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/serverless-webpack/-/serverless-webpack-3.1.1.tgz#059713b30a1df61e14f0a212d9bfa3322cfacbe2"
   dependencies:
     archiver "^2.0.0"
-    bluebird "^3.4.0"
-    fs-extra "^0.26.7"
+    bluebird "^3.5.0"
+    fs-extra "^4.0.2"
     glob "^7.1.2"
     is-builtin-module "^1.0.0"
     lodash "^4.17.4"
-    npm-programmatic "^0.0.7"
     semver "^5.4.1"
     ts-node "^3.2.0"
 
@@ -5839,7 +5824,7 @@ spdx-license-ids@^1.0.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/spdx-license-ids/-/spdx-license-ids-1.2.2.tgz#c9df7a3424594ade6bd11900d596696dc06bac57"
 
-split2@^2.0.0:
+split2@2.2.0, split2@^2.0.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/split2/-/split2-2.2.0.tgz#186b2575bcf83e85b7d18465756238ee4ee42493"
   dependencies:
@@ -6200,7 +6185,7 @@ throat@^4.0.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/throat/-/throat-4.1.0.tgz#89037cbc92c56ab18926e6ba4cbb200e15672a6a"
 
-through2@^2.0.0, through2@^2.0.2:
+through2@2.0.3, through2@^2.0.0, through2@^2.0.2:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/through2/-/through2-2.0.3.tgz#0004569b37c7c74ba39c43f3ced78d1ad94140be"
   dependencies:
@@ -6425,10 +6410,6 @@ util@0.10.3, util@^0.10.3:
 uuid@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.0.0.tgz#6728fc0459c450d796a99c31837569bdf672d728"
-
-uuid@3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.0.1.tgz#6544bba2dfda8c1cf17e629a3a305e2bb1fee6c1"
 
 uuid@3.1.0, uuid@^3.0.0, uuid@^3.0.1, uuid@^3.1.0:
   version "3.1.0"
