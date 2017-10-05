@@ -115,12 +115,12 @@ export const onObjectRemoved = (event, context, callback) => {
     convertEmptyValues: true,
   });
 
-  return deleteProjects(
-    {
-      documentClient,
-      table: TABLE,
-      key: s3record.s3.object.key,
-    },
-    callback
-  );
+  /*
+   * Delete existing records
+   */
+  return deleteProjects({
+    documentClient,
+    table: TABLE,
+    key: s3record.s3.object.key,
+  });
 };
