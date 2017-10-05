@@ -12,6 +12,7 @@
     "babel-loader": "7.1.2",
     "babel-plugin-transform-runtime": "6.23.0",
     "babel-preset-env": "1.6.0",
+    "babel-preset-stage-3": "6.24.1",
     "jest": "21.2.1",
     "serverless": "1.23.0",
     "serverless-jest-plugin": "0.1.6",

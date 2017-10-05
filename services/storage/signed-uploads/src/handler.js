@@ -7,7 +7,7 @@ const region = process.env.REGION;
 
 const s3 = new AWS.S3({ signatureVersion: 'v4', region });
 
-export const handler = (event, context, cb) => {
+export const onProjectsUpsert = (event, context, cb) => {
   const file = event.headers['x-amz-meta-producer-key'];
 
   if (!file) {
@@ -44,4 +44,20 @@ export const handler = (event, context, cb) => {
 
     cb(null, response);
   });
+};
+
+export const onProjectsGetRoot = (event, context, cb) => {
+  const response = {
+    statusCode: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*', // Required for CORS support
+      'Access-Control-Allow-Credentials': true, // Required for cookies, authorization headers with HTTPS
+    },
+    body: JSON.stringify({
+      message:
+        'Docroot is not used at the moment. Please check the other endpoints',
+    }),
+  };
+
+  cb(null, response);
 };

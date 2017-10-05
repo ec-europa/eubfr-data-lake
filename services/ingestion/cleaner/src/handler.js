@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export, no-console */
-const AWS = require('aws-sdk'); // eslint-disable-line import/no-extraneous-dependencies
+import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 
 const { BUCKET } = process.env;
 
@@ -9,7 +9,7 @@ export const onObjectRemoved = (event, context, callback) => {
    */
 
   // Only work on the first record
-  const snsRecord = event.Records[0];
+  const snsRecord = event.Records ? event.Records[0] : undefined;
 
   // Was the lambda triggered correctly? Is the file extension supported? etc.
   if (!snsRecord || snsRecord.EventSource !== 'aws:sns') {
