@@ -80,6 +80,15 @@ functions:
                 - Ref: "AWS::AccountId"
                 - ":${self:provider.stage}-harmonized-object-removed"
           topicName: ${self:provider.stage}-harmonized-object-removed
+  listProjects:
+    handler: src/handler.listProjects
+    name: ${self:provider.stage}-${self:service}-listProjects
+    environment:
+      TABLE: ${self:custom.DYNAMODB_TABLE}
+    events:
+      - http:
+          path: projects
+          method: get
 
 resources:
   Resources:
