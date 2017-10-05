@@ -8,12 +8,12 @@ describe(`Fuction onObjectCreated() in "@eubfr/storage-meta-index"`, () => {
     done();
   });
 
-  test('The function expects a correct SNS record', () =>
+  test('The function expects records', () =>
     wrapped
       .run({})
       .then(response => {
         // Either a null, error or a rejected promise because of bad input.
         expect(response).toBeFalsy();
       })
-      .catch(e => expect(e).toBe('Bad record')));
+      .catch(e => expect(e).toBe('No record')));
 });

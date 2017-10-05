@@ -7,8 +7,11 @@ const region = process.env.REGION;
 
 const s3 = new AWS.S3({ signatureVersion: 'v4', region });
 
-export const onProjectsUpsert = (event, context, cb) => {
-  const file = event.headers['x-amz-meta-producer-key'];
+export const onProjectsUpsert = (event, context, callback) => {
+  const file =
+    event.headers && event.headers['x-amz-meta-producer-key']
+      ? event.headers['x-amz-meta-producer-key']
+      : undefined;
 
   if (!file) {
     const response = {
@@ -18,7 +21,7 @@ export const onProjectsUpsert = (event, context, cb) => {
       }),
     };
 
-    cb(null, response);
+    callback(null, response);
   }
 
   // If producer has correctly submitted a key.
@@ -30,7 +33,7 @@ export const onProjectsUpsert = (event, context, cb) => {
 
   s3.getSignedUrl('putObject', params, (err, url) => {
     if (err) {
-      cb(err);
+      callback(err);
     }
 
     const response = {
@@ -42,11 +45,11 @@ export const onProjectsUpsert = (event, context, cb) => {
       body: JSON.stringify(url),
     };
 
-    cb(null, response);
+    callback(null, response);
   });
 };
 
-export const onProjectsGetRoot = (event, context, cb) => {
+export const onProjectsGetRoot = (event, context, callback) => {
   const response = {
     statusCode: 200,
     headers: {
@@ -59,5 +62,5 @@ export const onProjectsGetRoot = (event, context, cb) => {
     }),
   };
 
-  cb(null, response);
+  callback(null, response);
 };
