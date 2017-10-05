@@ -1,9 +1,9 @@
 import { lambdaWrapper } from 'serverless-jest-plugin';
 import * as mod from '../../src/handler';
 
-const wrapped = lambdaWrapper.wrap(mod, { handler: 'onCreate' });
+const wrapped = lambdaWrapper.wrap(mod, { handler: 'parseCsv' });
 
-describe(`Fuction onCreate() in "@eubfr/ingestion-manager"`, () => {
+describe(`Fuction parseCsv() in "@eubfr/ingestion-etl-budg-csv"`, () => {
   beforeAll(done => {
     done();
   });
