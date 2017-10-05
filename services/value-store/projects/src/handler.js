@@ -2,6 +2,7 @@ import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependenc
 import through2 from 'through2';
 import split2 from 'split2';
 import SaveStream from './lib/SaveStream';
+import deleteProjects from './lib/deleteProjects';
 
 const { TABLE } = process.env;
 
@@ -38,43 +39,48 @@ export const onObjectCreated = (event, context, callback) => {
     convertEmptyValues: true,
   });
 
-  return s3.headObject(
-    {
+  return s3
+    .headObject({
       Bucket: s3record.s3.bucket.name,
       Key: s3record.s3.object.key,
-    },
-    (err, data) => {
-      if (err) return callback(err); // an error occurred
-
-      const saveStream = new SaveStream({
-        objectMode: true,
+    })
+    .promise()
+    .then(data => {
+      deleteProjects({
         documentClient,
         table: TABLE,
-      });
+        key: s3record.s3.object.key,
+      }).then(() => {
+        const saveStream = new SaveStream({
+          objectMode: true,
+          documentClient,
+          table: TABLE,
+        });
 
-      return s3
-        .getObject({
-          Bucket: s3record.s3.bucket.name,
-          Key: s3record.s3.object.key,
-        })
-        .createReadStream()
-        .pipe(split2(JSON.parse))
-        .pipe(
-          through2.obj((chunk, enc, cb) => {
-            // Enhance item to save
-            const item = {
-              computed_key: s3record.s3.object.key,
-              producer_id: s3record.userIdentity.principalId,
-              last_modified: data.LastModified.toISOString(), // ISO-8601 date
-              ...chunk,
-            };
-
-            return cb(null, item);
+        return s3
+          .getObject({
+            Bucket: s3record.s3.bucket.name,
+            Key: s3record.s3.object.key,
           })
-        )
-        .pipe(saveStream);
-    }
-  );
+          .createReadStream()
+          .pipe(split2(JSON.parse))
+          .pipe(
+            through2.obj((chunk, enc, cb) => {
+              // Enhance item to save
+              const item = {
+                computed_key: s3record.s3.object.key,
+                producer_id: s3record.userIdentity.principalId,
+                last_modified: data.LastModified.toISOString(), // ISO-8601 date
+                ...chunk,
+              };
+
+              return cb(null, item);
+            })
+          )
+          .pipe(saveStream);
+      });
+    })
+    .catch(err => callback(err));
 };
 
 export const onObjectRemoved = (event, context, callback) => {
@@ -109,37 +115,12 @@ export const onObjectRemoved = (event, context, callback) => {
     convertEmptyValues: true,
   });
 
-  const params = {
-    TableName: TABLE,
-    KeyConditionExpression: 'computed_key = :key',
-    ExpressionAttributeValues: {
-      ':key': s3record.s3.object.key,
+  return deleteProjects(
+    {
+      documentClient,
+      table: TABLE,
+      key: s3record.s3.object.key,
     },
-    ProjectionExpression: 'computed_key, project_id',
-  };
-
-  return documentClient.query(params, (err, data) => {
-    if (err) return callback(err); // an error occurred
-
-    // Bad: replace with BatchWrite
-    data.Items.forEach(item => {
-      documentClient.delete(
-        {
-          TableName: TABLE,
-          Key: {
-            computed_key: s3record.s3.object.key,
-            project_id: item.project_id,
-          },
-        },
-        deleteErr => {
-          if (err) console.log(deleteErr);
-          else
-            console.log('item removed', {
-              computed_key: s3record.s3.object.key,
-              project_id: item.project_id,
-            });
-        }
-      );
-    });
-  });
+    callback
+  );
 };
