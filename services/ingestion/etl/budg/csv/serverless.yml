@@ -36,6 +36,7 @@ functions:
   parseCsv:
     handler: src/handler.parseCsv
     name: ${self:provider.stage}-${self:service}-parseCsv
+    memorySize: 256
     environment:
       BUCKET: ${self:custom.bucketName}
     events:

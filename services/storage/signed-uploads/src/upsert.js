@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 
-import AWS from 'aws-sdk';
+import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 
 const bucket = process.env.BUCKET;
 const region = process.env.REGION;

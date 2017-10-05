@@ -48,7 +48,7 @@ export const parseCsv = (event, context, callback) => {
   const transformer = transform(
     (record, cb) => {
       const data = transformRecord(record);
-      cb(null, `${JSON.stringify(data)}\r\n`);
+      cb(null, `${JSON.stringify(data)}\n`);
     },
     { parallel: 10 }
   );
@@ -59,8 +59,9 @@ export const parseCsv = (event, context, callback) => {
 
     const params = {
       Bucket: BUCKET,
-      Key: `${message.object.key}.data`,
+      Key: `${message.object.key}.ndjson`,
       Body: pass,
+      ContentType: 'application/x-ndjson',
     };
 
     s3.upload(params, err => {

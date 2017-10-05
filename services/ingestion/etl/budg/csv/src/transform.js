@@ -53,6 +53,7 @@ export default record => {
 
   // Map the fields
   return {
+    project_id: record.Nid,
     title: record.Name,
     cover_image: record.Visual,
     programme_name: record['Programme name'],

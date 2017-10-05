@@ -24,7 +24,7 @@
     "lerna": "2.3.1",
     "lint-staged": "4.2.3",
     "npm-run-all": "4.1.1",
-    "prettier": "1.7.3"
+    "prettier": "1.7.4"
   },
-  "workspaces": ["lib/*", "services/**"]
+  "workspaces": ["services/**"]
 }

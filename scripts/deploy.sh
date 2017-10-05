@@ -34,3 +34,7 @@ cd ../cleaner
 # Deploy ETL
 cd ../etl/budg/csv
 ./node_modules/.bin/serverless deploy -v
+
+# Deploy value store - projects
+cd ../../../../value-store/projects
+./node_modules/.bin/serverless deploy -v
