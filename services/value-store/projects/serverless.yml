@@ -46,7 +46,7 @@ provider:
 
 functions:
   onObjectCreated:
-    handler: src/handler.onObjectCreated
+    handler: src/events/onObjectCreated.handler
     name: ${self:provider.stage}-${self:service}-onObjectCreated
     memorySize: 256
     environment:
@@ -64,7 +64,7 @@ functions:
                 - ":${self:provider.stage}-harmonized-object-created"
           topicName: ${self:provider.stage}-harmonized-object-created
   onObjectRemoved:
-    handler: src/handler.onObjectRemoved
+    handler: src/events/onObjectRemoved.handler
     name: ${self:provider.stage}-${self:service}-onObjectRemoved
     environment:
       TABLE: ${self:custom.DYNAMODB_TABLE}
@@ -81,7 +81,7 @@ functions:
                 - ":${self:provider.stage}-harmonized-object-removed"
           topicName: ${self:provider.stage}-harmonized-object-removed
   listProjects:
-    handler: src/handler.listProjects
+    handler: src/api/listProjects.handler
     name: ${self:provider.stage}-${self:service}-listProjects
     environment:
       TABLE: ${self:custom.DYNAMODB_TABLE}
