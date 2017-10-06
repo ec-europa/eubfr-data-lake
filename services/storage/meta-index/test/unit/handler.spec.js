@@ -1,19 +1,19 @@
-import { lambdaWrapper } from 'serverless-jest-plugin';
-import * as mod from '../../src/handler';
+import { promisify } from 'util';
+import { onObjectCreated } from '../../src/handler';
 
-const wrapped = lambdaWrapper.wrap(mod, { handler: 'onObjectCreated' });
+const handler = promisify(onObjectCreated);
 
-describe(`Fuction onObjectCreated() in "@eubfr/storage-meta-index"`, () => {
-  beforeAll(done => {
-    done();
-  });
+describe(`Function onObjectCreated() in "@eubfr/storage-meta-index"`, () => {
+  test('The function expects records', () => {
+    const event = {};
+    const context = {};
 
-  test('The function expects records', () =>
-    wrapped
-      .run({})
+    const result = handler(event, context);
+    result
       .then(response => {
         // Either a null, error or a rejected promise because of bad input.
         expect(response).toBeFalsy();
       })
-      .catch(e => expect(e).toBe('No record')));
+      .catch(e => expect(e).toBe('No record'));
+  });
 });
