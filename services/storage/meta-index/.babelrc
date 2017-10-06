@@ -1,8 +1,4 @@
 {
-<<<<<<< HEAD
-  "plugins": ["transform-runtime"],
-  "presets": ["env", "stage-3"]
-=======
   "presets": [
     [
       "env",
@@ -14,6 +10,19 @@
         "loose": true
       }
     ]
-  ]
->>>>>>> eaf72013ba66e89f316f65f2451e6f8aabf87a64
+  ],
+  "env": {
+    "test": {
+      "presets": [
+        [
+          "env",
+          {
+            "targets": {
+              "node": "6.10"
+            }
+          }
+        ]
+      ]
+    }
+  }
 }

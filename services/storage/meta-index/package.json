@@ -10,13 +10,7 @@
     "aws-sdk": "2.128.0",
     "babel-core": "6.26.0",
     "babel-loader": "7.1.2",
-<<<<<<< HEAD
-    "babel-plugin-transform-runtime": "6.23.0",
     "babel-preset-env": "1.6.0",
-    "babel-preset-stage-3": "6.24.1",
-=======
-    "babel-preset-env": "1.6.0",
->>>>>>> eaf72013ba66e89f316f65f2451e6f8aabf87a64
     "jest": "21.2.1",
     "serverless": "1.23.0",
     "serverless-dynamodb-autoscaling": "0.6.2",
