@@ -67,12 +67,14 @@ export const onObjectCreated = (event, context, callback) => {
           .pipe(
             through2.obj((chunk, enc, cb) => {
               // Enhance item to save
-              const item = {
-                computed_key: s3record.s3.object.key,
-                producer_id: s3record.userIdentity.principalId,
-                last_modified: data.LastModified.toISOString(), // ISO-8601 date
-                ...chunk,
-              };
+              const item = Object.assign(
+                {
+                  computed_key: s3record.s3.object.key,
+                  producer_id: s3record.userIdentity.principalId,
+                  last_modified: data.LastModified.toISOString(), // ISO-8601 date
+                },
+                chunk
+              );
 
               return cb(null, item);
             })
