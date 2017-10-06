@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "deploy": "sls deploy -v",
+    "test:integration": "jest --testPathPattern=integration",
     "test:unit": "jest --testPathPattern=unit"
   },
   "devDependencies": {
