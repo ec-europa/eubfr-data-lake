@@ -1,7 +1,7 @@
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 
 export const handler = (event, context, callback) => {
-  const { BUCKET } = process.env || context.BUCKET;
+  const { BUCKET } = process.env;
 
   if (!BUCKET) {
     return callback(`BUCKET environment variable is required`);

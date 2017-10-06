@@ -3,7 +3,6 @@
     {
       "eventVersion": "2.0",
       "eventTime": "1970-01-01T00:00:00.000Z",
-      "EventSource": "aws:sns",
       "requestParameters": {
         "sourceIPAddress": "127.0.0.1"
       },
@@ -14,7 +13,7 @@
           "key": "HappyFace.jpg"
         },
         "bucket": {
-          "arn": "bucketarn",
+          "arn": "arn:banana",
           "name": "sourcebucket",
           "ownerIdentity": {
             "principalId": "EXAMPLE"
