@@ -1,9 +1,8 @@
-/* eslint-disable import/prefer-default-export, no-console */
 const AWS = require('aws-sdk'); // eslint-disable-line import/no-extraneous-dependencies
 
-const { BUCKET } = process.env;
+export const handler = (event, context, callback) => {
+  const { BUCKET } = process.env;
 
-export const onObjectRemoved = (event, context, callback) => {
   /*
    * Some checks here before going any further
    */
@@ -40,3 +39,5 @@ export const onObjectRemoved = (event, context, callback) => {
     callback(null, 'object removed');
   });
 };
+
+export default handler;
