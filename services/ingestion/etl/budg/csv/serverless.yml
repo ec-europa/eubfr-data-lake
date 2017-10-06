@@ -34,7 +34,7 @@ provider:
 
 functions:
   parseCsv:
-    handler: src/handler.parseCsv
+    handler: src/events/onParseCSV.handler
     name: ${self:provider.stage}-${self:service}-parseCsv
     memorySize: 256
     environment:

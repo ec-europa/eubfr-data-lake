@@ -1,13 +1,11 @@
-/* eslint-disable import/prefer-default-export */
-
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 
-const bucket = process.env.BUCKET;
-const region = process.env.REGION;
-
-const s3 = new AWS.S3({ signatureVersion: 'v4', region });
-
 export const handler = (event, context, cb) => {
+  const bucket = process.env.BUCKET;
+  const region = process.env.REGION;
+
+  const s3 = new AWS.S3({ signatureVersion: 'v4', region });
+
   const file = event.headers['x-amz-meta-producer-key'];
 
   if (!file) {
@@ -45,3 +43,5 @@ export const handler = (event, context, cb) => {
     cb(null, response);
   });
 };
+
+export default handler;
