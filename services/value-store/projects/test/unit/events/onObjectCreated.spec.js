@@ -1,10 +1,10 @@
 import { promisify } from 'util';
-import { onCreate } from '../../src/handler';
+import onObjectCreated from '../../../src/events/onObjectCreated';
 
-const handler = promisify(onCreate);
+const handler = promisify(onObjectCreated);
 
-describe(`Fuction onCreate() in "@eubfr/ingestion-manager"`, () => {
-  test('The function expects a correct SNS record', () => {
+describe(`Function onObjectCreated in "@eubfr/value-store-projects"`, () => {
+  test('The function expects records', () => {
     const event = {};
     const context = {};
 
@@ -14,6 +14,6 @@ describe(`Fuction onCreate() in "@eubfr/ingestion-manager"`, () => {
         // Either a null, error or a rejected promise because of bad input.
         expect(response).toBeFalsy();
       })
-      .catch(e => expect(e).toBe('Bad record'));
+      .catch(e => expect(e).toBe('No record'));
   });
 });

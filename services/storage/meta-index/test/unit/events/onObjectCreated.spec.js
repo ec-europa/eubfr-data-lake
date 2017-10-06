@@ -1,10 +1,10 @@
 import { promisify } from 'util';
-import { parseCsv } from '../../src/handler';
+import onObjectCreated from '../../../src/events/onObjectCreated';
 
-const handler = promisify(parseCsv);
+const handler = promisify(onObjectCreated);
 
-describe(`Fuction parseCsv() in "@eubfr/ingestion-etl-budg-csv"`, () => {
-  test('The function expects a correct SNS record', () => {
+describe(`Function onObjectCreated in "@eubfr/storage-meta-index"`, () => {
+  test('The function expects records', () => {
     const event = {};
     const context = {};
 
@@ -14,6 +14,6 @@ describe(`Fuction parseCsv() in "@eubfr/ingestion-etl-budg-csv"`, () => {
         // Either a null, error or a rejected promise because of bad input.
         expect(response).toBeFalsy();
       })
-      .catch(e => expect(e).toBe('Bad record'));
+      .catch(e => expect(e).toBe('No record'));
   });
 });

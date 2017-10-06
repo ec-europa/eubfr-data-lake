@@ -1,13 +1,11 @@
-/* eslint-disable import/prefer-default-export */
-
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 
-const bucket = process.env.BUCKET;
-const region = process.env.REGION;
+export const handler = (event, context, cb) => {
+  const bucket = process.env.BUCKET;
+  const region = process.env.REGION;
 
-const s3 = new AWS.S3({ signatureVersion: 'v4', region });
+  const s3 = new AWS.S3({ signatureVersion: 'v4', region });
 
-export const onProjectsUpsert = (event, context, callback) => {
   const file =
     event.headers && event.headers['x-amz-meta-producer-key']
       ? event.headers['x-amz-meta-producer-key']
@@ -21,7 +19,7 @@ export const onProjectsUpsert = (event, context, callback) => {
       }),
     };
 
-    callback(null, response);
+    cb(null, response);
   }
 
   // If producer has correctly submitted a key.
@@ -33,7 +31,7 @@ export const onProjectsUpsert = (event, context, callback) => {
 
   s3.getSignedUrl('putObject', params, (err, url) => {
     if (err) {
-      callback(err);
+      cb(err);
     }
 
     const response = {
@@ -45,22 +43,8 @@ export const onProjectsUpsert = (event, context, callback) => {
       body: JSON.stringify(url),
     };
 
-    callback(null, response);
+    cb(null, response);
   });
 };
 
-export const onProjectsGetRoot = (event, context, callback) => {
-  const response = {
-    statusCode: 200,
-    headers: {
-      'Access-Control-Allow-Origin': '*', // Required for CORS support
-      'Access-Control-Allow-Credentials': true, // Required for cookies, authorization headers with HTTPS
-    },
-    body: JSON.stringify({
-      message:
-        'Docroot is not used at the moment. Please check the other endpoints',
-    }),
-  };
-
-  callback(null, response);
-};
+export default handler;

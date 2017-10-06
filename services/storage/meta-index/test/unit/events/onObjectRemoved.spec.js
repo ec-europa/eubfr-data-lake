@@ -1,10 +1,10 @@
 import { promisify } from 'util';
-import { onObjectRemoved } from '../../src/handler';
+import onObjectRemoved from '../../../src/events/onObjectRemoved';
 
 const handler = promisify(onObjectRemoved);
 
-describe(`Fuction onObjectRemoved() in "@eubfr/ingestion-cleaner"`, () => {
-  test('The function expects a correct SNS record', () => {
+describe(`Function onObjectRemoved in "@eubfr/storage-meta-index"`, () => {
+  test('The function expects records', () => {
     const event = {};
     const context = {};
 
@@ -14,6 +14,6 @@ describe(`Fuction onObjectRemoved() in "@eubfr/ingestion-cleaner"`, () => {
         // Either a null, error or a rejected promise because of bad input.
         expect(response).toBeFalsy();
       })
-      .catch(e => expect(e).toBe('Bad record'));
+      .catch(e => expect(e).toBe('No record'));
   });
 });

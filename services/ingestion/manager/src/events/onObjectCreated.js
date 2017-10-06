@@ -1,7 +1,6 @@
-/* eslint-disable import/prefer-default-export, no-console */
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 
-export const onCreate = (event, context, callback) => {
+export const handler = (event, context, callback) => {
   /*
    * Some checks here before going any further
    */
@@ -68,3 +67,5 @@ export const onCreate = (event, context, callback) => {
     }
   );
 };
+
+export default handler;

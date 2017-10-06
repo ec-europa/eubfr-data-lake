@@ -1,9 +1,9 @@
 import { promisify } from 'util';
-import { onProjectsUpsert } from '../../src/handler';
+import projectsUpsert from '../../../src/api/projectsUpsert';
 
-const handler = promisify(onProjectsUpsert);
+const handler = promisify(projectsUpsert);
 
-describe(`Fuction onProjectsUpsert() in "@eubfr/storage-signed-uploads"`, () => {
+describe(`Function projectsUpsert in "@eubfr/storage-signed-uploads"`, () => {
   test('The function expects a meta producer key in request header', () => {
     const event = {};
     const context = {};
