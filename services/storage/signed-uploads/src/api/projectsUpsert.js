@@ -1,12 +1,19 @@
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 
-export const handler = (event, context, cb) => {
+export const handler = (event, context, callback) => {
   const bucket = process.env.BUCKET;
   const region = process.env.REGION;
 
+  if (!bucket || !region) {
+    callback(`BUCKET and REGION environment variable are required.`);
+  }
+
   const s3 = new AWS.S3({ signatureVersion: 'v4', region });
 
-  const file = event.headers['x-amz-meta-producer-key'];
+  const file =
+    event.headers && event.headers['x-amz-meta-producer-key']
+      ? event.headers['x-amz-meta-producer-key']
+      : undefined;
 
   if (!file) {
     const response = {
@@ -16,7 +23,7 @@ export const handler = (event, context, cb) => {
       }),
     };
 
-    cb(null, response);
+    callback(null, response);
   }
 
   // If producer has correctly submitted a key.
@@ -28,7 +35,7 @@ export const handler = (event, context, cb) => {
 
   s3.getSignedUrl('putObject', params, (err, url) => {
     if (err) {
-      cb(err);
+      callback(err);
     }
 
     const response = {
@@ -40,7 +47,7 @@ export const handler = (event, context, cb) => {
       body: JSON.stringify(url),
     };
 
-    cb(null, response);
+    callback(null, response);
   });
 };
 

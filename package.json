@@ -8,7 +8,8 @@
     "test:integration": "lerna run --parallel test:integration",
     "test:unit": "lerna run --parallel test:unit",
     "test:lint": "npm run lint",
-    "test": "npm-run-all -p test:* -cn"
+    "test": "npm-run-all -p test:* -cn",
+    "test-write": "jest --watch"
   },
   "lint-staged": {
     "*.{js,json}": ["prettier --write", "git add"]
