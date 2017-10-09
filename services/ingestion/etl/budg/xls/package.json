@@ -17,6 +17,7 @@
     "webpack": "3.6.0"
   },
   "dependencies": {
-    "xlsx": "0.11.5"
+    "xlsx": "0.11.5",
+    "stream-transform": "0.1.2"
   }
 }

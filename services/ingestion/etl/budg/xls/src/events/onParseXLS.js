@@ -1,7 +1,7 @@
 import path from 'path';
 import stream from 'stream';
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
-import parse from 'csv-parse';
+//import parse from 'xlsx';
 import transform from 'stream-transform';
 
 import transformRecord from '../lib/transform';
@@ -41,7 +41,10 @@ export const handler = (event, context, callback) => {
    */
 
   // Parse
-  const parser = parse({ columns: true });
+  if(typeof require !== 'undefined') XLSX = require('xlsx');
+  var workbook = XLSX.readFile('projects.xls');
+  var sheet_name_list = workbook.SheetNames;
+  const parser = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
 
   // Transform
   const transformer = transform(

@@ -42,7 +42,12 @@ export const handler = (event, context, callback) => {
   const region = process.env.REGION;
 
   // Get the arn
-  const endpointArn = `arn:aws:sns:${region}:${accountId}:${stage}-etl-budg-csv`;
+  //if (path.extname(message.object.key) !== '.xls') {
+    const endpointArn = `arn:aws:sns:${region}:${accountId}:${stage}-etl-budg-xls`;
+  //}
+  //else {
+  //  const endpointArn = `arn:aws:sns:${region}:${accountId}:${stage}-etl-budg-csv`;
+  //}
 
   /*
    * Send the SNS message
