@@ -43,6 +43,10 @@ provider:
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
       Resource: "arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.DYNAMODB_TABLE}"
+    - Effect: Allow
+      Action:
+        - iam:ListGroupsForUser
+      Resource: "*"
 
 functions:
   onObjectCreated:
@@ -89,6 +93,7 @@ functions:
       - http:
           path: projects
           method: get
+          authorizer: aws_iam
 
 resources:
   Resources:

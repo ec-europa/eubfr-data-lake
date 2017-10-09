@@ -1,6 +1,6 @@
 import AWS from 'aws-sdk-mock';
 import { promisify } from 'util';
-import projectsUpsert from '../../../src/api/projectsUpsert';
+import projectsUpsert from '../../../src/api/upsert';
 import eventStub from '../../stubs/eventHttpApiGateway.json';
 
 const handler = promisify(projectsUpsert);

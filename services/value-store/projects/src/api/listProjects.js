@@ -2,6 +2,23 @@ import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependenc
 
 export const handler = (event, context, callback) => {
   console.log(event); // Contains incoming request data (e.g., query params, headers and more)
+  console.log(context);
+
+  // var params =
+  const iam = new AWS.IAM();
+  iam.listGroupsForUser(
+    {
+      UserName: event.requestContext.identity.userArn
+        .split(':')[5]
+        .replace('user/', ''),
+    },
+    (err, data) => {
+      if (err) return console.log(err, err.stack); // an error occurred
+
+      console.log(data); // successful response
+      return data.Groups.some(group => group.GroupName === 'Administators');
+    }
+  );
 
   const documentClient = new AWS.DynamoDB.DocumentClient({
     apiVersion: '2012-08-10',
