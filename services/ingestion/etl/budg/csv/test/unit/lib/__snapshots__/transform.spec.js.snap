@@ -1,5 +1,78 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`DG BUDG CSV transformer Produces correct JSON output structure 1`] = `
+Object {
+  "coordinators": Array [
+    "Eva Maria Plunger (VERBUND AG)",
+  ],
+  "cover_image": "https://ec.europa.eu/budget/euprojects/sites/euprojects/files/at_cegc_985x270_0.jpg",
+  "description": "<p>Under the EU-funded Central European Green Corridors project, 115 fast-charging stations for electric cars have opened in Germany, Austria, Slovenia, Slovakia and Croatia – allowing cross-border electromobility with your e-car between Munich and Zagreb. Further network expansion, offers and services for customers and energy supply solutions also drive the project’s roll-out of electric transport. Partners include public sector bodies and private companies.</p>",
+  "ec_priorities": Array [
+    "Jobs, Growth and Investment",
+  ],
+  "eu_budget_contribution": 3562000,
+  "partners": Array [
+    "Bayern Innovativ, BMW, Nissan, Renault, Volkswagen, Republic of Slovenia, ZSE, Schrack Technik, GreenWay, City of Zagreb, SMATRICS",
+  ],
+  "programme_name": "Connecting Europe Facility",
+  "project_id": "8155",
+  "project_locations": Array [
+    Object {
+      "geolocation": Object {
+        "lat": "48.211312000000",
+        "long": "16.367315000000",
+      },
+      "name": "AT",
+    },
+    Object {
+      "geolocation": Object {
+        "lat": "45.803508000000",
+        "long": "16.017459000000",
+      },
+      "name": "HR",
+    },
+    Object {
+      "geolocation": Object {
+        "lat": "49.449922000000",
+        "long": "11.103470000000",
+      },
+      "name": "DE",
+    },
+    Object {
+      "geolocation": Object {
+        "lat": "48.143047000000",
+        "long": "17.124260000000",
+      },
+      "name": "SK",
+    },
+    Object {
+      "geolocation": Object {
+        "lat": "46.048183000000",
+        "long": "14.501456000000",
+      },
+      "name": "SI",
+    },
+  ],
+  "project_website": "http://www.cegc-project.eu/",
+  "related_links": Array [
+    Object {
+      "label": "INEA",
+      "url": "https://ec.europa.eu/inea/en/ten-t/ten-t-projects/projects-by-country/multi-country/2013-eu-92069-s",
+    },
+    Object {
+      "label": "InvestEU",
+      "url": "https://europa.eu/investeu/projects/central-european-green-corridors_en",
+    },
+  ],
+  "results": "Installation and operation of 115 fast-charging stations in 5 European countries,Development and implementation of electromobility and cross-border services for e-car users,Strategic planning for a European fast-charging network.Since the implementation of the Central European Green Corridors project, the European fast-charging network for electric vehicles has continued to grow. An additional 200 fast-charging stations – 180 in Italy and 20 in Austria – are developed. The charging networks in the various countries are compatible with each other. This gives even more citizens the chance to take advantage of cross-border electromobility.",
+  "timeframe": Object {
+    "from": "2013-12-31T23:00:00.000Z",
+    "to": "2014-12-31T23:00:00.000Z",
+  },
+  "title": "Central European Green Corridors",
+}
+`;
+
 exports[`DG BUDG CSV transformer Project location information is correctly mapped 1`] = `
 Object {
   "geolocation": Object {
