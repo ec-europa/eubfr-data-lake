@@ -1,9 +1,9 @@
 import AWS from 'aws-sdk-mock';
 import { promisify } from 'util';
-import projectsUpsert from '../../../src/api/projectsUpsert';
+import upsert from '../../../src/api/upsert';
 import eventStub from '../../stubs/eventHttpApiGateway.json';
 
-const handler = promisify(projectsUpsert);
+const handler = promisify(upsert);
 
 describe(`Service aws-node-singned-uploads: S3 mock for successful operations`, () => {
   beforeAll(() => {
