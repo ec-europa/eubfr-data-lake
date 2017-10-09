@@ -1,0 +1,28 @@
+{
+  "Records": [
+    {
+      "EventSource": "aws:sns",
+      "EventVersion": "1.0",
+      "EventSubscriptionArn":
+        "arn:aws:sns:eu-central-1:491621799026:devchernka1-object-removed:d6586309-d07d-4215-8b02-9ce7a7009bdf",
+      "Sns": {
+        "Type": "Notification",
+        "MessageId": "a0b33855-2cac-57ed-9aa4-6a045237a10f",
+        "TopicArn":
+          "arn:aws:sns:eu-central-1:491621799026:devchernka1-object-removed",
+        "Subject": "Amazon S3 Notification",
+        "Message":
+          "{\"Records\":[{\"eventVersion\":\"2.0\",\"eventSource\":\"aws:s3\",\"awsRegion\":\"eu-central-1\",\"eventTime\":\"2017-10-06T12:51:39.644Z\",\"eventName\":\"ObjectRemoved:Delete\",\"userIdentity\":{\"principalId\":\"AWS:AIDAJZCAYSNNJC5P7LPHK\"},\"requestParameters\":{\"sourceIPAddress\":\"54.239.6.7\"},\"responseElements\":{\"x-amz-request-id\":\"4558CEAAD8A5A2C8\",\"x-amz-id-2\":\"oQPGJ22VhS845tO6SXzeQ/XO4neUHV+L6ZqPUONdlbNmEyEHNHt087NhRt2zALDr6HQtzYbexvA=\"},\"s3\":{\"s3SchemaVersion\":\"1.0\",\"configurationId\":\"e4df3f87-30e8-4992-9e4e-e43d04424be7\",\"bucket\":{\"name\":\"eubfr-devchernka1\",\"ownerIdentity\":{\"principalId\":\"ABTN0CERTFU87\"},\"arn\":\"arn:aws:s3:::eubfr-devchernka1\"},\"object\":{\"key\":\"csv_test.csv\",\"sequencer\":\"0059D77C5BA029EBB2\"}}}]}",
+        "Timestamp": "2017-10-06T12:51:39.766Z",
+        "SignatureVersion": "1",
+        "Signature":
+          "GZE6uO8RkquPGT+GmDxrPfsqQIzKTo3Cr35cWTa+PnI+kHJvZqSY/xWp/xoS3T80d6+7awGsU5gi3WBV0k7e+GgsP5HmI++6a2whZvju7o7GV3b+ScahZeoRBb1wUjlItvrSXCXgJbyueR4W+CrBTjSHZqLOVW8AmlNrrCOdVVgYYMYegi6Mmr1+x4GT7jPR6kxw75dzJ63NGjkwUa9z8iwi5c6w+cPLx7vY+j3/FOp97//cVOvKI/rsmVCDd0ALv/9kC+SZi4sbqpL/I/7h1QjkW9etoFMpdnpCxKHbEwLvh2DAfL07C/bROKjLI3Zl9b79lIRfRMgw9Weu/TCkoA==",
+        "SigningCertUrl":
+          "https://sns.eu-central-1.amazonaws.com/SimpleNotificationService-433026a4050d206028891664da859041.pem",
+        "UnsubscribeUrl":
+          "https://sns.eu-central-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:eu-central-1:491621799026:devchernka1-object-removed:d6586309-d07d-4215-8b02-9ce7a7009bdf",
+        "MessageAttributes": {}
+      }
+    }
+  ]
+}

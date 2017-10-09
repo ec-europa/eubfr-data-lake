@@ -1,0 +1,61 @@
+{
+  "Records": [
+    {
+      "EventVersion": "1.0",
+      "EventSubscriptionArn": "arn:aws:sns:EXAMPLE",
+      "EventSource": "aws:sns",
+      "Sns": {
+        "SignatureVersion": "1",
+        "Timestamp": "1970-01-01T00:00:00.000Z",
+        "Signature": "EXAMPLE",
+        "SigningCertUrl": "EXAMPLE",
+        "MessageId": "95df01b4-ee98-5cb9-9903-4c221d41eb5e",
+        "Message": {
+          "Type": "Notification",
+          "MessageId": "8e9ace68-d2e6-5708-8a77-9c2574d2adb7",
+          "TopicArn":
+            "arn:aws:sns:eu-central-1:491621799026:devdegliwe1-etl-budg-csv",
+          "Subject": "null",
+          "Message": {
+            "eventTime": "2017-10-03T14:51:31.419Z",
+            "userIdentity": { "principalId": "AWS:AIDAJZCAYSNNJC5P7LPHK" },
+            "bucket": {
+              "name": "eubfr-devdegliwe1",
+              "ownerIdentity": { "principalId": "ABTN0CERTFU87" },
+              "arn": "arn:aws:s3:::eubfr-devdegliwe1"
+            },
+            "object": {
+              "key": "csv_en.csv",
+              "size": 504874,
+              "eTag": "a29130c880389c38e0ff0b60fee955c4",
+              "sequencer": "0059D3A3F352C4455A"
+            }
+          },
+          "Timestamp": "2017-10-03T14:51:32.715Z",
+          "SignatureVersion": "1",
+          "Signature":
+            "N/v6zfeaqLX7vlNytNYr5+XuG9+CZFNwaU6xBUUb3SpBYTSXIwrmvgrCaRGGBuNbcp9/zNFE26CHZLuKjkYi2nkmOM00ep4YwCmTuf8HFfmgtr0k8rp69sluYPPpy3+EFdL2Sw+H5juM5zDcwGL713WQnXtCGVxnbKJCunQMBYx3hgsgoKBXYiJVHiQzz5DDONdKnKE3/6ZnxhovZ4+iAftQ+IrD4zxDQIZDIWLpXBR9+QjlSrMLk7hSc+BOshD0fEXAUjrcV0vjUncQ6ULNEljAWdD9tkANCiY2m3C8aERXFJ0+E6tlp2DtXzVwCj/wvyAnX13rnX9MVOA3pLIxVw==",
+          "SigningCertUrl":
+            "https://sns.eu-central-1.amazonaws.com/SimpleNotificationService-433026a4050d206028891664da859041.pem",
+          "UnsubscribeUrl":
+            "https://sns.eu-central-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:eu-central-1:491621799026:devdegliwe1-etl-budg-csv:47e36b71-cc8f-4353-9119-233ab47eab01",
+          "MessageAttributes": {}
+        },
+        "MessageAttributes": {
+          "Test": {
+            "Type": "String",
+            "Value": "TestString"
+          },
+          "TestBinary": {
+            "Type": "Binary",
+            "Value": "TestBinary"
+          }
+        },
+        "Type": "Notification",
+        "UnsubscribeUrl": "EXAMPLE",
+        "TopicArn": "arn:aws:sns:EXAMPLE",
+        "Subject": "TestInvoke"
+      }
+    }
+  ]
+}

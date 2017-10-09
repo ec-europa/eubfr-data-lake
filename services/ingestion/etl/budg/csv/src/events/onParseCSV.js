@@ -15,7 +15,7 @@ export const handler = (event, context, callback) => {
    */
 
   // Only work on the first record
-  const snsRecord = event.Records[0];
+  const snsRecord = event.Records ? event.Records[0] : undefined;
 
   // Was the lambda triggered correctly? Is the file extension supported? etc.
   if (!snsRecord || snsRecord.EventSource !== 'aws:sns') {
