@@ -8,12 +8,8 @@ describe(`Function parseCsv in "@eubfr/ingestion-etl-budg-csv"`, () => {
     const event = {};
     const context = {};
 
+    expect.assertions(1);
     const result = handler(event, context);
-    result
-      .then(response => {
-        // Either a null, error or a rejected promise because of bad input.
-        expect(response).toBeFalsy();
-      })
-      .catch(e => expect(e).toBe('Bad record'));
+    return expect(result).rejects.toBe(`Bad record`);
   });
 });

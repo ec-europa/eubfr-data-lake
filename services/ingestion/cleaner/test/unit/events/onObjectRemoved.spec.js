@@ -19,13 +19,11 @@ describe(`Function onObjectRemoved in "@eubfr/ingestion-cleaner"`, () => {
     const event = {};
     const context = {};
 
+    expect.assertions(1);
     const result = handler(event, context);
-    result
-      .then(response => {
-        // Either a null, error or a rejected promise because of bad input.
-        expect(response).toBeFalsy();
-      })
-      .catch(e => expect(e).toBe(`BUCKET environment variable is required`));
+    return expect(result).rejects.toBe(
+      `BUCKET environment variable is required`
+    );
   });
 
   test('The function expects SNS record with the official event stub', () => {
@@ -33,13 +31,9 @@ describe(`Function onObjectRemoved in "@eubfr/ingestion-cleaner"`, () => {
     const event = eventOfficial;
     const context = {};
 
+    expect.assertions(1);
     const result = handler(event, context);
-    result
-      .then(response => {
-        // Either a null, error or a rejected promise because of bad input.
-        expect(response).toBeFalsy();
-      })
-      .catch(e => expect(e).toBe('Bad record'));
+    return expect(result).rejects.toBe(`Bad record`);
   });
 
   test('The function expects a message body from the actual event stub', () => {
@@ -50,12 +44,8 @@ describe(`Function onObjectRemoved in "@eubfr/ingestion-cleaner"`, () => {
     const event = eventEubfr;
     const context = {};
 
+    expect.assertions(1);
     const result = handler(event, context);
-    result
-      .then(response => {
-        // Either a null, error or a rejected promise because of bad input.
-        expect(response).toBeFalsy();
-      })
-      .catch(e => expect(e).toBe('Missing message body'));
+    return expect(result).rejects.toBe(`Missing message body`);
   });
 });

@@ -30,9 +30,8 @@ describe(`Function onObjectRemoved in "@eubfr/ingestion-cleaner" when S3 service
     const context = {};
 
     const result = handler(event, context);
-    result.then(response => {
-      expect(response).toBe(`object removed`);
-    });
+    expect.assertions(1);
+    return expect(result).resolves.toBe(`object removed`);
   });
 });
 
@@ -57,12 +56,8 @@ describe(`Function onObjectRemoved in "@eubfr/ingestion-cleaner" when S3 service
     const event = eventEubfr;
     const context = {};
 
+    expect.assertions(1);
     const result = handler(event, context);
-    result
-      .then(response => {
-        // Either a null, error or a rejected promise because of bad input.
-        expect(response).toBeFalsy();
-      })
-      .catch(e => expect(e).toBe('S3 failure'));
+    return expect(result).rejects.toBe(`S3 failure`);
   });
 });

@@ -8,12 +8,8 @@ describe(`Function onObjectRemoved in "@eubfr/value-store-projects"`, () => {
     const event = {};
     const context = {};
 
+    expect.assertions(1);
     const result = handler(event, context);
-    result
-      .then(response => {
-        // Either a null, error or a rejected promise because of bad input.
-        expect(response).toBeFalsy();
-      })
-      .catch(e => expect(e).toBe('No record'));
+    return expect(result).rejects.toBe(`No record`);
   });
 });
