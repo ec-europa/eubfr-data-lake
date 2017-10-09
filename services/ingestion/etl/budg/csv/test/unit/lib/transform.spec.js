@@ -1,5 +1,5 @@
 import mapper from '../../../src/lib/transform';
-import testRecord from '../../files/record.json';
+import testRecord from '../../stubs/record.json';
 
 describe(`DG BUDG CSV transformer`, () => {
   let result = {};
@@ -47,13 +47,7 @@ describe(`DG BUDG CSV transformer`, () => {
 
   test(`Project location information is correctly mapped`, () => {
     const firstLocation = result.project_locations[0];
-    expect(firstLocation.geolocation).toBeDefined();
-    expect(firstLocation.geolocation.lat).toBeDefined();
-    expect(firstLocation.geolocation.lat).toBe(`48.211312000000`);
-    expect(firstLocation.geolocation.long).toBeDefined();
-    expect(firstLocation.geolocation.long).toBe(`16.367315000000`);
-    expect(firstLocation.name).toBeDefined();
-    expect(firstLocation.name).toBe(`AT`);
+    expect(firstLocation).toMatchSnapshot();
   });
 });
 
@@ -73,19 +67,6 @@ describe(`DG BUDG transformer handling incomplete or inconsistent data`, () => {
 
   test(`Certain fields should always be present after transformation`, () => {
     const partialResult = mapper(partialRecord);
-    expect(partialResult.cover_image).toBeFalsy();
-    expect(partialResult.programme_name).toBeFalsy();
-    expect(partialResult.description).toBeFalsy();
-    expect(partialResult.results).toBeFalsy();
-    expect(partialResult.ec_priorities).toBeDefined();
-    expect(partialResult.coordinators).toBeDefined();
-    expect(partialResult.eu_budget_contribution).toBeFalsy();
-    expect(partialResult.partners).toBeDefined();
-    expect(partialResult.project_locations).toBeDefined();
-    expect(partialResult.timeframe).toBeDefined();
-    expect(partialResult.timeframe.from).toBeDefined();
-    expect(partialResult.timeframe.to).toBeDefined();
-    expect(partialResult.project_website).toBeFalsy();
-    expect(partialResult.related_links).toBeDefined();
+    expect(partialResult).toMatchSnapshot();
   });
 });

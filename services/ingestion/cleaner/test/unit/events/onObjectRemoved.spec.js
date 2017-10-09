@@ -39,7 +39,7 @@ describe(`Function onObjectRemoved in "@eubfr/ingestion-cleaner"`, () => {
 
   test('The function expects a message body from the actual event stub', () => {
     process.env.BUCKET = 'foo';
-    // The JSON.stringify is used as a simple means of cloning the original object.
+    // The JSON.stringify is used as a simple means of deep cloning the original object.
     const copy = JSON.parse(JSON.stringify(eventEubfr));
 
     // Remove the message from the actual event to check that the function asserts it.

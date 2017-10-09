@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DG BUDG CSV transformer Project location information is correctly mapped 1`] = `
+Object {
+  "geolocation": Object {
+    "lat": "48.211312000000",
+    "long": "16.367315000000",
+  },
+  "name": "AT",
+}
+`;
+
+exports[`DG BUDG transformer handling incomplete or inconsistent data Certain fields should always be present after transformation 1`] = `
+Object {
+  "coordinators": Array [
+    "",
+  ],
+  "cover_image": undefined,
+  "description": undefined,
+  "ec_priorities": Array [
+    "",
+  ],
+  "eu_budget_contribution": NaN,
+  "partners": Array [
+    "",
+  ],
+  "programme_name": undefined,
+  "project_id": undefined,
+  "project_locations": Array [
+    Object {
+      "geolocation": Object {
+        "lat": "42.73806663",
+        "long": "23.40014509",
+      },
+      "name": "",
+    },
+  ],
+  "project_website": undefined,
+  "related_links": Array [],
+  "results": undefined,
+  "timeframe": Object {
+    "from": "2013-12-31T23:00:00.000Z",
+    "to": "2014-12-31T23:00:00.000Z",
+  },
+  "title": "Bulgaria’s capital expands metro network",
+}
+`;
