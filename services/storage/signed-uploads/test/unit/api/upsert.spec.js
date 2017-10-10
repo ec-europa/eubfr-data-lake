@@ -31,9 +31,10 @@ describe(`Service aws-node-singned-uploads: S3 mock for successful operations`, 
 
   afterAll(() => {
     AWS.restore('S3');
+    AWS.restore('IAM');
   });
 
-  test(`Require environment variables`, () => {
+  test('Require environment variables', () => {
     const event = {
       requestContext: {
         identity: {
@@ -46,11 +47,11 @@ describe(`Service aws-node-singned-uploads: S3 mock for successful operations`, 
     expect.assertions(1);
     const result = handler(event, context);
     return expect(result).rejects.toBe(
-      `BUCKET and REGION environment variable are required.`
+      'BUCKET and REGION environment variable are required.'
     );
   });
 
-  test(`Require a header "x-amz-meta-producer-key"`, () => {
+  test('Require a header "x-amz-meta-producer-key"', () => {
     process.env.BUCKET = 'foo';
     process.env.REGION = 'bar';
     const event = {
@@ -67,7 +68,7 @@ describe(`Service aws-node-singned-uploads: S3 mock for successful operations`, 
     return expect(result).resolves.toMatchSnapshot();
   });
 
-  test(`Replies back with a JSON for a signed upload on success`, () => {
+  test('Replies back with a JSON for a signed upload on success', () => {
     process.env.BUCKET = 'foo';
     process.env.REGION = 'bar';
     const event = eventStub;
@@ -79,10 +80,20 @@ describe(`Service aws-node-singned-uploads: S3 mock for successful operations`, 
   });
 });
 
-describe(`Service aws-node-singned-uploads: S3 mock for failed operations`, () => {
+describe('Service aws-node-singned-uploads: S3 mock for failed operations', () => {
   beforeAll(() => {
     AWS.mock('S3', 'getSignedUrl', (method, _, callback) => {
-      callback(`S3 failed`);
+      callback('S3 failed');
+    });
+
+    AWS.mock('IAM', 'listGroupsForUser', (method, callback) => {
+      callback(null, {
+        Groups: [
+          {
+            GroupName: 'Producers',
+          },
+        ],
+      });
     });
   });
 
@@ -93,9 +104,10 @@ describe(`Service aws-node-singned-uploads: S3 mock for failed operations`, () =
 
   afterAll(() => {
     AWS.restore('S3');
+    AWS.restore('IAM');
   });
 
-  test(`Correctly handles error messages from S3`, () => {
+  test('Correctly handles error messages from S3', () => {
     process.env.BUCKET = 'foo';
     process.env.REGION = 'bar';
     const event = eventStub;
@@ -103,6 +115,6 @@ describe(`Service aws-node-singned-uploads: S3 mock for failed operations`, () =
 
     expect.assertions(1);
     const result = handler(event, context);
-    return expect(result).rejects.toBe(`S3 failed`);
+    return expect(result).rejects.toBe('S3 failed');
   });
 });
