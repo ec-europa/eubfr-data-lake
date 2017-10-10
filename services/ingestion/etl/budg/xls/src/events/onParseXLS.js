@@ -1,8 +1,5 @@
 import path from 'path';
-import stream from 'stream';
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
-//import parse from 'xlsx';
-import transform from 'stream-transform';
 
 import transformRecord from '../lib/transform';
 
@@ -35,59 +32,55 @@ export const handler = (event, context, callback) => {
   }
 
   const s3 = new AWS.S3();
+  const XLSX = require('xlsx');
 
-  /*
-   * Configure the pipeline
-   */
-
-  // Parse
-  if(typeof require !== 'undefined') XLSX = require('xlsx');
-  var workbook = XLSX.readFile('projects.xls');
-  var sheet_name_list = workbook.SheetNames;
-  const parser = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
-
-  // Transform
-  const transformer = transform(
-    (record, cb) => {
-      const data = transformRecord(record);
-      cb(null, `${JSON.stringify(data)}\n`);
-    },
-    { parallel: 10 }
-  );
-
-  // Load
-  const uploadFromStream = () => {
-    const pass = new stream.PassThrough();
-
-    const params = {
-      Bucket: BUCKET,
-      Key: `${message.object.key}.ndjson`,
-      Body: pass,
-      ContentType: 'application/x-ndjson',
-    };
-
-    s3.upload(params, err => {
-      if (err) {
-        callback(err);
-      }
-    });
-
-    return pass;
-  };
-
-  /*
-   * Start the hard work
-   */
-
-  return s3
+  // Get file
+  const file = s3
     .getObject({
       Bucket: message.bucket.name,
-      Key: message.object.key,
+      Key: message.object.key
     })
-    .createReadStream()
-    .pipe(parser)
-    .pipe(transformer)
-    .pipe(uploadFromStream());
+    .createReadStream();
+
+  // Put data in buffer
+  const buffers = [];
+  file.on('data', function(data) {
+    buffers.push(data);
+  });
+
+  // Manage data
+  file.on('end', function() {
+    // Parse file
+    const buffer = Buffer.concat(buffers);
+    const workbook = XLSX.read(buffer);
+    const sheet_name_list = workbook.SheetNames;
+    const parser =
+      XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
+    console.log(parser);
+
+    for (var i= 0; i < parser.length; i++) {
+      // Transform data
+      console.log(parser[i]);
+      const data = transformRecord(parser[i]);
+      console.log(data);
+
+      // Load data
+      const params = {
+        Bucket: BUCKET,
+        Key: `${message.object.key}.ndjson`,
+        Body: data,
+        ContentType: 'application/x-ndjson',
+      };
+
+      s3.upload(params, err => {
+        if (err) {
+          callback(err);
+        }
+      });
+    };
+  });
+
+  return;
 };
 
 export default handler;
