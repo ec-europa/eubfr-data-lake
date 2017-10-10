@@ -41,16 +41,24 @@ export const handler = (event, context, callback) => {
         convertEmptyValues: true,
       });
 
+      const meta = data.Metadata || {};
+
+      const {
+        'original-key': originalKey = null,
+        producer: producerArn = null,
+        ...otherMeta
+      } = meta;
+
       const params = {
         TableName: process.env.TABLE,
         Item: {
           computed_key: s3record.s3.object.key,
-          event_time: s3record.eventTime,
-          producer_id: s3record.userIdentity.principalId,
+          original_key: originalKey,
+          producer_arn: producerArn,
           content_type: data.ContentType,
           last_modified: data.LastModified.toISOString(), // ISO-8601 date
           content_length: data.ContentLength,
-          metadata: data.Metadata,
+          metadata: otherMeta,
         },
       };
 

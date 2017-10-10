@@ -10,7 +10,7 @@ export const handler = (event, context, callback) => {
 
   checkAccess(username).then(accessGranted => {
     if (!accessGranted) {
-      callback(null, {
+      return callback(null, {
         statusCode: 403,
         body: JSON.stringify({
           message:
@@ -23,7 +23,7 @@ export const handler = (event, context, callback) => {
     const region = process.env.REGION;
 
     if (!bucket || !region) {
-      callback(`BUCKET and REGION environment variable are required.`);
+      return callback(`BUCKET and REGION environment variable are required.`);
     }
 
     const s3 = new AWS.S3({ signatureVersion: 'v4', region });
@@ -41,7 +41,7 @@ export const handler = (event, context, callback) => {
         }),
       };
 
-      callback(null, response);
+      return callback(null, response);
     }
 
     const extension = path.extname(file);
@@ -57,9 +57,9 @@ export const handler = (event, context, callback) => {
       },
     };
 
-    s3.getSignedUrl('putObject', params, (err, url) => {
+    return s3.getSignedUrl('putObject', params, (err, url) => {
       if (err) {
-        callback(err);
+        return callback(err);
       }
 
       const response = {
@@ -71,7 +71,7 @@ export const handler = (event, context, callback) => {
         body: JSON.stringify(url),
       };
 
-      callback(null, response);
+      return callback(null, response);
     });
   });
 };
