@@ -1,22 +1,22 @@
 .App {
-  text-align: center;
+  margin-top: 2em;
+  margin-left: auto;
+  margin-right: auto;
+  width: 500px;
 }
 
-.App-logo {
-  height: 80px;
+.app-status {
+  margin-bottom: 2em;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.progress {
+  color: orange;
 }
 
-.App-title {
-  font-size: 1.5em;
+.error {
+  color: red;
 }
 
-.App-intro {
-  font-size: large;
+.success {
+  color: green;
 }
