@@ -12,6 +12,16 @@ describe(`Service aws-node-singned-uploads: S3 mock for successful operations`, 
         data: 'https://example.com',
       });
     });
+
+    AWS.mock('IAM', 'listGroupsForUser', (method, callback) => {
+      callback(null, {
+        Groups: [
+          {
+            GroupName: 'Producers',
+          },
+        ],
+      });
+    });
   });
 
   afterEach(() => {
@@ -24,7 +34,13 @@ describe(`Service aws-node-singned-uploads: S3 mock for successful operations`, 
   });
 
   test(`Require environment variables`, () => {
-    const event = {};
+    const event = {
+      requestContext: {
+        identity: {
+          userArn: 'arn:aws:iam::123456789012:user/test',
+        },
+      },
+    };
     const context = {};
 
     expect.assertions(1);
@@ -37,7 +53,13 @@ describe(`Service aws-node-singned-uploads: S3 mock for successful operations`, 
   test(`Require a header "x-amz-meta-producer-key"`, () => {
     process.env.BUCKET = 'foo';
     process.env.REGION = 'bar';
-    const event = {};
+    const event = {
+      requestContext: {
+        identity: {
+          userArn: 'arn:aws:iam::123456789012:user/test',
+        },
+      },
+    };
     const context = {};
 
     const result = handler(event, context);
