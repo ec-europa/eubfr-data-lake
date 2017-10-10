@@ -1,8 +1,14 @@
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
+import path from 'path';
+import uuid from 'uuid/v4';
 import { checkAccess } from '../lib/checkAccess';
+import { extractUsername } from '../lib/extractUsername';
 
 export const handler = (event, context, callback) => {
-  checkAccess(event.requestContext.identity.userArn).then(accessGranted => {
+  const { userArn } = event.requestContext.identity;
+  const username = extractUsername(userArn);
+
+  checkAccess(username).then(accessGranted => {
     if (!accessGranted) {
       callback(null, {
         statusCode: 403,
@@ -38,11 +44,17 @@ export const handler = (event, context, callback) => {
       callback(null, response);
     }
 
+    const extension = path.extname(file);
+
     // If producer has correctly submitted a key.
     const params = {
       Bucket: bucket,
-      Key: file,
-      Expires: 30,
+      Key: `${username}/${uuid()}${extension}`,
+      Expires: 300,
+      Metadata: {
+        producer: userArn,
+        'original-key': file,
+      },
     };
 
     s3.getSignedUrl('putObject', params, (err, url) => {
