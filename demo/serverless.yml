@@ -6,7 +6,7 @@ plugins:
 
 custom:
   webpackIncludeModules: true
-  eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
+  eubfrEnvironment: ${opt:eubfr_env, file(../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
   serverless-offline:
     port: 4000
 
@@ -55,4 +55,5 @@ functions:
       - http:
           path: storage/signed_url
           method: get
-          authorizer: aws_iam
+          # authorizer: aws_iam
+          cors: true

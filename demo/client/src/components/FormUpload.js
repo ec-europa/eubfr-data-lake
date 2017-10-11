@@ -6,48 +6,32 @@ class FormUpload extends Component {
     super(props);
 
     this.state = {
-      progressStatus: 'Ready for file uploads',
-      progressStyle: 'clean',
+      message: ``,
+      progress: 'clean',
     };
 
-    this.onUploadStart = this.onUploadStart.bind(this);
     this.onUploadProgress = this.onUploadProgress.bind(this);
     this.onUploadError = this.onUploadError.bind(this);
     this.onUploadFinish = this.onUploadFinish.bind(this);
   }
 
-  onUploadStart(file, next) {
+  onUploadProgress(percent, status) {
     this.setState({
-      progressStatus: 'Upload started ...',
-      progressStyle: 'progress',
-    });
-
-    return next(file);
-  }
-
-  onUploadProgress(percent, status, file) {
-    console.log(`progress .......................`);
-    console.log(percent, status, file);
-    this.setState({
-      progressStatus: status,
-      progressStyle: 'progress',
+      message: `${status}: ${percent}`,
+      progress: 'progress',
     });
   }
 
-  onUploadError(status, file) {
-    console.log(`error .......................`);
-    console.log(status, file);
+  onUploadError(status) {
     this.setState({
-      progressStatus: 'Error occured',
-      progressStyle: 'error',
+      message: status,
+      progress: 'error',
     });
   }
 
-  onUploadFinish(signResult, file) {
-    console.log(`finish .......................`);
-    console.log(signResult, file);
+  onUploadFinish(signResult) {
     this.setState({
-      progressStatus: 'Upload complete!',
+      message: signResult,
       progressStyle: 'success',
     });
   }
@@ -56,9 +40,9 @@ class FormUpload extends Component {
     return (
       <div className="App">
         <p>Disclaimer</p>
-        <div className={`${`app-status `}${this.state.progressStyle}`}>
+        <div className={`${`app-status `}${this.state.progress}`}>
           {' '}
-          {this.state.progressStatus}{' '}
+          {this.state.message}{' '}
         </div>
         <ReactS3Uploader
           server=""
