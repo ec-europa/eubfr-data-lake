@@ -58,7 +58,7 @@ export const handler = (event, context, callback) => {
       XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
     console.log(parser);
 
-    for (var i= 0; i < parser.length; i++) {
+    for (let i= 0; i < parser.length; i++) {
       // Transform data
       console.log(parser[i]);
       const data = transformRecord(parser[i]);
@@ -73,6 +73,7 @@ export const handler = (event, context, callback) => {
       };
 
       s3.upload(params, err => {
+        console.log('upload');
         if (err) {
           callback(err);
         }
