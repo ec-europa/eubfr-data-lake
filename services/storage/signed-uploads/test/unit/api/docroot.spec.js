@@ -1,5 +1,5 @@
 import { promisify } from 'util';
-import projectsDocroot from '../../../src/api/projectsDocroot';
+import projectsDocroot from '../../../src/api/docroot';
 
 const handler = promisify(projectsDocroot);
 

@@ -1,8 +1,6 @@
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 
 export const handler = (event, context, callback) => {
-  console.log(event); // Contains incoming request data (e.g., query params, headers and more)
-
   const documentClient = new AWS.DynamoDB.DocumentClient({
     apiVersion: '2012-08-10',
     convertEmptyValues: true,
@@ -16,8 +14,6 @@ export const handler = (event, context, callback) => {
       'project_id, title, timeframe, eu_budget_contribution, description',
   };
 
-  console.log('Scanning projects table.');
-
   const projects = [];
 
   function onScan(isRoot) {
@@ -25,9 +21,6 @@ export const handler = (event, context, callback) => {
       if (err) {
         callback(err);
       } else {
-        // print all the movies
-        console.log('Scan succeeded.');
-
         data.Items.forEach(project => {
           projects.push(project);
         });
@@ -35,7 +28,6 @@ export const handler = (event, context, callback) => {
         // continue scanning if we have more movies, because
         // scan can retrieve a maximum of 1MB of data
         if (typeof data.LastEvaluatedKey !== 'undefined') {
-          console.log('Scanning for more...');
           params.ExclusiveStartKey = data.LastEvaluatedKey;
           documentClient.scan(params, onScan(false));
         }

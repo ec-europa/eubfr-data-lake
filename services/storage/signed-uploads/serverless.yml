@@ -24,10 +24,14 @@ provider:
     ENV: ${self:custom.eubfrEnvironment}
   versionFunctions: false
   iamRoleStatements:
-  -  Effect: "Allow"
-     Action:
-       - "s3:*"
-     Resource: "*"
+    -  Effect: "Allow"
+       Action:
+         - "s3:*"
+       Resource: "*"
+    - Effect: Allow
+      Action:
+        - iam:ListGroupsForUser
+      Resource: "*"
 
 functions:
   docroot:
@@ -50,6 +54,5 @@ functions:
     events:
       - http:
           path: storage/signed_url
-          method: put
-          private: true
-          cors: true
+          method: get
+          authorizer: aws_iam
