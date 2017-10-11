@@ -32,7 +32,7 @@
     "prettier": "1.7.4"
   },
   "workspaces": [
-    "client/**",
+    "demo/**",
     "services/**"
   ]
 }
