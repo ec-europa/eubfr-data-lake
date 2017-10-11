@@ -27,8 +27,8 @@ export const handler = (event, context, callback) => {
   const message = JSON.parse(snsRecord.Sns.Message);
 
   // Check file extension
-  if (path.extname(message.object.key) !== '.xls') {
-    return callback('File extension should be .xls');
+  if (['.xls', '.xlsx'].indexOf(path.extname(message.object.key)) === -1) {
+    return callback('File extension should be .xls or .xlsx');
   }
 
   const s3 = new AWS.S3();
@@ -56,29 +56,27 @@ export const handler = (event, context, callback) => {
     const sheet_name_list = workbook.SheetNames;
     const parser =
       XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
-    console.log(parser);
 
+    let dataString = '';
     for (let i= 0; i < parser.length; i++) {
       // Transform data
-      console.log(parser[i]);
       const data = transformRecord(parser[i]);
-      console.log(data);
-
-      // Load data
-      const params = {
-        Bucket: BUCKET,
-        Key: `${message.object.key}.ndjson`,
-        Body: data,
-        ContentType: 'application/x-ndjson',
-      };
-
-      s3.upload(params, err => {
-        console.log('upload');
-        if (err) {
-          callback(err);
-        }
-      });
+      dataString += `${JSON.stringify(data)}\n`;
     };
+
+    // Load data
+    const params = {
+      Bucket: BUCKET,
+      Key: `${message.object.key}.ndjson`,
+      Body: dataString,
+      ContentType: 'application/x-ndjson',
+    };
+
+    s3.upload(params, err => {
+      if (err) {
+        callback(err);
+      }
+    });
   });
 
   return;
