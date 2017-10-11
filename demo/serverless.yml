@@ -55,5 +55,5 @@ functions:
       - http:
           path: storage/signed_url
           method: get
-          # authorizer: aws_iam
+          authorizer: aws_iam
           cors: true

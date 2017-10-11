@@ -10,9 +10,18 @@ class FormUpload extends Component {
       progress: 'clean',
     };
 
+    this.getSignedUrl = this.getSignedUrl.bind(this);
     this.onUploadProgress = this.onUploadProgress.bind(this);
     this.onUploadError = this.onUploadError.bind(this);
     this.onUploadFinish = this.onUploadFinish.bind(this);
+  }
+
+  getSignedUrl(file, callback) {
+    // Tricky CB https://github.com/odysseyscience/react-s3-uploader#using-custom-function-to-get-signedurl
+    /* eslint class-methods-use-this: "off" */
+    callback({
+      signedUrl: ``,
+    });
   }
 
   onUploadProgress(percent, status) {
@@ -45,9 +54,7 @@ class FormUpload extends Component {
           {this.state.message}{' '}
         </div>
         <ReactS3Uploader
-          server=""
-          signingUrl="/storage/signed_url"
-          preprocess={this.onUploadStart}
+          getSignedUrl={this.getSignedUrl}
           onProgress={this.onUploadProgress}
           onError={this.onUploadError}
           onFinish={this.onUploadFinish}
