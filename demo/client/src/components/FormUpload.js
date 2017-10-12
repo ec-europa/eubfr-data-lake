@@ -1,17 +1,7 @@
 import React, { Component } from 'react';
 import ReactS3Uploader from 'react-s3-uploader';
-import aws4 from 'aws-v4-sign-small';
 
-const apiGatewayId = `z4ub7kq0ae`;
-const service = `execute-api`;
-const region = `eu-central-1`;
-const stage = `chernka1`;
-const endpoint = `/storage/signed_url`;
-const path = `/${stage}${endpoint}`;
-const host = `${apiGatewayId}.${service}.${region}.amazonaws.com`;
-
-const accessKeyId = ``;
-const secretAccessKey = ``;
+const demoSignedUrl = `http://localhost:4000/demo/signed_url`;
 
 class FormUpload extends Component {
   constructor(props) {
@@ -28,33 +18,12 @@ class FormUpload extends Component {
     this.onUploadFinish = this.onUploadFinish.bind(this);
   }
 
-  componentDidMount() {
-    const opts = {
-      host,
-      method: 'GET',
-      path,
-      headers: {
-        'x-amz-meta-producer-key': 'test.csv',
-      },
-    };
-
-    aws4.sign(opts, {
-      accessKeyId,
-      secretAccessKey,
-    });
-
-    // fetch(
-    //   ``
-    // )
-    //   .then(console.log)
-    //   .catch(console.log);
-  }
-
-  // https://z4ub7kq0ae.execute-api.eu-central-1.amazonaws.com/chernka1/storage/signed_url
-
   /* eslint class-methods-use-this: "off" */
   getSignedUrl(file, callback) {
-    console.log(file);
+    fetch(demoSignedUrl)
+      .then(data => data.json())
+      .then(callback)
+      .catch(callback);
   }
 
   onUploadProgress(percent, status) {
@@ -86,6 +55,7 @@ class FormUpload extends Component {
           {this.state.message}
         </div>
         <ReactS3Uploader
+          server="https://foo.ecom"
           getSignedUrl={this.getSignedUrl}
           onProgress={this.onUploadProgress}
           onError={this.onUploadError}
