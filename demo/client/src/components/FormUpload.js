@@ -32,7 +32,7 @@ class FormUpload extends Component {
   onUploadFinish(signResult) {
     this.setState({
       message: signResult,
-      progressStyle: 'success',
+      progress: 'success',
     });
   }
 
@@ -41,21 +41,17 @@ class FormUpload extends Component {
       <div className="App">
         <p>Disclaimer</p>
         <div className={`${`app-status `}${this.state.progress}`}>
-          {' '}
-          {this.state.message}{' '}
+          {this.state.message}
         </div>
         <ReactS3Uploader
-          // getSignedUrl={this.getSignedUrl}
+          server=""
           signingUrl="/storage/signed_url"
           onProgress={this.onUploadProgress}
           onError={this.onUploadError}
           onFinish={this.onUploadFinish}
-          signingUrlHeaders={{
-            'x-amz-meta-producer-key': 'foo',
-          }}
-          signingUrlWithCredentials={false}
+          signingUrlHeaders={{}}
+          signingUrlWithCredentials={true}
           contentDisposition="auto"
-          server="//foo.l"
         />
       </div>
     );
