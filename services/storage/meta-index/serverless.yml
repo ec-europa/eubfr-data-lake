@@ -31,6 +31,8 @@ provider:
     name: eubfr-${self:custom.eubfrEnvironment}-deploy
   stackTags:
     ENV: ${self:custom.eubfrEnvironment}
+  environment:
+    TABLE: ${self:custom.DYNAMODB_TABLE}
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -41,13 +43,15 @@ provider:
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
       Resource: "arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.DYNAMODB_TABLE}"
+    - Effect: Allow
+      Action:
+        - iam:ListGroupsForUser
+      Resource: "*"
 
 functions:
   onObjectCreated:
     handler: src/events/onObjectCreated.handler
     name: ${self:provider.stage}-${self:service}-onObjectCreated
-    environment:
-      TABLE: ${self:custom.DYNAMODB_TABLE}
     events:
       - sns:
           arn:
@@ -63,8 +67,6 @@ functions:
   onObjectRemoved:
     handler: src/events/onObjectRemoved.handler
     name: ${self:provider.stage}-${self:service}-onObjectRemoved
-    environment:
-      TABLE: ${self:custom.DYNAMODB_TABLE}
     events:
       - sns:
           arn:
@@ -77,6 +79,16 @@ functions:
                 - Ref: "AWS::AccountId"
                 - ":${self:provider.stage}-object-removed"
           topicName: ${self:provider.stage}-object-removed
+  listProjects:
+    handler: src/api/list.handler
+    name: ${self:provider.stage}-${self:service}-list
+    environment:
+      TABLE: ${self:custom.DYNAMODB_TABLE}
+    events:
+      - http:
+          path: meta-index/list
+          method: get
+          authorizer: aws_iam
 
 resources:
   Resources:

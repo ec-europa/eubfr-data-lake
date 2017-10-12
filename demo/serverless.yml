@@ -10,6 +10,7 @@ custom:
   PRODUCER_KEY_ID: ${opt:PRODUCER_KEY_ID, file(../config.json):demo.AWS_ACCESS_KEY_ID, env:PRODUCER_KEY_ID, ''}
   PRODUCER_SECRET_ACCESS_KEY: ${opt:PRODUCER_SECRET_ACCESS_KEY, file(../config.json):demo.AWS_SECRET_ACCESS_KEY, env:PRODUCER_SECRET_ACCESS_KEY, ''}
   SIGNED_UPLOADS_API_ID: ${opt:SIGNED_UPLOADS_API_ID, file(../config.json):demo.SIGNED_UPLOADS_API_ID, env:SIGNED_UPLOADS_API_ID, ''}
+  META_INDEX_API_ID: ${opt:META_INDEX_API_ID, file(../config.json):demo.META_INDEX_API_ID, env:META_INDEX_API_ID, ''}
   serverless-offline:
     port: 4000
 
@@ -34,6 +35,21 @@ functions:
     events:
       - http:
           path: demo
+          method: get
+          cors: true
+  meta:
+    handler: server/src/api/meta.handler
+    name: ${self:provider.stage}-${self:service}-meta
+    memorySize: 128
+    environment:
+      PRODUCER_KEY_ID: ${self:custom.PRODUCER_KEY_ID}
+      PRODUCER_SECRET_ACCESS_KEY: ${self:custom.PRODUCER_SECRET_ACCESS_KEY}
+      META_INDEX_API_ID: ${self:custom.META_INDEX_API_ID}
+      STAGE: ${self:provider.stage}
+      REGION: ${self:provider.region}
+    events:
+      - http:
+          path: demo/meta
           method: get
           cors: true
   signed-url:
