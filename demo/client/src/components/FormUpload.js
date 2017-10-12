@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReactS3Uploader from 'react-s3-uploader';
+import UploadForm from 'react-s3-uploader';
 
 const demoSignedUrl = `http://localhost:4000/demo/signed_url`;
 
@@ -22,6 +22,14 @@ class FormUpload extends Component {
   getSignedUrl(file, callback) {
     fetch(demoSignedUrl)
       .then(data => data.json())
+      .then(j => {
+        const url = j.signedUrl;
+        // Remove the additional double quote from start and end.
+        // It messes with the way createCORSRequest() works internally for ReactS3Uploader
+        return {
+          signedUrl: url.replace(/['"]+/g, ''),
+        };
+      })
       .then(callback)
       .catch(callback);
   }
@@ -54,14 +62,12 @@ class FormUpload extends Component {
         <div className={`${`app-status `}${this.state.progress}`}>
           {this.state.message}
         </div>
-        <ReactS3Uploader
-          server="https://foo.ecom"
+        <UploadForm
           getSignedUrl={this.getSignedUrl}
           onProgress={this.onUploadProgress}
           onError={this.onUploadError}
           onFinish={this.onUploadFinish}
           signingUrlHeaders={{}}
-          signingUrlWithCredentials={true}
           contentDisposition="auto"
         />
       </div>
