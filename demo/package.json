@@ -4,7 +4,8 @@
   "description": "",
   "version": "0.0.1",
   "scripts": {
-    "deploy": "sls deploy -v",
+    "build": "cd client && npm run build",
+    "deploy": "sls deploy -v && sls client deploy",
     "start": "sls offline start"
   },
   "devDependencies": {
@@ -21,6 +22,7 @@
     "webpack": "3.6.0"
   },
   "dependencies": {
-    "aws4": "1.6.0"
+    "aws4": "1.6.0",
+    "serverless-finch": "1.1.1"
   }
 }

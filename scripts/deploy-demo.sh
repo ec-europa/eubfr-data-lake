@@ -9,4 +9,9 @@ cd ..
 
 # Deploy demo
 cd ./demo
-./node_modules/.bin/serverless deploy -v
+echo 'Cleaning previous client builds of the demo ...'
+rm -rf client/build client/dist
+echo 'Building a new client app for the demo ...'
+yarn run build
+echo 'Deploying all parts for the demo ...'
+yarn run deploy

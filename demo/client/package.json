@@ -1,17 +1,17 @@
 {
-  "name": "@eubfr/form-upload",
-  "description": "Form to upload files for ingestion.",
+  "name": "@eubfr/client-app",
+  "description": "Client app for EUBFR.",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
+    "react": "16.0.0",
+    "react-dom": "16.0.0",
     "react-s3-uploader": "4.5.0",
     "react-scripts": "1.0.14"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && mv build dist",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }

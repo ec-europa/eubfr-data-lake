@@ -1,10 +1,13 @@
 service: demo
 
 plugins:
+  - serverless-finch
   - serverless-webpack
   - serverless-offline #serverless-offline needs to be last in the list
 
 custom:
+  client:
+    bucketName: eubfr-${self:provider.stage}-demo
   webpackIncludeModules: true
   eubfrEnvironment: ${opt:eubfr_env, file(../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
   PRODUCER_KEY_ID: ${opt:PRODUCER_KEY_ID, file(../config.json):demo.AWS_ACCESS_KEY_ID, env:PRODUCER_KEY_ID, ''}
