@@ -48,9 +48,9 @@ class FormUpload extends Component {
     });
   }
 
-  onUploadFinish(signResult) {
+  onUploadFinish() {
     this.setState({
-      message: signResult,
+      message: `Done!`,
       progress: 'success',
     });
   }
