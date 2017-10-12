@@ -3,6 +3,7 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "deploy": "./scripts/deploy.sh",
+    "deploy-demo": "./scripts/deploy-demo.sh",
     "lint": "eslint .",
     "precommit": "lint-staged",
     "test:integration": "lerna run --parallel test:integration",
@@ -12,10 +13,7 @@
     "test-write": "jest --watch"
   },
   "lint-staged": {
-    "*.{js,json}": [
-      "prettier --write",
-      "git add"
-    ]
+    "*.{js,json}": ["prettier --write", "git add"]
   },
   "devDependencies": {
     "eslint": "4.8.0",
@@ -31,8 +29,5 @@
     "npm-run-all": "4.1.1",
     "prettier": "1.7.4"
   },
-  "workspaces": [
-    "demo/**",
-    "services/**"
-  ]
+  "workspaces": ["demo/**", "services/**"]
 }

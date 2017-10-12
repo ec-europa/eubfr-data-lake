@@ -1,4 +1,4 @@
-service: storage-signed-uploads
+service: demo
 
 plugins:
   - serverless-webpack
@@ -7,6 +7,9 @@ plugins:
 custom:
   webpackIncludeModules: true
   eubfrEnvironment: ${opt:eubfr_env, file(../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
+  PRODUCER_KEY_ID: ${opt:PRODUCER_KEY_ID, file(../config.json):demo.AWS_ACCESS_KEY_ID, env:PRODUCER_KEY_ID, ''}
+  PRODUCER_SECRET_ACCESS_KEY: ${opt:PRODUCER_SECRET_ACCESS_KEY, file(../config.json):demo.AWS_SECRET_ACCESS_KEY, env:PRODUCER_SECRET_ACCESS_KEY, ''}
+  SIGNED_UPLOADS_API_ID: ${opt:SIGNED_UPLOADS_API_ID, file(../config.json):demo.SIGNED_UPLOADS_API_ID, env:SIGNED_UPLOADS_API_ID, ''}
   serverless-offline:
     port: 4000
 
@@ -22,16 +25,6 @@ provider:
     name: eubfr-${self:custom.eubfrEnvironment}-deploy
   stackTags:
     ENV: ${self:custom.eubfrEnvironment}
-  versionFunctions: false
-  iamRoleStatements:
-    -  Effect: "Allow"
-       Action:
-         - "s3:*"
-       Resource: "*"
-    - Effect: Allow
-      Action:
-        - iam:ListGroupsForUser
-      Resource: "*"
 
 functions:
   docroot:
@@ -40,20 +33,21 @@ functions:
     memorySize: 128
     events:
       - http:
-          path: /
+          path: demo
           method: get
           cors: true
-      - http:
-          path: storage
-          method: get
-          cors: true
-  upsert-objects:
-    handler: server/src/api/upsert.handler
-    name: ${self:provider.stage}-${self:service}-upsert-objects
+  signed-url:
+    handler: server/src/api/signedUrl.handler
+    name: ${self:provider.stage}-${self:service}-signed-url
     memorySize: 128
+    timeout: 60
+    environment:
+      PRODUCER_KEY_ID: ${self:custom.PRODUCER_KEY_ID}
+      PRODUCER_SECRET_ACCESS_KEY: ${self:custom.PRODUCER_SECRET_ACCESS_KEY}
+      SIGNED_UPLOADS_API_ID: ${self:custom.SIGNED_UPLOADS_API_ID}
+      STAGE: ${self:provider.stage}
+      REGION: ${self:provider.region}
     events:
       - http:
-          path: storage/signed_url
+          path: demo/signed_url
           method: get
-          authorizer: aws_iam
-          cors: true
