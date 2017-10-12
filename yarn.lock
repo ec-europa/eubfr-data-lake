@@ -479,6 +479,13 @@ aws-sign2@~0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/aws-sign2/-/aws-sign2-0.7.0.tgz#b46e890934a9591f2d2f6f86d7e6a9f1b3fe76a8"
 
+aws-v4-sign-small@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/aws-v4-sign-small/-/aws-v4-sign-small-1.1.1.tgz#37824cc336e23056ba9bd2d2d31e9d0ac79420d8"
+  dependencies:
+    crypto-js "^3.1.5"
+    strict-uri-encode "^1.0.2"
+
 aws4@1.6.0, aws4@^1.2.1, aws4@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.6.0.tgz#83ef5ca860b2b32e4a0deedee8c771b9db57471e"
@@ -2261,6 +2268,10 @@ crypto-browserify@^3.11.0:
     pbkdf2 "^3.0.3"
     public-encrypt "^4.0.0"
     randombytes "^2.0.0"
+
+crypto-js@^3.1.5:
+  version "3.1.8"
+  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-3.1.8.tgz#715f070bf6014f2ae992a98b3929258b713f08d5"
 
 css-color-names@0.0.4:
   version "0.0.4"
@@ -8237,7 +8248,7 @@ stream-transform@0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/stream-transform/-/stream-transform-0.1.2.tgz#7d8e6b4e03ac4781778f8c79517501bfb0762a9f"
 
-strict-uri-encode@^1.0.0:
+strict-uri-encode@^1.0.0, strict-uri-encode@^1.0.2:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/strict-uri-encode/-/strict-uri-encode-1.1.0.tgz#279b225df1d582b1f54e65addd4352e18faa0713"
 
