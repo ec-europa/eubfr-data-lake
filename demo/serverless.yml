@@ -51,3 +51,13 @@ functions:
       - http:
           path: demo/signed_url
           method: get
+  allow-options:
+    handler: server/src/api/optionsAllow.handler
+    name: ${self:provider.stage}-${self:service}-options-allow
+    memorySize: 128
+    timeout: 60
+    events:
+      - http:
+          path: /{proxy+}
+          method: options
+          cors: true

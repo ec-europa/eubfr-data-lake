@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import UploadForm from 'react-s3-uploader';
 
-const demoSignedUrl = `http://localhost:4000/demo/signed_url`;
+const demoSignedUrl = `https://9hstwjamag.execute-api.eu-central-1.amazonaws.com/chernka1/demo/signed_url`;
 
 class FormUpload extends Component {
   constructor(props) {
