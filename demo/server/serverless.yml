@@ -1,27 +1,24 @@
-service: demo
+service: demo-server
 
 plugins:
-  - serverless-finch
   - serverless-webpack
   - serverless-offline #serverless-offline needs to be last in the list
 
 custom:
-  client:
-    bucketName: eubfr-${self:provider.stage}-demo
   webpackIncludeModules: true
-  eubfrEnvironment: ${opt:eubfr_env, file(../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
-  PRODUCER_KEY_ID: ${opt:PRODUCER_KEY_ID, file(../config.json):demo.AWS_ACCESS_KEY_ID, env:PRODUCER_KEY_ID, ''}
-  PRODUCER_SECRET_ACCESS_KEY: ${opt:PRODUCER_SECRET_ACCESS_KEY, file(../config.json):demo.AWS_SECRET_ACCESS_KEY, env:PRODUCER_SECRET_ACCESS_KEY, ''}
-  SIGNED_UPLOADS_API_ID: ${opt:SIGNED_UPLOADS_API_ID, file(../config.json):demo.SIGNED_UPLOADS_API_ID, env:SIGNED_UPLOADS_API_ID, ''}
-  META_INDEX_API_ID: ${opt:META_INDEX_API_ID, file(../config.json):demo.META_INDEX_API_ID, env:META_INDEX_API_ID, ''}
+  eubfrEnvironment: ${opt:eubfr_env, file(../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
+  PRODUCER_KEY_ID: ${opt:PRODUCER_KEY_ID, file(../../config.json):demo.AWS_ACCESS_KEY_ID, env:PRODUCER_KEY_ID, ''}
+  PRODUCER_SECRET_ACCESS_KEY: ${opt:PRODUCER_SECRET_ACCESS_KEY, file(../../config.json):demo.AWS_SECRET_ACCESS_KEY, env:PRODUCER_SECRET_ACCESS_KEY, ''}
+  SIGNED_UPLOADS_API_ID: ${opt:SIGNED_UPLOADS_API_ID, file(../../config.json):demo.SIGNED_UPLOADS_API_ID, env:SIGNED_UPLOADS_API_ID, ''}
+  META_INDEX_API_ID: ${opt:META_INDEX_API_ID, file(../../config.json):demo.META_INDEX_API_ID, env:META_INDEX_API_ID, ''}
   serverless-offline:
     port: 4000
 
 provider:
   name: aws
   runtime: nodejs6.10
-  stage: ${opt:stage, file(../config.json):stage, 'dev'}
-  region: ${opt:region, file(../config.json):region, 'eu-central-1'}
+  stage: ${opt:stage, file(../../config.json):stage, 'dev'}
+  region: ${opt:region, file(../../config.json):region, 'eu-central-1'}
   environment:
     REGION: ${self:provider.region}
     BUCKET: eubfr-${self:provider.stage}
@@ -32,7 +29,7 @@ provider:
 
 functions:
   docroot:
-    handler: server/src/api/docroot.handler
+    handler: src/api/docroot.handler
     name: ${self:provider.stage}-${self:service}-docroot
     memorySize: 128
     events:
@@ -41,7 +38,7 @@ functions:
           method: get
           cors: true
   meta:
-    handler: server/src/api/meta.handler
+    handler: src/api/meta.handler
     name: ${self:provider.stage}-${self:service}-meta
     memorySize: 128
     environment:
@@ -56,7 +53,7 @@ functions:
           method: get
           cors: true
   signed-url:
-    handler: server/src/api/signedUrl.handler
+    handler: src/api/signedUrl.handler
     name: ${self:provider.stage}-${self:service}-signed-url
     memorySize: 128
     timeout: 60

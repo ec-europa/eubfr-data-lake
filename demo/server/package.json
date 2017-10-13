@@ -1,28 +1,23 @@
 {
   "private": true,
-  "name": "@eubfr/demo",
+  "name": "@eubfr/demo-server",
   "description": "",
   "version": "0.0.1",
   "scripts": {
-    "build": "cd client && npm run build",
-    "deploy": "sls deploy -v && sls client deploy",
+    "deploy": "sls deploy -v",
     "start": "sls offline start"
   },
   "devDependencies": {
     "aws-sdk": "2.128.0",
-    "aws-sdk-mock": "1.7.0",
     "babel-core": "6.26.0",
     "babel-loader": "7.1.2",
     "babel-preset-env": "1.6.0",
-    "create-react-app": "1.4.1",
-    "jest": "21.2.1",
     "serverless": "1.23.0",
     "serverless-offline": "3.16.0",
     "serverless-webpack": "3.1.1",
     "webpack": "3.6.0"
   },
   "dependencies": {
-    "aws4": "1.6.0",
-    "serverless-finch": "1.1.1"
+    "aws4": "1.6.0"
   }
 }

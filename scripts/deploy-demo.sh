@@ -8,10 +8,19 @@ cd "$(dirname "$0")"
 cd ..
 
 # Deploy demo
-cd ./demo
-echo 'Cleaning previous client builds of the demo ...'
-rm -rf client/build client/dist
-echo 'Building a new client app for the demo ...'
-yarn run build
-echo 'Deploying all parts for the demo ...'
-yarn run deploy
+
+cd ./demo/server
+echo 'Start demo server deploy ...'
+yarn deploy
+
+cd ../client
+echo 'Start demo client deploy ...'
+
+echo 'Cleaning previous builds ...'
+rm -rf build client/dist
+
+echo 'serverless-finch needs a /client folder'
+mkdir client
+
+echo 'Deploying ...'
+yarn run release
