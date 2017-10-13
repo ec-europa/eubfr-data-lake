@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Uploader from 'react-s3-uploader';
-import config from '../config.json';
+import config from '../config.json'; // eslint-disable-line import/no-unresolved
 
 const demoSignedUrl = `${config.ServiceEndpoint}/demo/signed_url`;
 
