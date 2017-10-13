@@ -1,22 +1,21 @@
-/* eslint-disable import/prefer-default-export, no-console */
 import path from 'path';
 import stream from 'stream';
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 import parse from 'csv-parse';
 import transform from 'stream-transform';
 
-import transformRecord from './transform';
+import transformRecord from '../lib/transform';
 
 // Destination bucket
 const { BUCKET } = process.env;
 
-export const parseCsv = (event, context, callback) => {
+export const handler = (event, context, callback) => {
   /*
    * Some checks here before going any further
    */
 
   // Only work on the first record
-  const snsRecord = event.Records[0];
+  const snsRecord = event.Records ? event.Records[0] : undefined;
 
   // Was the lambda triggered correctly? Is the file extension supported? etc.
   if (!snsRecord || snsRecord.EventSource !== 'aws:sns') {
@@ -87,3 +86,5 @@ export const parseCsv = (event, context, callback) => {
     .pipe(transformer)
     .pipe(uploadFromStream());
 };
+
+export default handler;

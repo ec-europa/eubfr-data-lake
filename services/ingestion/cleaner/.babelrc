@@ -1,4 +1,28 @@
 {
-  "plugins": ["transform-runtime"],
-  "presets": ["es2015", "stage-3"]
+  "presets": [
+    [
+      "env",
+      {
+        "targets": {
+          "node": "6.10"
+        },
+        "modules": false,
+        "loose": true
+      }
+    ]
+  ],
+  "env": {
+    "test": {
+      "presets": [
+        [
+          "env",
+          {
+            "targets": {
+              "node": "6.10"
+            }
+          }
+        ]
+      ]
+    }
+  }
 }

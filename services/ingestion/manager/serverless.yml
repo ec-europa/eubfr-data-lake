@@ -22,7 +22,7 @@ provider:
 
 functions:
   onCreate:
-    handler: src/handler.onCreate
+    handler: src/events/onObjectCreated.handler
     name: ${self:provider.stage}-${self:service}-onCreate
     environment:
       STAGE: ${self:provider.stage}

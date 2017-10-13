@@ -24,14 +24,18 @@ provider:
     ENV: ${self:custom.eubfrEnvironment}
   versionFunctions: false
   iamRoleStatements:
-  -  Effect: "Allow"
-     Action:
-       - "s3:*"
-     Resource: "*"
+    -  Effect: "Allow"
+       Action:
+         - "s3:*"
+       Resource: "*"
+    - Effect: Allow
+      Action:
+        - iam:ListGroupsForUser
+      Resource: "*"
 
 functions:
   docroot:
-    handler: src/docroot.handler
+    handler: src/api/docroot.handler
     name: ${self:provider.stage}-${self:service}-docroot
     memorySize: 128
     events:
@@ -44,12 +48,11 @@ functions:
           method: get
           cors: true
   upsert-objects:
-    handler: src/upsert.handler
+    handler: src/api/upsert.handler
     name: ${self:provider.stage}-${self:service}-upsert-objects
     memorySize: 128
     events:
       - http:
           path: storage/signed_url
-          method: put
-          private: true
-          cors: true
+          method: get
+          authorizer: aws_iam

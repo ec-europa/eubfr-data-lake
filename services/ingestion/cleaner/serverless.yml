@@ -33,7 +33,7 @@ provider:
 
 functions:
   onObjectRemoved:
-    handler: src/handler.onObjectRemoved
+    handler: src/events/onObjectRemoved.handler
     name: ${self:provider.stage}-${self:service}-onObjectRemoved
     environment:
       BUCKET: ${self:custom.outputBucketName}
