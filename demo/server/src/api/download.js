@@ -9,7 +9,6 @@ export const handler = (event, context, callback) => {
   const accessKeyId = process.env.PRODUCER_KEY_ID;
   const secretAccessKey = process.env.PRODUCER_SECRET_ACCESS_KEY;
 
-  // User must pass the "x-amz-meta-computed-key" header
   const computedKey =
     event.queryStringParameters && event.queryStringParameters.key
       ? event.queryStringParameters.key

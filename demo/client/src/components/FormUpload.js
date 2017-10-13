@@ -21,7 +21,7 @@ class FormUpload extends Component {
 
   /* eslint class-methods-use-this: "off" */
   getSignedUrl(file, callback) {
-    fetch(demoSignedUrl)
+    fetch(`${demoSignedUrl}?key=${encodeURIComponent(file.name)}`)
       .then(data => data.json())
       .then(j => {
         const url = j.signedUrl;
