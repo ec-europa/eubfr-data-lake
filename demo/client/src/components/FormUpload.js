@@ -19,10 +19,6 @@ class FormUpload extends Component {
     this.onUploadFinish = this.onUploadFinish.bind(this);
   }
 
-  componentDidMount() {
-    console.log(config);
-  }
-
   /* eslint class-methods-use-this: "off" */
   getSignedUrl(file, callback) {
     fetch(demoSignedUrl)
