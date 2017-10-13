@@ -63,7 +63,7 @@ export const handler = (event, context, callback) => {
 
   req.on('error', err => callback(err));
 
-  req.end();
+  return req.end();
 };
 
 export default handler;
