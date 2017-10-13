@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Uploader from 'react-s3-uploader';
+import config from '../config.json';
 
-const demoSignedUrl = `http://localhost:4000/demo/signed_url`;
+const demoSignedUrl = `${config.ServiceEndpoint}/demo/signed_url`;
 
 class FormUpload extends Component {
   constructor(props) {
@@ -16,6 +17,10 @@ class FormUpload extends Component {
     this.onUploadProgress = this.onUploadProgress.bind(this);
     this.onUploadError = this.onUploadError.bind(this);
     this.onUploadFinish = this.onUploadFinish.bind(this);
+  }
+
+  componentDidMount() {
+    console.log(config);
   }
 
   /* eslint class-methods-use-this: "off" */

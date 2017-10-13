@@ -1,6 +1,7 @@
 service: demo-server
 
 plugins:
+  - serverless-stack-output
   - serverless-webpack
   - serverless-offline #serverless-offline needs to be last in the list
 
@@ -11,6 +12,10 @@ custom:
   PRODUCER_SECRET_ACCESS_KEY: ${opt:PRODUCER_SECRET_ACCESS_KEY, file(../../config.json):demo.AWS_SECRET_ACCESS_KEY, env:PRODUCER_SECRET_ACCESS_KEY, ''}
   SIGNED_UPLOADS_API_ID: ${opt:SIGNED_UPLOADS_API_ID, file(../../config.json):demo.SIGNED_UPLOADS_API_ID, env:SIGNED_UPLOADS_API_ID, ''}
   META_INDEX_API_ID: ${opt:META_INDEX_API_ID, file(../../config.json):demo.META_INDEX_API_ID, env:META_INDEX_API_ID, ''}
+  # save output of the server to the client folder
+  output:
+    handle: scripts/output.process
+    file: ../client/src/config.json
   serverless-offline:
     port: 4000
 

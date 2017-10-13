@@ -17,7 +17,7 @@ cd ../client
 echo 'Start demo client deploy ...'
 
 echo 'Cleaning previous builds ...'
-rm -rf build client/dist
+rm -rf build client
 
 echo 'serverless-finch needs a /client folder'
 mkdir client

@@ -7647,6 +7647,13 @@ serverless-offline@3.16.0:
     lodash "^4.17.4"
     velocityjs "^0.9.3"
 
+serverless-stack-output@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/serverless-stack-output/-/serverless-stack-output-0.2.0.tgz#95178727b4b0999ece09251cb24eaa01cdcda63d"
+  dependencies:
+    tomlify-j0.4 "^2.0.0"
+    yamljs "^0.3.0"
+
 serverless-webpack@3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/serverless-webpack/-/serverless-webpack-3.1.1.tgz#059713b30a1df61e14f0a212d9bfa3322cfacbe2"
@@ -8395,6 +8402,10 @@ to-fast-properties@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/to-fast-properties/-/to-fast-properties-1.0.3.tgz#b83571fa4d8c25b82e231b06e3a3055de4ca1a47"
 
+tomlify-j0.4@^2.0.0:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/tomlify-j0.4/-/tomlify-j0.4-2.2.1.tgz#60c4e7dd2066b2e917dd9a0de5fd676c0a6d7c7b"
+
 topo@1.x.x:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/topo/-/topo-1.1.0.tgz#e9d751615d1bb87dc865db182fa1ca0a5ef536d5"
@@ -9068,6 +9079,13 @@ yallist@^2.1.2:
 yaml-ast-parser@0.0.34:
   version "0.0.34"
   resolved "https://registry.yarnpkg.com/yaml-ast-parser/-/yaml-ast-parser-0.0.34.tgz#d00f3cf9d773b7241409ae92a6740d1db19f49e6"
+
+yamljs@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/yamljs/-/yamljs-0.3.0.tgz#dc060bf267447b39f7304e9b2bfbe8b5a7ddb03b"
+  dependencies:
+    argparse "^1.0.7"
+    glob "^7.0.5"
 
 yargs-parser@^4.2.0:
   version "4.2.1"
