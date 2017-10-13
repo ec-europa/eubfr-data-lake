@@ -436,22 +436,7 @@ aws-sdk-mock@1.7.0:
     sinon "^1.17.3"
     traverse "^0.6.6"
 
-aws-sdk@2.128.0:
-  version "2.128.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.128.0.tgz#b9be561c5e3733c0068c6121b587674534662d4b"
-  dependencies:
-    buffer "4.9.1"
-    crypto-browserify "1.0.9"
-    events "^1.1.1"
-    jmespath "0.15.0"
-    querystring "0.2.0"
-    sax "1.2.1"
-    url "0.10.3"
-    uuid "3.1.0"
-    xml2js "0.4.17"
-    xmlbuilder "4.2.1"
-
-aws-sdk@2.x, aws-sdk@^2.3.0, aws-sdk@^2.75.0:
+aws-sdk@2.133.0, aws-sdk@2.x, aws-sdk@^2.3.0, aws-sdk@^2.75.0:
   version "2.133.0"
   resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.133.0.tgz#6a6d8988bd35928c11bbd3db677ad5b3eae7107a"
   dependencies:
@@ -2324,9 +2309,9 @@ cssom@0.3.x, "cssom@>= 0.3.2 < 0.4.0":
   dependencies:
     cssom "0.3.x"
 
-csv-parse@1.2.3:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/csv-parse/-/csv-parse-1.2.3.tgz#466206b51eaf77ccb50c3fadebd098cdeb2c69e7"
+csv-parse@1.2.4:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/csv-parse/-/csv-parse-1.2.4.tgz#cbf676e355226625888c6432400b83f07e75cc2e"
 
 currently-unhandled@^0.4.1:
   version "0.4.1"
@@ -7654,9 +7639,9 @@ serverless-stack-output@^0.2.0:
     tomlify-j0.4 "^2.0.0"
     yamljs "^0.3.0"
 
-serverless-webpack@3.1.1:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/serverless-webpack/-/serverless-webpack-3.1.1.tgz#059713b30a1df61e14f0a212d9bfa3322cfacbe2"
+serverless-webpack@3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/serverless-webpack/-/serverless-webpack-3.1.2.tgz#f1ee61649414e141a1659cdce0ad6294a414d470"
   dependencies:
     archiver "^2.0.0"
     bluebird "^3.5.0"
@@ -8864,9 +8849,9 @@ webpack@3.5.1:
     webpack-sources "^1.0.1"
     yargs "^8.0.2"
 
-webpack@3.6.0:
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-3.6.0.tgz#a89a929fbee205d35a4fa2cc487be9cbec8898bc"
+webpack@3.7.1:
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-3.7.1.tgz#6046b5c415ff7df7a0dc54c5b6b86098e8b952da"
   dependencies:
     acorn "^5.0.0"
     acorn-dynamic-import "^2.0.0"

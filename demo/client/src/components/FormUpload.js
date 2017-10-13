@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Uploader from 'react-s3-uploader';
-import config from '../config.json';
+import config from '../config.json'; // eslint-disable-line import/no-unresolved
 
 const demoSignedUrl = `${config.ServiceEndpoint}/demo/signed_url`;
 
@@ -21,7 +21,7 @@ class FormUpload extends Component {
 
   /* eslint class-methods-use-this: "off" */
   getSignedUrl(file, callback) {
-    fetch(demoSignedUrl)
+    fetch(`${demoSignedUrl}?key=${encodeURIComponent(file.name)}`)
       .then(data => data.json())
       .then(j => {
         const url = j.signedUrl;

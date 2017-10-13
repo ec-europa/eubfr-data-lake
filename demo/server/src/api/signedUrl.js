@@ -9,12 +9,28 @@ export const handler = (event, context, callback) => {
   const accessKeyId = process.env.PRODUCER_KEY_ID;
   const secretAccessKey = process.env.PRODUCER_SECRET_ACCESS_KEY;
 
+  const producerKey =
+    event.queryStringParameters && event.queryStringParameters.key
+      ? event.queryStringParameters.key
+      : undefined;
+
+  if (!producerKey) {
+    const response = {
+      statusCode: 400,
+      body: JSON.stringify({
+        message: `Missing key parameter`,
+      }),
+    };
+
+    return callback(null, response);
+  }
+
   const params = {
     host: `${apiGatewayId}.execute-api.${region}.amazonaws.com`,
     method: 'GET',
     path: `/${stage}${endpoint}`,
     headers: {
-      'x-amz-meta-producer-key': 'test.csv',
+      'x-amz-meta-producer-key': producerKey,
     },
   };
 
