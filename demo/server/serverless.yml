@@ -42,6 +42,22 @@ functions:
           path: demo
           method: get
           cors: true
+  download:
+    handler: src/api/download.handler
+    name: ${self:provider.stage}-${self:service}-download
+    memorySize: 128
+    timeout: 60
+    environment:
+      PRODUCER_KEY_ID: ${self:custom.PRODUCER_KEY_ID}
+      PRODUCER_SECRET_ACCESS_KEY: ${self:custom.PRODUCER_SECRET_ACCESS_KEY}
+      SIGNED_UPLOADS_API_ID: ${self:custom.SIGNED_UPLOADS_API_ID}
+      STAGE: ${self:provider.stage}
+      REGION: ${self:provider.region}
+    events:
+      - http:
+          path: demo/download
+          method: get
+          cors: true
   meta:
     handler: src/api/meta.handler
     name: ${self:provider.stage}-${self:service}-meta
