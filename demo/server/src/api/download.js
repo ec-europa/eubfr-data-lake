@@ -11,15 +11,15 @@ export const handler = (event, context, callback) => {
 
   // User must pass the "x-amz-meta-computed-key" header
   const computedKey =
-    event.headers && event.headers['x-amz-meta-computed-key']
-      ? event.headers['x-amz-meta-computed-key']
+    event.queryStringParameters && event.queryStringParameters.key
+      ? event.queryStringParameters.key
       : undefined;
 
   if (!computedKey) {
     const response = {
       statusCode: 400,
       body: JSON.stringify({
-        message: `Missing x-amz-meta-computed-key header`,
+        message: `Missing key parameter`,
       }),
     };
 
