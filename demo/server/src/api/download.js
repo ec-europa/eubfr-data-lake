@@ -51,23 +51,23 @@ export const handler = (event, context, callback) => {
       res.on('end', () => {
         const { statusCode } = res;
 
+        // Response headers
+        const headers = {
+          'Access-Control-Allow-Origin': '*', // Required for CORS support to work
+          'Access-Control-Allow-Credentials': true, // Required for cookies, authorization headers with HTTPS
+        };
+
         if (statusCode === 200) {
           return callback(null, {
             statusCode: 200,
-            headers: {
-              'Access-Control-Allow-Origin': '*', // Required for CORS support to work
-              'Access-Control-Allow-Credentials': true, // Required for cookies, authorization headers with HTTPS
-            },
+            headers,
             body: JSON.stringify({ signedUrl: JSON.parse(body) }),
           });
         }
 
         return callback(null, {
           statusCode: 400,
-          headers: {
-            'Access-Control-Allow-Origin': '*', // Required for CORS support to work
-            'Access-Control-Allow-Credentials': true, // Required for cookies, authorization headers with HTTPS
-          },
+          headers,
           body: JSON.stringify({ Error: JSON.parse(body) }),
         });
       });
