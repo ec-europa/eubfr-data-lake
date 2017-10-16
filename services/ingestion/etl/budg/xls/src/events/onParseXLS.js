@@ -6,6 +6,8 @@ import transformRecord from '../lib/transform';
 // Destination bucket
 const { BUCKET } = process.env;
 
+const XLSX = require('xlsx');
+
 export const handler = (event, context, callback) => {
   /*
    * Some checks here before going any further
@@ -32,7 +34,6 @@ export const handler = (event, context, callback) => {
   }
 
   const s3 = new AWS.S3();
-  const XLSX = require('xlsx');
 
   // Get file
   const file = s3
@@ -75,6 +76,9 @@ export const handler = (event, context, callback) => {
     s3.upload(params, err => {
       if (err) {
         callback(err);
+      }
+      else {
+        callback('JSON file has been uploaded');
       }
     });
   });
