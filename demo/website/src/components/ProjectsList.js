@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import config from '../meta/projects.json'; // eslint-disable-line
 
-const demoServer = `https://mpdas1c1qd.execute-api.eu-central-1.amazonaws.com/huartya1`;
+const apiEndpoint = config.ServiceEndpoint;
 
 const handleErrors = response => {
   if (!response.ok) {
@@ -31,7 +32,7 @@ class ProjectsList extends Component {
     });
 
     window
-      .fetch(`${demoServer}/projects`)
+      .fetch(`${apiEndpoint}/projects`)
       .then(handleErrors)
       .then(response => response.json())
       .then(data => {

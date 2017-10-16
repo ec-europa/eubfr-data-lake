@@ -8,8 +8,10 @@
     "react-scripts": "1.0.14"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build && mv build client/dist",
+    "start": "npm run copy && react-scripts start",
+    "build": "npm run copy && react-scripts build && mv build client/dist",
+    "copy":
+      "ln -f ../../services/value-store/projects/stack-output.json ./src/meta/projects.json",
     "deploy": "sls client deploy",
     "release": "npm run build && npm run deploy",
     "test": "react-scripts test --env=jsdom",
