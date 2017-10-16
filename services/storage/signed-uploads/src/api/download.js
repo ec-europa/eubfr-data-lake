@@ -1,12 +1,13 @@
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
-import path from 'path';
-import uuid from 'uuid/v4';
 import { checkAccess } from '../lib/checkAccess';
 import { extractUsername } from '../lib/extractUsername';
 
 export const handler = (event, context, callback) => {
   const { userArn } = event.requestContext.identity;
   const username = extractUsername(userArn);
+
+  console.log(event);
+  console.log(context);
 
   checkAccess(username).then(accessGranted => {
     if (!accessGranted) {
@@ -29,36 +30,31 @@ export const handler = (event, context, callback) => {
     const s3 = new AWS.S3({ signatureVersion: 'v4', region });
 
     const file =
-      event.headers && event.headers['x-amz-meta-producer-key']
-        ? event.headers['x-amz-meta-producer-key']
+      event.headers && event.headers['x-amz-meta-computed-key']
+        ? event.headers['x-amz-meta-computed-key']
         : undefined;
 
     if (!file) {
       const response = {
         statusCode: 400,
         body: JSON.stringify({
-          message: `Missing x-amz-meta-producer-key header`,
+          message: `Missing x-amz-meta-computed-key header`,
         }),
       };
 
       return callback(null, response);
     }
 
-    const extension = path.extname(file);
-
     // If producer has correctly submitted a key.
     const params = {
-      ACL: 'public-read',
       Bucket: bucket,
-      Key: `${username}/${uuid()}${extension}`,
+      Key: file,
       Expires: 300,
-      Metadata: {
-        producer: userArn,
-        'original-key': file,
-      },
     };
 
-    return s3.getSignedUrl('putObject', params, (err, url) => {
+    // TODO: call headObject to check if the object exists and if the user has the rights to access it
+
+    return s3.getSignedUrl('getObject', params, (err, url) => {
       if (err) {
         return callback(err);
       }

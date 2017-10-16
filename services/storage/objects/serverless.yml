@@ -48,6 +48,20 @@ resources:
       DependsOn: ObjectEventsTopicPolicy
       Properties:
         BucketName: eubfr-${self:provider.stage}
+        CorsConfiguration:
+          CorsRules:
+            - AllowedHeaders:
+                - "Authorization"
+              AllowedMethods:
+                - GET
+              AllowedOrigins:
+                - "*"
+            - AllowedHeaders:
+                - "*"
+              AllowedMethods:
+                - PUT
+              AllowedOrigins:
+                - "*"
         NotificationConfiguration:
           TopicConfigurations:
             -
