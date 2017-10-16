@@ -80,6 +80,8 @@ export const handler = (event, context, callback) => {
       }
     });
   });
+
+  return file;
 };
 
 export default handler;
