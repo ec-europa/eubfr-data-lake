@@ -67,11 +67,10 @@ class ProjectsList extends Component {
       <div>
         <button onClick={this.loadProjects}>Refresh</button>
         {projects.map(project => (
-          <div key={project.project_id}>
-            <h2>{project.title}</h2>
+          <details key={project.project_id}>
+            <summary>{project.title}</summary>
             <div dangerouslySetInnerHTML={{ __html: project.description }} />
-            <hr />
-          </div>
+          </details>
         ))}
       </div>
     );
