@@ -75,9 +75,10 @@ export const handler = (event, context, callback) => {
     s3.upload(params, err => {
       if (err) {
         callback(err);
-      } else {
-        callback('JSON file has been uploaded');
+        return;
       }
+
+      callback(null, 'JSON file has been uploaded');
     });
   });
 

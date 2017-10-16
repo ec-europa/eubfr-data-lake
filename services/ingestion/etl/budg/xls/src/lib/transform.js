@@ -41,16 +41,22 @@ export default record => {
   ];
 
   // Preprocess partners
+  const recordKeys = Object.keys(record);
+  const partnerKeys = recordKeys.filter(elem => {
+    const re = new RegExp('Partner ' + '([0-9]{1,2})' + ' name', 'g'); // eslint-disable-line
+    return elem.match(re);
+  });
+
   const partnerArray = [];
-  for (let i = 1; i < 39; i += 1) {
-    if (record[`Partner ${i} name`] != null) {
+  for (let i = 0; i < partnerKeys.length; i += 1) {
+    if (record[`Partner ${i + 1} name`] != null) {
       partnerArray.push({
-        name: record[`Partner ${i} name`],
-        type: record[`Partner ${i} organisation type`],
-        address: record[`Partner ${i} address`],
-        region: record[`Partner ${i} region`],
-        country: record[`Partner ${i} country`],
-        website: record[`Partner ${i} website`],
+        name: record[`Partner ${i + 1} name`],
+        type: record[`Partner ${i + 1} organisation type`],
+        address: record[`Partner ${i + 1} address`],
+        region: record[`Partner ${i + 1} region`],
+        country: record[`Partner ${i + 1} country`],
+        website: record[`Partner ${i + 1} website`],
       });
     }
   }
