@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Uploader from 'react-s3-uploader';
-import config from '../config.json'; // eslint-disable-line import/no-unresolved
+import config from '../meta/server.json'; // eslint-disable-line import/no-unresolved
 
 import handleErrors from '../lib/handleErrors';
 

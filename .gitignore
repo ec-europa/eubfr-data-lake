@@ -4,4 +4,3 @@ node_modules
 *.log
 config.json
 coverage
-stack-output.json

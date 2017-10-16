@@ -20,7 +20,7 @@ custom:
         maximum: 100      # Maximum write capacity
         usage: 0.5        # Targeted usage percentage
   output:
-    file: stack-output.json
+    file: .serverless/stack-output.json
 
 package:
   individually: true

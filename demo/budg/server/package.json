@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@eubfr/demo-server",
+  "name": "@eubfr/demo-budg-server",
   "description": "",
   "version": "0.0.1",
   "scripts": {
