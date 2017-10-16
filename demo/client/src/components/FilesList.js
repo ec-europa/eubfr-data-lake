@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
 import config from '../config.json'; // eslint-disable-line import/no-unresolved
 
-const demoServer = `${config.ServiceEndpoint}/demo`;
+import handleErrors from '../lib/handleErrors';
 
-const handleErrors = response => {
-  if (!response.ok) {
-    throw Error(response.statusText);
-  }
-  return response;
-};
+const demoServer = `${config.ServiceEndpoint}/demo`;
 
 class FilesList extends Component {
   constructor() {
