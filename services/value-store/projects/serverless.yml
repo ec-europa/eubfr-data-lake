@@ -89,6 +89,7 @@ functions:
       - http:
           path: projects
           method: get
+          cors: true
 
 resources:
   Resources:
