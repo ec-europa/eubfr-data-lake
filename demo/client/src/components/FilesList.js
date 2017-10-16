@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import config from '../config.json'; // eslint-disable-line import/no-unresolved
 
+import handleErrors from '../lib/handleErrors';
+
 const demoServer = `${config.ServiceEndpoint}/demo`;
 
 class FilesList extends Component {
@@ -28,18 +30,14 @@ class FilesList extends Component {
 
     window
       .fetch(`${demoServer}/meta`)
-      .then(response => {
-        if (response.ok) {
-          response.json().then(data => {
-            this.setState({
-              loading: false,
-              files: data,
-            });
-          });
-        } else {
-          console.log('Bad response');
-        }
-      })
+      .then(handleErrors)
+      .then(response => response.json())
+      .then(data =>
+        this.setState({
+          loading: false,
+          files: data,
+        })
+      )
       .catch(error => {
         console.log(`An error happened: ${error.message}`);
       });
@@ -49,19 +47,15 @@ class FilesList extends Component {
     return () => {
       window
         .fetch(`${demoServer}/download?key=${encodeURIComponent(key)}`)
-        .then(response => {
-          if (response.ok) {
-            response.json().then(data => {
-              this.setState(state => ({
-                links: Object.assign(state.links, {
-                  [key]: data.signedUrl,
-                }),
-              }));
-            });
-          } else {
-            console.log('Bad response');
-          }
-        })
+        .then(handleErrors)
+        .then(response => response.json())
+        .then(data =>
+          this.setState(state => ({
+            links: Object.assign(state.links, {
+              [key]: data.signedUrl,
+            }),
+          }))
+        )
         .catch(error => {
           console.log(`An error happened: ${error.message}`);
         });
