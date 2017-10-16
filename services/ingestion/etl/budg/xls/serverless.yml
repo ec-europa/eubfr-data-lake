@@ -50,6 +50,16 @@ functions:
                 - Ref: "AWS::AccountId"
                 - ":${self:provider.stage}-etl-budg-xls"
           topicName: ${self:provider.stage}-etl-budg-xls
+      - sns:
+          arn:
+            Fn::Join:
+              - ""
+              - - "arn:aws:sns:"
+                - Ref: "AWS::Region"
+                - ":"
+                - Ref: "AWS::AccountId"
+                - ":${self:provider.stage}-etl-budg-xlsx"
+          topicName: ${self:provider.stage}-etl-budg-xlsx
 
 resources:
   Resources:
@@ -58,6 +68,11 @@ resources:
       Properties:
         TopicName: ${self:provider.stage}-etl-budg-xls
         DisplayName: BUDG XLS ETL
+    SNSTopicBUDGXLSX:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: ${self:provider.stage}-etl-budg-xlsx
+        DisplayName: BUDG XLSX ETL
     SNSTopicBUDGXLSPolicy:
       Type: AWS::SNS::TopicPolicy
       Properties:
@@ -74,3 +89,5 @@ resources:
         Topics:
           -
             Ref: SNSTopicBUDGXLS
+          -
+            Ref: SNSTopicBUDGXLSX
