@@ -39,31 +39,30 @@ export const handler = (event, context, callback) => {
   const file = s3
     .getObject({
       Bucket: message.bucket.name,
-      Key: message.object.key
+      Key: message.object.key,
     })
     .createReadStream();
 
   // Put data in buffer
   const buffers = [];
-  file.on('data', function(data) {
+  file.on('data', data => {
     buffers.push(data);
   });
 
   // Manage data
-  file.on('end', function() {
+  file.on('end', () => {
     // Parse file
     const buffer = Buffer.concat(buffers);
     const workbook = XLSX.read(buffer);
-    const sheet_name_list = workbook.SheetNames;
-    const parser =
-      XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
+    const sheetNameList = workbook.SheetNames;
+    const parser = XLSX.utils.sheet_to_json(workbook.Sheets[sheetNameList[0]]);
 
     let dataString = '';
-    for (let i= 0; i < parser.length; i++) {
+    for (let i = 0; i < parser.length; i += 1) {
       // Transform data
       const data = transformRecord(parser[i]);
       dataString += `${JSON.stringify(data)}\n`;
-    };
+    }
 
     // Load data
     const params = {
@@ -76,14 +75,11 @@ export const handler = (event, context, callback) => {
     s3.upload(params, err => {
       if (err) {
         callback(err);
-      }
-      else {
+      } else {
         callback('JSON file has been uploaded');
       }
     });
   });
-
-  return;
 };
 
 export default handler;
