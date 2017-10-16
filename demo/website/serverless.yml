@@ -1,13 +1,12 @@
-service: demo-client
+service: demo-website
 
 plugins:
   - serverless-finch
 
 custom:
   client:
-    bucketName: eubfr-${self:provider.stage}-site
+    bucketName: eubfr-${self:provider.stage}-demo-website
   eubfrEnvironment: ${opt:eubfr_env, file(../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
-  SIGNED_UPLOADS_API_ID: ${opt:SIGNED_UPLOADS_API_ID, file(../../config.json):demo.SIGNED_UPLOADS_API_ID, env:SIGNED_UPLOADS_API_ID, ''}
 
 provider:
   name: aws

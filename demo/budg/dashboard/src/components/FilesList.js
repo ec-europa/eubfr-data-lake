@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import config from '../config.json'; // eslint-disable-line import/no-unresolved
+import config from '../meta/server.json'; // eslint-disable-line import/no-unresolved
 
 import handleErrors from '../lib/handleErrors';
 
