@@ -58,57 +58,14 @@ Make sure your environment is ready
 Deploy on root
   - go to root of the project
   - `yarn deploy`
-
-Deploy the facade
-  - go to 'services/ingestion/facade'
-  - `yarn deploy`
+  - `yarn deploy-demo`
 
 It automatically creates everything you need (bucket, database, ...)
 
-## AWS configuration
-
-Environment should be already configured, but to be sure, check that:
-
-- API Gateway is correctly created, with a 'test' step
-- Use plan 'TEST' is correctly created, with API step and API key configured
-
 ## Send data
 
-Install postman
+Open the demo dashboard: `http://eubfr-<your_stage_name>-demo-budg-dashboard.s3-website.eu-central-1.amazonaws.com/`.
 
-  - https://www.getpostman.com/
-  - also available as chrome app
+This page is a demo of what a producer dashboard could provide. From there, upload a test file (CSV, XLS). Then, hit the "Refresh" button to see if your file appears in the meta index.
 
-Add a header to postman
-
-  - `key: x-api-key`
-  - `value: <api_key_value>`
-
-Add your data file in postman
-
-  - In 'body' tab, select 'binary'
-  - Select the file you want to send
-
-
-Get API url
-
-  - Go to [AWS console](https://eu-central-1.console.aws.amazon.com/apigateway/home?region=eu-central-1#/apis)
-  - Open 'EUBFRs3Proxy' API
-  - In 'Steps', select 'test'
-  - API url is displayed at screen top
-
-
-Add target in postman
-  - <api_url>/projects?key=<your_file_name>
-
-Note: the file should be correctly formatted
-
-Send the data
-
-  - Select 'PUT', in the list before the target
-  - Hit 'Send'
-
-## Check results
-
-- Go to your [S3 bucket](https://s3.console.aws.amazon.com/s3/home?region=eu-central-1), verify that the file has been uploaded.
-- Go to your [database](https://eu-central-1.console.aws.amazon.com/dynamodb/home?region=eu-central-1#tables:) and verify fields have been extracted.
+Now if you want to see the results of the ETL, you can check `http://eubfr-<your_stage_name>-demo-website.s3-website.eu-central-1.amazonaws.com/`. This page lists all the projects for the current stage name.

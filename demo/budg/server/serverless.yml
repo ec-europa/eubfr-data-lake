@@ -11,6 +11,7 @@ custom:
   PRODUCER_KEY_ID: ${opt:PRODUCER_KEY_ID, file(../../../config.json):demo.AWS_ACCESS_KEY_ID, env:PRODUCER_KEY_ID, ''}
   PRODUCER_SECRET_ACCESS_KEY: ${opt:PRODUCER_SECRET_ACCESS_KEY, file(../../../config.json):demo.AWS_SECRET_ACCESS_KEY, env:PRODUCER_SECRET_ACCESS_KEY, ''}
   SIGNED_UPLOADS_API: ${opt:SIGNED_UPLOADS_API, file(../../../services/storage/signed-uploads/.serverless/stack-output.json):ServiceEndpoint, env:SIGNED_UPLOADS_API, ''}
+  DELETER_API: ${opt:DELETER_API, file(../../../services/storage/deleter/.serverless/stack-output.json):ServiceEndpoint, env:DELETER_API, ''}
   META_INDEX_API: ${opt:META_INDEX_API, file(../../../services/storage/meta-index/.serverless/stack-output.json):ServiceEndpoint, env:META_INDEX_API, ''}
   output:
     file: .serverless/stack-output.json
@@ -49,6 +50,20 @@ functions:
     events:
       - http:
           path: demo/download
+          method: get
+          cors: true
+  delete:
+    handler: src/api/delete.handler
+    name: ${self:provider.stage}-${self:service}-delete
+    memorySize: 128
+    timeout: 60
+    environment:
+      PRODUCER_KEY_ID: ${self:custom.PRODUCER_KEY_ID}
+      PRODUCER_SECRET_ACCESS_KEY: ${self:custom.PRODUCER_SECRET_ACCESS_KEY}
+      DELETER_API: ${self:custom.DELETER_API}
+    events:
+      - http:
+          path: demo/delete
           method: get
           cors: true
   meta:
