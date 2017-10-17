@@ -16,6 +16,7 @@ class FilesList extends Component {
     };
 
     this.generateLink = this.generateLink.bind(this);
+    this.deleteFile = this.deleteFile.bind(this);
     this.loadFiles = this.loadFiles.bind(this);
   }
 
@@ -41,6 +42,19 @@ class FilesList extends Component {
       .catch(error => {
         console.log(`An error happened: ${error.message}`);
       });
+  }
+
+  deleteFile(key) {
+    return () => {
+      window
+        .fetch(`${demoServer}/delete?key=${encodeURIComponent(key)}`)
+        .then(handleErrors)
+        .then(response => response.json())
+        .then(this.loadFiles)
+        .catch(error => {
+          console.log(`An error happened: ${error.message}`);
+        });
+    };
   }
 
   generateLink(key) {
@@ -87,7 +101,7 @@ class FilesList extends Component {
               <th>Original name</th>
               <th>Computed key</th>
               <th>Content length</th>
-              <th />
+              <th colSpan="2">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -104,6 +118,11 @@ class FilesList extends Component {
                       Get download link
                     </button>
                   )}
+                </td>
+                <td>
+                  <button onClick={this.deleteFile(file.computed_key)}>
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}
