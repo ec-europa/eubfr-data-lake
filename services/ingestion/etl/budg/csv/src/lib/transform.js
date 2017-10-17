@@ -62,7 +62,7 @@ export default record => {
   }));
 
   // Preprocess partners
-  const partnerArray = record.Coordinators.split(';').map(partner => ({
+  const partnerArray = record.Partners.split(',').map(partner => ({
     name: partner,
     type: null,
     address: null,
