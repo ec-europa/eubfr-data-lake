@@ -64,8 +64,8 @@ It automatically creates everything you need (bucket, database, ...)
 
 ## Send data
 
-Open the demo dashboard: http://eubfr-<your_stage_name>-demo-budg-dashboard.s3-website.eu-central-1.amazonaws.com/
+Open the demo dashboard: `http://eubfr-<your_stage_name>-demo-budg-dashboard.s3-website.eu-central-1.amazonaws.com/`.
 
 This page is a demo of what a producer dashboard could provide. From there, upload a test file (CSV, XLS). Then, hit the "Refresh" button to see if your file appears in the meta index.
 
-Now if you want to see the results of the ETL, you can check http://eubfr-<your_stage_name>-demo-website.s3-website.eu-central-1.amazonaws.com/. This page lists all the projects for the current stage name.
+Now if you want to see the results of the ETL, you can check `http://eubfr-<your_stage_name>-demo-website.s3-website.eu-central-1.amazonaws.com/`. This page lists all the projects for the current stage name.
