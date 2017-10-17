@@ -1,5 +1,5 @@
 /*
- * Transform message
+ * Transform message (BUDGCSV)
  */
 
 /*
@@ -51,6 +51,36 @@ export default record => {
       },
     }));
 
+  // Preprocess coordinators
+  const coordArray = record.Coordinators
+    .split(';')
+    .map(coordinator => ({
+      name: coordinator,
+      type: null,
+      address: null,
+      region: null,
+      country: null,
+      website: null,
+    }));
+
+  // Preprocess partners
+  const partnerArray = record.Coordinators
+    .split(';')
+    .map(partner => ({
+      name: partner,
+      type: null,
+      address: null,
+      region: null,
+      country: null,
+      website: null,
+    }));
+
+  // Preprocess results
+  const resultObject = {
+    available: null,
+    result: record.Results,
+  };
+
   // Map the fields
   return {
     project_id: record.Nid,
@@ -58,11 +88,11 @@ export default record => {
     cover_image: record.Visual,
     programme_name: record['Programme name'],
     description: record['Project description'],
-    results: record.Results,
+    results: resultObject,
     ec_priorities: record['EC’s priorities'].split(';'),
-    coordinators: record.Coordinators.split(';'),
+    coordinators: coordArray,
     eu_budget_contribution: Number(record['EU Budget contribution']),
-    partners: record.Partners.split(';'),
+    partners: partnerArray,
     project_locations: projectLocations,
     timeframe: {
       from:
