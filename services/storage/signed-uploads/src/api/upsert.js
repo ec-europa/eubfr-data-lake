@@ -48,6 +48,7 @@ export const handler = (event, context, callback) => {
 
     // If producer has correctly submitted a key.
     const params = {
+      ACL: 'public-read',
       Bucket: bucket,
       Key: `${username}/${uuid()}${extension}`,
       Expires: 300,
