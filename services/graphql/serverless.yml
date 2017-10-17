@@ -1,0 +1,33 @@
+service: graphql
+
+plugins:
+  - serverless-webpack
+  - serverless-offline #serverless-offline needs to be last in the list
+
+custom:
+  webpackIncludeModules: true
+  eubfrEnvironment: ${opt:eubfr_env, file(../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
+  serverless-offline:
+    port: 4000
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  stage: ${opt:stage, file(../../config.json):stage, 'dev'}
+  region: ${opt:region, file(../../config.json):region, 'eu-central-1'}
+  deploymentBucket:
+    name: eubfr-${self:custom.eubfrEnvironment}-deploy
+  stackTags:
+    ENV: ${self:custom.eubfrEnvironment}
+  versionFunctions: false
+
+functions:
+  docroot:
+    handler: src/api/graphql.handler
+    name: ${self:provider.stage}-${self:service}
+    memorySize: 128
+    events:
+      - http:
+          path: /graphql
+          method: post
+          cors: true
