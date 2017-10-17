@@ -7675,7 +7675,7 @@ serverless-offline@3.16.0:
     lodash "^4.17.4"
     velocityjs "^0.9.3"
 
-serverless-stack-output@0.2.0, serverless-stack-output@^0.2.0:
+serverless-stack-output@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/serverless-stack-output/-/serverless-stack-output-0.2.0.tgz#95178727b4b0999ece09251cb24eaa01cdcda63d"
   dependencies:
