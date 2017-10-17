@@ -16,6 +16,7 @@
     "*.{js,json}": ["prettier --write", "git add"]
   },
   "devDependencies": {
+    "babel-core": "6.26.0",
     "eslint": "4.9.0",
     "eslint-config-airbnb-base": "12.1.0",
     "eslint-config-prettier": "2.6.0",

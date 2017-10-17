@@ -60,9 +60,7 @@ yarn deploy
 
 ## Deploy the demo
 
-First, make sure you have deployed the services. Then, update your `config.json` with the API Gateway IDs generated during the deployment of the services.
-
-Finally:
+First, make sure you have deployed the services. Then:
 
 ```sh
 yarn deploy-demo

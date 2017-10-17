@@ -10,8 +10,8 @@ custom:
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
   PRODUCER_KEY_ID: ${opt:PRODUCER_KEY_ID, file(../../../config.json):demo.AWS_ACCESS_KEY_ID, env:PRODUCER_KEY_ID, ''}
   PRODUCER_SECRET_ACCESS_KEY: ${opt:PRODUCER_SECRET_ACCESS_KEY, file(../../../config.json):demo.AWS_SECRET_ACCESS_KEY, env:PRODUCER_SECRET_ACCESS_KEY, ''}
-  SIGNED_UPLOADS_API_ID: ${opt:SIGNED_UPLOADS_API_ID, file(../../../config.json):demo.SIGNED_UPLOADS_API_ID, env:SIGNED_UPLOADS_API_ID, ''}
-  META_INDEX_API_ID: ${opt:META_INDEX_API_ID, file(../../../config.json):demo.META_INDEX_API_ID, env:META_INDEX_API_ID, ''}
+  SIGNED_UPLOADS_API: ${opt:SIGNED_UPLOADS_API, file(../../../services/storage/signed-uploads/.serverless/stack-output.json):ServiceEndpoint, env:SIGNED_UPLOADS_API, ''}
+  META_INDEX_API: ${opt:META_INDEX_API, file(../../../services/storage/meta-index/.serverless/stack-output.json):ServiceEndpoint, env:META_INDEX_API, ''}
   output:
     file: .serverless/stack-output.json
   serverless-offline:
@@ -22,9 +22,6 @@ provider:
   runtime: nodejs6.10
   stage: ${opt:stage, file(../../../config.json):stage, 'dev'}
   region: ${opt:region, file(../../../config.json):region, 'eu-central-1'}
-  environment:
-    REGION: ${self:provider.region}
-    BUCKET: eubfr-${self:provider.stage}
   deploymentBucket:
     name: eubfr-${self:custom.eubfrEnvironment}-deploy
   stackTags:
@@ -48,9 +45,7 @@ functions:
     environment:
       PRODUCER_KEY_ID: ${self:custom.PRODUCER_KEY_ID}
       PRODUCER_SECRET_ACCESS_KEY: ${self:custom.PRODUCER_SECRET_ACCESS_KEY}
-      SIGNED_UPLOADS_API_ID: ${self:custom.SIGNED_UPLOADS_API_ID}
-      STAGE: ${self:provider.stage}
-      REGION: ${self:provider.region}
+      SIGNED_UPLOADS_API: ${self:custom.SIGNED_UPLOADS_API}
     events:
       - http:
           path: demo/download
@@ -63,9 +58,7 @@ functions:
     environment:
       PRODUCER_KEY_ID: ${self:custom.PRODUCER_KEY_ID}
       PRODUCER_SECRET_ACCESS_KEY: ${self:custom.PRODUCER_SECRET_ACCESS_KEY}
-      META_INDEX_API_ID: ${self:custom.META_INDEX_API_ID}
-      STAGE: ${self:provider.stage}
-      REGION: ${self:provider.region}
+      META_INDEX_API: ${self:custom.META_INDEX_API}
     events:
       - http:
           path: demo/meta
@@ -79,9 +72,7 @@ functions:
     environment:
       PRODUCER_KEY_ID: ${self:custom.PRODUCER_KEY_ID}
       PRODUCER_SECRET_ACCESS_KEY: ${self:custom.PRODUCER_SECRET_ACCESS_KEY}
-      SIGNED_UPLOADS_API_ID: ${self:custom.SIGNED_UPLOADS_API_ID}
-      STAGE: ${self:provider.stage}
-      REGION: ${self:provider.region}
+      SIGNED_UPLOADS_API: ${self:custom.SIGNED_UPLOADS_API}
     events:
       - http:
           path: demo/signed_url

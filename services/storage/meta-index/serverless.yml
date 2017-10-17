@@ -1,6 +1,7 @@
 service: storage-meta-index
 
 plugins:
+  - serverless-stack-output
   - serverless-dynamodb-autoscaling
   - serverless-webpack
 
@@ -18,6 +19,8 @@ custom:
         minimum: 5        # Minimum write capacity
         maximum: 100      # Maximum write capacity
         usage: 0.5        # Targeted usage percentage
+  output:
+    file: .serverless/stack-output.json
 
 package:
   individually: true
