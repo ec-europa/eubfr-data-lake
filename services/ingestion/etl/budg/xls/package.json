@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@eubfr/ingestion-etl-budg-csv",
+  "name": "@eubfr/ingestion-etl-budg-xls",
   "version": "0.0.1",
   "scripts": {
     "deploy": "sls deploy -v",
@@ -17,7 +17,6 @@
     "webpack": "3.7.1"
   },
   "dependencies": {
-    "csv-parse": "1.2.4",
-    "stream-transform": "0.1.2"
+    "xlsx": "0.11.6"
   }
 }

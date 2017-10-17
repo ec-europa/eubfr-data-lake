@@ -39,7 +39,6 @@ export const handler = (event, context, callback) => {
     Bucket: BUCKET,
     Key: `${s3record.s3.object.key}.ndjson`,
   };
-  console.log('params', params);
 
   return s3.deleteObject(params, err => {
     if (err) {
