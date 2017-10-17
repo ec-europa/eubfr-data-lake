@@ -1,7 +1,9 @@
 import { graphiqlLambda } from 'apollo-server-lambda';
 
-export const handler = graphiqlLambda({
-  endpointURL: '/graphql',
-});
+const endpointURL = process.env.PROD
+  ? `/${process.env.STAGE}/graphql`
+  : `/graphql`;
+
+export const handler = graphiqlLambda({ endpointURL });
 
 export default handler;

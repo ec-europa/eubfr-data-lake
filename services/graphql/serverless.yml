@@ -38,6 +38,9 @@ functions:
     handler: src/api/graphiql.handler
     name: ${self:provider.stage}-${self:service}-graphiql
     memorySize: 128
+    environment:
+      STAGE: ${self:provider.stage}
+      PROD: ${env:PROD}
     events:
     - http:
         path: graphiql

@@ -38,3 +38,7 @@ cd ../etl/budg/csv
 # Deploy value store - projects
 cd ../../../../value-store/projects
 ./node_modules/.bin/serverless deploy -v
+
+# Deploy the GraphQL API - should be last, as it needs outputs of previous serivces
+cd ../../graphql
+./node_modules/.bin/serverless deploy -v
