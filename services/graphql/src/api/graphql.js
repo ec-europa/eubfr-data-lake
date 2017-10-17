@@ -1,17 +1,24 @@
-export const handler = (event, context, cb) => {
-  const response = {
-    statusCode: 200,
-    headers: {
-      'Access-Control-Allow-Origin': '*', // Required for CORS support
-      'Access-Control-Allow-Credentials': true, // Required for cookies, authorization headers with HTTPS
-    },
-    body: JSON.stringify({
-      message:
-        'GraphQL placeholder',
-    }),
+import { graphqlLambda } from 'apollo-server-lambda';
+import { makeExecutableSchema } from 'graphql-tools';
+
+import { schema } from './schema';
+import { resolvers } from './resolvers';
+
+const myGraphQLSchema = makeExecutableSchema({
+  typeDefs: schema,
+  resolvers,
+  logger: console,
+});
+
+export const handler = (event, context, callback) => {
+  const callbackFilter = (error, output) => {
+    // eslint-disable-next-line no-param-reassign
+    output.headers['Access-Control-Allow-Origin'] = '*';
+    callback(error, output);
   };
 
-  cb(null, response);
+  const gLambda = graphqlLambda({ schema: myGraphQLSchema });
+  return gLambda(event, context, callbackFilter);
 };
 
 export default handler;

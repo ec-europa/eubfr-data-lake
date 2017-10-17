@@ -22,7 +22,7 @@ provider:
   versionFunctions: false
 
 functions:
-  docroot:
+  graphql:
     handler: src/api/graphql.handler
     name: ${self:provider.stage}-${self:service}
     memorySize: 128
@@ -31,3 +31,12 @@ functions:
           path: /graphql
           method: post
           cors: true
+  graphiql:
+    handler: src/api/graphiql.handler
+    name: ${self:provider.stage}-${self:service}-graphiql
+    memorySize: 128
+    events:
+    - http:
+        path: graphiql
+        method: get
+        cors: true
