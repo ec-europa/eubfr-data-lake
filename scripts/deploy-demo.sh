@@ -7,14 +7,16 @@ set -ex
 cd "$(dirname "$0")"
 cd ..
 
-# Deploy demo
+# Deploy demos
 
-cd ./demo/server
+## BUDG demo
+
+cd ./demo/budg/server
 echo 'Start demo server deploy ...'
 yarn deploy
 
-cd ../client
-echo 'Start demo client deploy ...'
+cd ../dashboard
+echo 'Start demo dashboard deploy ...'
 
 echo 'Cleaning previous builds ...'
 rm -rf build client
@@ -22,5 +24,19 @@ rm -rf build client
 echo 'serverless-finch needs a /client folder'
 mkdir client
 
-echo 'Deploying ...'
+echo 'Deploying BUDG dashboard...'
+yarn run release
+
+## Website demo
+
+cd ../../website
+echo 'Start demo website deploy ...'
+
+echo 'Cleaning previous builds ...'
+rm -rf build client
+
+echo 'serverless-finch needs a /client folder'
+mkdir client
+
+echo 'Deploying website...'
 yarn run release

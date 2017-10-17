@@ -1,25 +1,24 @@
 {
   "private": true,
-  "name": "@eubfr/value-store-projects",
+  "name": "@eubfr/demo-budg-server",
+  "description": "",
   "version": "0.0.1",
   "scripts": {
     "deploy": "sls deploy -v",
-    "test:unit": "jest --testPathPattern=unit"
+    "start": "sls offline start"
   },
   "devDependencies": {
     "aws-sdk": "2.133.0",
     "babel-core": "6.26.0",
     "babel-loader": "7.1.2",
     "babel-preset-env": "1.6.0",
-    "jest": "21.2.1",
     "serverless": "1.23.0",
-    "serverless-dynamodb-autoscaling": "0.6.2",
+    "serverless-offline": "3.16.0",
     "serverless-stack-output": "0.2.0",
     "serverless-webpack": "3.1.2",
     "webpack": "3.7.1"
   },
   "dependencies": {
-    "split2": "2.2.0",
-    "through2": "2.0.3"
+    "aws4": "1.6.0"
   }
 }
