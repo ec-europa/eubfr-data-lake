@@ -52,28 +52,24 @@ export default record => {
     }));
 
   // Preprocess coordinators
-  const coordArray = record.Coordinators
-    .split(';')
-    .map(coordinator => ({
-      name: coordinator,
-      type: null,
-      address: null,
-      region: null,
-      country: null,
-      website: null,
-    }));
+  const coordArray = record.Coordinators.split(';').map(coordinator => ({
+    name: coordinator,
+    type: null,
+    address: null,
+    region: null,
+    country: null,
+    website: null,
+  }));
 
   // Preprocess partners
-  const partnerArray = record.Coordinators
-    .split(';')
-    .map(partner => ({
-      name: partner,
-      type: null,
-      address: null,
-      region: null,
-      country: null,
-      website: null,
-    }));
+  const partnerArray = record.Coordinators.split(';').map(partner => ({
+    name: partner,
+    type: null,
+    address: null,
+    region: null,
+    country: null,
+    website: null,
+  }));
 
   // Preprocess results
   const resultObject = {
