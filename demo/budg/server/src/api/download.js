@@ -1,10 +1,9 @@
 const https = require('https');
 const aws4 = require('aws4');
+const url = require('url');
 
 export const handler = (event, context, callback) => {
-  const region = process.env.REGION;
-  const apiGatewayId = process.env.SIGNED_UPLOADS_API_ID;
-  const stage = process.env.STAGE;
+  const apiEndpoint = url.parse(process.env.SIGNED_UPLOADS_API);
   const endpoint = '/storage/download';
   const accessKeyId = process.env.PRODUCER_KEY_ID;
   const secretAccessKey = process.env.PRODUCER_SECRET_ACCESS_KEY;
@@ -25,10 +24,12 @@ export const handler = (event, context, callback) => {
     return callback(null, response);
   }
 
+  // https://f9pwfxauvg.execute-api.eu-central-1.amazonaws.com/huartya17
+
   const params = {
-    host: `${apiGatewayId}.execute-api.${region}.amazonaws.com`,
+    host: apiEndpoint.host,
     method: 'GET',
-    path: `/${stage}${endpoint}`,
+    path: `${apiEndpoint.pathname}${endpoint}`,
     headers: {
       'x-amz-meta-computed-key': computedKey,
     },
