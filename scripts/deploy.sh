@@ -15,6 +15,10 @@ cd ./services/storage/objects
 cd ../signed-uploads
 ./node_modules/.bin/serverless deploy -v
 
+# Deploy deleter service
+cd ../deleter
+./node_modules/.bin/serverless deploy -v
+
 # Deploy storage meta index
 cd ../meta-index
 ./node_modules/.bin/serverless deploy -v

@@ -1,0 +1,48 @@
+service: storage-deleter
+
+plugins:
+  - serverless-stack-output
+  - serverless-webpack
+  - serverless-offline #serverless-offline needs to be last in the list
+
+custom:
+  webpackIncludeModules: true
+  eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
+  serverless-offline:
+    port: 4000
+  output:
+    file: .serverless/stack-output.json
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  stage: ${opt:stage, file(../../../config.json):stage, 'dev'}
+  region: ${opt:region, file(../../../config.json):region, 'eu-central-1'}
+  environment:
+    REGION: ${self:provider.region}
+    BUCKET: eubfr-${self:provider.stage}
+  deploymentBucket:
+    name: eubfr-${self:custom.eubfrEnvironment}-deploy
+  stackTags:
+    ENV: ${self:custom.eubfrEnvironment}
+  versionFunctions: false
+  iamRoleStatements:
+    -  Effect: "Allow"
+       Action:
+         - "s3:*"
+       Resource: "*"
+    - Effect: Allow
+      Action:
+        - iam:ListGroupsForUser
+      Resource: "*"
+
+functions:
+  delete-objects:
+    handler: src/api/delete.handler
+    name: ${self:provider.stage}-${self:service}-delete-objects
+    memorySize: 128
+    events:
+      - http:
+          path: storage/delete
+          method: get
+          authorizer: aws_iam
