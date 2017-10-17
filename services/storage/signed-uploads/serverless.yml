@@ -47,6 +47,16 @@ functions:
           path: storage
           method: get
           cors: true
+  download-objects:
+    handler: src/api/download.handler
+    name: ${self:provider.stage}-${self:service}-download-objects
+    memorySize: 128
+    events:
+      - http:
+          path: storage/download
+          method: get
+          authorizer: aws_iam
+
   upsert-objects:
     handler: src/api/upsert.handler
     name: ${self:provider.stage}-${self:service}-upsert-objects

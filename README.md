@@ -38,7 +38,7 @@ Test the services:
 yarn test
 ```
 
-## Deploy
+## Deploy the services
 
 First, you need to [set up your AWS credentials](https://serverless.com/framework/docs/providers/aws/guide/credentials/).
 
@@ -56,6 +56,16 @@ Go to the folder of the service you want to deploy and type:
 
 ```sh
 yarn deploy
+```
+
+## Deploy the demo
+
+First, make sure you have deployed the services. Then, update your `config.json` with the API Gateway IDs generated during the deployment of the services.
+
+Finally:
+
+```sh
+yarn deploy-demo
 ```
 
 ## Notes

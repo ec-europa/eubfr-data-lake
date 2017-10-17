@@ -1,0 +1,89 @@
+service: demo-budg-server
+
+plugins:
+  - serverless-stack-output
+  - serverless-webpack
+  - serverless-offline #serverless-offline needs to be last in the list
+
+custom:
+  webpackIncludeModules: true
+  eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
+  PRODUCER_KEY_ID: ${opt:PRODUCER_KEY_ID, file(../../../config.json):demo.AWS_ACCESS_KEY_ID, env:PRODUCER_KEY_ID, ''}
+  PRODUCER_SECRET_ACCESS_KEY: ${opt:PRODUCER_SECRET_ACCESS_KEY, file(../../../config.json):demo.AWS_SECRET_ACCESS_KEY, env:PRODUCER_SECRET_ACCESS_KEY, ''}
+  SIGNED_UPLOADS_API_ID: ${opt:SIGNED_UPLOADS_API_ID, file(../../../config.json):demo.SIGNED_UPLOADS_API_ID, env:SIGNED_UPLOADS_API_ID, ''}
+  META_INDEX_API_ID: ${opt:META_INDEX_API_ID, file(../../../config.json):demo.META_INDEX_API_ID, env:META_INDEX_API_ID, ''}
+  output:
+    file: .serverless/stack-output.json
+  serverless-offline:
+    port: 4000
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  stage: ${opt:stage, file(../../../config.json):stage, 'dev'}
+  region: ${opt:region, file(../../../config.json):region, 'eu-central-1'}
+  environment:
+    REGION: ${self:provider.region}
+    BUCKET: eubfr-${self:provider.stage}
+  deploymentBucket:
+    name: eubfr-${self:custom.eubfrEnvironment}-deploy
+  stackTags:
+    ENV: ${self:custom.eubfrEnvironment}
+
+functions:
+  docroot:
+    handler: src/api/docroot.handler
+    name: ${self:provider.stage}-${self:service}-docroot
+    memorySize: 128
+    events:
+      - http:
+          path: demo
+          method: get
+          cors: true
+  download:
+    handler: src/api/download.handler
+    name: ${self:provider.stage}-${self:service}-download
+    memorySize: 128
+    timeout: 60
+    environment:
+      PRODUCER_KEY_ID: ${self:custom.PRODUCER_KEY_ID}
+      PRODUCER_SECRET_ACCESS_KEY: ${self:custom.PRODUCER_SECRET_ACCESS_KEY}
+      SIGNED_UPLOADS_API_ID: ${self:custom.SIGNED_UPLOADS_API_ID}
+      STAGE: ${self:provider.stage}
+      REGION: ${self:provider.region}
+    events:
+      - http:
+          path: demo/download
+          method: get
+          cors: true
+  meta:
+    handler: src/api/meta.handler
+    name: ${self:provider.stage}-${self:service}-meta
+    memorySize: 128
+    environment:
+      PRODUCER_KEY_ID: ${self:custom.PRODUCER_KEY_ID}
+      PRODUCER_SECRET_ACCESS_KEY: ${self:custom.PRODUCER_SECRET_ACCESS_KEY}
+      META_INDEX_API_ID: ${self:custom.META_INDEX_API_ID}
+      STAGE: ${self:provider.stage}
+      REGION: ${self:provider.region}
+    events:
+      - http:
+          path: demo/meta
+          method: get
+          cors: true
+  signed-url:
+    handler: src/api/signedUrl.handler
+    name: ${self:provider.stage}-${self:service}-signed-url
+    memorySize: 128
+    timeout: 60
+    environment:
+      PRODUCER_KEY_ID: ${self:custom.PRODUCER_KEY_ID}
+      PRODUCER_SECRET_ACCESS_KEY: ${self:custom.PRODUCER_SECRET_ACCESS_KEY}
+      SIGNED_UPLOADS_API_ID: ${self:custom.SIGNED_UPLOADS_API_ID}
+      STAGE: ${self:provider.stage}
+      REGION: ${self:provider.region}
+    events:
+      - http:
+          path: demo/signed_url
+          method: get
+          cors: true
