@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+
 import config from '../meta/server.json'; // eslint-disable-line import/no-unresolved
 
 import handleErrors from '../lib/handleErrors';
@@ -101,7 +103,7 @@ class FilesList extends Component {
               <th>Original name</th>
               <th>Computed key</th>
               <th>Content length</th>
-              <th colSpan="2">Actions</th>
+              <th colSpan="3">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -123,6 +125,11 @@ class FilesList extends Component {
                   <button onClick={this.deleteFile(file.computed_key)}>
                     Delete
                   </button>
+                </td>
+                <td>
+                  <Link to={`/file/${encodeURIComponent(file.computed_key)}`}>
+                    Update
+                  </Link>
                 </td>
               </tr>
             ))}
