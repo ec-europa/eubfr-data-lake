@@ -93,3 +93,17 @@ functions:
           path: demo/signed_url
           method: get
           cors: true
+  update:
+    handler: src/api/update.handler
+    name: ${self:provider.stage}-${self:service}-update
+    memorySize: 128
+    timeout: 60
+    environment:
+      PRODUCER_KEY_ID: ${self:custom.PRODUCER_KEY_ID}
+      PRODUCER_SECRET_ACCESS_KEY: ${self:custom.PRODUCER_SECRET_ACCESS_KEY}
+      SIGNED_UPLOADS_API: ${self:custom.SIGNED_UPLOADS_API}
+    events:
+      - http:
+          path: demo/update
+          method: get
+          cors: true

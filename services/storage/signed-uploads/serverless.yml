@@ -59,7 +59,15 @@ functions:
           path: storage/download
           method: get
           authorizer: aws_iam
-
+  update-objects:
+    handler: src/api/update.handler
+    name: ${self:provider.stage}-${self:service}-update-objects
+    memorySize: 128
+    events:
+      - http:
+          path: storage/update
+          method: get
+          authorizer: aws_iam
   upsert-objects:
     handler: src/api/upsert.handler
     name: ${self:provider.stage}-${self:service}-upsert-objects
