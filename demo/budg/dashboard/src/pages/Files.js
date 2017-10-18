@@ -2,8 +2,7 @@ import React from 'react';
 import FilesList from '../components/FilesList';
 
 const Files = () => (
-  <div>
-    <h2>Existing files</h2>
+  <div className="ecl-u-mv-m">
     <FilesList />
   </div>
 );

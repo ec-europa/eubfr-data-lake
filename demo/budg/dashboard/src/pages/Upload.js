@@ -2,8 +2,7 @@ import React from 'react';
 import FormUpload from '../components/FormUpload';
 
 const Upload = () => (
-  <div>
-    <h2>Upload a new file</h2>
+  <div className="ecl-u-mv-m">
     <FormUpload />
   </div>
 );
