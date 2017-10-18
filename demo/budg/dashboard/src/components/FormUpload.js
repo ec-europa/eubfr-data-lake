@@ -1,10 +1,22 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Uploader from 'react-s3-uploader';
 import config from '../meta/server.json'; // eslint-disable-line import/no-unresolved
 
 import handleErrors from '../lib/handleErrors';
 
-const demoSignedUrl = `${config.ServiceEndpoint}/demo/signed_url`;
+const demoSignedUrl = config.ServiceEndpoint;
+
+const getUrl = (computedKey, file) => {
+  if (computedKey)
+    return `${demoSignedUrl}/demo/update?key=${encodeURIComponent(
+      computedKey
+    )}`;
+
+  return `${demoSignedUrl}/demo/signed_url?key=${encodeURIComponent(
+    file.name
+  )}`;
+};
 
 class FormUpload extends Component {
   constructor(props) {
@@ -25,7 +37,7 @@ class FormUpload extends Component {
   /* eslint class-methods-use-this: "off" */
   getSignedUrl(file, callback) {
     window
-      .fetch(`${demoSignedUrl}?key=${encodeURIComponent(file.name)}`)
+      .fetch(getUrl(this.props.computedKey, file))
       .then(handleErrors)
       .then(data => data.json())
       .then(j => {
@@ -129,5 +141,9 @@ class FormUpload extends Component {
     );
   }
 }
+
+FormUpload.propTypes = {
+  computedKey: PropTypes.string,
+};
 
 export default FormUpload;

@@ -1,9 +1,12 @@
 .dashboard {
   display: flex;
-  flex-direction: column; }
-  @media (min-width: 992px) {
-    .dashboard {
-      flex-direction: row; } }
+  flex-direction: column;
+}
+@media (min-width: 992px) {
+  .dashboard {
+    flex-direction: row;
+  }
+}
 
 .dashboard__item {
   flex-basis: 0;
