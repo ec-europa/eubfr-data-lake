@@ -74,7 +74,29 @@ class FormUpload extends Component {
   render() {
     return (
       <div className="App">
-        <p>Disclaimer</p>
+        <p>
+          <strong>WARNING!</strong>
+          <br />
+          You are about to send data to a platform hosted outside the European
+          Commission network.<br />
+          The purpose of this platform is the dissemination of information
+          toward third parties and citizens. All information on this platform
+          should be considered as public.<br />
+          Please make sure you have checked the content of the file(s) you are
+          about to send and that you have all authorization to proceed.
+        </p>
+        <p>
+          <strong>ATTENTION!</strong>
+          <br />
+          Vous êtes sur le point de transmettre des informations sur une
+          plateforme à l{"'"}extérieur du réseau de la Commission Européenne.<br />
+          Cette plateforme est utilisée pour le partage d{"'"}information vers
+          des tiers et vers le public. Toute information contenue dans cette
+          plateforme est considérée comme publique.<br />
+          Veuillez-vous assurez que vous avez vérifié le contenu des fichiers
+          que vous voulez transmettre et que vous avez l{"'"}autorisation de le
+          faire.
+        </p>
         <div className={`${`app-status `}${this.state.progress}`}>
           {this.state.message}
         </div>
