@@ -122,7 +122,9 @@ class FilesList extends Component {
                 <td>{Math.floor(file.content_length / 1024)} kB</td>
                 <td>
                   {links[file.computed_key] ? (
-                    <a href={links[file.computed_key]}>Download</a>
+                    <a className="ecl-link" href={links[file.computed_key]}>
+                      Download
+                    </a>
                   ) : (
                     <button
                       className="ecl-button ecl-button--secondary"
