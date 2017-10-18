@@ -78,12 +78,12 @@ class FormUpload extends Component {
           <strong>ATTENTION!</strong>
           <br />
           Vous êtes sur le point de transmettre des informations sur une
-          plateforme à l'extérieur du réseau de la Commission Européenne.<br />
-          Cette plateforme est utilisée pour le partage d'information vers des
-          tiers et vers le public. Toute information contenue dans cette
+          plateforme à l{"'"}extérieur du réseau de la Commission Européenne.<br />
+          Cette plateforme est utilisée pour le partage d{"'"}information vers
+          des tiers et vers le public. Toute information contenue dans cette
           plateforme est considérée comme publique.<br />
           Veuillez-vous assurez que vous avez vérifié le contenu des fichiers
-          que vous voulez transmettre et que vous avez l'autorisation de le
+          que vous voulez transmettre et que vous avez l{"'"}autorisation de le
           faire.
         </p>
         <div className={`${`app-status `}${this.state.progress}`}>
