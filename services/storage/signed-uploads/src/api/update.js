@@ -1,5 +1,4 @@
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
-import path from 'path';
 import { checkAccess } from '../lib/checkAccess';
 import { extractUsername } from '../lib/extractUsername';
 

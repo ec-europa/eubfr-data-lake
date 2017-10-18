@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import FormUpload from '../components/FormUpload';
 
 const Update = ({ match }) => (
@@ -8,5 +9,9 @@ const Update = ({ match }) => (
     <FormUpload computedKey={decodeURIComponent(match.params.id)} />
   </div>
 );
+
+Update.propTypes = {
+  match: PropTypes.object,
+};
 
 export default Update;

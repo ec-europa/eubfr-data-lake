@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Uploader from 'react-s3-uploader';
 import config from '../meta/server.json'; // eslint-disable-line import/no-unresolved
 
@@ -112,5 +113,9 @@ class FormUpload extends Component {
     );
   }
 }
+
+FormUpload.propTypes = {
+  computedKey: PropTypes.string,
+};
 
 export default FormUpload;
