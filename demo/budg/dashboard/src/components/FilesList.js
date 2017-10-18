@@ -86,16 +86,26 @@ class FilesList extends Component {
     if (files.length === 0) {
       return (
         <div>
-          <button onClick={this.loadFiles}>Refresh</button>
-          <p>No file found</p>
+          <button
+            className="ecl-button ecl-button--default"
+            onClick={this.loadFiles}
+          >
+            Refresh
+          </button>
+          <p className="ecl-paragraph">No file found</p>
         </div>
       );
     }
 
     return (
       <div className="files-list">
-        <button onClick={this.loadFiles}>Refresh</button>
-        <table>
+        <button
+          className="ecl-button ecl-button--default"
+          onClick={this.loadFiles}
+        >
+          Refresh
+        </button>
+        <table className="ecl-table">
           <thead>
             <tr>
               <th>Original name</th>
@@ -114,13 +124,19 @@ class FilesList extends Component {
                   {links[file.computed_key] ? (
                     <a href={links[file.computed_key]}>Download</a>
                   ) : (
-                    <button onClick={this.generateLink(file.computed_key)}>
+                    <button
+                      className="ecl-button ecl-button--secondary"
+                      onClick={this.generateLink(file.computed_key)}
+                    >
                       Get download link
                     </button>
                   )}
                 </td>
                 <td>
-                  <button onClick={this.deleteFile(file.computed_key)}>
+                  <button
+                    className="ecl-button ecl-button--secondary"
+                    onClick={this.deleteFile(file.computed_key)}
+                  >
                     Delete
                   </button>
                 </td>

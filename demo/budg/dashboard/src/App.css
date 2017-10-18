@@ -27,8 +27,8 @@
   width: 100%;
 }
 
-.app-status {
-  margin-bottom: 2em;
+.ecl-table td {
+  word-wrap: break-word;
 }
 
 .progress {

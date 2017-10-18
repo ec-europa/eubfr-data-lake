@@ -91,10 +91,10 @@ class FormUpload extends Component {
           faire.
         </p>
 
-        <div className="ecl-file-upload">
+        <div className="ecl-file-upload ecl-u-mb-s">
           <label className="ecl-file-upload__label" htmlFor="dashboard-upload">
             <span
-              className="ecl-button ecl-button--primary ecl-button--block"
+              className="ecl-button ecl-button--call ecl-button--block"
               role="button"
               aria-controls="dashboard-upload"
               tabIndex="0"
@@ -115,20 +115,11 @@ class FormUpload extends Component {
         </div>
 
         <div
-          className={`${`ecl-u-mt-s ecl-message  ecl-message--`}${this.state
+          className={`${`ecl-u-mb-s ecl-message  ecl-message--`}${this.state
             .progress}`}
           role="alert"
         >
           <span className="ecl-u-sr-only">${this.state.progress} message</span>
-
-          <button
-            type="button"
-            className="ecl-message__dismiss"
-            aria-label="Dismiss this alert"
-          >
-            &times;
-          </button>
-
           <div className="ecl-message__title">{this.state.messageTitle}</div>
           <div className="ecl-message__body ecl-u-pl-none">
             {this.state.messageBody}
