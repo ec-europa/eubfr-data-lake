@@ -1,6 +1,7 @@
 service: graphql
 
 plugins:
+  - serverless-stack-output
   - serverless-webpack
   - serverless-offline #serverless-offline needs to be last in the list
 
@@ -10,6 +11,8 @@ custom:
   PROJECTS_API: ${opt:PROJECTS_API, file(../value-store/projects/.serverless/stack-output.json):ServiceEndpoint, env:PROJECTS_API, ''}
   serverless-offline:
     port: 4000
+  output:
+    file: .serverless/stack-output.json
 
 provider:
   name: aws
