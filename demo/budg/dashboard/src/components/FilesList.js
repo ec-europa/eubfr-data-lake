@@ -93,7 +93,7 @@ class FilesList extends Component {
     }
 
     return (
-      <div>
+      <div className="files-list">
         <button onClick={this.loadFiles}>Refresh</button>
         <table>
           <thead>
