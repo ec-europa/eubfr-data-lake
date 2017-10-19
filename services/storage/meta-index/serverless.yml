@@ -92,7 +92,16 @@ functions:
           path: meta-index/list
           method: get
           authorizer: aws_iam
-
+  fileApi:
+    handler: src/api/file.handler
+    name: ${self:provider.stage}-${self:service}-file
+    environment:
+      TABLE: ${self:custom.DYNAMODB_TABLE}
+    events:
+      - http:
+          path: meta-index/file
+          method: get
+          authorizer: aws_iam
 resources:
   Resources:
     MetaIndexDynamoDbTable:

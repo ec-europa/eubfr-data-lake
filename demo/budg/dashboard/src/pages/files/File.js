@@ -12,12 +12,41 @@ class File extends React.Component {
     super();
 
     this.state = {
+      file: {}, // load file info and store it there
+      fileLoading: false,
       link: '',
       linkLoading: false,
     };
 
     this.deleteFile = this.deleteFile.bind(this);
     this.generateLink = this.generateLink.bind(this);
+    this.loadFile = this.loadFile.bind(this);
+  }
+
+  componentDidMount() {
+    this.loadFile();
+  }
+
+  loadFile() {
+    this.setState({
+      fileLoading: true,
+    });
+    const { match } = this.props;
+    const computedKey = decodeURIComponent(match.params.id);
+
+    return window
+      .fetch(`${demoServer}/filemeta?key=${encodeURIComponent(computedKey)}`)
+      .then(handleErrors)
+      .then(response => response.json())
+      .then(data =>
+        this.setState({
+          fileLoading: false,
+          file: data[0],
+        })
+      )
+      .catch(error => {
+        console.log(`An error happened: ${error.message}`);
+      });
   }
 
   deleteFile() {
@@ -59,7 +88,7 @@ class File extends React.Component {
 
   render() {
     const { match } = this.props;
-    const { link, linkLoading } = this.state;
+    const { file, fileLoading, link, linkLoading } = this.state;
     const computedKey = decodeURIComponent(match.params.id);
 
     return (
@@ -68,7 +97,6 @@ class File extends React.Component {
           <span className="ecl-icon ecl-icon--left" />Go Back
         </Link>
         <h1>File info</h1>
-        <p>Computed key: {computedKey}</p>
         {link ? (
           <a className="ecl-link" href={link}>
             <span className="ecl-icon ecl-icon--download" />
@@ -89,9 +117,18 @@ class File extends React.Component {
         >
           Delete
         </button>
-        <hr />
-        <h2>File</h2>
+        <dl>
+          <dt>Computed key</dt>
+          <dd>{computedKey}</dd>
+          <dt>Size</dt>
+          <dd>{Math.floor(file.content_length / 1024)} kB</dd>
+        </dl>
+        <h2>Update</h2>
         <FormUpload computedKey={computedKey} />
+        <h2>Related projects</h2>
+        <p>
+          <i>List of projects extracted from this file...</i>
+        </p>
       </div>
     );
   }
