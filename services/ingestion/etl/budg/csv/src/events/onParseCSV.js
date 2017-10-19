@@ -86,7 +86,7 @@ export const handler = (event, context, callback) => {
         const data = transformRecord(record);
         return cb(null, `${JSON.stringify(data)}\n`);
       } catch (e) {
-        return cb(e.message);
+        return cb(e);
       }
     },
     { parallel: 10 }
@@ -149,11 +149,11 @@ export const handler = (event, context, callback) => {
     })
     .createReadStream()
     .pipe(parser)
-    .on('error', onError)
+    .on('error', e => onError(`Error on parse: ${e.message}`))
     .pipe(transformer)
-    .on('error', onError)
+    .on('error', e => onError(`Error on transform: ${e.message}`))
     .pipe(uploadFromStream())
-    .on('error', onError);
+    .on('error', e => onError(`Error on upload: ${e.message}`));
 };
 
 export default handler;

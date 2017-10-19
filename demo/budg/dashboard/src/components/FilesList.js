@@ -81,18 +81,15 @@ class FilesList extends Component {
   render() {
     const { loading, files, links } = this.state;
 
-    if (loading) {
-      return <p>Loading...</p>;
-    }
-
     if (files.length === 0) {
       return (
         <div>
           <button
             className="ecl-button ecl-button--default"
             onClick={this.loadFiles}
+            disabled={loading}
           >
-            Refresh
+            {loading ? 'Loading...' : 'Refresh'}
           </button>
           <p className="ecl-paragraph">No file found</p>
         </div>
@@ -104,8 +101,9 @@ class FilesList extends Component {
         <button
           className="ecl-button ecl-button--default"
           onClick={this.loadFiles}
+          disabled={loading}
         >
-          Refresh
+          {loading ? 'Loading...' : 'Refresh'}
         </button>
         <table className="ecl-table">
           <thead>
