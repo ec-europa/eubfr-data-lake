@@ -13,22 +13,27 @@ export const handler = (event, context, callback) => {
   const snsRecord = event.Records ? event.Records[0] : undefined;
 
   // Was the lambda triggered correctly? Is the file extension supported? etc.
-  if (!snsRecord || snsRecord.EventSource !== 'aws:sns') {
+  if (
+    !snsRecord ||
+    !snsRecord.EventSubscriptionArn ||
+    snsRecord.EventSource !== 'aws:sns'
+  ) {
     return callback('Bad record');
   }
+
+  const eventArn = snsRecord.EventSubscriptionArn;
+  const snsTopic = eventArn.split(':')[5] || '';
 
   /*
    * Extract information from the event
    */
 
   // Extract S3 record
-  console.log(JSON.parse(snsRecord.Sns.Message));
-  const computedKey = JSON.parse(snsRecord.Sns.Message).Records[0];
+  const computedKey = JSON.parse(snsRecord.Sns.Message).object;
 
   // Save record
   const documentClient = new AWS.DynamoDB.DocumentClient({
     apiVersion: '2012-08-10',
-    convertEmptyValues: true,
   });
 
   const params = {
@@ -37,11 +42,11 @@ export const handler = (event, context, callback) => {
     UpdateExpression: 'set #a = :x',
     ExpressionAttributeNames: { '#a': 'status' },
     ExpressionAttributeValues: {
-      ':x': 'parsed',
+      ':x': snsTopic.endsWith('etl-success') ? 'parsed' : 'error',
     },
   };
 
-  return documentClient.uodate(params, dynamoErr => {
+  return documentClient.update(params, dynamoErr => {
     if (dynamoErr) return callback(dynamoErr);
 
     return callback(null, 'All fine');
