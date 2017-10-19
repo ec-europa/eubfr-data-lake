@@ -11,8 +11,12 @@ cd ..
 cd ./services/storage/objects
 ./node_modules/.bin/serverless deploy -v
 
+# Deploy ETL results (SNS topics)
+cd ../../ingestion/etl-results
+./node_modules/.bin/serverless deploy -v
+
 # Deploy signed uploads service
-cd ../signed-uploads
+cd ../../storage/signed-uploads
 ./node_modules/.bin/serverless deploy -v
 
 # Deploy deleter service

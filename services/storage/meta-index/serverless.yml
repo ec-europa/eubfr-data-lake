@@ -82,6 +82,21 @@ functions:
                 - Ref: "AWS::AccountId"
                 - ":${self:provider.stage}-object-removed"
           topicName: ${self:provider.stage}-object-removed
+  onETLSuccess:
+    handler: src/events/onETLSuccess.handler
+    name: ${self:provider.stage}-${self:service}-onETLSuccess
+    events:
+      - sns:
+          arn:
+            Fn::Join:
+              - ""
+              -
+                - "arn:aws:sns:"
+                - Ref: "AWS::Region"
+                - ":"
+                - Ref: "AWS::AccountId"
+                - ":${self:provider.stage}-etl-success"
+          topicName: ${self:provider.stage}-etl-success
   listProjects:
     handler: src/api/list.handler
     name: ${self:provider.stage}-${self:service}-list

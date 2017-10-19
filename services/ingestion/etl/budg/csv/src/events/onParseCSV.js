@@ -67,6 +67,48 @@ export const handler = (event, context, callback) => {
       if (err) {
         callback(err);
       }
+
+      // Publish message to ETL Success topic
+      /*
+       * Prepare the SNS message
+       */
+
+      // Get Account ID from lambda function arn in the context
+      const accountId = context.invokedFunctionArn.split(':')[4];
+
+      // Get stage and region from environment variables
+      const stage = process.env.STAGE;
+      const region = process.env.REGION;
+
+      // Get the endpoint arn
+      const endpointArn = `arn:aws:sns:${region}:${accountId}:${stage}-etl-success`;
+
+      /*
+       * Send the SNS message
+       */
+
+      const sns = new AWS.SNS();
+
+      return sns.publish(
+        {
+          Message: JSON.stringify({
+            default: JSON.stringify({
+              object: message.object.key,
+            }),
+          }),
+          MessageStructure: 'json',
+          TargetArn: endpointArn,
+        },
+        snsErr => {
+          if (snsErr) {
+            console.log(snsErr.stack);
+            callback(snsErr);
+            return;
+          }
+
+          callback(null, 'push sent');
+        }
+      );
     });
 
     return pass;
