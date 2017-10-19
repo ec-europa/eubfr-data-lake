@@ -123,7 +123,16 @@ class FilesList extends Component {
                 <td>{file.original_key || 'unknown'}</td>
                 <td>{file.computed_key}</td>
                 <td>{Math.floor(file.content_length / 1024)} kB</td>
-                <td>{file.status}</td>
+                <td>
+                  {file.message ? (
+                    <details>
+                      <summary>{file.status}</summary>
+                      <p>{file.message}</p>
+                    </details>
+                  ) : (
+                    file.status
+                  )}
+                </td>
                 <td>
                   {links[file.computed_key] ? (
                     <a className="ecl-link" href={links[file.computed_key]}>

@@ -29,7 +29,9 @@ export const handler = (event, context, callback) => {
    */
 
   // Extract S3 record
-  const computedKey = JSON.parse(snsRecord.Sns.Message).object;
+  const snsMessage = JSON.parse(snsRecord.Sns.Message);
+  const computedKey = snsMessage.object;
+  const etlMessage = snsMessage.message;
 
   // Save record
   const documentClient = new AWS.DynamoDB.DocumentClient({
@@ -39,10 +41,11 @@ export const handler = (event, context, callback) => {
   const params = {
     TableName: process.env.TABLE,
     Key: { computed_key: computedKey },
-    UpdateExpression: 'set #a = :x',
-    ExpressionAttributeNames: { '#a': 'status' },
+    UpdateExpression: 'SET #status = :s, message = :m',
+    ExpressionAttributeNames: { '#status': 'status' },
     ExpressionAttributeValues: {
-      ':x': snsTopic.endsWith('etl-success') ? 'parsed' : 'error',
+      ':s': snsTopic.endsWith('etl-success') ? 'parsed' : 'error',
+      ':m': etlMessage,
     },
   };
 

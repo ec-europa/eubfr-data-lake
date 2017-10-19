@@ -55,7 +55,7 @@ export const handler = (event, context, callback) => {
         Message: JSON.stringify({
           default: JSON.stringify({
             object: message.object.key,
-            error: e,
+            message: JSON.stringify(e),
           }),
         }),
         MessageStructure: 'json',
@@ -84,9 +84,9 @@ export const handler = (event, context, callback) => {
     (record, cb) => {
       try {
         const data = transformRecord(record);
-        cb(null, `${JSON.stringify(data)}\n`);
+        return cb(null, `${JSON.stringify(data)}\n`);
       } catch (e) {
-        cb(e);
+        return cb(e.message);
       }
     },
     { parallel: 10 }
@@ -118,6 +118,7 @@ export const handler = (event, context, callback) => {
           Message: JSON.stringify({
             default: JSON.stringify({
               object: message.object.key,
+              message: JSON.stringify('ETL successful'),
             }),
           }),
           MessageStructure: 'json',
@@ -125,7 +126,6 @@ export const handler = (event, context, callback) => {
         },
         snsErr => {
           if (snsErr) {
-            console.log(snsErr.stack);
             callback(snsErr);
             return;
           }
