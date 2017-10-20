@@ -93,6 +93,20 @@ functions:
           path: projects
           method: get
           cors: true
+  listProjectsWithComputedKey:
+    handler: src/api/listProjectsWithComputedKey.handler
+    name: ${self:provider.stage}-${self:service}-listProjectsWithComputedKey
+    environment:
+      TABLE: ${self:custom.DYNAMODB_TABLE}
+    events:
+      - http:
+          path: projects/{key}
+          method: get
+          cors: true
+          request:
+            parameters:
+              paths:
+                key: true
 
 resources:
   Resources:
