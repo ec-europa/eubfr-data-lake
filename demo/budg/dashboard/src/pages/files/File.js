@@ -117,6 +117,7 @@ class File extends React.Component {
         >
           Delete
         </button>
+        {fileLoading && <p>Updating info...</p>}
         <dl>
           <dt>Computed key</dt>
           <dd>{computedKey}</dd>
