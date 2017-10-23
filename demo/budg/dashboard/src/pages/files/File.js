@@ -165,8 +165,21 @@ class File extends React.Component {
         <dl>
           <dt>Computed key</dt>
           <dd>{computedKey}</dd>
+          <dt>Last update</dt>
+          <dd>{new Date(file.last_modified).toLocaleString()}</dd>
           <dt>Size</dt>
           <dd>{Math.floor(file.content_length / 1024)} kB</dd>
+          <dt>Status</dt>
+          <dd>
+            {file.message ? (
+              <details>
+                <summary>{file.status}</summary>
+                <p>{file.message}</p>
+              </details>
+            ) : (
+              file.status
+            )}
+          </dd>
         </dl>
         <h2>Update</h2>
         <FormUpload computedKey={computedKey} />
