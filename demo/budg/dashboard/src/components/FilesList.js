@@ -24,6 +24,7 @@ const List = ({ files }) => {
           <th>Original name</th>
           <th>Computed key</th>
           <th>Content length</th>
+          <th>Status</th>
           <th />
         </tr>
       </thead>
@@ -33,6 +34,16 @@ const List = ({ files }) => {
             <td>{file.original_key || 'unknown'}</td>
             <td>{file.computed_key}</td>
             <td>{Math.floor(file.content_length / 1024)} kB</td>
+            <td>
+              {file.message ? (
+                <details>
+                  <summary>{file.status}</summary>
+                  <p>{file.message}</p>
+                </details>
+              ) : (
+                file.status
+              )}
+            </td>
             <td>
               <Link
                 to={`/files/${encodeURIComponent(file.computed_key)}`}

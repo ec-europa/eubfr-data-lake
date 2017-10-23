@@ -1,12 +1,7 @@
 import path from 'path';
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
-
+import XLSX from 'xlsx';
 import transformRecord from '../lib/transform';
-
-// Destination bucket
-const { BUCKET } = process.env;
-
-const XLSX = require('xlsx');
 
 export const handler = (event, context, callback) => {
   /*
@@ -33,6 +28,41 @@ export const handler = (event, context, callback) => {
     return callback('File extension should be .xls or .xlsx');
   }
 
+  /*
+   * Prepare the SNS message
+   */
+
+  // Get Account ID from lambda function arn in the context
+  const accountId = context.invokedFunctionArn.split(':')[4];
+
+  // Get environment variables
+  const { BUCKET, REGION, STAGE } = process.env;
+
+  // Get the endpoint arn
+  const endpointArn = `arn:aws:sns:${REGION}:${accountId}:${STAGE}-etl-`;
+  const sns = new AWS.SNS();
+
+  const handleError = e =>
+    sns.publish(
+      {
+        Message: JSON.stringify({
+          default: JSON.stringify({
+            object: message.object.key,
+            message: JSON.stringify(e),
+          }),
+        }),
+        MessageStructure: 'json',
+        TargetArn: `${endpointArn}failure`,
+      },
+      snsErr => {
+        if (snsErr) {
+          return callback(snsErr);
+        }
+
+        return callback(e);
+      }
+    );
+
   const s3 = new AWS.S3();
 
   // Get file
@@ -49,19 +79,28 @@ export const handler = (event, context, callback) => {
     buffers.push(data);
   });
 
+  file.on('error', handleError);
+
   // Manage data
   file.on('end', () => {
-    // Parse file
-    const buffer = Buffer.concat(buffers);
-    const workbook = XLSX.read(buffer);
-    const sheetNameList = workbook.SheetNames;
-    const parser = XLSX.utils.sheet_to_json(workbook.Sheets[sheetNameList[0]]);
-
     let dataString = '';
-    for (let i = 0; i < parser.length; i += 1) {
-      // Transform data
-      const data = transformRecord(parser[i]);
-      dataString += `${JSON.stringify(data)}\n`;
+
+    try {
+      // Parse file
+      const buffer = Buffer.concat(buffers);
+      const workbook = XLSX.read(buffer);
+      const sheetNameList = workbook.SheetNames;
+      const parser = XLSX.utils.sheet_to_json(
+        workbook.Sheets[sheetNameList[0]]
+      );
+
+      for (let i = 0; i < parser.length; i += 1) {
+        // Transform data
+        const data = transformRecord(parser[i]);
+        dataString += `${JSON.stringify(data)}\n`;
+      }
+    } catch (e) {
+      return handleError(e.message);
     }
 
     // Load data
@@ -72,13 +111,35 @@ export const handler = (event, context, callback) => {
       ContentType: 'application/x-ndjson',
     };
 
-    s3.upload(params, err => {
+    return s3.upload(params, err => {
       if (err) {
-        callback(err);
-        return;
+        return handleError(err);
       }
 
-      callback(null, 'JSON file has been uploaded');
+      // Publish message to ETL Success topic
+
+      /*
+       * Send the SNS message
+       */
+      return sns.publish(
+        {
+          Message: JSON.stringify({
+            default: JSON.stringify({
+              object: message.object.key,
+              message: JSON.stringify('ETL successful'),
+            }),
+          }),
+          MessageStructure: 'json',
+          TargetArn: `${endpointArn}success`,
+        },
+        snsErr => {
+          if (snsErr) {
+            return callback(snsErr);
+          }
+
+          return callback(null, 'XLS file has been parsed');
+        }
+      );
     });
   });
 

@@ -25,7 +25,10 @@ export const handler = (event, context, callback) => {
     const params = {
       TableName: TABLE,
       ProjectionExpression:
-        'computed_key, content_type, original_key, metadata, last_modified, content_length',
+        'computed_key, content_type, original_key, message, metadata, last_modified, content_length, #status',
+      ExpressionAttributeNames: {
+        '#status': 'status',
+      },
       FilterExpression: 'begins_with(computed_key, :producer)',
       ExpressionAttributeValues: { ':producer': `${username}/` },
     };
