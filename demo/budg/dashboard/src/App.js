@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
 import Files from './pages/Files';
 import Home from './pages/Home';
-import Update from './pages/Update';
 import Upload from './pages/Upload';
 
 import './App.css';
@@ -47,7 +46,6 @@ const App = () => (
       <Route exact path="/" component={Home} />
       <Route path="/upload" component={Upload} />
       <Route path="/files" component={Files} />
-      <Route path="/file/:id" component={Update} />
     </div>
   </Router>
 );
