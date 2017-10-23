@@ -1,10 +1,9 @@
 {
   "private": true,
-  "name": "@eubfr/facade",
-  "description": "S3 proxy.",
+  "name": "@eubfr/ingestion-etl-results",
   "version": "0.0.1",
   "scripts": {
-    "deploy": "serverless deploy -v"
+    "deploy": "sls deploy -v"
   },
   "devDependencies": {
     "serverless": "1.23.0"

@@ -1,0 +1,11 @@
+# See https://help.github.com/ignore-files/ for more about ignoring files.
+
+# testing
+/coverage
+
+# imported files
+/src/meta
+
+# production
+/build
+/client/dist

@@ -3,10 +3,13 @@
   extends:
     - airbnb-base
     - prettier
+    - prettier/react
     - plugin:jest/recommended
+    - plugin:react/recommended
   plugins:
     - jest
     - prettier
+    - react
   rules:
     prettier/prettier:
       - error
@@ -14,5 +17,6 @@
         trailingComma: es5
         singleQuote: true
   env:
+    browser: true
     node: true
     jest/globals: true

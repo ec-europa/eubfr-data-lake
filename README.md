@@ -1,4 +1,4 @@
-# EU Budget for Results - Data Lake [![Build Status](https://drone.ne-dev.eu/api/badges/ec-europa/eubfr-data-lake/status.svg)](https://drone.ne-dev.eu/ec-europa/eubfr-data-lake)
+# EU Budget for Results - Data Lake [![Build Status](https://drone.fpfis.eu/api/badges/ec-europa/eubfr-data-lake/status.svg)](https://drone.fpfis.eu/ec-europa/eubfr-data-lake)
 
 ## Requirements
 
@@ -38,7 +38,7 @@ Test the services:
 yarn test
 ```
 
-## Deploy
+## Deploy the services
 
 First, you need to [set up your AWS credentials](https://serverless.com/framework/docs/providers/aws/guide/credentials/).
 
@@ -56,6 +56,14 @@ Go to the folder of the service you want to deploy and type:
 
 ```sh
 yarn deploy
+```
+
+## Deploy the demo
+
+First, make sure you have deployed the services. Then:
+
+```sh
+yarn deploy-demo
 ```
 
 ## Notes

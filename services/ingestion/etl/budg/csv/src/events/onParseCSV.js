@@ -34,6 +34,42 @@ export const handler = (event, context, callback) => {
     return callback('File extension should be .csv');
   }
 
+  /*
+   * Prepare the SNS message
+   */
+
+  // Get Account ID from lambda function arn in the context
+  const accountId = context.invokedFunctionArn.split(':')[4];
+
+  // Get stage and region from environment variables
+  const stage = process.env.STAGE;
+  const region = process.env.REGION;
+
+  // Get the endpoint arn
+  const endpointArn = `arn:aws:sns:${region}:${accountId}:${stage}-etl-`;
+  const sns = new AWS.SNS();
+
+  const onError = e =>
+    sns.publish(
+      {
+        Message: JSON.stringify({
+          default: JSON.stringify({
+            object: message.object.key,
+            message: JSON.stringify(e),
+          }),
+        }),
+        MessageStructure: 'json',
+        TargetArn: `${endpointArn}failure`,
+      },
+      snsErr => {
+        if (snsErr) {
+          return callback(snsErr);
+        }
+
+        return callback(e);
+      }
+    );
+
   const s3 = new AWS.S3();
 
   /*
@@ -46,8 +82,12 @@ export const handler = (event, context, callback) => {
   // Transform
   const transformer = transform(
     (record, cb) => {
-      const data = transformRecord(record);
-      cb(null, `${JSON.stringify(data)}\n`);
+      try {
+        const data = transformRecord(record);
+        return cb(null, `${JSON.stringify(data)}\n`);
+      } catch (e) {
+        return cb(e);
+      }
     },
     { parallel: 10 }
   );
@@ -65,8 +105,34 @@ export const handler = (event, context, callback) => {
 
     s3.upload(params, err => {
       if (err) {
-        callback(err);
+        return onError(err);
       }
+
+      // Publish message to ETL Success topic
+
+      /*
+       * Send the SNS message
+       */
+      return sns.publish(
+        {
+          Message: JSON.stringify({
+            default: JSON.stringify({
+              object: message.object.key,
+              message: JSON.stringify('ETL successful'),
+            }),
+          }),
+          MessageStructure: 'json',
+          TargetArn: `${endpointArn}success`,
+        },
+        snsErr => {
+          if (snsErr) {
+            callback(snsErr);
+            return;
+          }
+
+          callback(null, 'push sent');
+        }
+      );
     });
 
     return pass;
@@ -83,8 +149,11 @@ export const handler = (event, context, callback) => {
     })
     .createReadStream()
     .pipe(parser)
+    .on('error', e => onError(`Error on parse: ${e.message}`))
     .pipe(transformer)
-    .pipe(uploadFromStream());
+    .on('error', e => onError(`Error on transform: ${e.message}`))
+    .pipe(uploadFromStream())
+    .on('error', e => onError(`Error on upload: ${e.message}`));
 };
 
 export default handler;

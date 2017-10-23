@@ -1,6 +1,7 @@
 service: storage-signed-uploads
 
 plugins:
+  - serverless-stack-output
   - serverless-webpack
   - serverless-offline #serverless-offline needs to be last in the list
 
@@ -9,6 +10,8 @@ custom:
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
   serverless-offline:
     port: 4000
+  output:
+    file: .serverless/stack-output.json
 
 provider:
   name: aws
@@ -47,6 +50,24 @@ functions:
           path: storage
           method: get
           cors: true
+  download-objects:
+    handler: src/api/download.handler
+    name: ${self:provider.stage}-${self:service}-download-objects
+    memorySize: 128
+    events:
+      - http:
+          path: storage/download
+          method: get
+          authorizer: aws_iam
+  update-objects:
+    handler: src/api/update.handler
+    name: ${self:provider.stage}-${self:service}-update-objects
+    memorySize: 128
+    events:
+      - http:
+          path: storage/update
+          method: get
+          authorizer: aws_iam
   upsert-objects:
     handler: src/api/upsert.handler
     name: ${self:provider.stage}-${self:service}-upsert-objects
