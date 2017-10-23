@@ -11,8 +11,16 @@ cd ..
 cd ./services/storage/objects
 ./node_modules/.bin/serverless deploy -v
 
+# Deploy ETL results (SNS topics)
+cd ../../ingestion/etl-results
+./node_modules/.bin/serverless deploy -v
+
 # Deploy signed uploads service
-cd ../signed-uploads
+cd ../../storage/signed-uploads
+./node_modules/.bin/serverless deploy -v
+
+# Deploy deleter service
+cd ../deleter
 ./node_modules/.bin/serverless deploy -v
 
 # Deploy storage meta index
@@ -33,6 +41,8 @@ cd ../cleaner
 
 # Deploy ETL
 cd ../etl/budg/csv
+./node_modules/.bin/serverless deploy -v
+cd ../xls
 ./node_modules/.bin/serverless deploy -v
 
 # Deploy value store - projects

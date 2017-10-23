@@ -1,18 +1,17 @@
 const https = require('https');
 const aws4 = require('aws4');
+const url = require('url');
 
 export const handler = (event, context, callback) => {
-  const region = process.env.REGION;
-  const apiGatewayId = process.env.META_INDEX_API_ID;
-  const stage = process.env.STAGE;
+  const apiEndpoint = url.parse(process.env.META_INDEX_API);
   const endpoint = '/meta-index/list';
   const accessKeyId = process.env.PRODUCER_KEY_ID;
   const secretAccessKey = process.env.PRODUCER_SECRET_ACCESS_KEY;
 
   const params = {
-    host: `${apiGatewayId}.execute-api.${region}.amazonaws.com`,
+    host: apiEndpoint.host,
     method: 'GET',
-    path: `/${stage}${endpoint}`,
+    path: `${apiEndpoint.pathname}${endpoint}`,
   };
 
   // can specify any custom option or header as per usual

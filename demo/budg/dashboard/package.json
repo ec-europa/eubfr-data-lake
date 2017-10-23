@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "prop-types": "15.6.0",
     "react": "16.0.0",
     "react-dom": "16.0.0",
+    "react-router-dom": "4.2.2",
     "react-s3-uploader": "4.5.0",
     "react-scripts": "1.0.14"
   },
@@ -12,8 +14,7 @@
     "start": "npm run prepare && react-scripts start",
     "build": "npm run prepare && react-scripts build && mv build client/dist",
     "deploy": "sls client deploy",
-    "prepare":
-      "mkdir -p ./src/meta && ln -f ../server/.serverless/stack-output.json ./src/meta/server.json",
+    "prepare": "mkdir -p ./src/meta && ln -f ../server/.serverless/stack-output.json ./src/meta/server.json",
     "release": "npm run build && npm run deploy",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"

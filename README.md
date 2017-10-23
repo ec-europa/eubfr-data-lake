@@ -1,4 +1,4 @@
-# EU Budget for Results - Data Lake [![Build Status](https://drone.ne-dev.eu/api/badges/ec-europa/eubfr-data-lake/status.svg)](https://drone.ne-dev.eu/ec-europa/eubfr-data-lake)
+# EU Budget for Results - Data Lake [![Build Status](https://drone.fpfis.eu/api/badges/ec-europa/eubfr-data-lake/status.svg)](https://drone.fpfis.eu/ec-europa/eubfr-data-lake)
 
 ## Requirements
 
@@ -60,9 +60,7 @@ yarn deploy
 
 ## Deploy the demo
 
-First, make sure you have deployed the services. Then, update your `config.json` with the API Gateway IDs generated during the deployment of the services.
-
-Finally:
+First, make sure you have deployed the services. Then:
 
 ```sh
 yarn deploy-demo

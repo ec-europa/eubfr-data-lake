@@ -1,20 +1,19 @@
 const https = require('https');
 const aws4 = require('aws4');
+const url = require('url');
 
 export const handler = (event, context, callback) => {
-  const region = process.env.REGION;
-  const apiGatewayId = process.env.SIGNED_UPLOADS_API_ID;
-  const stage = process.env.STAGE;
-  const endpoint = '/storage/download';
+  const apiEndpoint = url.parse(process.env.SIGNED_UPLOADS_API);
+  const endpoint = '/storage/update';
   const accessKeyId = process.env.PRODUCER_KEY_ID;
   const secretAccessKey = process.env.PRODUCER_SECRET_ACCESS_KEY;
 
-  const computedKey =
+  const producerKey =
     event.queryStringParameters && event.queryStringParameters.key
       ? event.queryStringParameters.key
       : undefined;
 
-  if (!computedKey) {
+  if (!producerKey) {
     const response = {
       statusCode: 400,
       body: JSON.stringify({
@@ -26,11 +25,11 @@ export const handler = (event, context, callback) => {
   }
 
   const params = {
-    host: `${apiGatewayId}.execute-api.${region}.amazonaws.com`,
+    host: apiEndpoint.host,
     method: 'GET',
-    path: `/${stage}${endpoint}`,
+    path: `${apiEndpoint.pathname}${endpoint}`,
     headers: {
-      'x-amz-meta-computed-key': computedKey,
+      'x-amz-meta-producer-key': producerKey,
     },
   };
 
@@ -49,26 +48,13 @@ export const handler = (event, context, callback) => {
       });
 
       res.on('end', () => {
-        const { statusCode } = res;
-
-        // Response headers
-        const headers = {
-          'Access-Control-Allow-Origin': '*', // Required for CORS support to work
-          'Access-Control-Allow-Credentials': true, // Required for cookies, authorization headers with HTTPS
-        };
-
-        if (statusCode === 200) {
-          return callback(null, {
-            statusCode: 200,
-            headers,
-            body: JSON.stringify({ signedUrl: JSON.parse(body) }),
-          });
-        }
-
-        return callback(null, {
-          statusCode: 400,
-          headers,
-          body: JSON.stringify({ Error: JSON.parse(body) }),
+        callback(null, {
+          statusCode: 200,
+          headers: {
+            'Access-Control-Allow-Origin': '*', // Required for CORS support to work
+            'Access-Control-Allow-Credentials': true, // Required for cookies, authorization headers with HTTPS
+          },
+          body: JSON.stringify({ signedUrl: JSON.parse(body) }),
         });
       });
     }

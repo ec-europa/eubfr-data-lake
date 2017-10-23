@@ -1,4 +1,4 @@
-service: storage-signed-uploads
+service: storage-deleter
 
 plugins:
   - serverless-stack-output
@@ -37,43 +37,12 @@ provider:
       Resource: "*"
 
 functions:
-  docroot:
-    handler: src/api/docroot.handler
-    name: ${self:provider.stage}-${self:service}-docroot
+  delete-objects:
+    handler: src/api/delete.handler
+    name: ${self:provider.stage}-${self:service}-delete-objects
     memorySize: 128
     events:
       - http:
-          path: /
-          method: get
-          cors: true
-      - http:
-          path: storage
-          method: get
-          cors: true
-  download-objects:
-    handler: src/api/download.handler
-    name: ${self:provider.stage}-${self:service}-download-objects
-    memorySize: 128
-    events:
-      - http:
-          path: storage/download
-          method: get
-          authorizer: aws_iam
-  update-objects:
-    handler: src/api/update.handler
-    name: ${self:provider.stage}-${self:service}-update-objects
-    memorySize: 128
-    events:
-      - http:
-          path: storage/update
-          method: get
-          authorizer: aws_iam
-  upsert-objects:
-    handler: src/api/upsert.handler
-    name: ${self:provider.stage}-${self:service}-upsert-objects
-    memorySize: 128
-    events:
-      - http:
-          path: storage/signed_url
+          path: storage/delete
           method: get
           authorizer: aws_iam

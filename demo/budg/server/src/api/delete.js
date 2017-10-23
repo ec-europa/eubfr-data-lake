@@ -1,18 +1,38 @@
 const https = require('https');
 const aws4 = require('aws4');
+const url = require('url');
 
 export const handler = (event, context, callback) => {
-  const region = process.env.REGION;
-  const apiGatewayId = process.env.META_INDEX_API_ID;
-  const stage = process.env.STAGE;
-  const endpoint = '/meta-index/list';
+  const apiEndpoint = url.parse(process.env.DELETER_API);
+  const endpoint = '/storage/delete';
   const accessKeyId = process.env.PRODUCER_KEY_ID;
   const secretAccessKey = process.env.PRODUCER_SECRET_ACCESS_KEY;
 
+  const computedKey =
+    event.queryStringParameters && event.queryStringParameters.key
+      ? event.queryStringParameters.key
+      : undefined;
+
+  if (!computedKey) {
+    const response = {
+      statusCode: 400,
+      body: JSON.stringify({
+        message: `Missing key parameter`,
+      }),
+    };
+
+    return callback(null, response);
+  }
+
+  // https://f9pwfxauvg.execute-api.eu-central-1.amazonaws.com/huartya17
+
   const params = {
-    host: `${apiGatewayId}.execute-api.${region}.amazonaws.com`,
+    host: apiEndpoint.host,
     method: 'GET',
-    path: `/${stage}${endpoint}`,
+    path: `${apiEndpoint.pathname}${endpoint}`,
+    headers: {
+      'x-amz-meta-computed-key': computedKey,
+    },
   };
 
   // can specify any custom option or header as per usual
@@ -57,7 +77,7 @@ export const handler = (event, context, callback) => {
 
   req.on('error', err => callback(err));
 
-  req.end();
+  return req.end();
 };
 
 export default handler;

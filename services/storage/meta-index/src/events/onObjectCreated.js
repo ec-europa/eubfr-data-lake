@@ -59,6 +59,7 @@ export const handler = (event, context, callback) => {
           last_modified: data.LastModified.toISOString(), // ISO-8601 date
           content_length: data.ContentLength,
           metadata: otherMeta,
+          status: 'not parsed',
         },
       };
 
