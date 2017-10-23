@@ -5,9 +5,12 @@
 /*
  * Map fields
  */
-export default record =>
+export default record => {
+  console.log(record);
+
   // Map the fields
-  ({
-    project_id: record.Nid,
-    title: record.Name,
-  });
+  return {
+    project_id: record.sid,
+    title: record.title,
+  };
+};

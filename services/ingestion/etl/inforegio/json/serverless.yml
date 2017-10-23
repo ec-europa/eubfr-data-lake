@@ -36,9 +36,11 @@ functions:
   parseJson:
     handler: src/events/onParseJSON.handler
     name: ${self:provider.stage}-${self:service}-parseJson
-    memorySize: 256
+    memorySize: 1024
     environment:
       BUCKET: ${self:custom.bucketName}
+      REGION: ${self:provider.region}
+      STAGE: ${self:provider.stage}
     events:
       - sns:
           arn:
