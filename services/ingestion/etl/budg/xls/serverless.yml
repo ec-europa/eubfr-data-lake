@@ -36,9 +36,11 @@ functions:
   parseXls:
     handler: src/events/onParseXLS.handler
     name: ${self:provider.stage}-${self:service}-parseXls
-    memorySize: 256
+    memorySize: 1024
     environment:
       BUCKET: ${self:custom.bucketName}
+      REGION: ${self:provider.region}
+      STAGE: ${self:provider.stage}
     events:
       - sns:
           arn:

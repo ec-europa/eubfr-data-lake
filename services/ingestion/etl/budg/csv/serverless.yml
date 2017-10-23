@@ -39,6 +39,8 @@ functions:
     memorySize: 256
     environment:
       BUCKET: ${self:custom.bucketName}
+      REGION: ${self:provider.region}
+      STAGE: ${self:provider.stage}
     events:
       - sns:
           arn:

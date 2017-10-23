@@ -81,18 +81,15 @@ class FilesList extends Component {
   render() {
     const { loading, files, links } = this.state;
 
-    if (loading) {
-      return <p>Loading...</p>;
-    }
-
     if (files.length === 0) {
       return (
         <div>
           <button
             className="ecl-button ecl-button--default"
             onClick={this.loadFiles}
+            disabled={loading}
           >
-            Refresh
+            {loading ? 'Loading...' : 'Refresh'}
           </button>
           <p className="ecl-paragraph">No file found</p>
         </div>
@@ -104,8 +101,9 @@ class FilesList extends Component {
         <button
           className="ecl-button ecl-button--default"
           onClick={this.loadFiles}
+          disabled={loading}
         >
-          Refresh
+          {loading ? 'Loading...' : 'Refresh'}
         </button>
         <table className="ecl-table">
           <thead>
@@ -113,6 +111,7 @@ class FilesList extends Component {
               <th>Original name</th>
               <th>Computed key</th>
               <th>Content length</th>
+              <th>Status</th>
               <th colSpan="3">Actions</th>
             </tr>
           </thead>
@@ -122,6 +121,16 @@ class FilesList extends Component {
                 <td>{file.original_key || 'unknown'}</td>
                 <td>{file.computed_key}</td>
                 <td>{Math.floor(file.content_length / 1024)} kB</td>
+                <td>
+                  {file.message ? (
+                    <details>
+                      <summary>{file.status}</summary>
+                      <p>{file.message}</p>
+                    </details>
+                  ) : (
+                    file.status
+                  )}
+                </td>
                 <td>
                   {links[file.computed_key] ? (
                     <a className="ecl-link" href={links[file.computed_key]}>
