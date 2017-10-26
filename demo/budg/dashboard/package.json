@@ -22,6 +22,6 @@
   },
   "devDependencies": {
     "serverless": "1.23.0",
-    "serverless-finch": "1.1.1"
+    "serverless-finch": "1.2.2"
   }
 }
