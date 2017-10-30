@@ -79,6 +79,19 @@ functions:
           path: demo/meta
           method: get
           cors: true
+  filemeta:
+    handler: src/api/filemeta.handler
+    name: ${self:provider.stage}-${self:service}-filemeta
+    memorySize: 128
+    environment:
+      PRODUCER_KEY_ID: ${self:custom.PRODUCER_KEY_ID}
+      PRODUCER_SECRET_ACCESS_KEY: ${self:custom.PRODUCER_SECRET_ACCESS_KEY}
+      META_INDEX_API: ${self:custom.META_INDEX_API}
+    events:
+      - http:
+          path: demo/filemeta
+          method: get
+          cors: true
   signed-url:
     handler: src/api/signedUrl.handler
     name: ${self:provider.stage}-${self:service}-signed-url
