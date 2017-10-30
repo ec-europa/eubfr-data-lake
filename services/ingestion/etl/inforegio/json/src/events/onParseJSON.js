@@ -79,7 +79,7 @@ export const handler = (event, context, callback) => {
   const transformer = transform(
     (record, cb) => {
       try {
-        const data = transformRecord(record);
+        const data = transformRecord(JSON.parse(record));
         return cb(null, `${JSON.stringify(data)}\n`);
       } catch (e) {
         return cb(e);
