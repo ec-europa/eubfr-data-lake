@@ -1,7 +1,5 @@
 import path from 'path';
-import stream from 'stream';
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
-import transform from 'stream-transform';
 
 import transformRecord from '../lib/transform';
 
@@ -48,7 +46,7 @@ export const handler = (event, context, callback) => {
   const endpointArn = `arn:aws:sns:${region}:${accountId}:${stage}-etl-`;
   const sns = new AWS.SNS();
 
-  const onError = e =>
+  const handleError = e =>
     sns.publish(
       {
         Message: JSON.stringify({
@@ -71,37 +69,51 @@ export const handler = (event, context, callback) => {
 
   const s3 = new AWS.S3();
 
-  /*
-   * Configure the pipeline
-   */
+  // Get file
+  const file = s3
+    .getObject({
+      Bucket: message.bucket.name,
+      Key: message.object.key,
+    })
+    .createReadStream();
 
-  // Transform
-  const transformer = transform(
-    (record, cb) => {
-      try {
-        const data = transformRecord(JSON.parse(record));
-        return cb(null, `${JSON.stringify(data)}\n`);
-      } catch (e) {
-        return cb(e);
+  // Put data in buffer
+  const buffers = [];
+  file.on('data', data => {
+    buffers.push(data);
+  });
+
+  file.on('error', handleError);
+
+  // Manage data
+  file.on('end', () => {
+    let dataString = '';
+
+    try {
+      // Parse file
+      const buffer = Buffer.concat(buffers);
+      const parser = JSON.parse(buffer);
+
+      for (let i = 0; i < parser.length; i += 1) {
+        // Transform data
+        const data = transformRecord(parser[i]);
+        dataString += `${JSON.stringify(data)}\n`;
       }
-    },
-    { parallel: 10 }
-  );
+    } catch (e) {
+      return handleError(e.message);
+    }
 
-  // Load
-  const uploadFromStream = () => {
-    const pass = new stream.PassThrough();
-
+    // Load data
     const params = {
       Bucket: BUCKET,
       Key: `${message.object.key}.ndjson`,
-      Body: pass,
+      Body: dataString,
       ContentType: 'application/x-ndjson',
     };
 
-    s3.upload(params, err => {
+    return s3.upload(params, err => {
       if (err) {
-        return onError(err);
+        return handleError(err);
       }
 
       // Publish message to ETL Success topic
@@ -122,32 +134,16 @@ export const handler = (event, context, callback) => {
         },
         snsErr => {
           if (snsErr) {
-            callback(snsErr);
-            return;
+            return callback(snsErr);
           }
 
-          callback(null, 'push sent');
+          return callback(null, 'JSON file has been parsed');
         }
       );
     });
+  });
 
-    return pass;
-  };
-
-  /*
-   * Start the hard work
-   */
-
-  return s3
-    .getObject({
-      Bucket: message.bucket.name,
-      Key: message.object.key,
-    })
-    .createReadStream()
-    .pipe(transformer)
-    .on('error', e => onError(`Error on transform: ${e.message}`))
-    .pipe(uploadFromStream())
-    .on('error', e => onError(`Error on upload: ${e.message}`));
+  return file;
 };
 
 export default handler;

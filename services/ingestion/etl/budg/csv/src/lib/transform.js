@@ -1,11 +1,20 @@
 /*
- * Transform message (BUDGCSV)
+ * Transform message (BUDG CSV)
  */
 
 /*
  * Map fields
  */
 export default record => {
+  // Preprocess budget
+  const budgetObject = {
+    total_cost: null,
+    eu_contrib: Number(record['EU Budget contribution']),
+    private_fund: null,
+    public_fund: null,
+    other_contrib: null,
+  };
+
   // Preprocess timeframe
   let timeframeFrom = null;
   let timeframeTo = null;
@@ -44,7 +53,8 @@ export default record => {
   const projectLocations = record['Project country(ies)']
     .split(';')
     .map((country, index) => ({
-      name: country,
+      country_name: null,
+      country_code: country,
       geolocation: {
         lat: (Array.isArray(latArray) && latArray[index]) || null,
         long: (Array.isArray(longArray) && longArray[index]) || null,
@@ -59,6 +69,8 @@ export default record => {
     region: null,
     country: null,
     website: null,
+    phone: null,
+    email: null,
   }));
 
   // Preprocess partners
@@ -87,7 +99,7 @@ export default record => {
     results: resultObject,
     ec_priorities: record['EC’s priorities'].split(';'),
     coordinators: coordArray,
-    eu_budget_contribution: Number(record['EU Budget contribution']),
+    budget: budgetObject,
     partners: partnerArray,
     project_locations: projectLocations,
     timeframe: {
