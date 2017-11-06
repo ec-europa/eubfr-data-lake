@@ -21,21 +21,22 @@ export const handler = (event, context, callback) => {
 
     const { TABLE } = process.env;
 
-    // Only return results for the current producer
     const params = {
       TableName: TABLE,
       ProjectionExpression:
-        'computed_key, content_type, original_key, message, metadata, last_modified, content_length, #status',
+        'producer_id, computed_key, content_type, original_key, message, metadata, last_modified, content_length, #status',
       ExpressionAttributeNames: {
         '#status': 'status',
       },
-      FilterExpression: 'begins_with(computed_key, :producer)',
-      ExpressionAttributeValues: { ':producer': `${username}/` },
+      KeyConditionExpression: 'producer_id = :pid',
+      ExpressionAttributeValues: {
+        ':pid': username,
+      },
     };
 
     const files = [];
 
-    function onScan(isRoot) {
+    function onQuery(isRoot) {
       return (err, data) => {
         if (err) {
           callback(err);
@@ -44,11 +45,11 @@ export const handler = (event, context, callback) => {
             files.push(project);
           });
 
-          // continue scanning if we have more movies, because
-          // scan can retrieve a maximum of 1MB of data
+          // continue querying if we have more movies, because
+          // query can retrieve a maximum of 1MB of data
           if (typeof data.LastEvaluatedKey !== 'undefined') {
             params.ExclusiveStartKey = data.LastEvaluatedKey;
-            documentClient.scan(params, onScan(false));
+            documentClient.query(params, onQuery(false));
           }
 
           if (isRoot) {
@@ -64,7 +65,7 @@ export const handler = (event, context, callback) => {
       };
     }
 
-    return documentClient.scan(params, onScan(true));
+    return documentClient.query(params, onQuery(true));
   });
 };
 
