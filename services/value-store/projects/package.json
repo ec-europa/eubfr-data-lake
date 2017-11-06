@@ -13,13 +13,8 @@
     "babel-preset-env": "1.6.1",
     "jest": "21.2.1",
     "serverless": "1.23.0",
-    "serverless-dynamodb-autoscaling": "0.6.2",
     "serverless-stack-output": "0.2.0",
     "serverless-webpack": "3.1.2",
     "webpack": "3.8.1"
-  },
-  "dependencies": {
-    "split2": "2.2.0",
-    "through2": "2.0.3"
   }
 }
