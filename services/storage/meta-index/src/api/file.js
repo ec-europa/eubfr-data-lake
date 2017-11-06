@@ -17,10 +17,38 @@ export const handler = (event, context, callback) => {
       });
     }
 
+    const file =
+      event.headers && event.headers['x-amz-meta-computed-key']
+        ? event.headers['x-amz-meta-computed-key']
+        : undefined;
+
+    if (!file) {
+      const response = {
+        statusCode: 400,
+        body: JSON.stringify({
+          error: `Missing x-amz-meta-computed-key header`,
+        }),
+      };
+
+      return callback(null, response);
+    }
+
+    if (!file.startsWith(username)) {
+      const response = {
+        statusCode: 400,
+        body: JSON.stringify({
+          error: `You can't access a file you don't own.`,
+        }),
+      };
+
+      return callback(null, response);
+    }
+
     const documentClient = new AWS.DynamoDB.DocumentClient();
 
     const { TABLE } = process.env;
 
+    // Only return results for the current producer
     const params = {
       TableName: TABLE,
       ProjectionExpression:
@@ -28,44 +56,26 @@ export const handler = (event, context, callback) => {
       ExpressionAttributeNames: {
         '#status': 'status',
       },
-      KeyConditionExpression: 'producer_id = :pid',
+      KeyConditionExpression: 'producer_id = :pid AND computed_key = :ckey',
       ExpressionAttributeValues: {
         ':pid': username,
+        ':ckey': file,
       },
     };
 
-    const files = [];
+    return documentClient.query(params, (err, data) => {
+      if (err) {
+        return callback(err);
+      }
 
-    function onQuery(isRoot) {
-      return (err, data) => {
-        if (err) {
-          callback(err);
-        } else {
-          data.Items.forEach(project => {
-            files.push(project);
-          });
-
-          // continue querying if we have more movies, because
-          // query can retrieve a maximum of 1MB of data
-          if (typeof data.LastEvaluatedKey !== 'undefined') {
-            params.ExclusiveStartKey = data.LastEvaluatedKey;
-            documentClient.query(params, onQuery(false));
-          }
-
-          if (isRoot) {
-            const response = {
-              statusCode: 200,
-              headers: {},
-              body: JSON.stringify(files),
-            };
-
-            callback(null, response);
-          }
-        }
+      const response = {
+        statusCode: 200,
+        headers: {},
+        body: JSON.stringify(data.Items),
       };
-    }
 
-    return documentClient.query(params, onQuery(true));
+      return callback(null, response);
+    });
   });
 };
 

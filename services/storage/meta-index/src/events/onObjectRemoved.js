@@ -29,10 +29,14 @@ export const handler = (event, context, callback) => {
     apiVersion: '2012-08-10',
   });
 
+  const computedKey = s3record.s3.object.key;
+  const producerId = computedKey.split('/')[0];
+
   const params = {
     TableName: process.env.TABLE,
     Key: {
-      computed_key: s3record.s3.object.key,
+      producer_id: producerId,
+      computed_key: computedKey,
     },
   };
 

@@ -32,6 +32,7 @@ export const handler = (event, context, callback) => {
   const snsMessage = JSON.parse(snsRecord.Sns.Message);
   const computedKey = snsMessage.object;
   const etlMessage = snsMessage.message;
+  const producerId = computedKey.split('/')[0];
 
   // Save record
   const documentClient = new AWS.DynamoDB.DocumentClient({
@@ -40,7 +41,10 @@ export const handler = (event, context, callback) => {
 
   const params = {
     TableName: process.env.TABLE,
-    Key: { computed_key: computedKey },
+    Key: {
+      producer_id: producerId,
+      computed_key: computedKey,
+    },
     UpdateExpression: 'SET #status = :s, message = :m',
     ExpressionAttributeNames: { '#status': 'status' },
     ExpressionAttributeValues: {

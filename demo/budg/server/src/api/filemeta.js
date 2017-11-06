@@ -3,8 +3,8 @@ const aws4 = require('aws4');
 const url = require('url');
 
 export const handler = (event, context, callback) => {
-  const apiEndpoint = url.parse(process.env.SIGNED_UPLOADS_API);
-  const endpoint = '/storage/download';
+  const apiEndpoint = url.parse(process.env.META_INDEX_API);
+  const endpoint = '/meta-index/file';
   const accessKeyId = process.env.PRODUCER_KEY_ID;
   const secretAccessKey = process.env.PRODUCER_SECRET_ACCESS_KEY;
 
@@ -60,7 +60,7 @@ export const handler = (event, context, callback) => {
           return callback(null, {
             statusCode: 200,
             headers,
-            body: JSON.stringify({ signedUrl: JSON.parse(body) }),
+            body,
           });
         }
 
