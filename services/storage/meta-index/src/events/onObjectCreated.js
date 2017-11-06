@@ -27,10 +27,13 @@ export const handler = (event, context, callback) => {
   // Retrieve file meta
   const s3 = new AWS.S3();
 
+  const computedKey = s3record.s3.object.key;
+  const producerId = computedKey.split('/')[0];
+
   return s3.headObject(
     {
       Bucket: s3record.s3.bucket.name,
-      Key: s3record.s3.object.key,
+      Key: computedKey,
     },
     (err, data) => {
       if (err) return callback(err); // an error occurred
@@ -52,7 +55,8 @@ export const handler = (event, context, callback) => {
       const params = {
         TableName: process.env.TABLE,
         Item: {
-          computed_key: s3record.s3.object.key,
+          producer_id: producerId,
+          computed_key: computedKey,
           original_key: originalKey,
           producer_arn: producerArn,
           content_type: data.ContentType,

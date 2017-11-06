@@ -137,12 +137,18 @@ resources:
         TableName: ${self:custom.DYNAMODB_TABLE}
         AttributeDefinitions:
           -
+            AttributeName: producer_id
+            AttributeType: S
+          -
             AttributeName: computed_key
             AttributeType: S
         KeySchema:
           -
-            AttributeName: computed_key
+            AttributeName: producer_id
             KeyType: HASH
+          -
+            AttributeName: computed_key
+            KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5
