@@ -2,11 +2,20 @@
 
 exports[`DG BUDG CSV transformer Produces correct JSON output structure 1`] = `
 Object {
+  "budget": Object {
+    "eu_contrib": 3562000,
+    "other_contrib": null,
+    "private_fund": null,
+    "public_fund": null,
+    "total_cost": null,
+  },
   "coordinators": Array [
     Object {
       "address": null,
       "country": null,
+      "email": null,
       "name": "Eva Maria Plunger (VERBUND AG)",
+      "phone": null,
       "region": null,
       "type": null,
       "website": null,
@@ -17,7 +26,6 @@ Object {
   "ec_priorities": Array [
     "Jobs, Growth and Investment",
   ],
-  "eu_budget_contribution": 3562000,
   "partners": Array [
     Object {
       "address": null,
@@ -112,39 +120,44 @@ Object {
   "project_id": "8155",
   "project_locations": Array [
     Object {
+      "country_code": "AT",
+      "country_name": null,
       "geolocation": Object {
         "lat": "48.211312000000",
         "long": "16.367315000000",
       },
-      "name": "AT",
     },
     Object {
+      "country_code": "HR",
+      "country_name": null,
       "geolocation": Object {
         "lat": "45.803508000000",
         "long": "16.017459000000",
       },
-      "name": "HR",
     },
     Object {
+      "country_code": "DE",
+      "country_name": null,
       "geolocation": Object {
         "lat": "49.449922000000",
         "long": "11.103470000000",
       },
-      "name": "DE",
     },
     Object {
+      "country_code": "SK",
+      "country_name": null,
       "geolocation": Object {
         "lat": "48.143047000000",
         "long": "17.124260000000",
       },
-      "name": "SK",
     },
     Object {
+      "country_code": "SI",
+      "country_name": null,
       "geolocation": Object {
         "lat": "46.048183000000",
         "long": "14.501456000000",
       },
-      "name": "SI",
     },
   ],
   "project_website": "http://www.cegc-project.eu/",
@@ -172,21 +185,31 @@ Object {
 
 exports[`DG BUDG CSV transformer Project location information is correctly mapped 1`] = `
 Object {
+  "country_code": "AT",
+  "country_name": null,
   "geolocation": Object {
     "lat": "48.211312000000",
     "long": "16.367315000000",
   },
-  "name": "AT",
 }
 `;
 
 exports[`DG BUDG transformer handling incomplete or inconsistent data Certain fields should always be present after transformation 1`] = `
 Object {
+  "budget": Object {
+    "eu_contrib": NaN,
+    "other_contrib": null,
+    "private_fund": null,
+    "public_fund": null,
+    "total_cost": null,
+  },
   "coordinators": Array [
     Object {
       "address": null,
       "country": null,
+      "email": null,
       "name": "",
+      "phone": null,
       "region": null,
       "type": null,
       "website": null,
@@ -197,7 +220,6 @@ Object {
   "ec_priorities": Array [
     "",
   ],
-  "eu_budget_contribution": NaN,
   "partners": Array [
     Object {
       "address": null,
@@ -212,11 +234,12 @@ Object {
   "project_id": undefined,
   "project_locations": Array [
     Object {
+      "country_code": "",
+      "country_name": null,
       "geolocation": Object {
         "lat": "42.73806663",
         "long": "23.40014509",
       },
-      "name": "",
     },
   ],
   "project_website": undefined,
