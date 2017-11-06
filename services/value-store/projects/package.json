@@ -16,5 +16,9 @@
     "serverless-stack-output": "0.2.0",
     "serverless-webpack": "3.1.2",
     "webpack": "3.8.1"
+  },
+  "dependencies": {
+    "elasticsearch": "13.3.1",
+    "http-aws-es": "3.1.3"
   }
 }
