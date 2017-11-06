@@ -7,6 +7,7 @@ plugins:
 custom:
   webpackIncludeModules: true
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
+  ES_DOMAIN: ${self:provider.stage}-projects
   output:
     file: .serverless/stack-output.json
 
@@ -29,6 +30,8 @@ resources:
     ProjectsElasticSearchDomain:
       Type: AWS::Elasticsearch::Domain
       Properties:
+        DomainName: ${self:custom.ES_DOMAIN}
+        ElasticsearchVersion: 5.5
         EBSOptions:
           EBSEnabled: true
           VolumeType: gp2
@@ -38,4 +41,15 @@ resources:
           InstanceCount: 1
           DedicatedMasterEnabled: false
           ZoneAwarenessEnabled: false
-        ElasticsearchVersion: 5.5
+        AccessPolicies:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Principal:
+              AWS: "*"
+            Action: es:*
+            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.ES_DOMAIN}/*"
+            Condition:
+              IpAddress:
+                aws:SourceIp:
+                - 147.67.241.226
