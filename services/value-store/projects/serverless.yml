@@ -53,3 +53,8 @@ resources:
               IpAddress:
                 aws:SourceIp:
                 - 147.67.241.226
+  Outputs:
+    # Manually set for serverless-stack-output.
+    ServiceEndpoint:
+      Value:
+        Fn::GetAtt: ["ProjectsElasticSearchDomain", "DomainEndpoint"]
