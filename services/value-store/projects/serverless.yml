@@ -7,9 +7,6 @@ plugins:
 custom:
   webpackIncludeModules: true
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
-  ES_DOMAIN: ${self:provider.stage}-projects
-  # Temporarily
-  ES_HOST: https://search-chernka8-projects-7lr3khdfkgin44aem2oqmclphi.eu-central-1.es.amazonaws.com
   output:
     file: .serverless/stack-output.json
 
@@ -33,7 +30,8 @@ functions:
     name: ${self:provider.stage}-${self:service}-onObjectCreated
     memorySize: 256
     environment:
-      HOST: ${self:custom.ES_HOST}
+      API:
+        "Fn::ImportValue": ${self:provider.stage}:elasticsearch:ServiceEndpoint
     events:
       - sns:
           arn:
@@ -46,37 +44,21 @@ functions:
                 - Ref: "AWS::AccountId"
                 - ":${self:provider.stage}-harmonized-object-created"
           topicName: ${self:provider.stage}-harmonized-object-created
-
-resources:
-  Resources:
-    ProjectsElasticSearchDomain:
-      Type: AWS::Elasticsearch::Domain
-      Properties:
-        DomainName: ${self:custom.ES_DOMAIN}
-        ElasticsearchVersion: 5.5
-        EBSOptions:
-          EBSEnabled: true
-          VolumeType: gp2
-          VolumeSize: 10
-        ElasticsearchClusterConfig:
-          InstanceType: t2.small.elasticsearch
-          InstanceCount: 1
-          DedicatedMasterEnabled: false
-          ZoneAwarenessEnabled: false
-        AccessPolicies:
-          Version: '2012-10-17'
-          Statement:
-          - Effect: Allow
-            Principal:
-              AWS: "*"
-            Action: es:*
-            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.ES_DOMAIN}/*"
-            Condition:
-              IpAddress:
-                aws:SourceIp:
-                - 147.67.241.226
-  Outputs:
-    # Manually set for serverless-stack-output.
-    ServiceEndpoint:
-      Value:
-        Fn::GetAtt: ["ProjectsElasticSearchDomain", "DomainEndpoint"]
+  onObjectRemoved:
+    handler: src/events/onObjectRemoved.handler
+    name: ${self:provider.stage}-${self:service}-onObjectRemoved
+    environment:
+      API:
+        "Fn::ImportValue": ${self:provider.stage}:elasticsearch:ServiceEndpoint
+    events:
+      - sns:
+          arn:
+            Fn::Join:
+              - ""
+              -
+                - "arn:aws:sns:"
+                - Ref: "AWS::Region"
+                - ":"
+                - Ref: "AWS::AccountId"
+                - ":${self:provider.stage}-harmonized-object-removed"
+          topicName: ${self:provider.stage}-harmonized-object-removed

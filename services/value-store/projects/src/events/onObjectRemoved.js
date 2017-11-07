@@ -1,6 +1,7 @@
-import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
-
 export const handler = (event, context, callback) => {
+  // API to work with
+  const { API } = process.env;
+
   /*
    * Some checks here before going any further
    */
@@ -23,6 +24,9 @@ export const handler = (event, context, callback) => {
 
   // Extract S3 record
   const s3record = JSON.parse(snsRecord.Sns.Message).Records[0];
+
+  // Temporary return statement.
+  return s3record;
 };
 
 export default handler;

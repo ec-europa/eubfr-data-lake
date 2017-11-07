@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "name": "@eubfr/elasticsearch",
+  "version": "0.0.1",
+  "scripts": {
+    "deploy": "sls deploy -v"
+  },
+  "devDependencies": {
+    "serverless": "1.23.0",
+    "serverless-stack-output": "0.2.0"
+  }
+}
