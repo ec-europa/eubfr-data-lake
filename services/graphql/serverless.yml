@@ -1,0 +1,51 @@
+service: graphql
+
+plugins:
+  - serverless-stack-output
+  - serverless-webpack
+  - serverless-offline #serverless-offline needs to be last in the list
+
+custom:
+  webpackIncludeModules: true
+  eubfrEnvironment: ${opt:eubfr_env, file(../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
+  PROJECTS_API: ${opt:PROJECTS_API, file(../value-store/projects/.serverless/stack-output.json):ServiceEndpoint, env:PROJECTS_API, ''}
+  serverless-offline:
+    port: 4000
+  output:
+    file: .serverless/stack-output.json
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  stage: ${opt:stage, file(../../config.json):stage, 'dev'}
+  region: ${opt:region, file(../../config.json):region, 'eu-central-1'}
+  deploymentBucket:
+    name: eubfr-${self:custom.eubfrEnvironment}-deploy
+  stackTags:
+    ENV: ${self:custom.eubfrEnvironment}
+  versionFunctions: false
+
+functions:
+  graphql:
+    handler: src/api/graphql.handler
+    name: ${self:provider.stage}-${self:service}
+    memorySize: 128
+    environment:
+      PROJECTS_API: ${self:custom.PROJECTS_API}
+    events:
+      - http:
+          path: /graphql
+          method: post
+          cors: true
+  graphiql:
+    handler: src/api/graphiql.handler
+    name: ${self:provider.stage}-${self:service}-graphiql
+    memorySize: 128
+    environment:
+      STAGE: ${self:provider.stage}
+      PROD: ${env:PROD}
+    events:
+    - http:
+        path: graphiql
+        method: get
+        cors: true
