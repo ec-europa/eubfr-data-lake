@@ -31,7 +31,7 @@ functions:
     memorySize: 256
     environment:
       API:
-        "Fn::ImportValue": ${self:provider.stage}:elasticsearch:ServiceEndpoint
+        Fn::ImportValue: ${self:provider.stage}:elasticsearch:ServiceEndpoint
     events:
       - sns:
           arn:
@@ -49,7 +49,7 @@ functions:
     name: ${self:provider.stage}-${self:service}-onObjectRemoved
     environment:
       API:
-        "Fn::ImportValue": ${self:provider.stage}:elasticsearch:ServiceEndpoint
+        Fn::ImportValue: ${self:provider.stage}:elasticsearch:ServiceEndpoint
     events:
       - sns:
           arn:
