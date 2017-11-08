@@ -23,7 +23,6 @@ provider:
     name: eubfr-${self:custom.eubfrEnvironment}-deploy
   stackTags:
     ENV: ${self:custom.eubfrEnvironment}
-
 functions:
   onObjectCreated:
     handler: src/events/onObjectCreated.handler

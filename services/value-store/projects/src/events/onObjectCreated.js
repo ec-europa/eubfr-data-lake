@@ -8,28 +8,18 @@ export const handler = (event, context, callback) => {
   const { API } = process.env;
 
   const options = {
-    hosts: [API],
+    host: `https://${API}`,
     connectionClass,
     log: 'trace',
     index: 'projects',
-    // httpOptions: {}, // set httpOptions on aws-sdk's request. default to aws-sdk's config.httpOptions
   };
 
   const client = elasticsearch.Client(options);
 
-  client.ping(
-    {
-      // ping usually has a 3000ms timeout
-      requestTimeout: 1000,
-    },
-    error => {
-      if (error) {
-        console.trace(error);
-      } else {
-        console.log('All is well');
-      }
-    }
-  );
+  client
+    .info()
+    .then(console.log)
+    .catch(console.log);
 
   // Retrieve file meta
   return {};

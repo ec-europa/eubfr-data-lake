@@ -42,7 +42,10 @@ resources:
           - Effect: Allow
             Principal:
               AWS: "*"
-            Action: es:*
+            Action:
+            #  - "es:ESHttpPost"
+             - "es:ESHttpHead"
+             - "es:ESHttpGet"
             Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.ES_DOMAIN}/*"
             Condition:
               IpAddress:
