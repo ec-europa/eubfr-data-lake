@@ -43,14 +43,14 @@ resources:
             Principal:
               AWS: "*"
             Action:
-             - "es:ESHttpPost"
              - "es:ESHttpHead"
              - "es:ESHttpGet"
             Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.ES_DOMAIN}/*"
-            Condition:
-              IpAddress:
-                aws:SourceIp:
-                - 147.67.241.226
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+
   Outputs:
     ServiceEndpoint:
       Description: The API endpoint of the projects' elasticsearch domain.
