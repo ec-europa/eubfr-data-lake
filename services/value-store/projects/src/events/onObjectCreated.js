@@ -53,13 +53,15 @@ export const handler = (event, context, callback) => {
       Key: s3record.s3.object.key,
     })
     .promise()
-    .then(() =>
+    .then(data => {
       deleteProjects({
         client,
         index: INDEX,
         key: s3record.s3.object.key,
-      })
-    )
+      });
+
+      return data;
+    })
     .then(data => {
       const saveStream = new SaveStream({
         objectMode: true,
