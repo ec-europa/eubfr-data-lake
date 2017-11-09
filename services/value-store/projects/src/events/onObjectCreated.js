@@ -5,6 +5,7 @@ import connectionClass from 'http-aws-es';
 import through2 from 'through2';
 import split2 from 'split2';
 
+import deleteProjects from '../lib/deleteProjects';
 import SaveStream from '../lib/SaveStream';
 
 export const handler = (event, context, callback) => {
@@ -52,6 +53,13 @@ export const handler = (event, context, callback) => {
       Key: s3record.s3.object.key,
     })
     .promise()
+    .then(() =>
+      deleteProjects({
+        client,
+        index: INDEX,
+        key: s3record.s3.object.key,
+      })
+    )
     .then(data => {
       const saveStream = new SaveStream({
         objectMode: true,
