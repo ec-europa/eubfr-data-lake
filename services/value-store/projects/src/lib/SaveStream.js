@@ -11,7 +11,7 @@ export default class SaveStream extends stream.Writable {
     return this.client.index(
       {
         index: this.index,
-        type: 'projects',
+        type: 'project',
         body: chunk,
       },
       next

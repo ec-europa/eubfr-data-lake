@@ -8,9 +8,7 @@ import split2 from 'split2';
 import SaveStream from '../lib/SaveStream';
 
 export const handler = (event, context, callback) => {
-  // API to work with
-  const { API } = process.env;
-  const index = `projects-test`;
+  const { API, INDEX } = process.env;
 
   /*
    * Some checks here before going any further
@@ -42,7 +40,7 @@ export const handler = (event, context, callback) => {
     host: `https://${API}`,
     connectionClass,
     log: 'trace',
-    index,
+    index: INDEX,
   };
 
   // elasticsearch client instantiation
@@ -58,7 +56,7 @@ export const handler = (event, context, callback) => {
       const saveStream = new SaveStream({
         objectMode: true,
         client,
-        index,
+        index: INDEX,
       });
 
       return s3

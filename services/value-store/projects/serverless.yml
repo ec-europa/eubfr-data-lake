@@ -7,6 +7,7 @@ plugins:
 custom:
   webpackIncludeModules: true
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
+  index: projects
   output:
     file: .serverless/stack-output.json
 
@@ -37,6 +38,7 @@ functions:
     environment:
       API:
         Fn::ImportValue: ${self:provider.stage}:elasticsearch:ServiceEndpoint
+      INDEX: ${self:custom.index}
     events:
       - sns:
           arn:
@@ -55,6 +57,7 @@ functions:
     environment:
       API:
         Fn::ImportValue: ${self:provider.stage}:elasticsearch:ServiceEndpoint
+      INDEX: ${self:custom.index}
     events:
       - sns:
           arn:
