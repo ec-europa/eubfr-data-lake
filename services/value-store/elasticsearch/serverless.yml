@@ -50,6 +50,17 @@ resources:
             Principal:
               Service: lambda.amazonaws.com
             Action: sts:AssumeRole
+          # Kibana for devs in B28
+          - Effect: Allow
+            Principal:
+              AWS: "*"
+            Action:
+            - es:*
+            Condition:
+              IpAddress:
+                aws:SourceIp:
+                - 147.67.241.226
+            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.ES_DOMAIN}/*"
 
   Outputs:
     ServiceEndpoint:
