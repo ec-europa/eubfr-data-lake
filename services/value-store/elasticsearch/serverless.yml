@@ -40,8 +40,7 @@ resources:
           Version: '2012-10-17'
           Statement:
           - Effect: Allow
-            Principal:
-              AWS: "*"
+            Principal: "*"
             Action:
              - "es:ESHttpHead"
              - "es:ESHttpGet"
@@ -50,17 +49,15 @@ resources:
             Principal:
               Service: lambda.amazonaws.com
             Action: sts:AssumeRole
-          # Kibana for devs in B28
+          # Admin access to Kibana from an IP
           - Effect: Allow
-            Principal:
-              AWS: "*"
-            Action:
-            - es:*
+            Principal: "*"
+            Action: es:*
             Condition:
               IpAddress:
                 aws:SourceIp:
                 - 147.67.241.226
-            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.ES_DOMAIN}/*"
+            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.ES_DOMAIN}/_plugin/kibana/*"
 
   Outputs:
     ServiceEndpoint:

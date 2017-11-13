@@ -25,6 +25,7 @@ provider:
   stackTags:
     ENV: ${self:custom.eubfrEnvironment}
   iamRoleStatements:
+    # https://goo.gl/U21zxP
     - Effect: "Allow"
       Action:
         - "es:*"
