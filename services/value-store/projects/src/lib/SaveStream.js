@@ -1,5 +1,7 @@
 import stream from 'stream';
 
+const type = `project`;
+
 export default class SaveStream extends stream.Writable {
   constructor(options) {
     super(options);
@@ -11,7 +13,7 @@ export default class SaveStream extends stream.Writable {
     return this.client.index(
       {
         index: this.index,
-        type: 'project',
+        type,
         body: chunk,
       },
       next

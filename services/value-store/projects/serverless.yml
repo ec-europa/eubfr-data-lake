@@ -27,8 +27,7 @@ provider:
   iamRoleStatements:
     # https://goo.gl/U21zxP
     - Effect: "Allow"
-      Action:
-        - "es:*"
+      Action: "es:*"
       Resource: "arn:aws:es:${self:provider.region}:*:domain/*"
 
 functions:

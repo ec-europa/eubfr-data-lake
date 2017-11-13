@@ -39,17 +39,20 @@ resources:
         AccessPolicies:
           Version: '2012-10-17'
           Statement:
+          # Public can query for information
           - Effect: Allow
             Principal: "*"
             Action:
              - "es:ESHttpHead"
              - "es:ESHttpGet"
             Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.ES_DOMAIN}/*"
+          # Lambda can take actions on the ES domain
           - Effect: Allow
             Principal:
               Service: lambda.amazonaws.com
             Action: sts:AssumeRole
           # Admin access to Kibana from an IP
+          # https://goo.gl/eiGgpD
           - Effect: Allow
             Principal: "*"
             Action: es:*
@@ -57,7 +60,7 @@ resources:
               IpAddress:
                 aws:SourceIp:
                 - 147.67.241.226
-            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.ES_DOMAIN}/_plugin/kibana/*"
+            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.ES_DOMAIN}/*"
 
   Outputs:
     ServiceEndpoint:

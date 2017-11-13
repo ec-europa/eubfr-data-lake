@@ -10,6 +10,7 @@ import SaveStream from '../lib/SaveStream';
 
 export const handler = (event, context, callback) => {
   const { API, INDEX } = process.env;
+  const type = `project`;
 
   /*
    * Some checks here before going any further
@@ -44,55 +45,81 @@ export const handler = (event, context, callback) => {
     index: INDEX,
   };
 
+  // elasticsearch mapping overrides/corrections
+  // the rest of the fields are dynamically discovered fine for now
+  const body = {
+    project: {
+      properties: {
+        project_locations: {
+          properties: {
+            location: { type: 'geo_point' },
+          },
+        },
+      },
+    },
+  };
+
   // elasticsearch client instantiation
   const client = elasticsearch.Client(options);
 
-  return s3
-    .headObject({
-      Bucket: s3record.s3.bucket.name,
-      Key: s3record.s3.object.key,
+  return client.indices
+    .create({ index: INDEX })
+    .catch(e => {
+      // There will possibly be an existing index.
+      // But for the mapping to work, the index has to be ensured before.
+      // If you find a more elegant ES API function, feel free to change.
+      console.log(e);
+      return true;
     })
-    .promise()
-    .then(data => {
-      deleteProjects({
-        client,
-        index: INDEX,
-        key: s3record.s3.object.key,
-      });
-
-      return data;
-    })
-    .then(data => {
-      const saveStream = new SaveStream({
-        objectMode: true,
-        client,
-        index: INDEX,
-      });
-
-      return s3
-        .getObject({
+    .then(() => client.indices.putMapping({ index: INDEX, type, body }))
+    .then(() =>
+      s3
+        .headObject({
           Bucket: s3record.s3.bucket.name,
           Key: s3record.s3.object.key,
         })
-        .createReadStream()
-        .pipe(split2(JSON.parse))
-        .pipe(
-          through2.obj((chunk, enc, cb) => {
-            // Enhance item to save
-            const item = Object.assign(
-              {
-                computed_key: s3record.s3.object.key,
-                producer_id: s3record.userIdentity.principalId,
-                last_modified: data.LastModified.toISOString(), // ISO-8601 date
-              },
-              chunk
-            );
+        .promise()
+        .then(data => {
+          deleteProjects({
+            client,
+            index: INDEX,
+            key: s3record.s3.object.key,
+          });
 
-            return cb(null, item);
-          })
-        )
-        .pipe(saveStream);
-    })
+          return data;
+        })
+        .then(data => {
+          const saveStream = new SaveStream({
+            objectMode: true,
+            client,
+            index: INDEX,
+          });
+
+          return s3
+            .getObject({
+              Bucket: s3record.s3.bucket.name,
+              Key: s3record.s3.object.key,
+            })
+            .createReadStream()
+            .pipe(split2(JSON.parse))
+            .pipe(
+              through2.obj((chunk, enc, cb) => {
+                // Enhance item to save
+                const item = Object.assign(
+                  {
+                    computed_key: s3record.s3.object.key,
+                    producer_id: s3record.userIdentity.principalId,
+                    last_modified: data.LastModified.toISOString(), // ISO-8601 date
+                  },
+                  chunk
+                );
+
+                return cb(null, item);
+              })
+            )
+            .pipe(saveStream);
+        })
+    )
     .catch(err => callback(err));
 };
 
