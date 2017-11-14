@@ -112,37 +112,37 @@ Object {
   "project_id": "8155",
   "project_locations": Array [
     Object {
-      "geolocation": Object {
+      "location": Object {
         "lat": "48.211312000000",
-        "long": "16.367315000000",
+        "lon": "16.367315000000",
       },
       "name": "AT",
     },
     Object {
-      "geolocation": Object {
+      "location": Object {
         "lat": "45.803508000000",
-        "long": "16.017459000000",
+        "lon": "16.017459000000",
       },
       "name": "HR",
     },
     Object {
-      "geolocation": Object {
+      "location": Object {
         "lat": "49.449922000000",
-        "long": "11.103470000000",
+        "lon": "11.103470000000",
       },
       "name": "DE",
     },
     Object {
-      "geolocation": Object {
+      "location": Object {
         "lat": "48.143047000000",
-        "long": "17.124260000000",
+        "lon": "17.124260000000",
       },
       "name": "SK",
     },
     Object {
-      "geolocation": Object {
+      "location": Object {
         "lat": "46.048183000000",
-        "long": "14.501456000000",
+        "lon": "14.501456000000",
       },
       "name": "SI",
     },
@@ -172,9 +172,9 @@ Object {
 
 exports[`DG BUDG CSV transformer Project location information is correctly mapped 1`] = `
 Object {
-  "geolocation": Object {
+  "location": Object {
     "lat": "48.211312000000",
-    "long": "16.367315000000",
+    "lon": "16.367315000000",
   },
   "name": "AT",
 }
@@ -212,9 +212,9 @@ Object {
   "project_id": undefined,
   "project_locations": Array [
     Object {
-      "geolocation": Object {
+      "location": Object {
         "lat": "42.73806663",
-        "long": "23.40014509",
+        "lon": "23.40014509",
       },
       "name": "",
     },

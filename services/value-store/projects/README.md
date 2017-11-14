@@ -1,1 +1,1 @@
-# Storage - Meta Index
+# Projects related functionalities

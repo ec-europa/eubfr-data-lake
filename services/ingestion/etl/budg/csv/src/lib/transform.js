@@ -44,10 +44,11 @@ export default record => {
   const projectLocations = record['Project country(ies)']
     .split(';')
     .map((country, index) => ({
+      // elasticsearch specific structure for geo_point https://goo.gl/nbi2Yp
       name: country,
-      geolocation: {
+      location: {
         lat: (Array.isArray(latArray) && latArray[index]) || null,
-        long: (Array.isArray(longArray) && longArray[index]) || null,
+        lon: (Array.isArray(longArray) && longArray[index]) || null,
       },
     }));
 

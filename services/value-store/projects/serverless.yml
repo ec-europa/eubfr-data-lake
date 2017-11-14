@@ -2,23 +2,12 @@ service: value-store-projects
 
 plugins:
   - serverless-stack-output
-  - serverless-dynamodb-autoscaling
   - serverless-webpack
 
 custom:
   webpackIncludeModules: true
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
-  DYNAMODB_TABLE: ${self:provider.stage}-projects
-  capacities:
-    - table: ProjectsDynamoDbTable  # DynamoDB Resource
-      read:
-        minimum: 5        # Minimum read capacity
-        maximum: 1000     # Maximum read capacity
-        usage: 0.75       # Targeted usage percentage
-      write:
-        minimum: 5        # Minimum write capacity
-        maximum: 100      # Maximum write capacity
-        usage: 0.5        # Targeted usage percentage
+  index: projects
   output:
     file: .serverless/stack-output.json
 
@@ -36,16 +25,10 @@ provider:
   stackTags:
     ENV: ${self:custom.eubfrEnvironment}
   iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - dynamodb:Query
-        - dynamodb:Scan
-        - dynamodb:GetItem
-        - dynamodb:BatchWriteItem
-        - dynamodb:PutItem
-        - dynamodb:UpdateItem
-        - dynamodb:DeleteItem
-      Resource: "arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.DYNAMODB_TABLE}"
+    # https://goo.gl/U21zxP
+    - Effect: "Allow"
+      Action: "es:*"
+      Resource: "arn:aws:es:${self:provider.region}:*:domain/*"
 
 functions:
   onObjectCreated:
@@ -53,7 +36,9 @@ functions:
     name: ${self:provider.stage}-${self:service}-onObjectCreated
     memorySize: 256
     environment:
-      TABLE: ${self:custom.DYNAMODB_TABLE}
+      API:
+        Fn::ImportValue: ${self:provider.stage}:elasticsearch:ServiceEndpoint
+      INDEX: ${self:custom.index}
     events:
       - sns:
           arn:
@@ -70,7 +55,9 @@ functions:
     handler: src/events/onObjectRemoved.handler
     name: ${self:provider.stage}-${self:service}-onObjectRemoved
     environment:
-      TABLE: ${self:custom.DYNAMODB_TABLE}
+      API:
+        Fn::ImportValue: ${self:provider.stage}:elasticsearch:ServiceEndpoint
+      INDEX: ${self:custom.index}
     events:
       - sns:
           arn:
@@ -83,52 +70,3 @@ functions:
                 - Ref: "AWS::AccountId"
                 - ":${self:provider.stage}-harmonized-object-removed"
           topicName: ${self:provider.stage}-harmonized-object-removed
-  listProjects:
-    handler: src/api/listProjects.handler
-    name: ${self:provider.stage}-${self:service}-listProjects
-    environment:
-      TABLE: ${self:custom.DYNAMODB_TABLE}
-    events:
-      - http:
-          path: projects
-          method: get
-          cors: true
-  listProjectsWithComputedKey:
-    handler: src/api/listProjectsWithComputedKey.handler
-    name: ${self:provider.stage}-${self:service}-listProjectsWithComputedKey
-    environment:
-      TABLE: ${self:custom.DYNAMODB_TABLE}
-    events:
-      - http:
-          path: projects/{key}
-          method: get
-          cors: true
-          request:
-            parameters:
-              paths:
-                key: true
-
-resources:
-  Resources:
-    ProjectsDynamoDbTable:
-      Type: AWS::DynamoDB::Table
-      DeletionPolicy: Retain
-      Properties:
-        TableName: ${self:custom.DYNAMODB_TABLE}
-        AttributeDefinitions:
-          -
-            AttributeName: computed_key
-            AttributeType: S
-          -
-            AttributeName: project_id
-            AttributeType: S
-        KeySchema:
-          -
-            AttributeName: computed_key
-            KeyType: HASH
-          -
-            AttributeName: project_id
-            KeyType: RANGE
-        ProvisionedThroughput:
-          ReadCapacityUnits: 5
-          WriteCapacityUnits: 5
