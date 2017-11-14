@@ -63,15 +63,15 @@ export const handler = (event, context, callback) => {
   const client = elasticsearch.Client(options);
 
   return client.indices
-    .create({ index: INDEX })
-    .catch(e => {
-      // There will possibly be an existing index.
-      // But for the mapping to work, the index has to be ensured before.
-      // If you find a more elegant ES API function, feel free to change.
-      console.log(e);
-      return true;
+    .exists({ index: INDEX })
+    .then(exists => {
+      if (!exists) {
+        return client.indices.create({ index: INDEX });
+      }
+      return exists;
     })
-    .then(() => client.indices.putMapping({ index: INDEX, type, body }))
+    .then(() => client.indices.getMapping({ index: INDEX, type }))
+    .catch(() => client.indices.putMapping({ index: INDEX, type, body }))
     .then(() =>
       s3
         .headObject({
