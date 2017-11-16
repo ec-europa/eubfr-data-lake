@@ -139,7 +139,6 @@ Object {
       "country_code": "DE",
       "country_name": null,
       "geolocation": Object {
-      "location": Object {
         "lat": "49.449922000000",
         "lon": "11.103470000000",
       },
