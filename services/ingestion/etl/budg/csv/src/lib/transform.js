@@ -56,8 +56,9 @@ export default record => {
       country_name: null,
       country_code: country,
       geolocation: {
+      // elasticsearch specific structure for geo_point https://goo.gl/nbi2Yp
         lat: (Array.isArray(latArray) && latArray[index]) || null,
-        long: (Array.isArray(longArray) && longArray[index]) || null,
+        lon: (Array.isArray(longArray) && longArray[index]) || null,
       },
     }));
 

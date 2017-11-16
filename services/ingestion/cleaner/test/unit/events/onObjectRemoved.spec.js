@@ -1,4 +1,6 @@
 import AWS from 'aws-sdk-mock';
+import AWS_SDK from 'aws-sdk';
+
 import { promisify } from 'util';
 import onObjectRemoved from '../../../src/events/onObjectRemoved';
 
@@ -6,6 +8,8 @@ import onObjectRemoved from '../../../src/events/onObjectRemoved';
 import eventOfficial from '../../stubs/events/onObjectRemoved/event-official.json';
 import eventEubfr from '../../stubs/events/onObjectRemoved/event-eubfr.json';
 
+// Explicitly set the correct module, as it might not map correctly after transpilation.
+AWS.setSDKInstance(AWS_SDK);
 const handler = promisify(onObjectRemoved);
 
 describe(`Function onObjectRemoved in "@eubfr/ingestion-cleaner"`, () => {

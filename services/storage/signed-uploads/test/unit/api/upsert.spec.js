@@ -1,8 +1,12 @@
 import AWS from 'aws-sdk-mock';
+import AWS_SDK from 'aws-sdk';
+
 import { promisify } from 'util';
 import upsert from '../../../src/api/upsert';
 import eventStub from '../../stubs/eventHttpApiGateway.json';
 
+// Explicitly set the correct module, as it might not map correctly after transpilation.
+AWS.setSDKInstance(AWS_SDK);
 const handler = promisify(upsert);
 
 describe(`Service aws-node-singned-uploads: S3 mock for successful operations`, () => {

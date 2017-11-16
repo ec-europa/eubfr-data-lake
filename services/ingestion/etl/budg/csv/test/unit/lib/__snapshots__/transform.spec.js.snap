@@ -124,7 +124,7 @@ Object {
       "country_name": null,
       "geolocation": Object {
         "lat": "48.211312000000",
-        "long": "16.367315000000",
+        "lon": "16.367315000000",
       },
     },
     Object {
@@ -132,15 +132,16 @@ Object {
       "country_name": null,
       "geolocation": Object {
         "lat": "45.803508000000",
-        "long": "16.017459000000",
+        "lon": "16.017459000000",
       },
     },
     Object {
       "country_code": "DE",
       "country_name": null,
       "geolocation": Object {
+      "location": Object {
         "lat": "49.449922000000",
-        "long": "11.103470000000",
+        "lon": "11.103470000000",
       },
     },
     Object {
@@ -148,7 +149,7 @@ Object {
       "country_name": null,
       "geolocation": Object {
         "lat": "48.143047000000",
-        "long": "17.124260000000",
+        "lon": "17.124260000000",
       },
     },
     Object {
@@ -156,7 +157,7 @@ Object {
       "country_name": null,
       "geolocation": Object {
         "lat": "46.048183000000",
-        "long": "14.501456000000",
+        "lon": "14.501456000000",
       },
     },
   ],
@@ -189,7 +190,7 @@ Object {
   "country_name": null,
   "geolocation": Object {
     "lat": "48.211312000000",
-    "long": "16.367315000000",
+    "lon": "16.367315000000",
   },
 }
 `;
@@ -238,7 +239,7 @@ Object {
       "country_name": null,
       "geolocation": Object {
         "lat": "42.73806663",
-        "long": "23.40014509",
+        "lon": "23.40014509",
       },
     },
   ],
