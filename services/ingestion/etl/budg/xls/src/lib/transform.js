@@ -33,7 +33,7 @@ export default record => {
       country_code: country,
       geolocation: {
         lat: null,
-        long: null,
+        lon: null,
       },
     }));
 

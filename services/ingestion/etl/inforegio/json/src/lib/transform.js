@@ -38,7 +38,7 @@ export default record => {
       country_code: record.related_countries[i].code,
       geolocation: {
         lat: null,
-        long: null,
+        lon: null,
       },
     });
   }

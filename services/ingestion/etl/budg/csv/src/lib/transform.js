@@ -57,7 +57,7 @@ export default record => {
       country_code: country,
       geolocation: {
         lat: (Array.isArray(latArray) && latArray[index]) || null,
-        long: (Array.isArray(longArray) && longArray[index]) || null,
+        lon: (Array.isArray(longArray) && longArray[index]) || null,
       },
     }));
 
