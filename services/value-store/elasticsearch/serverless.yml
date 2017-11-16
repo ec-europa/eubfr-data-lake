@@ -1,0 +1,71 @@
+service: elasticsearch
+
+plugins:
+  - serverless-stack-output
+
+custom:
+  eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
+  ES_DOMAIN: ${self:provider.stage}-projects
+  output:
+    file: .serverless/stack-output.json
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  timeout: 60
+  stage: ${opt:stage, file(../../../config.json):stage, 'dev'}
+  region: ${opt:region, file(../../../config.json):region, 'eu-central-1'}
+  deploymentBucket:
+    name: eubfr-${self:custom.eubfrEnvironment}-deploy
+  stackTags:
+    ENV: ${self:custom.eubfrEnvironment}
+
+resources:
+  Resources:
+    ProjectsElasticSearchDomain:
+      Type: AWS::Elasticsearch::Domain
+      Properties:
+        DomainName: ${self:custom.ES_DOMAIN}
+        ElasticsearchVersion: 5.5
+        EBSOptions:
+          EBSEnabled: true
+          VolumeType: gp2
+          VolumeSize: 10
+        ElasticsearchClusterConfig:
+          InstanceType: t2.small.elasticsearch
+          InstanceCount: 1
+          DedicatedMasterEnabled: false
+          ZoneAwarenessEnabled: false
+        AccessPolicies:
+          Version: '2012-10-17'
+          Statement:
+          # Public can query for information
+          - Effect: Allow
+            Principal: "*"
+            Action:
+             - "es:ESHttpHead"
+             - "es:ESHttpGet"
+            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.ES_DOMAIN}/*"
+          # Lambda can take actions on the ES domain
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+          # Admin access to Kibana from an IP
+          # https://goo.gl/eiGgpD
+          - Effect: Allow
+            Principal: "*"
+            Action: es:*
+            Condition:
+              IpAddress:
+                aws:SourceIp:
+                - 147.67.241.226
+            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.ES_DOMAIN}/*"
+
+  Outputs:
+    ServiceEndpoint:
+      Description: The API endpoint of the projects' elasticsearch domain.
+      Value:
+        Fn::GetAtt: ["ProjectsElasticSearchDomain", "DomainEndpoint"]
+      Export:
+        Name: "${self:provider.stage}:${self:service}:ServiceEndpoint"

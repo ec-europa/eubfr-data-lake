@@ -9,7 +9,7 @@
     "test:unit": "jest --testPathPattern=unit"
   },
   "devDependencies": {
-    "aws-sdk": "2.140.0",
+    "aws-sdk": "2.148.0",
     "aws-sdk-mock": "1.7.0",
     "babel-core": "6.26.0",
     "babel-loader": "7.1.2",

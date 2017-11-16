@@ -47,6 +47,10 @@ cd ../xls
 cd ../../inforegio/json
 ./node_modules/.bin/serverless deploy -v
 
-# Deploy value store - projects
-cd ../../../../value-store/projects
+# Deploy value store - elasticsearch instance
+cd ../../../../value-store/elasticsearch
+./node_modules/.bin/serverless deploy -v
+
+# Deploy value store - projects' functions
+cd ../projects
 ./node_modules/.bin/serverless deploy -v
