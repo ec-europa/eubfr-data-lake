@@ -8,7 +8,7 @@ import projectsApi from '../../meta/projects.json'; // eslint-disable-line impor
 import handleErrors from '../../lib/handleErrors';
 
 const demoServerEndpoint = `${demoServer.ServiceEndpoint}/demo`;
-const projectsApiEndpoint = `https://${projectsApi.ServiceEndpoint}/projects`;
+const projectsApiEndpoint = `https://${projectsApi.ServiceEndpoint}`;
 
 class File extends React.Component {
   constructor() {
@@ -76,7 +76,8 @@ class File extends React.Component {
         this.client
           .search({
             index: 'projects',
-            q: `computed_key:"budg/4e355b0f-8e15-4654-9f99-640df53af2e6.csv.ndjson"`,
+            type: 'project',
+            q: `computed_key:"${computedKey}.ndjson"`,
           })
           .then(data =>
             this.setState({
