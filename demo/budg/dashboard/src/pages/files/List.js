@@ -48,15 +48,19 @@ class List extends Component {
       return <p>Loading...</p>;
     }
 
+    const refreshButton = (
+      <button
+        className="ecl-button ecl-button--default"
+        onClick={this.loadFiles}
+      >
+        Refresh
+      </button>
+    );
+
     if (files.length === 0) {
       return (
         <div>
-          <button
-            className="ecl-button ecl-button--default"
-            onClick={this.loadFiles}
-          >
-            Refresh
-          </button>
+          {refreshButton}
           <p className="ecl-paragraph">No file found</p>
         </div>
       );
@@ -64,12 +68,7 @@ class List extends Component {
 
     return (
       <div className="files-list">
-        <button
-          className="ecl-button ecl-button--default"
-          onClick={this.loadFiles}
-        >
-          Refresh
-        </button>
+        {refreshButton}
         <FilesList files={files} />
       </div>
     );

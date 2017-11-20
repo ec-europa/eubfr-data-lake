@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import elasticsearch from 'elasticsearch';
 import PropTypes from 'prop-types';
 import FormUpload from '../../components/FormUpload';
 import demoServer from '../../meta/server.json'; // eslint-disable-line import/no-unresolved
@@ -7,7 +8,7 @@ import projectsApi from '../../meta/projects.json'; // eslint-disable-line impor
 import handleErrors from '../../lib/handleErrors';
 
 const demoServerEndpoint = `${demoServer.ServiceEndpoint}/demo`;
-const projectsApiEndpoint = `${projectsApi.ServiceEndpoint}/projects`;
+const projectsApiEndpoint = `https://${projectsApi.ServiceEndpoint}/projects`;
 
 class File extends React.Component {
   constructor() {
@@ -18,9 +19,15 @@ class File extends React.Component {
       fileLoading: false,
       link: '',
       linkLoading: false,
-      projects: [],
+      relatedProjects: [],
       projectsLoading: false,
     };
+
+    this.client = elasticsearch.Client({
+      host: projectsApiEndpoint,
+      apiVersion: '5.5',
+      log: 'warning',
+    });
 
     this.deleteFile = this.deleteFile.bind(this);
     this.generateLink = this.generateLink.bind(this);
@@ -58,28 +65,29 @@ class File extends React.Component {
   }
 
   loadProjects() {
-    this.setState({
-      projectsLoading: true,
-    });
     const { match } = this.props;
     const computedKey = decodeURIComponent(match.params.id);
 
-    return window
-      .fetch(`${projectsApiEndpoint}/${encodeURIComponent(computedKey)}`, {
-        method: 'GET',
-        mode: 'cors',
-      })
-      .then(handleErrors)
-      .then(response => response.json())
-      .then(data =>
-        this.setState({
-          projectsLoading: false,
-          projects: data,
-        })
-      )
-      .catch(error => {
-        console.log(`An error happened: ${error.message}`);
-      });
+    this.setState(
+      {
+        projectsLoading: true,
+      },
+      () =>
+        this.client
+          .search({
+            index: 'projects',
+            q: `computed_key:"budg/4e355b0f-8e15-4654-9f99-640df53af2e6.csv.ndjson"`,
+          })
+          .then(data =>
+            this.setState({
+              projectsLoading: false,
+              relatedProjects: data.hits.hits,
+            })
+          )
+          .catch(error => {
+            throw Error(`An error happened: ${error.message}`);
+          })
+    );
   }
 
   deleteFile() {
@@ -130,7 +138,7 @@ class File extends React.Component {
       fileLoading,
       link,
       linkLoading,
-      projects,
+      relatedProjects,
       projectsLoading,
     } = this.state;
     const computedKey = decodeURIComponent(match.params.id);
@@ -185,10 +193,10 @@ class File extends React.Component {
         <FormUpload computedKey={computedKey} />
         <h2>Related projects</h2>
         {projectsLoading && <p>Loading related projects</p>}
-        <p>Total: {projects.length}</p>
+        <p>Total: {relatedProjects.length}</p>
         <ul>
-          {projects.map(project => (
-            <li key={project.project_id}>{project.title}</li>
+          {relatedProjects.map(project => (
+            <li key={project._source.project_id}>{project._source.title}</li>
           ))}
         </ul>
       </div>

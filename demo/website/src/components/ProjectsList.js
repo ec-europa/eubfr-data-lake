@@ -19,6 +19,7 @@ class ProjectsList extends Component {
     const { elasticsearch } = this.props;
     this.client = new elasticsearch.Client({
       host: apiEndpoint,
+      apiVersion: '5.5',
       log: 'warning',
     });
 
