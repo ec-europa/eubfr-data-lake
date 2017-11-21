@@ -1,3 +1,8 @@
+[hidden],
+[aria-hidden='true'] {
+  visibility: hidden;
+}
+
 .dashboard {
   display: flex;
   flex-direction: column;

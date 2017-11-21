@@ -22,23 +22,26 @@ class List extends Component {
   }
 
   loadFiles() {
-    this.setState({
-      loading: true,
-    });
-
-    window
-      .fetch(`${demoServer}/meta`)
-      .then(handleErrors)
-      .then(response => response.json())
-      .then(data =>
-        this.setState({
-          loading: false,
-          files: data,
-        })
-      )
-      .catch(error => {
-        console.log(`An error happened: ${error.message}`);
-      });
+    this.setState(
+      {
+        loading: true,
+      },
+      () => {
+        window
+          .fetch(`${demoServer}/meta`)
+          .then(handleErrors)
+          .then(response => response.json())
+          .then(data =>
+            this.setState({
+              loading: false,
+              files: data,
+            })
+          )
+          .catch(error => {
+            console.log(`An error happened: ${error.message}`);
+          });
+      }
+    );
   }
 
   render() {
