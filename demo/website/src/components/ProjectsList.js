@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import elasticsearch from 'elasticsearch';
 import config from '../meta/projects.json'; // eslint-disable-line
 
 const apiEndpoint = `https://${config.ServiceEndpoint}`;
@@ -16,7 +17,6 @@ class ProjectsList extends Component {
   }
 
   componentDidMount() {
-    const { elasticsearch } = this.props;
     this.client = new elasticsearch.Client({
       host: apiEndpoint,
       apiVersion: '5.5',

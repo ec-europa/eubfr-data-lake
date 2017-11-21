@@ -23,12 +23,6 @@ class File extends React.Component {
       projectsLoading: false,
     };
 
-    this.client = elasticsearch.Client({
-      host: projectsApiEndpoint,
-      apiVersion: '5.5',
-      log: 'warning',
-    });
-
     this.deleteFile = this.deleteFile.bind(this);
     this.generateLink = this.generateLink.bind(this);
     this.loadFile = this.loadFile.bind(this);
@@ -36,6 +30,11 @@ class File extends React.Component {
   }
 
   componentDidMount() {
+    this.client = elasticsearch.Client({
+      host: projectsApiEndpoint,
+      apiVersion: '5.5',
+      log: 'warning',
+    });
     this.loadFile();
     this.loadProjects();
   }

@@ -45,6 +45,7 @@ resources:
             Action:
              - "es:ESHttpHead"
              - "es:ESHttpGet"
+             - "es:ESHttpPost"
             Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.ES_DOMAIN}/*"
           # Lambda can take actions on the ES domain
           - Effect: Allow
