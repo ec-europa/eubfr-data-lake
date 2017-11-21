@@ -13,6 +13,7 @@ export default record => {
     private_fund: null,
     public_fund: null,
     other_contrib: null,
+    funding_area: null,
   };
 
   // Preprocess timeframe
@@ -50,7 +51,7 @@ export default record => {
   // Preprocess project locations
   const latArray = record['Project location latitude'].split(';');
   const longArray = record['Project location longitude'].split(';');
-  const projectLocations = record['Project country(ies)']
+  const locationArray = record['Project country(ies)']
     .split(';')
     .map((country, index) => ({
       country_name: null,
@@ -102,7 +103,7 @@ export default record => {
     coordinators: coordArray,
     budget: budgetObject,
     partners: partnerArray,
-    project_locations: projectLocations,
+    project_locations: locationArray,
     timeframe: {
       from:
         timeframeFrom &&

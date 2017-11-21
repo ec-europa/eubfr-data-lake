@@ -17,6 +17,7 @@ export default record => {
     private_fund: null,
     public_fund: null,
     other_contrib: null,
+    funding_area: null,
   };
 
   // Preprocess results

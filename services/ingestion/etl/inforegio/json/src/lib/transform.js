@@ -13,6 +13,7 @@ export default record => {
     private_fund: Number(record.privatefund.substring(4).replace(/\s+/g, '')),
     public_fund: Number(record.publicfund.substring(4).replace(/\s+/g, '')),
     other_contrib: Number(record.othercontrib.substring(4).replace(/\s+/g, '')),
+    funding_area: record.related_fund,
   };
 
   // Preprocess coordinators
@@ -31,9 +32,9 @@ export default record => {
   }
 
   // Preprocess related countries
-  const countriesArray = [];
+  const locationArray = [];
   for (let i = 0; i < record.related_countries.length; i += 1) {
-    countriesArray.push({
+    locationArray.push({
       country_name: record.related_countries[i].name,
       country_code: record.related_countries[i].code,
       geolocation: {
@@ -46,10 +47,7 @@ export default record => {
   // Map the fields
   return {
     project_id: record.id.toString(),
-    sid: record.sid.toString(),
     title: record.title,
-    technical_data: record.technicaldata,
-    cci: record.cci,
     budget: budgetObject,
     coordinators: coordArray,
     period: record.period,
@@ -61,8 +59,8 @@ export default record => {
     themes: record.related_themes,
     project_website: record.url,
     draft_date: record.draftdate,
-    related_fund: record.related_fund,
     programme_name: record.rel_program,
-    subtitle: record.subtitle,
+    description: record.subtitle,
+    project_locations: locationArray,
   };
 };
