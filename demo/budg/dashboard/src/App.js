@@ -11,46 +11,47 @@ import './App.css';
 
 const App = () => (
   <Router>
-    <div className="ecl-container">
+    <div>
       <Header />
-      <h1 className="ecl-heading ecl-heading--h1">Dashboard</h1>
-      <nav className="ecl-navigation-list-wrapper">
-        <h2 className="ecl-u-sr-only">Navigation Menu</h2>
-        <ul className="ecl-navigation-list ecl-navigation-list--tabs">
-          <li className="ecl-navigation-list__item">
-            <NavLink
-              to="/"
-              exact
-              className="ecl-navigation-list__link ecl-link"
-              activeClassName="ecl-navigation-list__link--active"
-            >
-              Home
-            </NavLink>
-          </li>
-          <li className="ecl-navigation-list__item">
-            <NavLink
-              to="/upload"
-              className="ecl-navigation-list__link ecl-link"
-              activeClassName="ecl-navigation-list__link--active"
-            >
-              Upload new file
-            </NavLink>
-          </li>
-          <li className="ecl-navigation-list__item">
-            <NavLink
-              to="/files"
-              className="ecl-navigation-list__link ecl-link"
-              activeClassName="ecl-navigation-list__link--active"
-            >
-              Files
-            </NavLink>
-          </li>
-        </ul>
-      </nav>
-      <Route exact path="/" component={Home} />
-      <Route path="/upload" component={Upload} />
-      <Route path="/files" component={Files} />
-
+      <div className="ecl-container">
+        <h1 className="ecl-heading ecl-heading--h1">Dashboard</h1>
+        <nav className="ecl-navigation-list-wrapper">
+          <h2 className="ecl-u-sr-only">Navigation Menu</h2>
+          <ul className="ecl-navigation-list ecl-navigation-list--tabs">
+            <li className="ecl-navigation-list__item">
+              <NavLink
+                to="/"
+                exact
+                className="ecl-navigation-list__link ecl-link"
+                activeClassName="ecl-navigation-list__link--active"
+              >
+                Home
+              </NavLink>
+            </li>
+            <li className="ecl-navigation-list__item">
+              <NavLink
+                to="/upload"
+                className="ecl-navigation-list__link ecl-link"
+                activeClassName="ecl-navigation-list__link--active"
+              >
+                Upload new file
+              </NavLink>
+            </li>
+            <li className="ecl-navigation-list__item">
+              <NavLink
+                to="/files"
+                className="ecl-navigation-list__link ecl-link"
+                activeClassName="ecl-navigation-list__link--active"
+              >
+                Files
+              </NavLink>
+            </li>
+          </ul>
+        </nav>
+        <Route exact path="/" component={Home} />
+        <Route path="/upload" component={Upload} />
+        <Route path="/files" component={Files} />
+      </div>
       <Footer />
     </div>
   </Router>
