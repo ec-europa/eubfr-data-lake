@@ -1,3 +1,5 @@
+// @flow
+
 /*
  * Transform message (BUDG CSV)
  */

@@ -11,6 +11,7 @@
     "babel-core": "6.26.0",
     "babel-loader": "7.1.2",
     "babel-preset-env": "1.6.1",
+    "babel-preset-flow": "^6.23.0",
     "jest": "21.2.1",
     "serverless": "1.23.0",
     "serverless-webpack": "3.1.2",
