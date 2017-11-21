@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import config from '../meta/projects.json'; // eslint-disable-line
+import Project from './Project';
 
 const apiEndpoint = config.ServiceEndpoint;
 
@@ -66,13 +67,18 @@ class ProjectsList extends Component {
 
     return (
       <div>
-        <button onClick={this.loadProjects}>Refresh</button>
-        {projects.map(project => (
-          <details key={project.project_id}>
-            <summary>{project.title}</summary>
-            <div dangerouslySetInnerHTML={{ __html: project.description }} />
-          </details>
-        ))}
+        <button
+          className="ecl-button ecl-button--primary"
+          onClick={this.loadProjects}
+        >
+          Refresh
+        </button>
+
+        <ul className="ecl-listing">
+          {projects.map((project, index) => (
+            <Project project={project} key={index} />
+          ))}
+        </ul>
       </div>
     );
   }
