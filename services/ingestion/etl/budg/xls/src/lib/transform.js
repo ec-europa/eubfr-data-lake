@@ -1,11 +1,25 @@
 /*
- * Transform message (BUDGXLS)
+ * Transform message (BUDG XLS)
  */
 
 /*
  * Map fields
  */
 export default record => {
+  // Preprocess budget
+  const budgetObject = {
+    total_cost: null,
+    eu_contrib: Number(
+      record[
+        "EU Grant award in euros (This amount represents the grant awarded after the selection stage and is indicative. Please note that any changes made during or after the project's lifetime will not be reflected here.)"
+      ]
+    ),
+    private_fund: null,
+    public_fund: null,
+    other_contrib: null,
+    funding_area: null,
+  };
+
   // Preprocess results
   const resultObject = {
     available: record['Results Available'],
@@ -16,10 +30,11 @@ export default record => {
   const locationArray = record['Participating countries']
     .split(',')
     .map(country => ({
-      name: country,
+      country_name: null,
+      country_code: country,
       geolocation: {
         lat: null,
-        long: null,
+        lon: null,
       },
     }));
 
@@ -37,6 +52,8 @@ export default record => {
       region: record["Coordinator's region"],
       country: record["Coordinator's country"],
       website: record["Coordinator's website"],
+      phone: null,
+      email: null,
     },
   ];
 
@@ -77,11 +94,7 @@ export default record => {
     success_story: record['Is Success Story'],
     title: record['Project Title'],
     description: record['Project Summary'],
-    eu_budget_contribution: Number(
-      record[
-        "EU Grant award in euros (This amount represents the grant awarded after the selection stage and is indicative. Please note that any changes made during or after the project's lifetime will not be reflected here.)"
-      ]
-    ),
+    budget: budgetObject,
     project_website: record['Project Website'],
     results: resultObject,
     project_locations: locationArray,
