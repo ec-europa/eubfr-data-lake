@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class Project extends Component {
   render() {
@@ -38,5 +39,9 @@ class Project extends Component {
     );
   }
 }
+
+Project.propTypes = {
+  project: PropTypes.object,
+};
 
 export default Project;

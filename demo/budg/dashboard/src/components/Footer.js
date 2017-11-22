@@ -88,7 +88,7 @@ const Footer = () => (
                   className="ecl-link ecl-footer__link"
                   href="http://ec.europa.eu/info/about-commissions-new-web-presence_en"
                 >
-                  About the Commission's new web presence
+                  About the Commission&apos;s new web presence
                 </a>
               </li>
               <li className="ecl-footer__menu-item">
