@@ -1,11 +1,21 @@
 /*
- * Transform message (BUDGCSV)
+ * Transform message (BUDG CSV)
  */
 
 /*
  * Map fields
  */
 export default record => {
+  // Preprocess budget
+  const budgetObject = {
+    total_cost: null,
+    eu_contrib: Number(record['EU Budget contribution']),
+    private_fund: null,
+    public_fund: null,
+    other_contrib: null,
+    funding_area: null,
+  };
+
   // Preprocess timeframe
   let timeframeFrom = null;
   let timeframeTo = null;
@@ -41,12 +51,13 @@ export default record => {
   // Preprocess project locations
   const latArray = record['Project location latitude'].split(';');
   const longArray = record['Project location longitude'].split(';');
-  const projectLocations = record['Project country(ies)']
+  const locationArray = record['Project country(ies)']
     .split(';')
     .map((country, index) => ({
-      // elasticsearch specific structure for geo_point https://goo.gl/nbi2Yp
-      name: country,
-      location: {
+      country_name: null,
+      country_code: country,
+      geolocation: {
+        // elasticsearch specific structure for geo_point https://goo.gl/nbi2Yp
         lat: (Array.isArray(latArray) && latArray[index]) || null,
         lon: (Array.isArray(longArray) && longArray[index]) || null,
       },
@@ -60,6 +71,8 @@ export default record => {
     region: null,
     country: null,
     website: null,
+    phone: null,
+    email: null,
   }));
 
   // Preprocess partners
@@ -88,9 +101,9 @@ export default record => {
     results: resultObject,
     ec_priorities: record['EC’s priorities'].split(';'),
     coordinators: coordArray,
-    eu_budget_contribution: Number(record['EU Budget contribution']),
+    budget: budgetObject,
     partners: partnerArray,
-    project_locations: projectLocations,
+    project_locations: locationArray,
     timeframe: {
       from:
         timeframeFrom &&

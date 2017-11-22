@@ -1,0 +1,1 @@
+# INFOREGIO JSON ETL rules
