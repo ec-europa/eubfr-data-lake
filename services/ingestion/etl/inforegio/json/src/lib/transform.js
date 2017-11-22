@@ -37,7 +37,7 @@ export default record => {
     locationArray.push({
       country_name: record.related_countries[i].name,
       country_code: record.related_countries[i].code,
-      geolocation: {
+      location: {
         lat: null,
         lon: null,
       },
