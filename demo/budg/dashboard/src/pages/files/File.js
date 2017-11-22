@@ -196,7 +196,9 @@ class File extends React.Component {
         <p>Total: {relatedProjects.length}</p>
         <ul>
           {relatedProjects.map(project => (
-            <li key={project._source.project_id}>{project._source.title}</li>
+            <li key={project['_source'].project_id}>
+              {project['_source'].title}
+            </li>
           ))}
         </ul>
       </div>

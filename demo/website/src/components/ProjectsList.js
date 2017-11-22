@@ -70,9 +70,11 @@ class ProjectsList extends Component {
 
         {projects.map((project, index) => (
           <details key={index}>
-            <summary>{project._source.title}</summary>
+            <summary>{project['_source'].title}</summary>
             <div
-              dangerouslySetInnerHTML={{ __html: project._source.description }}
+              dangerouslySetInnerHTML={{
+                __html: project['_source'].description,
+              }}
             />
           </details>
         ))}
