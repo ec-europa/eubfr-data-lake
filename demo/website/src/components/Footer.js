@@ -34,19 +34,25 @@ const Footer = () => (
 
             <ul className="ecl-footer__menu ecl-list--inline">
               <li className="ecl-footer__menu-item">
-                <a className="ecl-link ecl-footer__link" href="">
+                <a
+                  className="ecl-link ecl-footer__link"
+                  href="https://www.facebook.com/EuropeanCommission"
+                >
                   <span className="ecl-icon ecl-icon--facebook ecl-footer__social-icon" />Facebook
                 </a>
               </li>
               <li className="ecl-footer__menu-item">
-                <a className="ecl-link ecl-footer__link" href="">
+                <a
+                  className="ecl-link ecl-footer__link"
+                  href="https://twitter.com/EU_commission"
+                >
                   <span className="ecl-icon ecl-icon--twitter ecl-footer__social-icon" />Twitter
                 </a>
               </li>
               <li className="ecl-footer__menu-item">
                 <a
                   className="ecl-link ecl-footer__link ecl-link--external"
-                  href=""
+                  href="https://europa.eu/european-union/contact/social-networks_en"
                 >
                   Other social media
                 </a>
@@ -60,7 +66,7 @@ const Footer = () => (
               <li className="ecl-footer__menu-item">
                 <a
                   className="ecl-link ecl-footer__link ecl-link--external"
-                  href=""
+                  href="https://europa.eu/european-union/about-eu/institutions-bodies_en"
                 >
                   EU institutions
                 </a>
@@ -68,7 +74,7 @@ const Footer = () => (
               <li className="ecl-footer__menu-item">
                 <a
                   className="ecl-link ecl-footer__link ecl-link--external"
-                  href=""
+                  href="https://europa.eu/european-union/index_en"
                 >
                   European Union
                 </a>

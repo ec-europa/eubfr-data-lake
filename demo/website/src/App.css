@@ -1,4 +1,3 @@
-[hidden],
-[aria-hidden='true'] {
-  visibility: hidden;
+.ecl-site-header__banner {
+  justify-content: left;
 }

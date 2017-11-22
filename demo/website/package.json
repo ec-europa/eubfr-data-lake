@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "prop-types": "15.6.0",
+    "elasticsearch": "14.0.0",
     "react": "16.0.0",
     "react-dom": "16.0.0",
     "react-scripts": "1.0.14"
@@ -13,7 +14,7 @@
     "build": "npm run prepare && react-scripts build && mv build client/dist",
     "deploy": "sls client deploy",
     "prepare":
-      "mkdir -p ./src/meta && ln -f ../../services/value-store/projects/.serverless/stack-output.json ./src/meta/projects.json",
+      "mkdir -p ./src/meta && ln -f ../../services/value-store/elasticsearch/.serverless/stack-output.json ./src/meta/projects.json",
     "release": "npm run build && npm run deploy",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"

@@ -1,8 +1,3 @@
-[hidden],
-[aria-hidden='true'] {
-  visibility: hidden;
-}
-
 .dashboard {
   display: flex;
   flex-direction: column;
@@ -11,6 +6,10 @@
   .dashboard {
     flex-direction: row;
   }
+}
+
+.ecl-site-header__banner {
+  justify-content: left;
 }
 
 .dashboard__item {

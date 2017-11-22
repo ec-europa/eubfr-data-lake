@@ -5,12 +5,18 @@ const Header = () => (
     <div className="ecl-site-switcher ecl-site-switcher--header">
       <ul className="ecl-site-switcher__list ecl-container">
         <li className="ecl-site-switcher__option">
-          <a className="ecl-link ecl-site-switcher__link" href="">
+          <a
+            className="ecl-link ecl-site-switcher__link"
+            href="https://ec.europa.eu/commission/index_en"
+          >
             Commission and its priorities
           </a>
         </li>
         <li className="ecl-site-switcher__option ecl-site-switcher__option--is-selected">
-          <a className="ecl-link ecl-site-switcher__link" href="">
+          <a
+            className="ecl-link ecl-site-switcher__link"
+            href="https://ec.europa.eu/info/index_en"
+          >
             Policies, information and services
           </a>
         </li>
@@ -25,26 +31,6 @@ const Header = () => (
       >
         <span className="ecl-u-sr-only">Home - European Commission</span>
       </a>
-
-      <form aria-hidden className="ecl-search-form ecl-site-header__search">
-        <label className="ecl-search-form__textfield-wrapper">
-          <span className="ecl-u-sr-only">Search this website</span>
-
-          <input
-            type="search"
-            className="ecl-text-input ecl-search-form__textfield"
-            id="global-search"
-            name="default-name"
-          />
-        </label>
-
-        <button
-          className="ecl-button ecl-button--form ecl-search-form__button"
-          type="submit"
-        >
-          Search
-        </button>
-      </form>
     </div>
   </header>
 );

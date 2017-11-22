@@ -25,26 +25,6 @@ const Header = () => (
       >
         <span className="ecl-u-sr-only">Home - European Commission</span>
       </a>
-
-      <form aria-hidden className="ecl-search-form ecl-site-header__search">
-        <label className="ecl-search-form__textfield-wrapper">
-          <span className="ecl-u-sr-only">Search this website</span>
-
-          <input
-            type="search"
-            className="ecl-text-input ecl-search-form__textfield"
-            id="global-search"
-            name="default-name"
-          />
-        </label>
-
-        <button
-          className="ecl-button ecl-button--form ecl-search-form__button"
-          type="submit"
-        >
-          Search
-        </button>
-      </form>
     </div>
   </header>
 );
