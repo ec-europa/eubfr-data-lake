@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
+import elasticsearch from 'elasticsearch';
 import config from '../meta/projects.json'; // eslint-disable-line
 
-const apiEndpoint = config.ServiceEndpoint;
-
-const handleErrors = response => {
-  if (!response.ok) {
-    throw Error(response.statusText);
-  }
-  return response;
-};
+const apiEndpoint = `https://${config.ServiceEndpoint}`;
 
 class ProjectsList extends Component {
   constructor() {
@@ -23,29 +17,35 @@ class ProjectsList extends Component {
   }
 
   componentDidMount() {
+    this.client = new elasticsearch.Client({
+      host: apiEndpoint,
+      apiVersion: '5.5',
+      log: 'warning',
+    });
+
     this.loadProjects();
   }
 
   loadProjects() {
-    this.setState({
-      loading: true,
-    });
-
-    window
-      .fetch(`${apiEndpoint}/projects`)
-      .then(handleErrors)
-      .then(response => response.json())
-      .then(data => {
-        this.setState({
-          loading: false,
-          projects: data,
-        });
-
-        return true;
-      })
-      .catch(error => {
-        console.log(`An error happened: ${error.message}`);
-      });
+    this.setState(
+      {
+        loading: true,
+      },
+      () =>
+        this.client
+          .search({
+            q: 'projects',
+          })
+          .then(data =>
+            this.setState({
+              loading: false,
+              projects: data.hits.hits,
+            })
+          )
+          .catch(error => {
+            throw Error(error.message);
+          })
+    );
   }
 
   render() {
@@ -67,10 +67,15 @@ class ProjectsList extends Component {
     return (
       <div>
         <button onClick={this.loadProjects}>Refresh</button>
-        {projects.map(project => (
-          <details key={project.project_id}>
-            <summary>{project.title}</summary>
-            <div dangerouslySetInnerHTML={{ __html: project.description }} />
+
+        {projects.map((project, index) => (
+          <details key={index}>
+            <summary>{project._source.title}</summary>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: project._source.description,
+              }}
+            />
           </details>
         ))}
       </div>
