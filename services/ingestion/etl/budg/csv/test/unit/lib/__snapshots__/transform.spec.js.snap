@@ -4,6 +4,7 @@ exports[`DG BUDG CSV transformer Produces correct JSON output structure 1`] = `
 Object {
   "budget": Object {
     "eu_contrib": 3562000,
+    "funding_area": null,
     "other_contrib": null,
     "private_fund": null,
     "public_fund": null,
@@ -198,6 +199,7 @@ exports[`DG BUDG transformer handling incomplete or inconsistent data Certain fi
 Object {
   "budget": Object {
     "eu_contrib": NaN,
+    "funding_area": null,
     "other_contrib": null,
     "private_fund": null,
     "public_fund": null,
