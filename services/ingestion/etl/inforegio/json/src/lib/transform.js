@@ -52,8 +52,8 @@ export default record => {
     coordinators: coordArray,
     period: record.period,
     timeframe: {
-      from: record.start,
-      to: record.end,
+      from: new Date(record.start).toISOString(),
+      to: new Date(record.start).toISOString(),
     },
     source: record.source,
     themes: record.related_themes,
