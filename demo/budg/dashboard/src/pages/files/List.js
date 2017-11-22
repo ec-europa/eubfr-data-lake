@@ -22,23 +22,25 @@ class List extends Component {
   }
 
   loadFiles() {
-    this.setState({
-      loading: true,
-    });
-
-    window
-      .fetch(`${demoServer}/meta`)
-      .then(handleErrors)
-      .then(response => response.json())
-      .then(data =>
-        this.setState({
-          loading: false,
-          files: data,
-        })
-      )
-      .catch(error => {
-        console.log(`An error happened: ${error.message}`);
-      });
+    this.setState(
+      {
+        loading: true,
+      },
+      () =>
+        window
+          .fetch(`${demoServer}/meta`)
+          .then(handleErrors)
+          .then(response => response.json())
+          .then(data =>
+            this.setState({
+              loading: false,
+              files: data,
+            })
+          )
+          .catch(error => {
+            console.log(`An error happened: ${error.message}`);
+          })
+    );
   }
 
   render() {
@@ -48,15 +50,19 @@ class List extends Component {
       return <p>Loading...</p>;
     }
 
+    const RefreshButton = () => (
+      <button
+        className="ecl-button ecl-button--default"
+        onClick={this.loadFiles}
+      >
+        Refresh
+      </button>
+    );
+
     if (files.length === 0) {
       return (
         <div>
-          <button
-            className="ecl-button ecl-button--default"
-            onClick={this.loadFiles}
-          >
-            Refresh
-          </button>
+          <RefreshButton />
           <p className="ecl-paragraph">No file found</p>
         </div>
       );
@@ -64,12 +70,7 @@ class List extends Component {
 
     return (
       <div className="files-list">
-        <button
-          className="ecl-button ecl-button--default"
-          onClick={this.loadFiles}
-        >
-          Refresh
-        </button>
+        <RefreshButton />
         <FilesList files={files} />
       </div>
     );
