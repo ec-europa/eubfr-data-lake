@@ -56,7 +56,7 @@ export default record => {
     .map((country, index) => ({
       country_name: null,
       country_code: country,
-      geolocation: {
+      location: {
         // elasticsearch specific structure for geo_point https://goo.gl/nbi2Yp
         lat: (Array.isArray(latArray) && latArray[index]) || null,
         lon: (Array.isArray(longArray) && longArray[index]) || null,

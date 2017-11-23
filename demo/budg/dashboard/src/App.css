@@ -8,6 +8,10 @@
   }
 }
 
+.ecl-site-header__banner {
+  justify-content: left;
+}
+
 .dashboard__item {
   flex-basis: 0;
   flex-grow: 1;
