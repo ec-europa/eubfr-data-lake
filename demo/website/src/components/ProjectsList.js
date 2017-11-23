@@ -35,7 +35,8 @@ class ProjectsList extends Component {
       () =>
         this.client
           .search({
-            q: 'projects',
+            index: 'projects',
+            type: 'project',
           })
           .then(data =>
             this.setState({
