@@ -58,7 +58,7 @@ export default record => {
     source: record.source,
     themes: record.related_themes,
     project_website: record.url,
-    draft_date: record.draftdate,
+    draft_date: new Date(record.draftdate).toISOString(),
     programme_name: record.rel_program,
     description: record.subtitle,
     project_locations: locationArray,
