@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import elasticsearch from 'elasticsearch';
 import config from '../meta/projects.json'; // eslint-disable-line
+import Project from './Project';
 
 const apiEndpoint = `https://${config.ServiceEndpoint}`;
 
@@ -14,6 +15,7 @@ class ProjectsList extends Component {
     };
 
     this.loadProjects = this.loadProjects.bind(this);
+    this.getProjects = this.getProjects.bind(this);
   }
 
   componentDidMount() {
@@ -26,26 +28,30 @@ class ProjectsList extends Component {
     this.loadProjects();
   }
 
+  getProjects() {
+    return this.client
+      .search({
+        index: 'projects',
+        type: 'project',
+      })
+      .then(data =>
+        this.setState({
+          loading: false,
+          projects: data.hits.hits,
+        })
+      )
+      .catch(error => {
+        this.setState({
+          loading: false,
+          projects: [],
+        });
+        throw Error(error.message);
+      });
+  }
+
   loadProjects() {
-    this.setState(
-      {
-        loading: true,
-      },
-      () =>
-        this.client
-          .search({
-            q: 'projects',
-          })
-          .then(data =>
-            this.setState({
-              loading: false,
-              projects: data.hits.hits,
-            })
-          )
-          .catch(error => {
-            throw Error(error.message);
-          })
-    );
+    this.setState({ loading: true });
+    this.getProjects();
   }
 
   render() {
@@ -64,20 +70,24 @@ class ProjectsList extends Component {
       );
     }
 
+    const RefreshButton = () => (
+      <button
+        className="ecl-button ecl-button--default"
+        onClick={this.loadProjects}
+      >
+        Refresh
+      </button>
+    );
+
     return (
       <div>
-        <button onClick={this.loadProjects}>Refresh</button>
+        <RefreshButton />
 
-        {projects.map((project, index) => (
-          <details key={index}>
-            <summary>{project._source.title}</summary>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: project._source.description,
-              }}
-            />
-          </details>
-        ))}
+        <ul className="ecl-listing">
+          {projects.map((project, index) => (
+            <Project project={project} key={index} />
+          ))}
+        </ul>
       </div>
     );
   }
