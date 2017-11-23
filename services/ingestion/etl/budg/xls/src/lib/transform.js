@@ -88,8 +88,8 @@ export default record => {
     type: typeArray,
     call_year: record['Call year'],
     timeframe: {
-      from: record['Start date'],
-      to: record['End date'],
+      from: new Date(record['Start date']).toISOString(),
+      to: new Date(record['End date']).toISOString(),
     },
     success_story: record['Is Success Story'],
     title: record['Project Title'],
