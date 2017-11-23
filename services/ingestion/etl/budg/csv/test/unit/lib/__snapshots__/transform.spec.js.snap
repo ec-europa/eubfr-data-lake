@@ -123,7 +123,7 @@ Object {
     Object {
       "country_code": "AT",
       "country_name": null,
-      "geolocation": Object {
+      "location": Object {
         "lat": "48.211312000000",
         "lon": "16.367315000000",
       },
@@ -131,7 +131,7 @@ Object {
     Object {
       "country_code": "HR",
       "country_name": null,
-      "geolocation": Object {
+      "location": Object {
         "lat": "45.803508000000",
         "lon": "16.017459000000",
       },
@@ -139,7 +139,7 @@ Object {
     Object {
       "country_code": "DE",
       "country_name": null,
-      "geolocation": Object {
+      "location": Object {
         "lat": "49.449922000000",
         "lon": "11.103470000000",
       },
@@ -147,7 +147,7 @@ Object {
     Object {
       "country_code": "SK",
       "country_name": null,
-      "geolocation": Object {
+      "location": Object {
         "lat": "48.143047000000",
         "lon": "17.124260000000",
       },
@@ -155,7 +155,7 @@ Object {
     Object {
       "country_code": "SI",
       "country_name": null,
-      "geolocation": Object {
+      "location": Object {
         "lat": "46.048183000000",
         "lon": "14.501456000000",
       },
@@ -188,7 +188,7 @@ exports[`DG BUDG CSV transformer Project location information is correctly mappe
 Object {
   "country_code": "AT",
   "country_name": null,
-  "geolocation": Object {
+  "location": Object {
     "lat": "48.211312000000",
     "lon": "16.367315000000",
   },
@@ -238,7 +238,7 @@ Object {
     Object {
       "country_code": "",
       "country_name": null,
-      "geolocation": Object {
+      "location": Object {
         "lat": "42.73806663",
         "lon": "23.40014509",
       },

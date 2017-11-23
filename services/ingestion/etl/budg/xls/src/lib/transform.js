@@ -32,7 +32,7 @@ export default record => {
     .map(country => ({
       country_name: null,
       country_code: country,
-      geolocation: {
+      location: {
         lat: null,
         lon: null,
       },
