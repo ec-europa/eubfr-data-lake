@@ -11,13 +11,15 @@ class Project extends Component {
           <div className="ecl-list-item__body">
             <div className="ecl-list-item__meta">
               <div className="ecl-meta">
-                {this.props.project._source.related_links.map(
-                  (related, index) => (
-                    <span className="ecl-meta__item" key={index}>
-                      {related.label}
-                    </span>
-                  )
-                )}
+                {this.props.project._source.related_links
+                  ? this.props.project._source.related_links.map(
+                      (related, index) => (
+                        <span className="ecl-meta__item" key={index}>
+                          {related.label}
+                        </span>
+                      )
+                    )
+                  : ''}
               </div>
             </div>
 

@@ -15,6 +15,7 @@ class ProjectsList extends Component {
     };
 
     this.loadProjects = this.loadProjects.bind(this);
+    this.getProjects = this.getProjects.bind(this);
   }
 
   componentDidMount() {
@@ -27,27 +28,30 @@ class ProjectsList extends Component {
     this.loadProjects();
   }
 
+  getProjects() {
+    return this.client
+      .search({
+        index: 'projects',
+        type: 'project',
+      })
+      .then(data =>
+        this.setState({
+          loading: false,
+          projects: data.hits.hits,
+        })
+      )
+      .catch(error => {
+        this.setState({
+          loading: false,
+          projects: [],
+        });
+        throw Error(error.message);
+      });
+  }
+
   loadProjects() {
-    this.setState(
-      {
-        loading: true,
-      },
-      () =>
-        this.client
-          .search({
-            index: 'projects',
-            type: 'project',
-          })
-          .then(data =>
-            this.setState({
-              loading: false,
-              projects: data.hits.hits,
-            })
-          )
-          .catch(error => {
-            throw Error(error.message);
-          })
-    );
+    this.setState({ loading: true });
+    this.getProjects();
   }
 
   render() {
