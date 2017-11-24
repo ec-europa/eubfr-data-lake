@@ -50,8 +50,7 @@ class ProjectsList extends Component {
   }
 
   loadProjects() {
-    this.setState({ loading: true });
-    this.getProjects();
+    this.setState({ loading: true }, () => this.getProjects());
   }
 
   render() {
@@ -59,15 +58,6 @@ class ProjectsList extends Component {
 
     if (loading) {
       return <p>Loading...</p>;
-    }
-
-    if (projects.length === 0) {
-      return (
-        <div>
-          <button onClick={this.loadProjects}>Refresh</button>
-          <p>No project found</p>
-        </div>
-      );
     }
 
     const RefreshButton = () => (
@@ -79,11 +69,20 @@ class ProjectsList extends Component {
       </button>
     );
 
+    if (projects.length === 0) {
+      return (
+        <div>
+          <RefreshButton />
+          <p>No projects found</p>
+        </div>
+      );
+    }
+
     return (
       <div>
         <RefreshButton />
 
-        <ul className="ecl-listing">
+        <ul className="ecl-listing ecl-u-mt-xs">
           {projects.map((project, index) => (
             <Project project={project} key={index} />
           ))}

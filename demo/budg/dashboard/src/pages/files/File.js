@@ -40,27 +40,33 @@ class File extends React.Component {
   }
 
   loadFile() {
-    this.setState({
-      fileLoading: true,
-    });
     const { match } = this.props;
     const computedKey = decodeURIComponent(match.params.id);
 
-    return window
-      .fetch(
-        `${demoServerEndpoint}/filemeta?key=${encodeURIComponent(computedKey)}`
-      )
-      .then(handleErrors)
-      .then(response => response.json())
-      .then(data =>
-        this.setState({
-          fileLoading: false,
-          file: data[0],
-        })
-      )
-      .catch(error => {
-        console.log(`An error happened: ${error.message}`);
-      });
+    this.setState(
+      {
+        fileLoading: true,
+      },
+      () => {
+        window
+          .fetch(
+            `${demoServerEndpoint}/filemeta?key=${encodeURIComponent(
+              computedKey
+            )}`
+          )
+          .then(handleErrors)
+          .then(response => response.json())
+          .then(data =>
+            this.setState({
+              fileLoading: false,
+              file: data[0],
+            })
+          )
+          .catch(error => {
+            console.log(`An error happened: ${error.message}`);
+          });
+      }
+    );
   }
 
   loadProjects() {
@@ -110,25 +116,29 @@ class File extends React.Component {
     const { match } = this.props;
     const computedKey = decodeURIComponent(match.params.id);
 
-    this.setState({
-      linkLoading: true,
-    });
-
-    return window
-      .fetch(
-        `${demoServerEndpoint}/download?key=${encodeURIComponent(computedKey)}`
-      )
-      .then(handleErrors)
-      .then(response => response.json())
-      .then(data =>
-        this.setState({
-          link: data.signedUrl,
-          linkLoading: false,
-        })
-      )
-      .catch(error => {
-        console.log(`An error happened: ${error.message}`);
-      });
+    this.setState(
+      {
+        linkLoading: true,
+      },
+      () =>
+        window
+          .fetch(
+            `${demoServerEndpoint}/download?key=${encodeURIComponent(
+              computedKey
+            )}`
+          )
+          .then(handleErrors)
+          .then(response => response.json())
+          .then(data =>
+            this.setState({
+              link: data.signedUrl,
+              linkLoading: false,
+            })
+          )
+          .catch(error => {
+            console.log(`An error happened: ${error.message}`);
+          })
+    );
   }
 
   render() {

@@ -63,7 +63,7 @@ class List extends Component {
       return (
         <div>
           <RefreshButton />
-          <p className="ecl-paragraph">No file found</p>
+          <p className="ecl-paragraph">No files found</p>
         </div>
       );
     }
