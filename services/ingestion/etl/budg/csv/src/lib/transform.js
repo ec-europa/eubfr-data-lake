@@ -12,7 +12,7 @@ type Project = {
 /*
  * Map fields
  */
-export default (record: Project) => {
+export default (record: Object): Project => {
   // Preprocess budget
   const budgetObject = {
     total_cost: null,
