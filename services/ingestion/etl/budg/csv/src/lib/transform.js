@@ -4,10 +4,15 @@
  * Transform message (BUDG CSV)
  */
 
+type Project = {
+  project_id: string,
+  title: string,
+};
+
 /*
  * Map fields
  */
-export default record => {
+export default (record: Project) => {
   // Preprocess budget
   const budgetObject = {
     total_cost: null,
