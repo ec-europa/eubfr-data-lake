@@ -4,10 +4,7 @@
  * Transform message (BUDG CSV)
  */
 
-type Project = {
-  project_id: string,
-  title: string,
-};
+import type { Project } from '../../../../types/Project';
 
 /*
  * Map fields
