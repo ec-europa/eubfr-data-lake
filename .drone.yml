@@ -24,6 +24,12 @@ pipeline:
     commands:
       - yarn test:lint
 
+  test-flow:
+    image: node:8.5
+    group: test
+    commands:
+      - yarn test:flow
+
   test-integration:
     image: node:8.5
     group: test
