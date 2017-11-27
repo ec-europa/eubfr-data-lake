@@ -4,7 +4,7 @@
     "bootstrap": "lerna bootstrap",
     "deploy": "./scripts/deploy.sh",
     "deploy-demo": "./scripts/deploy-demo.sh",
-    "flow": "./node_modules/.bin/flow",
+    "flow": "flow",
     "lint": "eslint .",
     "precommit": "lint-staged",
     "test:integration": "lerna run --parallel test:integration",
