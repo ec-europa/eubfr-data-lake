@@ -2,6 +2,12 @@
  * Transform message (REGIO JSON)
  */
 
+// Takes DD/MM/YYYY to MM/DD/YYYY
+const formatDate = date => {
+  const d = date.split(/\//);
+  return new Date(`${d[1]}/${d[0]}/${d[2]}`).toISOString();
+};
+
 /*
  * Map fields
  */
@@ -52,13 +58,13 @@ export default record => {
     coordinators: coordArray,
     period: record.period,
     timeframe: {
-      from: record.start,
-      to: record.end,
+      from: formatDate(record.start),
+      to: formatDate(record.end),
     },
     source: record.source,
     themes: record.related_themes,
     project_website: record.url,
-    draft_date: record.draftdate,
+    draft_date: formatDate(record.draftdate),
     programme_name: record.rel_program,
     description: record.subtitle,
     project_locations: locationArray,
