@@ -59,12 +59,8 @@ export default record => {
       country_code: record.related_countries[i].code,
       // Provide 0 as number by default, because of current Elasticsearch store.
       location: {
-        lat: record.related_countries[i].location.lat
-          ? record.related_countries[i].location.lat
-          : 0,
-        lon: record.related_countries[i].location.lon
-          ? record.related_countries[i].location.lon
-          : 0,
+        lat: 0,
+        lon: 0,
       },
     });
   }
@@ -76,6 +72,7 @@ export default record => {
     budget: budgetObject,
     coordinators: coordArray,
     period: record.period,
+    // Todo
     timeframe: {
       from: record.start && new Date(record.start).toISOString(),
       to: record.end && new Date(record.end).toISOString(),
