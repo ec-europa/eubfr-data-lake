@@ -52,7 +52,16 @@ export const handler = (event, context, callback) => {
       properties: {
         project_locations: {
           properties: {
-            location: { type: 'geo_point' },
+            location: {
+              type: 'geo_point',
+              // That's necessary as often transforms provide
+              // location: {
+              //   lat: null,
+              //   lon: null,
+              // },
+              // As in JSON for Inforegio.
+              ignore_malformed: true,
+            },
           },
         },
       },
