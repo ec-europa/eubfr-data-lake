@@ -2,17 +2,43 @@
  * Transform message (REGIO JSON)
  */
 
+const getNumber = str => str.substring(4).replace(/\s+/g, '');
+const hasEuroPrefix = str => (str.includes('EUR') ? str : '');
+const getAddress = contact => {
+  if (contact.address && contact.city) {
+    return `${contact.address}, ${contact.city}`;
+  } else if (contact.address) {
+    return `${contact.address}`;
+  }
+  return '';
+};
+
+const getProjectWebsite = record => {
+  if (record.url && typeof record.url === 'object') {
+    return record.url[0];
+  } else if (record.url && typeof record.url === 'string') {
+    return record.url;
+  }
+  return '';
+};
+
+// Converts DD/MM/YYYY to ISO string date.
+const formatDate = date => {
+  const d = date.split(/\//);
+  return new Date(`${d[1]}/${d[0]}/${d[2]}`).toISOString();
+};
+
 /*
  * Map fields
  */
 export default record => {
   // Preprocess budget
   const budgetObject = {
-    total_cost: Number(record.totalcost.substring(4).replace(/\s+/g, '')),
-    eu_contrib: Number(record.eucontrib.substring(4).replace(/\s+/g, '')),
-    private_fund: Number(record.privatefund.substring(4).replace(/\s+/g, '')),
-    public_fund: Number(record.publicfund.substring(4).replace(/\s+/g, '')),
-    other_contrib: Number(record.othercontrib.substring(4).replace(/\s+/g, '')),
+    total_cost: Number(getNumber(hasEuroPrefix(record.totalcost))),
+    eu_contrib: Number(getNumber(hasEuroPrefix(record.eucontrib))),
+    private_fund: Number(getNumber(hasEuroPrefix(record.privatefund))),
+    public_fund: Number(getNumber(hasEuroPrefix(record.publicfund))),
+    other_contrib: Number(getNumber(hasEuroPrefix(record.othercontrib))),
     funding_area: record.related_fund,
   };
 
@@ -22,10 +48,10 @@ export default record => {
     coordArray.push({
       name: record.contacts[i].organization,
       type: record.contacts[i].contact_type,
-      address: `${record.contacts[i].address}, ${record.contacts[i].city}`,
-      region: null,
+      address: getAddress(record.contacts[i]),
+      region: record.contacts[i].region ? record.contacts[i].region : null,
       country: record.contacts[i].country,
-      website: null,
+      website: record.contacts[i].website ? record.contacts[i].website : null,
       phone: record.contacts[i].phone,
       email: record.contacts[i].email,
     });
@@ -37,9 +63,10 @@ export default record => {
     locationArray.push({
       country_name: record.related_countries[i].name,
       country_code: record.related_countries[i].code,
+      // Provide 0 as number by default, because of current Elasticsearch store.
       location: {
-        lat: null,
-        lon: null,
+        lat: 0,
+        lon: 0,
       },
     });
   }
@@ -51,16 +78,17 @@ export default record => {
     budget: budgetObject,
     coordinators: coordArray,
     period: record.period,
+    // Todo
     timeframe: {
-      from: new Date(record.start).toISOString(),
-      to: new Date(record.start).toISOString(),
+      from: formatDate(record.start),
+      to: formatDate(record.end),
     },
     source: record.source,
     themes: record.related_themes,
-    project_website: record.url,
-    draft_date: record.draftdate,
+    draft_date: formatDate(record.draftdate),
     programme_name: record.rel_program,
     description: record.subtitle,
     project_locations: locationArray,
+    project_website: getProjectWebsite(record),
   };
 };
