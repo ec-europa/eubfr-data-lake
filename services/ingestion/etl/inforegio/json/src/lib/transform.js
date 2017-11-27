@@ -53,7 +53,7 @@ export default record => {
     period: record.period,
     timeframe: {
       from: new Date(record.start).toISOString(),
-      to: new Date(record.start).toISOString(),
+      to: new Date(record.end).toISOString(),
     },
     source: record.source,
     themes: record.related_themes,
