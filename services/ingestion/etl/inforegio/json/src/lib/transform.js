@@ -38,8 +38,8 @@ export default record => {
       country_name: record.related_countries[i].name,
       country_code: record.related_countries[i].code,
       location: {
-        lat: null,
-        lon: null,
+        lat: 0,
+        lon: 0,
       },
     });
   }
