@@ -22,6 +22,12 @@ const getProjectWebsite = record => {
   return '';
 };
 
+// Converts DD/MM/YYYY to ISO string date.
+const formatDate = date => {
+  const d = date.split(/\//);
+  return new Date(`${d[1]}/${d[0]}/${d[2]}`).toISOString();
+};
+
 /*
  * Map fields
  */
@@ -74,12 +80,12 @@ export default record => {
     period: record.period,
     // Todo
     timeframe: {
-      from: record.start && new Date(record.start).toISOString(),
-      to: record.end && new Date(record.end).toISOString(),
+      from: formatDate(record.start),
+      to: formatDate(record.end),
     },
     source: record.source,
     themes: record.related_themes,
-    draft_date: record.draftdate && new Date(record.draftdate).toISOString(),
+    draft_date: formatDate(record.draftdate),
     programme_name: record.rel_program,
     description: record.subtitle,
     project_locations: locationArray,
