@@ -33,8 +33,8 @@ export default record => {
       country_name: null,
       country_code: country,
       location: {
-        lat: null,
-        lon: null,
+        lat: 0,
+        lon: 0,
       },
     }));
 
@@ -88,8 +88,8 @@ export default record => {
     type: typeArray,
     call_year: record['Call year'],
     timeframe: {
-      from: record['Start date'],
-      to: record['End date'],
+      from: new Date(record['Start date']).toISOString(),
+      to: new Date(record['End date']).toISOString(),
     },
     success_story: record['Is Success Story'],
     title: record['Project Title'],

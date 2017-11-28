@@ -1,11 +1,15 @@
+// @flow
+
 /*
  * Transform message (BUDG CSV)
  */
 
+import type { Project } from '../../../../types/Project';
+
 /*
  * Map fields
  */
-export default record => {
+export default (record: Object): Project => {
   // Preprocess budget
   const budgetObject = {
     total_cost: null,
@@ -58,8 +62,8 @@ export default record => {
       country_code: country,
       location: {
         // elasticsearch specific structure for geo_point https://goo.gl/nbi2Yp
-        lat: (Array.isArray(latArray) && latArray[index]) || null,
-        lon: (Array.isArray(longArray) && longArray[index]) || null,
+        lat: (Array.isArray(latArray) && latArray[index]) || 0,
+        lon: (Array.isArray(longArray) && longArray[index]) || 0,
       },
     }));
 

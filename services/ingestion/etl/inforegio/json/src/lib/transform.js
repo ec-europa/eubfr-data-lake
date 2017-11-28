@@ -2,6 +2,13 @@
  * Transform message (REGIO JSON)
  */
 
+// Takes DD/MM/YYYY to MM/DD/YYYY
+const formatDate = date => {
+  const d = date.split(/\//);
+  if (d.length !== 3) return null;
+  return new Date(d[2], d[1] - 1, d[0]).toISOString();
+};
+
 /*
  * Map fields
  */
@@ -38,8 +45,8 @@ export default record => {
       country_name: record.related_countries[i].name,
       country_code: record.related_countries[i].code,
       location: {
-        lat: null,
-        lon: null,
+        lat: 0,
+        lon: 0,
       },
     });
   }
@@ -52,13 +59,13 @@ export default record => {
     coordinators: coordArray,
     period: record.period,
     timeframe: {
-      from: new Date(record.start).toISOString(),
-      to: new Date(record.start).toISOString(),
+      from: formatDate(record.start),
+      to: formatDate(record.end),
     },
     source: record.source,
     themes: record.related_themes,
     project_website: record.url,
-    draft_date: record.draftdate,
+    draft_date: formatDate(record.draftdate),
     programme_name: record.rel_program,
     description: record.subtitle,
     project_locations: locationArray,
