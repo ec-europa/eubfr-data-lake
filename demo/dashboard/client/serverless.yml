@@ -1,11 +1,11 @@
-service: demo-budg-dashboard
+service: demo-dash-client-${opt:username}
 
 plugins:
   - serverless-finch
 
 custom:
   client:
-    bucketName: eubfr-${self:provider.stage}-demo-budg-dashboard
+    bucketName: eubfr-${self:provider.stage}-demo-dashboard-client-${opt:username}
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
 
 provider:

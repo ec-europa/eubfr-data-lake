@@ -11,12 +11,12 @@ cd ..
 
 ## BUDG demo
 
-cd ./demo/budg/server
-echo 'Start demo server deploy ...'
-yarn deploy
+cd ./demo/dashboard/server
+echo 'Start demo dashboard server deploy ...'
+yarn deploy --username budg
 
-cd ../dashboard
-echo 'Start demo dashboard deploy ...'
+cd ../client
+echo 'Start demo dashboard client deploy ...'
 
 echo 'Cleaning previous builds ...'
 rm -rf build client
@@ -24,10 +24,30 @@ rm -rf build client
 echo 'serverless-finch needs a /client folder'
 mkdir client
 
-echo 'Deploying BUDG dashboard...'
+echo 'Deploying dashboard client...'
 yarn run release
+yarn run sls client deploy --username budg
 
-## Website demo
+## INFOREGIO demo
+
+cd ../server
+echo 'Start demo dashboard server deploy ...'
+yarn deploy --username inforegio
+
+cd ../client
+echo 'Start demo dashboard client deploy ...'
+
+echo 'Cleaning previous builds ...'
+rm -rf build client
+
+echo 'serverless-finch needs a /client folder'
+mkdir client
+
+echo 'Deploying dashboard client...'
+yarn run release
+yarn run sls client deploy --username inforegio
+
+# Website demo
 
 cd ../../website
 echo 'Start demo website deploy ...'
