@@ -5,7 +5,8 @@
 // Takes DD/MM/YYYY to MM/DD/YYYY
 const formatDate = date => {
   const d = date.split(/\//);
-  return new Date(`${d[1]}/${d[0]}/${d[2]}`).toISOString();
+  if (d.length !== 3) return null;
+  return new Date(d[2], d[1] - 1, d[0]).toISOString();
 };
 
 /*
