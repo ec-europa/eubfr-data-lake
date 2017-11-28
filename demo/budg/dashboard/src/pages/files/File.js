@@ -7,6 +7,8 @@ import demoServer from '../../meta/server.json'; // eslint-disable-line import/n
 import projectsApi from '../../meta/projects.json'; // eslint-disable-line import/no-unresolved
 import handleErrors from '../../lib/handleErrors';
 
+import './File.css';
+
 const demoServerEndpoint = `${demoServer.ServiceEndpoint}/demo`;
 const projectsApiEndpoint = `https://${projectsApi.ServiceEndpoint}`;
 
@@ -63,12 +65,13 @@ class File extends React.Component {
             })
           )
           .catch(error => {
-            console.log(`An error happened: ${error.message}`);
+            console.log(`An error occured: ${error.message}`);
           });
       }
     );
   }
 
+  // Load related Projects
   loadProjects() {
     const { match } = this.props;
     const computedKey = decodeURIComponent(match.params.id);
@@ -78,22 +81,36 @@ class File extends React.Component {
         projectsLoading: true,
       },
       () =>
-        this.client
-          .search({
+        this.client.indices
+          .exists({
             index: 'projects',
-            type: 'project',
-            q: `computed_key:"${computedKey}.ndjson"`,
           })
-          .then(data =>
-            this.setState({
-              projectsLoading: false,
-              relatedProjects: data.hits.hits,
-            })
-          )
+          .then(exists => {
+            exists
+              ? this.client
+                  .search({
+                    index: 'projects',
+                    type: 'project',
+                    q: `computed_key:"${computedKey}.ndjson"`,
+                  })
+                  .then(data => this.setProjects(data.hits.hits))
+                  .catch(error => {
+                    this.setProjects([]);
+                    throw Error(`An error occured: ${error.message}`);
+                  })
+              : this.setProjects([]);
+          })
           .catch(error => {
-            throw Error(`An error happened: ${error.message}`);
+            this.setProjects([]);
           })
     );
+  }
+
+  setProjects(relatedProjects) {
+    this.setState({
+      projectsLoading: false,
+      relatedProjects,
+    });
   }
 
   deleteFile() {
@@ -186,11 +203,11 @@ class File extends React.Component {
           <dt>Last update</dt>
           <dd>{new Date(file.last_modified).toLocaleString()}</dd>
           <dt>Size</dt>
-          <dd>{Math.floor(file.content_length / 1024)} kB</dd>
+          <dd>{Math.floor(file.content_length / 1024) || 0} kB</dd>
           <dt>Status</dt>
           <dd>
             {file.message ? (
-              <details>
+              <details className="ecl-item__status">
                 <summary>{file.status}</summary>
                 <p>{file.message}</p>
               </details>

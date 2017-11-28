@@ -28,29 +28,39 @@ class ProjectsList extends Component {
     this.loadProjects();
   }
 
+  loadProjects() {
+    this.setState({ loading: true }, () => this.getProjects());
+  }
+
   getProjects() {
-    return this.client
-      .search({
+    this.client.indices
+      .exists({
         index: 'projects',
-        type: 'project',
       })
-      .then(data =>
-        this.setState({
-          loading: false,
-          projects: data.hits.hits,
-        })
-      )
+      .then(exists => {
+        exists
+          ? this.client
+              .search({
+                index: 'projects',
+                type: 'project',
+              })
+              .then(data => this.setProjects(data.hits.hits))
+              .catch(error => {
+                this.setProjects([]);
+                throw Error(error.message);
+              })
+          : this.setProjects([]);
+      })
       .catch(error => {
-        this.setState({
-          loading: false,
-          projects: [],
-        });
-        throw Error(error.message);
+        this.setProjects([]);
       });
   }
 
-  loadProjects() {
-    this.setState({ loading: true }, () => this.getProjects());
+  setProjects(projects) {
+    this.setState({
+      loading: false,
+      projects,
+    });
   }
 
   render() {

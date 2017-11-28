@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 const List = ({ files }) => (
-  <table className="ecl-table">
+  <table className="ecl-table ecl-u-mt-xs">
     <thead>
       <tr>
         <th>Original name</th>
@@ -20,7 +20,7 @@ const List = ({ files }) => (
           <td>{file.original_key || 'unknown'}</td>
           <td>{file.computed_key}</td>
           <td>{new Date(file.last_modified).toLocaleString()}</td>
-          <td>{Math.floor(file.content_length / 1024)} kB</td>
+          <td>{Math.floor(file.content_length / 1024) || 0} kB</td>
           <td>
             {file.message ? (
               <details>
