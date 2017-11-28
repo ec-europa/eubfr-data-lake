@@ -85,22 +85,23 @@ class File extends React.Component {
           .exists({
             index: 'projects',
           })
-          .then(exists => {
-            exists
-              ? this.client
-                  .search({
-                    index: 'projects',
-                    type: 'project',
-                    q: `computed_key:"${computedKey}.ndjson"`,
-                  })
-                  .then(data => this.setProjects(data.hits.hits))
-                  .catch(error => {
-                    this.setProjects([]);
-                    throw Error(`An error occured: ${error.message}`);
-                  })
-              : this.setProjects([]);
-          })
-          .catch(error => {
+          .then(
+            exists =>
+              exists
+                ? this.client
+                    .search({
+                      index: 'projects',
+                      type: 'project',
+                      q: `computed_key:"${computedKey}.ndjson"`,
+                    })
+                    .then(data => this.setProjects(data.hits.hits))
+                    .catch(error => {
+                      this.setProjects([]);
+                      throw Error(`An error occured: ${error.message}`);
+                    })
+                : this.setProjects([])
+          )
+          .catch(() => {
             this.setProjects([]);
           })
     );
