@@ -1,6 +1,10 @@
+// @flow
+
 /*
  * Transform message (REGIO JSON)
  */
+
+import type { Project } from '../../../../types/Project';
 
 // Takes DD/MM/YYYY to MM/DD/YYYY
 const formatDate = date => {
@@ -12,7 +16,7 @@ const formatDate = date => {
 /*
  * Map fields
  */
-export default record => {
+export default (record: Object): Project => {
   // Preprocess budget
   const budgetObject = {
     total_cost: Number(record.totalcost.substring(4).replace(/\s+/g, '')),
