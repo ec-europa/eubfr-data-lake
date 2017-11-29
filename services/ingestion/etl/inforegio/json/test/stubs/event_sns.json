@@ -7,16 +7,16 @@
         "arn:aws:sns:eu-central-1:491621799026:chernka21-etl-inforegio-json:0780a9c4-8386-439d-98f7-67f47507f4a1",
       "Sns": {
         "Type": "Notification",
-        "MessageId": "9ad5f493-bf25-5f5d-a53e-a60b0513d2de",
+        "MessageId": "20b3454b-980c-5b18-8dcd-17d352f979bc",
         "TopicArn":
           "arn:aws:sns:eu-central-1:491621799026:chernka21-etl-inforegio-json",
         "Subject": null,
         "Message":
-          "{\"eventTime\":\"2017-11-29T13:36:52.533Z\",\"userIdentity\":{\"principalId\":\"AWS:AROAJENQOJYYKRL54TXKE:chernka21-storage-signed-uploads-upsert-objects\"},\"bucket\":{\"name\":\"eubfr-chernka21\",\"ownerIdentity\":{\"principalId\":\"ABTN0CERTFU87\"},\"arn\":\"arn:aws:s3:::eubfr-chernka21\"},\"object\":{\"key\":\"inforegio/daa5b88f-85e0-4d25-b774-1c2d795a5c00.json\",\"size\":1764,\"eTag\":\"aca9eafe80a3b19f855a77b379b4558f\",\"sequencer\":\"005A1EB7F4725D3F64\"}}",
-        "Timestamp": "2017-11-29T13:36:54.085Z",
+          "{\"eventTime\":\"2017-11-29T14:48:21.142Z\",\"userIdentity\":{\"principalId\":\"AWS:AROAJENQOJYYKRL54TXKE:chernka21-storage-signed-uploads-upsert-objects\"},\"bucket\":{\"name\":\"eubfr-chernka21\",\"ownerIdentity\":{\"principalId\":\"ABTN0CERTFU87\"},\"arn\":\"arn:aws:s3:::eubfr-chernka21\"},\"object\":{\"key\":\"inforegio/c8af6ae0-e58f-40b6-8273-42b9f542f5ff.json\",\"size\":1764,\"eTag\":\"aca9eafe80a3b19f855a77b379b4558f\",\"sequencer\":\"005A1EC8B515BF5D56\"}}",
+        "Timestamp": "2017-11-29T14:48:21.736Z",
         "SignatureVersion": "1",
         "Signature":
-          "H7Z8ITT29Lvepgb4DeRzaY2jzyJpgATY9VeunxcBb5Gj6eWO/rQ5Nn61qZDthDuNp8golZI8gEUMYMw7EHrOrDKvhbtf+9JpTR9a8szNXICOyIHxF5KpEhtE9LeGZWqeA+7zqpe//0PmDxgMzYqZEPhSbhyn+oNQeKRZYFFzjX8u+unbIhEi4I7PZ1MbDsjKoMW4Q+njeM/wkZg94mZ4+9ooTTbZVfqRMe/RmPmRHUbv06XcgUJJtGcATP+pMf5g2Gey9RirZaBPiAmFw4y0KMbUW905Idvcj9LCdkvJ17cbob0l4rNv1/K4TRkmhE9fKqcbcovnEg86rHLGBRUMxA==",
+          "YQo9GG2rjJ6cMi7NpTPn3k7HXzLzkK09KwLIl9UaRjHQHpGjE4qIP/fMcf8ty7CA/5VAqkIGqRUdQviOlGoOtWvEeZ3VfFxpWyX99HtnrOhh5PGP0/zvI6zxIR6bANNuaVij/s40RfRJqNd4TuCPKAZE7zTtYEClHG4PZD8xHV2BQQmY08aFhR4p/L68zbY/+digClqVG5Qtpj19SDekPeF7nN5Cx+SdCQ9ZTRGdzL5sopG/uKCoHCLtyUYhVSYX876Lg+XvC0rgBfl1gYjNWlpWe9L/AmDI8dkH9ejzl9FXluLCyyCsA3OSKWXu2CZfB9xzvhg0dGRZSGFm5hsgBQ==",
         "SigningCertUrl":
           "https://sns.eu-central-1.amazonaws.com/SimpleNotificationService-433026a4050d206028891664da859041.pem",
         "UnsubscribeUrl":
