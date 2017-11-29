@@ -1,22 +1,38 @@
-// @flow
-
 /*
  * Transform message (REGIO JSON)
  */
 
-import type { Project } from '../../../../types/Project';
+// import type { Project } from '../../../../types/Project';
 
-// Takes DD/MM/YYYY to MM/DD/YYYY
+// Formats date from DD/MM/YYYY to ISO 8601 date format.
 const formatDate = date => {
   const d = date.split(/\//);
   if (d.length !== 3) return null;
   return new Date(d[2], d[1] - 1, d[0]).toISOString();
 };
 
+const getAddress = contact => {
+  if (contact.address && contact.city) {
+    return `${contact.address}, ${contact.city}`;
+  } else if (contact.address) {
+    return `${contact.address}`;
+  }
+  return '';
+};
+
+const getProjectWebsite = record => {
+  if (record.url && typeof record.url === 'object') {
+    return record.url[0];
+  } else if (record.url && typeof record.url === 'string') {
+    return record.url;
+  }
+  return '';
+};
+
 /*
  * Map fields
  */
-export default (record: Object): Project => {
+export default record => {
   // Preprocess budget
   const budgetObject = {
     total_cost: Number(record.totalcost.substring(4).replace(/\s+/g, '')),
@@ -33,7 +49,7 @@ export default (record: Object): Project => {
     coordArray.push({
       name: record.contacts[i].organization,
       type: record.contacts[i].contact_type,
-      address: `${record.contacts[i].address}, ${record.contacts[i].city}`,
+      address: getAddress(record.contacts[i]),
       region: null,
       country: record.contacts[i].country,
       website: null,
@@ -68,7 +84,7 @@ export default (record: Object): Project => {
     },
     source: record.source,
     themes: record.related_themes,
-    project_website: record.url,
+    project_website: getProjectWebsite(record),
     draft_date: formatDate(record.draftdate),
     programme_name: record.rel_program,
     description: record.subtitle,

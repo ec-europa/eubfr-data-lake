@@ -1,0 +1,28 @@
+{
+  "Records": [
+    {
+      "EventSource": "aws:sns",
+      "EventVersion": "1.0",
+      "EventSubscriptionArn":
+        "arn:aws:sns:eu-central-1:491621799026:chernka21-etl-inforegio-json:0780a9c4-8386-439d-98f7-67f47507f4a1",
+      "Sns": {
+        "Type": "Notification",
+        "MessageId": "9ad5f493-bf25-5f5d-a53e-a60b0513d2de",
+        "TopicArn":
+          "arn:aws:sns:eu-central-1:491621799026:chernka21-etl-inforegio-json",
+        "Subject": null,
+        "Message":
+          "{\"eventTime\":\"2017-11-29T13:36:52.533Z\",\"userIdentity\":{\"principalId\":\"AWS:AROAJENQOJYYKRL54TXKE:chernka21-storage-signed-uploads-upsert-objects\"},\"bucket\":{\"name\":\"eubfr-chernka21\",\"ownerIdentity\":{\"principalId\":\"ABTN0CERTFU87\"},\"arn\":\"arn:aws:s3:::eubfr-chernka21\"},\"object\":{\"key\":\"inforegio/daa5b88f-85e0-4d25-b774-1c2d795a5c00.json\",\"size\":1764,\"eTag\":\"aca9eafe80a3b19f855a77b379b4558f\",\"sequencer\":\"005A1EB7F4725D3F64\"}}",
+        "Timestamp": "2017-11-29T13:36:54.085Z",
+        "SignatureVersion": "1",
+        "Signature":
+          "H7Z8ITT29Lvepgb4DeRzaY2jzyJpgATY9VeunxcBb5Gj6eWO/rQ5Nn61qZDthDuNp8golZI8gEUMYMw7EHrOrDKvhbtf+9JpTR9a8szNXICOyIHxF5KpEhtE9LeGZWqeA+7zqpe//0PmDxgMzYqZEPhSbhyn+oNQeKRZYFFzjX8u+unbIhEi4I7PZ1MbDsjKoMW4Q+njeM/wkZg94mZ4+9ooTTbZVfqRMe/RmPmRHUbv06XcgUJJtGcATP+pMf5g2Gey9RirZaBPiAmFw4y0KMbUW905Idvcj9LCdkvJ17cbob0l4rNv1/K4TRkmhE9fKqcbcovnEg86rHLGBRUMxA==",
+        "SigningCertUrl":
+          "https://sns.eu-central-1.amazonaws.com/SimpleNotificationService-433026a4050d206028891664da859041.pem",
+        "UnsubscribeUrl":
+          "https://sns.eu-central-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:eu-central-1:491621799026:chernka21-etl-inforegio-json:0780a9c4-8386-439d-98f7-67f47507f4a1",
+        "MessageAttributes": {}
+      }
+    }
+  ]
+}
