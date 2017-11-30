@@ -1,12 +1,9 @@
 #!/usr/bin/env node
 
 // Dependencies
-const { exec } = require('child_process');
+const { spawn } = require('child_process');
 const fs = require('fs');
 const path = require('path');
-const { promisify } = require('util');
-
-const sh = promisify(exec);
 
 // Get config
 const config = require(`../config.json`);
@@ -19,7 +16,40 @@ const resolveSymbolicLink = filePath => {
     : false;
 };
 
-// Order is important!
+const runOp = (args, service) => {
+  const operation = spawn(`./node_modules/.bin/sls`, args, {
+    cwd: resolveSymbolicLink(`node_modules/@eubfr/${service}`),
+  });
+
+  operation.stdout.on('data', data => {
+    console.log('\x1b[36m', `${data}`, '\x1b[0m');
+  });
+
+  operation.stderr.on('data', data => {
+    console.log('\x1b[31m', `${data}`, '\x1b[31m');
+  });
+
+  operation.on('close', data => {
+    console.log('\x1b[36m', `${data}`, '\x1b[0m');
+  });
+};
+
+const demoApps = [`demo-dashboard-client`, `demo-dashboard-server`];
+
+Object.keys(config.demo).map(producer =>
+  demoApps.forEach(app => {
+    runOp(
+      [
+        `remove`,
+        `--stage ${config.stage}`,
+        `--region ${config.region}`,
+        `--username ${producer}`,
+      ],
+      app
+    );
+  })
+);
+
 const services = [
   `storage-objects`,
   `ingestion-etl-results`,
@@ -34,15 +64,12 @@ const services = [
   `ingestion-etl-inforegio-json`,
   `elasticsearch`,
   `value-store-projects`,
+  `demo-website`,
 ];
 
 services.forEach(service => {
-  sh(
-    `./node_modules/.bin/sls remove --stage ${config.stage} --region ${config.region}`,
-    {
-      cwd: resolveSymbolicLink(`node_modules/@eubfr/${service}`),
-    }
-  )
-    .then(console.log)
-    .catch(console.error);
+  runOp(
+    ['remove', `--stage ${config.stage}`, `--region ${config.region}`],
+    service
+  );
 });
