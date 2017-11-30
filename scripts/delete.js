@@ -8,48 +8,7 @@ const path = require('path');
 // Get config
 const config = require(`../config.json`);
 
-// Helpers
-const resolveSymbolicLink = filePath => {
-  const lstat = fs.lstatSync(filePath);
-  return lstat.isSymbolicLink()
-    ? path.resolve(path.dirname(filePath), fs.readlinkSync(filePath))
-    : false;
-};
-
-const runOp = (args, service) => {
-  const operation = spawn(`./node_modules/.bin/sls`, args, {
-    cwd: resolveSymbolicLink(`node_modules/@eubfr/${service}`),
-  });
-
-  operation.stdout.on('data', data => {
-    console.log('\x1b[36m', `${data}`, '\x1b[0m');
-  });
-
-  operation.stderr.on('data', data => {
-    console.log('\x1b[31m', `${data}`, '\x1b[31m');
-  });
-
-  operation.on('close', data => {
-    console.log('\x1b[36m', `${data}`, '\x1b[0m');
-  });
-};
-
-const demoApps = [`demo-dashboard-client`, `demo-dashboard-server`];
-
-Object.keys(config.demo).map(producer =>
-  demoApps.forEach(app => {
-    runOp(
-      [
-        `remove`,
-        `--stage ${config.stage}`,
-        `--region ${config.region}`,
-        `--username ${producer}`,
-      ],
-      app
-    );
-  })
-);
-
+// Easier to edit in the beginning of the file
 const services = [
   `storage-objects`,
   `ingestion-etl-results`,
@@ -64,12 +23,38 @@ const services = [
   `ingestion-etl-inforegio-json`,
   `elasticsearch`,
   `value-store-projects`,
-  `demo-website`,
 ];
 
-services.forEach(service => {
-  runOp(
+// Helpers
+const resolveSymbolicLink = filePath => {
+  const lstat = fs.lstatSync(filePath);
+  return lstat.isSymbolicLink()
+    ? path.resolve(path.dirname(filePath), fs.readlinkSync(filePath))
+    : false;
+};
+
+const deleteServerlessService = service => {
+  console.log(`Start deletion of ${service}`);
+  console.time(service);
+
+  const operation = spawn(
+    `./node_modules/.bin/sls`,
     ['remove', `--stage ${config.stage}`, `--region ${config.region}`],
-    service
+    {
+      cwd: resolveSymbolicLink(`node_modules/@eubfr/${service}`),
+    }
   );
-});
+
+  operation.stdout.on('data', data => {
+    console.log('\x1b[36m', `${data}`, '\x1b[0m');
+  });
+
+  operation.stderr.on('data', data => {
+    console.log('\x1b[31m', `${data}`, '\x1b[31m');
+  });
+
+  operation.on('close', () => console.timeEnd(service));
+};
+
+// And run the deletion procedure
+services.forEach(deleteServerlessService);

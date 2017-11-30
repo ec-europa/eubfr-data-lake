@@ -6,9 +6,7 @@
     "deploy": "sls deploy -v"
   },
   "devDependencies": {
-    "serverless": "1.23.0"
-  },
-  "dependencies": {
+    "serverless": "1.23.0",
     "serverless-s3-remover": "^0.4.0"
   }
 }
