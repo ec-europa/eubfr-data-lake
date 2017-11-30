@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import elasticsearch from 'elasticsearch';
 import config from '../meta/projects.json'; // eslint-disable-line
 import Project from './Project';
+import Spinner from './Spinner';
 
 const apiEndpoint = `https://${config.ServiceEndpoint}`;
 
@@ -68,7 +69,7 @@ class ProjectsList extends Component {
     const { loading, projects } = this.state;
 
     if (loading) {
-      return <p>Loading...</p>;
+      return <Spinner />;
     }
 
     const RefreshButton = () => (
