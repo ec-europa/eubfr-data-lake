@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
+import './FileList.css';
+
 const List = ({ files }) => (
   <table className="ecl-table ecl-u-mt-xs">
     <thead>
@@ -33,7 +35,7 @@ const List = ({ files }) => (
             <td>
               <Link
                 to={`/files/${encodeURIComponent(file.computed_key)}`}
-                className="ecl-button ecl-button--secondary"
+                className="ecl-button ecl-button__more-info ecl-button--secondary"
               >
                 More info<span className="ecl-icon ecl-icon--right" />
               </Link>

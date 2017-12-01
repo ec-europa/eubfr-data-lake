@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import elasticsearch from 'elasticsearch';
 import PropTypes from 'prop-types';
@@ -169,10 +169,15 @@ class File extends React.Component {
       relatedProjects,
       projectsLoading,
     } = this.state;
+
     const computedKey = decodeURIComponent(match.params.id);
+    const className =
+      file.status === 'parsed'
+        ? 'ecl-icon ecl-icon--success ecl-u-color-primary'
+        : 'ecl-icon ecl-icon--error ecl-u-color-error';
 
     return (
-      <div>
+      <Fragment>
         <Link to="/files" className="ecl-navigation-list__link ecl-link">
           <span className="ecl-icon ecl-icon--left" />Go Back
         </Link>
@@ -207,18 +212,12 @@ class File extends React.Component {
           <dd>{Math.floor(file.content_length / 1024) || 0} kB</dd>
           <dt>Status</dt>
           <dd>
-            {file.message ? (
-              <details className="ecl-item__status">
-                <summary>{file.status}</summary>
-                <p>{file.message}</p>
-              </details>
-            ) : (
-              file.status
-            )}
+            <span className={className} />
+            {file.message}
           </dd>
         </dl>
         <h2>Update</h2>
-        <FormUpload computedKey={computedKey} />
+        <FormUpload computedKey={computedKey} text="Update this file" />
         <h2>Related projects</h2>
         {projectsLoading && <p>Loading related projects</p>}
         <p>Total: {relatedProjects.length}</p>
@@ -227,7 +226,7 @@ class File extends React.Component {
             <li key={project._source.project_id}>{project._source.title}</li>
           ))}
         </ul>
-      </div>
+      </Fragment>
     );
   }
 }
