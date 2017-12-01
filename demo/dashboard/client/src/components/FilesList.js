@@ -15,32 +15,32 @@ const List = ({ files }) => (
       </tr>
     </thead>
     <tbody>
-      {files.map(file => (
-        <tr key={file.computed_key}>
-          <td>{file.original_key || 'unknown'}</td>
-          <td>{file.computed_key}</td>
-          <td>{new Date(file.last_modified).toLocaleString()}</td>
-          <td>{Math.floor(file.content_length / 1024) || 0} kB</td>
-          <td>
-            {file.message ? (
-              <details>
-                <summary>{file.status}</summary>
-                <p>{file.message}</p>
-              </details>
-            ) : (
-              file.status
-            )}
-          </td>
-          <td>
-            <Link
-              to={`/files/${encodeURIComponent(file.computed_key)}`}
-              className="ecl-button ecl-button--secondary"
-            >
-              More info<span className="ecl-icon ecl-icon--right" />
-            </Link>
-          </td>
-        </tr>
-      ))}
+      {files.map(file => {
+        const className =
+          file.status === 'parsed'
+            ? 'ecl-icon ecl-icon--success ecl-u-color-primary'
+            : 'ecl-icon ecl-icon--error ecl-u-color-error';
+
+        return (
+          <tr key={file.computed_key}>
+            <td>{file.original_key || 'unknown'}</td>
+            <td>{file.computed_key}</td>
+            <td>{new Date(file.last_modified).toLocaleString()}</td>
+            <td>{Math.floor(file.content_length / 1024) || 0} kB</td>
+            <td>
+              <span title={file.message} className={className} />
+            </td>
+            <td>
+              <Link
+                to={`/files/${encodeURIComponent(file.computed_key)}`}
+                className="ecl-button ecl-button--secondary"
+              >
+                More info<span className="ecl-icon ecl-icon--right" />
+              </Link>
+            </td>
+          </tr>
+        );
+      })}
     </tbody>
   </table>
 );

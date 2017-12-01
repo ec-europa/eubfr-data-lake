@@ -126,7 +126,7 @@ export const handler = (event, context, callback) => {
           Message: JSON.stringify({
             default: JSON.stringify({
               object: message.object.key,
-              message: JSON.stringify('ETL successful'),
+              message: 'ETL successful',
             }),
           }),
           MessageStructure: 'json',
