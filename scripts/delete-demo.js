@@ -2,7 +2,8 @@
 
 // Dependencies
 const deleteServerlessService = require('./utils/deleteServerlessService');
-const config = require('../config');
+
+const config = require('../config'); // eslint-disable-line import/no-unresolved
 
 const usernames = Object.keys(config.demo);
 

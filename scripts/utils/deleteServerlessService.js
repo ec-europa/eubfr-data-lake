@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Get config
-const config = require(`../../config.json`);
+const config = require(`../../config.json`); // eslint-disable-line import/no-unresolved
 
 // Helpers
 const resolveSymbolicLink = filePath => {
