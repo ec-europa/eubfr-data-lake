@@ -3,6 +3,8 @@ import FilesList from '../../components/FilesList';
 import config from '../../meta/server.json'; // eslint-disable-line import/no-unresolved
 import handleErrors from '../../lib/handleErrors';
 
+import Spinner from '../../components/Spinner';
+
 const demoServer = `${config.ServiceEndpoint}/demo`;
 
 class List extends Component {
@@ -47,7 +49,7 @@ class List extends Component {
     const { loading, files } = this.state;
 
     if (loading) {
-      return <p>Loading...</p>;
+      return <Spinner />;
     }
 
     const RefreshButton = () => (
