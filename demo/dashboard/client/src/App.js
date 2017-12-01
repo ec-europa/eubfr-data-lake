@@ -1,5 +1,7 @@
 import React, { Fragment } from 'react';
-import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
+import { Route, NavLink } from 'react-router-dom';
+import { Router } from 'react-router';
+import createBrowserHistory from 'history/createBrowserHistory';
 import Files from './pages/Files';
 import Home from './pages/Home';
 import Upload from './pages/Upload';
@@ -9,8 +11,10 @@ import Footer from './components/Footer';
 
 import './App.css';
 
+const history = createBrowserHistory();
+
 const App = () => (
-  <Router>
+  <Router history={history}>
     <Fragment>
       <Header />
       <div className="ecl-container">

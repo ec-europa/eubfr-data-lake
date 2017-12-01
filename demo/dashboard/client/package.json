@@ -16,6 +16,7 @@
     "prop-types": "15.6.0",
     "react": "16.2.0",
     "react-dom": "16.2.0",
+    "react-router": "4.2.0",
     "react-router-dom": "4.2.2",
     "react-s3-uploader": "4.5.1",
     "react-scripts": "1.0.17"
