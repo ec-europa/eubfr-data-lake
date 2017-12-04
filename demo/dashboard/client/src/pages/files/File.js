@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import elasticsearch from 'elasticsearch';
 import PropTypes from 'prop-types';
+import Spinner from '../../components/Spinner';
 import FormUpload from '../../components/FormUpload';
 import demoServer from '../../meta/server.json'; // eslint-disable-line import/no-unresolved
 import projectsApi from '../../meta/projects.json'; // eslint-disable-line import/no-unresolved
@@ -118,16 +119,22 @@ class File extends React.Component {
     const { match } = this.props;
     const computedKey = decodeURIComponent(match.params.id);
 
-    return window
-      .fetch(
-        `${demoServerEndpoint}/delete?key=${encodeURIComponent(computedKey)}`
-      )
-      .then(handleErrors)
-      .then(response => response.json())
-      .then(() => this.props.history.push('/files'))
-      .catch(error => {
-        console.log(`An error happened: ${error.message}`);
-      });
+    let confirmDelete = window.confirm(
+      'Are you sure you want to delete this file?'
+    );
+
+    if (confirmDelete) {
+      window
+        .fetch(
+          `${demoServerEndpoint}/delete?key=${encodeURIComponent(computedKey)}`
+        )
+        .then(handleErrors)
+        .then(response => response.json())
+        .then(() => this.props.history.push('/files'))
+        .catch(error => {
+          console.log(`An error happened: ${error.message}`);
+        });
+    }
   }
 
   generateLink() {
@@ -169,6 +176,10 @@ class File extends React.Component {
       relatedProjects,
       projectsLoading,
     } = this.state;
+
+    if (fileLoading) {
+      return <Spinner />;
+    }
 
     const computedKey = decodeURIComponent(match.params.id);
     const className =
