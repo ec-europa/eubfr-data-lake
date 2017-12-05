@@ -21,6 +21,7 @@ class File extends React.Component {
       linkLoading: false,
       relatedProjects: [],
       projectsLoading: false,
+      projectsCount: 0,
     };
 
     this.deleteFile = this.deleteFile.bind(this);
@@ -43,6 +44,7 @@ class File extends React.Component {
     this.setState({
       fileLoading: true,
     });
+
     const { match } = this.props;
     const computedKey = decodeURIComponent(match.params.id);
 
@@ -82,6 +84,7 @@ class File extends React.Component {
             this.setState({
               projectsLoading: false,
               relatedProjects: data.hits.hits,
+              projectsCount: data.hits.total,
             })
           )
           .catch(error => {
@@ -140,6 +143,7 @@ class File extends React.Component {
       linkLoading,
       relatedProjects,
       projectsLoading,
+      projectsCount,
     } = this.state;
     const computedKey = decodeURIComponent(match.params.id);
 
@@ -193,7 +197,7 @@ class File extends React.Component {
         <FormUpload computedKey={computedKey} />
         <h2>Related projects</h2>
         {projectsLoading && <p>Loading related projects</p>}
-        <p>Total: {relatedProjects.length}</p>
+        <p>Total: {projectsCount}</p>
         <ul>
           {relatedProjects.map(project => (
             <li key={project._source.project_id}>{project._source.title}</li>

@@ -32,7 +32,6 @@ export const handler = (event, context, callback) => {
   const options = {
     host: `https://${API}`,
     connectionClass,
-    log: 'trace',
     index: INDEX,
   };
 
