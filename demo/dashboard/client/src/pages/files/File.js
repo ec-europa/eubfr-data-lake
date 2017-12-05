@@ -30,6 +30,7 @@ class File extends React.Component {
     this.generateLink = this.generateLink.bind(this);
     this.loadFile = this.loadFile.bind(this);
     this.loadProjects = this.loadProjects.bind(this);
+    this.getFileMeta = this.getFileMeta.bind(this);
   }
 
   componentDidMount() {
@@ -42,34 +43,32 @@ class File extends React.Component {
     this.loadProjects();
   }
 
+  getFileMeta(computedKey) {
+    return () =>
+      window
+        .fetch(
+          `${demoServerEndpoint}/filemeta?key=${encodeURIComponent(
+            computedKey
+          )}`
+        )
+        .then(handleErrors)
+        .then(response => response.json())
+        .then(data =>
+          this.setState({
+            fileLoading: false,
+            file: data[0],
+          })
+        )
+        .catch(error => {
+          console.log(`An error occured: ${error.message}`);
+        });
+  }
+
   loadFile() {
     const { match } = this.props;
     const computedKey = decodeURIComponent(match.params.id);
 
-    this.setState(
-      {
-        fileLoading: true,
-      },
-      () => {
-        window
-          .fetch(
-            `${demoServerEndpoint}/filemeta?key=${encodeURIComponent(
-              computedKey
-            )}`
-          )
-          .then(handleErrors)
-          .then(response => response.json())
-          .then(data =>
-            this.setState({
-              fileLoading: false,
-              file: data[0],
-            })
-          )
-          .catch(error => {
-            console.log(`An error occured: ${error.message}`);
-          });
-      }
-    );
+    this.setState({ fileLoading: true }, this.getFileMeta(computedKey));
   }
 
   // Load related Projects
