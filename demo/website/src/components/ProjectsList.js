@@ -17,6 +17,7 @@ class ProjectsList extends Component {
 
     this.loadProjects = this.loadProjects.bind(this);
     this.getProjects = this.getProjects.bind(this);
+    this.setProjects = this.setProjects.bind(this);
   }
 
   componentDidMount() {
