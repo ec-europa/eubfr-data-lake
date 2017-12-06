@@ -111,7 +111,7 @@ class FormUpload extends Component {
               aria-controls="dashboard-upload"
               tabIndex="0"
             >
-              Upload a file
+              {this.props.text}
             </span>
           </label>
           <Uploader
@@ -144,6 +144,7 @@ class FormUpload extends Component {
 
 FormUpload.propTypes = {
   computedKey: PropTypes.string,
+  text: PropTypes.string,
 };
 
 export default FormUpload;
