@@ -1,8 +1,14 @@
 service: harmonized-storage
 
+plugins:
+  - serverless-s3-remover
+
 custom:
   eubfrEnvironment: ${opt:eubfr_env, file(../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
   bucketName: eubfr-${self:provider.stage}-harmonized
+  remover:
+     buckets:
+       - ${self:custom.bucketName}
 
 provider:
   name: aws

@@ -4,6 +4,8 @@
     "bootstrap": "lerna bootstrap",
     "deploy": "./scripts/deploy.sh",
     "deploy-demo": "./scripts/deploy-demo.sh",
+    "delete": "node ./scripts/delete.js",
+    "delete-demo": "./scripts/delete-demo.js",
     "flow": "flow",
     "lint": "eslint .",
     "precommit": "lint-staged",
