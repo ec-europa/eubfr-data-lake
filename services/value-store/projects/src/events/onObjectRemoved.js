@@ -31,6 +31,7 @@ export const handler = (event, context, callback) => {
   // elasticsearch client configuration
   const options = {
     host: `https://${API}`,
+    apiVersion: '5.5',
     connectionClass,
     log: 'trace',
     index: INDEX,
