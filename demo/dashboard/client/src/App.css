@@ -49,3 +49,24 @@
 .success {
   color: green;
 }
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.eubfr-main-content {
+  flex-grow: 1;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+}
+
+/* Hacks */
+.ecl-button {
+  border-radius: 0;
+}
+
+.ecl-navigation-inpage__list {
+  list-style-type: none;
+}
