@@ -92,7 +92,10 @@ export const handler = (event, context, callback) => {
     try {
       // Parse file
       const buffer = Buffer.concat(buffers);
-      const parser = JSON.parse(buffer);
+      let parser = JSON.parse(buffer);
+
+      // Sometimes records are nested in items key.
+      parser = parser.items ? parser.items : parser;
 
       for (let i = 0; i < parser.length; i += 1) {
         // Transform data
