@@ -42,7 +42,6 @@ export const handler = (event, context, callback) => {
     host: `https://${API}`,
     apiVersion: '5.5',
     connectionClass,
-    log: 'trace',
     index: INDEX,
   };
 
