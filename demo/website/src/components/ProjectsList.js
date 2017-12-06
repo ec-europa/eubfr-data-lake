@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import elasticsearch from 'elasticsearch';
 import config from '../meta/projects.json'; // eslint-disable-line
 import Project from './Project';
+import Spinner from './Spinner';
 
 const apiEndpoint = `https://${config.ServiceEndpoint}`;
 
@@ -16,6 +17,7 @@ class ProjectsList extends Component {
 
     this.loadProjects = this.loadProjects.bind(this);
     this.getProjects = this.getProjects.bind(this);
+    this.setProjects = this.setProjects.bind(this);
   }
 
   componentDidMount() {
@@ -28,46 +30,47 @@ class ProjectsList extends Component {
     this.loadProjects();
   }
 
+  loadProjects() {
+    this.setState({ loading: true }, () => this.getProjects());
+  }
+
   getProjects() {
-    return this.client
-      .search({
+    this.client.indices
+      .exists({
         index: 'projects',
-        type: 'project',
       })
-      .then(data =>
-        this.setState({
-          loading: false,
-          projects: data.hits.hits,
-        })
+      .then(
+        exists =>
+          exists
+            ? this.client
+                .search({
+                  index: 'projects',
+                  type: 'project',
+                })
+                .then(data => this.setProjects(data.hits.hits))
+                .catch(error => {
+                  this.setProjects([]);
+                  throw Error(error.message);
+                })
+            : this.setProjects([])
       )
-      .catch(error => {
-        this.setState({
-          loading: false,
-          projects: [],
-        });
-        throw Error(error.message);
+      .catch(() => {
+        this.setProjects([]);
       });
   }
 
-  loadProjects() {
-    this.setState({ loading: true });
-    this.getProjects();
+  setProjects(projects) {
+    this.setState({
+      loading: false,
+      projects,
+    });
   }
 
   render() {
     const { loading, projects } = this.state;
 
     if (loading) {
-      return <p>Loading...</p>;
-    }
-
-    if (projects.length === 0) {
-      return (
-        <div>
-          <button onClick={this.loadProjects}>Refresh</button>
-          <p>No project found</p>
-        </div>
-      );
+      return <Spinner />;
     }
 
     const RefreshButton = () => (
@@ -79,11 +82,20 @@ class ProjectsList extends Component {
       </button>
     );
 
+    if (projects.length === 0) {
+      return (
+        <div>
+          <RefreshButton />
+          <p>No projects found</p>
+        </div>
+      );
+    }
+
     return (
       <div>
         <RefreshButton />
 
-        <ul className="ecl-listing">
+        <ul className="ecl-listing ecl-u-mt-xs">
           {projects.map((project, index) => (
             <Project project={project} key={index} />
           ))}

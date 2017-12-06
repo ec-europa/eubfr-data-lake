@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
+import React, { Fragment } from 'react';
+import { HashRouter, Route, NavLink } from 'react-router-dom';
 import Files from './pages/Files';
 import Home from './pages/Home';
 import Upload from './pages/Upload';
@@ -10,8 +10,8 @@ import Footer from './components/Footer';
 import './App.css';
 
 const App = () => (
-  <Router>
-    <div>
+  <HashRouter>
+    <Fragment>
       <Header />
       <div className="ecl-container">
         <h1 className="ecl-heading ecl-heading--h1">Dashboard</h1>
@@ -53,8 +53,8 @@ const App = () => (
         <Route path="/files" component={Files} />
       </div>
       <Footer />
-    </div>
-  </Router>
+    </Fragment>
+  </HashRouter>
 );
 
 export default App;
