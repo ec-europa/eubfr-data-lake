@@ -1,7 +1,13 @@
 service: storage-objects
 
+plugins:
+  - serverless-s3-remover
+
 custom:
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
+  remover:
+     buckets:
+       - eubfr-${self:provider.stage}
 
 provider:
   name: aws

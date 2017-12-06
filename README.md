@@ -66,6 +66,27 @@ First, make sure you have deployed the services. Then:
 yarn deploy-demo
 ```
 
+## Remove the services and the demo
+
+You can remove all the services with the following command:
+
+```sh
+yarn run delete
+```
+
+If you want to delete the demos, you can run:
+
+```sh
+yarn run delete-demo
+```
+
+Or, if you want to target a specific producer demo:
+
+```sh
+EUBFR_USERNAME=budg yarn run delete-demo
+ ```
+
+
 ## Notes
 
 -   Deploy `services/storage` first.
