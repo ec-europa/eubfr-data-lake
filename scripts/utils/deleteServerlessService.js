@@ -13,23 +13,35 @@ const resolveSymbolicLink = filePath => {
     : false;
 };
 
-module.exports = service => {
-  console.log(`Start deletion of ${service}`);
-  console.time(service);
+module.exports = (
+  service,
+  { isClient, username } = { isClient: false, username: '' }
+) => {
+  const serviceName = `${service}${username ? `-${username}` : ''}`;
+  console.log(`Start deletion of ${serviceName}`);
+  console.time(serviceName);
 
-  const operation = spawn(
-    `./node_modules/.bin/sls`,
-    ['remove', `--stage ${config.stage}`, `--region ${config.region}`],
-    {
+  let operation;
+
+  if (username) {
+    process.env.EUBFR_USERNAME = username;
+  }
+
+  if (isClient) {
+    operation = spawn('./node_modules/.bin/sls', ['client', 'remove'], {
       cwd: resolveSymbolicLink(`node_modules/@eubfr/${service}`),
-      // This is a helper for serverless.yml variables as an alternative to options
-      env: {
-        EUBFR_USERNAME: process.env.EUBFR_USERNAME
-          ? process.env.EUBFR_USERNAME
-          : '',
-      },
-    }
-  );
+      env: process.env,
+    });
+  } else {
+    operation = spawn(
+      './node_modules/.bin/sls',
+      ['remove', `--stage ${config.stage}`, `--region ${config.region}`],
+      {
+        cwd: resolveSymbolicLink(`node_modules/@eubfr/${service}`),
+        env: process.env,
+      }
+    );
+  }
 
   operation.stdout.on('data', data => {
     console.log('\x1b[36m', `${data}`, '\x1b[0m');
@@ -39,5 +51,5 @@ module.exports = service => {
     console.log('\x1b[31m', `${data}`, '\x1b[31m');
   });
 
-  operation.on('close', () => console.timeEnd(service));
+  operation.on('close', () => console.timeEnd(serviceName));
 };

@@ -5,14 +5,22 @@ const deleteServerlessService = require('./utils/deleteServerlessService');
 
 const config = require('../config'); // eslint-disable-line import/no-unresolved
 
-const usernames = Object.keys(config.demo);
+let usernames = Object.keys(config.demo);
 
-const services = [`demo-dashboard-server`];
-
-if (!process.env.EUBFR_USERNAME) {
-  console.error(`EUBFR_USERNAME environment variable is required.`);
-  console.log(`Please pass one of the following: ${usernames}`);
-  console.log(`For example: "EUBFR_USERNAME=${usernames[0]} yarn delete-demo"`);
-} else {
-  services.forEach(deleteServerlessService);
+if (process.env.EUBFR_USERNAME) {
+  usernames = usernames.filter(
+    username => username === process.env.EUBFR_USERNAME
+  );
 }
+
+// Remove dashboards
+usernames.forEach(username => {
+  deleteServerlessService('demo-dashboard-client', {
+    isClient: true,
+    username,
+  });
+  deleteServerlessService('demo-dashboard-server', { username });
+});
+
+// Remove website
+deleteServerlessService('demo-website', { isClient: true });
