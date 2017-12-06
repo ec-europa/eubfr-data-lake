@@ -3,7 +3,7 @@ import FormUpload from '../components/FormUpload';
 
 const Upload = () => (
   <div className="ecl-u-mv-m">
-    <FormUpload />
+    <FormUpload text="Upload" />
   </div>
 );
 

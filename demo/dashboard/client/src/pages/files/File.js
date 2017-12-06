@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import elasticsearch from 'elasticsearch';
 import PropTypes from 'prop-types';
+import Spinner from '../../components/Spinner';
 import FormUpload from '../../components/FormUpload';
 import demoServer from '../../meta/server.json'; // eslint-disable-line import/no-unresolved
 import projectsApi from '../../meta/projects.json'; // eslint-disable-line import/no-unresolved
 import handleErrors from '../../lib/handleErrors';
+
+import './File.css';
 
 const demoServerEndpoint = `${demoServer.ServiceEndpoint}/demo`;
 const projectsApiEndpoint = `https://${projectsApi.ServiceEndpoint}`;
@@ -28,6 +31,7 @@ class File extends React.Component {
     this.generateLink = this.generateLink.bind(this);
     this.loadFile = this.loadFile.bind(this);
     this.loadProjects = this.loadProjects.bind(this);
+    this.getFileMeta = this.getFileMeta.bind(this);
   }
 
   componentDidMount() {
@@ -40,6 +44,27 @@ class File extends React.Component {
     this.loadProjects();
   }
 
+  getFileMeta(computedKey) {
+    return () =>
+      window
+        .fetch(
+          `${demoServerEndpoint}/filemeta?key=${encodeURIComponent(
+            computedKey
+          )}`
+        )
+        .then(handleErrors)
+        .then(response => response.json())
+        .then(data =>
+          this.setState({
+            fileLoading: false,
+            file: data[0],
+          })
+        )
+        .catch(error => {
+          console.log(`An error occured: ${error.message}`);
+        });
+  }
+
   loadFile() {
     this.setState({
       fileLoading: true,
@@ -48,23 +73,10 @@ class File extends React.Component {
     const { match } = this.props;
     const computedKey = decodeURIComponent(match.params.id);
 
-    return window
-      .fetch(
-        `${demoServerEndpoint}/filemeta?key=${encodeURIComponent(computedKey)}`
-      )
-      .then(handleErrors)
-      .then(response => response.json())
-      .then(data =>
-        this.setState({
-          fileLoading: false,
-          file: data[0],
-        })
-      )
-      .catch(error => {
-        console.log(`An error happened: ${error.message}`);
-      });
+    this.setState({ fileLoading: true }, this.getFileMeta(computedKey));
   }
 
+  // Load related Projects
   loadProjects() {
     const { match } = this.props;
     const computedKey = decodeURIComponent(match.params.id);
@@ -74,11 +86,9 @@ class File extends React.Component {
         projectsLoading: true,
       },
       () =>
-        this.client
-          .search({
+        this.client.indices
+          .exists({
             index: 'projects',
-            type: 'project',
-            q: `computed_key:"${computedKey}.ndjson"`,
           })
           .then(data =>
             this.setState({
@@ -87,51 +97,68 @@ class File extends React.Component {
               projectsCount: data.hits.total,
             })
           )
-          .catch(error => {
-            throw Error(`An error happened: ${error.message}`);
+          .catch(() => {
+            this.setProjects([]);
           })
     );
+  }
+
+  setProjects(relatedProjects) {
+    this.setState({
+      projectsLoading: false,
+      relatedProjects,
+    });
   }
 
   deleteFile() {
     const { match } = this.props;
     const computedKey = decodeURIComponent(match.params.id);
 
-    return window
-      .fetch(
-        `${demoServerEndpoint}/delete?key=${encodeURIComponent(computedKey)}`
-      )
-      .then(handleErrors)
-      .then(response => response.json())
-      .then(() => this.props.history.push('/files'))
-      .catch(error => {
-        console.log(`An error happened: ${error.message}`);
-      });
+    const confirmDelete = window.confirm(
+      'Are you sure you want to delete this file?'
+    );
+
+    if (confirmDelete) {
+      window
+        .fetch(
+          `${demoServerEndpoint}/delete?key=${encodeURIComponent(computedKey)}`
+        )
+        .then(handleErrors)
+        .then(response => response.json())
+        .then(() => this.props.history.push('/files'))
+        .catch(error => {
+          console.log(`An error happened: ${error.message}`);
+        });
+    }
   }
 
   generateLink() {
     const { match } = this.props;
     const computedKey = decodeURIComponent(match.params.id);
 
-    this.setState({
-      linkLoading: true,
-    });
-
-    return window
-      .fetch(
-        `${demoServerEndpoint}/download?key=${encodeURIComponent(computedKey)}`
-      )
-      .then(handleErrors)
-      .then(response => response.json())
-      .then(data =>
-        this.setState({
-          link: data.signedUrl,
-          linkLoading: false,
-        })
-      )
-      .catch(error => {
-        console.log(`An error happened: ${error.message}`);
-      });
+    this.setState(
+      {
+        linkLoading: true,
+      },
+      () =>
+        window
+          .fetch(
+            `${demoServerEndpoint}/download?key=${encodeURIComponent(
+              computedKey
+            )}`
+          )
+          .then(handleErrors)
+          .then(response => response.json())
+          .then(data =>
+            this.setState({
+              link: data.signedUrl,
+              linkLoading: false,
+            })
+          )
+          .catch(error => {
+            console.log(`An error happened: ${error.message}`);
+          })
+    );
   }
 
   render() {
@@ -145,10 +172,19 @@ class File extends React.Component {
       projectsLoading,
       projectsCount,
     } = this.state;
+
+    if (fileLoading) {
+      return <Spinner />;
+    }
+
     const computedKey = decodeURIComponent(match.params.id);
+    const className =
+      file.status === 'parsed'
+        ? 'ecl-icon ecl-icon--success ecl-u-color-primary'
+        : 'ecl-icon ecl-icon--error ecl-u-color-error';
 
     return (
-      <div>
+      <Fragment>
         <Link to="/files" className="ecl-navigation-list__link ecl-link">
           <span className="ecl-icon ecl-icon--left" />Go Back
         </Link>
@@ -180,21 +216,15 @@ class File extends React.Component {
           <dt>Last update</dt>
           <dd>{new Date(file.last_modified).toLocaleString()}</dd>
           <dt>Size</dt>
-          <dd>{Math.floor(file.content_length / 1024)} kB</dd>
+          <dd>{Math.floor(file.content_length / 1024) || 0} kB</dd>
           <dt>Status</dt>
           <dd>
-            {file.message ? (
-              <details>
-                <summary>{file.status}</summary>
-                <p>{file.message}</p>
-              </details>
-            ) : (
-              file.status
-            )}
+            <span className={className} />
+            {file.message}
           </dd>
         </dl>
         <h2>Update</h2>
-        <FormUpload computedKey={computedKey} />
+        <FormUpload computedKey={computedKey} text="Update this file" />
         <h2>Related projects</h2>
         {projectsLoading && <p>Loading related projects</p>}
         <p>Total: {projectsCount}</p>
@@ -203,7 +233,7 @@ class File extends React.Component {
             <li key={project._source.project_id}>{project._source.title}</li>
           ))}
         </ul>
-      </div>
+      </Fragment>
     );
   }
 }
