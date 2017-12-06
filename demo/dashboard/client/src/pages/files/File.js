@@ -29,9 +29,11 @@ class File extends React.Component {
 
     this.deleteFile = this.deleteFile.bind(this);
     this.generateLink = this.generateLink.bind(this);
+    this.getFileMeta = this.getFileMeta.bind(this);
     this.loadFile = this.loadFile.bind(this);
     this.loadProjects = this.loadProjects.bind(this);
-    this.getFileMeta = this.getFileMeta.bind(this);
+    this.setProjects = this.setProjects.bind(this);
+    this.setEmptyProjects = this.setEmptyProjects.bind(this);
   }
 
   componentDidMount() {
@@ -42,6 +44,39 @@ class File extends React.Component {
     });
     this.loadFile();
     this.loadProjects();
+  }
+
+  setProjects(computedKey) {
+    return () =>
+      this.client.indices
+        .exists({
+          index: 'projects',
+        })
+        .then(
+          exists =>
+            exists
+              ? this.client
+                  .search({
+                    index: 'projects',
+                    type: 'project',
+                    q: `computed_key:"${computedKey}.ndjson"`,
+                  })
+                  .then(data =>
+                    this.setState({
+                      projectsLoading: false,
+                      relatedProjects: data.hits.hits,
+                      projectsCount: data.hits.total,
+                    })
+                  )
+                  .catch(error => {
+                    this.setEmptyProjects();
+                    throw Error(`An error occured: ${error.message}`);
+                  })
+              : this.setEmptyProjects()
+        )
+        .catch(() => {
+          this.setEmptyProjects();
+        });
   }
 
   getFileMeta(computedKey) {
@@ -81,32 +116,14 @@ class File extends React.Component {
     const { match } = this.props;
     const computedKey = decodeURIComponent(match.params.id);
 
-    this.setState(
-      {
-        projectsLoading: true,
-      },
-      () =>
-        this.client.indices
-          .exists({
-            index: 'projects',
-          })
-          .then(data =>
-            this.setState({
-              projectsLoading: false,
-              relatedProjects: data.hits.hits,
-              projectsCount: data.hits.total,
-            })
-          )
-          .catch(() => {
-            this.setProjects([]);
-          })
-    );
+    this.setState({ projectsLoading: true }, this.setProjects(computedKey));
   }
 
-  setProjects(relatedProjects) {
+  setEmptyProjects() {
     this.setState({
       projectsLoading: false,
-      relatedProjects,
+      relatedProjects: [],
+      projectsCount: 0,
     });
   }
 
