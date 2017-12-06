@@ -37,14 +37,13 @@ const getProjectWebsite = record => {
 };
 
 const formatBudget = budget => {
-  console.log('format budget');
   if (!budget) return null;
   const b = budget.split(' ');
-  console.log(b);
+
   if (b.length < 2) return 0;
 
   let s = '';
-  for (let i = 0; i < b.length; i += 1) {
+  for (let i = 1; i < b.length; i += 1) {
     s += b[i];
   }
   return Number(s);
@@ -72,10 +71,10 @@ export default record => {
   const previousCountries = [];
   if (countryArray.length > 1) {
     for (let i = 0; i < countryArray.length; i += 1) {
-      if (previousCountries.indexOf(countryArray[i] !== -1)) {
+      if (previousCountries.indexOf(countryArray[i] === -1)) {
         locationArray.push({
           country_name: null,
-          country_code: countryArray[i].trim(),
+          country_code: countryArray[i],
           region: null,
           nuts2: null,
           location: {
