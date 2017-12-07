@@ -26,7 +26,7 @@ export default record => {
     result: record['Results Platform Project Card'],
   };
 
-  // Preprocess locations
+  // Preprocess project locations
   const locationArray = record['Participating countries']
     .split(',')
     .map(country => ({

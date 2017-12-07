@@ -2,7 +2,7 @@
 
 exports[`DG BUDG CSV transformer Produces correct JSON output structure 1`] = `
 Object {
-  "budget": Object {
+  "agriet": Object {
     "eu_contrib": 3562000,
     "funding_area": null,
     "other_contrib": null,
@@ -22,7 +22,7 @@ Object {
       "website": null,
     },
   ],
-  "cover_image": "https://ec.europa.eu/budget/euprojects/sites/euprojects/files/at_cegc_985x270_0.jpg",
+  "cover_image": "https://ec.europa.eu/agriet/euprojects/sites/euprojects/files/at_cegc_985x270_0.jpg",
   "description": "<p>Under the EU-funded Central European Green Corridors project, 115 fast-charging stations for electric cars have opened in Germany, Austria, Slovenia, Slovakia and Croatia – allowing cross-border electromobility with your e-car between Munich and Zagreb. Further network expansion, offers and services for customers and energy supply solutions also drive the project’s roll-out of electric transport. Partners include public sector bodies and private companies.</p>",
   "ec_priorities": Array [
     "Jobs, Growth and Investment",
@@ -197,7 +197,7 @@ Object {
 
 exports[`DG BUDG transformer handling incomplete or inconsistent data Certain fields should always be present after transformation 1`] = `
 Object {
-  "budget": Object {
+  "agriet": Object {
     "eu_contrib": NaN,
     "funding_area": null,
     "other_contrib": null,

@@ -4,6 +4,8 @@ const path = require('path');
 module.exports = {
   entry: slsw.lib.entries,
   target: 'node',
+  // Generate source map for easier local debugging of the code.
+  devtool: process.env.NODE_ENV === 'dev' ? 'source-map' : false,
   externals: [{ 'aws-sdk': true }],
   module: {
     loaders: [

@@ -2,11 +2,51 @@
  * Transform message (REGIO JSON)
  */
 
-// Takes DD/MM/YYYY to MM/DD/YYYY
+// Formats date from DD/MM/YYYY to ISO 8601 date format.
 const formatDate = date => {
+  if (!date) return null;
   const d = date.split(/\//);
   if (d.length !== 3) return null;
+  if (d[2].length === 2) d[2] = `20${d[2]}`;
   return new Date(d[2], d[1] - 1, d[0]).toISOString();
+};
+
+const getAddress = record => {
+  let address = '';
+  if (record['beneficiary address']) {
+    address += record['beneficiary address'];
+  }
+  if (record['beneficiary post code']) {
+    if (address !== '') address += ', ';
+    address += record['beneficiary post code'];
+  }
+  if (record['beneficiary city']) {
+    if (address !== '') address += ', ';
+    address += record['beneficiary city'];
+  }
+  return address;
+};
+
+const getProjectWebsite = record => {
+  if (record.url && typeof record.url === 'object') {
+    return record.url[0];
+  } else if (record.url && typeof record.url === 'string') {
+    return record.url;
+  }
+  return '';
+};
+
+const formatBudget = budget => {
+  if (!budget) return null;
+  const b = budget.split(' ');
+
+  if (b.length < 2) return 0;
+
+  let s = '';
+  for (let i = 1; i < b.length; i += 1) {
+    s += b[i];
+  }
+  return Number(s);
 };
 
 /*
@@ -15,35 +55,42 @@ const formatDate = date => {
 export default record => {
   // Preprocess budget
   const budgetObject = {
-    total_cost: Number(record.totalcost.substring(4).replace(/\s+/g, '')),
-    eu_contrib: Number(record.eucontrib.substring(4).replace(/\s+/g, '')),
-    private_fund: Number(record.privatefund.substring(4).replace(/\s+/g, '')),
-    public_fund: Number(record.publicfund.substring(4).replace(/\s+/g, '')),
-    other_contrib: Number(record.othercontrib.substring(4).replace(/\s+/g, '')),
-    funding_area: record.related_fund,
+    total_cost: formatBudget(record['total project budget']),
+    eu_contrib: formatBudget(record['eu budget contribution']),
+    private_fund: null,
+    public_fund: null,
+    other_contrib: null,
+    funding_area: record.funds || null,
   };
 
-  // Preprocess coordinators
-  const coordArray = [];
-  for (let i = 0; i < record.contacts.length; i += 1) {
-    coordArray.push({
-      name: record.contacts[i].organization,
-      type: record.contacts[i].contact_type,
-      address: `${record.contacts[i].address}, ${record.contacts[i].city}`,
-      region: null,
-      country: record.contacts[i].country,
-      website: null,
-      phone: record.contacts[i].phone,
-      email: record.contacts[i].email,
-    });
-  }
-
-  // Preprocess related countries
+  // Preprocess project locations
   const locationArray = [];
-  for (let i = 0; i < record.related_countries.length; i += 1) {
+  const countryArray = record['project country']
+    ? record['project country'].split('; ')
+    : null;
+  const previousCountries = [];
+  if (countryArray.length > 1) {
+    for (let i = 0; i < countryArray.length; i += 1) {
+      if (previousCountries.indexOf(countryArray[i] === -1)) {
+        locationArray.push({
+          country_name: null,
+          country_code: countryArray[i],
+          region: null,
+          nuts2: null,
+          location: {
+            lat: 0,
+            lon: 0,
+          },
+        });
+        previousCountries.push(countryArray[i]);
+      }
+    }
+  } else {
     locationArray.push({
-      country_name: record.related_countries[i].name,
-      country_code: record.related_countries[i].code,
+      country_name: null,
+      country_code: record['project country'],
+      region: record['project region'],
+      nuts2: record['project nuts2 code'],
       location: {
         lat: 0,
         lon: 0,
@@ -51,23 +98,39 @@ export default record => {
     });
   }
 
+  // Preprocess type
+  const typeArray = [record['project type']];
+
+  // Preprocess themes
+  const themeArray = record.themes ? record.themes.split('; ') : null;
+
+  // Preprocess partners
+  const partnerArray = [
+    {
+      name: record.beneficiary,
+      type: null,
+      address: getAddress(record),
+      region: null,
+      country: record['beneficiary country'],
+      website: null,
+    },
+  ];
+
   // Map the fields
   return {
-    project_id: record.id.toString(),
-    title: record.title,
-    budget: budgetObject,
-    coordinators: coordArray,
+    project_id: record.projectid.toString(),
+    type: typeArray,
     period: record.period,
-    timeframe: {
-      from: formatDate(record.start),
-      to: formatDate(record.end),
-    },
-    source: record.source,
-    themes: record.related_themes,
-    project_website: record.url,
-    draft_date: formatDate(record.draftdate),
-    programme_name: record.rel_program,
-    description: record.subtitle,
+    publication_date: formatDate(record['date published']),
+    title: record['project name'],
     project_locations: locationArray,
+    themes: themeArray,
+    budget: budgetObject,
+    project_website: getProjectWebsite(record),
+    partners: partnerArray,
+    timeframe: {
+      from: formatDate(record['project timeframe start date']),
+      to: formatDate(record['project timeframe end date']),
+    },
   };
 };
