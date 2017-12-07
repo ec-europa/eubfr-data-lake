@@ -3,7 +3,7 @@ import onParseCSV from '../../../src/events/onParseCSV';
 
 const handler = promisify(onParseCSV);
 
-describe(`Function parseCsv in "@eubfr/ingestion-etl-budg-csv"`, () => {
+describe(`Function parseCsv in "@eubfr/ingestion-etl-agri-csv"`, () => {
   test('The function expects a correct SNS record', () => {
     const event = {};
     const context = {};

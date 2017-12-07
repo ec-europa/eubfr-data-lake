@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -6,10 +6,10 @@ import FilesList from './files/List';
 import File from './files/File';
 
 const Files = ({ match }) => (
-  <div className="ecl-u-mv-m">
+  <Fragment>
     <Route exact path={`${match.url}/`} component={FilesList} />
     <Route path={`${match.url}/:id`} component={File} />
-  </div>
+  </Fragment>
 );
 
 Files.propTypes = {

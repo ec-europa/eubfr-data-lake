@@ -9,17 +9,17 @@
     "test:unit": "jest --testPathPattern=unit"
   },
   "devDependencies": {
-    "aws-sdk": "2.148.0",
+    "aws-sdk": "2.165.0",
     "aws-sdk-mock": "1.7.0",
     "babel-core": "6.26.0",
     "babel-loader": "7.1.2",
     "babel-preset-env": "1.6.1",
     "jest": "21.2.1",
-    "serverless": "1.23.0",
+    "serverless": "1.24.1",
     "serverless-offline": "3.16.0",
-    "serverless-stack-output": "0.2.0",
-    "serverless-webpack": "3.1.2",
-    "webpack": "3.8.1"
+    "serverless-stack-output": "0.2.3",
+    "serverless-webpack": "4.1.0",
+    "webpack": "3.10.0"
   },
   "dependencies": {
     "uuid": "3.1.0"

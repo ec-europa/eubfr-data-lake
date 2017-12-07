@@ -1,4 +1,4 @@
-service: ingestion-etl-budg-csv
+service: ingestion-etl-agri-csv
 
 plugins:
   - serverless-webpack
@@ -50,15 +50,15 @@ functions:
                 - Ref: "AWS::Region"
                 - ":"
                 - Ref: "AWS::AccountId"
-                - ":${self:provider.stage}-etl-budg-csv"
-          topicName: ${self:provider.stage}-etl-budg-csv
+                - ":${self:provider.stage}-etl-agri-csv"
+          topicName: ${self:provider.stage}-etl-agri-csv
 
 resources:
   Resources:
     SNSTopicBUDGCSV:
       Type: AWS::SNS::Topic
       Properties:
-        TopicName: ${self:provider.stage}-etl-budg-csv
+        TopicName: ${self:provider.stage}-etl-agri-csv
         DisplayName: BUDG CSV ETL
     SNSTopicBUDGCSVPolicy:
       Type: AWS::SNS::TopicPolicy

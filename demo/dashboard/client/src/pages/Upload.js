@@ -1,10 +1,6 @@
 import React from 'react';
 import FormUpload from '../components/FormUpload';
 
-const Upload = () => (
-  <div className="ecl-u-mv-m">
-    <FormUpload text="Upload" />
-  </div>
-);
+const Upload = () => <FormUpload text="Select a file" />;
 
 export default Upload;

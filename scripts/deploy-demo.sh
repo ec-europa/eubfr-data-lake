@@ -9,9 +9,28 @@ cd ..
 
 # Deploy demos
 
-## BUDG demo
+## AGRI demo
 
 cd ./demo/dashboard/server
+echo 'Start demo dashboard server deploy ...'
+yarn deploy --username agri
+
+cd ../client
+echo 'Start demo dashboard client deploy ...'
+
+echo 'Cleaning previous builds ...'
+rm -rf build client
+
+echo 'serverless-finch needs a /client folder'
+mkdir client
+
+echo 'Deploying dashboard client...'
+yarn run release
+yarn run sls client deploy --username agri
+
+## BUDG demo
+
+cd ../server
 echo 'Start demo dashboard server deploy ...'
 yarn deploy --username budg
 
