@@ -7,6 +7,8 @@ import split2 from 'split2';
 
 import deleteProjects from '../lib/deleteProjects';
 import SaveStream from '../lib/SaveStream';
+// elasticsearch mapping https://goo.gl/MEGiA6
+import ProjectMapping from '../mappings/project';
 
 export const handler = (event, context, callback) => {
   const { API, INDEX } = process.env;
@@ -45,33 +47,6 @@ export const handler = (event, context, callback) => {
     index: INDEX,
   };
 
-  // elasticsearch mapping overrides/corrections
-  // the rest of the fields are dynamically discovered fine for now
-  const body = {
-    project: {
-      properties: {
-        project_locations: {
-          properties: {
-            location: {
-              type: 'geo_point',
-              ignore_malformed: true,
-            },
-          },
-        },
-        timeframe: {
-          properties: {
-            from: {
-              type: 'date',
-            },
-            to: {
-              type: 'date',
-            },
-          },
-        },
-      },
-    },
-  };
-
   // elasticsearch client instantiation
   const client = elasticsearch.Client(options);
 
@@ -84,7 +59,9 @@ export const handler = (event, context, callback) => {
       return exists;
     })
     .then(() => client.indices.getMapping({ index: INDEX, type }))
-    .catch(() => client.indices.putMapping({ index: INDEX, type, body }))
+    .catch(() =>
+      client.indices.putMapping({ index: INDEX, type, body: ProjectMapping })
+    )
     .then(() =>
       s3
         .headObject({
