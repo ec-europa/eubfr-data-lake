@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink, Route } from 'react-router-dom';
 import elasticsearch from 'elasticsearch';
 import PropTypes from 'prop-types';
 import Spinner from '../../components/Spinner';
@@ -12,6 +12,15 @@ import './File.css';
 
 const demoServerEndpoint = `${demoServer.ServiceEndpoint}/demo`;
 const projectsApiEndpoint = `https://${projectsApi.ServiceEndpoint}`;
+
+const getIcon = status => {
+  if (status === 'parsed')
+    return 'ecl-icon ecl-icon--success ecl-u-color-success';
+  else if (status === 'not parsed')
+    return 'ecl-icon ecl-icon--warning ecl-u-color-warning';
+
+  return 'ecl-icon ecl-icon--error ecl-u-color-error';
+};
 
 class File extends React.Component {
   constructor() {
@@ -194,62 +203,124 @@ class File extends React.Component {
       return <Spinner />;
     }
 
+    if (!file) {
+      return (
+        <Fragment>
+          <h1 className="ecl-heading ecl-heading--h1 ecl-u-mt-none">
+            File not found
+          </h1>
+          <Link to="/files" className="ecl-button ecl-button--secondary">
+            <span className="ecl-icon ecl-icon--left" />Go Back to My Files
+          </Link>
+        </Fragment>
+      );
+    }
+
     const computedKey = decodeURIComponent(match.params.id);
-    const className =
-      file.status === 'parsed'
-        ? 'ecl-icon ecl-icon--success ecl-u-color-primary'
-        : 'ecl-icon ecl-icon--error ecl-u-color-error';
 
     return (
       <Fragment>
-        <Link to="/files" className="ecl-navigation-list__link ecl-link">
-          <span className="ecl-icon ecl-icon--left" />Go Back
+        <h1 className="ecl-heading ecl-heading--h1 ecl-u-mt-none">
+          <span className={getIcon(file.status)} title={file.message} />
+          {file.original_key}
+        </h1>
+        <Link to="/files" className="ecl-button ecl-button--secondary">
+          <span className="ecl-icon ecl-icon--left" />Go Back to My Files
         </Link>
-        <h1>File info</h1>
-        {link ? (
-          <a className="ecl-link" href={link}>
-            <span className="ecl-icon ecl-icon--download" />
-            Download
-          </a>
-        ) : (
-          <button
-            className="ecl-button ecl-button--secondary"
-            onClick={this.generateLink}
-            disabled={linkLoading}
-          >
-            {linkLoading ? 'Loading' : 'Get download link'}
-          </button>
-        )}
-        <button
-          className="ecl-button ecl-button--secondary"
-          onClick={this.deleteFile}
-        >
-          Delete
-        </button>
-        {fileLoading && <p>Updating info...</p>}
-        <dl>
-          <dt>Computed key</dt>
-          <dd>{computedKey}</dd>
-          <dt>Last update</dt>
-          <dd>{new Date(file.last_modified).toLocaleString()}</dd>
-          <dt>Size</dt>
-          <dd>{Math.floor(file.content_length / 1024) || 0} kB</dd>
-          <dt>Status</dt>
-          <dd>
-            <span className={className} />
-            {file.message}
-          </dd>
-        </dl>
-        <h2>Update</h2>
-        <FormUpload computedKey={computedKey} text="Update this file" />
-        <h2>Related projects</h2>
-        {projectsLoading && <p>Loading related projects</p>}
-        <p>Total: {projectsCount}</p>
-        <ul>
-          {relatedProjects.map(project => (
-            <li key={project._source.project_id}>{project._source.title}</li>
-          ))}
-        </ul>
+
+        <div className="ecl-row ecl-u-mv-m">
+          <div className="ecl-col-md-4 ecl-u-d-flex ecl-u-justify-content-center ecl-u-align-items-baseline">
+            <span className="ecl-u-fs-xxl">{projectsCount}</span>
+            <span className="ecl-u-fs-l">&nbsp;projects</span>
+          </div>
+          <div className="ecl-col-md-4 ecl-u-d-flex ecl-u-justify-content-center ecl-u-align-items-baseline">
+            <span className="ecl-u-fs-xxl">
+              {Math.floor(file.content_length / 1024) || 0}
+            </span>{' '}
+            <span className="ecl-u-fs-l">&nbsp;kB</span>
+          </div>
+          <div className="ecl-col-md-4 ecl-u-d-flex ecl-u-justify-content-center ecl-u-align-items-center">
+            <span className="ecl-u-fs-l" title="Last update">
+              {new Date(file.last_modified).toLocaleString()}
+            </span>
+          </div>
+        </div>
+
+        <nav className="ecl-navigation-list-wrapper">
+          <h2 className="ecl-u-sr-only">Navigation Menu</h2>
+          <ul className="ecl-navigation-list ecl-navigation-list--tabs">
+            <li className="ecl-navigation-list__item">
+              <NavLink
+                to={`${match.url}`}
+                exact
+                className="ecl-navigation-list__link ecl-link"
+                activeClassName="ecl-navigation-list__link--active"
+              >
+                Actions
+              </NavLink>
+            </li>
+            <li className="ecl-navigation-list__item">
+              <NavLink
+                to={`${match.url}/projects`}
+                className="ecl-navigation-list__link ecl-link"
+                activeClassName="ecl-navigation-list__link--active"
+              >
+                Projects
+              </NavLink>
+            </li>
+          </ul>
+        </nav>
+
+        <Route
+          exact
+          path={`${match.url}`}
+          render={() => (
+            <Fragment>
+              <h3 className="ecl-heading ecl-heading--h3">Download</h3>
+              {link ? (
+                <a className="ecl-button ecl-button--secondary" href={link}>
+                  <span className="ecl-icon ecl-icon--download" />
+                  Download
+                </a>
+              ) : (
+                <button
+                  className="ecl-button ecl-button--secondary"
+                  onClick={this.generateLink}
+                  disabled={linkLoading}
+                >
+                  {linkLoading
+                    ? 'Requesting download link...'
+                    : 'Get download link'}
+                </button>
+              )}
+              <h3 className="ecl-heading ecl-heading--h3">Update</h3>
+              <FormUpload computedKey={computedKey} text="Select a file" />
+              <h3 className="ecl-heading ecl-heading--h3">Delete</h3>
+              <button
+                className="ecl-button ecl-button--secondary"
+                onClick={this.deleteFile}
+              >
+                Delete
+              </button>
+            </Fragment>
+          )}
+        />
+        <Route
+          path={`${match.url}/projects`}
+          render={() => (
+            <Fragment>
+              {' '}
+              {projectsLoading && <p>Loading related projects</p>}
+              <ul>
+                {relatedProjects.map(project => (
+                  <li key={project._source.project_id}>
+                    {project._source.title}
+                  </li>
+                ))}
+              </ul>
+            </Fragment>
+          )}
+        />
       </Fragment>
     );
   }

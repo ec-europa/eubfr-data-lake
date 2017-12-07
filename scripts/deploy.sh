@@ -40,9 +40,9 @@ cd ../cleaner
 ./node_modules/.bin/serverless deploy -v
 
 # Deploy ETL
-cd ../etl/budg/csv
+cd ../etl/agri/csv
 ./node_modules/.bin/serverless deploy -v
-cd ../xls
+cd ../../budg/xls
 ./node_modules/.bin/serverless deploy -v
 cd ../../inforegio/json
 ./node_modules/.bin/serverless deploy -v

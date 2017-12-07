@@ -72,8 +72,10 @@ class List extends Component {
 
     return (
       <div className="files-list">
-        <RefreshButton />
         <FilesList files={files} />
+        <div className="ecl-u-mv-s">
+          <RefreshButton />
+        </div>
       </div>
     );
   }

@@ -12,7 +12,7 @@ const services = [
   `harmonized-storage`,
   `ingestion-manager`,
   `ingestion-cleaner`,
-  `ingestion-etl-budg-csv`,
+  `ingestion-etl-agri-csv`,
   `ingestion-etl-budg-xls`,
   `ingestion-etl-inforegio-json`,
   `elasticsearch`,

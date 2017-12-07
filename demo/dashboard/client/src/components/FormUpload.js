@@ -79,7 +79,7 @@ class FormUpload extends Component {
   render() {
     return (
       <div className="form-upload">
-        <details>
+        <details open>
           <summary>Disclaimer</summary>
           <p className="ecl-paragraph">
             <strong>WARNING!</strong>
@@ -106,10 +106,10 @@ class FormUpload extends Component {
           </p>
         </details>
 
-        <div className="ecl-file-upload ecl-u-mb-s">
+        <div className="ecl-u-mv-s">
           <label className="ecl-file-upload__label" htmlFor="dashboard-upload">
             <span
-              className="ecl-button ecl-button--call ecl-button--block"
+              className="ecl-button ecl-button--call"
               role="button"
               aria-controls="dashboard-upload"
               tabIndex="0"
@@ -130,8 +130,9 @@ class FormUpload extends Component {
         </div>
 
         <div
-          className={`${`ecl-u-mb-s ecl-message  ecl-message--`}${this.state
-            .progress}`}
+          className={`${`ecl-u-mb-s ecl-message  ecl-message--`}${
+            this.state.progress
+          }`}
           role="alert"
         >
           <span className="ecl-u-sr-only">${this.state.progress} message</span>
