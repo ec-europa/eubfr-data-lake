@@ -203,6 +203,19 @@ class File extends React.Component {
       return <Spinner />;
     }
 
+    if (!file) {
+      return (
+        <Fragment>
+          <h1 className="ecl-heading ecl-heading--h1 ecl-u-mt-none">
+            File not found
+          </h1>
+          <Link to="/files" className="ecl-button ecl-button--secondary">
+            <span className="ecl-icon ecl-icon--left" />Go Back to My Files
+          </Link>
+        </Fragment>
+      );
+    }
+
     const computedKey = decodeURIComponent(match.params.id);
 
     return (
