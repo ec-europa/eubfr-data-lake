@@ -506,22 +506,7 @@ aws-sdk-mock@1.7.0:
     sinon "^1.17.3"
     traverse "^0.6.6"
 
-aws-sdk@2.164.0:
-  version "2.164.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.164.0.tgz#e3988657b7c7e96e7ca5a9ff52c90b96b4b229d9"
-  dependencies:
-    buffer "4.9.1"
-    crypto-browserify "1.0.9"
-    events "^1.1.1"
-    jmespath "0.15.0"
-    querystring "0.2.0"
-    sax "1.2.1"
-    url "0.10.3"
-    uuid "3.1.0"
-    xml2js "0.4.17"
-    xmlbuilder "4.2.1"
-
-aws-sdk@2.x, aws-sdk@^2.3.0, aws-sdk@^2.75.0:
+aws-sdk@2.165.0, aws-sdk@2.x, aws-sdk@^2.3.0, aws-sdk@^2.75.0:
   version "2.165.0"
   resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.165.0.tgz#4ae6f73111c3e83acb70fadac5791c4892b84d3d"
   dependencies:
@@ -3000,9 +2985,9 @@ eslint-plugin-import@2.8.0:
     minimatch "^3.0.3"
     read-pkg-up "^2.0.0"
 
-eslint-plugin-jest@21.4.1:
-  version "21.4.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jest/-/eslint-plugin-jest-21.4.1.tgz#7fcc407924d44f78cb7197eb0d5f65152f81fcf9"
+eslint-plugin-jest@21.4.2:
+  version "21.4.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jest/-/eslint-plugin-jest-21.4.2.tgz#0e8ec03687259169cef46656827a0a0715e8a8d4"
 
 eslint-plugin-jsx-a11y@5.1.1:
   version "5.1.1"
