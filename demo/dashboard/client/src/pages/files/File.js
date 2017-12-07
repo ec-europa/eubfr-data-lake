@@ -231,13 +231,13 @@ class File extends React.Component {
         <div className="ecl-row ecl-u-mv-m">
           <div className="ecl-col-md-4 ecl-u-d-flex ecl-u-justify-content-center ecl-u-align-items-baseline">
             <span className="ecl-u-fs-xxl">{projectsCount}</span>
-            <span className="ecl-u-fs-l"> projects</span>
+            <span className="ecl-u-fs-l">&nbsp;projects</span>
           </div>
           <div className="ecl-col-md-4 ecl-u-d-flex ecl-u-justify-content-center ecl-u-align-items-baseline">
             <span className="ecl-u-fs-xxl">
               {Math.floor(file.content_length / 1024) || 0}
             </span>{' '}
-            <span className="ecl-u-fs-l"> kB</span>
+            <span className="ecl-u-fs-l">&nbsp;kB</span>
           </div>
           <div className="ecl-col-md-4 ecl-u-d-flex ecl-u-justify-content-center ecl-u-align-items-center">
             <span className="ecl-u-fs-l" title="Last update">
