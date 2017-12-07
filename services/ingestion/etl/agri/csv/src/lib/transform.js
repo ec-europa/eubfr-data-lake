@@ -10,8 +10,8 @@ import type { Project } from '../../../../types/Project';
  * Map fields
  */
 export default (record: Object): Project => {
-  // Preprocess agriet
-  const agrietObject = {
+  // Preprocess budget
+  const budgetObject = {
     total_cost: null,
     eu_contrib: Number(record['EU Budget contribution']),
     private_fund: null,
@@ -105,7 +105,7 @@ export default (record: Object): Project => {
     results: resultObject,
     ec_priorities: record['EC’s priorities'].split(';'),
     coordinators: coordArray,
-    agriet: agrietObject,
+    budget: budgetObject,
     partners: partnerArray,
     project_locations: locationArray,
     timeframe: {
