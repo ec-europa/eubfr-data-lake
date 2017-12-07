@@ -13,6 +13,15 @@ import './File.css';
 const demoServerEndpoint = `${demoServer.ServiceEndpoint}/demo`;
 const projectsApiEndpoint = `https://${projectsApi.ServiceEndpoint}`;
 
+const getIcon = status => {
+  if (status === 'parsed')
+    return 'ecl-icon ecl-icon--success ecl-u-color-success';
+  else if (status === 'not parsed')
+    return 'ecl-icon ecl-icon--warning ecl-u-color-warning';
+
+  return 'ecl-icon ecl-icon--error ecl-u-color-error';
+};
+
 class File extends React.Component {
   constructor() {
     super();
@@ -195,32 +204,34 @@ class File extends React.Component {
     }
 
     const computedKey = decodeURIComponent(match.params.id);
-    const className =
-      file.status === 'parsed'
-        ? 'ecl-icon ecl-icon--success ecl-u-color-primary'
-        : 'ecl-icon ecl-icon--error ecl-u-color-error';
 
     return (
       <Fragment>
         <h1 className="ecl-heading ecl-heading--h1 ecl-u-mt-none">
+          <span className={getIcon(file.status)} title={file.message} />
           {file.original_key}
         </h1>
         <Link to="/files" className="ecl-button ecl-button--secondary">
           <span className="ecl-icon ecl-icon--left" />Go Back to My Files
         </Link>
 
-        {fileLoading && <p>Updating info...</p>}
-        <ul>
-          <li>Computed key: {computedKey}</li>
-          <li>Last update: {new Date(file.last_modified).toLocaleString()}</li>
-          <li>Size: {Math.floor(file.content_length / 1024) || 0} kB</li>
-          <li>
-            Status:
-            <span className={className} />
-            {file.message}
-          </li>
-          <li>Projects: {projectsCount}</li>
-        </ul>
+        <div className="ecl-row ecl-u-mv-m">
+          <div className="ecl-col-md-4 ecl-u-d-flex ecl-u-justify-content-center ecl-u-align-items-baseline">
+            <span className="ecl-u-fs-xxl">{projectsCount}</span>
+            <span className="ecl-u-fs-l"> projects</span>
+          </div>
+          <div className="ecl-col-md-4 ecl-u-d-flex ecl-u-justify-content-center ecl-u-align-items-baseline">
+            <span className="ecl-u-fs-xxl">
+              {Math.floor(file.content_length / 1024) || 0}
+            </span>{' '}
+            <span className="ecl-u-fs-l"> kB</span>
+          </div>
+          <div className="ecl-col-md-4 ecl-u-d-flex ecl-u-justify-content-center ecl-u-align-items-center">
+            <span className="ecl-u-fs-l" title="Last update">
+              {new Date(file.last_modified).toLocaleString()}
+            </span>
+          </div>
+        </div>
 
         <nav className="ecl-navigation-list-wrapper">
           <h2 className="ecl-u-sr-only">Navigation Menu</h2>
