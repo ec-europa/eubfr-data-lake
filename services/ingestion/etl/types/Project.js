@@ -11,10 +11,17 @@ type Geolocation = {
   lon: string,
 };
 
+type GeoJSON = {
+  type: string,
+  coordinates: Array<Geolocation>,
+};
+
 type Location = {
   country_name?: string,
   country_code: string,
-  geolocation: Geolocation,
+  region?: string,
+  nuts2?: string,
+  location: GeoJSON,
 };
 
 type Timeframe = {

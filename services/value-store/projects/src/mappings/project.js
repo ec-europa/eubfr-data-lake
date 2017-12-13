@@ -30,8 +30,7 @@ module.exports = {
       project_locations: {
         properties: {
           location: {
-            type: 'geo_point',
-            ignore_malformed: true,
+            type: 'geo_shape',
           },
         },
       },
