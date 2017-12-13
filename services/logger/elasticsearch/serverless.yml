@@ -1,11 +1,11 @@
-service: value-store-elasticsearch
+service: logger-elasticsearch
 
 plugins:
   - serverless-stack-output
 
 custom:
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
-  ES_DOMAIN: ${self:provider.stage}-projects
+  ES_DOMAIN: ${self:provider.stage}-logs
   output:
     file: .serverless/stack-output.json
 
@@ -22,7 +22,7 @@ provider:
 
 resources:
   Resources:
-    ProjectsElasticSearchDomain:
+    LogsElasticSearchDomain:
       Type: AWS::Elasticsearch::Domain
       Properties:
         DomainName: ${self:custom.ES_DOMAIN}
@@ -65,8 +65,8 @@ resources:
 
   Outputs:
     ServiceEndpoint:
-      Description: The API endpoint of the projects' elasticsearch domain.
+      Description: The API endpoint of the logs' elasticsearch domain.
       Value:
-        Fn::GetAtt: ["ProjectsElasticSearchDomain", "DomainEndpoint"]
+        Fn::GetAtt: ["LogsElasticSearchDomain", "DomainEndpoint"]
       Export:
         Name: "${self:provider.stage}:${self:service}:ServiceEndpoint"

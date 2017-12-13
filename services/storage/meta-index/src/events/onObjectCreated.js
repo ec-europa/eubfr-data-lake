@@ -1,5 +1,7 @@
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 
+import { STATUS } from './onStatusReported';
+
 export const handler = (event, context, callback) => {
   /*
    * Some checks here before going any further
@@ -63,7 +65,7 @@ export const handler = (event, context, callback) => {
           last_modified: data.LastModified.toISOString(), // ISO-8601 date
           content_length: data.ContentLength,
           metadata: otherMeta,
-          status: 'not parsed',
+          status: STATUS.UPLOADED,
         },
       };
 

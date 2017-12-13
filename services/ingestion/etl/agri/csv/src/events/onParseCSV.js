@@ -1,66 +1,41 @@
-import path from 'path';
-import stream from 'stream';
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 import parse from 'csv-parse';
 import transform from 'stream-transform';
 
-import transformRecord from '../lib/transform';
+// Import constants
+import { STATUS } from '../../../../../../storage/meta-index/src/events/onStatusReported';
 
-// Destination bucket
-const { BUCKET } = process.env;
+// Import logic
+import { extractMessage, prepareMessage } from '../lib/sns';
+import transformRecord from '../lib/transform';
+import uploadFromStream from '../lib/uploadFromStream';
 
 export const handler = (event, context, callback) => {
-  /*
-   * Some checks here before going any further
-   */
+  // 1. Validate handler execution
+  // check event, context
+  const snsMessage = extractMessage(event);
 
-  // Only work on the first record
-  const snsRecord = event.Records ? event.Records[0] : undefined;
-
-  // Was the lambda triggered correctly? Is the file extension supported? etc.
-  if (!snsRecord || snsRecord.EventSource !== 'aws:sns') {
-    return callback('Bad record');
-  }
-
-  /*
-   * Prepare file analysis
-   */
-
-  // Extract message
-  const message = JSON.parse(snsRecord.Sns.Message);
-
-  // Check file extension
-  if (path.extname(message.object.key) !== '.csv') {
-    return callback('File extension should be .csv');
-  }
-
-  /*
-   * Prepare the SNS message
-   */
+  // Extract env vars
+  const { BUCKET, REGION, STAGE } = process.env;
 
   // Get Account ID from lambda function arn in the context
   const accountId = context.invokedFunctionArn.split(':')[4];
 
-  // Get stage and region from environment variables
-  const stage = process.env.STAGE;
-  const region = process.env.REGION;
-
   // Get the endpoint arn
-  const endpointArn = `arn:aws:sns:${region}:${accountId}:${stage}-etl-`;
+  const endpointArn = `arn:aws:sns:${REGION}:${accountId}:${STAGE}-MetaStatusReported`;
+
   const sns = new AWS.SNS();
 
   const onError = e =>
     sns.publish(
-      {
-        Message: JSON.stringify({
-          default: JSON.stringify({
-            object: message.object.key,
-            message: JSON.stringify(e),
-          }),
-        }),
-        MessageStructure: 'json',
-        TargetArn: `${endpointArn}failure`,
-      },
+      prepareMessage(
+        {
+          key: snsMessage.object.key,
+          status: STATUS.ERROR,
+          message: JSON.stringify(e),
+        },
+        endpointArn
+      ),
       snsErr => {
         if (snsErr) {
           return callback(snsErr);
@@ -92,67 +67,31 @@ export const handler = (event, context, callback) => {
     { parallel: 10 }
   );
 
-  // Load
-  const uploadFromStream = () => {
-    const pass = new stream.PassThrough();
-
-    const params = {
-      Bucket: BUCKET,
-      Key: `${message.object.key}.ndjson`,
-      Body: pass,
-      ContentType: 'application/x-ndjson',
-    };
-
-    s3.upload(params, err => {
-      if (err) {
-        return onError(err);
-      }
-
-      // Publish message to ETL Success topic
-
-      /*
-       * Send the SNS message
-       */
-      return sns.publish(
-        {
-          Message: JSON.stringify({
-            default: JSON.stringify({
-              object: message.object.key,
-              message: 'ETL successful',
-            }),
-          }),
-          MessageStructure: 'json',
-          TargetArn: `${endpointArn}success`,
-        },
-        snsErr => {
-          if (snsErr) {
-            callback(snsErr);
-            return;
-          }
-
-          callback(null, 'push sent');
-        }
-      );
-    });
-
-    return pass;
-  };
-
   /*
-   * Start the hard work
-   */
+       * Start the hard work
+       */
 
   return s3
     .getObject({
-      Bucket: message.bucket.name,
-      Key: message.object.key,
+      Bucket: snsMessage.bucket.name,
+      Key: snsMessage.object.key,
     })
     .createReadStream()
     .pipe(parser)
     .on('error', e => onError(`Error on parse: ${e.message}`))
     .pipe(transformer)
     .on('error', e => onError(`Error on transform: ${e.message}`))
-    .pipe(uploadFromStream())
+    .pipe(
+      uploadFromStream({
+        key: snsMessage.object.key,
+        BUCKET,
+        s3,
+        sns,
+        endpointArn,
+        onError,
+        callback,
+      })
+    )
     .on('error', e => onError(`Error on upload: ${e.message}`));
 };
 

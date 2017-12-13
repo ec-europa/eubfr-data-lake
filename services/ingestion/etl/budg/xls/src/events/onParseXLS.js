@@ -2,6 +2,7 @@ import path from 'path';
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 import XLSX from 'xlsx';
 import transformRecord from '../lib/transform';
+import { STATUS } from '../../../../../../storage/meta-index/src/events/onStatusReported';
 
 export const handler = (event, context, callback) => {
   /*
@@ -39,7 +40,7 @@ export const handler = (event, context, callback) => {
   const { BUCKET, REGION, STAGE } = process.env;
 
   // Get the endpoint arn
-  const endpointArn = `arn:aws:sns:${REGION}:${accountId}:${STAGE}-etl-`;
+  const endpointArn = `arn:aws:sns:${REGION}:${accountId}:${STAGE}-MetaStatusReported`;
   const sns = new AWS.SNS();
 
   const handleError = e =>
@@ -47,12 +48,13 @@ export const handler = (event, context, callback) => {
       {
         Message: JSON.stringify({
           default: JSON.stringify({
-            object: message.object.key,
+            key: message.object.key,
+            status: STATUS.ERROR,
             message: JSON.stringify(e),
           }),
         }),
         MessageStructure: 'json',
-        TargetArn: `${endpointArn}failure`,
+        TargetArn: endpointArn,
       },
       snsErr => {
         if (snsErr) {
@@ -125,12 +127,13 @@ export const handler = (event, context, callback) => {
         {
           Message: JSON.stringify({
             default: JSON.stringify({
-              object: message.object.key,
+              key: message.object.key,
+              status: STATUS.PARSED,
               message: 'ETL successful',
             }),
           }),
           MessageStructure: 'json',
-          TargetArn: `${endpointArn}success`,
+          TargetArn: endpointArn,
         },
         snsErr => {
           if (snsErr) {
