@@ -7,7 +7,7 @@ import split2 from 'split2';
 
 import deleteProjects from '../lib/deleteProjects';
 import SaveStream from '../lib/SaveStream';
-// elasticsearch mapping https://goo.gl/MEGiA6
+// elasticsearch mapping https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html
 import ProjectMapping from '../mappings/project';
 
 export const handler = (event, context, callback) => {
