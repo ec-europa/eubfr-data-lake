@@ -12,7 +12,7 @@ export default record => {
     eu_contrib: Number(
       record[
         "EU Grant award in euros (This amount represents the grant awarded after the selection stage and is indicative. Please note that any changes made during or after the project's lifetime will not be reflected here.)"
-      ].replace(',', '')
+      ].replace(/, /g, '')
     ),
     private_fund: null,
     public_fund: null,
