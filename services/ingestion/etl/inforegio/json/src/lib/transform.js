@@ -73,10 +73,12 @@ export default record => {
     for (let i = 0; i < countryArray.length; i += 1) {
       if (previousCountries.indexOf(countryArray[i] === -1)) {
         locationArray.push({
-          country_name: null,
           country_code: countryArray[i],
           region: null,
           nuts2: null,
+          address: null,
+          postal_code: null,
+          town: null,
           location: {
             lat: 0,
             lon: 0,

@@ -58,8 +58,12 @@ export default (record: Object): Project => {
   const locationArray = record['Project country(ies)']
     .split(';')
     .map((country, index) => ({
-      country_name: null,
       country_code: country,
+      region: null,
+      nuts2: null,
+      address: record['Project address(es)'],
+      postal_code: record['Project postal code(s)'],
+      town: record['Project town(s)'],
       location: {
         // elasticsearch specific structure for geo_point
         // read more https://www.elastic.co/guide/en/elasticsearch/reference/5.5/modules-scripting-expression.html#_literal_geo_point_literal_field_api
