@@ -121,44 +121,64 @@ Object {
   "project_id": "8155",
   "project_locations": Array [
     Object {
+      "address": "",
       "country_code": "AT",
-      "country_name": null,
       "location": Object {
         "lat": "48.211312000000",
         "lon": "16.367315000000",
       },
+      "nuts2": null,
+      "postal_code": "",
+      "region": null,
+      "town": "",
     },
     Object {
+      "address": "",
       "country_code": "HR",
-      "country_name": null,
       "location": Object {
         "lat": "45.803508000000",
         "lon": "16.017459000000",
       },
+      "nuts2": null,
+      "postal_code": "",
+      "region": null,
+      "town": "",
     },
     Object {
+      "address": "",
       "country_code": "DE",
-      "country_name": null,
       "location": Object {
         "lat": "49.449922000000",
         "lon": "11.103470000000",
       },
+      "nuts2": null,
+      "postal_code": "",
+      "region": null,
+      "town": "",
     },
     Object {
+      "address": "",
       "country_code": "SK",
-      "country_name": null,
       "location": Object {
         "lat": "48.143047000000",
         "lon": "17.124260000000",
       },
+      "nuts2": null,
+      "postal_code": "",
+      "region": null,
+      "town": "",
     },
     Object {
+      "address": "",
       "country_code": "SI",
-      "country_name": null,
       "location": Object {
         "lat": "46.048183000000",
         "lon": "14.501456000000",
       },
+      "nuts2": null,
+      "postal_code": "",
+      "region": null,
+      "town": "",
     },
   ],
   "project_website": "http://www.cegc-project.eu/",
@@ -186,12 +206,16 @@ Object {
 
 exports[`DG BUDG CSV transformer Project location information is correctly mapped 1`] = `
 Object {
+  "address": "",
   "country_code": "AT",
-  "country_name": null,
   "location": Object {
     "lat": "48.211312000000",
     "lon": "16.367315000000",
   },
+  "nuts2": null,
+  "postal_code": "",
+  "region": null,
+  "town": "",
 }
 `;
 
@@ -236,12 +260,16 @@ Object {
   "project_id": undefined,
   "project_locations": Array [
     Object {
+      "address": undefined,
       "country_code": "",
-      "country_name": null,
       "location": Object {
         "lat": "42.73806663",
         "lon": "23.40014509",
       },
+      "nuts2": null,
+      "postal_code": undefined,
+      "region": null,
+      "town": undefined,
     },
   ],
   "project_website": undefined,
