@@ -1,14 +1,14 @@
 service: value-store-projects
 
 plugins:
-  # - serverless-elasticsearch-index
+  - serverless-elasticsearch-index
   - serverless-stack-output
   - serverless-webpack
 
 custom:
-  # slsEsIndex:
-  #   esIndex: test-projects-index
-  #   esIndexType: test-projects-type
+  slsEsIndex:
+    esIndex: projects
+    esIndexType: project
   webpackIncludeModules: true
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
   index: projects

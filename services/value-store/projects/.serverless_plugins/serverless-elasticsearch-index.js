@@ -1,7 +1,9 @@
+const AWS = require('aws-sdk');
+const awsConfig = {};
+
 const elasticsearch = require('elasticsearch');
 const connectionClass = require('http-aws-es');
 const elasticsearchOutput = require('../../elasticsearch/.serverless/stack-output.json');
-const AWS = require('aws-sdk');
 
 const ProjectMapping = require('../src/mappings/project');
 
@@ -15,15 +17,6 @@ class CreateElasticIndexDeploy {
       'after:deploy:deploy': this.afterDeployment.bind(this),
     };
 
-    // AWS sdk setup
-    const awsCredentials = this.serverless.getProvider('aws').getCredentials();
-
-    // Default credentials seem not to be taken by default
-    AWS.config.update({
-      credentials: awsCredentials.credentials,
-      region: awsCredentials.region,
-    });
-
     // elasticsearch setup
     // get configuration from serverless.yml file
     const { esIndex, esIndexType } = this.serverless.service.custom.slsEsIndex;
@@ -33,10 +26,11 @@ class CreateElasticIndexDeploy {
 
     // elasticsearch client configuration
     const esOptions = {
-      host: `https://${ServiceEndpoint}`,
-      apiVersion: '5.5',
-      connectionClass,
       index: esIndex,
+      connectionClass,
+      apiVersion: '5.5',
+      host: `https://${ServiceEndpoint}`,
+      awsConfig: new AWS.Config(awsConfig),
     };
 
     // elasticsearch client instantiation
@@ -50,7 +44,6 @@ class CreateElasticIndexDeploy {
   }
 
   afterDeployment() {
-    // this.client.info().then(console.log);
     this.client.indices
       .exists({ index: this.esIndex })
       .then(exists => {
