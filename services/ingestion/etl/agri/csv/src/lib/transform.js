@@ -61,7 +61,8 @@ export default (record: Object): Project => {
       country_name: null,
       country_code: country,
       location: {
-        // elasticsearch specific structure for geo_point https://goo.gl/nbi2Yp
+        // elasticsearch specific structure for geo_point
+        // read more https://www.elastic.co/guide/en/elasticsearch/reference/5.5/modules-scripting-expression.html#_literal_geo_point_literal_field_api
         lat: (Array.isArray(latArray) && latArray[index]) || 0,
         lon: (Array.isArray(longArray) && longArray[index]) || 0,
       },
