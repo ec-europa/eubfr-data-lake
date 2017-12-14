@@ -11,6 +11,7 @@ const elasticsearch = require('elasticsearch');
 const connectionClass = require('http-aws-es');
 const elasticsearchOutput = require('../../elasticsearch/.serverless/stack-output.json');
 
+// elasticsearch mapping https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html
 const ProjectMapping = require('../src/mappings/project');
 
 class CreateElasticIndexDeploy {

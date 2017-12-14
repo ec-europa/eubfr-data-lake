@@ -42,7 +42,7 @@ functions:
     environment:
       API:
         Fn::ImportValue: ${self:provider.stage}:elasticsearch:ServiceEndpoint
-      INDEX: ${self:custom.index}
+      INDEX: ${self:custom.slsEsIndex.esIndex}
     events:
       - sns:
           arn:
@@ -61,7 +61,7 @@ functions:
     environment:
       API:
         Fn::ImportValue: ${self:provider.stage}:elasticsearch:ServiceEndpoint
-      INDEX: ${self:custom.index}
+      INDEX: ${self:custom.slsEsIndex.esIndex}
     events:
       - sns:
           arn:
