@@ -1,5 +1,6 @@
-import elasticsearch from 'elasticsearch';
-import connectionClass from 'http-aws-es';
+import getIndexOperation from '../lib/getIndexOperation';
+import createLocations from '../lib/createLocations';
+import deleteLocations from '../lib/deleteLocations';
 
 export const handler = (event, context, callback) => {
   const { API, INDEX } = process.env;
@@ -19,18 +20,21 @@ export const handler = (event, context, callback) => {
     return callback('Bad record');
   }
 
-  // elasticsearch client configuration
-  const options = {
-    host: `https://${API}`,
-    apiVersion: '5.5',
-    connectionClass,
-    index: INDEX,
-  };
+  // Extract S3 record
+  const s3record = JSON.parse(snsRecord.Sns.Message).Records[0];
 
-  // elasticsearch client instantiation
-  const client = elasticsearch.Client(options);
+  const op = getIndexOperation(s3record);
 
-  return callback();
+  switch (op) {
+    case 'CREATE':
+      return createLocations({ API, INDEX }, s3record);
+
+    case 'DELETE':
+      return deleteLocations({ API, INDEX }, s3record);
+
+    default:
+      return callback();
+  }
 };
 
 export default handler;
