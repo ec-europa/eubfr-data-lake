@@ -27,7 +27,7 @@ export const handler = (event, context, callback) => {
 
   switch (op) {
     case 'CREATE':
-      return createLocations({ API }, s3record);
+      return setTimeout(() => createLocations({ API }, s3record), 30000);
 
     case 'DELETE':
       return deleteLocations({ API }, s3record);
