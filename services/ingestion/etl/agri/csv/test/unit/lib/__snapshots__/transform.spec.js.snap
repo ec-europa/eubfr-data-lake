@@ -125,8 +125,8 @@ Object {
       "country_name": null,
       "location": Object {
         "coordinates": Array [
-          "16.367315000000",
-          "48.211312000000",
+          16.367315,
+          48.211312,
         ],
         "type": "Point",
       },
@@ -136,8 +136,8 @@ Object {
       "country_name": null,
       "location": Object {
         "coordinates": Array [
-          "16.017459000000",
-          "45.803508000000",
+          16.017459,
+          45.803508,
         ],
         "type": "Point",
       },
@@ -147,8 +147,8 @@ Object {
       "country_name": null,
       "location": Object {
         "coordinates": Array [
-          "11.103470000000",
-          "49.449922000000",
+          11.10347,
+          49.449922,
         ],
         "type": "Point",
       },
@@ -158,8 +158,8 @@ Object {
       "country_name": null,
       "location": Object {
         "coordinates": Array [
-          "17.124260000000",
-          "48.143047000000",
+          17.12426,
+          48.143047,
         ],
         "type": "Point",
       },
@@ -169,8 +169,8 @@ Object {
       "country_name": null,
       "location": Object {
         "coordinates": Array [
-          "14.501456000000",
-          "46.048183000000",
+          14.501456,
+          46.048183,
         ],
         "type": "Point",
       },
@@ -205,8 +205,8 @@ Object {
   "country_name": null,
   "location": Object {
     "coordinates": Array [
-      "16.367315000000",
-      "48.211312000000",
+      16.367315,
+      48.211312,
     ],
     "type": "Point",
   },
@@ -258,8 +258,8 @@ Object {
       "country_name": null,
       "location": Object {
         "coordinates": Array [
-          "23.40014509",
-          "42.73806663",
+          23.40014509,
+          42.73806663,
         ],
         "type": "Point",
       },
