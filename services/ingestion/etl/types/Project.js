@@ -2,9 +2,9 @@
 
 // Project model is discussed in EUBFR-4 EUBFR-5 and EUBFR-70
 
-type NestedCoordinates<Coordinates> = Array<
-  Coordinates | NestedCoordinates<Coordinates>
->;
+// prettier-ignore line length
+// prettier-ignore
+type NestedCoordinates<Coordinates> = Array<Coordinates | NestedCoordinates<Coordinates>>;
 
 type Result = {
   result: string,
