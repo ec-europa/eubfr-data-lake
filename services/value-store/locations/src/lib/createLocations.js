@@ -21,7 +21,7 @@ export default (esOptions, s3record) => {
     // elasticsearch client configuration
     const options = {
       host: `https://${esOptions.API}`,
-      apiVersion: '5.5',
+      apiVersion: '6.0',
       connectionClass,
       index: indices[i].index,
     };
@@ -37,9 +37,31 @@ export default (esOptions, s3record) => {
       type: indices.from.type,
       q: `computed_key:"${Key}"`,
     })
-    .then(results => {
-      console.log('Sync locations index with projects index');
-      console.log(results);
+    .then(res => {
+      // res.hits.hits is [] in 0 records matching the query
+      const results = res.hits.hits;
+
+      if (results.length) {
+        console.log('Syncing locations index with projects index');
+
+        results.forEach(project => {
+          const projectId = project._id;
+          const projectLocation = project._source.project_locations;
+
+          // prepare information for location index
+          const location = {
+            projectId,
+            location: projectLocation,
+          };
+
+          // save to locations index
+          clients.to.index({
+            index: indices.to.index,
+            type: indices.to.type,
+            body: location,
+          });
+        });
+      }
     })
     .catch(console.log);
 };

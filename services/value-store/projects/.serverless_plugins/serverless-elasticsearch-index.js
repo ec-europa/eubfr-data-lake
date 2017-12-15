@@ -48,7 +48,7 @@ class CreateElasticIndexDeploy {
     const esOptions = {
       index: esIndex,
       connectionClass,
-      apiVersion: '5.5',
+      apiVersion: '6.0',
       host: `https://${ServiceEndpoint}`,
       // this is required when out of a lambda function
       awsConfig: new AWS.Config({

@@ -9,7 +9,7 @@ export default (esOptions, s3record) => {
   // elasticsearch client configuration
   const options = {
     host: `https://${esOptions.API}`,
-    apiVersion: '5.5',
+    apiVersion: '6.0',
     connectionClass,
     index,
   };
