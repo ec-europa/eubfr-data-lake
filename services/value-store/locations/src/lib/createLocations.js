@@ -2,23 +2,39 @@ import elasticsearch from 'elasticsearch';
 import connectionClass from 'http-aws-es';
 
 export default (esOptions, s3record) => {
+  const clients = {};
+
   const Key = s3record.s3.object.key;
 
-  // elasticsearch client configuration
-  const options = {
-    host: `https://${esOptions.API}`,
-    apiVersion: '5.5',
-    connectionClass,
-    index: esOptions.INDEX,
+  const indices = {
+    from: {
+      index: 'projects',
+      type: 'project',
+    },
+    to: {
+      index: 'locations',
+      type: 'location',
+    },
   };
 
-  // elasticsearch client instantiation
-  const client = elasticsearch.Client(options);
+  Object.keys(indices).forEach(i => {
+    // elasticsearch client configuration
+    const options = {
+      host: `https://${esOptions.API}`,
+      apiVersion: '5.5',
+      connectionClass,
+      index: indices[i].index,
+    };
 
-  client
+    clients[i] = elasticsearch.Client(options);
+  });
+
+  // add latest changes from projects index to locations index
+  clients.from
     .search({
-      index: esOptions.API,
-      type: 'project',
+      // index and type will narrow the search
+      index: indices.from.index,
+      type: indices.from.type,
       q: `computed_key:"${Key}"`,
     })
     .then(results => {

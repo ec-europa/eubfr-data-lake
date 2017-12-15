@@ -43,7 +43,6 @@ functions:
     environment:
       API:
         Fn::ImportValue: ${self:provider.stage}:elasticsearch:ServiceEndpoint
-      INDEX: ${self:custom.slsEsIndex.esIndex}
     events:
       - sns:
           arn:

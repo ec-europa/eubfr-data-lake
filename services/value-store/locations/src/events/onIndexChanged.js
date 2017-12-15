@@ -3,7 +3,7 @@ import createLocations from '../lib/createLocations';
 import deleteLocations from '../lib/deleteLocations';
 
 export const handler = (event, context, callback) => {
-  const { API, INDEX } = process.env;
+  const { API } = process.env;
 
   /*
    * Some checks here before going any further
@@ -27,10 +27,10 @@ export const handler = (event, context, callback) => {
 
   switch (op) {
     case 'CREATE':
-      return createLocations({ API, INDEX }, s3record);
+      return createLocations({ API }, s3record);
 
     case 'DELETE':
-      return deleteLocations({ API, INDEX }, s3record);
+      return deleteLocations({ API }, s3record);
 
     default:
       return callback();
