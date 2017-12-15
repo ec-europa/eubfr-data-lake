@@ -2,21 +2,19 @@
 
 // Project model is discussed in EUBFR-4 EUBFR-5 and EUBFR-70
 
-type Coordinates<Geolocation> = Array<Geolocation | Coordinates<Geolocation>>;
+type NestedCoordinates<Coordinates> = Array<
+  Coordinates | NestedCoordinates<Coordinates>
+>;
 
 type Result = {
   result: string,
 };
 
-type Geolocation = {
-  lat: number,
-  lon: number,
-  alt?: number,
-};
+type Coordinates = [number, number] | [number, number, number];
 
 type GeoJSON = {
   type: string,
-  coordinates: Coordinates<Geolocation>,
+  coordinates: NestedCoordinates<Coordinates>,
 };
 
 type Location = {
