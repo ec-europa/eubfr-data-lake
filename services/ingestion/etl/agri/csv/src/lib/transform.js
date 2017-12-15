@@ -63,8 +63,8 @@ export default (record: Object): Project => {
       location: {
         type: 'Point',
         coordinates: [
-          (Array.isArray(longArray) && longArray[index]) || 0,
-          (Array.isArray(latArray) && latArray[index]) || 0,
+          parseFloat(Array.isArray(longArray) && longArray[index]) || 0,
+          parseFloat(Array.isArray(latArray) && latArray[index]) || 0,
         ],
       },
     }));

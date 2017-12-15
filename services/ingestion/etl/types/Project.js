@@ -2,18 +2,21 @@
 
 // Project model is discussed in EUBFR-4 EUBFR-5 and EUBFR-70
 
+type Coordinates<Geolocation> = Array<Geolocation | Coordinates<Geolocation>>;
+
 type Result = {
   result: string,
 };
 
 type Geolocation = {
-  lat: string,
-  lon: string,
+  lat: number,
+  lon: number,
+  alt?: number,
 };
 
 type GeoJSON = {
   type: string,
-  coordinates: Array<Geolocation>,
+  coordinates: Coordinates<Geolocation>,
 };
 
 type Location = {
