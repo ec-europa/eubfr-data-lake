@@ -47,6 +47,12 @@ export const handler = (event, context, callback) => {
   // elasticsearch client instantiation
   const client = elasticsearch.Client(options);
 
+  const saveProjectStream = new SaveStream({
+    objectMode: true,
+    client,
+    index: INDEX,
+  });
+
   return s3
     .headObject({
       Bucket: s3record.s3.bucket.name,
@@ -62,14 +68,8 @@ export const handler = (event, context, callback) => {
 
       return data;
     })
-    .then(data => {
-      const saveStream = new SaveStream({
-        objectMode: true,
-        client,
-        index: INDEX,
-      });
-
-      return s3
+    .then(data =>
+      s3
         .getObject({
           Bucket: s3record.s3.bucket.name,
           Key: s3record.s3.object.key,
@@ -91,8 +91,8 @@ export const handler = (event, context, callback) => {
             return cb(null, item);
           })
         )
-        .pipe(saveStream);
-    });
+        .pipe(saveProjectStream)
+    );
 };
 
 export default handler;
