@@ -1,4 +1,4 @@
-service: value-store-projects
+service: value-store-locations
 
 plugins:
   - serverless-elasticsearch-index
@@ -7,8 +7,8 @@ plugins:
 
 custom:
   slsEsIndex:
-    esIndex: projects
-    esIndexType: project
+    esIndex: locations
+    esIndexType: location
   webpackIncludeModules: true
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
   output:
@@ -35,9 +35,11 @@ provider:
 
 functions:
   onObjectCreated:
-    handler: src/events/onObjectCreated.handler
-    name: ${self:provider.stage}-${self:service}-onObjectCreated
-    memorySize: 256
+    # Changes API not ready yet on elasticsearch part
+    # https://github.com/elastic/elasticsearch/issues/1242
+    # That's why we need to hook into AWS events for now
+    handler: src/events/onIndexChanged.handler
+    name: ${self:provider.stage}-${self:service}-onIndexChanged
     environment:
       API:
         Fn::ImportValue: ${self:provider.stage}:elasticsearch:ServiceEndpoint
@@ -46,30 +48,20 @@ functions:
       - sns:
           arn:
             Fn::Join:
-              - ""
-              -
-                - "arn:aws:sns:"
-                - Ref: "AWS::Region"
-                - ":"
-                - Ref: "AWS::AccountId"
-                - ":${self:provider.stage}-harmonized-object-created"
-          topicName: ${self:provider.stage}-harmonized-object-created
-  onObjectRemoved:
-    handler: src/events/onObjectRemoved.handler
-    name: ${self:provider.stage}-${self:service}-onObjectRemoved
-    environment:
-      API:
-        Fn::ImportValue: ${self:provider.stage}:elasticsearch:ServiceEndpoint
-      INDEX: ${self:custom.slsEsIndex.esIndex}
-    events:
+            - ''
+            - - 'arn:aws:sns:'
+              - Ref: AWS::Region
+              - ":"
+              - Ref: AWS::AccountId
+              - ":${self:provider.stage}-harmonized-object-removed"
+          topicName: "${self:provider.stage}-harmonized-object-removed"
       - sns:
           arn:
             Fn::Join:
-              - ""
-              -
-                - "arn:aws:sns:"
-                - Ref: "AWS::Region"
-                - ":"
-                - Ref: "AWS::AccountId"
-                - ":${self:provider.stage}-harmonized-object-removed"
-          topicName: ${self:provider.stage}-harmonized-object-removed
+            - ''
+            - - 'arn:aws:sns:'
+              - Ref: AWS::Region
+              - ":"
+              - Ref: AWS::AccountId
+              - ":${self:provider.stage}-harmonized-object-created"
+          topicName: "${self:provider.stage}-harmonized-object-created"
