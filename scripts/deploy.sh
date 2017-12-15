@@ -56,5 +56,5 @@ cd ../../logger/elasticsearch
 ./node_modules/.bin/serverless deploy -v
 
 # Deploy logger - listener
-cd ../listner
+cd ../listener
 ./node_modules/.bin/serverless deploy -v

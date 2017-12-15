@@ -57,9 +57,17 @@ export const handler = (event, context, callback) => {
 
   return sns.publish(
     {
-      Message: JSON.stringify(payload),
+      Message: JSON.stringify({
+        default: JSON.stringify({
+          log: true,
+          eventTime: s3record.eventTime,
+          userIdentity: s3record.userIdentity,
+          bucket: s3record.s3.bucket,
+          object: s3record.s3.object,
+        }),
+      }),
       MessageStructure: 'json',
-      TargetArn: endpointArn,
+      TargetArn: `arn:aws:sns:${region}:${accountId}:${stage}-onLogEmitted`,
     },
     err => {
       if (err) {
@@ -68,7 +76,22 @@ export const handler = (event, context, callback) => {
         return;
       }
 
-      callback(null, 'push sent');
+      sns.publish(
+        {
+          Message: JSON.stringify(payload),
+          MessageStructure: 'json',
+          TargetArn: endpointArn,
+        },
+        err2 => {
+          if (err2) {
+            console.log(err2.stack);
+            callback(err2);
+            return;
+          }
+
+          callback(null, 'push sent');
+        }
+      );
     }
   );
 };

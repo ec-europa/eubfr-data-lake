@@ -1,15 +1,9 @@
-import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
-
-import elasticsearch from 'elasticsearch';
-import connectionClass from 'http-aws-es';
-import through2 from 'through2';
-import split2 from 'split2';
-
-import SaveStream from '../lib/SaveStream';
+// import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
+// import elasticsearch from 'elasticsearch';
+// import connectionClass from 'http-aws-es';
 
 export const handler = (event, context, callback) => {
-  const { API, INDEX } = process.env;
-  const type = `log`;
+  // const { API, INDEX } = process.env;
 
   /*
    * Some checks here before going any further
@@ -30,81 +24,9 @@ export const handler = (event, context, callback) => {
    * Extract information from the event
    */
 
-  // Extract S3 record
-  const s3record = JSON.parse(snsRecord.Sns.Message).Records[0];
+  console.log(snsRecord);
 
-  // s3 client instantiation
-  const s3 = new AWS.S3();
-
-  // elasticsearch client configuration
-  const options = {
-    host: `https://${API}`,
-    apiVersion: '5.5',
-    connectionClass,
-    index: INDEX,
-  };
-
-  // elasticsearch mapping overrides/corrections
-  // the rest of the fields are dynamically discovered fine for now
-  const body = {
-    log: {
-      properties: {},
-    },
-  };
-
-  // elasticsearch client instantiation
-  const client = elasticsearch.Client(options);
-
-  return client.indices
-    .exists({ index: INDEX })
-    .then(exists => {
-      if (!exists) {
-        return client.indices.create({ index: INDEX });
-      }
-      return exists;
-    })
-    .then(() => client.indices.getMapping({ index: INDEX, type }))
-    .catch(() => client.indices.putMapping({ index: INDEX, type, body }))
-    .then(() =>
-      s3
-        .headObject({
-          Bucket: s3record.s3.bucket.name,
-          Key: s3record.s3.object.key,
-        })
-        .promise()
-        .then(data => {
-          const saveStream = new SaveStream({
-            objectMode: true,
-            client,
-            index: INDEX,
-          });
-
-          return s3
-            .getObject({
-              Bucket: s3record.s3.bucket.name,
-              Key: s3record.s3.object.key,
-            })
-            .createReadStream()
-            .pipe(split2(JSON.parse))
-            .pipe(
-              through2.obj((chunk, enc, cb) => {
-                // Enhance item to save
-                const item = Object.assign(
-                  {
-                    computed_key: s3record.s3.object.key,
-                    producer_id: s3record.userIdentity.principalId,
-                    last_modified: data.LastModified.toISOString(), // ISO-8601 date
-                  },
-                  chunk
-                );
-
-                return cb(null, item);
-              })
-            )
-            .pipe(saveStream);
-        })
-    )
-    .catch(err => callback(err));
+  return callback(null, 'ok');
 };
 
 export default handler;

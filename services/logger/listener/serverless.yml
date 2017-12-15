@@ -37,7 +37,7 @@ functions:
     memorySize: 256
     environment:
       API:
-        Fn::ImportValue: ${self:provider.stage}:elasticsearch:ServiceEndpoint
+        Fn::ImportValue: ${self:provider.stage}:logger-elasticsearch:ServiceEndpoint
       INDEX: ${self:custom.index}
     events:
       - sns:
@@ -49,15 +49,15 @@ functions:
                 - Ref: "AWS::Region"
                 - ":"
                 - Ref: "AWS::AccountId"
-                - ":${self:provider.stage}-log"
-          topicName: ${self:provider.stage}-log
+                - ":${self:provider.stage}-onLogEmitted"
+          topicName: ${self:provider.stage}-onLogEmitted
 
 resources:
   Resources:
     LogTopic:
       Type: AWS::SNS::Topic
       Properties:
-        TopicName: ${self:provider.stage}-log
+        TopicName: ${self:provider.stage}-onLogEmitted
     LogTopicPolicy:
       Type: AWS::SNS::TopicPolicy
       Properties:
