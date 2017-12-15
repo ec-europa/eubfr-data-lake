@@ -34,7 +34,7 @@ provider:
       Resource: "arn:aws:es:${self:provider.region}:*:domain/*"
 
 functions:
-  onObjectCreated:
+  onIndexChanged:
     # Changes API not ready yet on elasticsearch part
     # https://github.com/elastic/elasticsearch/issues/1242
     # That's why we need to hook into AWS events for now

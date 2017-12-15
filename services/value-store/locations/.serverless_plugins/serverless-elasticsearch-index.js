@@ -10,6 +10,7 @@ const awsConfigCredentials = require('serverless/lib/plugins/aws/configCredentia
 const elasticsearch = require('elasticsearch');
 const connectionClass = require('http-aws-es');
 const elasticsearchOutput = require('../../elasticsearch/.serverless/stack-output.json');
+const config = require('../../../../config.json');
 
 // elasticsearch mapping https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html
 const LocationMapping = require('../src/mappings/location');
@@ -53,7 +54,7 @@ class CreateElasticIndexDeploy {
       awsConfig: new AWS.Config({
         accessKeyId,
         secretAccessKey,
-        region: `eu-central-1`,
+        region: config.region,
       }),
     };
 
