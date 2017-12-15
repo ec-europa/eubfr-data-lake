@@ -54,3 +54,7 @@ cd ../../../../value-store/elasticsearch
 # Deploy value store - projects' functions
 cd ../projects
 ./node_modules/.bin/serverless deploy -v
+
+# Deploy value store - locations for a second index on top of projects
+cd ../locations
+./node_modules/.bin/serverless deploy -v

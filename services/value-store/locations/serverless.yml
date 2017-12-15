@@ -1,0 +1,66 @@
+service: value-store-locations
+
+plugins:
+  - serverless-elasticsearch-index
+  - serverless-stack-output
+  - serverless-webpack
+
+custom:
+  slsEsIndex:
+    esIndex: locations
+    esIndexType: location
+  webpackIncludeModules: true
+  eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
+  output:
+    file: .serverless/stack-output.json
+
+package:
+  individually: true
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  timeout: 300
+  stage: ${opt:stage, file(../../../config.json):stage, 'dev'}
+  region: ${opt:region, file(../../../config.json):region, 'eu-central-1'}
+  deploymentBucket:
+    name: eubfr-${self:custom.eubfrEnvironment}-deploy
+  stackTags:
+    ENV: ${self:custom.eubfrEnvironment}
+  iamRoleStatements:
+    # http://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-aws-integrations.html?shortFooter=true#es-aws-integrations-s3-lambda-es-authorizations
+    - Effect: "Allow"
+      Action: "es:*"
+      Resource: "arn:aws:es:${self:provider.region}:*:domain/*"
+
+functions:
+  onIndexChanged:
+    # Changes API not ready yet on elasticsearch part
+    # https://github.com/elastic/elasticsearch/issues/1242
+    # That's why we need to hook into AWS events for now
+    handler: src/events/onIndexChanged.handler
+    name: ${self:provider.stage}-${self:service}-onIndexChanged
+    environment:
+      API:
+        Fn::ImportValue: ${self:provider.stage}:elasticsearch:ServiceEndpoint
+    events:
+      - sns:
+          arn:
+            Fn::Join:
+            - ''
+            - - 'arn:aws:sns:'
+              - Ref: AWS::Region
+              - ":"
+              - Ref: AWS::AccountId
+              - ":${self:provider.stage}-harmonized-object-removed"
+          topicName: "${self:provider.stage}-harmonized-object-removed"
+      - sns:
+          arn:
+            Fn::Join:
+            - ''
+            - - 'arn:aws:sns:'
+              - Ref: AWS::Region
+              - ":"
+              - Ref: AWS::AccountId
+              - ":${self:provider.stage}-harmonized-object-created"
+          topicName: "${self:provider.stage}-harmonized-object-created"
