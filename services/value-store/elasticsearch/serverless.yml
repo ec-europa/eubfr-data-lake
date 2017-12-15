@@ -26,7 +26,7 @@ resources:
       Type: AWS::Elasticsearch::Domain
       Properties:
         DomainName: ${self:custom.ES_DOMAIN}
-        ElasticsearchVersion: 6.0
+        ElasticsearchVersion: '6.0'
         EBSOptions:
           EBSEnabled: true
           VolumeType: gp2
