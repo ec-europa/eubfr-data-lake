@@ -1,21 +1,28 @@
 // @flow
 
-// Project model is discussed in EUBFR-4 EUBFR-5 and EUBFR-70
+// eslint-disable-next-line
+import type {
+  Point2D,
+  MultiPoint2D,
+  LineString2D,
+  MultiLineString2D,
+  Polygon2D,
+  MultiPolygon2D,
+} from 'flow-geojson';
 
-// prettier-ignore line length
-// prettier-ignore
-type NestedCoordinates<Coordinates> = Array<Coordinates | NestedCoordinates<Coordinates>>;
+// Project model is discussed in EUBFR-4 EUBFR-5 and EUBFR-70
 
 type Result = {
   result: string,
 };
 
-type Coordinates = [number, number] | [number, number, number];
-
-type GeoJSON = {
-  type: string,
-  coordinates: NestedCoordinates<Coordinates>,
-};
+type GeoJSON =
+  | Point2D
+  | MultiPoint2D
+  | LineString2D
+  | MultiLineString2D
+  | Polygon2D
+  | MultiPolygon2D;
 
 type Location = {
   country_name?: string,

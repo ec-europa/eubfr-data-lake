@@ -3558,6 +3558,10 @@ flow-bin@0.60.1:
   version "0.60.1"
   resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.60.1.tgz#0f4fa7b49be2a916f18cd946fc4a51e32ffe4b48"
 
+flow-geojson@2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/flow-geojson/-/flow-geojson-2.0.2.tgz#38491931eae9461193c9fb858aef8252d06a85cc"
+
 for-in@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/for-in/-/for-in-1.0.2.tgz#81068d295a8142ec0ac726c6e2200c30fb6d5e80"
