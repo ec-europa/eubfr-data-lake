@@ -6,7 +6,7 @@
     "build": "npm run prepare && react-scripts build && mv build client/dist",
     "deploy": "sls client deploy",
     "prepare":
-      "mkdir -p ./src/meta && ln -f ../server/.serverless/stack-output.json ./src/meta/server.json && ln -f ../../../services/value-store/elasticsearch/.serverless/stack-output.json ./src/meta/projects.json",
+      "mkdir -p ./src/meta && ln -f ../server/.serverless/stack-output.json ./src/meta/server.json && ln -f ../../../services/value-store/elasticsearch/.serverless/stack-output.json ./src/meta/projects.json && ln -f ../../../services/logger/elasticsearch/.serverless/stack-output.json ./src/meta/logs.json",
     "release": "npm run build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"

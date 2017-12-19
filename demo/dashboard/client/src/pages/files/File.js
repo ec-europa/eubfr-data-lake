@@ -6,12 +6,14 @@ import Spinner from '../../components/Spinner';
 import FormUpload from '../../components/FormUpload';
 import demoServer from '../../meta/server.json'; // eslint-disable-line import/no-unresolved
 import projectsApi from '../../meta/projects.json'; // eslint-disable-line import/no-unresolved
+import logsApi from '../../meta/logs.json'; // eslint-disable-line import/no-unresolved
 import handleErrors from '../../lib/handleErrors';
 
 import './File.css';
 
 const demoServerEndpoint = `${demoServer.ServiceEndpoint}/demo`;
 const projectsApiEndpoint = `https://${projectsApi.ServiceEndpoint}`;
+const logsApiEndpoint = `https://${logsApi.ServiceEndpoint}`;
 
 const getIcon = status => {
   if (status === 'parsed')
@@ -40,6 +42,7 @@ class File extends React.Component {
     this.generateLink = this.generateLink.bind(this);
     this.getFileMeta = this.getFileMeta.bind(this);
     this.loadFile = this.loadFile.bind(this);
+    this.loadLogs = this.loadLogs.bind(this);
     this.loadProjects = this.loadProjects.bind(this);
     this.setProjects = this.setProjects.bind(this);
     this.setEmptyProjects = this.setEmptyProjects.bind(this);
@@ -51,7 +54,14 @@ class File extends React.Component {
       apiVersion: '5.5',
       log: 'warning',
     });
+
+    this.logClient = elasticsearch.Client({
+      host: logsApiEndpoint,
+      apiVersion: '5.5',
+      log: 'warning',
+    });
     this.loadFile();
+    this.loadLogs();
     this.loadProjects();
   }
 
@@ -77,6 +87,47 @@ class File extends React.Component {
                       projectsCount: data.hits.total,
                     })
                   )
+                  .catch(error => {
+                    this.setEmptyProjects();
+                    throw Error(`An error occured: ${error.message}`);
+                  })
+              : this.setEmptyProjects()
+        )
+        .catch(() => {
+          this.setEmptyProjects();
+        });
+  }
+
+  setLogs() {
+    return () =>
+      this.logClient.indices
+        .exists({
+          index: 'logs',
+        })
+        .then(
+          exists =>
+            exists
+              ? this.logClient
+                  .search({
+                    index: 'logs',
+                    type: 'log',
+                    body: {
+                      query: {
+                        term: {
+                          log: true,
+                        },
+                      },
+                    },
+                    // q: 'log:true',
+                  })
+                  .then(data => {
+                    console.log(data);
+                    this.setState({
+                      logsLoading: false,
+                      // relatedProjects: data.hits.hits,
+                      // projectsCount: data.hits.total,
+                    });
+                  })
                   .catch(error => {
                     this.setEmptyProjects();
                     throw Error(`An error occured: ${error.message}`);
@@ -126,6 +177,14 @@ class File extends React.Component {
     const computedKey = decodeURIComponent(match.params.id);
 
     this.setState({ projectsLoading: true }, this.setProjects(computedKey));
+  }
+
+  // Load related logs
+  loadLogs() {
+    const { match } = this.props;
+    const computedKey = decodeURIComponent(match.params.id);
+
+    this.setState({ logsLoading: true }, this.setLogs(computedKey));
   }
 
   setEmptyProjects() {
