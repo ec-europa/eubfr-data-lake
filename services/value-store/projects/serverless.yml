@@ -25,7 +25,7 @@ provider:
   stackTags:
     ENV: ${self:custom.eubfrEnvironment}
   iamRoleStatements:
-    # https://goo.gl/U21zxP
+    # http://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-aws-integrations.html?shortFooter=true#es-aws-integrations-s3-lambda-es-authorizations
     - Effect: "Allow"
       Action: "es:*"
       Resource: "arn:aws:es:${self:provider.region}:*:domain/*"

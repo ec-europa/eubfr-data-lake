@@ -61,9 +61,11 @@ export default (record: Object): Project => {
       country_name: null,
       country_code: country,
       location: {
-        // elasticsearch specific structure for geo_point https://goo.gl/nbi2Yp
-        lat: (Array.isArray(latArray) && latArray[index]) || 0,
-        lon: (Array.isArray(longArray) && longArray[index]) || 0,
+        type: 'Point',
+        coordinates: [
+          parseFloat(Array.isArray(longArray) && longArray[index]) || 0,
+          parseFloat(Array.isArray(latArray) && latArray[index]) || 0,
+        ],
       },
     }));
 
