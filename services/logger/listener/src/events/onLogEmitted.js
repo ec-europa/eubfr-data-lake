@@ -23,8 +23,8 @@ export const handler = (event, context, callback) => {
    * Extract information from the event
    */
   try {
-    const message = JSON.parse(snsRecord.Sns.Message);
-    console.log(message);
+    const snsMessage = JSON.parse(snsRecord.Sns.Message);
+    console.log(snsMessage);
 
     // elasticsearch client configuration
     const options = {
@@ -34,10 +34,26 @@ export const handler = (event, context, callback) => {
       index: INDEX,
     };
 
-    const body = {
-      log: {
-        properties: {},
+    const mappings = {
+      // mappings: {
+      // "file" logs
+      // file: {
+      properties: {
+        emitter: { type: 'keyword' },
+        level: { type: 'keyword' },
+        time: { type: 'date' },
+        message: {
+          type: 'nested',
+          properties: {
+            computed_key: { type: 'keyword' },
+            status_message: { type: 'text' },
+          },
+        },
       },
+      // },
+      // other logs
+      // ...
+      // },
     };
 
     // elasticsearch client instantiation
@@ -51,16 +67,27 @@ export const handler = (event, context, callback) => {
         }
         return exists;
       })
-      .then(() => client.indices.getMapping({ index: INDEX, type: 'log' }))
+      .then(() =>
+        client.indices.getMapping({ index: INDEX, type: snsMessage.type })
+      )
       .catch(() =>
-        client.indices.putMapping({ index: INDEX, type: 'log', body })
+        client.indices.putMapping({
+          index: INDEX,
+          type: snsMessage.type,
+          body: mappings,
+        })
       )
       .then(() => {
         client.index(
           {
             index: INDEX,
-            type: 'log',
-            body: message,
+            type: snsMessage.type,
+            body: {
+              emitter: snsMessage.emitter,
+              level: snsMessage.level,
+              time: snsMessage.time,
+              message: snsMessage.message,
+            },
           },
           err => {
             if (err) return callback(err);
