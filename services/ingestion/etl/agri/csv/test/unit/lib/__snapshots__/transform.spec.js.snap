@@ -124,8 +124,11 @@ Object {
       "address": "",
       "country_code": "AT",
       "location": Object {
-        "lat": "48.211312000000",
-        "lon": "16.367315000000",
+        "coordinates": Array [
+          16.367315,
+          48.211312,
+        ],
+        "type": "Point",
       },
       "nuts2": null,
       "postal_code": "",
@@ -136,8 +139,11 @@ Object {
       "address": "",
       "country_code": "HR",
       "location": Object {
-        "lat": "45.803508000000",
-        "lon": "16.017459000000",
+        "coordinates": Array [
+          16.017459,
+          45.803508,
+        ],
+        "type": "Point",
       },
       "nuts2": null,
       "postal_code": "",
@@ -148,8 +154,11 @@ Object {
       "address": "",
       "country_code": "DE",
       "location": Object {
-        "lat": "49.449922000000",
-        "lon": "11.103470000000",
+        "coordinates": Array [
+          11.10347,
+          49.449922,
+        ],
+        "type": "Point",
       },
       "nuts2": null,
       "postal_code": "",
@@ -160,8 +169,11 @@ Object {
       "address": "",
       "country_code": "SK",
       "location": Object {
-        "lat": "48.143047000000",
-        "lon": "17.124260000000",
+        "coordinates": Array [
+          17.12426,
+          48.143047,
+        ],
+        "type": "Point",
       },
       "nuts2": null,
       "postal_code": "",
@@ -172,8 +184,11 @@ Object {
       "address": "",
       "country_code": "SI",
       "location": Object {
-        "lat": "46.048183000000",
-        "lon": "14.501456000000",
+        "coordinates": Array [
+          14.501456,
+          46.048183,
+        ],
+        "type": "Point",
       },
       "nuts2": null,
       "postal_code": "",
@@ -209,8 +224,11 @@ Object {
   "address": "",
   "country_code": "AT",
   "location": Object {
-    "lat": "48.211312000000",
-    "lon": "16.367315000000",
+    "coordinates": Array [
+      16.367315,
+      48.211312,
+    ],
+    "type": "Point",
   },
   "nuts2": null,
   "postal_code": "",
@@ -263,8 +281,11 @@ Object {
       "address": undefined,
       "country_code": "",
       "location": Object {
-        "lat": "42.73806663",
-        "lon": "23.40014509",
+        "coordinates": Array [
+          23.40014509,
+          42.73806663,
+        ],
+        "type": "Point",
       },
       "nuts2": null,
       "postal_code": undefined,

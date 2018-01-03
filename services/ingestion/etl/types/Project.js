@@ -1,20 +1,35 @@
 // @flow
 
+// eslint-disable-next-line
+import type {
+  Point2D,
+  MultiPoint2D,
+  LineString2D,
+  MultiLineString2D,
+  Polygon2D,
+  MultiPolygon2D,
+} from 'flow-geojson';
+
 // Project model is discussed in EUBFR-4 EUBFR-5 and EUBFR-70
 
 type Result = {
   result: string,
 };
 
-type Geolocation = {
-  lat: string,
-  lon: string,
-};
+type GeoJSON =
+  | Point2D
+  | MultiPoint2D
+  | LineString2D
+  | MultiLineString2D
+  | Polygon2D
+  | MultiPolygon2D;
 
 type Location = {
   country_name?: string,
   country_code: string,
-  geolocation: Geolocation,
+  region?: string,
+  nuts2?: string,
+  location: GeoJSON,
 };
 
 type Timeframe = {

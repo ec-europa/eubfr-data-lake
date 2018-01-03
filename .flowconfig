@@ -1,6 +1,6 @@
 [ignore]
 .*/__tests__/.*
-.*/node_modules/.*
+.*/node_modules/config-chain/.*
 .*\.ignore\.js
 
 [include]
