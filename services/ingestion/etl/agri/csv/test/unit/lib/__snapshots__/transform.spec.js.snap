@@ -121,7 +121,7 @@ Object {
   "project_id": "8155",
   "project_locations": Array [
     Object {
-      "address": "",
+      "address": null,
       "country_code": "AT",
       "location": Object {
         "coordinates": Array [
@@ -131,12 +131,12 @@ Object {
         "type": "Point",
       },
       "nuts2": null,
-      "postal_code": "",
+      "postal_code": null,
       "region": null,
-      "town": "",
+      "town": null,
     },
     Object {
-      "address": "",
+      "address": null,
       "country_code": "HR",
       "location": Object {
         "coordinates": Array [
@@ -146,12 +146,12 @@ Object {
         "type": "Point",
       },
       "nuts2": null,
-      "postal_code": "",
+      "postal_code": null,
       "region": null,
-      "town": "",
+      "town": null,
     },
     Object {
-      "address": "",
+      "address": null,
       "country_code": "DE",
       "location": Object {
         "coordinates": Array [
@@ -161,12 +161,12 @@ Object {
         "type": "Point",
       },
       "nuts2": null,
-      "postal_code": "",
+      "postal_code": null,
       "region": null,
-      "town": "",
+      "town": null,
     },
     Object {
-      "address": "",
+      "address": null,
       "country_code": "SK",
       "location": Object {
         "coordinates": Array [
@@ -176,12 +176,12 @@ Object {
         "type": "Point",
       },
       "nuts2": null,
-      "postal_code": "",
+      "postal_code": null,
       "region": null,
-      "town": "",
+      "town": null,
     },
     Object {
-      "address": "",
+      "address": null,
       "country_code": "SI",
       "location": Object {
         "coordinates": Array [
@@ -191,9 +191,9 @@ Object {
         "type": "Point",
       },
       "nuts2": null,
-      "postal_code": "",
+      "postal_code": null,
       "region": null,
-      "town": "",
+      "town": null,
     },
   ],
   "project_website": "http://www.cegc-project.eu/",
@@ -221,7 +221,7 @@ Object {
 
 exports[`DG BUDG CSV transformer Project location information is correctly mapped 1`] = `
 Object {
-  "address": "",
+  "address": null,
   "country_code": "AT",
   "location": Object {
     "coordinates": Array [
@@ -231,9 +231,9 @@ Object {
     "type": "Point",
   },
   "nuts2": null,
-  "postal_code": "",
+  "postal_code": null,
   "region": null,
-  "town": "",
+  "town": null,
 }
 `;
 
@@ -259,8 +259,8 @@ Object {
       "website": null,
     },
   ],
-  "cover_image": undefined,
-  "description": undefined,
+  "cover_image": null,
+  "description": null,
   "ec_priorities": Array [
     "",
   ],
@@ -274,11 +274,11 @@ Object {
       "website": null,
     },
   ],
-  "programme_name": undefined,
-  "project_id": undefined,
+  "programme_name": null,
+  "project_id": null,
   "project_locations": Array [
     Object {
-      "address": undefined,
+      "address": null,
       "country_code": "",
       "location": Object {
         "coordinates": Array [
@@ -288,16 +288,16 @@ Object {
         "type": "Point",
       },
       "nuts2": null,
-      "postal_code": undefined,
+      "postal_code": null,
       "region": null,
-      "town": undefined,
+      "town": null,
     },
   ],
-  "project_website": undefined,
+  "project_website": null,
   "related_links": Array [],
   "results": Object {
     "available": null,
-    "result": undefined,
+    "result": null,
   },
   "timeframe": Object {
     "from": "2013-12-31T23:00:00.000Z",

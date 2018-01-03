@@ -1,7 +1,7 @@
 // @flow
 
 /*
- * Transform message (BUDG CSV)
+ * Transform message (AGRI CSV)
  */
 
 import type { Project } from '../../../../types/Project';
@@ -61,9 +61,9 @@ export default (record: Object): Project => {
       country_code: country,
       region: null,
       nuts2: null,
-      address: record['Project address(es)'],
-      postal_code: record['Project postal code(s)'],
-      town: record['Project town(s)'],
+      address: record['Project address(es)'] || null,
+      postal_code: record['Project postal code(s)'] || null,
+      town: record['Project town(s)'] || null,
       location: {
         type: 'Point',
         coordinates: [
@@ -98,18 +98,18 @@ export default (record: Object): Project => {
   // Preprocess results
   const resultObject = {
     available: null,
-    result: record.Results,
+    result: record.Results || null,
   };
 
   // Map the fields
   return {
-    project_id: record.Nid,
-    title: record.Name,
-    cover_image: record.Visual,
-    programme_name: record['Programme name'],
-    description: record['Project description'],
+    project_id: record.Nid || null,
+    title: record.Name || null,
+    cover_image: record.Visual || null,
+    programme_name: record['Programme name'] || null,
+    description: record['Project description'] || null,
     results: resultObject,
-    ec_priorities: record['EC’s priorities'].split(';'),
+    ec_priorities: record['EC’s priorities'].split(';') || null,
     coordinators: coordArray,
     budget: budgetObject,
     partners: partnerArray,
@@ -121,7 +121,7 @@ export default (record: Object): Project => {
       to:
         timeframeTo && new Date(parseInt(timeframeTo, 10) * 1000).toISOString(),
     },
-    project_website: record['Project webpage'],
+    project_website: record['Project webpage'] || null,
     related_links: links,
   };
 };
