@@ -1,11 +1,11 @@
-service: elasticsearch
+service: value-store-elasticsearch
 
 plugins:
   - serverless-stack-output
 
 custom:
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
-  ES_DOMAIN: ${self:provider.stage}-projects
+  projectsDomain: ${self:custom.eubfrEnvironment}-projects
   output:
     file: .serverless/stack-output.json
 
@@ -24,8 +24,10 @@ resources:
   Resources:
     ProjectsElasticSearchDomain:
       Type: AWS::Elasticsearch::Domain
+      # Don't delete the elastic search instance when the CF stack is deleted
+      DeletionPolicy: Retain
       Properties:
-        DomainName: ${self:custom.ES_DOMAIN}
+        DomainName: ${self:custom.projectsDomain}
         ElasticsearchVersion: 5.5
         EBSOptions:
           EBSEnabled: true
@@ -46,7 +48,7 @@ resources:
              - "es:ESHttpHead"
              - "es:ESHttpGet"
              - "es:ESHttpPost"
-            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.ES_DOMAIN}/*"
+            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.projectsDomain}/*"
           # Lambda can take actions on the ES domain
           - Effect: Allow
             Principal:
@@ -61,7 +63,7 @@ resources:
               IpAddress:
                 aws:SourceIp:
                 - 147.67.241.226
-            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.ES_DOMAIN}/*"
+            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.projectsDomain}/*"
 
   Outputs:
     ServiceEndpoint:

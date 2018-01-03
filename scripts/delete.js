@@ -6,6 +6,7 @@ require(`./utils/protectStage`)();
 const deleteServerlessService = require('./utils/deleteServerlessService');
 
 const services = [
+  // Serivces
   `storage-objects`,
   `ingestion-etl-results`,
   `storage-signed-uploads`,
@@ -17,8 +18,9 @@ const services = [
   `ingestion-etl-agri-csv`,
   `ingestion-etl-budg-xls`,
   `ingestion-etl-inforegio-json`,
-  `elasticsearch`,
   `value-store-projects`,
+  // Resources
+  `resources-elasticsearch`,
 ];
 
 services.forEach(deleteServerlessService);
