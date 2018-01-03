@@ -4,6 +4,8 @@
 | PROJECTID              | true     | Integer |       | -> | project_id | true     | String |       | ( ) |                |               |                  |
 | SID                    |          | Integer |       | -> |            |          |        |       | ( ) |                |               |                  |
 | Project_type           |          | Array   |       | -> | type       |          | Array       |       | ( ) | true             |               |                  |
+| Project_Timeframe_start_date                 |          |         |       | -> | timeframe.from           |          |        |       | ( ) | true              |               |                  |
+| Project_Timeframe_end_date                 |          |         |       | -> | timeframe.to           |          |        |       | ( ) | true              |               |                  |
 | Period                 |          |         |       | -> | period           |          |        |       | ( ) | true              |               |                  |
 | Date_published         |          |         |       | -> |            |          |        |       | ( ) |                |               |                  |
 | Project_name           | true     | String  |       | -> | title      | true     | String |       | ( ) |                |               |                  |
@@ -13,5 +15,5 @@
 | Themes                 |          |         |       | -> |  themes          |    Array      |        |       | ( ) |                |               |                  |
 | EU_Budget_contribution |          |         |       | -> |  budget.eu_contrib          |          |        |       | ( ) |                |               |                  |
 | Total_project_budget   |          |         |       | -> |  budget.total_cost          |          |        |       | ( ) |                |               |                  |
-| quote                  |          |         |       | -> |   description         |          |        |       | ( ) |                |               |                  |
-| URL                    |          |         |       | -> |            |          |        |       | ( ) |                |               |                  |
+| quote                  |          |         |       | -> |  description         |          |        |       | ( ) |                |               |                  |
+| URL                    |          |         |       | -> |  project_website          |          |        |       | ( ) |                |               |                  |
