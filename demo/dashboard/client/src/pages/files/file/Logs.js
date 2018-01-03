@@ -64,6 +64,7 @@ class Logs extends React.Component {
                           },
                         },
                       },
+                      sort: [{ time: { order: 'desc' } }],
                     },
                   })
                   .then(data => {

@@ -2,6 +2,8 @@ import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependenc
 import parse from 'csv-parse';
 import transform from 'stream-transform';
 
+import Logger from '../../../../../../logger/listener/src/lib/Logger';
+
 // Import constants
 import { STATUS } from '../../../../../../storage/meta-index/src/events/onStatusReported';
 
@@ -25,6 +27,11 @@ export const handler = (event, context, callback) => {
   const endpointArn = `arn:aws:sns:${REGION}:${accountId}:${STAGE}-MetaStatusReported`;
 
   const sns = new AWS.SNS();
+  const logger = new Logger({
+    sns,
+    targetArn: `arn:aws:sns:${REGION}:${accountId}:${STAGE}-onLogEmitted`,
+    emitter: context.invokedFunctionArn,
+  });
 
   const onError = e =>
     sns.publish(
@@ -36,10 +43,18 @@ export const handler = (event, context, callback) => {
         },
         endpointArn
       ),
-      snsErr => {
+      async snsErr => {
         if (snsErr) {
           return callback(snsErr);
         }
+
+        await logger.error({
+          type: 'file',
+          message: {
+            computed_key: snsMessage.object.key,
+            status_message: JSON.stringify(e),
+          },
+        });
 
         return callback(e);
       }
@@ -68,8 +83,8 @@ export const handler = (event, context, callback) => {
   );
 
   /*
-       * Start the hard work
-       */
+   * Start the hard work
+   */
 
   return s3
     .getObject({
@@ -92,7 +107,17 @@ export const handler = (event, context, callback) => {
         callback,
       })
     )
-    .on('error', e => onError(`Error on upload: ${e.message}`));
+    .on('error', e => onError(`Error on upload: ${e.message}`))
+    .on('end', async () =>
+      logger.info({
+        type: 'file',
+        message: {
+          computed_key: snsMessage.object.key,
+          status_message:
+            'CSV parsed successfully. Results will be uploaded to ElasticSearch soon...',
+        },
+      })
+    );
 };
 
 export default handler;

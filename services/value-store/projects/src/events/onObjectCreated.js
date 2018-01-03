@@ -10,8 +10,10 @@ import SaveStream from '../lib/SaveStream';
 // elasticsearch mapping https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html
 import ProjectMapping from '../mappings/project';
 
-export const handler = (event, context, callback) => {
-  const { API, INDEX } = process.env;
+import Logger from '../../../../logger/listener/src/lib/Logger';
+
+export const handler = async (event, context, callback) => {
+  const { API, INDEX, REGION, STAGE } = process.env;
   const type = `project`;
 
   /*
@@ -29,6 +31,15 @@ export const handler = (event, context, callback) => {
     return callback('Bad record');
   }
 
+  // Get Account ID from lambda function arn in the context
+  const accountId = context.invokedFunctionArn.split(':')[4];
+  const sns = new AWS.SNS();
+  const logger = new Logger({
+    sns,
+    targetArn: `arn:aws:sns:${REGION}:${accountId}:${STAGE}-onLogEmitted`,
+    emitter: context.invokedFunctionArn,
+  });
+
   /*
    * Extract information from the event
    */
@@ -36,81 +47,134 @@ export const handler = (event, context, callback) => {
   // Extract S3 record
   const s3record = JSON.parse(snsRecord.Sns.Message).Records[0];
 
-  // s3 client instantiation
-  const s3 = new AWS.S3();
+  // Get original computed key (without '.ndjson')
+  const originalComputedKey = s3record.s3.object.key.replace('.ndjson', '');
 
-  // elasticsearch client configuration
-  const options = {
-    host: `https://${API}`,
-    apiVersion: '5.5',
-    connectionClass,
-    index: INDEX,
-  };
+  try {
+    await logger.info({
+      message: {
+        computed_key: originalComputedKey,
+        status_message: 'Preparing the upload to ElasticSearch...',
+      },
+    });
 
-  // elasticsearch client instantiation
-  const client = elasticsearch.Client(options);
+    // s3 client instantiation
+    const s3 = new AWS.S3();
 
-  return client.indices
-    .exists({ index: INDEX })
-    .then(exists => {
-      if (!exists) {
-        return client.indices.create({ index: INDEX });
-      }
-      return exists;
-    })
-    .then(() => client.indices.getMapping({ index: INDEX, type }))
-    .catch(() =>
-      client.indices.putMapping({ index: INDEX, type, body: ProjectMapping })
-    )
-    .then(() =>
-      s3
-        .headObject({
-          Bucket: s3record.s3.bucket.name,
-          Key: s3record.s3.object.key,
-        })
-        .promise()
-        .then(data => {
-          deleteProjects({
-            client,
-            index: INDEX,
-            key: s3record.s3.object.key,
-          });
+    // elasticsearch client configuration
+    const options = {
+      host: `https://${API}`,
+      apiVersion: '5.5',
+      connectionClass,
+      index: INDEX,
+    };
 
-          return data;
-        })
-        .then(data => {
-          const saveStream = new SaveStream({
-            objectMode: true,
-            client,
-            index: INDEX,
-          });
+    const onPipeError = async e =>
+      logger.error({
+        message: {
+          computed_key: originalComputedKey,
+          status_message: e.message,
+        },
+      });
 
-          return s3
-            .getObject({
-              Bucket: s3record.s3.bucket.name,
-              Key: s3record.s3.object.key,
-            })
-            .createReadStream()
-            .pipe(split2(JSON.parse))
-            .pipe(
-              through2.obj((chunk, enc, cb) => {
-                // Enhance item to save
-                const item = Object.assign(
-                  {
-                    computed_key: s3record.s3.object.key,
-                    producer_id: s3record.userIdentity.principalId,
-                    last_modified: data.LastModified.toISOString(), // ISO-8601 date
-                  },
-                  chunk
-                );
+    // elasticsearch client instantiation
+    const client = elasticsearch.Client(options);
 
-                return cb(null, item);
+    return client.indices
+      .exists({ index: INDEX })
+      .then(exists => {
+        if (!exists) {
+          return client.indices.create({ index: INDEX });
+        }
+        return exists;
+      })
+      .then(() => client.indices.getMapping({ index: INDEX, type }))
+      .catch(() =>
+        client.indices.putMapping({ index: INDEX, type, body: ProjectMapping })
+      )
+      .then(() =>
+        s3
+          .headObject({
+            Bucket: s3record.s3.bucket.name,
+            Key: s3record.s3.object.key,
+          })
+          .promise()
+          .then(data => {
+            deleteProjects({
+              client,
+              index: INDEX,
+              key: s3record.s3.object.key,
+            });
+
+            return data;
+          })
+          .then(async data => {
+            const saveStream = new SaveStream({
+              objectMode: true,
+              client,
+              index: INDEX,
+            });
+
+            await logger.info({
+              message: {
+                computed_key: originalComputedKey,
+                status_message: 'Start uploading to ElasticSearch',
+              },
+            });
+
+            return s3
+              .getObject({
+                Bucket: s3record.s3.bucket.name,
+                Key: s3record.s3.object.key,
               })
-            )
-            .pipe(saveStream);
-        })
-    )
-    .catch(err => callback(err));
+              .createReadStream()
+              .pipe(split2(JSON.parse))
+              .on('error', onPipeError)
+              .pipe(
+                through2.obj((chunk, enc, cb) => {
+                  // Enhance item to save
+                  const item = Object.assign(
+                    {
+                      computed_key: s3record.s3.object.key,
+                      producer_id: s3record.userIdentity.principalId,
+                      last_modified: data.LastModified.toISOString(), // ISO-8601 date
+                    },
+                    chunk
+                  );
+
+                  return cb(null, item);
+                })
+              )
+              .on('error', onPipeError)
+              .pipe(saveStream)
+              .on('error', onPipeError)
+              .on('finish', async () => {
+                await logger.info({
+                  message: {
+                    computed_key: originalComputedKey,
+                    status_message:
+                      'Results uploaded successfully, all went well.',
+                  },
+                });
+
+                return callback(
+                  null,
+                  'Results uploaded successfully, all went well.'
+                );
+              });
+          })
+      )
+      .catch(err => callback(err));
+  } catch (err) {
+    await logger.error({
+      message: {
+        computed_key: originalComputedKey,
+        status_message: err.message,
+      },
+    });
+
+    return callback(err.message);
+  }
 };
 
 export default handler;

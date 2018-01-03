@@ -4,13 +4,17 @@ function Logger({ sns, targetArn, emitter }) {
   this.emitter = emitter;
 }
 
-Logger.prototype.info = function info({ type = 'file', message = '' }) {
+Logger.prototype.log = function log({
+  level = 'info',
+  type = 'file',
+  message = '',
+}) {
   return this.sns
     .publish({
       Message: JSON.stringify({
         default: JSON.stringify({
           emitter: this.emitter,
-          level: 'info',
+          level,
           type,
           time: new Date().toISOString(),
           message,
@@ -20,6 +24,22 @@ Logger.prototype.info = function info({ type = 'file', message = '' }) {
       TargetArn: this.targetArn,
     })
     .promise();
+};
+
+Logger.prototype.info = function info({ type = 'file', message = '' }) {
+  return this.log({
+    level: 'info',
+    type,
+    message,
+  });
+};
+
+Logger.prototype.error = function info({ type = 'file', message = '' }) {
+  return this.log({
+    level: 'error',
+    type,
+    message,
+  });
 };
 
 export default Logger;

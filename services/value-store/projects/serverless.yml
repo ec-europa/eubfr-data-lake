@@ -39,6 +39,8 @@ functions:
       API:
         Fn::ImportValue: ${self:provider.stage}:value-store-elasticsearch:ServiceEndpoint
       INDEX: ${self:custom.index}
+      REGION: ${self:provider.region}
+      STAGE: ${self:provider.stage}
     events:
       - sns:
           arn:
@@ -58,6 +60,8 @@ functions:
       API:
         Fn::ImportValue: ${self:provider.stage}:value-store-elasticsearch:ServiceEndpoint
       INDEX: ${self:custom.index}
+      REGION: ${self:provider.region}
+      STAGE: ${self:provider.stage}
     events:
       - sns:
           arn:
