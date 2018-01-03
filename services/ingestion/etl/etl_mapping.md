@@ -1,12 +1,12 @@
 | Name                         | Required | Type    | Notes | > | Name                             | Required | Type   | Notes | () | Direct mapping | Default value | Additional logic |
 |------------------------------|----------|---------|-------|----|----------------------------------|----------|--------|-------|-----|----------------|---------------|------------------|
 | PROJECTID                    | true     | Integer |       | > | project_id                       | true     | String |       | () |                |               |                  |
-| SID                          |          | Integer |       | > |                                  |          |        |       | () |                |               |                  |
+| SID                          |          | Integer |       |  |                                  |          |        |       | () |                |               |                  |
 | Project_type                 |          | String  |       | > | type                             |          | Array  |       | () | true           |               |                  |
 | Project_Timeframe_start_date |          |         |       | > | timeframe.from                   |          | Date   |       | () | true           |               |                  |
 | Project_Timeframe_end_date   |          |         |       | > | timeframe.to                     |          | Date   |       | () | true           |               |                  |
 | Period                       |          |         |       | > | period                           |          | String |       | () | true           |               |                  |
-| Date_published               |          |         |       | > |                                  |          |        |       | () |                |               |                  |
+| Date_published               |          |         |       |  |                                  |          |        |       | () |                |               |                  |
 | Project_name                 | true     | String  |       | > | title                            | true     | String |       | () |                |               |                  |
 | Project_region               |          |         |       | > | project_locations[].region       |          |        |       | () |                |               |                  |
 | Project_NUTS2_code           |          |         |       | > | project_locations[].nuts2        |          |        |       | () |                |               |                  |
