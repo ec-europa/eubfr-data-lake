@@ -3,15 +3,15 @@
 |------------------------|----------|---------|-------|----|------------|----------|--------|-------|-----|----------------|---------------|------------------|
 | PROJECTID              | true     | Integer |       | -> | project_id | true     | String |       | ( ) |                |               |                  |
 | SID                    |          | Integer |       | -> |            |          |        |       | ( ) |                |               |                  |
-| Project_type           |          |         |       | -> |            |          |        |       | ( ) |                |               |                  |
-| Period                 |          |         |       | -> |            |          |        |       | ( ) |                |               |                  |
+| Project_type           |          | Array   |       | -> | type       |          | Array       |       | ( ) | true             |               |                  |
+| Period                 |          |         |       | -> | period           |          |        |       | ( ) | true              |               |                  |
 | Date_published         |          |         |       | -> |            |          |        |       | ( ) |                |               |                  |
 | Project_name           | true     | String  |       | -> | title      | true     | String |       | ( ) |                |               |                  |
-| Project_region         |          |         |       | -> |            |          |        |       | ( ) |                |               |                  |
-| Project_NUTS2_code     |          |         |       | -> |            |          |        |       | ( ) |                |               |                  |
-| Project_country        |          |         |       | -> |            |          |        |       | ( ) |                |               |                  |
-| Themes                 |          |         |       | -> |            |          |        |       | ( ) |                |               |                  |
-| EU_Budget_contribution |          |         |       | -> |            |          |        |       | ( ) |                |               |                  |
-| Total_project_budget   |          |         |       | -> |            |          |        |       | ( ) |                |               |                  |
-| quote                  |          |         |       | -> |            |          |        |       | ( ) |                |               |                  |
+| Project_region         |          |         |       | -> | project_locations.region           |          |        |       | ( ) |                |               |                  |
+| Project_NUTS2_code     |          |         |       | -> |  project_locations.nuts2          |          |        |       | ( ) |                |               |                  |
+| Project_country        |          |         |       | -> |  project_locations.country_code          |          |        |       | ( ) |                |               |                  |
+| Themes                 |          |         |       | -> |  themes          |    Array      |        |       | ( ) |                |               |                  |
+| EU_Budget_contribution |          |         |       | -> |  budget.eu_contrib          |          |        |       | ( ) |                |               |                  |
+| Total_project_budget   |          |         |       | -> |  budget.total_cost          |          |        |       | ( ) |                |               |                  |
+| quote                  |          |         |       | -> |   description         |          |        |       | ( ) |                |               |                  |
 | URL                    |          |         |       | -> |            |          |        |       | ( ) |                |               |                  |
