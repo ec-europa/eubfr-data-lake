@@ -12,7 +12,7 @@ import { extractMessage, prepareMessage } from '../lib/sns';
 import transformRecord from '../lib/transform';
 import uploadFromStream from '../lib/uploadFromStream';
 
-export const handler = (event, context, callback) => {
+export const handler = async (event, context, callback) => {
   // 1. Validate handler execution
   // check event, context
   const snsMessage = extractMessage(event);
@@ -49,7 +49,6 @@ export const handler = (event, context, callback) => {
         }
 
         await logger.error({
-          type: 'file',
           message: {
             computed_key: snsMessage.object.key,
             status_message: JSON.stringify(e),
@@ -85,6 +84,12 @@ export const handler = (event, context, callback) => {
   /*
    * Start the hard work
    */
+  await logger.info({
+    message: {
+      computed_key: snsMessage.object.key,
+      status_message: 'Start parsing CSV...',
+    },
+  });
 
   return s3
     .getObject({
@@ -110,7 +115,6 @@ export const handler = (event, context, callback) => {
     .on('error', e => onError(`Error on upload: ${e.message}`))
     .on('end', async () =>
       logger.info({
-        type: 'file',
         message: {
           computed_key: snsMessage.object.key,
           status_message:
