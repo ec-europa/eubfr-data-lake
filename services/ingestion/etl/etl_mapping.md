@@ -1,23 +1,23 @@
-| Name                         | Required | Type    | Notes | > | Name                             | Required | Type   | Notes | () | Direct mapping | Default value | Additional logic |
-|------------------------------|----------|---------|-------|----|----------------------------------|----------|--------|-------|-----|----------------|---------------|------------------|
-| PROJECTID                    | true     | Integer |       | > | project_id                       | true     | String |       | () |                |               |                  |
-| SID                          |          | Integer |       |  |                                  |          |        |       | () |                |               |                  |
-| Project_type                 |          | String  |       | > | type                             |          | Array  |       | () | true           |               |                  |
-| Project_Timeframe_start_date |          |         |       | > | timeframe.from                   |          | Date   |       | () | true           |               |                  |
-| Project_Timeframe_end_date   |          |         |       | > | timeframe.to                     |          | Date   |       | () | true           |               |                  |
-| Period                       |          |         |       | > | period                           |          | String |       | () | true           |               |                  |
-| Date_published               |          |         |       |  |                                  |          |        |       | () |                |               |                  |
-| Project_name                 | true     | String  |       | > | title                            | true     | String |       | () |                |               |                  |
-| Project_region               |          |         |       | > | project_locations[].region       |          |        |       | () |                |               |                  |
-| Project_NUTS2_code           |          |         |       | > | project_locations[].nuts2        |          |        |       | () |                |               |                  |
-| Project_country              |          |         |       | > | project_locations[].country_code |          |        |       | () |                |               |                  |
-| Themes                       |          | String  |       | > | themes                           |          | Array  |       | () |                |               |                  |
-| EU_Budget_contribution       |          |         |       | > | budget.eu_contrib                |          |        |       | () |                |               |                  |
-| Total_project_budget         |          |         |       | > | budget.total_cost                |          |        |       | () |                |               |                  |
-| quote                        |          |         |       | > | description                      |          | String |       | ()  |                |               |                  |
-| URL                          |          |         |       | > | project_website                  |          | String |       | ()  |                |               |                  |
-| Beneficiary                  |          |         |       | > | partners[].name                  |          | String |       | ()  |                |               |                  |
-| Beneficiary_address          |          |         |       | > | partners[].address               |          | String |       | ()  |                |               |                  |
-| Beneficiary_Post_Code        |          |         |       | > | partners[].address               |          | String |       | ()  |                |               |                  |
-| Beneficiary_City             |          |         |       | > | partners[].address               |          | String |       | ()  |                |               |                  |
-| Beneficiary_Country          |          |         |       | > | partners[].country               |          | String |       | ()  |                |               |                  |
+| Name                         | Required | Type   | Notes |   | Name                             | Required | Type     | Notes | () | Direct mapping | Default value | Additional logic             |
+|------------------------------|----------|--------|-------|---|----------------------------------|----------|----------|-------|----|----------------|---------------|------------------------------|
+| PROJECTID                    | true     | String |       | > | project_id                       | true     | String   |       | () |                |               |                              |
+| SID                          |          | String |       |   |                                  |          |          |       | () |                |               |                              |
+| Project_type                 |          | String |       | > | type                             |          | String[] |       | () | true           |               |                              |
+| Project_Timeframe_start_date |          | String |       | > | timeframe.from                   |          | Date     |       | () | true           |               |                              |
+| Project_Timeframe_end_date   |          | String |       | > | timeframe.to                     |          | Date     |       | () | true           |               |                              |
+| Period                       |          | String |       | > | period                           |          | String   |       | () | true           |               |                              |
+| Date_published               |          | String |       |   |                                  |          |          |       | () |                |               |                              |
+| Project_name                 | true     | String |       | > | title                            | true     | String   |       | () |                |               |                              |
+| Project_region               |          | String |       | > | project_locations[].region       |          | String   |       | () |                |               |                              |
+| Project_NUTS2_code           |          | String |       | > | project_locations[].nuts2        |          | String   |       | () |                |               |                              |
+| Project_country              |          | String |       | > | project_locations[].country_code |          | String   |       | () |                |               |                              |
+| Themes                       |          | String |       | > | themes                           |          | String[] |       | () |                |               |                              |
+| EU_Budget_contribution       |          | String |       | > | budget.eu_contrib                |          | String   |       | () |                |               | 'EUR 1 500 000' -> '1500000' |
+| Total_project_budget         |          | String |       | > | budget.total_cost                |          | String   |       | () |                |               |                              |
+| quote                        |          | String |       | > | description                      |          | String   |       | () |                |               |                              |
+| URL                          |          | String |       | > | project_website                  |          | String   |       | () |                |               |                              |
+| Beneficiary                  |          | String |       | > | partners[].name                  |          | String   |       | () |                |               |                              |
+| Beneficiary_address          |          | String |       | > | partners[].address               |          | String   |       | () |                |               |                              |
+| Beneficiary_Post_Code        |          | String |       | > | partners[].address               |          | String   |       | () |                |               |                              |
+| Beneficiary_City             |          | String |       | > | partners[].address               |          | String   |       | () |                |               |                              |
+| Beneficiary_Country          |          | String |       | > | partners[].country               |          | String   |       | () |                |               |                              |
