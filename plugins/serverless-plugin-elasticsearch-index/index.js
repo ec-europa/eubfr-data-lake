@@ -9,11 +9,6 @@ const AwsConfigCredentials = require('serverless/lib/plugins/aws/configCredentia
 // all the dependencies to work with elasticsearch out of the serverless framework
 const elasticsearch = require('elasticsearch');
 const connectionClass = require('http-aws-es');
-const elasticsearchOutput = require('../../elasticsearch/.serverless/stack-output.json');
-const config = require('../../../../config.json');
-
-// elasticsearch mapping https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html
-const LocationMapping = require('../src/mappings/location');
 
 class CreateElasticIndexDeploy {
   constructor(serverless, options) {
@@ -39,22 +34,21 @@ class CreateElasticIndexDeploy {
 
     // Setup elasticsearch:
     // get configuration from serverless.yml file
-    const { esIndex, esIndexType } = this.serverless.service.custom.slsEsIndex;
-
-    // get the domain endpoint
-    const { ServiceEndpoint } = elasticsearchOutput;
+    const pluginConfig = this.serverless.service.custom.slsEsIndex;
+    // Get plugin configurations
+    const { region, index, type, domain, mapping } = pluginConfig;
 
     // elasticsearch client configuration
     const esOptions = {
-      index: esIndex,
+      index,
       connectionClass,
       apiVersion: '6.0',
-      host: `https://${ServiceEndpoint}`,
+      host: `https://${domain}`,
       // this is required when out of a lambda function
       awsConfig: new AWS.Config({
         accessKeyId,
         secretAccessKey,
-        region: config.region,
+        region,
       }),
     };
 
@@ -63,35 +57,36 @@ class CreateElasticIndexDeploy {
 
     // handle instance scope for class properties
     this.client = client;
-    this.esIndex = esIndex;
-    this.esIndexType = esIndexType;
-    this.ServiceEndpoint = ServiceEndpoint;
+    this.index = index;
+    this.type = type;
+    this.domain = domain;
+    this.mapping = mapping;
   }
 
   // Create elasticsearch index after deployment has finished
   afterDeployment() {
     this.client.indices
-      .exists({ index: this.esIndex })
+      .exists({ index: this.index })
       .then(exists => {
         if (!exists) {
-          return this.client.indices.create({ index: this.esIndex });
+          return this.client.indices.create({ index: this.index });
         }
         return exists;
       })
       .catch(() => {
-        return this.client.indices.create({ index: this.esIndex });
+        return this.client.indices.create({ index: this.index });
       })
       .then(() =>
         this.client.indices.getMapping({
-          index: this.esIndex,
-          type: this.esIndexType,
+          index: this.index,
+          type: this.type,
         })
       )
       .catch(() =>
         this.client.indices.putMapping({
-          index: this.esIndex,
-          type: this.esIndexType,
-          body: LocationMapping,
+          index: this.index,
+          type: this.type,
+          body: this.mapping,
         })
       );
   }
