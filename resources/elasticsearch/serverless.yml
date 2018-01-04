@@ -68,4 +68,5 @@ resources:
       Value:
         Fn::GetAtt: ["ProjectsElasticSearchDomain", "DomainEndpoint"]
       Export:
-        Name: "${self:provider.stage}:${self:service}:ProjectsEndpoint"
+        # Global varibale, uses eubfrEnvironment instead of stage
+        Name: "${self:custom.eubfrEnvironment}:${self:service}:ProjectsEndpoint"

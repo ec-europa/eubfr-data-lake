@@ -4,14 +4,14 @@ import elasticsearch from 'elasticsearch';
 import PropTypes from 'prop-types';
 import Spinner from '../../components/Spinner';
 import FormUpload from '../../components/FormUpload';
-import demoServer from '../../meta/server.json'; // eslint-disable-line import/no-unresolved
-import elasticsearchApi from '../../meta/elasticsearch.json'; // eslint-disable-line import/no-unresolved
 import handleErrors from '../../lib/handleErrors';
 
 import './File.css';
 
-const demoServerEndpoint = `${demoServer.ServiceEndpoint}/demo`;
-const projectsApiEndpoint = `https://${elasticsearchApi.ProjectsEndpoint}`;
+const demoServerEndpoint = `https://${process.env.REACT_APP_DEMO_SERVER}/demo`;
+const projectsApiEndpoint = `https://${
+  process.env.REACT_APP_ES_PROJECTS_ENDPOINT
+}`;
 
 const getIcon = status => {
   if (status === 'parsed')

@@ -37,7 +37,7 @@ functions:
     memorySize: 256
     environment:
       API:
-        Fn::ImportValue: ${self:provider.stage}:resources-elasticsearch:ProjectsEndpoint
+        Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:ProjectsEndpoint
       INDEX: ${self:custom.index}
     events:
       - sns:
@@ -56,7 +56,7 @@ functions:
     name: ${self:provider.stage}-${self:service}-onObjectRemoved
     environment:
       API:
-        Fn::ImportValue: ${self:provider.stage}:resources-elasticsearch:ProjectsEndpoint
+        Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:ProjectsEndpoint
       INDEX: ${self:custom.index}
     events:
       - sns:

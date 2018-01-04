@@ -5,8 +5,7 @@
     "start": "npm run prepare && react-scripts start",
     "build": "npm run prepare && react-scripts build && mv build client/dist",
     "deploy": "sls client deploy",
-    "prepare":
-      "mkdir -p ./src/meta && ln -f ../server/.serverless/stack-output.json ./src/meta/server.json && ln -f ../../../resources/elasticsearch/.serverless/stack-output.json ./src/meta/elasticsearch.json",
+    "prepare": "serverless deploy && serverless export-env",
     "release": "npm run build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
@@ -23,6 +22,7 @@
   },
   "devDependencies": {
     "serverless": "1.24.1",
+    "serverless-export-env": "arabold/serverless-export-env",
     "serverless-finch": "1.3.0"
   },
   "private": true
