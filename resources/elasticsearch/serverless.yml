@@ -4,15 +4,16 @@ plugins:
   - serverless-stack-output
 
 custom:
-  eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
+  eubfrEnvironment: ${opt:eubfr_env, file(../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
   projectsDomain: ${self:custom.eubfrEnvironment}-projects
   output:
     file: .serverless/stack-output.json
 
 provider:
   name: aws
-  stage: ${opt:stage, file(../../../config.json):stage, 'dev'}
-  region: ${opt:region, file(../../../config.json):region, 'eu-central-1'}
+  # Global resource, uses eubfrEnvironment as a stage
+  stage: ${self:custom.eubfrEnvironment}
+  region: ${opt:region, file(../../config.json):region, 'eu-central-1'}
   deploymentBucket:
     name: eubfr-${self:custom.eubfrEnvironment}-deploy
   stackTags:
