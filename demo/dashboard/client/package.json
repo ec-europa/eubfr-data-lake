@@ -6,7 +6,6 @@
     "build": "npm run prepare && react-scripts build && mv build client/dist",
     "deploy": "sls client deploy",
     "prepare": "serverless deploy && serverless export-env",
-    "release": "npm run build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },

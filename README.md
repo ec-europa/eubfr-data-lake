@@ -2,8 +2,8 @@
 
 ## Requirements
 
--   Node.js current (8.x)
--   yarn >= 1.0.1
+* Node.js current (8.x)
+* yarn >= 1.0.1
 
 We recommend you to use [Node Version Manager](https://github.com/creationix/nvm) with our local `.nvmrc`:
 
@@ -36,6 +36,14 @@ Test the services:
 
 ```sh
 yarn test
+```
+
+## Deploy the shared resources
+
+Some resources (like ElasticSearch) are shared between all the stages for a same environment (dev, acc, prod). You need to deply them first if it's not already done.
+
+```sh
+yarn deploy-resources
 ```
 
 ## Deploy the services
@@ -84,10 +92,9 @@ Or, if you want to target a specific producer demo:
 
 ```sh
 EUBFR_USERNAME=budg yarn run delete-demo
- ```
-
+```
 
 ## Notes
 
--   Deploy `services/storage` first.
--   Keep the same stage name for every services so they can work together.
+* Deploy `services/storage` first.
+* Keep the same stage name for every services so they can work together.

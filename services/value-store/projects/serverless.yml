@@ -7,7 +7,7 @@ plugins:
 custom:
   webpackIncludeModules: true
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
-  index: projects
+  index: ${self:provider.stage}-projects
   output:
     file: .serverless/stack-output.json
 
