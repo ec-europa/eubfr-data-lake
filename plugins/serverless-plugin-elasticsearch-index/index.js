@@ -5,7 +5,6 @@ const connectionClass = require('http-aws-es');
 
 class CreateElasticIndexDeploy {
   constructor(serverless, options) {
-    // Setup serverless instance:
     this.serverless = serverless;
     this.options = options;
 
@@ -29,7 +28,7 @@ class CreateElasticIndexDeploy {
     // Setup elasticsearch:
     // get configuration from serverless.yml file
     const pluginConfig = this.serverless.service.custom.slsEsIndex;
-    // Get plugin configurations
+    // Get specific plugin configurations
     const { region, index, type, domain, mapping } = pluginConfig;
 
     // elasticsearch client configuration
@@ -49,7 +48,7 @@ class CreateElasticIndexDeploy {
     // elasticsearch client instantiation
     const client = elasticsearch.Client(esOptions);
 
-    // handle instance scope for class properties
+    // class scope for elasticsearch properties
     this.client = client;
     this.index = index;
     this.type = type;
@@ -69,9 +68,7 @@ class CreateElasticIndexDeploy {
         }
         return exists;
       })
-      .catch(() => {
-        return this.client.indices.create({ index: this.index });
-      })
+      .catch(() => this.client.indices.create({ index: this.index }))
       .then(() =>
         this.client.indices.getMapping({
           index: this.index,
