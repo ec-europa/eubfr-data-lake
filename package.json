@@ -38,5 +38,5 @@
     "npm-run-all": "4.1.2",
     "prettier": "1.9.1"
   },
-  "workspaces": ["demo/**", "services/**"]
+  "workspaces": ["demo/**", "plugins/**", "services/**"]
 }

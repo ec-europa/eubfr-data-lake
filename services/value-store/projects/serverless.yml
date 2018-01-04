@@ -1,6 +1,7 @@
 service: value-store-projects
 
 plugins:
+  - serverless-plugin-elasticsearch-index
   - serverless-stack-output
   - serverless-webpack
 
