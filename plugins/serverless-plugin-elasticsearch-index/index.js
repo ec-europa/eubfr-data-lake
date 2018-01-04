@@ -1,12 +1,5 @@
-// we'll need the SDK, because of repeated issue with credentials inheritance
-// in the https-aws-es and its connector
-// read more https://github.com/TheDeveloper/http-aws-es/search?q=Data+must+be+a+string+or+a+buffer&type=Issues&utf8=%E2%9C%93
 const AWS = require('aws-sdk');
-// get a helper from the serverless framework, we'll need to deal with credentials
-// and we don't want to re-invent the logic of discovering the user's credentials
 const AwsConfigCredentials = require('serverless/lib/plugins/aws/configCredentials/awsConfigCredentials');
-
-// all the dependencies to work with elasticsearch out of the serverless framework
 const elasticsearch = require('elasticsearch');
 const connectionClass = require('http-aws-es');
 
@@ -21,16 +14,17 @@ class CreateElasticIndexDeploy {
     };
 
     // Setup credentials:
-    // connect parameters of our constructor to the one of the helper utility
-    // so that we connect the serverless client instances
     const slsAwsConfig = new AwsConfigCredentials(
       this.serverless,
       this.options
     );
-    // get the user credentials, just as the serverless framework would
-    const awsConfig = slsAwsConfig.getCredentials();
-    const accessKeyId = awsConfig[1].split(' = ')[1];
-    const secretAccessKey = awsConfig[2].split(' = ')[1];
+
+    this.awsConfig = slsAwsConfig.getCredentials();
+  }
+
+  setupElasticClient() {
+    const accessKeyId = this.awsConfig[1].split(' = ')[1];
+    const secretAccessKey = this.awsConfig[2].split(' = ')[1];
 
     // Setup elasticsearch:
     // get configuration from serverless.yml file
@@ -65,6 +59,8 @@ class CreateElasticIndexDeploy {
 
   // Create elasticsearch index after deployment has finished
   afterDeployment() {
+    this.setupElasticClient();
+
     this.client.indices
       .exists({ index: this.index })
       .then(exists => {
