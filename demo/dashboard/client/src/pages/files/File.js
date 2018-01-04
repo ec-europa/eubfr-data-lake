@@ -5,13 +5,13 @@ import PropTypes from 'prop-types';
 import Spinner from '../../components/Spinner';
 import FormUpload from '../../components/FormUpload';
 import demoServer from '../../meta/server.json'; // eslint-disable-line import/no-unresolved
-import projectsApi from '../../meta/projects.json'; // eslint-disable-line import/no-unresolved
+import elasticsearchApi from '../../meta/elasticsearch.json'; // eslint-disable-line import/no-unresolved
 import handleErrors from '../../lib/handleErrors';
 
 import './File.css';
 
 const demoServerEndpoint = `${demoServer.ServiceEndpoint}/demo`;
-const projectsApiEndpoint = `https://${projectsApi.ServiceEndpoint}`;
+const projectsApiEndpoint = `https://${elasticsearchApi.ProjectsEndpoint}`;
 
 const getIcon = status => {
   if (status === 'parsed')

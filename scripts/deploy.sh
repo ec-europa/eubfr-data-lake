@@ -7,12 +7,8 @@ set -ex
 cd "$(dirname "$0")"
 cd ..
 
-# Deploy elasticsearch domains
-cd ./resources/elasticsearch
-./node_modules/.bin/serverless deploy -v
-
 # Deploy storage
-cd ../../services/storage/objects
+cd ./services/storage/objects
 ./node_modules/.bin/serverless deploy -v
 
 # Deploy ETL results (SNS topics)
@@ -52,5 +48,5 @@ cd ../../inforegio/json
 ./node_modules/.bin/serverless deploy -v
 
 # Deploy value store - projects' functions
-cd ../projects
+cd ../../../../value-store/projects
 ./node_modules/.bin/serverless deploy -v
