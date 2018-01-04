@@ -1,3 +1,5 @@
+// Specific syntax https://serverless.com/framework/docs/providers/aws/guide/variables/#reference-variables-in-javascript-files
+// eslint-disable-next-line arrow-body-style
 module.exports = () => {
   return {
     project: {
