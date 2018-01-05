@@ -25,7 +25,7 @@ echo 'serverless-finch needs a /client folder'
 mkdir client
 
 echo 'Deploying dashboard client...'
-yarn run release
+EUBFR_USERNAME=agri yarn run build
 yarn run sls client deploy --username agri
 
 ## BUDG demo
@@ -44,7 +44,7 @@ echo 'serverless-finch needs a /client folder'
 mkdir client
 
 echo 'Deploying dashboard client...'
-yarn run release
+EUBFR_USERNAME=budg yarn run build
 yarn run sls client deploy --username budg
 
 ## INFOREGIO demo
@@ -63,7 +63,7 @@ echo 'serverless-finch needs a /client folder'
 mkdir client
 
 echo 'Deploying dashboard client...'
-yarn run release
+EUBFR_USERNAME=inforegio yarn run build
 yarn run sls client deploy --username inforegio
 
 # Website demo

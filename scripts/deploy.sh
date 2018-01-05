@@ -7,7 +7,7 @@ set -ex
 cd "$(dirname "$0")"
 cd ..
 
-# Deploy storage first
+# Deploy storage
 cd ./services/storage/objects
 ./node_modules/.bin/serverless deploy -v
 
@@ -47,10 +47,6 @@ cd ../../budg/xls
 cd ../../inforegio/json
 ./node_modules/.bin/serverless deploy -v
 
-# Deploy value store - elasticsearch instance
-cd ../../../../value-store/elasticsearch
-./node_modules/.bin/serverless deploy -v
-
 # Deploy value store - projects' functions
-cd ../projects
+cd ../../../../value-store/projects
 ./node_modules/.bin/serverless deploy -v

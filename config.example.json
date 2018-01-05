@@ -2,6 +2,7 @@
   "eubfr_env": "dev",
   "region": "eu-central-1",
   "stage": "uuid",
+  "username": "agri",
   "demo": {
     "agri": {
       "AWS_ACCESS_KEY_ID": "",

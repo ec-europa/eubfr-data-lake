@@ -8,7 +8,7 @@ plugins:
 custom:
   slsEsIndex:
     type: project
-    index: projects
+    index: ${self:provider.stage}-projects
     mapping: ${file(./src/mappings/project.js)}
     region: ${opt:region, file(../../../config.json):region, 'eu-central-1'}
     domain: ${file(../elasticsearch/.serverless/stack-output.json):ServiceEndpoint}
@@ -43,7 +43,7 @@ functions:
     memorySize: 256
     environment:
       API:
-        Fn::ImportValue: ${self:provider.stage}:elasticsearch:ServiceEndpoint
+        Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:ProjectsEndpoint
       INDEX: ${self:custom.slsEsIndex.index}
     events:
       - sns:
@@ -62,7 +62,7 @@ functions:
     name: ${self:provider.stage}-${self:service}-onObjectRemoved
     environment:
       API:
-        Fn::ImportValue: ${self:provider.stage}:elasticsearch:ServiceEndpoint
+        Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:ProjectsEndpoint
       INDEX: ${self:custom.slsEsIndex.index}
     events:
       - sns:
