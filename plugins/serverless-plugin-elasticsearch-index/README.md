@@ -1,13 +1,14 @@
 # Serverless Plugin Elasticsearch Index
 
-[Plugin](https://serverless.com/framework/docs/providers/aws/guide/plugins/)
-for the serverless framework, which integrates with [Elasticsearch](https://github.com/elastic/elasticsearch-js).
+[Serverless plugin](https://serverless.com/framework/docs/providers/aws/guide/plugins/)
+to automate the creation of elasticsearch indices and mappings on deployment of your services.
+In the background it uses [elasticsearch client](https://github.com/elastic/elasticsearch-js).
 
 ## Usage
 
-When installed, update your `serverless.yml` file with the following:
+When installed in your service, update your `serverless.yml` file as follows:
 
-### Add the plugin to your service
+### Register the plugin in your service
 
 For example:
 
@@ -22,7 +23,9 @@ plugins:
 
 Order does not matter, the plugin can be added at any position in the list.
 
-Then, use the `custom` section to configure the plugin parameters:
+### Configure the plugin
+
+Use the `custom` section in `serverless.yml` to apply settings to the plugin:
 
 ```yaml
 custom:
@@ -32,15 +35,19 @@ custom:
     mapping: ${file(./src/mappings/project.js)}
     region: ${opt:region, file(../../../config.json):region, 'eu-central-1'}
     domain: ${file(../elasticsearch/.serverless/stack-output.json):ServiceEndpoint, env:SLS_ES_DOMAIN}
+
+...
 ```
 
-As you notice, [variables](https://serverless.com/framework/docs/providers/aws/guide/variables/)
-can be used for the setup for your convenience.
+[Variables](https://serverless.com/framework/docs/providers/aws/guide/variables/)
+can be used for extracting values from various parts of the project for your convenience.
 
 As the domain variable depends on a deployed service, it can be passed either
-from a file containing the domain address, or from an environment variable.
+from a file containing the domain address, or from an environment variable `SLS_ES_DOMAIN`.
 
-To export the domain address, a possible plugin integration could be the
-[serverless-stack-output](https://github.com/sbstjn/serverless-stack-output) or
-[serverless-export-env](https://www.npmjs.com/package/serverless-export-env) or
-any other means to get information after CloudFormation has finished a deployment.
+To export the domain address in a file, you can choose from a variety of plugins:
+
+* [serverless-stack-output](https://github.com/sbstjn/serverless-stack-output)
+* [serverless-export-env](https://www.npmjs.com/package/serverless-export-env)
+
+Of course, you can use any other means to get information after CloudFormation has finished a deployment.
