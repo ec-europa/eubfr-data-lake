@@ -77,10 +77,7 @@ export default record => {
           country_code: countryArray[i],
           region: null,
           nuts2: null,
-          location: {
-            lat: 0,
-            lon: 0,
-          },
+          location: null,
         });
         previousCountries.push(countryArray[i]);
       }
@@ -91,10 +88,7 @@ export default record => {
       country_code: record.Project_country,
       region: record.Project_region,
       nuts2: record.Project_NUTS2_code,
-      location: {
-        lat: 0,
-        lon: 0,
-      },
+      location: null,
     });
   }
 
