@@ -64,7 +64,6 @@ export const handler = async (event, context, callback) => {
     });
 
     await logger.info({
-      type: 'file',
       message: {
         computed_key: s3record.s3.object.key,
         status_message:
@@ -72,21 +71,29 @@ export const handler = async (event, context, callback) => {
       },
     });
 
-    await sns
-      .publish({
-        Message: JSON.stringify(payload),
-        MessageStructure: 'json',
-        TargetArn: endpointArn,
-      })
-      .promise();
+    try {
+      await sns
+        .publish({
+          Message: JSON.stringify(payload),
+          MessageStructure: 'json',
+          TargetArn: endpointArn,
+        })
+        .promise();
 
-    await logger.info({
-      type: 'file',
-      message: {
-        computed_key: s3record.s3.object.key,
-        status_message: `ETL "${producer}-${extension}" has been pinged`,
-      },
-    });
+      await logger.info({
+        message: {
+          computed_key: s3record.s3.object.key,
+          status_message: `ETL "${producer}-${extension}" has been pinged!`,
+        },
+      });
+    } catch (err) {
+      await logger.error({
+        message: {
+          computed_key: s3record.s3.object.key,
+          status_message: `Unable to ping ETL "${producer}-${extension}".`,
+        },
+      });
+    }
 
     return callback(null, 'Success!');
   } catch (err) {
