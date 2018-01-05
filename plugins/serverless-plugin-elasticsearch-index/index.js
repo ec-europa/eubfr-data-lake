@@ -29,7 +29,12 @@ class CreateElasticIndexDeploy {
     // get configuration from serverless.yml file
     const pluginConfig = this.serverless.service.custom.slsEsIndex;
     // Get specific plugin configurations
-    const { region, index, type, domain, mapping } = pluginConfig;
+    const { region, index, type, mapping } = pluginConfig;
+
+    // Respect env variable if passed.
+    const domain = pluginConfig.domain
+      ? pluginConfig.domain
+      : process.env.SLS_ES_DOMAIN;
 
     // elasticsearch client configuration
     const esOptions = {

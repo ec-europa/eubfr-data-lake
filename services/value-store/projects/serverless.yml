@@ -2,6 +2,7 @@ service: value-store-projects
 
 plugins:
   - serverless-plugin-elasticsearch-index
+  - serverless-export-env
   - serverless-stack-output
   - serverless-webpack
 
@@ -11,7 +12,7 @@ custom:
     index: ${self:provider.stage}-projects
     mapping: ${file(./src/mappings/project.js)}
     region: ${opt:region, file(../../../config.json):region, 'eu-central-1'}
-    domain: ${file(../elasticsearch/.serverless/stack-output.json):ServiceEndpoint}
+    domain: ${file(./scripts/getDomain.js):EUBFR_ES_PROJECTS_DOMAIN, env:EUBFR_ES_PROJECTS_DOMAIN, ''}
   webpackIncludeModules: true
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
   output:
@@ -30,6 +31,9 @@ provider:
     name: eubfr-${self:custom.eubfrEnvironment}-deploy
   stackTags:
     ENV: ${self:custom.eubfrEnvironment}
+  environment:
+    EUBFR_ES_PROJECTS_DOMAIN:
+      Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:ProjectsEndpoint
   iamRoleStatements:
     # http://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-aws-integrations.html?shortFooter=true#es-aws-integrations-s3-lambda-es-authorizations
     - Effect: "Allow"
