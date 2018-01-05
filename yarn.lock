@@ -7909,9 +7909,9 @@ serverless-dynamodb-autoscaling@0.6.2:
     lodash "^4.17.4"
     md5 "^2.2.1"
 
-serverless-export-env@arabold/serverless-export-env:
+serverless-export-env@1.1.3:
   version "1.1.3"
-  resolved "https://codeload.github.com/arabold/serverless-export-env/tar.gz/a2e65a9176a9f9bde88fddd6389db41640f1291e"
+  resolved "https://registry.yarnpkg.com/serverless-export-env/-/serverless-export-env-1.1.3.tgz#f82d2695861e3df7f80bac71139e58a05596706d"
   dependencies:
     bluebird "^3.5.1"
     lodash "^4.17.4"
