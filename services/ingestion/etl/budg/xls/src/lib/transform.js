@@ -32,10 +32,7 @@ export default record => {
     .map(country => ({
       country_name: null,
       country_code: country,
-      location: {
-        lat: 0,
-        lon: 0,
-      },
+      location: null,
     }));
 
   // Preprocess type

@@ -2,8 +2,8 @@
 
 ## Requirements
 
--   Node.js current (8.x)
--   yarn >= 1.0.1
+* Node.js current (8.x)
+* yarn >= 1.0.1
 
 We recommend you to use [Node Version Manager](https://github.com/creationix/nvm) with our local `.nvmrc`:
 
@@ -38,6 +38,14 @@ Test the services:
 yarn test
 ```
 
+## Deploy the shared resources
+
+Some resources (like ElasticSearch) are shared between all the stages for a same environment (dev, acc, prod). You need to deploy them first if it's not already done.
+
+```sh
+yarn deploy-resources
+```
+
 ## Deploy the services
 
 First, you need to [set up your AWS credentials](https://serverless.com/framework/docs/providers/aws/guide/credentials/).
@@ -58,13 +66,29 @@ Go to the folder of the service you want to deploy and type:
 yarn deploy
 ```
 
-## Deploy the demo
+## Deploy the demos
 
-First, make sure you have deployed the services. Then:
+First, make sure you have deployed the resources and the services. Then, to deploy all the demos at once, you can run:
 
 ```sh
 yarn deploy-demo
 ```
+
+On the other hand, if you want to work on the demo client locally, first deploy the demo server and then start the client:
+
+```sh
+# Example: AGRI demo
+
+# Deploy the server first
+cd ./demo/dashboard/server
+EUBFR_USERNAME=agri yarn deploy
+
+# Then start the client locally
+cd ../client
+EUBFR_USERNAME=agri yarn start
+```
+
+If you don't provide the `EUBFR_USERNAME` variable, it will fall back to the producer defined in your `config.json` (`username` field).
 
 ## Remove the services and the demo
 
@@ -84,10 +108,9 @@ Or, if you want to target a specific producer demo:
 
 ```sh
 EUBFR_USERNAME=budg yarn run delete-demo
- ```
-
+```
 
 ## Notes
 
--   Deploy `services/storage` first.
--   Keep the same stage name for every services so they can work together.
+* Deploy `services/storage` first.
+* Keep the same stage name for every services so they can work together.
