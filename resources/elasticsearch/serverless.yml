@@ -1,0 +1,118 @@
+service: resources-elasticsearch
+
+custom:
+  eubfrEnvironment: ${opt:eubfr_env, file(../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
+  projectsDomain: ${self:custom.eubfrEnvironment}-projects
+  logsDomain: ${self:custom.eubfrEnvironment}-logs
+
+provider:
+  name: aws
+  # Global resource, uses eubfrEnvironment as a stage
+  stage: ${self:custom.eubfrEnvironment}
+  region: ${opt:region, file(../../config.json):region, 'eu-central-1'}
+  deploymentBucket:
+    name: eubfr-${self:custom.eubfrEnvironment}-deploy
+  stackTags:
+    ENV: ${self:custom.eubfrEnvironment}
+
+resources:
+  Resources:
+    ProjectsElasticSearchDomain:
+      Type: AWS::Elasticsearch::Domain
+      # Don't delete the elastic search instance when the CF stack is deleted
+      DeletionPolicy: Retain
+      Properties:
+        DomainName: ${self:custom.projectsDomain}
+        ElasticsearchVersion: 5.5
+        EBSOptions:
+          EBSEnabled: true
+          VolumeType: gp2
+          VolumeSize: 10
+        ElasticsearchClusterConfig:
+          InstanceType: t2.small.elasticsearch
+          InstanceCount: 1
+          DedicatedMasterEnabled: false
+          ZoneAwarenessEnabled: false
+        AccessPolicies:
+          Version: '2012-10-17'
+          Statement:
+          # Public can query for information
+          - Effect: Allow
+            Principal: "*"
+            Action:
+             - "es:ESHttpHead"
+             - "es:ESHttpGet"
+             - "es:ESHttpPost"
+            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.projectsDomain}/*"
+          # Lambda can take actions on the ES domain
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+          # Admin access to Kibana from an IP
+          # http://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-kibana.html?shortFooter=true
+          - Effect: Allow
+            Principal: "*"
+            Action: es:*
+            Condition:
+              IpAddress:
+                aws:SourceIp:
+                - 147.67.241.226
+            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.projectsDomain}/*"
+    LogsElasticSearchDomain:
+      Type: AWS::Elasticsearch::Domain
+      # Don't delete the elastic search instance when the CF stack is deleted
+      DeletionPolicy: Retain
+      Properties:
+        DomainName: ${self:custom.logsDomain}
+        ElasticsearchVersion: 5.5
+        EBSOptions:
+          EBSEnabled: true
+          VolumeType: gp2
+          VolumeSize: 10
+        ElasticsearchClusterConfig:
+          InstanceType: t2.small.elasticsearch
+          InstanceCount: 1
+          DedicatedMasterEnabled: false
+          ZoneAwarenessEnabled: false
+        AccessPolicies:
+          Version: '2012-10-17'
+          Statement:
+          # Public can query for information
+          - Effect: Allow
+            Principal: "*"
+            Action:
+             - "es:ESHttpHead"
+             - "es:ESHttpGet"
+             - "es:ESHttpPost"
+            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.logsDomain}/*"
+          # Lambda can take actions on the ES domain
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+          # Admin access to Kibana from an IP
+          # https://goo.gl/eiGgpD
+          - Effect: Allow
+            Principal: "*"
+            Action: es:*
+            Condition:
+              IpAddress:
+                aws:SourceIp:
+                - 147.67.241.226
+            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.logsDomain}/*"
+  Outputs:
+    ProjectsEndpoint:
+      Description: The API endpoint of the projects' elasticsearch domain.
+      Value:
+        Fn::GetAtt: ["ProjectsElasticSearchDomain", "DomainEndpoint"]
+      Export:
+        # Global varibale, uses eubfrEnvironment instead of stage
+        Name: "${self:custom.eubfrEnvironment}:${self:service}:ProjectsEndpoint"
+    LogsEndpoint:
+      Description: The API endpoint of the logs' elasticsearch domain.
+      Value:
+        Fn::GetAtt: ["LogsElasticSearchDomain", "DomainEndpoint"]
+      Export:
+        # Global varibale, uses eubfrEnvironment instead of stage
+        Name: "${self:custom.eubfrEnvironment}:${self:service}:LogsEndpoint"

@@ -1,7 +1,6 @@
 service: demo-dash-server-${self:custom.EUBFR_USERNAME}
 
 plugins:
-  - serverless-stack-output
   - serverless-webpack
   - serverless-offline #serverless-offline needs to be last in the list
 
@@ -9,7 +8,7 @@ custom:
   webpackIncludeModules: true
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
   # EUBFR_USERNAME comes from cli parameter, but for spawn() and similar, it's from env var.
-  EUBFR_USERNAME: ${opt:username, file(../../../config.json):username, env:EUBFR_USERNAME, ''}
+  EUBFR_USERNAME: ${opt:username, env:EUBFR_USERNAME, file(../../../config.json):username, ''}
   PRODUCER_KEY_ID: ${opt:PRODUCER_KEY_ID, file(../../../config.json):demo.${self:custom.EUBFR_USERNAME}.AWS_ACCESS_KEY_ID, env:PRODUCER_KEY_ID, ''}
   PRODUCER_SECRET_ACCESS_KEY: ${opt:PRODUCER_SECRET_ACCESS_KEY, file(../../../config.json):demo.${self:custom.EUBFR_USERNAME}.AWS_SECRET_ACCESS_KEY, env:PRODUCER_SECRET_ACCESS_KEY, ''}
   SIGNED_UPLOADS_API: ${opt:SIGNED_UPLOADS_API, file(../../../services/storage/signed-uploads/.serverless/stack-output.json):ServiceEndpoint, env:SIGNED_UPLOADS_API, ''}
@@ -122,3 +121,18 @@ functions:
           path: demo/update
           method: get
           cors: true
+
+resources:
+  Outputs:
+    ProjectsEndpoint:
+      Description: The demo server endpoint
+      Value:
+        Fn::Join:
+          - ''
+          - - Ref: ApiGatewayRestApi
+            - '.execute-api.'
+            - ${self:provider.region}
+            - '.amazonaws.com/'
+            - ${self:provider.stage}
+      Export:
+        Name: "${self:provider.stage}:${self:service}:ServiceEndpoint"

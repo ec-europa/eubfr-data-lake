@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Uploader from 'react-s3-uploader';
-import config from '../meta/server.json'; // eslint-disable-line import/no-unresolved
 
 import handleErrors from '../lib/handleErrors';
 
-const demoSignedUrl = config.ServiceEndpoint;
+const demoSignedUrl = `https://${process.env.REACT_APP_DEMO_SERVER}`;
 
 const getUrl = (computedKey, file) => {
   if (computedKey)

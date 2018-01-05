@@ -4,9 +4,9 @@ import React from 'react';
 import elasticsearch from 'elasticsearch';
 import PropTypes from 'prop-types';
 import Spinner from '../../../components/Spinner';
-import logsApi from '../../../meta/logs.json'; // eslint-disable-line import/no-unresolved
 
-const logsApiEndpoint = `https://${logsApi.ServiceEndpoint}`;
+const logsApiEndpoint = `https://${process.env.REACT_APP_ES_LOGS_ENDPOINT}`;
+const logsIndex = `${process.env.REACT_APP_STAGE}-logs`;
 
 class Logs extends React.Component {
   constructor() {
@@ -44,14 +44,14 @@ class Logs extends React.Component {
     return () =>
       this.logClient.indices
         .exists({
-          index: 'logs',
+          index: logsIndex,
         })
         .then(
           exists =>
             exists
               ? this.logClient
                   .search({
-                    index: 'logs',
+                    index: logsIndex,
                     type: 'file',
                     body: {
                       query: {

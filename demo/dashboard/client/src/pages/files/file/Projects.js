@@ -2,9 +2,11 @@ import React from 'react';
 import elasticsearch from 'elasticsearch';
 import PropTypes from 'prop-types';
 import Spinner from '../../../components/Spinner';
-import projectsApi from '../../../meta/projects.json'; // eslint-disable-line import/no-unresolved
 
-const projectsApiEndpoint = `https://${projectsApi.ServiceEndpoint}`;
+const projectsApiEndpoint = `https://${
+  process.env.REACT_APP_ES_PROJECTS_ENDPOINT
+}`;
+const projectsIndex = `${process.env.REACT_APP_STAGE}-projects`;
 
 class Projects extends React.Component {
   constructor() {
@@ -41,14 +43,14 @@ class Projects extends React.Component {
     return () =>
       this.client.indices
         .exists({
-          index: 'projects',
+          index: projectsIndex,
         })
         .then(
           exists =>
             exists
               ? this.client
                   .search({
-                    index: 'projects',
+                    index: projectsIndex,
                     type: 'project',
                     q: `computed_key:"${computedKey}.ndjson"`,
                   })

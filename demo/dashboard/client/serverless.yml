@@ -2,13 +2,14 @@ service: demo-dash-client-${self:custom.EUBFR_USERNAME}
 
 plugins:
   - serverless-finch
+  - serverless-export-env
 
 custom:
   client:
     bucketName: eubfr-${self:provider.stage}-demo-dashboard-client-${self:custom.EUBFR_USERNAME}
-  eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
+  eubfrEnvironment: ${opt:eubfr_env, env:EUBFR_ENV, file(../../../config.json):eubfr_env, 'dev'}
   # EUBFR_USERNAME comes from cli parameter, but for spawn() and similar, it's from env var.
-  EUBFR_USERNAME: ${opt:username, file(../../../config.json):username, env:EUBFR_USERNAME, ''}
+  EUBFR_USERNAME: ${opt:username, env:EUBFR_USERNAME, file(../../../config.json):username, ''}
 
 provider:
   name: aws
@@ -19,3 +20,18 @@ provider:
     name: eubfr-${self:custom.eubfrEnvironment}-deploy
   stackTags:
     ENV: ${self:custom.eubfrEnvironment}
+  environment:
+    REACT_APP_STAGE: ${self:provider.stage}
+    REACT_APP_DEMO_SERVER:
+      Fn::ImportValue: ${self:provider.stage}:demo-dash-server-${self:custom.EUBFR_USERNAME}:ServiceEndpoint
+    REACT_APP_ES_PROJECTS_ENDPOINT:
+      Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:ProjectsEndpoint
+    REACT_APP_ES_LOGS_ENDPOINT:
+      Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:LogsEndpoint
+
+resources:
+  Resources:
+    DeployBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.client.bucketName}

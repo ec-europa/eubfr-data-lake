@@ -4,16 +4,17 @@ import elasticsearch from 'elasticsearch';
 import PropTypes from 'prop-types';
 import Spinner from '../../components/Spinner';
 import FormUpload from '../../components/FormUpload';
-import demoServer from '../../meta/server.json'; // eslint-disable-line import/no-unresolved
-import projectsApi from '../../meta/projects.json'; // eslint-disable-line import/no-unresolved
 import handleErrors from '../../lib/handleErrors';
 import LogsTab from './file/Logs';
 import ProjectsTab from './file/Projects';
 
 import './File.css';
 
-const demoServerEndpoint = `${demoServer.ServiceEndpoint}/demo`;
-const projectsApiEndpoint = `https://${projectsApi.ServiceEndpoint}`;
+const demoServerEndpoint = `https://${process.env.REACT_APP_DEMO_SERVER}/demo`;
+const projectsApiEndpoint = `https://${
+  process.env.REACT_APP_ES_PROJECTS_ENDPOINT
+}`;
+const projectsIndex = `${process.env.REACT_APP_STAGE}-projects`;
 
 const getIcon = status => {
   if (status === 'parsed')
@@ -61,7 +62,7 @@ class File extends React.Component {
 
     return this.client
       .count({
-        index: 'projects',
+        index: projectsIndex,
         type: 'project',
         q: `computed_key:"${computedKey}.ndjson"`,
       })
