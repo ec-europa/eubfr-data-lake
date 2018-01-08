@@ -73,10 +73,12 @@ export default record => {
     for (let i = 0; i < countryArray.length; i += 1) {
       if (previousCountries.indexOf(countryArray[i] === -1)) {
         locationArray.push({
-          country_name: null,
           country_code: countryArray[i],
-          region: null,
-          nuts2: null,
+          region: '',
+          nuts2: '',
+          address: '',
+          postal_code: '',
+          town: '',
           location: null,
         });
         previousCountries.push(countryArray[i]);
@@ -84,10 +86,12 @@ export default record => {
     }
   } else {
     locationArray.push({
-      country_name: null,
       country_code: record.Project_country,
       region: record.Project_region,
       nuts2: record.Project_NUTS2_code,
+      address: '',
+      postal_code: '',
+      town: '',
       location: null,
     });
   }

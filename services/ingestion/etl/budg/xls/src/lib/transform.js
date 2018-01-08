@@ -30,8 +30,12 @@ export default record => {
   const locationArray = record['Participating countries']
     .split(',')
     .map(country => ({
-      country_name: null,
       country_code: country,
+      region: '',
+      nuts2: '',
+      address: '',
+      postal_code: '',
+      town: '',
       location: null,
     }));
 
