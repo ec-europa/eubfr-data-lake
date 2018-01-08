@@ -80,8 +80,8 @@ export default record => {
           postal_code: null,
           town: null,
           location: {
-            lat: 0,
-            lon: 0,
+            type: 'Point',
+            coordinates: [0, 0],
           },
         });
         previousCountries.push(countryArray[i]);

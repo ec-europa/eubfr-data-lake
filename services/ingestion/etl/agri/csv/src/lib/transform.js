@@ -12,12 +12,12 @@ import type { Project } from '../../../../types/Project';
 export default (record: Object): Project => {
   // Preprocess budget
   const budgetObject = {
-    total_cost: null,
+    total_cost: 0,
     eu_contrib: Number(record['EU Budget contribution']),
-    private_fund: null,
-    public_fund: null,
-    other_contrib: null,
-    funding_area: null,
+    private_fund: 0,
+    public_fund: 0,
+    other_contrib: 0,
+    funding_area: '',
   };
 
   // Preprocess timeframe
@@ -59,11 +59,11 @@ export default (record: Object): Project => {
     .split(';')
     .map((country, index) => ({
       country_code: country,
-      region: null,
-      nuts2: null,
-      address: record['Project address(es)'] || null,
-      postal_code: record['Project postal code(s)'] || null,
-      town: record['Project town(s)'] || null,
+      region: '',
+      nuts2: '',
+      address: record['Project address(es)'] || '',
+      postal_code: record['Project postal code(s)'] || '',
+      town: record['Project town(s)'] || '',
       location: {
         type: 'Point',
         coordinates: [
@@ -76,38 +76,38 @@ export default (record: Object): Project => {
   // Preprocess coordinators
   const coordArray = record.Coordinators.split(';').map(coordinator => ({
     name: coordinator,
-    type: null,
-    address: null,
-    region: null,
-    country: null,
-    website: null,
-    phone: null,
-    email: null,
+    type: '',
+    address: '',
+    region: '',
+    country: '',
+    website: '',
+    phone: '',
+    email: '',
   }));
 
   // Preprocess partners
   const partnerArray = record.Partners.split(',').map(partner => ({
     name: partner,
-    type: null,
-    address: null,
-    region: null,
-    country: null,
-    website: null,
+    type: '',
+    address: '',
+    region: '',
+    country: '',
+    website: '',
   }));
 
   // Preprocess results
   const resultObject = {
-    available: null,
-    result: record.Results || null,
+    available: '',
+    result: record.Results || '',
   };
 
   // Map the fields
   return {
-    project_id: record.Nid || null,
-    title: record.Name || null,
-    cover_image: record.Visual || null,
-    programme_name: record['Programme name'] || null,
-    description: record['Project description'] || null,
+    project_id: record.Nid || '',
+    title: record.Name || '',
+    cover_image: record.Visual || '',
+    programme_name: record['Programme name'] || '',
+    description: record['Project description'] || '',
     results: resultObject,
     ec_priorities: record['EC’s priorities'].split(';') || null,
     coordinators: coordArray,
@@ -121,7 +121,7 @@ export default (record: Object): Project => {
       to:
         timeframeTo && new Date(parseInt(timeframeTo, 10) * 1000).toISOString(),
     },
-    project_website: record['Project webpage'] || null,
+    project_website: record['Project webpage'] || '',
     related_links: links,
   };
 };
