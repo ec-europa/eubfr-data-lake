@@ -17,7 +17,6 @@ const services = [
   `ingestion-etl-agri-csv`,
   `ingestion-etl-budg-xls`,
   `ingestion-etl-inforegio-json`,
-  `elasticsearch`,
   `value-store-projects`,
 ];
 

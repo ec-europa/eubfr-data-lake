@@ -2,6 +2,7 @@ service: demo-website
 
 plugins:
   - serverless-finch
+  - serverless-export-env
 
 custom:
   client:
@@ -17,3 +18,14 @@ provider:
     name: eubfr-${self:custom.eubfrEnvironment}-deploy
   stackTags:
     ENV: ${self:custom.eubfrEnvironment}
+  environment:
+    REACT_APP_STAGE: ${self:provider.stage}
+    REACT_APP_ES_PROJECTS_ENDPOINT:
+      Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:ProjectsEndpoint
+
+resources:
+  Resources:
+    DeployBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.client.bucketName}

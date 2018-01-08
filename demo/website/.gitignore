@@ -3,8 +3,8 @@
 # testing
 /coverage
 
-# imported files
-/src/meta
+# env files
+.env
 
 # production
 /build

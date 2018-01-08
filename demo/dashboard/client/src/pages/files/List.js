@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import FilesList from '../../components/FilesList';
-import config from '../../meta/server.json'; // eslint-disable-line import/no-unresolved
 import handleErrors from '../../lib/handleErrors';
 
 import Spinner from '../../components/Spinner';
 
-const demoServer = `${config.ServiceEndpoint}/demo`;
+const demoServer = `https://${process.env.REACT_APP_DEMO_SERVER}/demo`;
 
 class List extends Component {
   constructor() {

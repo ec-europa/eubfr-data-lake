@@ -1,20 +1,19 @@
-service: elasticsearch
+service: resources-elasticsearch
 
 plugins:
   - serverless-stack-output
 
 custom:
-  eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
-  ES_DOMAIN: ${self:provider.stage}-projects
+  eubfrEnvironment: ${opt:eubfr_env, file(../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
+  projectsDomain: ${self:custom.eubfrEnvironment}-projects
   output:
     file: .serverless/stack-output.json
 
 provider:
   name: aws
-  runtime: nodejs6.10
-  timeout: 60
-  stage: ${opt:stage, file(../../../config.json):stage, 'dev'}
-  region: ${opt:region, file(../../../config.json):region, 'eu-central-1'}
+  # Global resource, uses eubfrEnvironment as a stage
+  stage: ${self:custom.eubfrEnvironment}
+  region: ${opt:region, file(../../config.json):region, 'eu-central-1'}
   deploymentBucket:
     name: eubfr-${self:custom.eubfrEnvironment}-deploy
   stackTags:
@@ -24,8 +23,10 @@ resources:
   Resources:
     ProjectsElasticSearchDomain:
       Type: AWS::Elasticsearch::Domain
+      # Don't delete the elastic search instance when the CF stack is deleted
+      DeletionPolicy: Retain
       Properties:
-        DomainName: ${self:custom.ES_DOMAIN}
+        DomainName: ${self:custom.projectsDomain}
         ElasticsearchVersion: 5.5
         EBSOptions:
           EBSEnabled: true
@@ -46,7 +47,7 @@ resources:
              - "es:ESHttpHead"
              - "es:ESHttpGet"
              - "es:ESHttpPost"
-            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.ES_DOMAIN}/*"
+            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.projectsDomain}/*"
           # Lambda can take actions on the ES domain
           - Effect: Allow
             Principal:
@@ -61,12 +62,12 @@ resources:
               IpAddress:
                 aws:SourceIp:
                 - 147.67.241.226
-            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.ES_DOMAIN}/*"
-
+            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.projectsDomain}/*"
   Outputs:
-    ServiceEndpoint:
+    ProjectsEndpoint:
       Description: The API endpoint of the projects' elasticsearch domain.
       Value:
         Fn::GetAtt: ["ProjectsElasticSearchDomain", "DomainEndpoint"]
       Export:
-        Name: "${self:provider.stage}:${self:service}:ServiceEndpoint"
+        # Global varibale, uses eubfrEnvironment instead of stage
+        Name: "${self:custom.eubfrEnvironment}:${self:service}:ProjectsEndpoint"
