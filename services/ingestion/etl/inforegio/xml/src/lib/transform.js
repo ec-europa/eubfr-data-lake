@@ -39,16 +39,13 @@ const getAddress = record => {
 };
 
 const formatBudget = budget => {
-  if (!budget) return null;
-  const b = budget.toString().split(' ');
-
-  if (b === null || b.length < 2) return 0;
-
-  let s = '';
-  for (let i = 1; i < b.length; i += 1) {
-    s += b[i];
-  }
-  return Number(s);
+  if (!budget) return 0;
+  budget
+    .toString()
+    .split(' ')
+    .slice(1)
+    .join('');
+  return Number(budget);
 };
 
 /*
@@ -83,10 +80,7 @@ export default record => {
           address: null,
           postal_code: null,
           town: null,
-          location: {
-            type: 'Point',
-            coordinates: [0, 0],
-          },
+          location: null,
         });
         previousCountries.push(countryArray[i]);
       }
@@ -99,10 +93,7 @@ export default record => {
       address: null,
       postal_code: null,
       town: null,
-      location: {
-        type: 'Point',
-        coordinates: [0, 0],
-      },
+      location: null,
     });
   }
 
