@@ -13,6 +13,7 @@
     "babel-preset-env": "1.6.1",
     "jest": "21.2.1",
     "serverless": "1.24.1",
+    "serverless-plugin-elasticsearch-index": "0.0.1",
     "serverless-stack-output": "0.2.3",
     "serverless-webpack": "4.1.0",
     "webpack": "3.10.0"

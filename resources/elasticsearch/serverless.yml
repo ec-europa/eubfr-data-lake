@@ -27,7 +27,7 @@ resources:
       DeletionPolicy: Retain
       Properties:
         DomainName: ${self:custom.projectsDomain}
-        ElasticsearchVersion: 5.5
+        ElasticsearchVersion: '6.0'
         EBSOptions:
           EBSEnabled: true
           VolumeType: gp2
