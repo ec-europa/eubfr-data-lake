@@ -21,8 +21,8 @@ export default (record: Object): Project => {
   };
 
   // Preprocess timeframe
-  let timeframeFrom = null;
-  let timeframeTo = null;
+  let timeframeFrom = '';
+  let timeframeTo = '';
 
   if (record['Timeframe start'].indexOf(' to ') !== -1) {
     const timeframe = (record['Timeframe start'] || '').split(' to ');
