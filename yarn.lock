@@ -77,13 +77,9 @@
   version "0.10.2"
   resolved "https://registry.yarnpkg.com/@types/graphql/-/graphql-0.10.2.tgz#d7c79acbaa17453b6681c80c34b38fcb10c4c08c"
 
-"@types/node@*":
-  version "4.0.35"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-4.0.35.tgz#2b96b8e67bea7451e6e1ba8b65eaeb8f223261ed"
-
-"@types/node@^8.0.25", "@types/node@^8.0.47", "@types/node@^8.0.53", "@types/node@^8.0.57":
-  version "8.5.5"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.5.5.tgz#6f9e8164ae1a55a9beb1d2571cfb7acf9d720c61"
+"@types/node@*", "@types/node@^8.0.25", "@types/node@^8.0.47", "@types/node@^8.0.53", "@types/node@^8.0.57":
+  version "8.5.7"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.5.7.tgz#9c498c35af354dcfbca3790fb2e81129e93cf0e2"
 
 "@types/request@^2.0.8":
   version "2.0.9"

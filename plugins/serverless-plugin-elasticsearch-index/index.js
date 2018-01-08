@@ -3,6 +3,22 @@ const AwsConfigCredentials = require('serverless/lib/plugins/aws/configCredentia
 const elasticsearch = require('elasticsearch');
 const connectionClass = require('http-aws-es');
 
+function listExports(sdk, exports, nextToken) {
+  exports = exports || [];
+  return sdk
+    .request('CloudFormation', 'listExports', { NextToken: nextToken })
+    .tap(response => {
+      exports.push(...response.Exports);
+      if (response.NextToken) {
+        // Query next page
+        return listExports(sdk, exports, response.NextToken);
+      }
+
+      return response;
+    })
+    .return(exports);
+}
+
 class CreateElasticIndexDeploy {
   constructor(serverless, options) {
     this.serverless = serverless;
@@ -21,7 +37,7 @@ class CreateElasticIndexDeploy {
     this.awsConfig = slsAwsConfig.getCredentials();
   }
 
-  setupElasticClient() {
+  async setupElasticClient() {
     const accessKeyId = this.awsConfig[1].split(' = ')[1];
     const secretAccessKey = this.awsConfig[2].split(' = ')[1];
 
@@ -31,10 +47,12 @@ class CreateElasticIndexDeploy {
     // Get specific plugin configurations
     const { region, index, type, mapping } = pluginConfig;
 
-    // Respect env variable if passed.
-    const domain = pluginConfig.domain
-      ? pluginConfig.domain
-      : process.env.SLS_ES_DOMAIN;
+    const exportedVariables = await listExports(this.serverless.providers.aws);
+
+    // Map endpointName with the actual ES domain
+    const domain = exportedVariables.find(
+      exp => exp.Name === pluginConfig.endpointName
+    ).Value;
 
     // elasticsearch client configuration
     const esOptions = {
@@ -62,8 +80,8 @@ class CreateElasticIndexDeploy {
   }
 
   // Create elasticsearch index after deployment has finished
-  afterDeployment() {
-    this.setupElasticClient();
+  async afterDeployment() {
+    await this.setupElasticClient();
 
     this.client.indices
       .exists({ index: this.index })
