@@ -42,9 +42,8 @@ custom:
 [Variables](https://serverless.com/framework/docs/providers/aws/guide/variables/)
 can be used for extracting values from various parts of the project for your convenience.
 
-As the elasticsearch domain endpoint address depends on a deployed service, thus
-the evaluated expression should match an export from CloudFormation from an existing stack.
-This basically means that the [`ListExports`](https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_ListExports.html).
+As the elasticsearch domain endpoint address depends on a deployed service,
+the evaluated expression should match an exported named value from an existing CloudFormation stack. [`ListExports`](https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_ListExports.html) is used in the background for the evaluation.
 
 ### Export domain address
 
@@ -62,5 +61,4 @@ Outputs:
 ```
 
 By adding this export, other plugins such as [serverless-stack-output](https://github.com/sbstjn/serverless-stack-output)
-can hook into the creation phase of the CloudFormation stack and create a file with the information for other
-services and modules to feed in the information about the domain address.
+can also hook into the creation phase of the CloudFormation stack and export the result of the created elasticsearch service.
