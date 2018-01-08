@@ -36,8 +36,8 @@ type Location = {
 };
 
 type Timeframe = {
-  from: string | '',
-  to: string | '',
+  from: string,
+  to: string,
 };
 
 type Coordinator = {
@@ -62,16 +62,16 @@ type Partner = {
 
 type Budget = {
   eu_contrib: number,
-  total_cost?: number | 0,
-  private_fund?: number | 0,
-  public_fund?: number | 0,
-  other_contrib?: number | 0,
-  funding_area?: string | '',
+  total_cost?: number,
+  private_fund?: number,
+  public_fund?: number,
+  other_contrib?: number,
+  funding_area?: string,
 };
 
 type RelatedLink = {
-  url: string | '',
-  label: string | '',
+  url: string,
+  label: string,
 };
 
 export type Project = {
