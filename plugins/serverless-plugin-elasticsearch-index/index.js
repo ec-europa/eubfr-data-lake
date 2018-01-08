@@ -2,24 +2,7 @@ const AWS = require('aws-sdk');
 const AwsConfigCredentials = require('serverless/lib/plugins/aws/configCredentials/awsConfigCredentials');
 const elasticsearch = require('elasticsearch');
 const connectionClass = require('http-aws-es');
-
-// Inspired by serverless-export-env plugin.
-function listExports(sdk, exports, nextToken) {
-  // eslint-disable-next-line
-  exports = exports || [];
-  return sdk
-    .request('CloudFormation', 'listExports', { NextToken: nextToken })
-    .tap(response => {
-      exports.push(...response.Exports);
-      if (response.NextToken) {
-        // Query next page
-        return listExports(sdk, exports, response.NextToken);
-      }
-
-      return response;
-    })
-    .return(exports);
-}
+const listExports = require('../lib/listExports');
 
 class CreateElasticIndexDeploy {
   constructor(serverless, options) {
