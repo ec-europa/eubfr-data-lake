@@ -75,11 +75,11 @@ export default record => {
       if (previousCountries.indexOf(countryArray[i] === -1)) {
         locationArray.push({
           country_code: countryArray[i],
-          region: null,
-          nuts2: null,
-          address: null,
-          postal_code: null,
-          town: null,
+          region: '',
+          nuts2: '',
+          address: '',
+          postal_code: '',
+          town: '',
           location: null,
         });
         previousCountries.push(countryArray[i]);
@@ -90,9 +90,9 @@ export default record => {
       country_code: checkData(record.Project_country),
       region: checkData(record.Project_region),
       nuts2: checkData(record.Project_NUTS2_code),
-      address: null,
-      postal_code: null,
-      town: null,
+      address: '',
+      postal_code: '',
+      town: '',
       location: null,
     });
   }

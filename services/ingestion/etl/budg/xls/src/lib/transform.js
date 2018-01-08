@@ -31,11 +31,11 @@ export default record => {
     .split(',')
     .map(country => ({
       country_code: country,
-      region: null,
-      nuts2: null,
-      address: null,
-      postal_code: null,
-      town: null,
+      region: '',
+      nuts2: '',
+      address: '',
+      postal_code: '',
+      town: '',
       location: null,
     }));
 
