@@ -11,7 +11,6 @@
     "babel-core": "6.26.0",
     "babel-loader": "7.1.2",
     "babel-preset-env": "1.6.1",
-    "dotenv": "4.0.0",
     "jest": "21.2.1",
     "serverless": "1.24.1",
     "serverless-plugin-elasticsearch-index": "0.0.1",

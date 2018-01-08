@@ -18,7 +18,7 @@ service: foo-service
 plugins:
   - serverless-plugin-elasticsearch-index
 
-  ...
+...
 ```
 
 Order does not matter, the plugin can be added at any position in the list.
@@ -34,7 +34,7 @@ custom:
     index: projects
     mapping: ${file(./src/mappings/project.js)}
     region: ${opt:region, file(../../../config.json):region, 'eu-central-1'}
-    domain: ${file(../elasticsearch/.serverless/stack-output.json):ServiceEndpoint, env:SLS_ES_DOMAIN}
+    endpointName: ${self:custom.eubfrEnvironment}:resources-elasticsearch:ProjectsEndpoint
 
 ...
 ```
@@ -42,12 +42,25 @@ custom:
 [Variables](https://serverless.com/framework/docs/providers/aws/guide/variables/)
 can be used for extracting values from various parts of the project for your convenience.
 
-As the domain variable depends on a deployed service, it can be passed either
-from a file containing the domain address, or from an environment variable `SLS_ES_DOMAIN`.
+As the elasticsearch domain endpoint address depends on a deployed service, thus
+the evaluated expression should match an export from CloudFormation from an existing stack.
+This basically means that the [`ListExports`](https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_ListExports.html).
 
-To export the domain address in a file, you can choose from a variety of plugins:
+### Export domain address
 
-* [serverless-stack-output](https://github.com/sbstjn/serverless-stack-output)
-* [serverless-export-env](https://www.npmjs.com/package/serverless-export-env)
+From the service which creates the elasticsearch domain in AWS, add an export in the end of `serverless.yml`
 
-Of course, you can use any other means to get information after CloudFormation has finished a deployment.
+```yaml
+Outputs:
+  ProjectsEndpoint:
+    Description: The API endpoint of elasticsearch domain.
+    Value:
+      Fn::GetAtt: ["ProjectsElasticSearchDomain", "DomainEndpoint"]
+    Export:
+      # Global varibale, uses eubfrEnvironment instead of stage
+      Name: "${self:custom.eubfrEnvironment}:${self:service}:ProjectsEndpoint"
+```
+
+By adding this export, other plugins such as [serverless-stack-output](https://github.com/sbstjn/serverless-stack-output)
+can hook into the creation phase of the CloudFormation stack and create a file with the information for other
+services and modules to feed in the information about the domain address.
