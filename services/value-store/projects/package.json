@@ -3,7 +3,7 @@
   "name": "@eubfr/value-store-projects",
   "version": "0.0.1",
   "scripts": {
-    "deploy": "sls export-env && sls deploy -v",
+    "deploy": "sls deploy -v",
     "test:unit": "jest --testPathPattern=unit"
   },
   "devDependencies": {
@@ -14,7 +14,6 @@
     "dotenv": "4.0.0",
     "jest": "21.2.1",
     "serverless": "1.24.1",
-    "serverless-export-env": "1.1.3",
     "serverless-plugin-elasticsearch-index": "0.0.1",
     "serverless-stack-output": "0.2.3",
     "serverless-webpack": "4.1.0",
