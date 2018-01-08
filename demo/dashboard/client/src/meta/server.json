@@ -1,0 +1,11 @@
+{
+  "DeleteLambdaFunctionQualifiedArn": "arn:aws:lambda:eu-central-1:491621799026:function:emeryro7-demo-dash-server-inforegio-delete:1",
+  "DocrootLambdaFunctionQualifiedArn": "arn:aws:lambda:eu-central-1:491621799026:function:emeryro7-demo-dash-server-inforegio-docroot:1",
+  "UpdateLambdaFunctionQualifiedArn": "arn:aws:lambda:eu-central-1:491621799026:function:emeryro7-demo-dash-server-inforegio-update:1",
+  "DownloadLambdaFunctionQualifiedArn": "arn:aws:lambda:eu-central-1:491621799026:function:emeryro7-demo-dash-server-inforegio-download:1",
+  "FilemetaLambdaFunctionQualifiedArn": "arn:aws:lambda:eu-central-1:491621799026:function:emeryro7-demo-dash-server-inforegio-filemeta:1",
+  "SignedDashurlLambdaFunctionQualifiedArn": "arn:aws:lambda:eu-central-1:491621799026:function:emeryro7-demo-dash-server-inforegio-signed-url:1",
+  "ServiceEndpoint": "https://rdcywb4xxc.execute-api.eu-central-1.amazonaws.com/emeryro7",
+  "ServerlessDeploymentBucketName": "eubfr-dev-deploy",
+  "MetaLambdaFunctionQualifiedArn": "arn:aws:lambda:eu-central-1:491621799026:function:emeryro7-demo-dash-server-inforegio-meta:1"
+}

@@ -3,7 +3,6 @@ import AWS from 'aws-sdk';
 // eslint-disable-line import/no-extraneous-dependencies
 import transformRecord from '../lib/transform';
 
-const fs = require('fs');
 const xml2js = require('xml2js');
 
 // Destination bucket
@@ -95,22 +94,18 @@ export const handler = (event, context, callback) => {
     try {
       // Parse file
       const buffer = Buffer.concat(buffers);
-      const parser = new xml2js.Parser();
-      fs.readFile(buffer, (readErr, readData) => {
-        parser.parseString(readData, (parseErr, result) => {
-          console.dir(result);
-          console.log('Done');
 
-          for (let i = 0; i < result.length; i += 1) {
+      const parser = xml2js.Parser();
+      parser.parseString(buffer, (err, result) => {
+        if (result.main && result.main.DATA_RECORD) {
+          const res = result.main.DATA_RECORD;
+          for (let i = 0; i < res.length; i += 1) {
             // Transform data
-            const data = transformRecord(parser[i]);
+            const data = transformRecord(res[i]);
             dataString += `${JSON.stringify(data)}\n`;
           }
-        });
+        }
       });
-
-      // Sometimes records are nested in items key.
-      // parser = parser.items ? parser.items : parser;
     } catch (e) {
       return handleError(e.message);
     }

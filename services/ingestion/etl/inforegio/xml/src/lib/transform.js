@@ -1,44 +1,46 @@
 /*
- * Transform message (REGIO JSON)
+ * Transform message (INFOREGIO XML)
  */
+
+// Check if field is an array or a sting.
+const checkData = data => {
+  if (data && typeof data === 'object') {
+    return data[0];
+  } else if (data && typeof data === 'string') {
+    return data;
+  }
+  return '';
+};
 
 // Formats date from DD/MM/YYYY to ISO 8601 date format.
 const formatDate = date => {
   if (!date) return null;
-  const d = date.split(/\//);
+  const d = date.toString().split(/\//);
   if (d === null || d.length !== 3) return null;
   if (d[2].length === 2) d[2] = `20${d[2]}`;
   return new Date(d[2], d[1] - 1, d[0]).toISOString();
 };
 
+// Get and format adress from different fields.
 const getAddress = record => {
   let address = '';
   if (record.Beneficiary_address) {
-    address += record.Beneficiary_address;
+    address += checkData(record.Beneficiary_address);
   }
   if (record.Beneficiary_Post_Code) {
     if (address !== '') address += ', ';
-    address += record.Beneficiary_Post_Code;
+    address += checkData(record.Beneficiary_Post_Code);
   }
   if (record.Beneficiary_City) {
     if (address !== '') address += ', ';
-    address += record.Beneficiary_City;
+    address += checkData(record.Beneficiary_City);
   }
   return address;
 };
 
-const getProjectWebsite = record => {
-  if (record.URL && typeof record.URL === 'object') {
-    return record.URL[0];
-  } else if (record.URL && typeof record.URL === 'string') {
-    return record.URL;
-  }
-  return '';
-};
-
 const formatBudget = budget => {
   if (!budget) return null;
-  const b = budget.split(' ');
+  const b = budget.toString().split(' ');
 
   if (b === null || b.length < 2) return 0;
 
@@ -55,31 +57,35 @@ const formatBudget = budget => {
 export default record => {
   // Preprocess budget
   const budgetObject = {
-    total_cost: formatBudget(record.Total_project_budget),
-    eu_contrib: formatBudget(record.EU_Budget_contribution),
+    total_cost: formatBudget(checkData(record.Total_project_budget)),
+    eu_contrib: formatBudget(checkData(record.EU_Budget_contribution)),
     private_fund: null,
     public_fund: null,
     other_contrib: null,
-    funding_area: record.Funds || null,
+    funding_area: checkData(record.Funds) || null,
   };
 
   // Preprocess project locations
   const locationArray = [];
   const countryArray = record.Project_country
-    ? record.Project_country.split('; ')
+    ? checkData(record.Project_country)
+        .toString()
+        .split('; ')
     : null;
   const previousCountries = [];
   if (countryArray !== null && countryArray.length > 1) {
     for (let i = 0; i < countryArray.length; i += 1) {
       if (previousCountries.indexOf(countryArray[i] === -1)) {
         locationArray.push({
-          country_name: null,
           country_code: countryArray[i],
           region: null,
           nuts2: null,
+          address: null,
+          postal_code: null,
+          town: null,
           location: {
-            lat: 0,
-            lon: 0,
+            type: 'Point',
+            coordinates: [0, 0],
           },
         });
         previousCountries.push(countryArray[i]);
@@ -87,50 +93,58 @@ export default record => {
     }
   } else {
     locationArray.push({
-      country_name: null,
-      country_code: record.Project_country,
-      region: record.Project_region,
-      nuts2: record.Project_NUTS2_code,
+      country_code: checkData(record.Project_country),
+      region: checkData(record.Project_region),
+      nuts2: checkData(record.Project_NUTS2_code),
+      address: null,
+      postal_code: null,
+      town: null,
       location: {
-        lat: 0,
-        lon: 0,
+        type: 'Point',
+        coordinates: [0, 0],
       },
     });
   }
 
   // Preprocess type
-  const typeArray = [record.Project_type];
+  const typeArray = record.Project_type || null;
 
   // Preprocess themes
-  const themeArray = record.Thèmes ? record.Thèmes.split('; ') : null;
+  const themeArray = record.Themes
+    ? checkData(record.Themes)
+        .toString()
+        .split('; ')
+    : null;
 
   // Preprocess partners
-  const partnerArray = [
-    {
-      name: record.Beneficiary,
-      type: null,
-      address: getAddress(record),
-      region: null,
-      country: record.Beneficiary_Country,
-      website: null,
-    },
-  ];
+  const partnerArray = record.Beneficiary
+    ? [
+        {
+          name: checkData(record.Beneficiary),
+          type: null,
+          address: getAddress(record),
+          region: null,
+          country: checkData(record.Beneficiary_Country),
+          website: null,
+        },
+      ]
+    : null;
 
   // Map the fields
   return {
-    project_id: record.PROJECTID.toString(),
+    project_id: checkData(record.PROJECTID).toString(),
+    title: checkData(record.Project_name),
     type: typeArray,
-    period: record.Period,
-    title: record.Project_name,
+    period: checkData(record.Period),
     project_locations: locationArray,
     themes: themeArray,
     budget: budgetObject,
-    description: record.quote,
-    project_website: getProjectWebsite(record),
+    description: checkData(record.quote),
+    project_website: checkData(record.URL),
     partners: partnerArray,
     timeframe: {
-      from: formatDate(record.Project_Timeframe_start_date),
-      to: formatDate(record.Project_Timeframe_end_date),
+      from: formatDate(checkData(record.Project_Timeframe_start_date)),
+      to: formatDate(checkData(record.Project_Timeframe_end_date)),
     },
   };
 };
