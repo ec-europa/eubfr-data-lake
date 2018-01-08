@@ -13,6 +13,7 @@ import type {
 // Project model is discussed in EUBFR-4 EUBFR-5 and EUBFR-70
 
 type Result = {
+  available?: string,
   result: string,
 };
 
@@ -25,16 +26,18 @@ type GeoJSON =
   | MultiPolygon2D;
 
 type Location = {
-  country_name?: string,
   country_code: string,
   region?: string,
   nuts2?: string,
+  address?: string,
+  postal_code?: string,
+  town?: string,
   location: GeoJSON,
 };
 
 type Timeframe = {
-  from: string | null,
-  to: string | null,
+  from: string | '',
+  to: string | '',
 };
 
 type Coordinator = {
@@ -59,11 +62,16 @@ type Partner = {
 
 type Budget = {
   eu_contrib: number,
-  total_cost?: string | null,
-  private_fund?: string | null,
-  public_fund?: string | null,
-  other_contrib?: string | null,
-  funding_area?: string | null,
+  total_cost?: number | 0,
+  private_fund?: number | 0,
+  public_fund?: number | 0,
+  other_contrib?: number | 0,
+  funding_area?: string | '',
+};
+
+type RelatedLink = {
+  url: string | '',
+  label: string | '',
 };
 
 export type Project = {
@@ -80,4 +88,5 @@ export type Project = {
   coordinators: Array<Coordinator>,
   partners: Array<Partner>,
   project_locations: Array<Location>,
+  related_links: Array<RelatedLink>,
 };
