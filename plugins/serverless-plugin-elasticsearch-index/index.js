@@ -3,7 +3,9 @@ const AwsConfigCredentials = require('serverless/lib/plugins/aws/configCredentia
 const elasticsearch = require('elasticsearch');
 const connectionClass = require('http-aws-es');
 
+// Inspired by serverless-export-env plugin.
 function listExports(sdk, exports, nextToken) {
+  // eslint-disable-next-line
   exports = exports || [];
   return sdk
     .request('CloudFormation', 'listExports', { NextToken: nextToken })
