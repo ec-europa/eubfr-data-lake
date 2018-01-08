@@ -46,6 +46,8 @@ cd ../../budg/xls
 ./node_modules/.bin/serverless deploy -v
 cd ../../inforegio/json
 ./node_modules/.bin/serverless deploy -v
+cd ../../inforegio/xml
+./node_modules/.bin/serverless deploy -v
 
 # Deploy value store - projects' functions
 cd ../../../../value-store/projects

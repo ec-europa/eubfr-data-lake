@@ -1,0 +1,1 @@
+# INFOREGIO XML ETL rules
