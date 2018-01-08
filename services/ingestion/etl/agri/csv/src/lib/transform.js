@@ -48,7 +48,10 @@ export default (record: Object): Project => {
         };
       }
 
-      return null;
+      return {
+        url: '',
+        label: '',
+      };
     })
     .filter(link => link !== null);
 
@@ -109,7 +112,7 @@ export default (record: Object): Project => {
     programme_name: record['Programme name'] || '',
     description: record['Project description'] || '',
     results: resultObject,
-    ec_priorities: record['EC’s priorities'].split(';') || null,
+    ec_priorities: record['EC’s priorities'].split(';') || [],
     coordinators: coordArray,
     budget: budgetObject,
     partners: partnerArray,
