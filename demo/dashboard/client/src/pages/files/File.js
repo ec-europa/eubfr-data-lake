@@ -53,7 +53,11 @@ class File extends React.Component {
       log: 'warning',
     });
     this.loadFile();
-    this.loadProjects();
+    setInterval(this.loadProjects, 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.loadProjects);
   }
 
   setProjects(computedKey) {
