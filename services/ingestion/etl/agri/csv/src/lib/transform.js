@@ -1,7 +1,7 @@
 // @flow
 
 /*
- * Transform message (BUDG CSV)
+ * Transform message (AGRI CSV)
  */
 
 import type { Project } from '../../../../types/Project';
@@ -12,17 +12,17 @@ import type { Project } from '../../../../types/Project';
 export default (record: Object): Project => {
   // Preprocess budget
   const budgetObject = {
-    total_cost: null,
+    total_cost: 0,
     eu_contrib: Number(record['EU Budget contribution']),
-    private_fund: null,
-    public_fund: null,
-    other_contrib: null,
-    funding_area: null,
+    private_fund: 0,
+    public_fund: 0,
+    other_contrib: 0,
+    funding_area: '',
   };
 
   // Preprocess timeframe
-  let timeframeFrom = null;
-  let timeframeTo = null;
+  let timeframeFrom = '';
+  let timeframeTo = '';
 
   if (record['Timeframe start'].indexOf(' to ') !== -1) {
     const timeframe = (record['Timeframe start'] || '').split(' to ');
@@ -48,7 +48,10 @@ export default (record: Object): Project => {
         };
       }
 
-      return null;
+      return {
+        url: '',
+        label: '',
+      };
     })
     .filter(link => link !== null);
 
@@ -58,8 +61,12 @@ export default (record: Object): Project => {
   const locationArray = record['Project country(ies)']
     .split(';')
     .map((country, index) => ({
-      country_name: null,
       country_code: country,
+      region: '',
+      nuts2: '',
+      address: record['Project address(es)'] || '',
+      postal_code: record['Project postal code(s)'] || '',
+      town: record['Project town(s)'] || '',
       location: {
         type: 'Point',
         coordinates: [
@@ -72,40 +79,40 @@ export default (record: Object): Project => {
   // Preprocess coordinators
   const coordArray = record.Coordinators.split(';').map(coordinator => ({
     name: coordinator,
-    type: null,
-    address: null,
-    region: null,
-    country: null,
-    website: null,
-    phone: null,
-    email: null,
+    type: '',
+    address: '',
+    region: '',
+    country: '',
+    website: '',
+    phone: '',
+    email: '',
   }));
 
   // Preprocess partners
   const partnerArray = record.Partners.split(',').map(partner => ({
     name: partner,
-    type: null,
-    address: null,
-    region: null,
-    country: null,
-    website: null,
+    type: '',
+    address: '',
+    region: '',
+    country: '',
+    website: '',
   }));
 
   // Preprocess results
   const resultObject = {
-    available: null,
-    result: record.Results,
+    available: '',
+    result: record.Results || '',
   };
 
   // Map the fields
   return {
-    project_id: record.Nid,
-    title: record.Name,
-    cover_image: record.Visual,
-    programme_name: record['Programme name'],
-    description: record['Project description'],
+    project_id: record.Nid || '',
+    title: record.Name || '',
+    cover_image: record.Visual || '',
+    programme_name: record['Programme name'] || '',
+    description: record['Project description'] || '',
     results: resultObject,
-    ec_priorities: record['EC’s priorities'].split(';'),
+    ec_priorities: record['EC’s priorities'].split(';') || [],
     coordinators: coordArray,
     budget: budgetObject,
     partners: partnerArray,
@@ -117,7 +124,7 @@ export default (record: Object): Project => {
       to:
         timeframeTo && new Date(parseInt(timeframeTo, 10) * 1000).toISOString(),
     },
-    project_website: record['Project webpage'],
+    project_website: record['Project webpage'] || '',
     related_links: links,
   };
 };
