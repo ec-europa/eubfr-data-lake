@@ -1,6 +1,6 @@
 import path from 'path';
-import AWS from 'aws-sdk';
-// eslint-disable-line import/no-extraneous-dependencies
+import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
+
 import transformRecord from '../lib/transform';
 
 const xml2js = require('xml2js');
