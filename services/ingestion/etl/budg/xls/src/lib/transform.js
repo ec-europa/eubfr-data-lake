@@ -24,6 +24,14 @@ export default (record: Object): Project => {
     funding_area: null,
   };
 
+  // Preprocess timeframe
+  const timeframeFrom = record['Start date']
+    ? new Date(record['Start date']).toISOString()
+    : '';
+  const timeframeTo = record['End date']
+    ? new Date(record['End date']).toISOString()
+    : '';
+
   // Preprocess results
   const resultObject = {
     available: record['Results Available'],
@@ -93,8 +101,8 @@ export default (record: Object): Project => {
     type: typeArray,
     call_year: record['Call year'],
     timeframe: {
-      from: new Date(record['Start date']).toISOString(),
-      to: new Date(record['End date']).toISOString(),
+      from: timeframeFrom,
+      to: timeframeTo,
     },
     success_story: record['Is Success Story'],
     title: record['Project Title'],

@@ -18,9 +18,9 @@ const checkData = data => {
 
 // Formats date from DD/MM/YYYY to ISO 8601 date format.
 const formatDate = date => {
-  if (!date) return null;
+  if (!date) return '';
   const d = date.toString().split(/\//);
-  if (d === null || d.length !== 3) return null;
+  if (d === null || d.length !== 3) return '';
   if (d[2].length === 2) d[2] = `20${d[2]}`;
   return new Date(d[2], d[1] - 1, d[0]).toISOString();
 };
