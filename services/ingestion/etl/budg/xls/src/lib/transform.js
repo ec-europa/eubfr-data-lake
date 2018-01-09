@@ -1,3 +1,7 @@
+// @flow
+
+import type { Project } from '../../../../types/Project';
+
 /*
  * Transform message (BUDG XLS)
  */
@@ -5,7 +9,7 @@
 /*
  * Map fields
  */
-export default record => {
+export default (record: Object): Project => {
   // Preprocess budget
   const budgetObject = {
     total_cost: null,

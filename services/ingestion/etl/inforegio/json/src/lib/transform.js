@@ -1,3 +1,7 @@
+// @flow
+
+import type { Project } from '../../../../types/Project';
+
 /*
  * Transform message (REGIO JSON)
  */
@@ -52,7 +56,7 @@ const formatBudget = budget => {
 /*
  * Map fields
  */
-export default record => {
+export default (record: Object): Project => {
   // Preprocess budget
   const budgetObject = {
     total_cost: formatBudget(record.Total_project_budget),

@@ -1,3 +1,7 @@
+// @flow
+
+import type { Project } from '../../../../types/Project';
+
 /*
  * Transform message (INFOREGIO XML)
  */
@@ -51,7 +55,7 @@ const formatBudget = budget => {
 /*
  * Map fields
  */
-export default record => {
+export default (record: Object): Project => {
   // Preprocess budget
   const budgetObject = {
     total_cost: formatBudget(checkData(record.Total_project_budget)),
