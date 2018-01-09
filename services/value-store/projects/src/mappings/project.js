@@ -4,6 +4,14 @@
 module.exports = () => ({
   project: {
     properties: {
+      title: {
+        type: 'text',
+        fields: {
+          keyword: {
+            type: 'keyword',
+          },
+        },
+      },
       budget: {
         properties: {
           funding_area: {
