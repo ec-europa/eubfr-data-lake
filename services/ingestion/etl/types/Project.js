@@ -88,5 +88,5 @@ export type Project = {
   coordinators: Array<Coordinator>,
   partners: Array<Partner>,
   project_locations: Array<Location>,
-  related_links: Array<RelatedLink>,
+  related_links?: Array<RelatedLink>,
 };
