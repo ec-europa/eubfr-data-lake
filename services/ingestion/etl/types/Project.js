@@ -82,7 +82,7 @@ export type Project = {
   programme_name: string,
   project_website: string,
   budget: Budget,
-  results: Result,
+  results?: Result,
   timeframe: Timeframe,
   ec_priorities: Array<string>,
   coordinators: Array<Coordinator>,
