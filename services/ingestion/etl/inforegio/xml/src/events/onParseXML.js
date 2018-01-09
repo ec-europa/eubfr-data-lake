@@ -47,7 +47,7 @@ export const handler = async (event, context, callback) => {
   const region = process.env.REGION;
 
   // Get the endpoint arn
-  const endpointArn = `arn:aws:sns:${region}:${accountId}:${stage}-etl-`;
+  const endpointArn = `arn:aws:sns:${region}:${accountId}:${stage}-MetaStatusReported`;
   const sns = new AWS.SNS();
   const logger = new Logger({
     sns,
