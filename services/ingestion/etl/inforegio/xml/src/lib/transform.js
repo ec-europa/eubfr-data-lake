@@ -116,14 +116,14 @@ export default (record: Object): Project => {
     ? [
         {
           name: checkData(record.Beneficiary),
-          type: null,
+          type: '',
           address: getAddress(record),
-          region: null,
+          region: '',
           country: checkData(record.Beneficiary_Country),
-          website: null,
+          website: '',
         },
       ]
-    : null;
+    : [];
 
   // Map the fields
   return {
