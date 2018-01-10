@@ -22,21 +22,20 @@ class CreateElasticIndexDeploy {
     this.awsConfig = slsAwsConfig.getCredentials();
   }
 
-  async setupElasticClient() {
+  async setupElasticClient(config) {
     const accessKeyId = this.awsConfig[1].split(' = ')[1];
     const secretAccessKey = this.awsConfig[2].split(' = ')[1];
 
     // Setup elasticsearch:
-    // get configuration from serverless.yml file
-    const pluginConfig = this.serverless.service.custom.slsEsIndex;
+
     // Get specific plugin configurations
-    const { region, index, type, mapping } = pluginConfig;
+    const { region, index } = config;
 
     const exportedVariables = await listExports(this.serverless.providers.aws);
 
     // Map endpointName with the actual ES domain
     const domain = exportedVariables.find(
-      exp => exp.Name === pluginConfig.endpointName
+      exp => exp.Name === config.endpointName
     ).Value;
 
     // elasticsearch client configuration
@@ -54,42 +53,40 @@ class CreateElasticIndexDeploy {
     };
 
     // elasticsearch client instantiation
-    const client = elasticsearch.Client(esOptions);
-
-    // class scope for elasticsearch properties
-    this.client = client;
-    this.index = index;
-    this.type = type;
-    this.domain = domain;
-    this.mapping = mapping;
+    return elasticsearch.Client(esOptions);
   }
 
   // Create elasticsearch index after deployment has finished
   async afterDeployment() {
-    await this.setupElasticClient();
+    const indices = this.serverless.service.custom.slsEsIndices;
 
-    this.client.indices
-      .exists({ index: this.index })
-      .then(exists => {
-        if (!exists) {
-          return this.client.indices.create({ index: this.index });
-        }
-        return exists;
-      })
-      .catch(() => this.client.indices.create({ index: this.index }))
-      .then(() =>
-        this.client.indices.getMapping({
-          index: this.index,
-          type: this.type,
+    await indices.forEach(async indexConfig => {
+      const client = await this.setupElasticClient(indexConfig);
+      const { index, type, mapping } = indexConfig;
+
+      client.indices
+        .exists({ index: this.index })
+        .then(exists => {
+          if (!exists) {
+            return client.indices.create({ index });
+          }
+          return exists;
         })
-      )
-      .catch(() =>
-        this.client.indices.putMapping({
-          index: this.index,
-          type: this.type,
-          body: this.mapping,
-        })
-      );
+        .catch(() => client.indices.create({ index }))
+        .then(() =>
+          client.indices.getMapping({
+            index,
+            type,
+          })
+        )
+        .catch(() =>
+          client.indices.putMapping({
+            index,
+            type,
+            body: mapping[type],
+          })
+        );
+    });
   }
 }
 

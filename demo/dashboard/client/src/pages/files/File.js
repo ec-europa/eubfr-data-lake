@@ -48,7 +48,7 @@ class File extends React.Component {
   componentDidMount() {
     this.client = elasticsearch.Client({
       host: projectsApiEndpoint,
-      apiVersion: '5.5',
+      apiVersion: '6.0',
       log: 'warning',
     });
 

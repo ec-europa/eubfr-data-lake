@@ -26,7 +26,7 @@ class Logs extends React.Component {
   componentDidMount() {
     this.logClient = elasticsearch.Client({
       host: logsApiEndpoint,
-      apiVersion: '5.5',
+      apiVersion: '6.0',
       log: 'warning',
     });
 

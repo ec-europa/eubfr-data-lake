@@ -1,9 +1,26 @@
 service: resources-elasticsearch
 
+plugins:
+  - serverless-plugin-elasticsearch-index
+
 custom:
   eubfrEnvironment: ${opt:eubfr_env, file(../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
   projectsDomain: ${self:custom.eubfrEnvironment}-projects
   logsDomain: ${self:custom.eubfrEnvironment}-logs
+  slsEsIndices:
+    -
+      type: project
+      index: '${opt:stage, file(../../config.json):stage, ''dev''}-projects'
+      mapping: '${file(./mappings/project.js)}'
+      region: '${opt:region, file(../../config.json):region, ''eu-central-1''}'
+      endpointName: '${self:custom.eubfrEnvironment}:resources-elasticsearch:ProjectsEndpoint'
+    -
+      type: file
+      index: '${opt:stage, file(../../config.json):stage, ''dev''}-logs'
+      mapping: '${file(./mappings/logs.js)}'
+      region: '${opt:region, file(../../config.json):region, ''eu-central-1''}'
+      endpointName: '${self:custom.eubfrEnvironment}:resources-elasticsearch:LogsEndpoint'
+
 
 provider:
   name: aws
@@ -65,7 +82,7 @@ resources:
       DeletionPolicy: Retain
       Properties:
         DomainName: ${self:custom.logsDomain}
-        ElasticsearchVersion: 5.5
+        ElasticsearchVersion: 6.0
         EBSOptions:
           EBSEnabled: true
           VolumeType: gp2
