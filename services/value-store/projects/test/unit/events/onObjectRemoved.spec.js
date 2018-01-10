@@ -1,3 +1,7 @@
+/**
+ * @jest-environment node
+ */
+
 import { promisify } from 'util';
 import onObjectRemoved from '../../../src/events/onObjectRemoved';
 

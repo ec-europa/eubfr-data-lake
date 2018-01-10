@@ -1,3 +1,7 @@
+/**
+ * @jest-environment node
+ */
+
 import onParseCSV from '../../../src/events/onParseCSV';
 
 describe(`Function parseCsv in "@eubfr/ingestion-etl-agri-csv"`, () => {

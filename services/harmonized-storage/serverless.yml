@@ -67,8 +67,7 @@ resources:
     HarmonizedSourceBucketPolicy:
       Type: AWS::S3::BucketPolicy
       Properties:
-        Bucket:
-          Ref: HarmonizedSourceBucket
+        Bucket: ${self:custom.bucketName}
         PolicyDocument:
           Statement:
             -
