@@ -135,6 +135,7 @@ export default (record: Object): Project => {
     themes: themeArray,
     budget: budgetObject,
     description: checkData(record.quote),
+    programme_name: '',
     project_website: checkData(record.URL),
     partners: partnerArray,
     timeframe: {
