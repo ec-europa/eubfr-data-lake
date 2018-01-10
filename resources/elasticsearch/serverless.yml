@@ -10,16 +10,16 @@ custom:
   slsEsIndices:
     -
       type: project
-      index: '${opt:stage, file(../../config.json):stage, ''dev''}-projects'
+      index: ${opt:stage, file(../../config.json):stage, 'dev'}-projects
       mapping: '${file(./mappings/project.js)}'
-      region: '${opt:region, file(../../config.json):region, ''eu-central-1''}'
-      endpointName: '${self:custom.eubfrEnvironment}:resources-elasticsearch:ProjectsEndpoint'
+      region: ${opt:region, file(../../config.json):region, 'eu-central-1'}
+      endpointName: ${self:custom.eubfrEnvironment}:resources-elasticsearch:ProjectsEndpoint
     -
       type: file
-      index: '${opt:stage, file(../../config.json):stage, ''dev''}-logs'
-      mapping: '${file(./mappings/logs.js)}'
-      region: '${opt:region, file(../../config.json):region, ''eu-central-1''}'
-      endpointName: '${self:custom.eubfrEnvironment}:resources-elasticsearch:LogsEndpoint'
+      index: ${opt:stage, file(../../config.json):stage, 'dev'}-logs
+      mapping: ${file(./mappings/logs.js)}
+      region: ${opt:region, file(../../config.json):region, 'eu-central-1'}
+      endpointName: ${self:custom.eubfrEnvironment}:resources-elasticsearch:LogsEndpoint
 
 
 provider:
@@ -82,7 +82,7 @@ resources:
       DeletionPolicy: Retain
       Properties:
         DomainName: ${self:custom.logsDomain}
-        ElasticsearchVersion: 6.0
+        ElasticsearchVersion: '6.0'
         EBSOptions:
           EBSEnabled: true
           VolumeType: gp2
