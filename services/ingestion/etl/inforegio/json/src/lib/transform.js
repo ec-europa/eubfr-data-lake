@@ -64,7 +64,7 @@ export default (record: Object): Project => {
     private_fund: 0,
     public_fund: 0,
     other_contrib: 0,
-    funding_area: record.Funds || null,
+    funding_area: record.Funds || '',
   };
 
   // Preprocess project locations

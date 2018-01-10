@@ -12,16 +12,16 @@ import type { Project } from '../../../../types/Project';
 export default (record: Object): Project => {
   // Preprocess budget
   const budgetObject = {
-    total_cost: null,
+    total_cost: 0,
     eu_contrib: Number(
       record[
         "EU Grant award in euros (This amount represents the grant awarded after the selection stage and is indicative. Please note that any changes made during or after the project's lifetime will not be reflected here.)"
       ].replace(/,/g, '')
     ),
-    private_fund: null,
-    public_fund: null,
-    other_contrib: null,
-    funding_area: null,
+    private_fund: 0,
+    public_fund: 0,
+    other_contrib: 0,
+    funding_area: '',
   };
 
   // Preprocess timeframe
@@ -65,8 +65,8 @@ export default (record: Object): Project => {
       region: record["Coordinator's region"],
       country: record["Coordinator's country"],
       website: record["Coordinator's website"],
-      phone: null,
-      email: null,
+      phone: '',
+      email: '',
     },
   ];
 
@@ -113,5 +113,7 @@ export default (record: Object): Project => {
     project_locations: locationArray,
     coordinators: coordArray,
     partners: partnerArray,
+    ec_priorities: [],
+    cover_image: '',
   };
 };
