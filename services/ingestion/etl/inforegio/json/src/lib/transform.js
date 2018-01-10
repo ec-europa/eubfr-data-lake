@@ -8,9 +8,9 @@ import type { Project } from '../../../../types/Project';
 
 // Formats date from DD/MM/YYYY to ISO 8601 date format.
 const formatDate = date => {
-  if (!date) return null;
+  if (!date) return '';
   const d = date.split(/\//);
-  if (d === null || d.length !== 3) return null;
+  if (d === null || d.length !== 3) return '';
   if (d[2].length === 2) d[2] = `20${d[2]}`;
   return new Date(d[2], d[1] - 1, d[0]).toISOString();
 };
@@ -41,7 +41,7 @@ const getProjectWebsite = record => {
 };
 
 const formatBudget = budget => {
-  if (!budget) return null;
+  if (!budget) return 0;
   const b = budget.split(' ');
 
   if (b === null || b.length < 2) return 0;
@@ -61,9 +61,9 @@ export default (record: Object): Project => {
   const budgetObject = {
     total_cost: formatBudget(record.Total_project_budget),
     eu_contrib: formatBudget(record.EU_Budget_contribution),
-    private_fund: null,
-    public_fund: null,
-    other_contrib: null,
+    private_fund: 0,
+    public_fund: 0,
+    other_contrib: 0,
     funding_area: record.Funds || null,
   };
 
@@ -110,11 +110,11 @@ export default (record: Object): Project => {
   const partnerArray = [
     {
       name: record.Beneficiary,
-      type: null,
+      type: '',
       address: getAddress(record),
-      region: null,
+      region: '',
       country: record.Beneficiary_Country,
-      website: null,
+      website: '',
     },
   ];
 
@@ -134,5 +134,9 @@ export default (record: Object): Project => {
       from: formatDate(record.Project_Timeframe_start_date),
       to: formatDate(record.Project_Timeframe_end_date),
     },
+    programme_name: '',
+    ec_priorities: [],
+    cover_image: '',
+    coordinators: [],
   };
 };

@@ -60,10 +60,10 @@ export default (record: Object): Project => {
   const budgetObject = {
     total_cost: formatBudget(checkData(record.Total_project_budget)),
     eu_contrib: formatBudget(checkData(record.EU_Budget_contribution)),
-    private_fund: null,
-    public_fund: null,
-    other_contrib: null,
-    funding_area: checkData(record.Funds) || null,
+    private_fund: 0,
+    public_fund: 0,
+    other_contrib: 0,
+    funding_area: checkData(record.Funds) || '',
   };
 
   // Preprocess project locations
@@ -135,6 +135,7 @@ export default (record: Object): Project => {
     themes: themeArray,
     budget: budgetObject,
     description: checkData(record.quote),
+    cover_image: '',
     programme_name: '',
     project_website: checkData(record.URL),
     partners: partnerArray,
@@ -142,5 +143,7 @@ export default (record: Object): Project => {
       from: formatDate(checkData(record.Project_Timeframe_start_date)),
       to: formatDate(checkData(record.Project_Timeframe_end_date)),
     },
+    ec_priorities: [],
+    coordinators: [],
   };
 };
