@@ -1,17 +1,11 @@
 service: value-store-projects
 
 plugins:
-  - serverless-plugin-elasticsearch-index
   - serverless-stack-output
   - serverless-webpack
 
 custom:
-  slsEsIndex:
-    type: project
-    index: ${self:provider.stage}-projects
-    mapping: ${file(./src/mappings/project.js)}
-    region: ${opt:region, file(../../../config.json):region, 'eu-central-1'}
-    endpointName: ${self:custom.eubfrEnvironment}:resources-elasticsearch:ProjectsEndpoint
+  esIndex: ${self:provider.stage}-projects
   webpackIncludeModules: true
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
   output:
@@ -44,7 +38,9 @@ functions:
     environment:
       API:
         Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:ProjectsEndpoint
-      INDEX: ${self:custom.slsEsIndex.index}
+      INDEX: ${self:custom.esIndex}
+      REGION: ${self:provider.region}
+      STAGE: ${self:provider.stage}
     events:
       - sns:
           arn:
@@ -63,7 +59,9 @@ functions:
     environment:
       API:
         Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:ProjectsEndpoint
-      INDEX: ${self:custom.slsEsIndex.index}
+      INDEX: ${self:custom.esIndex}
+      REGION: ${self:provider.region}
+      STAGE: ${self:provider.stage}
     events:
       - sns:
           arn:

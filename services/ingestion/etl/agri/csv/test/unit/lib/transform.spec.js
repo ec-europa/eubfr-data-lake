@@ -1,3 +1,7 @@
+/**
+ * @jest-environment node
+ */
+
 import mapper from '../../../src/lib/transform';
 import testRecord from '../../stubs/record.json';
 

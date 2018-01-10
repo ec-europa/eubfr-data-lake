@@ -23,22 +23,22 @@
   },
   "devDependencies": {
     "babel-core": "6.26.0",
-    "babel-eslint": "8.0.3",
-    "eslint": "4.12.1",
+    "babel-eslint": "8.2.1",
+    "eslint": "4.15.0",
     "eslint-config-airbnb-base": "12.1.0",
     "eslint-config-prettier": "2.9.0",
-    "eslint-plugin-flowtype": "2.39.1",
+    "eslint-plugin-flowtype": "2.41.0",
     "eslint-plugin-import": "2.8.0",
-    "eslint-plugin-jest": "21.4.2",
-    "eslint-plugin-prettier": "2.3.1",
+    "eslint-plugin-jest": "21.6.1",
+    "eslint-plugin-prettier": "2.4.0",
     "eslint-plugin-react": "7.5.1",
-    "flow-bin": "0.60.1",
-    "flow-geojson": "2.0.2",
+    "flow-bin": "0.63.1",
+    "flow-geojson": "2.0.3",
     "husky": "0.14.3",
-    "lerna": "2.5.1",
+    "lerna": "2.6.0",
     "lint-staged": "6.0.0",
     "npm-run-all": "4.1.2",
-    "prettier": "1.9.1"
+    "prettier": "1.9.2"
   },
   "workspaces": ["demo/**", "plugins/**", "resources/**", "services/**"]
 }

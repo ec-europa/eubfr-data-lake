@@ -1,13 +1,26 @@
 service: resources-elasticsearch
 
 plugins:
-  - serverless-stack-output
+  - serverless-plugin-elasticsearch-index
 
 custom:
   eubfrEnvironment: ${opt:eubfr_env, file(../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
   projectsDomain: ${self:custom.eubfrEnvironment}-projects
-  output:
-    file: .serverless/stack-output.json
+  logsDomain: ${self:custom.eubfrEnvironment}-logs
+  slsEsIndices:
+    -
+      type: project
+      index: ${opt:stage, file(../../config.json):stage, 'dev'}-projects
+      mapping: '${file(./mappings/project.js)}'
+      region: ${opt:region, file(../../config.json):region, 'eu-central-1'}
+      endpointName: ${self:custom.eubfrEnvironment}:resources-elasticsearch:ProjectsEndpoint
+    -
+      type: file
+      index: ${opt:stage, file(../../config.json):stage, 'dev'}-logs
+      mapping: ${file(./mappings/logs.js)}
+      region: ${opt:region, file(../../config.json):region, 'eu-central-1'}
+      endpointName: ${self:custom.eubfrEnvironment}:resources-elasticsearch:LogsEndpoint
+
 
 provider:
   name: aws
@@ -63,6 +76,48 @@ resources:
                 aws:SourceIp:
                 - 147.67.241.226
             Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.projectsDomain}/*"
+    LogsElasticSearchDomain:
+      Type: AWS::Elasticsearch::Domain
+      # Don't delete the elastic search instance when the CF stack is deleted
+      DeletionPolicy: Retain
+      Properties:
+        DomainName: ${self:custom.logsDomain}
+        ElasticsearchVersion: '6.0'
+        EBSOptions:
+          EBSEnabled: true
+          VolumeType: gp2
+          VolumeSize: 10
+        ElasticsearchClusterConfig:
+          InstanceType: t2.small.elasticsearch
+          InstanceCount: 1
+          DedicatedMasterEnabled: false
+          ZoneAwarenessEnabled: false
+        AccessPolicies:
+          Version: '2012-10-17'
+          Statement:
+          # Public can query for information
+          - Effect: Allow
+            Principal: "*"
+            Action:
+             - "es:ESHttpHead"
+             - "es:ESHttpGet"
+             - "es:ESHttpPost"
+            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.logsDomain}/*"
+          # Lambda can take actions on the ES domain
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+          # Admin access to Kibana from an IP
+          # https://goo.gl/eiGgpD
+          - Effect: Allow
+            Principal: "*"
+            Action: es:*
+            Condition:
+              IpAddress:
+                aws:SourceIp:
+                - 147.67.241.226
+            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.logsDomain}/*"
   Outputs:
     ProjectsEndpoint:
       Description: The API endpoint of the projects' elasticsearch domain.
@@ -71,3 +126,10 @@ resources:
       Export:
         # Global varibale, uses eubfrEnvironment instead of stage
         Name: "${self:custom.eubfrEnvironment}:${self:service}:ProjectsEndpoint"
+    LogsEndpoint:
+      Description: The API endpoint of the logs' elasticsearch domain.
+      Value:
+        Fn::GetAtt: ["LogsElasticSearchDomain", "DomainEndpoint"]
+      Export:
+        # Global varibale, uses eubfrEnvironment instead of stage
+        Name: "${self:custom.eubfrEnvironment}:${self:service}:LogsEndpoint"

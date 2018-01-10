@@ -1,15 +1,20 @@
-import { promisify } from 'util';
+/**
+ * @jest-environment node
+ */
+
 import onParseCSV from '../../../src/events/onParseCSV';
 
-const handler = promisify(onParseCSV);
-
 describe(`Function parseCsv in "@eubfr/ingestion-etl-agri-csv"`, () => {
-  test('The function expects a correct SNS record', () => {
+  test('The function expects a correct SNS record', async () => {
     const event = {};
     const context = {};
 
     expect.assertions(1);
-    const result = handler(event, context);
-    return expect(result).rejects.toBe(`Bad record`);
+
+    try {
+      await onParseCSV(event, context);
+    } catch (e) {
+      expect(e.message).toEqual('Bad record');
+    }
   });
 });

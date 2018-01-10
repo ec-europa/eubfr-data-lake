@@ -1,12 +1,14 @@
 import path from 'path';
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 
+import Logger from '../../../../../../logger/listener/src/lib/Logger';
 import transformRecord from '../lib/transform';
+import { STATUS } from '../../../../../../storage/meta-index/src/events/onStatusReported';
 
 // Destination bucket
 const { BUCKET } = process.env;
 
-export const handler = (event, context, callback) => {
+export const handler = async (event, context, callback) => {
   /*
    * Some checks here before going any further
    */
@@ -43,31 +45,51 @@ export const handler = (event, context, callback) => {
   const region = process.env.REGION;
 
   // Get the endpoint arn
-  const endpointArn = `arn:aws:sns:${region}:${accountId}:${stage}-etl-`;
+  const endpointArn = `arn:aws:sns:${region}:${accountId}:${stage}-MetaStatusReported`;
   const sns = new AWS.SNS();
+  const logger = new Logger({
+    sns,
+    targetArn: `arn:aws:sns:${region}:${accountId}:${stage}-onLogEmitted`,
+    emitter: context.invokedFunctionArn,
+  });
 
   const handleError = e =>
     sns.publish(
       {
         Message: JSON.stringify({
           default: JSON.stringify({
-            object: message.object.key,
+            key: message.object.key,
+            status: STATUS.ERROR,
             message: e,
           }),
         }),
         MessageStructure: 'json',
-        TargetArn: `${endpointArn}failure`,
+        TargetArn: endpointArn,
       },
-      snsErr => {
+      async snsErr => {
         if (snsErr) {
           return callback(snsErr);
         }
+
+        await logger.error({
+          message: {
+            computed_key: message.object.key,
+            status_message: JSON.stringify(e),
+          },
+        });
 
         return callback(e);
       }
     );
 
   const s3 = new AWS.S3();
+
+  await logger.info({
+    message: {
+      computed_key: message.object.key,
+      status_message: 'Start parsing JSON...',
+    },
+  });
 
   // Get file
   const file = s3
@@ -114,12 +136,18 @@ export const handler = (event, context, callback) => {
       ContentType: 'application/x-ndjson',
     };
 
-    return s3.upload(params, err => {
+    return s3.upload(params, async err => {
       if (err) {
         return handleError(err);
       }
 
-      // Publish message to ETL Success topic
+      await logger.info({
+        message: {
+          computed_key: message.object.key,
+          status_message:
+            'JSON parsed successfully. Results will be uploaded to ElasticSearch soon...',
+        },
+      });
 
       /*
        * Send the SNS message
@@ -128,12 +156,13 @@ export const handler = (event, context, callback) => {
         {
           Message: JSON.stringify({
             default: JSON.stringify({
-              object: message.object.key,
+              key: message.object.key,
+              status: STATUS.PARSED,
               message: 'ETL successful',
             }),
           }),
           MessageStructure: 'json',
-          TargetArn: `${endpointArn}success`,
+          TargetArn: endpointArn,
         },
         snsErr => {
           if (snsErr) {

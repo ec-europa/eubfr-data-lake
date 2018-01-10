@@ -11,10 +11,6 @@ cd ..
 cd ./services/storage/objects
 ./node_modules/.bin/serverless deploy -v
 
-# Deploy ETL results (SNS topics)
-cd ../../ingestion/etl-results
-./node_modules/.bin/serverless deploy -v
-
 # Deploy signed uploads service
 cd ../../storage/signed-uploads
 ./node_modules/.bin/serverless deploy -v
@@ -51,4 +47,8 @@ cd ../../inforegio/xml
 
 # Deploy value store - projects' functions
 cd ../../../../value-store/projects
+./node_modules/.bin/serverless deploy -v
+
+# Deploy logger - listener
+cd ../../logger/listener
 ./node_modules/.bin/serverless deploy -v

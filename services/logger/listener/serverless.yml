@@ -1,0 +1,75 @@
+service: logger-listener
+
+plugins:
+  - serverless-stack-output
+  - serverless-webpack
+
+custom:
+  webpackIncludeModules: true
+  eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
+  index: ${self:provider.stage}-logs
+  output:
+    file: .serverless/stack-output.json
+
+package:
+  individually: true
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  timeout: 300
+  stage: ${opt:stage, file(../../../config.json):stage, 'dev'}
+  region: ${opt:region, file(../../../config.json):region, 'eu-central-1'}
+  deploymentBucket:
+    name: eubfr-${self:custom.eubfrEnvironment}-deploy
+  stackTags:
+    ENV: ${self:custom.eubfrEnvironment}
+  iamRoleStatements:
+    # https://goo.gl/U21zxP
+    - Effect: "Allow"
+      Action: "es:*"
+      Resource: "arn:aws:es:${self:provider.region}:*:domain/*"
+
+functions:
+  onLogEmitted:
+    handler: src/events/onLogEmitted.handler
+    name: ${self:provider.stage}-${self:service}-onLogEmitted
+    memorySize: 256
+    environment:
+      API:
+        Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:LogsEndpoint
+      INDEX: ${self:custom.index}
+    events:
+      - sns:
+          arn:
+            Fn::Join:
+              - ""
+              -
+                - "arn:aws:sns:"
+                - Ref: "AWS::Region"
+                - ":"
+                - Ref: "AWS::AccountId"
+                - ":${self:provider.stage}-onLogEmitted"
+          topicName: ${self:provider.stage}-onLogEmitted
+
+resources:
+  Resources:
+    LogTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: ${self:provider.stage}-onLogEmitted
+    LogTopicPolicy:
+      Type: AWS::SNS::TopicPolicy
+      Properties:
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            -
+              Sid: AllowAllToLog
+              Action:
+                - sns:Publish
+              Effect: Allow
+              Resource: "*"
+              Principal: "*"
+        Topics:
+        - Ref: LogTopic

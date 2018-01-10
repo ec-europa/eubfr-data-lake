@@ -1,3 +1,1 @@
-# Form Upload
-
-Helper form to upload files for ingestion.
+# Dashboard demo: Client

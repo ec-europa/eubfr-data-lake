@@ -82,9 +82,9 @@ functions:
                 - Ref: "AWS::AccountId"
                 - ":${self:provider.stage}-object-removed"
           topicName: ${self:provider.stage}-object-removed
-  onETLResult:
-    handler: src/events/onETLResult.handler
-    name: ${self:provider.stage}-${self:service}-onETLResult
+  onStatusReported:
+    handler: src/events/onStatusReported.handler
+    name: ${self:provider.stage}-${self:service}-onStatusReported
     events:
       - sns:
           arn:
@@ -95,19 +95,8 @@ functions:
                 - Ref: "AWS::Region"
                 - ":"
                 - Ref: "AWS::AccountId"
-                - ":${self:provider.stage}-etl-success"
-          topicName: ${self:provider.stage}-etl-success
-      - sns:
-          arn:
-            Fn::Join:
-              - ""
-              -
-                - "arn:aws:sns:"
-                - Ref: "AWS::Region"
-                - ":"
-                - Ref: "AWS::AccountId"
-                - ":${self:provider.stage}-etl-failure"
-          topicName: ${self:provider.stage}-etl-failure
+                - ":${self:provider.stage}-MetaStatusReported"
+          topicName: ${self:provider.stage}-MetaStatusReported
   listProjects:
     handler: src/api/list.handler
     name: ${self:provider.stage}-${self:service}-list
@@ -152,3 +141,20 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5
+    MetaStatusReported:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: ${self:provider.stage}-MetaStatusReported
+    MetaStatusReportedTopicPolicy:
+      Type: AWS::SNS::TopicPolicy
+      Properties:
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            -
+              Effect: Allow
+              Principal: '*'
+              Action: sns:Publish
+              Resource: '*'
+        Topics:
+        - Ref: MetaStatusReported
