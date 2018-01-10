@@ -56,8 +56,8 @@ export default (record: Object): Project => {
     .filter(link => link !== null);
 
   // Preprocess project locations
-  const latArray = record['Project location latitude'].split(';');
   const longArray = record['Project location longitude'].split(';');
+  const latArray = record['Project location latitude'].split(';');
   const locationArray = record['Project country(ies)']
     .split(';')
     .map((country, index) => ({

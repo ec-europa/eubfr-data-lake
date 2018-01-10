@@ -27,12 +27,14 @@ type GeoJSON =
 
 type Location = {
   country_code: string,
-  region?: string,
-  nuts2?: string,
-  address?: string,
-  postal_code?: string,
-  town?: string,
-  location: GeoJSON,
+  region: string,
+  nuts2: string,
+  address: string,
+  postal_code: string,
+  town: string,
+  // If nothing else, provide null in transform function for this field.
+  // Never null project_locations field which is typed on ES level.
+  location: GeoJSON | null,
 };
 
 type Timeframe = {
