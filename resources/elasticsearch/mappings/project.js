@@ -4,10 +4,23 @@
 module.exports = () => ({
   project: {
     properties: {
+      title: {
+        type: 'text',
+        fields: {
+          keyword: {
+            type: 'keyword',
+          },
+        },
+      },
       budget: {
         properties: {
           funding_area: {
-            type: 'keyword',
+            type: 'text',
+            fields: {
+              keyword: {
+                type: 'keyword',
+              },
+            },
           },
         },
       },
@@ -22,13 +35,23 @@ module.exports = () => ({
         },
       },
       ec_priorities: {
-        type: 'keyword',
+        type: 'text',
+        fields: {
+          keyword: {
+            type: 'keyword',
+          },
+        },
       },
       producer_id: {
         type: 'keyword',
       },
       programme_name: {
-        type: 'keyword',
+        type: 'text',
+        fields: {
+          keyword: {
+            type: 'keyword',
+          },
+        },
       },
       project_locations: {
         properties: {
