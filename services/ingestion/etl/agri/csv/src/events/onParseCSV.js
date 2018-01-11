@@ -1,70 +1,59 @@
-import path from 'path';
-import stream from 'stream';
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 import parse from 'csv-parse';
 import transform from 'stream-transform';
 
+import Logger from '../../../../../../logger/listener/src/lib/Logger';
+
+// Import constants
+import { STATUS } from '../../../../../../storage/meta-index/src/events/onStatusReported';
+
+// Import logic
+import { extractMessage, prepareMessage } from '../lib/sns';
 import transformRecord from '../lib/transform';
+import uploadFromStream from '../lib/uploadFromStream';
 
-// Destination bucket
-const { BUCKET } = process.env;
+export const handler = async (event, context, callback) => {
+  // 1. Validate handler execution
+  // check event, context
+  const snsMessage = extractMessage(event);
 
-export const handler = (event, context, callback) => {
-  /*
-   * Some checks here before going any further
-   */
-
-  // Only work on the first record
-  const snsRecord = event.Records ? event.Records[0] : undefined;
-
-  // Was the lambda triggered correctly? Is the file extension supported? etc.
-  if (!snsRecord || snsRecord.EventSource !== 'aws:sns') {
-    return callback('Bad record');
-  }
-
-  /*
-   * Prepare file analysis
-   */
-
-  // Extract message
-  const message = JSON.parse(snsRecord.Sns.Message);
-
-  // Check file extension
-  if (path.extname(message.object.key) !== '.csv') {
-    return callback('File extension should be .csv');
-  }
-
-  /*
-   * Prepare the SNS message
-   */
+  // Extract env vars
+  const { BUCKET, REGION, STAGE } = process.env;
 
   // Get Account ID from lambda function arn in the context
   const accountId = context.invokedFunctionArn.split(':')[4];
 
-  // Get stage and region from environment variables
-  const stage = process.env.STAGE;
-  const region = process.env.REGION;
-
   // Get the endpoint arn
-  const endpointArn = `arn:aws:sns:${region}:${accountId}:${stage}-etl-`;
+  const endpointArn = `arn:aws:sns:${REGION}:${accountId}:${STAGE}-MetaStatusReported`;
+
   const sns = new AWS.SNS();
+  const logger = new Logger({
+    sns,
+    targetArn: `arn:aws:sns:${REGION}:${accountId}:${STAGE}-onLogEmitted`,
+    emitter: context.invokedFunctionArn,
+  });
 
   const onError = e =>
     sns.publish(
-      {
-        Message: JSON.stringify({
-          default: JSON.stringify({
-            object: message.object.key,
-            message: JSON.stringify(e),
-          }),
-        }),
-        MessageStructure: 'json',
-        TargetArn: `${endpointArn}failure`,
-      },
-      snsErr => {
+      prepareMessage(
+        {
+          key: snsMessage.object.key,
+          status: STATUS.ERROR,
+          message: JSON.stringify(e),
+        },
+        endpointArn
+      ),
+      async snsErr => {
         if (snsErr) {
           return callback(snsErr);
         }
+
+        await logger.error({
+          message: {
+            computed_key: snsMessage.object.key,
+            status_message: JSON.stringify(e),
+          },
+        });
 
         return callback(e);
       }
@@ -92,68 +81,47 @@ export const handler = (event, context, callback) => {
     { parallel: 10 }
   );
 
-  // Load
-  const uploadFromStream = () => {
-    const pass = new stream.PassThrough();
-
-    const params = {
-      Bucket: BUCKET,
-      Key: `${message.object.key}.ndjson`,
-      Body: pass,
-      ContentType: 'application/x-ndjson',
-    };
-
-    s3.upload(params, err => {
-      if (err) {
-        return onError(err);
-      }
-
-      // Publish message to ETL Success topic
-
-      /*
-       * Send the SNS message
-       */
-      return sns.publish(
-        {
-          Message: JSON.stringify({
-            default: JSON.stringify({
-              object: message.object.key,
-              message: 'ETL successful',
-            }),
-          }),
-          MessageStructure: 'json',
-          TargetArn: `${endpointArn}success`,
-        },
-        snsErr => {
-          if (snsErr) {
-            callback(snsErr);
-            return;
-          }
-
-          callback(null, 'push sent');
-        }
-      );
-    });
-
-    return pass;
-  };
-
   /*
    * Start the hard work
    */
+  await logger.info({
+    message: {
+      computed_key: snsMessage.object.key,
+      status_message: 'Start parsing CSV...',
+    },
+  });
 
   return s3
     .getObject({
-      Bucket: message.bucket.name,
-      Key: message.object.key,
+      Bucket: snsMessage.bucket.name,
+      Key: snsMessage.object.key,
     })
     .createReadStream()
     .pipe(parser)
     .on('error', e => onError(`Error on parse: ${e.message}`))
     .pipe(transformer)
     .on('error', e => onError(`Error on transform: ${e.message}`))
-    .pipe(uploadFromStream())
-    .on('error', e => onError(`Error on upload: ${e.message}`));
+    .pipe(
+      uploadFromStream({
+        key: snsMessage.object.key,
+        BUCKET,
+        s3,
+        sns,
+        endpointArn,
+        onError,
+        callback,
+      })
+    )
+    .on('error', e => onError(`Error on upload: ${e.message}`))
+    .on('end', async () =>
+      logger.info({
+        message: {
+          computed_key: snsMessage.object.key,
+          status_message:
+            'CSV parsed successfully. Results will be uploaded to ElasticSearch soon...',
+        },
+      })
+    );
 };
 
 export default handler;

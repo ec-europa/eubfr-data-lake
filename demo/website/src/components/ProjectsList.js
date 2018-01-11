@@ -23,7 +23,7 @@ class ProjectsList extends Component {
   componentDidMount() {
     this.client = new elasticsearch.Client({
       host: apiEndpoint,
-      apiVersion: '5.5',
+      apiVersion: '6.0',
       log: 'warning',
     });
 

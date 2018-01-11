@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import Spinner from '../../components/Spinner';
 import FormUpload from '../../components/FormUpload';
 import handleErrors from '../../lib/handleErrors';
+import LogsTab from './file/Logs';
+import ProjectsTab from './file/Projects';
 
 import './File.css';
 
@@ -32,61 +34,47 @@ class File extends React.Component {
       fileLoading: false,
       link: '',
       linkLoading: false,
-      relatedProjects: [],
-      projectsLoading: false,
       projectsCount: 0,
+      projectsCountLoading: true,
     };
 
     this.deleteFile = this.deleteFile.bind(this);
     this.generateLink = this.generateLink.bind(this);
     this.getFileMeta = this.getFileMeta.bind(this);
     this.loadFile = this.loadFile.bind(this);
-    this.loadProjects = this.loadProjects.bind(this);
-    this.setProjects = this.setProjects.bind(this);
-    this.setEmptyProjects = this.setEmptyProjects.bind(this);
+    this.getProjectsCount = this.getProjectsCount.bind(this);
   }
 
   componentDidMount() {
     this.client = elasticsearch.Client({
       host: projectsApiEndpoint,
-      apiVersion: '5.5',
+      apiVersion: '6.0',
       log: 'warning',
     });
+
     this.loadFile();
-    this.loadProjects();
+    this.getProjectsCount();
   }
 
-  setProjects(computedKey) {
-    return () =>
-      this.client.indices
-        .exists({
-          index: projectsIndex,
+  getProjectsCount() {
+    const { match } = this.props;
+    const computedKey = decodeURIComponent(match.params.id);
+
+    return this.client
+      .count({
+        index: projectsIndex,
+        type: 'project',
+        q: `computed_key:"${computedKey}.ndjson"`,
+      })
+      .then(data =>
+        this.setState({
+          projectsCountLoading: false,
+          projectsCount: data.count,
         })
-        .then(
-          exists =>
-            exists
-              ? this.client
-                  .search({
-                    index: projectsIndex,
-                    type: 'project',
-                    q: `computed_key:"${computedKey}.ndjson"`,
-                  })
-                  .then(data =>
-                    this.setState({
-                      projectsLoading: false,
-                      relatedProjects: data.hits.hits,
-                      projectsCount: data.hits.total,
-                    })
-                  )
-                  .catch(error => {
-                    this.setEmptyProjects();
-                    throw Error(`An error occured: ${error.message}`);
-                  })
-              : this.setEmptyProjects()
-        )
-        .catch(() => {
-          this.setEmptyProjects();
-        });
+      )
+      .catch(error => {
+        console.error(`An error occured: ${error.message}`);
+      });
   }
 
   getFileMeta(computedKey) {
@@ -119,22 +107,6 @@ class File extends React.Component {
     const computedKey = decodeURIComponent(match.params.id);
 
     this.setState({ fileLoading: true }, this.getFileMeta(computedKey));
-  }
-
-  // Load related Projects
-  loadProjects() {
-    const { match } = this.props;
-    const computedKey = decodeURIComponent(match.params.id);
-
-    this.setState({ projectsLoading: true }, this.setProjects(computedKey));
-  }
-
-  setEmptyProjects() {
-    this.setState({
-      projectsLoading: false,
-      relatedProjects: [],
-      projectsCount: 0,
-    });
   }
 
   deleteFile() {
@@ -195,8 +167,7 @@ class File extends React.Component {
       fileLoading,
       link,
       linkLoading,
-      relatedProjects,
-      projectsLoading,
+      projectsCountLoading,
       projectsCount,
     } = this.state;
 
@@ -231,7 +202,9 @@ class File extends React.Component {
 
         <div className="ecl-row ecl-u-mv-m">
           <div className="ecl-col-md-4 ecl-u-d-flex ecl-u-justify-content-center ecl-u-align-items-baseline">
-            <span className="ecl-u-fs-xxl">{projectsCount}</span>
+            <span className="ecl-u-fs-xxl">
+              {projectsCountLoading ? '...' : projectsCount}
+            </span>
             <span className="ecl-u-fs-l">&nbsp;projects</span>
           </div>
           <div className="ecl-col-md-4 ecl-u-d-flex ecl-u-justify-content-center ecl-u-align-items-baseline">
@@ -267,6 +240,15 @@ class File extends React.Component {
                 activeClassName="ecl-navigation-list__link--active"
               >
                 Projects
+              </NavLink>
+            </li>
+            <li className="ecl-navigation-list__item">
+              <NavLink
+                to={`${match.url}/logs`}
+                className="ecl-navigation-list__link ecl-link"
+                activeClassName="ecl-navigation-list__link--active"
+              >
+                Logs
               </NavLink>
             </li>
           </ul>
@@ -308,19 +290,11 @@ class File extends React.Component {
         />
         <Route
           path={`${match.url}/projects`}
-          render={() => (
-            <Fragment>
-              {' '}
-              {projectsLoading && <p>Loading related projects</p>}
-              <ul>
-                {relatedProjects.map(project => (
-                  <li key={project._source.project_id}>
-                    {project._source.title}
-                  </li>
-                ))}
-              </ul>
-            </Fragment>
-          )}
+          render={() => <ProjectsTab computedKey={computedKey} />}
+        />
+        <Route
+          path={`${match.url}/logs`}
+          render={() => <LogsTab computedKey={computedKey} />}
         />
       </Fragment>
     );

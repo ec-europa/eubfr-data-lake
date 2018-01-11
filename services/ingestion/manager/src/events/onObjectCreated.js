@@ -1,7 +1,9 @@
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 import path from 'path';
 
-export const handler = (event, context, callback) => {
+import Logger from '../../../../logger/listener/src/lib/Logger';
+
+export const handler = async (event, context, callback) => {
   /*
    * Some checks here before going any further
    */
@@ -52,25 +54,51 @@ export const handler = (event, context, callback) => {
   /*
    * Send the SNS message
    */
+  try {
+    const sns = new AWS.SNS();
 
-  const sns = new AWS.SNS();
+    const logger = new Logger({
+      sns,
+      targetArn: `arn:aws:sns:${region}:${accountId}:${stage}-onLogEmitted`,
+      emitter: context.invokedFunctionArn,
+    });
 
-  return sns.publish(
-    {
-      Message: JSON.stringify(payload),
-      MessageStructure: 'json',
-      TargetArn: endpointArn,
-    },
-    err => {
-      if (err) {
-        console.log(err.stack);
-        callback(err);
-        return;
-      }
+    await logger.info({
+      message: {
+        computed_key: s3record.s3.object.key,
+        status_message:
+          'The file has been uploaded. Forwarding to the right ETL...',
+      },
+    });
 
-      callback(null, 'push sent');
+    try {
+      await sns
+        .publish({
+          Message: JSON.stringify(payload),
+          MessageStructure: 'json',
+          TargetArn: endpointArn,
+        })
+        .promise();
+
+      await logger.info({
+        message: {
+          computed_key: s3record.s3.object.key,
+          status_message: `ETL "${producer}-${extension}" has been pinged!`,
+        },
+      });
+    } catch (err) {
+      await logger.error({
+        message: {
+          computed_key: s3record.s3.object.key,
+          status_message: `Unable to ping ETL "${producer}-${extension}".`,
+        },
+      });
     }
-  );
+
+    return callback(null, 'Success!');
+  } catch (err) {
+    return callback(err.message);
+  }
 };
 
 export default handler;

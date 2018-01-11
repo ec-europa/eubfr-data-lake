@@ -1,5 +1,12 @@
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 
+export const STATUS = {
+  ERROR: 'error',
+  UPLOADED: 'uploaded',
+  PARSING: 'parsing',
+  PARSED: 'parsed',
+};
+
 export const handler = (event, context, callback) => {
   /*
    * Some checks here before going any further
@@ -21,18 +28,14 @@ export const handler = (event, context, callback) => {
     return callback('Bad record');
   }
 
-  const eventArn = snsRecord.EventSubscriptionArn;
-  const snsTopic = eventArn.split(':')[5] || '';
-
   /*
    * Extract information from the event
    */
 
   // Extract S3 record
   const snsMessage = JSON.parse(snsRecord.Sns.Message);
-  const computedKey = snsMessage.object;
-  const etlMessage = snsMessage.message;
-  const producerId = computedKey.split('/')[0];
+  const { key, status, message } = snsMessage;
+  const producerId = key.split('/')[0];
 
   // Save record
   const documentClient = new AWS.DynamoDB.DocumentClient({
@@ -43,13 +46,13 @@ export const handler = (event, context, callback) => {
     TableName: process.env.TABLE,
     Key: {
       producer_id: producerId,
-      computed_key: computedKey,
+      computed_key: key,
     },
     UpdateExpression: 'SET #status = :s, message = :m',
     ExpressionAttributeNames: { '#status': 'status' },
     ExpressionAttributeValues: {
-      ':s': snsTopic.endsWith('etl-success') ? 'parsed' : 'error',
-      ':m': etlMessage,
+      ':s': status,
+      ':m': message,
     },
   };
 

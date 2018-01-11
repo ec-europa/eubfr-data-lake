@@ -1,3 +1,7 @@
+/**
+ * @jest-environment node
+ */
+
 import AWS from 'aws-sdk-mock';
 import AWS_SDK from 'aws-sdk';
 
