@@ -6,6 +6,16 @@
 
 import type { Project } from '../../../../types/Project';
 
+const getFundingArea = record => {
+  let fundingArea = record['Funding area'] ? record['Funding area'] : '';
+
+  if (fundingArea && fundingArea.length) {
+    fundingArea = fundingArea.split(';');
+  }
+
+  return fundingArea;
+};
+
 /*
  * Map fields
  */
@@ -17,7 +27,7 @@ export default (record: Object): Project => {
     private_fund: 0,
     public_fund: 0,
     other_contrib: 0,
-    funding_area: record['Funding area'],
+    funding_area: getFundingArea(record),
   };
 
   // Preprocess timeframe
