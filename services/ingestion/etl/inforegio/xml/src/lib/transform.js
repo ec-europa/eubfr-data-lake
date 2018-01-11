@@ -56,10 +56,13 @@ export default record => {
   const budgetObject = {
     total_cost: formatBudget(checkData(record.Total_project_budget)),
     eu_contrib: formatBudget(checkData(record.EU_Budget_contribution)),
-    private_fund: null,
-    public_fund: null,
-    other_contrib: null,
-    funding_area: checkData(record.Funds) || null,
+    private_fund: 0,
+    public_fund: 0,
+    other_contrib: 0,
+    funding_area: checkData(record.Funds) || '',
+    total_cost_raw: checkData(record.Total_project_budget) || '',
+    eu_contrib_raw: checkData(record.EU_Budget_contribution) || '',
+    currency: '',
   };
 
   // Preprocess project locations
