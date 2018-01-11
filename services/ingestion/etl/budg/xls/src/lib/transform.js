@@ -8,16 +8,22 @@
 export default record => {
   // Preprocess budget
   const budgetObject = {
-    total_cost: null,
+    total_cost: 0,
     eu_contrib: Number(
       record[
         "EU Grant award in euros (This amount represents the grant awarded after the selection stage and is indicative. Please note that any changes made during or after the project's lifetime will not be reflected here.)"
       ].replace(/,/g, '')
     ),
-    private_fund: null,
-    public_fund: null,
-    other_contrib: null,
-    funding_area: null,
+    private_fund: 0,
+    public_fund: 0,
+    other_contrib: 0,
+    funding_area: '',
+    total_cost_raw: '',
+    eu_contrib_raw:
+      record[
+        "EU Grant award in euros (This amount represents the grant awarded after the selection stage and is indicative. Please note that any changes made during or after the project's lifetime will not be reflected here.)"
+      ] || '',
+    currency: 'EUR',
   };
 
   // Preprocess results

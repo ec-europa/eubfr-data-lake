@@ -18,6 +18,9 @@ export default (record: Object): Project => {
     public_fund: 0,
     other_contrib: 0,
     funding_area: '',
+    total_cost_raw: '',
+    eu_contrib_raw: record['EU Budget contribution'] || '',
+    currency: 'EUR',
   };
 
   // Preprocess timeframe
