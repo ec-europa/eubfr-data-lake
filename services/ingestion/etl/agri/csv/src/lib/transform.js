@@ -6,15 +6,8 @@
 
 import type { Project } from '../../../../types/Project';
 
-const getFundingArea = record => {
-  let fundingArea = record['Funding area'] ? record['Funding area'] : '';
-
-  if (fundingArea && fundingArea.length) {
-    fundingArea = fundingArea.split(';');
-  }
-
-  return fundingArea;
-};
+const getFundingArea = record =>
+  record['Funding area'] ? record['Funding area'].split(';') : [];
 
 /*
  * Map fields

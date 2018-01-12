@@ -63,7 +63,7 @@ export default (record: Object): Project => {
     private_fund: 0,
     public_fund: 0,
     other_contrib: 0,
-    funding_area: checkData(record.Funds) || '',
+    funding_area: checkData(record.Funds).split(';'),
   };
 
   // Preprocess project locations
