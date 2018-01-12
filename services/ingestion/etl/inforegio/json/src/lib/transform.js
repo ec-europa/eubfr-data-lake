@@ -67,6 +67,18 @@ export default (record: Object): Project => {
     funding_area: record.Funds || '',
   };
 
+  // Preprocess partners
+  const partnerArray = [
+    {
+      name: record.Beneficiary,
+      type: '',
+      address: getAddress(record),
+      region: '',
+      country: record.Beneficiary_Country,
+      website: '',
+    },
+  ];
+
   // Preprocess project locations
   const locationArray = [];
   const countryArray = record.Project_country
@@ -100,43 +112,40 @@ export default (record: Object): Project => {
     });
   }
 
-  // Preprocess type
-  const typeArray = [record.Project_type];
-
   // Preprocess themes
   const themeArray = record.Thèmes ? record.Thèmes.split('; ') : [];
 
-  // Preprocess partners
-  const partnerArray = [
-    {
-      name: record.Beneficiary,
-      type: '',
-      address: getAddress(record),
-      region: '',
-      country: record.Beneficiary_Country,
-      website: '',
-    },
-  ];
+  // Preprocess type
+  const typeArray = [record.Project_type];
 
   // Map the fields
   return {
-    project_id: record.PROJECTID.toString(),
-    type: typeArray,
-    period: record.Period,
-    title: record.Project_name,
-    project_locations: locationArray,
-    themes: themeArray,
+    action: '',
     budget: budgetObject,
+    call_year: '',
+    coordinators: [],
+    cover_image: '',
     description: record.quote,
-    project_website: getProjectWebsite(record),
+    ec_priorities: [],
     partners: partnerArray,
+    period: record.Period,
+    programme_name: '',
+    project_id: record.PROJECTID.toString(),
+    project_locations: locationArray,
+    project_website: getProjectWebsite(record),
+    related_links: [],
+    results: {
+      result: '',
+    },
+    status: '',
+    sub_programme_name: '',
+    success_story: '',
+    themes: themeArray,
     timeframe: {
       from: formatDate(record.Project_Timeframe_start_date),
       to: formatDate(record.Project_Timeframe_end_date),
     },
-    programme_name: '',
-    ec_priorities: [],
-    cover_image: '',
-    coordinators: [],
+    title: record.Project_name,
+    type: typeArray,
   };
 };

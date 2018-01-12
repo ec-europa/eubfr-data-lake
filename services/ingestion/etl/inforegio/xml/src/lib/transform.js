@@ -127,23 +127,32 @@ export default (record: Object): Project => {
 
   // Map the fields
   return {
-    project_id: checkData(record.PROJECTID).toString(),
-    title: checkData(record.Project_name),
-    type: typeArray,
-    period: checkData(record.Period),
-    project_locations: locationArray,
-    themes: themeArray,
+    action: '',
     budget: budgetObject,
-    description: checkData(record.quote),
+    call_year: '',
+    coordinators: [],
     cover_image: '',
-    programme_name: '',
-    project_website: checkData(record.URL),
+    description: checkData(record.quote),
+    ec_priorities: [],
     partners: partnerArray,
+    period: checkData(record.Period),
+    programme_name: '',
+    project_id: checkData(record.PROJECTID).toString(),
+    project_locations: locationArray,
+    project_website: checkData(record.URL),
+    related_links: [],
+    results: {
+      result: '',
+    },
+    status: '',
+    sub_programme_name: '',
+    success_story: '',
+    themes: themeArray,
     timeframe: {
       from: formatDate(checkData(record.Project_Timeframe_start_date)),
       to: formatDate(checkData(record.Project_Timeframe_end_date)),
     },
-    ec_priorities: [],
-    coordinators: [],
+    title: checkData(record.Project_name),
+    type: typeArray,
   };
 };

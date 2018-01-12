@@ -24,38 +24,6 @@ export default (record: Object): Project => {
     funding_area: '',
   };
 
-  // Preprocess timeframe
-  const timeframeFrom = record['Start date']
-    ? new Date(record['Start date']).toISOString()
-    : null;
-  const timeframeTo = record['End date']
-    ? new Date(record['End date']).toISOString()
-    : null;
-
-  // Preprocess results
-  const resultObject = {
-    available: record['Results Available'],
-    result: record['Results Platform Project Card'],
-  };
-
-  // Preprocess project locations
-  const locationArray = record['Participating countries']
-    .split(',')
-    .map(country => ({
-      country_code: country,
-      region: '',
-      nuts2: '',
-      address: '',
-      postal_code: '',
-      town: '',
-      location: null,
-    }));
-
-  // Preprocess type
-  const typeArray =
-    (record['Activity type'] != null && record['Activity type'].split(',')) ||
-    [];
-
   // Preprocess coordinators
   const coordArray = [
     {
@@ -91,30 +59,63 @@ export default (record: Object): Project => {
     }
   }
 
+  // Preprocess locations
+  const locationArray = record['Participating countries']
+    .split(',')
+    .map(country => ({
+      country_code: country,
+      region: '',
+      nuts2: '',
+      address: '',
+      postal_code: '',
+      town: '',
+      location: null,
+    }));
+
+  // Preprocess results
+  const resultObject = {
+    available: record['Results Available'],
+    result: record['Results Platform Project Card'],
+  };
+
+  // Preprocess timeframe
+  const timeframeFrom = record['Start date']
+    ? new Date(record['Start date']).toISOString()
+    : null;
+  const timeframeTo = record['End date']
+    ? new Date(record['End date']).toISOString()
+    : null;
+
+  // Preprocess type
+  const typeArray =
+    (record['Activity type'] != null && record['Activity type'].split(',')) ||
+    [];
+
   // Map the fields
   return {
-    project_id: record['Project Number'],
-    programme_name: record.Programme,
-    sub_programme_name: record['Sub-programme'],
-    status: record['Project Status'],
     action: record.Action,
-    type: typeArray,
+    budget: budgetObject,
     call_year: record['Call year'],
+    coordinators: coordArray,
+    cover_image: '',
+    description: record['Project Summary'],
+    ec_priorities: [],
+    partners: partnerArray,
+    programme_name: record.Programme,
+    project_id: record['Project Number'],
+    project_locations: locationArray,
+    project_website: record['Project Website'],
+    related_links: [],
+    results: resultObject,
+    status: record['Project Status'],
+    sub_programme_name: record['Sub-programme'],
+    success_story: record['Is Success Story'],
+    themes: [],
     timeframe: {
       from: timeframeFrom,
       to: timeframeTo,
     },
-    success_story: record['Is Success Story'],
-    themes: [],
     title: record['Project Title'],
-    description: record['Project Summary'],
-    budget: budgetObject,
-    project_website: record['Project Website'],
-    results: resultObject,
-    project_locations: locationArray,
-    coordinators: coordArray,
-    partners: partnerArray,
-    ec_priorities: [],
-    cover_image: '',
+    type: typeArray,
   };
 };

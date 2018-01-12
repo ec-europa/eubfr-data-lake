@@ -1,6 +1,12 @@
 // @flow
 
 /**
+ *
+ * Project model has been continously discussed in EUBFR-4 EUBFR-5 and EUBFR-70.
+ *
+ * Exported Project interface should ALWAYS have fields as required. When a producer
+ * does not provide data for a field, provide null or '' from transform function.
+ *
  * Note that this file describes types which are used during static code analysis.
  * This helps developers write consistend transform functions in ETLs.
  * This does not mean other layers are safe: elasticsearch, HTTP requests, etc.
@@ -26,13 +32,6 @@ import type {
   MultiPolygon2D,
 } from 'flow-geojson';
 
-// Project model is continously discussed in EUBFR-4 EUBFR-5 and EUBFR-70
-
-type Result = {
-  available?: string,
-  result: string,
-};
-
 type GeoJSON =
   | Point2D
   | MultiPoint2D
@@ -41,21 +40,13 @@ type GeoJSON =
   | Polygon2D
   | MultiPolygon2D;
 
-type Location = {
-  country_code: string,
-  region: string,
-  nuts2: string,
-  address: string,
-  postal_code: string,
-  town: string,
-  // If nothing else, provide null in transform function for this field.
-  // Never null project_locations field which is typed on ES level.
-  location: GeoJSON | null,
-};
-
-type Timeframe = {
-  from: string | null,
-  to: string | null,
+type Budget = {
+  eu_contrib: number,
+  total_cost?: number,
+  private_fund?: number,
+  public_fund?: number,
+  other_contrib?: number,
+  funding_area?: string,
 };
 
 type Coordinator = {
@@ -69,6 +60,18 @@ type Coordinator = {
   email?: string,
 };
 
+type Location = {
+  country_code: string,
+  region: string,
+  nuts2: string,
+  address: string,
+  postal_code: string,
+  town: string,
+  // If nothing else, provide null in transform function for this field.
+  // Never null project_locations field which is typed on ES level.
+  location: GeoJSON | null,
+};
+
 type Partner = {
   name: string,
   type?: string,
@@ -78,39 +81,41 @@ type Partner = {
   website?: string,
 };
 
-type Budget = {
-  eu_contrib: number,
-  total_cost?: number,
-  private_fund?: number,
-  public_fund?: number,
-  other_contrib?: number,
-  funding_area?: string,
-};
-
 type RelatedLink = {
   url: string,
   label: string,
 };
 
+type Result = {
+  available?: string,
+  result: string,
+};
+
+type Timeframe = {
+  from: string | null,
+  to: string | null,
+};
+
 export type Project = {
-  project_id: string,
-  title: string,
-  description: string,
-  cover_image: string,
-  programme_name: string,
-  sub_programme_name?: string,
-  status?: string,
-  action?: string,
-  type?: Array<string>,
-  themes: Array<string>,
-  success_story?: string,
-  project_website: string,
+  action: string,
   budget: Budget,
-  results?: Result,
-  timeframe: Timeframe,
-  ec_priorities: Array<string>,
+  call_year: string,
   coordinators: Array<Coordinator>,
+  cover_image: string,
+  description: string,
+  ec_priorities: Array<string>,
   partners: Array<Partner>,
+  programme_name: string,
+  project_id: string,
   project_locations: Array<Location>,
-  related_links?: Array<RelatedLink>,
+  project_website: string,
+  related_links: Array<RelatedLink>,
+  results: Result,
+  status: string,
+  sub_programme_name: string,
+  success_story: string,
+  themes: Array<string>,
+  timeframe: Timeframe,
+  title: string,
+  type: Array<string>,
 };

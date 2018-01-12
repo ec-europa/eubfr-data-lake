@@ -4146,7 +4146,7 @@ flow-geojson@2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/flow-geojson/-/flow-geojson-2.0.3.tgz#0ba84cf64a0a8722d827dc22e05cc8899efc8daa"
 
-flow-watch@^1.1.1:
+flow-watch@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/flow-watch/-/flow-watch-1.1.1.tgz#793627dffc01ca391d2dbac53a1214af295f3966"
   dependencies:
