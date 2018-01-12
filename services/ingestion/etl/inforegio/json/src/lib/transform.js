@@ -8,9 +8,9 @@ import type { Project } from '../../../../types/Project';
 
 // Formats date from DD/MM/YYYY to ISO 8601 date format.
 const formatDate = date => {
-  if (!date) return '';
+  if (!date) return null;
   const d = date.split(/\//);
-  if (d === null || d.length !== 3) return '';
+  if (d === null || d.length !== 3) return null;
   if (d[2].length === 2) d[2] = `20${d[2]}`;
   return new Date(d[2], d[1] - 1, d[0]).toISOString();
 };

@@ -27,10 +27,10 @@ export default (record: Object): Project => {
   // Preprocess timeframe
   const timeframeFrom = record['Start date']
     ? new Date(record['Start date']).toISOString()
-    : '';
+    : null;
   const timeframeTo = record['End date']
     ? new Date(record['End date']).toISOString()
-    : '';
+    : null;
 
   // Preprocess results
   const resultObject = {

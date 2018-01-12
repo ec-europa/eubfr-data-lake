@@ -1,5 +1,21 @@
 // @flow
 
+/**
+ * Note that this file describes types which are used during static code analysis.
+ * This helps developers write consistend transform functions in ETLs.
+ * This does not mean other layers are safe: elasticsearch, HTTP requests, etc.
+ *
+ * Following is a list of specifics which are here to interoperate with other layers.
+ *
+ * Dates:
+ * Put default `null` when missing data. Elasticsearch will not accept empty string.
+ * More: https://www.elastic.co/guide/en/elasticsearch/reference/6.0/date.html
+ *
+ * Geolocation:
+ * Put default `null` when missing data. Elasticsearch has the notion of geo_shape.
+ * More: https://www.elastic.co/guide/en/elasticsearch/reference/6.0/geo-shape.html
+ */
+
 // eslint-disable-next-line
 import type {
   Point2D,
@@ -10,7 +26,7 @@ import type {
   MultiPolygon2D,
 } from 'flow-geojson';
 
-// Project model is discussed in EUBFR-4 EUBFR-5 and EUBFR-70
+// Project model is continously discussed in EUBFR-4 EUBFR-5 and EUBFR-70
 
 type Result = {
   available?: string,
@@ -38,8 +54,8 @@ type Location = {
 };
 
 type Timeframe = {
-  from: string,
-  to: string,
+  from: string | null,
+  to: string | null,
 };
 
 type Coordinator = {
