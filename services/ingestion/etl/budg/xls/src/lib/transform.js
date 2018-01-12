@@ -54,7 +54,7 @@ export default (record: Object): Project => {
   // Preprocess type
   const typeArray =
     (record['Activity type'] != null && record['Activity type'].split(',')) ||
-    null;
+    [];
 
   // Preprocess coordinators
   const coordArray = [
