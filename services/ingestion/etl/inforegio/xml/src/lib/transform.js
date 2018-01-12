@@ -63,7 +63,12 @@ export default (record: Object): Project => {
     private_fund: 0,
     public_fund: 0,
     other_contrib: 0,
-    funding_area: checkData(record.Funds).split(';'),
+    // Check data and return an array or a string.
+    funding_area: checkData(record.Funds)
+      // Make an array of strings if multiple items in the field.
+      .split(';')
+      // Remove empty strings.
+      .filter(item => item),
   };
 
   // Preprocess project locations

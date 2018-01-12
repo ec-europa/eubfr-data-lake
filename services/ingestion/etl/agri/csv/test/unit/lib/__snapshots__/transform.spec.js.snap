@@ -253,7 +253,7 @@ Object {
   "action": "",
   "budget": Object {
     "eu_contrib": NaN,
-    "funding_area": "",
+    "funding_area": Array [],
     "other_contrib": 0,
     "private_fund": 0,
     "public_fund": 0,
