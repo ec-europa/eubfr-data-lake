@@ -2,23 +2,11 @@ service: storage-meta-index
 
 plugins:
   - serverless-stack-output
-  - serverless-dynamodb-autoscaling
   - serverless-webpack
 
 custom:
   webpackIncludeModules: true
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
-  DYNAMODB_TABLE: ${self:provider.stage}-meta
-  capacities:
-    - table: MetaIndexDynamoDbTable  # DynamoDB Resource
-      read:
-        minimum: 5        # Minimum read capacity
-        maximum: 1000     # Maximum read capacity
-        usage: 0.75       # Targeted usage percentage
-      write:
-        minimum: 5        # Minimum write capacity
-        maximum: 100      # Maximum write capacity
-        usage: 0.5        # Targeted usage percentage
   output:
     file: .serverless/stack-output.json
 
@@ -36,20 +24,6 @@ provider:
     ENV: ${self:custom.eubfrEnvironment}
   environment:
     TABLE: ${self:custom.DYNAMODB_TABLE}
-  iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - dynamodb:Query
-        - dynamodb:Scan
-        - dynamodb:GetItem
-        - dynamodb:PutItem
-        - dynamodb:UpdateItem
-        - dynamodb:DeleteItem
-      Resource: "arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.DYNAMODB_TABLE}"
-    - Effect: Allow
-      Action:
-        - iam:ListGroupsForUser
-      Resource: "*"
 
 functions:
   onObjectCreated:
@@ -97,50 +71,9 @@ functions:
                 - Ref: "AWS::AccountId"
                 - ":${self:provider.stage}-MetaStatusReported"
           topicName: ${self:provider.stage}-MetaStatusReported
-  listProjects:
-    handler: src/api/list.handler
-    name: ${self:provider.stage}-${self:service}-list
-    environment:
-      TABLE: ${self:custom.DYNAMODB_TABLE}
-    events:
-      - http:
-          path: meta-index/list
-          method: get
-          authorizer: aws_iam
-  fileApi:
-    handler: src/api/file.handler
-    name: ${self:provider.stage}-${self:service}-file
-    environment:
-      TABLE: ${self:custom.DYNAMODB_TABLE}
-    events:
-      - http:
-          path: meta-index/file
-          method: get
-          authorizer: aws_iam
+
 resources:
   Resources:
-    MetaIndexDynamoDbTable:
-      Type: AWS::DynamoDB::Table
-      DeletionPolicy: Retain
-      Properties:
-        TableName: ${self:custom.DYNAMODB_TABLE}
-        AttributeDefinitions:
-          -
-            AttributeName: producer_id
-            AttributeType: S
-          -
-            AttributeName: computed_key
-            AttributeType: S
-        KeySchema:
-          -
-            AttributeName: producer_id
-            KeyType: HASH
-          -
-            AttributeName: computed_key
-            KeyType: RANGE
-        ProvisionedThroughput:
-          ReadCapacityUnits: 5
-          WriteCapacityUnits: 5
     MetaStatusReported:
       Type: AWS::SNS::Topic
       Properties:
