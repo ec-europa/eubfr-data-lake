@@ -142,6 +142,7 @@ export default (record: Object): Project => {
     project_website: checkData(record.URL),
     related_links: [],
     results: {
+      available: '',
       result: '',
     },
     status: '',

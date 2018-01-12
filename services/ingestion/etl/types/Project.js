@@ -42,22 +42,22 @@ type GeoJSON =
 
 type Budget = {
   eu_contrib: number,
-  total_cost?: number,
-  private_fund?: number,
-  public_fund?: number,
-  other_contrib?: number,
-  funding_area?: string,
+  total_cost: number,
+  private_fund: number,
+  public_fund: number,
+  other_contrib: number,
+  funding_area: string,
 };
 
 type Coordinator = {
   name: string,
-  type?: string,
-  address?: string,
-  region?: string,
-  country?: string,
-  website?: string,
-  phone?: string,
-  email?: string,
+  type: string,
+  address: string,
+  region: string,
+  country: string,
+  website: string,
+  phone: string,
+  email: string,
 };
 
 type Location = {
@@ -74,10 +74,10 @@ type Location = {
 
 type Partner = {
   name: string,
-  type?: string,
-  address?: string,
-  region?: string,
-  country?: string,
+  type: string,
+  address: string,
+  region: string,
+  country: string,
   website?: string,
 };
 
@@ -87,7 +87,7 @@ type RelatedLink = {
 };
 
 type Result = {
-  available?: string,
+  available: string,
   result: string,
 };
 

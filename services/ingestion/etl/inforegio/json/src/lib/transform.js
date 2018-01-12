@@ -135,6 +135,7 @@ export default (record: Object): Project => {
     project_website: getProjectWebsite(record),
     related_links: [],
     results: {
+      available: '',
       result: '',
     },
     status: '',
