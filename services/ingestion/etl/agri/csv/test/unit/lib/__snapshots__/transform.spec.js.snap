@@ -2,6 +2,7 @@
 
 exports[`DG BUDG CSV transformer Produces correct JSON output structure 1`] = `
 Object {
+  "action": "",
   "budget": Object {
     "eu_contrib": 3562000,
     "funding_area": Array [
@@ -14,6 +15,7 @@ Object {
     "public_fund": 0,
     "total_cost": 0,
   },
+  "call_year": "",
   "coordinators": Array [
     Object {
       "address": "",
@@ -215,11 +217,16 @@ Object {
     "available": "",
     "result": "Installation and operation of 115 fast-charging stations in 5 European countries,Development and implementation of electromobility and cross-border services for e-car users,Strategic planning for a European fast-charging network.Since the implementation of the Central European Green Corridors project, the European fast-charging network for electric vehicles has continued to grow. An additional 200 fast-charging stations – 180 in Italy and 20 in Austria – are developed. The charging networks in the various countries are compatible with each other. This gives even more citizens the chance to take advantage of cross-border electromobility.",
   },
+  "status": "",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [],
   "timeframe": Object {
     "from": "2013-12-31T23:00:00.000Z",
     "to": "2014-12-31T23:00:00.000Z",
   },
   "title": "Central European Green Corridors",
+  "type": Array [],
 }
 `;
 
@@ -243,6 +250,7 @@ Object {
 
 exports[`DG BUDG transformer handling incomplete or inconsistent data Certain fields should always be present after transformation 1`] = `
 Object {
+  "action": "",
   "budget": Object {
     "eu_contrib": NaN,
     "funding_area": "",
@@ -251,6 +259,7 @@ Object {
     "public_fund": 0,
     "total_cost": 0,
   },
+  "call_year": "",
   "coordinators": Array [
     Object {
       "address": "",
@@ -308,10 +317,15 @@ Object {
     "available": "",
     "result": "",
   },
+  "status": "",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [],
   "timeframe": Object {
     "from": "2013-12-31T23:00:00.000Z",
     "to": "2014-12-31T23:00:00.000Z",
   },
   "title": "Bulgaria’s capital expands metro network",
+  "type": Array [],
 }
 `;
