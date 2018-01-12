@@ -117,6 +117,7 @@ export default (record: Object): Project => {
     budget: budgetObject,
     partners: partnerArray,
     project_locations: locationArray,
+    themes: [],
     timeframe: {
       from:
         timeframeFrom &&

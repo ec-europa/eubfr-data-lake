@@ -104,7 +104,7 @@ export default (record: Object): Project => {
   const typeArray = [record.Project_type];
 
   // Preprocess themes
-  const themeArray = record.Thèmes ? record.Thèmes.split('; ') : null;
+  const themeArray = record.Thèmes ? record.Thèmes.split('; ') : [];
 
   // Preprocess partners
   const partnerArray = [

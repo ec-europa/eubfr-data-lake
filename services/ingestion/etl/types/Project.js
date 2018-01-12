@@ -102,6 +102,7 @@ export type Project = {
   status?: string,
   action?: string,
   type?: Array<string>,
+  themes: Array<string>,
   success_story?: string,
   project_website: string,
   budget: Budget,

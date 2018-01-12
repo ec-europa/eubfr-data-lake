@@ -105,6 +105,7 @@ export default (record: Object): Project => {
       to: timeframeTo,
     },
     success_story: record['Is Success Story'],
+    themes: [],
     title: record['Project Title'],
     description: record['Project Summary'],
     budget: budgetObject,

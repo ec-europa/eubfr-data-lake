@@ -102,14 +102,14 @@ export default (record: Object): Project => {
   }
 
   // Preprocess type
-  const typeArray = record.Project_type || null;
+  const typeArray = record.Project_type || [];
 
   // Preprocess themes
   const themeArray = record.Themes
     ? checkData(record.Themes)
         .toString()
         .split('; ')
-    : null;
+    : [];
 
   // Preprocess partners
   const partnerArray = record.Beneficiary
