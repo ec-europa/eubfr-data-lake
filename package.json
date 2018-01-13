@@ -8,6 +8,11 @@
     "delete": "node ./scripts/delete.js",
     "delete-demo": "./scripts/delete-demo.js",
     "delete-resources": "./scripts/delete-resources.js",
+    "docs": "run-s docs:gen-html docs:gen-md",
+    "docs:gen-md":
+      "documentation build services/**/src/**/lib/transform.js services/**/types/*.js -f md -o docs/README.md",
+    "docs:gen-html":
+      "documentation build services/**/src/**/lib/transform.js services/**/types/*.js -f html -o docs",
     "flow": "flow",
     "flow-watch": "flow-watch",
     "lint": "eslint .",
@@ -25,6 +30,7 @@
   "devDependencies": {
     "babel-core": "6.26.0",
     "babel-eslint": "8.2.1",
+    "documentation": "5.3.5",
     "eslint": "4.15.0",
     "eslint-config-airbnb-base": "12.1.0",
     "eslint-config-prettier": "2.9.0",

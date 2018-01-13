@@ -6,8 +6,10 @@
 
 import type { Project } from '../../../../types/Project';
 
-/*
+/**
  * Map fields
+ * @param record The item received from parser
+ * @return Project Specifically shaped JSON for persistence layer
  */
 export default (record: Object): Project => {
   // Preprocess budget
