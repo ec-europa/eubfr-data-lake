@@ -58,14 +58,19 @@ const formatBudget = budget => {
 export default (record: Object): Project => {
   // Preprocess budget
   const budgetObject = {
-    total_cost: formatBudget(checkData(record.Total_project_budget)),
-    eu_contrib: formatBudget(checkData(record.EU_Budget_contribution)),
-    private_fund: 0,
-    public_fund: 0,
-    other_contrib: 0,,
-    total_cost_raw: checkData(record.Total_project_budget) || '',
-    eu_contrib_raw: checkData(record.EU_Budget_contribution) || '',
-    currency: '',
+    total_cost: {
+      value: formatBudget(checkData(record.Total_project_budget)),
+      currency: '',
+      raw: checkData(record.Total_project_budget) || '',
+    },
+    eu_contrib: {
+      value: formatBudget(checkData(record.EU_Budget_contribution)),
+      currency: '',
+      raw: checkData(record.EU_Budget_contribution) || '',
+    },
+    private_fund: { value: 0, currency: '', raw: '' },
+    public_fund: { value: 0, currency: '', raw: '' },
+    other_contrib: { value: 0, currency: '', raw: '' },
     // Check data and return an array or a string.
     funding_area: checkData(record.Funds)
       // Make an array of strings if multiple items in the field.
