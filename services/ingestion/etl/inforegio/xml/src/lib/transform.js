@@ -1,3 +1,7 @@
+// @flow
+
+import type { Project } from '../../../../types/Project';
+
 /*
  * Transform message (INFOREGIO XML)
  */
@@ -51,7 +55,7 @@ const formatBudget = budget => {
 /*
  * Map fields
  */
-export default record => {
+export default (record: Object): Project => {
   // Preprocess budget
   const budgetObject = {
     total_cost: formatBudget(checkData(record.Total_project_budget)),
@@ -101,44 +105,58 @@ export default record => {
   }
 
   // Preprocess type
-  const typeArray = record.Project_type || null;
+  const typeArray = record.Project_type || [];
 
   // Preprocess themes
   const themeArray = record.Themes
     ? checkData(record.Themes)
         .toString()
         .split('; ')
-    : null;
+    : [];
 
   // Preprocess partners
   const partnerArray = record.Beneficiary
     ? [
         {
           name: checkData(record.Beneficiary),
-          type: null,
+          type: '',
           address: getAddress(record),
-          region: null,
+          region: '',
           country: checkData(record.Beneficiary_Country),
-          website: null,
+          website: '',
         },
       ]
-    : null;
+    : [];
 
   // Map the fields
   return {
-    project_id: checkData(record.PROJECTID).toString(),
-    title: checkData(record.Project_name),
-    type: typeArray,
-    period: checkData(record.Period),
-    project_locations: locationArray,
-    themes: themeArray,
+    action: '',
     budget: budgetObject,
+    call_year: '',
+    coordinators: [],
+    cover_image: '',
     description: checkData(record.quote),
-    project_website: checkData(record.URL),
+    ec_priorities: [],
     partners: partnerArray,
+    period: checkData(record.Period),
+    programme_name: '',
+    project_id: checkData(record.PROJECTID).toString(),
+    project_locations: locationArray,
+    project_website: checkData(record.URL),
+    related_links: [],
+    results: {
+      available: '',
+      result: '',
+    },
+    status: '',
+    sub_programme_name: '',
+    success_story: '',
+    themes: themeArray,
     timeframe: {
       from: formatDate(checkData(record.Project_Timeframe_start_date)),
       to: formatDate(checkData(record.Project_Timeframe_end_date)),
     },
+    title: checkData(record.Project_name),
+    type: typeArray,
   };
 };

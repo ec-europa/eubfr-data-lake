@@ -1,3 +1,7 @@
+// @flow
+
+import type { Project } from '../../../../types/Project';
+
 /*
  * Transform message (REGIO JSON)
  */
@@ -37,7 +41,7 @@ const getProjectWebsite = record => {
 };
 
 const formatBudget = budget => {
-  if (!budget) return null;
+  if (!budget) return 0;
   const b = budget.split(' ');
 
   if (b === null || b.length < 2) return 0;
@@ -52,7 +56,7 @@ const formatBudget = budget => {
 /*
  * Map fields
  */
-export default record => {
+export default (record: Object): Project => {
   // Preprocess budget
   const budgetObject = {
     total_cost: formatBudget(record.Total_project_budget),
@@ -65,6 +69,18 @@ export default record => {
     eu_contrib_raw: record.EU_Budget_contribution || '',
     currency: '',
   };
+
+  // Preprocess partners
+  const partnerArray = [
+    {
+      name: record.Beneficiary,
+      type: '',
+      address: getAddress(record),
+      region: '',
+      country: record.Beneficiary_Country,
+      website: '',
+    },
+  ];
 
   // Preprocess project locations
   const locationArray = [];
@@ -99,39 +115,41 @@ export default record => {
     });
   }
 
+  // Preprocess themes
+  const themeArray = record.Thèmes ? record.Thèmes.split('; ') : [];
+
   // Preprocess type
   const typeArray = [record.Project_type];
 
-  // Preprocess themes
-  const themeArray = record.Thèmes ? record.Thèmes.split('; ') : null;
-
-  // Preprocess partners
-  const partnerArray = [
-    {
-      name: record.Beneficiary,
-      type: null,
-      address: getAddress(record),
-      region: null,
-      country: record.Beneficiary_Country,
-      website: null,
-    },
-  ];
-
   // Map the fields
   return {
-    project_id: record.PROJECTID.toString(),
-    type: typeArray,
-    period: record.Period,
-    title: record.Project_name,
-    project_locations: locationArray,
-    themes: themeArray,
+    action: '',
     budget: budgetObject,
+    call_year: '',
+    coordinators: [],
+    cover_image: '',
     description: record.quote,
-    project_website: getProjectWebsite(record),
+    ec_priorities: [],
     partners: partnerArray,
+    period: record.Period,
+    programme_name: '',
+    project_id: record.PROJECTID.toString(),
+    project_locations: locationArray,
+    project_website: getProjectWebsite(record),
+    related_links: [],
+    results: {
+      available: '',
+      result: '',
+    },
+    status: '',
+    sub_programme_name: '',
+    success_story: '',
+    themes: themeArray,
     timeframe: {
       from: formatDate(record.Project_Timeframe_start_date),
       to: formatDate(record.Project_Timeframe_end_date),
     },
+    title: record.Project_name,
+    type: typeArray,
   };
 };
