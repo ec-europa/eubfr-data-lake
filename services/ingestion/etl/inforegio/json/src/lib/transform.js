@@ -8,7 +8,7 @@ import type { Project } from '../../../../types/Project';
 
 const getFundingArea = record =>
   // Get value for 'Funding area' if property is present.
-  (record['Funding area'] ? record['Funding area'].split(';') : []).filter(
+  (record.Funds ? record.Funds.split(';') : []).filter(
     // Remove empty strings.
     item => item
   );
