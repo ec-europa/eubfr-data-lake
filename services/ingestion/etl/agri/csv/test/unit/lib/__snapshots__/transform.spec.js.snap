@@ -4,12 +4,15 @@ exports[`DG BUDG CSV transformer Produces correct JSON output structure 1`] = `
 Object {
   "action": "",
   "budget": Object {
+    "currency": "EUR",
     "eu_contrib": 3562000,
+    "eu_contrib_raw": "3562000",
     "funding_area": "",
     "other_contrib": 0,
     "private_fund": 0,
     "public_fund": 0,
     "total_cost": 0,
+    "total_cost_raw": "",
   },
   "call_year": "",
   "coordinators": Array [
@@ -248,12 +251,15 @@ exports[`DG BUDG transformer handling incomplete or inconsistent data Certain fi
 Object {
   "action": "",
   "budget": Object {
+    "currency": "EUR",
     "eu_contrib": NaN,
+    "eu_contrib_raw": "",
     "funding_area": "",
     "other_contrib": 0,
     "private_fund": 0,
     "public_fund": 0,
     "total_cost": 0,
+    "total_cost_raw": "",
   },
   "call_year": "",
   "coordinators": Array [
