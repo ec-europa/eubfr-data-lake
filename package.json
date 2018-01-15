@@ -10,9 +10,9 @@
     "delete-resources": "./scripts/delete-resources.js",
     "docs": "run-s docs:gen-html docs:gen-md",
     "docs:gen-md":
-      "documentation build services/**/src/**/lib/transform.js services/**/types/*.js -f md -o docs/README.md",
+      "documentation build **/lib/transform.js services/**/types/*.js -f md -o docs/README.md",
     "docs:gen-html":
-      "documentation build services/**/src/**/lib/transform.js services/**/types/*.js -f html -o docs",
+      "documentation build **/lib/transform.js services/**/types/*.js -f html -o docs",
     "flow": "flow",
     "flow-watch": "flow-watch",
     "lint": "eslint .",

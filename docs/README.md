@@ -2,7 +2,13 @@
 
 ### Table of Contents
 
--   [transform](#transform)
+-   [transformAgriCsv](#transformagricsv)
+    -   [getFundingArea](#getfundingarea)
+    -   [getCoordinators](#getcoordinators)
+    -   [getPatners](#getpatners)
+-   [transformBudgXls](#transformbudgxls)
+-   [transformInforegioJson](#transforminforegiojson)
+-   [transformInforegioXml](#transforminforegioxml)
 -   [Budget](#budget)
 -   [Coordinator](#coordinator)
 -   [Location](#location)
@@ -12,21 +18,112 @@
 -   [Timeframe](#timeframe)
 -   [Project](#project)
 
-## transform
+## transformAgriCsv
 
-Map fields
+Map fields for AGRI producer, CSV file types.
+
+Example input data: [stub](https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/agri/csv/test/stubs/record.json)
+
+Transform function: [implementation details](https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/agri/csv/src/lib/transform.js)
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The item received from parser
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage.
 
-Returns **[Project](#project)** Project Specifically shaped JSON for persistence layer
+Returns **[Project](#project)** JSON matching the type fields.
+
+### getFundingArea
+
+Converts a single string to an array of multiple values.
+
+**Parameters**
+
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage.
+
+**Examples**
+
+```javascript
+input => "Research & innovation; Investment for growth; Transport"
+output => ["Research & innovation", "Investment for growth", "Transport"]
+```
+
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of string values for `funding_area` field.
+
+### getCoordinators
+
+Preprocess coordinators
+
+**Parameters**
+
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage.
+
+**Examples**
+
+```javascript
+input => "Eva Maria Plunger (VERBUND AG); foo; bar"
+output => ["Eva Maria Plunger (VERBUND AG)", "foo", "bar"]
+```
+
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of {Coordinator} objects for `coordinators` field.
+
+### getPatners
+
+Preprocess partners
+
+**Parameters**
+
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage.
+
+**Examples**
+
+```javascript
+input => "foo, bar, baz"
+output => ["foo", "bar", "baz"]
+```
+
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of {Partner} objects for `partners` field.
+
+## transformBudgXls
+
+Map fields for BUDG producer, XLS file types.
+
+Transform function: [implementation details](https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/budg/xls/src/lib/transform.js)
+
+**Parameters**
+
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage.
+
+Returns **[Project](#project)** JSON matching the type fields.
+
+## transformInforegioJson
+
+Map fields for INFOREGIO producer, JSON file types.
+
+Transform function: [implementation details](https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/json/src/lib/transform.js)
+
+**Parameters**
+
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage.
+
+Returns **[Project](#project)** JSON matching the type fields.
+
+## transformInforegioXml
+
+Map fields for INFOREGIO producer, XML file types.
+
+Transform function: [implementation details](https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/xml/src/lib/transform.js)
+
+**Parameters**
+
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage.
+
+Returns **[Project](#project)** JSON matching the type fields.
 
 ## Budget
 
 Describes field `project.budget`.
 
-Type: {eu_contrib: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number), total_cost: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number), private_fund: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number), public_fund: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number), other_contrib: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number), funding_area: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)}
+Type: {eu_contrib: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number), total_cost: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number), private_fund: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number), public_fund: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number), other_contrib: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number), funding_area: [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>}
 
 **Properties**
 
@@ -35,7 +132,7 @@ Type: {eu_contrib: [number](https://developer.mozilla.org/docs/Web/JavaScript/Re
 -   `private_fund` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
 -   `public_fund` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
 -   `other_contrib` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
--   `funding_area` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `funding_area` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>** 
 
 ## Coordinator
 

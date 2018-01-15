@@ -6,12 +6,61 @@
 
 import type { Project } from '../../../../types/Project';
 
+/**
+ * Converts a single string to an array of multiple values.
+ * @memberof transformAgriCsv
+ * @param {Object} record The row received from harmonized storage.
+ * @returns {Array} List of string values for `funding_area` field.
+ * @example
+ * input => "Research & innovation; Investment for growth; Transport"
+ * output => ["Research & innovation", "Investment for growth", "Transport"]
+ */
 const getFundingArea = record =>
   // Get value for 'Funding area' if property is present.
   (record['Funding area'] ? record['Funding area'].split(';') : []).filter(
     // Remove empty strings.
     item => item
   );
+
+/**
+ * Preprocess coordinators
+ * @memberof transformAgriCsv
+ * @param {Object} record The row received from harmonized storage.
+ * @returns {Array} List of {Coordinator} objects for `coordinators` field.
+ * @example
+ * input => "Eva Maria Plunger (VERBUND AG); foo; bar"
+ * output => ["Eva Maria Plunger (VERBUND AG)", "foo", "bar"]
+ */
+const getCoordinators = record =>
+  record.Coordinators.split(';').map(coordinator => ({
+    name: coordinator,
+    type: '',
+    address: '',
+    region: '',
+    country: '',
+    website: '',
+    phone: '',
+    email: '',
+  }));
+
+/**
+ * Preprocess partners
+ * @memberof transformAgriCsv
+ * @param {Object} record The row received from harmonized storage.
+ * @returns {Array} List of {Partner} objects for `partners` field.
+ * @example
+ * input => "foo, bar, baz"
+ * output => ["foo", "bar", "baz"]
+ */
+const getPatners = record =>
+  record.Partners.split(',').map(partner => ({
+    name: partner,
+    type: '',
+    address: '',
+    region: '',
+    country: '',
+    website: '',
+  }));
 
 /**
  * Map fields for AGRI producer, CSV file types.
@@ -34,26 +83,10 @@ export default (record: Object): Project => {
   };
 
   // Preprocess coordinators
-  const coordArray = record.Coordinators.split(';').map(coordinator => ({
-    name: coordinator,
-    type: '',
-    address: '',
-    region: '',
-    country: '',
-    website: '',
-    phone: '',
-    email: '',
-  }));
+  const coordArray = getCoordinators(record);
 
   // Preprocess partners
-  const partnerArray = record.Partners.split(',').map(partner => ({
-    name: partner,
-    type: '',
-    address: '',
-    region: '',
-    country: '',
-    website: '',
-  }));
+  const partnerArray = getPatners(record);
 
   // Preprocess locations
   const longArray = record['Project location longitude'].split(';');
