@@ -6,6 +6,13 @@
 
 import type { Project } from '../../../../types/Project';
 
+const getFundingArea = record =>
+  // Get value for 'Funding area' if property is present.
+  (record['Funding area'] ? record['Funding area'].split(';') : []).filter(
+    // Remove empty strings.
+    item => item
+  );
+
 /*
  * Map fields
  */
@@ -21,6 +28,7 @@ export default (record: Object): Project => {
     total_cost_raw: '',
     eu_contrib_raw: record['EU Budget contribution'] || '',
     currency: 'EUR',
+    funding_area: getFundingArea(record),
   };
 
   // Preprocess coordinators

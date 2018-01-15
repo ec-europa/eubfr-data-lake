@@ -6,6 +6,13 @@ import type { Project } from '../../../../types/Project';
  * Transform message (REGIO JSON)
  */
 
+const getFundingArea = record =>
+  // Get value for 'Funding area' if property is present.
+  (record.Funds ? record.Funds.split(';') : []).filter(
+    // Remove empty strings.
+    item => item
+  );
+
 // Formats date from DD/MM/YYYY to ISO 8601 date format.
 const formatDate = date => {
   if (!date) return null;
@@ -64,10 +71,10 @@ export default (record: Object): Project => {
     private_fund: 0,
     public_fund: 0,
     other_contrib: 0,
-    funding_area: record.Funds || '',
     total_cost_raw: record.Total_project_budget || '',
     eu_contrib_raw: record.EU_Budget_contribution || '',
     currency: '',
+    funding_area: getFundingArea(record),
   };
 
   // Preprocess partners

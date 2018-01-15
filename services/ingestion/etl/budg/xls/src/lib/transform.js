@@ -21,13 +21,13 @@ export default (record: Object): Project => {
     private_fund: 0,
     public_fund: 0,
     other_contrib: 0,
-    funding_area: '',
     total_cost_raw: '',
     eu_contrib_raw:
       record[
         "EU Grant award in euros (This amount represents the grant awarded after the selection stage and is indicative. Please note that any changes made during or after the project's lifetime will not be reflected here.)"
       ] || '',
     currency: 'EUR',
+    funding_area: [],
   };
 
   // Preprocess coordinators

@@ -62,11 +62,16 @@ export default (record: Object): Project => {
     eu_contrib: formatBudget(checkData(record.EU_Budget_contribution)),
     private_fund: 0,
     public_fund: 0,
-    other_contrib: 0,
-    funding_area: checkData(record.Funds) || '',
+    other_contrib: 0,,
     total_cost_raw: checkData(record.Total_project_budget) || '',
     eu_contrib_raw: checkData(record.EU_Budget_contribution) || '',
     currency: '',
+    // Check data and return an array or a string.
+    funding_area: checkData(record.Funds)
+      // Make an array of strings if multiple items in the field.
+      .split(';')
+      // Remove empty strings.
+      .filter(item => item),
   };
 
   // Preprocess project locations
