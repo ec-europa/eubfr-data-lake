@@ -28,7 +28,7 @@ type Budget = {
   private_fund: number,
   public_fund: number,
   other_contrib: number,
-  funding_area: string,
+  funding_area: Array<string>,
 };
 
 /**

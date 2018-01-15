@@ -6,7 +6,14 @@
 
 import type { Project } from '../../../../types/Project';
 
-/**
+const getFundingArea = record =>
+  // Get value for 'Funding area' if property is present.
+  (record['Funding area'] ? record['Funding area'].split(';') : []).filter(
+    // Remove empty strings.
+    item => item
+  );
+
+/*
  * Map fields
  * @param record The item received from parser
  * @return Project Specifically shaped JSON for persistence layer
@@ -19,7 +26,7 @@ export default (record: Object): Project => {
     private_fund: 0,
     public_fund: 0,
     other_contrib: 0,
-    funding_area: '',
+    funding_area: getFundingArea(record),
   };
 
   // Preprocess coordinators
