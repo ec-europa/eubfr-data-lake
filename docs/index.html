@@ -25,9 +25,39 @@
               
                 
                 <li><a
-                  href='#transform'
+                  href='#transformagricsv'
                   class="">
-                  transform
+                  transformAgriCsv
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#transformbudgxls'
+                  class="">
+                  transformBudgXls
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#transforminforegiojson'
+                  class="">
+                  transformInforegioJson
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#transforminforegioxml'
+                  class="">
+                  transformInforegioXml
                   
                 </a>
                 
@@ -128,18 +158,20 @@
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='transform'>
-      transform
+    <h3 class='fl m0' id='transformagricsv'>
+      transformAgriCsv
     </h3>
     
     
   </div>
   
 
-  <p>Map fields</p>
+  <p>Map fields for AGRI producer, CSV file types.</p>
+<p>Example input data: <a href="https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/agri/csv/test/stubs/record.json">stub</a></p>
+<p>Transform function: <a href="https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/agri/csv/src/lib/transform.js">implementation details</a></p>
 
 
-  <div class='pre p1 fill-light mt0'>transform(record: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="#project">Project</a></div>
+  <div class='pre p1 fill-light mt0'>transformAgriCsv</div>
   
   
 
@@ -157,7 +189,7 @@
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>record</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    The item received from parser
+	    The row received from harmonized storage.
 
           </div>
           
@@ -172,7 +204,217 @@
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
       <code><a href="#project">Project</a></code>:
-        Project Specifically shaped JSON for persistence layer
+        JSON matching the type fields.
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='transformbudgxls'>
+      transformBudgXls
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Map fields for BUDG producer, XLS file types.</p>
+<p>Transform function: <a href="https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/budg/xls/src/lib/transform.js">implementation details</a></p>
+
+
+  <div class='pre p1 fill-light mt0'>transformBudgXls</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>record</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    The row received from harmonized storage.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="#project">Project</a></code>:
+        JSON matching the type fields.
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='transforminforegiojson'>
+      transformInforegioJson
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Map fields for INFOREGIO producer, JSON file types.</p>
+<p>Transform function: <a href="https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/json/src/lib/transform.js">implementation details</a></p>
+
+
+  <div class='pre p1 fill-light mt0'>transformInforegioJson</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>record</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    The row received from harmonized storage.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="#project">Project</a></code>:
+        JSON matching the type fields.
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='transforminforegioxml'>
+      transformInforegioXml
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Map fields for INFOREGIO producer, XML file types.</p>
+<p>Transform function: <a href="https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/xml/src/lib/transform.js">implementation details</a></p>
+
+
+  <div class='pre p1 fill-light mt0'>transformInforegioXml</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>record</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    The row received from harmonized storage.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="#project">Project</a></code>:
+        JSON matching the type fields.
 
       
     
@@ -212,7 +454,7 @@
   
     <p>
       Type:
-      {eu_contrib: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, total_cost: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, private_fund: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, public_fund: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, other_contrib: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, funding_area: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>}
+      {eu_contrib: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, total_cost: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, private_fund: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, public_fund: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, other_contrib: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, funding_area: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>>}
     </p>
   
   
@@ -261,7 +503,7 @@
         </div>
       
         <div class='space-bottom0'>
-          <span class='code bold'>funding_area</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+          <span class='code bold'>funding_area</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>>)</code>
           
           
         </div>

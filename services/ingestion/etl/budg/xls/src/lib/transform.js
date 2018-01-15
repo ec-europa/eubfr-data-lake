@@ -1,13 +1,18 @@
 // @flow
 
-import type { Project } from '../../../../types/Project';
-
 /*
  * Transform message (BUDG XLS)
  */
 
-/*
- * Map fields
+import type { Project } from '../../../../types/Project';
+
+/**
+ * Map fields for BUDG producer, XLS file types.
+ *
+ * Transform function: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/budg/xls/src/lib/transform.js|implementation details}
+ * @name transformBudgXls
+ * @param {Object} record The row received from harmonized storage.
+ * @returns {Project} JSON matching the type fields.
  */
 export default (record: Object): Project => {
   // Preprocess budget

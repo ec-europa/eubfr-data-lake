@@ -60,8 +60,13 @@ const formatBudget = budget => {
   return Number(s);
 };
 
-/*
- * Map fields
+/**
+ * Map fields for INFOREGIO producer, JSON file types.
+ *
+ * Transform function: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/json/src/lib/transform.js|implementation details}
+ * @name transformInforegioJson
+ * @param {Object} record The row received from harmonized storage.
+ * @returns {Project} JSON matching the type fields.
  */
 export default (record: Object): Project => {
   // Preprocess budget

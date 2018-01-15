@@ -13,13 +13,17 @@ const getFundingArea = record =>
     item => item
   );
 
-/*
- * Map fields
- * @param record The item received from parser
- * @return Project Specifically shaped JSON for persistence layer
+/**
+ * Map fields for AGRI producer, CSV file types.
+ *
+ * Example input data: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/agri/csv/test/stubs/record.json|stub}
+ *
+ * Transform function: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/agri/csv/src/lib/transform.js|implementation details}
+ * @name transformAgriCsv
+ * @param {Object} record The row received from harmonized storage.
+ * @returns {Project} JSON matching the type fields.
  */
 export default (record: Object): Project => {
-  // Preprocess budget
   const budgetObject = {
     total_cost: 0,
     eu_contrib: Number(record['EU Budget contribution']),
