@@ -4,16 +4,14 @@
 module.exports = () => ({
   file: {
     properties: {
-      emitter: { type: 'keyword' },
-      level: { type: 'keyword' },
-      time: { type: 'date' },
-      message: {
-        type: 'nested',
-        properties: {
-          computed_key: { type: 'keyword' },
-          status_message: { type: 'text' },
-        },
-      },
+      producer_id: { type: 'keyword' },
+      computed_key: { type: 'keyword' },
+      original_key: { type: 'keyword' },
+      producer_arn: { type: 'keyword' },
+      content_type: { type: 'keyword' },
+      last_modified: { type: 'date' },
+      content_length: { type: 'long' },
+      // metadata: otherMeta,
     },
   },
 });

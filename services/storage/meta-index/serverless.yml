@@ -5,6 +5,7 @@ plugins:
   - serverless-webpack
 
 custom:
+  esIndex: ${self:provider.stage}-meta
   webpackIncludeModules: true
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
   output:
@@ -16,6 +17,7 @@ package:
 provider:
   name: aws
   runtime: nodejs6.10
+  timeout: 300
   stage: ${opt:stage, file(../../../config.json):stage, 'dev'}
   region: ${opt:region, file(../../../config.json):region, 'eu-central-1'}
   deploymentBucket:
@@ -23,7 +25,14 @@ provider:
   stackTags:
     ENV: ${self:custom.eubfrEnvironment}
   environment:
-    TABLE: ${self:custom.DYNAMODB_TABLE}
+    API:
+      Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:MetaEndpoint
+    INDEX: ${self:custom.esIndex}
+  iamRoleStatements:
+    # http://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-aws-integrations.html?shortFooter=true#es-aws-integrations-s3-lambda-es-authorizations
+    - Effect: "Allow"
+      Action: "es:*"
+      Resource: "arn:aws:es:${self:provider.region}:*:domain/*"
 
 functions:
   onObjectCreated:
