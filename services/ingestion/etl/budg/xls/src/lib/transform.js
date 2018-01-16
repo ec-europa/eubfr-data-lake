@@ -47,7 +47,7 @@ export default (record: Object): Project => {
 
   const partnerArray = [];
   for (let i = 0; i < partnerKeys.length; i += 1) {
-    if (record[`Partner ${i + 1} name`] != null) {
+    if (record[`Partner ${i + 1} name`]) {
       partnerArray.push({
         name: record[`Partner ${i + 1} name`],
         type: record[`Partner ${i + 1} organisation type`],
