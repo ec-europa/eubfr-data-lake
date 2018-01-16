@@ -40,12 +40,18 @@ type GeoJSON =
   | Polygon2D
   | MultiPolygon2D;
 
+type BudgetItem = {
+  currency: string,
+  raw: string,
+  value: number,
+};
+
 type Budget = {
-  eu_contrib: { value: number, currency: string, raw: string },
-  total_cost: { value: number, currency: string, raw: string },
-  private_fund: { value: number, currency: string, raw: string },
-  public_fund: { value: number, currency: string, raw: string },
-  other_contrib: { value: number, currency: string, raw: string },
+  eu_contrib: BudgetItem,
+  total_cost: BudgetItem,
+  private_fund: BudgetItem,
+  public_fund: BudgetItem,
+  other_contrib: BudgetItem,
   funding_area: Array<string>,
 };
 
