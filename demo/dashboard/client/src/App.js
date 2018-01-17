@@ -33,7 +33,9 @@ const App = () => (
             </ol>
           </nav>
           <div className="ecl-page-header__body">
-            <div className="ecl-page-header__identity">Dashboard</div>
+            <div className="ecl-page-header__identity">
+              {(process.env.REACT_APP_PRODUCER || '').toUpperCase()} Dashboard
+            </div>
           </div>
         </div>
       </div>
