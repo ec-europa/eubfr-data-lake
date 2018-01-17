@@ -7,6 +7,9 @@ import type { Project } from '../../../../types/Project';
  * Transform message (BUDG XLS)
  */
 
+const formatDate = date =>
+  date ? moment(date, 'MM/DD/YYYY').toISOString() : null;
+
 /*
  * Map fields
  */
@@ -86,14 +89,6 @@ export default (record: Object): Project => {
     result: record['Results Platform Project Card'],
   };
 
-  // Preprocess timeframe
-  const timeframeFrom = record['Start date']
-    ? moment(record['Start date'], 'MM/DD/YYYY').toISOString()
-    : null;
-  const timeframeTo = record['End date']
-    ? moment(record['End date'], 'MM/DD/YYYY').toISOString()
-    : null;
-
   // Preprocess type
   const typeArray =
     (record['Activity type'] != null && record['Activity type'].split(',')) ||
@@ -120,8 +115,8 @@ export default (record: Object): Project => {
     success_story: record['Is Success Story'],
     themes: [],
     timeframe: {
-      from: timeframeFrom,
-      to: timeframeTo,
+      from: formatDate(record['Start date']),
+      to: formatDate(record['End date']),
     },
     title: record['Project Title'],
     type: typeArray,

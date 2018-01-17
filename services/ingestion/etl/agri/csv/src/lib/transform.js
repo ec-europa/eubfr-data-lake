@@ -14,6 +14,8 @@ const getFundingArea = record =>
     item => item
   );
 
+const formatDate = date => (date ? moment.unix(date).toISOString() : null);
+
 /*
  * Map fields
  */
@@ -137,8 +139,8 @@ export default (record: Object): Project => {
     success_story: '',
     themes: [],
     timeframe: {
-      from: timeframeFrom && moment.unix(timeframeFrom).toISOString(),
-      to: timeframeFrom && moment.unix(timeframeTo).toISOString(),
+      from: formatDate(timeframeFrom),
+      to: formatDate(timeframeTo),
     },
     title: record.Name || '',
     type: [],

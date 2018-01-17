@@ -17,14 +17,8 @@ const checkData = data => {
   return '';
 };
 
-// Formats date from DD/MM/YYYY to ISO 8601 date format.
-const formatDate = date => {
-  if (!date) return null;
-  const d = date.toString().split(/\//);
-  if (d === null || d.length !== 3) return null;
-  if (d[2].length === 2) d[2] = `20${d[2]}`;
-  return moment(date, 'DD-MM-YYYY').toISOString();
-};
+const formatDate = date =>
+  date ? moment(date, 'MM/DD/YYYY').toISOString() : null;
 
 // Get and format adress from different fields.
 const getAddress = record => {
