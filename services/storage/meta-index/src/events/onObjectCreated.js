@@ -37,10 +37,12 @@ export const handler = async (event, context, callback) => {
   const producerId = computedKey.split('/')[0];
 
   try {
-    const data = await s3.headObject({
-      Bucket: s3record.s3.bucket.name,
-      Key: computedKey,
-    });
+    const data = await s3
+      .headObject({
+        Bucket: s3record.s3.bucket.name,
+        Key: computedKey,
+      })
+      .promise();
 
     const meta = data.Metadata || {};
 
