@@ -41,7 +41,7 @@ class List extends Component {
           .search({
             index: metaIndex,
             type: 'file',
-            // q: `computed_key:"${computedKey}.ndjson"`,
+            q: `producer_id:"${process.env.REACT_APP_PRODUCER}"`,
           })
           .then(data =>
             this.setState({
