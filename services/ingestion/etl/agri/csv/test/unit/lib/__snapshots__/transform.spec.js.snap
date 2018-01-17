@@ -4,16 +4,36 @@ exports[`DG BUDG CSV transformer Produces correct JSON output structure 1`] = `
 Object {
   "action": "",
   "budget": Object {
-    "eu_contrib": 3562000,
+    "eu_contrib": Object {
+      "currency": "EUR",
+      "raw": "3562000",
+      "value": 3562000,
+    },
     "funding_area": Array [
       "Research & innovation",
       "Investment for growth",
       "Transport",
     ],
-    "other_contrib": 0,
-    "private_fund": 0,
-    "public_fund": 0,
-    "total_cost": 0,
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
   },
   "call_year": "",
   "coordinators": Array [
@@ -252,12 +272,32 @@ exports[`DG BUDG transformer handling incomplete or inconsistent data Certain fi
 Object {
   "action": "",
   "budget": Object {
-    "eu_contrib": NaN,
+    "eu_contrib": Object {
+      "currency": "EUR",
+      "raw": "",
+      "value": NaN,
+    },
     "funding_area": Array [],
-    "other_contrib": 0,
-    "private_fund": 0,
-    "public_fund": 0,
-    "total_cost": 0,
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
   },
   "call_year": "",
   "coordinators": Array [
