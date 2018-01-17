@@ -66,11 +66,19 @@ const formatBudget = budget => {
 export default (record: Object): Project => {
   // Preprocess budget
   const budgetObject = {
-    total_cost: formatBudget(record.Total_project_budget),
-    eu_contrib: formatBudget(record.EU_Budget_contribution),
-    private_fund: 0,
-    public_fund: 0,
-    other_contrib: 0,
+    total_cost: {
+      value: formatBudget(record.Total_project_budget),
+      currency: '',
+      raw: record.Total_project_budget || '',
+    },
+    eu_contrib: {
+      value: formatBudget(record.EU_Budget_contribution),
+      currency: '',
+      raw: record.EU_Budget_contribution || '',
+    },
+    private_fund: { value: 0, currency: '', raw: '' },
+    public_fund: { value: 0, currency: '', raw: '' },
+    other_contrib: { value: 0, currency: '', raw: '' },
     funding_area: getFundingArea(record),
   };
 
