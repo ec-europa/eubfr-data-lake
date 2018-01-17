@@ -2,10 +2,14 @@
  * @jest-environment node
  */
 
+import moment from 'moment-timezone';
+
 import mapper from '../../../src/lib/transform';
 import testRecord from '../../stubs/record.json';
 
 describe(`DG AGRI CSV transformer`, () => {
+  moment.tz.setDefault('CET');
+
   let result = {};
 
   beforeAll(() => {
@@ -27,6 +31,8 @@ describe(`DG AGRI CSV transformer`, () => {
 });
 
 describe(`DG AGRI transformer handling incomplete or inconsistent data`, () => {
+  moment.tz.setDefault('CET');
+
   const partialRecord = {
     Name: 'Bulgaria’s capital expands metro network',
     'Timeframe start': '1388530800',

@@ -1,5 +1,6 @@
 // @flow
 
+import moment from 'moment';
 import type { Project } from '../../../../types/Project';
 
 /*
@@ -87,10 +88,10 @@ export default (record: Object): Project => {
 
   // Preprocess timeframe
   const timeframeFrom = record['Start date']
-    ? new Date(record['Start date']).toISOString()
+    ? moment(record['Start date'], 'MM/DD/YYYY').toISOString()
     : null;
   const timeframeTo = record['End date']
-    ? new Date(record['End date']).toISOString()
+    ? moment(record['End date'], 'MM/DD/YYYY').toISOString()
     : null;
 
   // Preprocess type

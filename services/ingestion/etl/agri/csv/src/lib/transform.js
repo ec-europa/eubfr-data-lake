@@ -4,6 +4,7 @@
  * Transform message (AGRI CSV)
  */
 
+import moment from 'moment';
 import type { Project } from '../../../../types/Project';
 
 const getFundingArea = record =>
@@ -136,11 +137,8 @@ export default (record: Object): Project => {
     success_story: '',
     themes: [],
     timeframe: {
-      from:
-        timeframeFrom &&
-        new Date(parseInt(timeframeFrom, 10) * 1000).toISOString(),
-      to:
-        timeframeTo && new Date(parseInt(timeframeTo, 10) * 1000).toISOString(),
+      from: timeframeFrom && moment.unix(timeframeFrom).toISOString(),
+      to: timeframeFrom && moment.unix(timeframeTo).toISOString(),
     },
     title: record.Name || '',
     type: [],
