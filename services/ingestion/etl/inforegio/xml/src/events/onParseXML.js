@@ -20,7 +20,7 @@ export const handler = async (event, context, callback) => {
 
   // Was the lambda triggered correctly? Is the file extension supported? etc.
   if (!snsRecord || snsRecord.EventSource !== 'aws:sns') {
-    return callback('Bad record');
+    throw new Error('Bad record');
   }
 
   /*
