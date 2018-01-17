@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 
-import onParseXLS from '../../../src/events/onParseXLS';
+import onParseXLS from '../../../src/events/onParseXML';
 
 describe(`Function onParseXLS in "@eubfr/ingestion-etl-budg-xls"`, () => {
   test('The function expects a correct SNS record', async () => {
