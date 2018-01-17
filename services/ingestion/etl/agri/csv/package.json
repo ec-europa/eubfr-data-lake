@@ -6,6 +6,11 @@
     "deploy": "sls deploy -v",
     "test:unit": "jest --testPathPattern=unit"
   },
+  "dependencies": {
+    "csv-parse": "2.0.0",
+    "moment": "2.20.1",
+    "stream-transform": "1.0.0"
+  },
   "devDependencies": {
     "aws-sdk": "2.179.0",
     "babel-core": "6.26.0",
@@ -17,10 +22,5 @@
     "serverless": "1.25.0",
     "serverless-webpack": "4.2.0",
     "webpack": "3.10.0"
-  },
-  "dependencies": {
-    "csv-parse": "2.0.0",
-    "moment": "2.20.1",
-    "stream-transform": "1.0.0"
   }
 }
