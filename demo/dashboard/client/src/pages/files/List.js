@@ -41,7 +41,14 @@ class List extends Component {
           .search({
             index: metaIndex,
             type: 'file',
-            q: `producer_id:"${process.env.REACT_APP_PRODUCER}"`,
+            body: {
+              query: {
+                term: {
+                  producer_id: process.env.REACT_APP_PRODUCER,
+                },
+              },
+              sort: [{ last_modified: { order: 'desc' } }],
+            },
           })
           .then(data =>
             this.setState({

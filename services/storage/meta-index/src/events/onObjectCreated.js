@@ -2,7 +2,7 @@ import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependenc
 import elasticsearch from 'elasticsearch';
 import connectionClass from 'http-aws-es';
 
-import { STATUS } from './onStatusReported';
+import { STATUS } from '../lib/status';
 
 export const handler = async (event, context, callback) => {
   const { API, INDEX } = process.env;
