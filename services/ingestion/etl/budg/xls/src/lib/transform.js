@@ -1,14 +1,21 @@
 // @flow
 
-import moment from 'moment';
 import type { Project } from '../../../../types/Project';
 
 /*
  * Transform message (BUDG XLS)
  */
 
-const formatDate = date =>
-  date ? moment(date, 'MM/DD/YYYY').toISOString() : null;
+const formatDate = date => {
+  if (!date) return null;
+  const d = date.split(/\//);
+  if (d === null || d.length !== 3) return null;
+  if (d[2].length === 2) d[2] = `20${d[2]}`;
+  const day = d[1];
+  const month = d[0];
+  const year = d[2];
+  return new Date(Date.UTC(year, month - 1, day)).toISOString();
+};
 
 /*
  * Map fields

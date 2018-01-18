@@ -158,8 +158,8 @@ Object {
   "success_story": "No",
   "themes": Array [],
   "timeframe": Object {
-    "from": "2014-10-08T22:00:00.000Z",
-    "to": "2016-10-07T22:00:00.000Z",
+    "from": "2014-10-09T00:00:00.000Z",
+    "to": "2016-10-08T00:00:00.000Z",
   },
   "title": "International Young Makers in Action",
   "type": Array [
