@@ -5,7 +5,7 @@ import transform from 'stream-transform';
 import Logger from '../../../../../../logger/listener/src/lib/Logger';
 
 // Import constants
-import { STATUS } from '../../../../../../storage/meta-index/src/events/onStatusReported';
+import { STATUS } from '../../../../../../storage/meta-index/src/lib/status';
 
 // Import logic
 import { extractMessage, prepareMessage } from '../lib/sns';

@@ -3,7 +3,7 @@ import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependenc
 
 import Logger from '../../../../../../logger/listener/src/lib/Logger';
 import transformRecord from '../lib/transform';
-import { STATUS } from '../../../../../../storage/meta-index/src/events/onStatusReported';
+import { STATUS } from '../../../../../../storage/meta-index/src/lib/status';
 
 const xml2js = require('xml2js');
 

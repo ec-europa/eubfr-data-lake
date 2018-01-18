@@ -1,6 +1,9 @@
-import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
+import elasticsearch from 'elasticsearch';
+import connectionClass from 'http-aws-es';
 
-export const handler = (event, context, callback) => {
+export const handler = async (event, context, callback) => {
+  const { API, INDEX } = process.env;
+
   /*
    * Some checks here before going any further
    */
@@ -17,34 +20,34 @@ export const handler = (event, context, callback) => {
     return callback('Bad record');
   }
 
-  /*
+  try {
+    /*
    * Extract information from the event
    */
 
-  // Extract S3 record
-  const s3record = JSON.parse(snsRecord.Sns.Message).Records[0];
+    // Extract S3 record
+    const s3record = JSON.parse(snsRecord.Sns.Message).Records[0];
 
-  // Delete record
-  const documentClient = new AWS.DynamoDB.DocumentClient({
-    apiVersion: '2012-08-10',
-  });
+    const computedKey = s3record.s3.object.key;
 
-  const computedKey = s3record.s3.object.key;
-  const producerId = computedKey.split('/')[0];
+    // elasticsearch client instantiation
+    const client = elasticsearch.Client({
+      host: `https://${API}`,
+      apiVersion: '6.0',
+      connectionClass,
+      index: INDEX,
+    });
 
-  const params = {
-    TableName: process.env.TABLE,
-    Key: {
-      producer_id: producerId,
-      computed_key: computedKey,
-    },
-  };
-
-  return documentClient.delete(params, dynamoErr => {
-    if (dynamoErr) return callback(dynamoErr);
+    await client.deleteByQuery({
+      index: INDEX,
+      type: 'file',
+      q: `computed_key:"${computedKey}"`,
+    });
 
     return callback(null, 'All fine');
-  });
+  } catch (err) {
+    return callback(err.message);
+  }
 };
 
 export default handler;

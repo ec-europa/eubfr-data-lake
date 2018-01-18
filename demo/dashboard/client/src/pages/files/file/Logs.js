@@ -18,6 +18,7 @@ class Logs extends React.Component {
       logsCount: 0,
     };
 
+    this.logClient = null;
     this.loadLogs = this.loadLogs.bind(this);
     this.setLogs = this.setLogs.bind(this);
     this.setEmptyLogs = this.setEmptyLogs.bind(this);

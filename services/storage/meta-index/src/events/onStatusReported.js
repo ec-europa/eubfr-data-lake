@@ -1,13 +1,9 @@
-import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
+import elasticsearch from 'elasticsearch';
+import connectionClass from 'http-aws-es';
 
-export const STATUS = {
-  ERROR: 'error',
-  UPLOADED: 'uploaded',
-  PARSING: 'parsing',
-  PARSED: 'parsed',
-};
+export const handler = async (event, context, callback) => {
+  const { API, INDEX } = process.env;
 
-export const handler = (event, context, callback) => {
   /*
    * Some checks here before going any further
    */
@@ -28,39 +24,48 @@ export const handler = (event, context, callback) => {
     return callback('Bad record');
   }
 
-  /*
-   * Extract information from the event
-   */
+  try {
+    /*
+     * Extract information from the event
+     */
 
-  // Extract S3 record
-  const snsMessage = JSON.parse(snsRecord.Sns.Message);
-  const { key, status, message } = snsMessage;
-  const producerId = key.split('/')[0];
+    // Extract S3 record
+    const snsMessage = JSON.parse(snsRecord.Sns.Message);
+    const { key, status, message } = snsMessage;
 
-  // Save record
-  const documentClient = new AWS.DynamoDB.DocumentClient({
-    apiVersion: '2012-08-10',
-  });
+    // Update record
+    const client = elasticsearch.Client({
+      host: `https://${API}`,
+      apiVersion: '6.0',
+      connectionClass,
+      index: INDEX,
+    });
 
-  const params = {
-    TableName: process.env.TABLE,
-    Key: {
-      producer_id: producerId,
-      computed_key: key,
-    },
-    UpdateExpression: 'SET #status = :s, message = :m',
-    ExpressionAttributeNames: { '#status': 'status' },
-    ExpressionAttributeValues: {
-      ':s': status,
-      ':m': message,
-    },
-  };
-
-  return documentClient.update(params, dynamoErr => {
-    if (dynamoErr) return callback(dynamoErr);
+    await client.updateByQuery({
+      index: INDEX,
+      type: 'file',
+      body: {
+        query: {
+          term: {
+            computed_key: key,
+          },
+        },
+        script: {
+          source:
+            'ctx._source.message = params.message ; ctx._source.status = params.status',
+          lang: 'painless',
+          params: {
+            message,
+            status,
+          },
+        },
+      },
+    });
 
     return callback(null, 'All fine');
-  });
+  } catch (err) {
+    return callback(err.message);
+  }
 };
 
 export default handler;

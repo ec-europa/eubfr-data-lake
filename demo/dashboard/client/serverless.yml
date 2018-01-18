@@ -22,12 +22,15 @@ provider:
     ENV: ${self:custom.eubfrEnvironment}
   environment:
     REACT_APP_STAGE: ${self:provider.stage}
+    REACT_APP_PRODUCER: ${self:custom.EUBFR_USERNAME}
     REACT_APP_DEMO_SERVER:
       Fn::ImportValue: ${self:provider.stage}:demo-dash-server-${self:custom.EUBFR_USERNAME}:ServiceEndpoint
     REACT_APP_ES_PROJECTS_ENDPOINT:
       Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:ProjectsEndpoint
     REACT_APP_ES_LOGS_ENDPOINT:
       Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:LogsEndpoint
+    REACT_APP_ES_META_ENDPOINT:
+      Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:MetaEndpoint
 
 resources:
   Resources:
