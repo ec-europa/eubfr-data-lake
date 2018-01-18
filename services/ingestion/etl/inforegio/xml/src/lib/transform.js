@@ -18,7 +18,7 @@ const checkData = data => {
 };
 
 const formatDate = date =>
-  date ? moment(date, 'MM/DD/YYYY').toISOString() : null;
+  date ? moment(date, 'DD/MM/YYYY').toISOString() : null;
 
 // Get and format adress from different fields.
 const getAddress = record => {
