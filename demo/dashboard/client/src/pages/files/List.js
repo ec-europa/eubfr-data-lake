@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import elasticsearch from 'elasticsearch';
 import FilesList from '../../components/FilesList';
-import handleErrors from '../../lib/handleErrors';
 
 import Spinner from '../../components/Spinner';
 
-const demoServer = `https://${process.env.REACT_APP_DEMO_SERVER}/demo`;
+const metaApiEndpoint = `https://${process.env.REACT_APP_ES_META_ENDPOINT}`;
+const metaIndex = `${process.env.REACT_APP_STAGE}-meta`;
 
 class List extends Component {
   constructor() {
@@ -13,33 +14,51 @@ class List extends Component {
     this.state = {
       loading: true,
       files: [],
+      filesCount: 0,
     };
 
+    this.esClient = null;
     this.loadFiles = this.loadFiles.bind(this);
   }
 
   componentDidMount() {
+    this.esClient = elasticsearch.Client({
+      host: metaApiEndpoint,
+      apiVersion: '6.0',
+      log: 'warning',
+    });
+
     this.loadFiles();
   }
 
   loadFiles() {
-    this.setState(
+    return this.setState(
       {
         loading: true,
       },
       () =>
-        window
-          .fetch(`${demoServer}/meta`)
-          .then(handleErrors)
-          .then(response => response.json())
+        this.esClient
+          .search({
+            index: metaIndex,
+            type: 'file',
+            body: {
+              query: {
+                term: {
+                  producer_id: process.env.REACT_APP_PRODUCER,
+                },
+              },
+              sort: [{ last_modified: { order: 'desc' } }],
+            },
+          })
           .then(data =>
             this.setState({
               loading: false,
-              files: data,
+              files: data.hits.hits,
+              filesCount: data.hits.total,
             })
           )
           .catch(error => {
-            console.log(`An error happened: ${error.message}`);
+            throw Error(`An error occured: ${error.message}`);
           })
     );
   }

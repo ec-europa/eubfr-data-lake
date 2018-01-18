@@ -1,5 +1,5 @@
 import stream from 'stream';
-import { STATUS } from '../../../../../../storage/meta-index/src/events/onStatusReported';
+import { STATUS } from '../../../../../../storage/meta-index/src/lib/status';
 
 // Load
 export default ({ key, BUCKET, s3, sns, endpointArn, onError, callback }) => {

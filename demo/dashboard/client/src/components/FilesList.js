@@ -21,24 +21,27 @@ const List = ({ files }) => (
       </tr>
     </thead>
     <tbody>
-      {files.map(file => (
-        <tr key={file.computed_key}>
-          <td>
-            <span
-              title={file.message || 'Not parsed'}
-              className={getIcon(file.status)}
-            />
-            <Link
-              to={`/files/${encodeURIComponent(file.computed_key)}`}
-              className="ecl-link"
-            >
-              {file.original_key || 'unknown'}
-            </Link>
-          </td>
-          <td>{new Date(file.last_modified).toLocaleString()}</td>
-          <td>{Math.floor(file.content_length / 1024) || 0} kB</td>
-        </tr>
-      ))}
+      {files.map(file => {
+        const hit = file._source;
+        return (
+          <tr key={hit.computed_key}>
+            <td>
+              <span
+                title={hit.message || 'Not parsed'}
+                className={getIcon(hit.status)}
+              />
+              <Link
+                to={`/files/${encodeURIComponent(hit.computed_key)}`}
+                className="ecl-link"
+              >
+                {hit.original_key || 'unknown'}
+              </Link>
+            </td>
+            <td>{new Date(hit.last_modified).toLocaleString()}</td>
+            <td>{Math.floor(hit.content_length / 1024) || 0} kB</td>
+          </tr>
+        );
+      })}
     </tbody>
   </table>
 );

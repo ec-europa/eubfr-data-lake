@@ -11,6 +11,10 @@ import ProjectsTab from './file/Projects';
 import './File.css';
 
 const demoServerEndpoint = `https://${process.env.REACT_APP_DEMO_SERVER}/demo`;
+
+const metaApiEndpoint = `https://${process.env.REACT_APP_ES_META_ENDPOINT}`;
+const metaIndex = `${process.env.REACT_APP_STAGE}-meta`;
+
 const projectsApiEndpoint = `https://${
   process.env.REACT_APP_ES_PROJECTS_ENDPOINT
 }`;
@@ -38,15 +42,22 @@ class File extends React.Component {
       projectsCountLoading: true,
     };
 
+    this.projectsClient = null;
+    this.metaClient = null;
     this.deleteFile = this.deleteFile.bind(this);
     this.generateLink = this.generateLink.bind(this);
-    this.getFileMeta = this.getFileMeta.bind(this);
     this.loadFile = this.loadFile.bind(this);
     this.getProjectsCount = this.getProjectsCount.bind(this);
   }
 
   componentDidMount() {
-    this.client = elasticsearch.Client({
+    this.metaClient = elasticsearch.Client({
+      host: metaApiEndpoint,
+      apiVersion: '6.0',
+      log: 'warning',
+    });
+
+    this.projectsClient = elasticsearch.Client({
       host: projectsApiEndpoint,
       apiVersion: '6.0',
       log: 'warning',
@@ -60,7 +71,7 @@ class File extends React.Component {
     const { match } = this.props;
     const computedKey = decodeURIComponent(match.params.id);
 
-    return this.client
+    return this.projectsClient
       .count({
         index: projectsIndex,
         type: 'project',
@@ -77,36 +88,27 @@ class File extends React.Component {
       });
   }
 
-  getFileMeta(computedKey) {
-    return () =>
-      window
-        .fetch(
-          `${demoServerEndpoint}/filemeta?key=${encodeURIComponent(
-            computedKey
-          )}`
-        )
-        .then(handleErrors)
-        .then(response => response.json())
-        .then(data =>
-          this.setState({
-            fileLoading: false,
-            file: data[0],
-          })
-        )
-        .catch(error => {
-          console.log(`An error occured: ${error.message}`);
-        });
-  }
-
   loadFile() {
-    this.setState({
-      fileLoading: true,
-    });
-
     const { match } = this.props;
     const computedKey = decodeURIComponent(match.params.id);
 
-    this.setState({ fileLoading: true }, this.getFileMeta(computedKey));
+    this.setState({ fileLoading: true }, () =>
+      this.metaClient
+        .search({
+          index: metaIndex,
+          type: 'file',
+          q: `computed_key:"${computedKey}"`,
+        })
+        .then(data =>
+          this.setState({
+            fileLoading: false,
+            file: data.hits.hits[0]._source,
+          })
+        )
+        .catch(error => {
+          throw Error(`An error occured: ${error.message}`);
+        })
+    );
   }
 
   deleteFile() {

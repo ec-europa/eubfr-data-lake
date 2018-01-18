@@ -6,7 +6,7 @@ import transformRecord from '../lib/transform';
 import Logger from '../../../../../../logger/listener/src/lib/Logger';
 
 // Import constants
-import { STATUS } from '../../../../../../storage/meta-index/src/events/onStatusReported';
+import { STATUS } from '../../../../../../storage/meta-index/src/lib/status';
 
 export const handler = async (event, context, callback) => {
   /*
