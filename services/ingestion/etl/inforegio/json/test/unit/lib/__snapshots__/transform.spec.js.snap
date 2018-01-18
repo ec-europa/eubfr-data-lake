@@ -77,8 +77,8 @@ Object {
     "Urban development",
   ],
   "timeframe": Object {
-    "from": "2008-12-31T23:00:00.000Z",
-    "to": "2010-11-29T23:00:00.000Z",
+    "from": "2009-01-01T00:00:00.000Z",
+    "to": "2012-06-11T00:00:00.000Z",
   },
   "title": "Renovated ship: a unique venue on the Danube",
   "type": Array [
