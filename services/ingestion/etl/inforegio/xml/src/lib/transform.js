@@ -1,6 +1,5 @@
 // @flow
 
-import moment from 'moment';
 import type { Project } from '../../../../types/Project';
 
 /*
@@ -17,8 +16,14 @@ const checkData = data => {
   return '';
 };
 
-const formatDate = date =>
-  date ? moment(date, 'DD/MM/YYYY').toISOString() : null;
+// Formats date from DD/MM/YYYY to ISO 8601 date format.
+const formatDate = date => {
+  if (!date) return null;
+  const d = date.toString().split(/\//);
+  if (d === null || d.length !== 3) return null;
+  if (d[2].length === 2) d[2] = `20${d[2]}`;
+  return new Date(d[2], d[1] - 1, d[0]).toISOString();
+};
 
 // Get and format adress from different fields.
 const getAddress = record => {

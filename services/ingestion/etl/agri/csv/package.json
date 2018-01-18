@@ -8,7 +8,6 @@
   },
   "dependencies": {
     "csv-parse": "2.0.0",
-    "moment": "2.20.1",
     "stream-transform": "1.0.0"
   },
   "devDependencies": {
@@ -18,7 +17,6 @@
     "babel-preset-env": "1.6.1",
     "babel-preset-flow": "6.23.0",
     "jest": "22.0.5",
-    "moment-timezone": "0.5.14",
     "serverless": "1.25.0",
     "serverless-webpack": "4.2.0",
     "webpack": "3.10.0"

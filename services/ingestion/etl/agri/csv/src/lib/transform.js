@@ -4,7 +4,6 @@
  * Transform message (AGRI CSV)
  */
 
-import moment from 'moment';
 import type { Project } from '../../../../types/Project';
 
 const getFundingArea = record =>
@@ -14,7 +13,8 @@ const getFundingArea = record =>
     item => item
   );
 
-const formatDate = date => (date ? moment.unix(date).toISOString() : null);
+const formatDate = date =>
+  date ? new Date(parseInt(date, 10) * 1000).toISOString() : null;
 
 /*
  * Map fields

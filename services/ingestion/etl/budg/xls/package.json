@@ -7,7 +7,6 @@
     "test:unit": "jest --testPathPattern=unit"
   },
   "dependencies": {
-    "moment": "^2.20.1",
     "xlsx": "0.11.17"
   },
   "devDependencies": {
@@ -16,7 +15,6 @@
     "babel-loader": "7.1.2",
     "babel-preset-env": "1.6.1",
     "jest": "22.1.1",
-    "moment-timezone": "0.5.14",
     "serverless": "1.25.0",
     "serverless-webpack": "4.2.0",
     "webpack": "3.10.0"
