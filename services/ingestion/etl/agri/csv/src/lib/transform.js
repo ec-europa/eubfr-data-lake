@@ -13,6 +13,9 @@ const getFundingArea = record =>
     item => item
   );
 
+const formatDate = date =>
+  date ? new Date(parseInt(date, 10) * 1000).toISOString() : null;
+
 /*
  * Map fields
  */
@@ -144,11 +147,8 @@ export default (record: Object): Project => {
     success_story: '',
     themes: [],
     timeframe: {
-      from:
-        timeframeFrom &&
-        new Date(parseInt(timeframeFrom, 10) * 1000).toISOString(),
-      to:
-        timeframeTo && new Date(parseInt(timeframeTo, 10) * 1000).toISOString(),
+      from: formatDate(timeframeFrom),
+      to: formatDate(timeframeTo),
     },
     title: record.Name || '',
     type: [],

@@ -15,11 +15,16 @@ const getFundingArea = record =>
 
 // Formats date from DD/MM/YYYY to ISO 8601 date format.
 const formatDate = date => {
-  if (!date) return null;
+  if (!date || typeof date !== 'string') return null;
   const d = date.split(/\//);
-  if (d === null || d.length !== 3) return null;
-  if (d[2].length === 2) d[2] = `20${d[2]}`;
-  return new Date(d[2], d[1] - 1, d[0]).toISOString();
+  if (d.length !== 3) return null;
+  const [day, month, year] = d;
+  if (!day || !month || !year) return null;
+  try {
+    return new Date(Date.UTC(year, month - 1, day)).toISOString();
+  } catch (e) {
+    return null;
+  }
 };
 
 const getAddress = record => {
