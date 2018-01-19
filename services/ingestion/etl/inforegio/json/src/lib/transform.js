@@ -80,6 +80,7 @@ export default (record: Object): Project => {
     public_fund: { value: 0, currency: '', raw: '' },
     other_contrib: { value: 0, currency: '', raw: '' },
     funding_area: getFundingArea(record),
+    mmf_heading: '',
   };
 
   // Preprocess partners

@@ -77,6 +77,7 @@ export default (record: Object): Project => {
       .split(';')
       // Remove empty strings.
       .filter(item => item),
+    mmf_heading: '',
   };
 
   // Preprocess project locations
