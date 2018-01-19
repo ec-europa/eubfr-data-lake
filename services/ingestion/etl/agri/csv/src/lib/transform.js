@@ -22,9 +22,13 @@ const formatDate = date =>
 export default (record: Object): Project => {
   // Preprocess budget
   const budgetObject = {
-    total_cost: { value: 0, currency: '', raw: '' },
+    total_cost: {
+      value: Number(record['Total project budget']) || 0,
+      currency: '',
+      raw: record['Total project budget'] || '',
+    },
     eu_contrib: {
-      value: Number(record['EU Budget contribution']),
+      value: Number(record['EU Budget contribution']) || 0,
       currency: 'EUR',
       raw: record['EU Budget contribution'] || '',
     },
@@ -32,6 +36,7 @@ export default (record: Object): Project => {
     public_fund: { value: 0, currency: '', raw: '' },
     other_contrib: { value: 0, currency: '', raw: '' },
     funding_area: getFundingArea(record),
+    mmf_heading: record['EU Budget MFF heading'] || '',
   };
 
   // Preprocess coordinators
@@ -124,9 +129,12 @@ export default (record: Object): Project => {
     budget: budgetObject,
     call_year: '',
     coordinators: coordArray,
-    cover_image: record.Visual || '',
     description: record['Project description'] || '',
     ec_priorities: record['EC’s priorities'].split(';') || [],
+    media: {
+      cover_image: record.Visual || '',
+      video: record['Link to a video'] || '',
+    },
     partners: partnerArray,
     programme_name: record['Programme name'] || '',
     project_id: record.Nid || '',

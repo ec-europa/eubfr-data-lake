@@ -7,9 +7,10 @@ Object {
     "eu_contrib": Object {
       "currency": "",
       "raw": "EUR 157 000 000",
-      "value": NaN,
+      "value": 157000000,
     },
     "funding_area": Array [],
+    "mmf_heading": "",
     "other_contrib": Object {
       "currency": "",
       "raw": "",
@@ -28,14 +29,17 @@ Object {
     "total_cost": Object {
       "currency": "",
       "raw": "EUR 329 000 000",
-      "value": NaN,
+      "value": 329000000,
     },
   },
   "call_year": "",
   "coordinators": Array [],
-  "cover_image": "",
   "description": "The colour of the sky never had much effect on the irksome rail trip between Greece's two principal cities of Athens and Thessaloniki: passengers had to wait for hours since there was only one set of tracks for trains travelling in both directions. Now all this has changed thanks to a huge programme carried out with the help of the European Union.",
   "ec_priorities": Array [],
+  "media": Object {
+    "cover_image": "",
+    "video": "",
+  },
   "partners": Array [],
   "period": "2000-2006",
   "programme_name": "",

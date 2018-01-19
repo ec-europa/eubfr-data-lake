@@ -85,6 +85,7 @@ export default (record: Object): Project => {
     public_fund: { value: 0, currency: '', raw: '' },
     other_contrib: { value: 0, currency: '', raw: '' },
     funding_area: getFundingArea(record),
+    mmf_heading: '',
   };
 
   // Preprocess partners
@@ -144,9 +145,12 @@ export default (record: Object): Project => {
     budget: budgetObject,
     call_year: '',
     coordinators: [],
-    cover_image: '',
     description: record.quote,
     ec_priorities: [],
+    media: {
+      cover_image: '',
+      video: '',
+    },
     partners: partnerArray,
     period: record.Period,
     programme_name: '',

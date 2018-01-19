@@ -48,13 +48,12 @@ const getAddress = record => {
 };
 
 const formatBudget = budget => {
-  if (!budget) return 0;
-  budget
-    .toString()
+  if (!budget || typeof budget !== 'string') return 0;
+  const formattedBudget = budget
     .split(' ')
     .slice(1)
     .join('');
-  return Number(budget);
+  return Number(formattedBudget) || 0;
 };
 
 /*
@@ -82,6 +81,7 @@ export default (record: Object): Project => {
       .split(';')
       // Remove empty strings.
       .filter(item => item),
+    mmf_heading: '',
   };
 
   // Preprocess project locations
@@ -149,9 +149,12 @@ export default (record: Object): Project => {
     budget: budgetObject,
     call_year: '',
     coordinators: [],
-    cover_image: '',
     description: checkData(record.quote),
     ec_priorities: [],
+    media: {
+      cover_image: '',
+      video: '',
+    },
     partners: partnerArray,
     period: checkData(record.Period),
     programme_name: '',

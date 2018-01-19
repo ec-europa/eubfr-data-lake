@@ -29,11 +29,12 @@ export default (record: Object): Project => {
   const budgetObject = {
     total_cost: { value: 0, currency: '', raw: '' },
     eu_contrib: {
-      value: Number(
-        record[
-          "EU Grant award in euros (This amount represents the grant awarded after the selection stage and is indicative. Please note that any changes made during or after the project's lifetime will not be reflected here.)"
-        ].replace(/,/g, '')
-      ),
+      value:
+        Number(
+          record[
+            "EU Grant award in euros (This amount represents the grant awarded after the selection stage and is indicative. Please note that any changes made during or after the project's lifetime will not be reflected here.)"
+          ].replace(/,/g, '')
+        ) || 0,
       currency: 'EUR',
       raw:
         record[
@@ -44,6 +45,7 @@ export default (record: Object): Project => {
     public_fund: { value: 0, currency: '', raw: '' },
     other_contrib: { value: 0, currency: '', raw: '' },
     funding_area: [],
+    mmf_heading: '',
   };
 
   // Preprocess coordinators
@@ -111,9 +113,12 @@ export default (record: Object): Project => {
     budget: budgetObject,
     call_year: record['Call year'],
     coordinators: coordArray,
-    cover_image: '',
     description: record['Project Summary'],
     ec_priorities: [],
+    media: {
+      cover_image: '',
+      video: '',
+    },
     partners: partnerArray,
     programme_name: record.Programme,
     project_id: record['Project Number'],
