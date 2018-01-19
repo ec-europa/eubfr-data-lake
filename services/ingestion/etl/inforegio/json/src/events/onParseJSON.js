@@ -17,8 +17,13 @@ export const handler = async (event, context, callback) => {
   const snsRecord = event.Records ? event.Records[0] : undefined;
 
   // Was the lambda triggered correctly? Is the file extension supported? etc.
-  if (!snsRecord || snsRecord.EventSource !== 'aws:sns') {
-    throw new Error('Bad record');
+  if (
+    !snsRecord ||
+    snsRecord.EventSource !== 'aws:sns' ||
+    !snsRecord.Sns ||
+    !snsRecord.Sns.Message
+  ) {
+    return callback(Error('Bad record'));
   }
 
   /*
@@ -26,11 +31,20 @@ export const handler = async (event, context, callback) => {
    */
 
   // Extract message
-  const message = JSON.parse(snsRecord.Sns.Message);
+  let message = {};
+  try {
+    message = JSON.parse(snsRecord.Sns.Message);
+  } catch (e) {
+    return callback(e);
+  }
+
+  if (!message.object || !message.object.key) {
+    return callback(Error('The message is not valid'));
+  }
 
   // Check file extension
   if (path.extname(message.object.key) !== '.json') {
-    return callback('File extension should be .json');
+    return callback(Error('File extension should be .json'));
   }
 
   /*
@@ -108,7 +122,7 @@ export const handler = async (event, context, callback) => {
   file.on('error', handleError);
 
   // Manage data
-  file.on('end', () => {
+  return file.on('end', () => {
     let dataString = '';
 
     try {
@@ -174,8 +188,6 @@ export const handler = async (event, context, callback) => {
       );
     });
   });
-
-  return file;
 };
 
 export default handler;
