@@ -54,7 +54,7 @@ const formatBudget = budget => {
     .split(' ')
     .slice(1)
     .join('');
-  return Number(budget);
+  return Number(budget) || 0;
 };
 
 /*

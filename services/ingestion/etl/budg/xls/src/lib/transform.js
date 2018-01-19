@@ -29,11 +29,12 @@ export default (record: Object): Project => {
   const budgetObject = {
     total_cost: { value: 0, currency: '', raw: '' },
     eu_contrib: {
-      value: Number(
-        record[
-          "EU Grant award in euros (This amount represents the grant awarded after the selection stage and is indicative. Please note that any changes made during or after the project's lifetime will not be reflected here.)"
-        ].replace(/,/g, '')
-      ),
+      value:
+        Number(
+          record[
+            "EU Grant award in euros (This amount represents the grant awarded after the selection stage and is indicative. Please note that any changes made during or after the project's lifetime will not be reflected here.)"
+          ].replace(/,/g, '')
+        ) || 0,
       currency: 'EUR',
       raw:
         record[
