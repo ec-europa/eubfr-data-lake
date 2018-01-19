@@ -19,7 +19,11 @@ const getFundingArea = record =>
 export default (record: Object): Project => {
   // Preprocess budget
   const budgetObject = {
-    total_cost: { value: 0, currency: '', raw: '' },
+    total_cost: {
+      value: Number(record['Total project budget']) || 0,
+      currency: '',
+      raw: record['Total project budget'] || '',
+    },
     eu_contrib: {
       value: Number(record['EU Budget contribution']),
       currency: 'EUR',

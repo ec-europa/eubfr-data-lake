@@ -14,6 +14,7 @@ Object {
       "Investment for growth",
       "Transport",
     ],
+    "mmf_heading": "Smart and Inclusive Growth: Competitiveness for growth and jobs",
     "other_contrib": Object {
       "currency": "",
       "raw": "",
@@ -48,11 +49,14 @@ Object {
       "website": "",
     },
   ],
-  "cover_image": "https://ec.europa.eu/budget/euprojects/sites/euprojects/files/at_cegc_985x270_0.jpg",
   "description": "<p>Under the EU-funded Central European Green Corridors project, 115 fast-charging stations for electric cars have opened in Germany, Austria, Slovenia, Slovakia and Croatia – allowing cross-border electromobility with your e-car between Munich and Zagreb. Further network expansion, offers and services for customers and energy supply solutions also drive the project’s roll-out of electric transport. Partners include public sector bodies and private companies.</p>",
   "ec_priorities": Array [
     "Jobs, Growth and Investment",
   ],
+  "media": Object {
+    "cover_image": "https://ec.europa.eu/budget/euprojects/sites/euprojects/files/at_cegc_985x270_0.jpg",
+    "video": "",
+  },
   "partners": Array [
     Object {
       "address": "",
@@ -278,6 +282,7 @@ Object {
       "value": NaN,
     },
     "funding_area": Array [],
+    "mmf_heading": "",
     "other_contrib": Object {
       "currency": "",
       "raw": "",
@@ -312,11 +317,14 @@ Object {
       "website": "",
     },
   ],
-  "cover_image": "",
   "description": "",
   "ec_priorities": Array [
     "",
   ],
+  "media": Object {
+    "cover_image": "",
+    "video": "",
+  },
   "partners": Array [
     Object {
       "address": "",
