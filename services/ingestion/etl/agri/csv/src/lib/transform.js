@@ -28,7 +28,7 @@ export default (record: Object): Project => {
       raw: record['Total project budget'] || '',
     },
     eu_contrib: {
-      value: Number(record['EU Budget contribution']),
+      value: Number(record['EU Budget contribution']) || 0,
       currency: 'EUR',
       raw: record['EU Budget contribution'] || '',
     },

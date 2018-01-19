@@ -279,7 +279,7 @@ Object {
     "eu_contrib": Object {
       "currency": "EUR",
       "raw": "",
-      "value": NaN,
+      "value": 0,
     },
     "funding_area": Array [],
     "mmf_heading": "",
