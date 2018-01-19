@@ -144,9 +144,12 @@ export default (record: Object): Project => {
     budget: budgetObject,
     call_year: '',
     coordinators: [],
-    cover_image: '',
     description: checkData(record.quote),
     ec_priorities: [],
+    media: {
+      cover_image: '',
+      video: '',
+    },
     partners: partnerArray,
     period: checkData(record.Period),
     programme_name: '',

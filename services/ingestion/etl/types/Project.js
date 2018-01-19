@@ -78,13 +78,18 @@ type Location = {
   location: GeoJSON | null,
 };
 
+type Media = {
+  cover_image: string,
+  video: string,
+};
+
 type Partner = {
   name: string,
   type: string,
   address: string,
   region: string,
   country: string,
-  website?: string,
+  website: string,
 };
 
 type RelatedLink = {
@@ -107,9 +112,9 @@ export type Project = {
   budget: Budget,
   call_year: string,
   coordinators: Array<Coordinator>,
-  cover_image: string,
   description: string,
   ec_priorities: Array<string>,
+  media: Media,
   partners: Array<Partner>,
   programme_name: string,
   project_id: string,

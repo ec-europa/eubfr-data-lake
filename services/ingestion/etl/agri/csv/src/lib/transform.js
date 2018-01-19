@@ -121,9 +121,12 @@ export default (record: Object): Project => {
     budget: budgetObject,
     call_year: '',
     coordinators: coordArray,
-    cover_image: record.Visual || '',
     description: record['Project description'] || '',
     ec_priorities: record['EC’s priorities'].split(';') || [],
+    media: {
+      cover_image: record.Visual || '',
+      video: record['Link to a video'] || '',
+    },
     partners: partnerArray,
     programme_name: record['Programme name'] || '',
     project_id: record.Nid || '',
