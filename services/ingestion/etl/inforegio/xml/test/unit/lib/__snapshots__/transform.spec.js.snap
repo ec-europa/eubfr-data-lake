@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DG INFOREGIO XLS transformer Produces correct JSON output structure 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "",
+      "raw": "EUR 157 000 000",
+      "value": NaN,
+    },
+    "funding_area": Array [],
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "",
+      "raw": "EUR 329 000 000",
+      "value": NaN,
+    },
+  },
+  "call_year": "",
+  "coordinators": Array [],
+  "cover_image": "",
+  "description": "The colour of the sky never had much effect on the irksome rail trip between Greece's two principal cities of Athens and Thessaloniki: passengers had to wait for hours since there was only one set of tracks for trains travelling in both directions. Now all this has changed thanks to a huge programme carried out with the help of the European Union.",
+  "ec_priorities": Array [],
+  "partners": Array [],
+  "period": "2000-2006",
+  "programme_name": "",
+  "project_id": "75",
+  "project_locations": Array [
+    Object {
+      "address": "",
+      "country_code": "EL",
+      "location": null,
+      "nuts2": "EL0",
+      "postal_code": "",
+      "region": "GREECE",
+      "town": "",
+    },
+  ],
+  "project_website": "http://ec.europa.eu/regional_policy/en/projects/greece/on-the-tracks-of-hercules",
+  "related_links": Array [],
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
+  "status": "",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [
+    "Transport",
+  ],
+  "timeframe": Object {
+    "from": null,
+    "to": null,
+  },
+  "title": "On the tracks of Hercules",
+  "type": Array [
+    "Standard",
+  ],
+}
+`;

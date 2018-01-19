@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DG BUDG CSV transformer Produces correct JSON output structure 1`] = `
+exports[`DG AGRI CSV transformer Produces correct JSON output structure 1`] = `
 Object {
   "action": "",
   "budget": Object {
@@ -250,7 +250,7 @@ Object {
 }
 `;
 
-exports[`DG BUDG CSV transformer Project location information is correctly mapped 1`] = `
+exports[`DG AGRI CSV transformer Project location information is correctly mapped 1`] = `
 Object {
   "address": "",
   "country_code": "AT",
@@ -268,7 +268,7 @@ Object {
 }
 `;
 
-exports[`DG BUDG transformer handling incomplete or inconsistent data Certain fields should always be present after transformation 1`] = `
+exports[`DG AGRI transformer handling incomplete or inconsistent data Certain fields should always be present after transformation 1`] = `
 Object {
   "action": "",
   "budget": Object {
