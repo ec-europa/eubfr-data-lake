@@ -21,7 +21,7 @@ const formatDate = date => {
   if (!date || typeof date !== 'string') return null;
   const d = date.split(/\//);
   if (d.length !== 3) return null;
-  const [month, day, year] = d;
+  const [day, month, year] = d;
   if (!day || !month || !year) return null;
   try {
     return new Date(Date.UTC(year, month - 1, day)).toISOString();

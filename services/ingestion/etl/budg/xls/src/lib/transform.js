@@ -7,14 +7,18 @@ import type { Project } from '../../../../types/Project';
  */
 
 const formatDate = date => {
-  if (!date) return null;
+  if (!date || typeof date !== 'string') return null;
   const d = date.split(/\//);
-  if (d === null || d.length !== 3) return null;
+  if (d.length !== 3) return null;
+  // If year is given as 2 digits, make it 4 digits.
   if (d[2].length === 2) d[2] = `20${d[2]}`;
-  const day = d[1];
-  const month = d[0];
-  const year = d[2];
-  return new Date(Date.UTC(year, month - 1, day)).toISOString();
+  const [month, day, year] = d;
+  if (!day || !month || !year) return null;
+  try {
+    return new Date(Date.UTC(year, month - 1, day)).toISOString();
+  } catch (e) {
+    return null;
+  }
 };
 
 /*
