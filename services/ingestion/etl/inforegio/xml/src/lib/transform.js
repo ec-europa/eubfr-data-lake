@@ -48,13 +48,12 @@ const getAddress = record => {
 };
 
 const formatBudget = budget => {
-  if (!budget) return 0;
-  budget
-    .toString()
+  if (!budget || typeof budget !== 'string') return 0;
+  const formattedBudget = budget
     .split(' ')
     .slice(1)
     .join('');
-  return Number(budget) || 0;
+  return Number(formattedBudget) || 0;
 };
 
 /*
