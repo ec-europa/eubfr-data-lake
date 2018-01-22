@@ -21,12 +21,18 @@ const projectsApiEndpoint = `https://${
 const projectsIndex = `${process.env.REACT_APP_STAGE}-projects`;
 
 const getIcon = status => {
-  if (status === 'parsed')
-    return 'ecl-icon ecl-icon--success ecl-u-color-success';
-  else if (status === 'not parsed')
-    return 'ecl-icon ecl-icon--warning ecl-u-color-warning';
-
-  return 'ecl-icon ecl-icon--error ecl-u-color-error';
+  switch (status) {
+    case 'uploaded':
+    case 'progress':
+    case 'parsing':
+      return 'ecl-icon ecl-icon--success ecl-u-color-info';
+    case 'parsed':
+      return 'ecl-icon ecl-icon--success ecl-u-color-success';
+    case 'not parsed':
+      return 'ecl-icon ecl-icon--warning ecl-u-color-warning';
+    default:
+      return 'ecl-icon ecl-icon--error ecl-u-color-error';
+  }
 };
 
 class File extends React.Component {
