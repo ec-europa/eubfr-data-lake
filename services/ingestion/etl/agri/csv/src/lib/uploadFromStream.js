@@ -1,4 +1,5 @@
 import stream from 'stream';
+import { prepareMessage } from './sns';
 import { STATUS } from '../../../../../../storage/meta-index/src/lib/status';
 
 // Load
@@ -23,17 +24,14 @@ export default ({ key, BUCKET, s3, sns, endpointArn, onError, callback }) => {
      * Send the SNS message
      */
     return sns.publish(
-      {
-        Message: JSON.stringify({
-          default: JSON.stringify({
-            key,
-            status: STATUS.PARSED,
-            message: 'ETL successful',
-          }),
-        }),
-        MessageStructure: 'json',
-        TargetArn: endpointArn,
-      },
+      prepareMessage(
+        {
+          key,
+          status: STATUS.PARSED,
+          message: 'ETL successful',
+        },
+        endpointArn
+      ),
       snsErr => {
         if (snsErr) {
           callback(snsErr);
