@@ -9,6 +9,7 @@ import LogsTab from './file/Logs';
 import ProjectsTab from './file/Projects';
 
 import './File.css';
+import getIcon from '../../lib/getIcon';
 
 const demoServerEndpoint = `https://${process.env.REACT_APP_DEMO_SERVER}/demo`;
 
@@ -19,22 +20,6 @@ const projectsApiEndpoint = `https://${
   process.env.REACT_APP_ES_PROJECTS_ENDPOINT
 }`;
 const projectsIndex = `${process.env.REACT_APP_STAGE}-projects`;
-
-const getIcon = status => {
-  switch (status) {
-    case 'uploaded':
-    case 'progress':
-    case 'parsing':
-    case 'parsed':
-      return 'ecl-icon ecl-icon--success ecl-u-color-info';
-    case 'ingested':
-      return 'ecl-icon ecl-icon--success ecl-u-color-success';
-    case 'not parsed':
-      return 'ecl-icon ecl-icon--warning ecl-u-color-warning';
-    default:
-      return 'ecl-icon ecl-icon--error ecl-u-color-error';
-  }
-};
 
 class File extends React.Component {
   constructor() {
@@ -202,9 +187,12 @@ class File extends React.Component {
     return (
       <Fragment>
         <h1 className="ecl-heading ecl-heading--h1 ecl-u-mt-none">
-          <span className={getIcon(file.status)} title={file.message} />
           {file.original_key}
         </h1>
+        <p>
+          <b>Ingestions status</b>: {file.message}{' '}
+          <span className={getIcon(file.status)} title={file.message} />
+        </p>
         <Link to="/files" className="ecl-button ecl-button--secondary">
           <span className="ecl-icon ecl-icon--left" />Go Back to My Files
         </Link>

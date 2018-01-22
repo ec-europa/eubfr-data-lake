@@ -10,6 +10,10 @@ import SaveStream from '../lib/SaveStream';
 
 import Logger from '../../../../logger/listener/src/lib/Logger';
 
+// Import constants
+import { STATUS } from '../../../../storage/meta-index/src/lib/status';
+import prepareMessage from '../lib/prepareMessage';
+
 export const handler = async (event, context, callback) => {
   const { API, INDEX, REGION, STAGE } = process.env;
 
@@ -30,6 +34,8 @@ export const handler = async (event, context, callback) => {
 
   // Get Account ID from lambda function arn in the context
   const accountId = context.invokedFunctionArn.split(':')[4];
+  const endpointMetaIndexArn = `arn:aws:sns:${REGION}:${accountId}:${STAGE}-MetaStatusReported`;
+
   const sns = new AWS.SNS();
   const logger = new Logger({
     sns,
@@ -134,6 +140,28 @@ export const handler = async (event, context, callback) => {
             status_message: 'Results uploaded successfully, all went well.',
           },
         });
+
+        await sns
+          .publish(
+            prepareMessage(
+              {
+                key: originalComputedKey,
+                status: STATUS.INGESTED,
+                message: 'Data ingested in the data lake!',
+              },
+              endpointMetaIndexArn
+            ),
+            snsErr => {
+              if (snsErr) {
+                return callback(snsErr);
+              }
+              return callback(
+                null,
+                'Data ingested successfully in the data lake!'
+              );
+            }
+          )
+          .promise();
 
         return callback(null, 'Results uploaded successfully, all went well.');
       });

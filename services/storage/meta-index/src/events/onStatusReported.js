@@ -31,6 +31,7 @@ export const handler = async (event, context, callback) => {
 
     // Extract S3 record
     const snsMessage = JSON.parse(snsRecord.Sns.Message);
+    console.log(snsMessage);
     const { key, status, message } = snsMessage;
 
     // Update record
