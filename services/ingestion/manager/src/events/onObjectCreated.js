@@ -75,16 +75,27 @@ export const handler = async (event, context, callback) => {
       },
     });
 
-    sns.publish(
-      prepareMessage(
-        {
-          key: objectKey,
-          status: STATUS.PROGRESS,
-          message: 'ETL operations in progress ...',
-        },
-        endpointMetaIndexArn
+    await sns
+      .publish(
+        prepareMessage(
+          {
+            key: objectKey,
+            status: STATUS.PROGRESS,
+            message: 'ETL operations in progress ...',
+          },
+          endpointMetaIndexArn
+        ),
+        snsErr => {
+          if (snsErr) {
+            return callback(snsErr);
+          }
+          return callback(
+            null,
+            'ETL process message sent to SNS topic of meta index'
+          );
+        }
       )
-    );
+      .promise();
 
     try {
       await sns

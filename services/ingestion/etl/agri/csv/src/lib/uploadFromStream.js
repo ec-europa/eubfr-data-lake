@@ -28,7 +28,8 @@ export default ({ key, BUCKET, s3, sns, endpointArn, onError, callback }) => {
         {
           key,
           status: STATUS.PARSED,
-          message: 'ETL successful',
+          message:
+            'ETL successfully uploaded a parsed (harmonized) version of incoming data!',
         },
         endpointArn
       ),
