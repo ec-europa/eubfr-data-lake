@@ -2,14 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const getIcon = status => {
-  if (status === 'parsed')
-    return 'ecl-icon ecl-icon--success ecl-u-color-success';
-  else if (status === 'not parsed')
-    return 'ecl-icon ecl-icon--warning ecl-u-color-warning';
-
-  return 'ecl-icon ecl-icon--error ecl-u-color-error';
-};
+import getIcon from '../lib/getIcon';
 
 const List = ({ files }) => (
   <table className="ecl-table">
@@ -18,6 +11,7 @@ const List = ({ files }) => (
         <th>Filename</th>
         <th>Last update</th>
         <th>Content length</th>
+        <th>Ingestion status</th>
       </tr>
     </thead>
     <tbody>
@@ -26,10 +20,6 @@ const List = ({ files }) => (
         return (
           <tr key={hit.computed_key}>
             <td>
-              <span
-                title={hit.message || 'Not parsed'}
-                className={getIcon(hit.status)}
-              />
               <Link
                 to={`/files/${encodeURIComponent(hit.computed_key)}`}
                 className="ecl-link"
@@ -39,6 +29,13 @@ const List = ({ files }) => (
             </td>
             <td>{new Date(hit.last_modified).toLocaleString()}</td>
             <td>{Math.floor(hit.content_length / 1024) || 0} kB</td>
+            <td>
+              {hit.message || 'Not parsed'}{' '}
+              <span
+                title={hit.message || 'Not parsed'}
+                className={getIcon(hit.status)}
+              />
+            </td>
           </tr>
         );
       })}
