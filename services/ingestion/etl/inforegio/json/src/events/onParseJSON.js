@@ -54,16 +54,15 @@ export const handler = async (event, context, callback) => {
   // Get Account ID from lambda function arn in the context
   const accountId = context.invokedFunctionArn.split(':')[4];
 
-  // Get stage and region from environment variables
-  const stage = process.env.STAGE;
-  const region = process.env.REGION;
+  // Extract env vars
+  const { REGION, STAGE } = process.env;
 
   // Get the endpoint arn
-  const endpointArn = `arn:aws:sns:${region}:${accountId}:${stage}-MetaStatusReported`;
+  const endpointArn = `arn:aws:sns:${REGION}:${accountId}:${STAGE}-MetaStatusReported`;
   const sns = new AWS.SNS();
   const logger = new Logger({
     sns,
-    targetArn: `arn:aws:sns:${region}:${accountId}:${stage}-onLogEmitted`,
+    targetArn: `arn:aws:sns:${REGION}:${accountId}:${STAGE}-onLogEmitted`,
     emitter: context.invokedFunctionArn,
   });
 
