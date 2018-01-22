@@ -3,6 +3,10 @@ import path from 'path';
 
 import Logger from '../../../../logger/listener/src/lib/Logger';
 
+// Import constants
+import { STATUS } from '../../../../storage/meta-index/src/lib/status';
+import prepareMessage from '../lib/prepareMessage';
+
 export const handler = async (event, context, callback) => {
   /*
    * Some checks here before going any further
@@ -40,16 +44,16 @@ export const handler = async (event, context, callback) => {
   // Get Account ID from lambda function arn in the context
   const accountId = context.invokedFunctionArn.split(':')[4];
 
-  // Get stage and region from environment variables
-  const stage = process.env.STAGE;
-  const region = process.env.REGION;
+  // Extract env vars
+  const { REGION, STAGE } = process.env;
 
   // Get the endpoint arn
   const objectKey = s3record.s3.object.key;
   const producer = path.dirname(objectKey);
   const extension = path.extname(objectKey).slice(1);
 
-  const endpointArn = `arn:aws:sns:${region}:${accountId}:${stage}-etl-${producer}-${extension}`;
+  const endpointArn = `arn:aws:sns:${REGION}:${accountId}:${STAGE}-etl-${producer}-${extension}`;
+  const endpointMetaIndexArn = `arn:aws:sns:${REGION}:${accountId}:${STAGE}-MetaStatusReported`;
 
   /*
    * Send the SNS message
@@ -59,17 +63,28 @@ export const handler = async (event, context, callback) => {
 
     const logger = new Logger({
       sns,
-      targetArn: `arn:aws:sns:${region}:${accountId}:${stage}-onLogEmitted`,
+      targetArn: `arn:aws:sns:${REGION}:${accountId}:${STAGE}-onLogEmitted`,
       emitter: context.invokedFunctionArn,
     });
 
     await logger.info({
       message: {
-        computed_key: s3record.s3.object.key,
+        computed_key: objectKey,
         status_message:
           'The file has been uploaded. Forwarding to the right ETL...',
       },
     });
+
+    sns.publish(
+      prepareMessage(
+        {
+          key: objectKey,
+          status: STATUS.PROGRESS,
+          message: 'ETL operations in progress ...',
+        },
+        endpointMetaIndexArn
+      )
+    );
 
     try {
       await sns
@@ -82,14 +97,14 @@ export const handler = async (event, context, callback) => {
 
       await logger.info({
         message: {
-          computed_key: s3record.s3.object.key,
+          computed_key: objectKey,
           status_message: `ETL "${producer}-${extension}" has been pinged!`,
         },
       });
     } catch (err) {
       await logger.error({
         message: {
-          computed_key: s3record.s3.object.key,
+          computed_key: objectKey,
           status_message: `Unable to ping ETL "${producer}-${extension}".`,
         },
       });
