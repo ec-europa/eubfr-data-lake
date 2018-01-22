@@ -163,7 +163,8 @@ export const handler = async (event, context, callback) => {
             default: JSON.stringify({
               key: message.object.key,
               status: STATUS.PARSED,
-              message: 'ETL successful',
+              message:
+                'ETL successfully uploaded a parsed (harmonized) version of incoming data!',
             }),
           }),
           MessageStructure: 'json',

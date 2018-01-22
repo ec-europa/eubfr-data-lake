@@ -25,8 +25,9 @@ const getIcon = status => {
     case 'uploaded':
     case 'progress':
     case 'parsing':
-      return 'ecl-icon ecl-icon--success ecl-u-color-info';
     case 'parsed':
+      return 'ecl-icon ecl-icon--success ecl-u-color-info';
+    case 'ingested':
       return 'ecl-icon ecl-icon--success ecl-u-color-success';
     case 'not parsed':
       return 'ecl-icon ecl-icon--warning ecl-u-color-warning';

@@ -4,6 +4,7 @@ export const STATUS = {
   PROGRESS: 'progress',
   PARSING: 'parsing',
   PARSED: 'parsed',
+  INGESTED: 'ingested',
 };
 
 export default STATUS;
