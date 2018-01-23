@@ -94,7 +94,14 @@ class File extends React.Component {
         .then(data =>
           this.setState({
             fileLoading: false,
-            file: data.hits.hits[0]._source,
+            file:
+              data.hits &&
+              data.hits.hits &&
+              data.hits.hits[0] &&
+              data.hits.hits[0]._source
+                ? data.hits.hits[0]._source
+                : null,
+            // null because if (!file) later.
           })
         )
         .catch(error => {
