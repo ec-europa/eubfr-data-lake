@@ -17,9 +17,9 @@ For example, given a root endpoint `API` being `https://ti5rsoocwg.execute-api.e
 | 1   | Upload                       | {`API`}/storage/signed_url | GET    | `x-amz-meta-producer-key`         |
 | 2   | Download                     | {`API`}/storage/download   | GET    | `x-amz-meta-computed-key`         |
 | 3   | Update                       | {`API`}/storage/update     | PUT    | -                                 |
-| 4   | Delete                       | {`API`}/storage/delete     | GET    | x-amz-meta-computed-key           |
+| 4   | Delete                       | {`API`}/storage/delete     | GET    | `x-amz-meta-computed-key`         |
 | 5   | Get a list of files          | {`API`}/meta-index/list    | GET    | -                                 |
-| 6   | Get meta for a specific file | {`API`}/meta-index/file    | GET    | x-amz-meta-computed-key           |
+| 6   | Get meta for a specific file | {`API`}/meta-index/file    | GET    | `x-amz-meta-computed-key`         |
 
 The root endpoint ID may change in time. Please request this information when you make your implementation. Later, you will be notified each time there is a change in address.
 
