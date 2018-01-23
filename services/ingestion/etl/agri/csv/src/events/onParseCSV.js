@@ -2,7 +2,7 @@ import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependenc
 import parse from 'csv-parse';
 import transform from 'stream-transform';
 
-import Logger from '../../../../../../logger/listener/src/lib/Logger';
+import Logger from '@eubfr/logger-listener/src/lib/Logger';
 
 // Import constants
 import { STATUS } from '../../../../../../storage/meta-index/src/lib/status';
