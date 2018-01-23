@@ -4,7 +4,7 @@ export default status => {
     case 'progress':
     case 'parsing':
     case 'parsed':
-      return 'ecl-icon ecl-icon--success ecl-u-color-info';
+      return 'ecl-icon ecl-icon--info ecl-u-color-info';
     case 'ingested':
       return 'ecl-icon ecl-icon--success ecl-u-color-success';
     case 'not parsed':

@@ -113,12 +113,33 @@ export const handler = async (event, context, callback) => {
         },
       });
     } catch (err) {
+      const errorMessage = `Unable to ping ETL "${producer}-${extension}".`;
+
       await logger.error({
         message: {
           computed_key: objectKey,
-          status_message: `Unable to ping ETL "${producer}-${extension}".`,
+          status_message: errorMessage,
         },
       });
+
+      await sns
+        .publish(
+          prepareMessage(
+            {
+              key: objectKey,
+              status: STATUS.ERROR,
+              message: errorMessage,
+            },
+            endpointMetaIndexArn
+          ),
+          snsErr => {
+            if (snsErr) {
+              return callback(snsErr);
+            }
+            return callback(null, errorMessage);
+          }
+        )
+        .promise();
     }
 
     return callback(null, 'Success!');
