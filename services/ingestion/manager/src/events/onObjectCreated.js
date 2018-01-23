@@ -1,7 +1,7 @@
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 import path from 'path';
 
-import Logger from '../../../../logger/listener/src/lib/Logger';
+import Logger from '@eubfr/logger-listener/src/lib/Logger';
 
 // Import constants
 import { STATUS } from '../../../../storage/meta-index/src/lib/status';
