@@ -4,29 +4,7 @@ If the environment has already been setup, you can skip to [Send data](#send-dat
 
 ## Setup your environment
 
-Get latest version of EUBFR. (clone this repository)
-
-Copy `config.example.json` to `config.json` and set the values according for your environment:
-
-```json
-{
-  "eubfr_env": "test",
-  "region": "eu-central-1",
-  "stage": "<username><n>"
-}
-```
-
-For example:
-
-```json
-{
-  "eubfr_env": "test",
-  "region": "eu-central-1",
-  "stage": "myuser3"
-}
-```
-
-The `stage` property accepts only alphanumeric values without any spaces, dashes or special characters. (`"^[a-zA-Z0-9]*$"`)
+Follow [these instructions](../README.md) to start your staged development environment.
 
 ## Get your AWS credentials
 
