@@ -13,12 +13,16 @@ import transformRecord from '../lib/transform';
 import uploadFromStream from '../lib/uploadFromStream';
 
 export const handler = async (event, context, callback) => {
+  // Extract env vars
+  const { BUCKET, REGION, STAGE } = process.env;
+
+  if (!BUCKET || !REGION || !STAGE) {
+    callback(`BUCKET, REGION and STAGE environment variable are required!`);
+  }
+
   // 1. Validate handler execution
   // check event, context
   const snsMessage = extractMessage(event);
-
-  // Extract env vars
-  const { BUCKET, REGION, STAGE } = process.env;
 
   // Get Account ID from lambda function arn in the context
   const accountId = context.invokedFunctionArn.split(':')[4];

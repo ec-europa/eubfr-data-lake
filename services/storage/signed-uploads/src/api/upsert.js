@@ -5,6 +5,13 @@ import { checkAccess } from '../lib/checkAccess';
 import { extractUsername } from '../lib/extractUsername';
 
 export const handler = (event, context, callback) => {
+  // Extract env vars
+  const { BUCKET, REGION } = process.env;
+
+  if (!BUCKET || !REGION) {
+    callback(`BUCKET and REGION environment variable are required!`);
+  }
+
   const { userArn } = event.requestContext.identity;
   const username = extractUsername(userArn);
 
@@ -17,13 +24,6 @@ export const handler = (event, context, callback) => {
             'Access denied. You have to be a member of the "Producers" group.',
         }),
       });
-    }
-
-    // Extract env vars
-    const { BUCKET, REGION } = process.env;
-
-    if (!BUCKET || !REGION) {
-      return callback(`BUCKET and REGION environment variable are required.`);
     }
 
     const s3 = new AWS.S3({ signatureVersion: 'v4', REGION });

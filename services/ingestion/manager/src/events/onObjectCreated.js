@@ -1,4 +1,6 @@
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
+import connectionClass from 'http-aws-es';
+import elasticsearch from 'elasticsearch';
 import path from 'path';
 
 import Logger from '@eubfr/logger-listener/src/lib/Logger';
@@ -8,16 +10,27 @@ import { STATUS } from '../../../../storage/meta-index/src/lib/status';
 import prepareMessage from '../lib/prepareMessage';
 
 export const handler = async (event, context, callback) => {
+  // Extract env vars
+  const { API, INDEX, REGION, STAGE } = process.env;
+
+  if (!API || !INDEX || !REGION || !STAGE) {
+    callback(`API, INDEX, REGION and STAGE environment variable are required!`);
+  }
+
   /*
    * Some checks here before going any further
    */
+
+  if (!event.Records) {
+    return callback('No record');
+  }
 
   // Only work on the first record
   const snsRecord = event.Records ? event.Records[0] : undefined;
 
   // Was the lambda triggered correctly? Is the file extension supported? etc.
   if (!snsRecord || snsRecord.EventSource !== 'aws:sns') {
-    return callback('Bad record');
+    callback('Bad record');
   }
 
   /*
@@ -26,6 +39,10 @@ export const handler = async (event, context, callback) => {
 
   // Extract S3 record
   const s3record = JSON.parse(snsRecord.Sns.Message).Records[0];
+  const computedObjectKey = s3record.s3.object.key;
+  const producerId = computedObjectKey.split('/')[0];
+  const producer = path.dirname(computedObjectKey);
+  const extension = path.extname(computedObjectKey).slice(1);
 
   // Fill the payload
   const payload = {
@@ -37,33 +54,25 @@ export const handler = async (event, context, callback) => {
     }),
   };
 
-  /*
-   * Prepare the SNS message
-   */
-
   // Get Account ID from lambda function arn in the context
   const accountId = context.invokedFunctionArn.split(':')[4];
 
-  // Extract env vars
-  const { REGION, STAGE } = process.env;
+  // Get SNS topics' endpoints for subscribers this service need to inform on new a new file being added to the data lake.
+  const producerEtlSnsEndpointArn = `arn:aws:sns:${REGION}:${accountId}:${STAGE}-etl-${producer}-${extension}`;
+  const metaIndexSnsEndpointArn = `arn:aws:sns:${REGION}:${accountId}:${STAGE}-MetaStatusReported`;
+  const loggerIndexSnsEndpointArn = `arn:aws:sns:${REGION}:${accountId}:${STAGE}-onLogEmitted`;
 
-  // Get the endpoint arn
-  const objectKey = s3record.s3.object.key;
-  const producer = path.dirname(objectKey);
-  const extension = path.extname(objectKey).slice(1);
-
-  const endpointArn = `arn:aws:sns:${REGION}:${accountId}:${STAGE}-etl-${producer}-${extension}`;
-  const endpointMetaIndexArn = `arn:aws:sns:${REGION}:${accountId}:${STAGE}-MetaStatusReported`;
+  // AWS clients
+  const s3 = new AWS.S3();
+  const sns = new AWS.SNS();
 
   /*
    * Send the SNS message
    */
   try {
-    const sns = new AWS.SNS();
-
     const logger = new Logger({
       sns,
-      targetArn: `arn:aws:sns:${REGION}:${accountId}:${STAGE}-onLogEmitted`,
+      targetArn: loggerIndexSnsEndpointArn,
       emitter: context.invokedFunctionArn,
     });
 
@@ -71,7 +80,7 @@ export const handler = async (event, context, callback) => {
 
     await logger.info({
       message: {
-        computed_key: objectKey,
+        computed_key: computedObjectKey,
         status_message: message,
       },
     });
@@ -80,11 +89,11 @@ export const handler = async (event, context, callback) => {
       .publish(
         prepareMessage(
           {
-            key: objectKey,
+            key: computedObjectKey,
             status: STATUS.UPLOADED,
             message,
           },
-          endpointMetaIndexArn
+          metaIndexSnsEndpointArn
         )
       )
       .promise();
@@ -94,13 +103,13 @@ export const handler = async (event, context, callback) => {
         .publish({
           Message: JSON.stringify(payload),
           MessageStructure: 'json',
-          TargetArn: endpointArn,
+          TargetArn: producerEtlSnsEndpointArn,
         })
         .promise();
 
       await logger.info({
         message: {
-          computed_key: objectKey,
+          computed_key: computedObjectKey,
           status_message: `ETL "${producer}-${extension}" has been pinged!`,
         },
       });
@@ -109,7 +118,7 @@ export const handler = async (event, context, callback) => {
 
       await logger.error({
         message: {
-          computed_key: objectKey,
+          computed_key: computedObjectKey,
           status_message: errorMessage,
         },
       });
@@ -118,17 +127,63 @@ export const handler = async (event, context, callback) => {
         .publish(
           prepareMessage(
             {
-              key: objectKey,
+              key: computedObjectKey,
               status: STATUS.ERROR,
               message: errorMessage,
             },
-            endpointMetaIndexArn
+            metaIndexSnsEndpointArn
           )
         )
         .promise();
+      return callback(null, 'All fine');
     }
+  } catch (err) {
+    return callback(err.message);
+  }
 
-    return callback(null, 'Success!');
+  try {
+    const data = await s3
+      .headObject({
+        Bucket: s3record.s3.bucket.name,
+        Key: computedObjectKey,
+      })
+      .promise();
+
+    const meta = data.Metadata || {};
+
+    const {
+      'original-key': originalKey = null,
+      producer: producerArn = null,
+      ...otherMeta
+    } = meta;
+
+    const item = {
+      producer_id: producerId,
+      computed_key: computedObjectKey,
+      original_key: originalKey,
+      producer_arn: producerArn,
+      content_type: data.ContentType,
+      last_modified: data.LastModified.toISOString(), // ISO-8601 date
+      content_length: Number(data.ContentLength),
+      metadata: otherMeta,
+      status: STATUS.UPLOADED,
+    };
+
+    // elasticsearch client instantiation
+    const client = elasticsearch.Client({
+      host: `https://${API}`,
+      apiVersion: '6.0',
+      connectionClass,
+      index: INDEX,
+    });
+
+    await client.index({
+      index: INDEX,
+      type: 'file',
+      body: item,
+    });
+
+    return callback(null, 'All fine');
   } catch (err) {
     return callback(err.message);
   }

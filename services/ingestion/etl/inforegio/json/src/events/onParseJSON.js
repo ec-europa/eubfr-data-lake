@@ -9,6 +9,13 @@ import { STATUS } from '../../../../../../storage/meta-index/src/lib/status';
 const { BUCKET } = process.env;
 
 export const handler = async (event, context, callback) => {
+  // Extract env vars
+  const { REGION, STAGE } = process.env;
+
+  if (!REGION || !STAGE) {
+    callback(`REGION and STAGE environment variable are required!`);
+  }
+
   /*
    * Some checks here before going any further
    */
@@ -53,9 +60,6 @@ export const handler = async (event, context, callback) => {
 
   // Get Account ID from lambda function arn in the context
   const accountId = context.invokedFunctionArn.split(':')[4];
-
-  // Extract env vars
-  const { REGION, STAGE } = process.env;
 
   // Get the endpoint arn
   const endpointArn = `arn:aws:sns:${REGION}:${accountId}:${STAGE}-MetaStatusReported`;
