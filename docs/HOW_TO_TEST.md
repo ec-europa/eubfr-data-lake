@@ -31,19 +31,7 @@ For more information about access key setup, see [this serverless guide](https:/
 
 ## Deploy
 
-Make sure your local environment meets the [requirements](https://github.com/ec-europa/eubfr-data-lake#requirements)
-
-Make sure your environment is ready
-
-* `yarn`
-
-Deploy on root
-
-* go to root of the project
-* `yarn deploy`
-* `yarn deploy-demo`
-
-It automatically creates everything you need (bucket, database, ...)
+Follow [these instructions](../README.md) to start your staged development environment.
 
 ## Send data
 
