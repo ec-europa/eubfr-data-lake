@@ -7,7 +7,7 @@ import onObjectRemoved from '../../../src/events/onObjectRemoved';
 
 const handler = promisify(onObjectRemoved);
 
-describe(`Function onObjectRemoved in "@eubfr/storage-meta-index"`, () => {
+describe(`Function onObjectRemoved in "@eubfr/ingestion-manager"`, () => {
   test('The function expects records', () => {
     const event = {};
     const context = {};

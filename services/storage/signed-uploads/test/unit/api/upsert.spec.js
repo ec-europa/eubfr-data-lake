@@ -55,7 +55,7 @@ describe(`Service aws-node-singned-uploads: S3 mock for successful operations`, 
     expect.assertions(1);
     const result = handler(event, context);
     return expect(result).rejects.toBe(
-      'BUCKET and REGION environment variable are required!'
+      'BUCKET and REGION environment variables are required!'
     );
   });
 

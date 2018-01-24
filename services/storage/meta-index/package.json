@@ -10,7 +10,6 @@
     "aws-sdk": "2.179.0",
     "babel-core": "6.26.0",
     "babel-loader": "7.1.2",
-    "babel-plugin-transform-object-rest-spread": "6.26.0",
     "babel-preset-env": "1.6.1",
     "jest": "22.0.5",
     "serverless": "1.25.0",

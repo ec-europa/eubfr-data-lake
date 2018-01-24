@@ -5,7 +5,7 @@
 import onParseXLS from '../../../src/events/onParseXML';
 
 describe(`Function onParseXLS in "@eubfr/ingestion-etl-budg-xls"`, () => {
-  test('The function expects a correct SNS record', async () => {
+  test('The function requires REGION and STAGE environment variables', async () => {
     const event = {};
     const context = {};
 
@@ -14,7 +14,9 @@ describe(`Function onParseXLS in "@eubfr/ingestion-etl-budg-xls"`, () => {
     try {
       await onParseXLS(event, context);
     } catch (e) {
-      expect(e.message).toEqual('Bad record');
+      expect(e.message).toEqual(
+        'REGION and STAGE environment variables are required!'
+      );
     }
   });
 });

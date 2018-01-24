@@ -15,7 +15,7 @@ export const handler = async (event, context, callback) => {
 
   if (!API || !INDEX || !REGION || !STAGE) {
     return callback(
-      `API, INDEX, REGION and STAGE environment variable are required!`
+      `API, INDEX, REGION and STAGE environment variables are required!`
     );
   }
 

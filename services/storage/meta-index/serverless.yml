@@ -35,21 +35,6 @@ provider:
       Resource: "arn:aws:es:${self:provider.region}:*:domain/*"
 
 functions:
-  onObjectRemoved:
-    handler: src/events/onObjectRemoved.handler
-    name: ${self:provider.stage}-${self:service}-onObjectRemoved
-    events:
-      - sns:
-          arn:
-            Fn::Join:
-              - ""
-              -
-                - "arn:aws:sns:"
-                - Ref: "AWS::Region"
-                - ":"
-                - Ref: "AWS::AccountId"
-                - ":${self:provider.stage}-object-removed"
-          topicName: ${self:provider.stage}-object-removed
   onStatusReported:
     handler: src/events/onStatusReported.handler
     name: ${self:provider.stage}-${self:service}-onStatusReported
