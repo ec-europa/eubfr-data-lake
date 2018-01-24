@@ -15,7 +15,7 @@ export const handler = async (event, context, callback) => {
 
   if (!API || !INDEX || !REGION || !STAGE) {
     return callback(
-      Error(`API, INDEX, REGION and STAGE environment variables are required!`)
+      Error('API, INDEX, REGION and STAGE environment variables are required!')
     );
   }
 
@@ -157,7 +157,7 @@ export const handler = async (event, context, callback) => {
       });
 
       // Send an sns message success pinging an ETL
-      await sns
+      return await sns
         .publish({
           Message: JSON.stringify(snsMessage),
           MessageStructure: 'json',
@@ -176,7 +176,7 @@ export const handler = async (event, context, callback) => {
       });
 
       // Send error SNS message for a wrong file extension.
-      await sns
+      return await sns
         .publish(
           prepareMessage(
             {

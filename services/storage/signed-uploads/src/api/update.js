@@ -7,7 +7,8 @@ export const handler = (event, context, callback) => {
   const { BUCKET, REGION } = process.env;
 
   if (!BUCKET || !REGION) {
-    return callback(`BUCKET and REGION environment variables are required!`);
+    callback(`BUCKET and REGION environment variables are required!`);
+    return;
   }
 
   const { userArn } = event.requestContext.identity;
