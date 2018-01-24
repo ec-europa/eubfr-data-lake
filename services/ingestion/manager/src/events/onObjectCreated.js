@@ -67,11 +67,12 @@ export const handler = async (event, context, callback) => {
       emitter: context.invokedFunctionArn,
     });
 
+    const message = 'File uploaded. Forwarding to the right ETL...';
+
     await logger.info({
       message: {
         computed_key: objectKey,
-        status_message:
-          'The file has been uploaded. Forwarding to the right ETL...',
+        status_message: message,
       },
     });
 
@@ -80,20 +81,11 @@ export const handler = async (event, context, callback) => {
         prepareMessage(
           {
             key: objectKey,
-            status: STATUS.PROGRESS,
-            message: 'ETL operations in progress ...',
+            status: STATUS.UPLOADED,
+            message,
           },
           endpointMetaIndexArn
-        ),
-        snsErr => {
-          if (snsErr) {
-            return callback(snsErr);
-          }
-          return callback(
-            null,
-            'ETL process message sent to SNS topic of meta index'
-          );
-        }
+        )
       )
       .promise();
 
@@ -131,13 +123,7 @@ export const handler = async (event, context, callback) => {
               message: errorMessage,
             },
             endpointMetaIndexArn
-          ),
-          snsErr => {
-            if (snsErr) {
-              return callback(snsErr);
-            }
-            return callback(null, errorMessage);
-          }
+          )
         )
         .promise();
     }
