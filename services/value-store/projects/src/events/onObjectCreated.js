@@ -150,16 +150,7 @@ export const handler = async (event, context, callback) => {
                 message: 'Data ingested in the data lake!',
               },
               endpointMetaIndexArn
-            ),
-            snsErr => {
-              if (snsErr) {
-                return callback(snsErr);
-              }
-              return callback(
-                null,
-                'Data ingested successfully in the data lake!'
-              );
-            }
+            )
           )
           .promise();
 
