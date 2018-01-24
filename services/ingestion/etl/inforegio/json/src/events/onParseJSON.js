@@ -5,15 +5,14 @@ import Logger from '@eubfr/logger-listener/src/lib/Logger';
 import transformRecord from '../lib/transform';
 import { STATUS } from '../../../../../../storage/meta-index/src/lib/status';
 
-// Destination bucket
-const { BUCKET } = process.env;
-
 export const handler = async (event, context, callback) => {
   // Extract env vars
-  const { REGION, STAGE } = process.env;
+  const { BUCKET, REGION, STAGE } = process.env;
 
-  if (!REGION || !STAGE) {
-    return callback(`REGION and STAGE environment variables are required!`);
+  if (!BUCKET || !REGION || !STAGE) {
+    return callback(
+      Error('BUCKET, REGION and STAGE environment variables are required!')
+    );
   }
 
   /*

@@ -15,7 +15,9 @@ export const handler = async (event, context, callback) => {
   const { REGION, STAGE } = process.env;
 
   if (!REGION || !STAGE) {
-    return callback('REGION and STAGE environment variables are required!');
+    return callback(
+      Error('REGION and STAGE environment variables are required!')
+    );
   }
 
   /*

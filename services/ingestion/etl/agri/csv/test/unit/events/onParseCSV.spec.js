@@ -8,6 +8,7 @@ describe(`Function parseCsv in "@eubfr/ingestion-etl-agri-csv"`, () => {
   test('The requires BUCKET, REGION and STAGE environment variables', async () => {
     const event = {};
     const context = {};
+
     const callback = error => {
       expect(error.message).toEqual(
         'BUCKET, REGION and STAGE environment variables are required!'

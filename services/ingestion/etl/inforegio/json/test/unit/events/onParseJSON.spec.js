@@ -5,6 +5,18 @@
 import onParseJSON from '../../../src/events/onParseJSON';
 
 describe(`Function onParseJSON in "@eubfr/ingestion-etl-inforegio-json"`, () => {
+  beforeEach(() => {
+    process.env.BUCKET = 'foo';
+    process.env.REGION = 'bar';
+    process.env.STAGE = 'baz';
+  });
+
+  afterEach(() => {
+    delete process.env.BUCKET;
+    delete process.env.REGION;
+    delete process.env.STAGE;
+  });
+
   test('The function expects a correct SNS record', async () => {
     const event = {};
     const context = {};
