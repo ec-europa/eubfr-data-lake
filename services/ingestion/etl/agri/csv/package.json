@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@eubfr/logger-listener": "0.0.1",
+    "@eubfr/storage-meta-index": "0.0.1",
     "csv-parse": "2.0.0",
     "stream-transform": "1.0.0"
   },

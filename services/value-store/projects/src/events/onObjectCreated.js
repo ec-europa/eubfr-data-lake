@@ -5,12 +5,10 @@ import connectionClass from 'http-aws-es';
 import through2 from 'through2';
 import split2 from 'split2';
 import Logger from '@eubfr/logger-listener/src/lib/Logger';
+import { STATUS } from '@eubfr/storage-meta-index/src/lib/status';
 
 import deleteProjects from '../lib/deleteProjects';
 import SaveStream from '../lib/SaveStream';
-
-// Import constants
-import { STATUS } from '../../../../storage/meta-index/src/lib/status';
 import prepareMessage from '../lib/prepareMessage';
 
 export const handler = async (event, context, callback) => {

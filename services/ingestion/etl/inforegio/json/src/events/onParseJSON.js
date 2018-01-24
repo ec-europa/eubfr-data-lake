@@ -1,9 +1,9 @@
 import path from 'path';
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 import Logger from '@eubfr/logger-listener/src/lib/Logger';
+import { STATUS } from '@eubfr/storage-meta-index/src/lib/status';
 
 import transformRecord from '../lib/transform';
-import { STATUS } from '../../../../../../storage/meta-index/src/lib/status';
 
 export const handler = async (event, context, callback) => {
   // Extract env vars

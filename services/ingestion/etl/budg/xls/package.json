@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@eubfr/logger-listener": "0.0.1",
+    "@eubfr/storage-meta-index": "0.0.1",
     "xlsx": "0.11.17"
   },
   "devDependencies": {

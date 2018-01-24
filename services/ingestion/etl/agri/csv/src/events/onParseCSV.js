@@ -3,9 +3,7 @@ import parse from 'csv-parse';
 import transform from 'stream-transform';
 
 import Logger from '@eubfr/logger-listener/src/lib/Logger';
-
-// Import constants
-import { STATUS } from '../../../../../../storage/meta-index/src/lib/status';
+import { STATUS } from '@eubfr/storage-meta-index/src/lib/status';
 
 // Import logic
 import { extractMessage, prepareMessage } from '../lib/sns';

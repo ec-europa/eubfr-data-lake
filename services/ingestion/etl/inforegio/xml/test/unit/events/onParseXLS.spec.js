@@ -5,12 +5,12 @@
 import onParseXLS from '../../../src/events/onParseXML';
 
 describe(`Function onParseXLS in "@eubfr/ingestion-etl-budg-xls"`, () => {
-  test('The function requires REGION and STAGE environment variables', async () => {
+  test('The function requires BUCKET, REGION and STAGE environment variables', async () => {
     const event = {};
     const context = {};
     const callback = error => {
       expect(error.message).toEqual(
-        'REGION and STAGE environment variables are required!'
+        'BUCKET, REGION and STAGE environment variables are required!'
       );
     };
 

@@ -1,22 +1,18 @@
 import path from 'path';
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
+import xml2js from 'xml2js';
 import Logger from '@eubfr/logger-listener/src/lib/Logger';
+import { STATUS } from '@eubfr/storage-meta-index/src/lib/status';
 
 import transformRecord from '../lib/transform';
-import { STATUS } from '../../../../../../storage/meta-index/src/lib/status';
-
-const xml2js = require('xml2js');
-
-// Destination bucket
-const { BUCKET } = process.env;
 
 export const handler = async (event, context, callback) => {
   // Extract env vars
-  const { REGION, STAGE } = process.env;
+  const { BUCKET, REGION, STAGE } = process.env;
 
-  if (!REGION || !STAGE) {
+  if (!BUCKET || !REGION || !STAGE) {
     return callback(
-      Error('REGION and STAGE environment variables are required!')
+      Error('BUCKET, REGION and STAGE environment variables are required!')
     );
   }
 

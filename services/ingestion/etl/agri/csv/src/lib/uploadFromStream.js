@@ -1,8 +1,8 @@
 import stream from 'stream';
-import { prepareMessage } from './sns';
-import { STATUS } from '../../../../../../storage/meta-index/src/lib/status';
+import { STATUS } from '@eubfr/storage-meta-index/src/lib/status';
 
-// Load
+import { prepareMessage } from './sns';
+
 export default ({ key, BUCKET, s3, sns, endpointArn, onError, callback }) => {
   const pass = new stream.PassThrough();
 
