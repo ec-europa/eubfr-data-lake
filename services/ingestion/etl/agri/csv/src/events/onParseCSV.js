@@ -17,7 +17,9 @@ export const handler = async (event, context, callback) => {
   const { BUCKET, REGION, STAGE } = process.env;
 
   if (!BUCKET || !REGION || !STAGE) {
-    callback(`BUCKET, REGION and STAGE environment variable are required!`);
+    return callback(
+      `BUCKET, REGION and STAGE environment variable are required!`
+    );
   }
 
   // 1. Validate handler execution

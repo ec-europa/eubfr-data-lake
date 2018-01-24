@@ -14,7 +14,9 @@ export const handler = async (event, context, callback) => {
   const { API, INDEX, REGION, STAGE } = process.env;
 
   if (!API || !INDEX || !REGION || !STAGE) {
-    callback(`API, INDEX, REGION and STAGE environment variable are required!`);
+    return callback(
+      `API, INDEX, REGION and STAGE environment variable are required!`
+    );
   }
 
   /*
@@ -30,7 +32,7 @@ export const handler = async (event, context, callback) => {
 
   // Was the lambda triggered correctly? Is the file extension supported? etc.
   if (!snsRecord || snsRecord.EventSource !== 'aws:sns') {
-    callback('Bad record');
+    return callback('Bad record');
   }
 
   /*
@@ -44,16 +46,6 @@ export const handler = async (event, context, callback) => {
   const producer = path.dirname(computedObjectKey);
   const extension = path.extname(computedObjectKey).slice(1);
 
-  // Fill the payload
-  const payload = {
-    default: JSON.stringify({
-      eventTime: s3record.eventTime,
-      userIdentity: s3record.userIdentity,
-      bucket: s3record.s3.bucket,
-      object: s3record.s3.object,
-    }),
-  };
-
   // Get Account ID from lambda function arn in the context
   const accountId = context.invokedFunctionArn.split(':')[4];
 
@@ -66,18 +58,26 @@ export const handler = async (event, context, callback) => {
   const s3 = new AWS.S3();
   const sns = new AWS.SNS();
 
-  /*
-   * Send the SNS message
-   */
-  try {
-    const logger = new Logger({
-      sns,
-      targetArn: loggerIndexSnsEndpointArn,
-      emitter: context.invokedFunctionArn,
-    });
+  // Instantiate logs SNS topic communicator.
+  const logger = new Logger({
+    sns,
+    targetArn: loggerIndexSnsEndpointArn,
+    emitter: context.invokedFunctionArn,
+  });
 
+  // Instantiate meta index communicator.
+  const client = elasticsearch.Client({
+    host: `https://${API}`,
+    apiVersion: '6.0',
+    connectionClass,
+    index: INDEX,
+  });
+
+  // When a file gets uploaded to an S3 bucket for ingestion.
+  try {
     const message = 'File uploaded. Forwarding to the right ETL...';
 
+    // Log success for a file being uploaded.
     await logger.info({
       message: {
         computed_key: computedObjectKey,
@@ -85,37 +85,89 @@ export const handler = async (event, context, callback) => {
       },
     });
 
-    await sns
-      .publish(
-        prepareMessage(
-          {
-            key: computedObjectKey,
-            status: STATUS.UPLOADED,
-            message,
-          },
-          metaIndexSnsEndpointArn
-        )
-      )
-      .promise();
-
+    // Insert meta data about the uploaded file to the meta index.
     try {
-      await sns
-        .publish({
-          Message: JSON.stringify(payload),
-          MessageStructure: 'json',
-          TargetArn: producerEtlSnsEndpointArn,
+      const data = await s3
+        .headObject({
+          Bucket: s3record.s3.bucket.name,
+          Key: computedObjectKey,
         })
         .promise();
 
+      const meta = data.Metadata || {};
+
+      const {
+        'original-key': originalKey = null,
+        producer: producerArn = null,
+        ...otherMeta
+      } = meta;
+
+      const item = {
+        producer_id: producerId,
+        computed_key: computedObjectKey,
+        original_key: originalKey,
+        producer_arn: producerArn,
+        content_type: data.ContentType,
+        last_modified: data.LastModified.toISOString(), // ISO-8601 date
+        content_length: Number(data.ContentLength),
+        metadata: otherMeta,
+        status: STATUS.UPLOADED,
+      };
+
+      await client.index({
+        index: INDEX,
+        type: 'file',
+        body: item,
+      });
+
+      // Send success SNS message for file being uploaded.
+      await sns
+        .publish(
+          prepareMessage(
+            {
+              key: computedObjectKey,
+              status: STATUS.UPLOADED,
+              message,
+            },
+            metaIndexSnsEndpointArn
+          )
+        )
+        .promise();
+    } catch (err) {
+      return callback(err.message);
+    }
+
+    try {
+      // Prepare to notify an ETL topic for a given file extension.
+      const snsMessage = {
+        default: JSON.stringify({
+          eventTime: s3record.eventTime,
+          userIdentity: s3record.userIdentity,
+          bucket: s3record.s3.bucket,
+          object: s3record.s3.object,
+        }),
+      };
+
+      // Log success pinging an ETL
       await logger.info({
         message: {
           computed_key: computedObjectKey,
           status_message: `ETL "${producer}-${extension}" has been pinged!`,
         },
       });
+
+      // Send an sns message success pinging an ETL
+      await sns
+        .publish({
+          Message: JSON.stringify(snsMessage),
+          MessageStructure: 'json',
+          TargetArn: producerEtlSnsEndpointArn,
+        })
+        .promise();
     } catch (err) {
       const errorMessage = `Unable to ping ETL "${producer}-${extension}".`;
 
+      // Log error pinging the right ETL topic.
       await logger.error({
         message: {
           computed_key: computedObjectKey,
@@ -123,6 +175,7 @@ export const handler = async (event, context, callback) => {
         },
       });
 
+      // Send error SNS message for a wrong file extension.
       await sns
         .publish(
           prepareMessage(
@@ -135,55 +188,7 @@ export const handler = async (event, context, callback) => {
           )
         )
         .promise();
-      return callback(null, 'All fine');
     }
-  } catch (err) {
-    return callback(err.message);
-  }
-
-  try {
-    const data = await s3
-      .headObject({
-        Bucket: s3record.s3.bucket.name,
-        Key: computedObjectKey,
-      })
-      .promise();
-
-    const meta = data.Metadata || {};
-
-    const {
-      'original-key': originalKey = null,
-      producer: producerArn = null,
-      ...otherMeta
-    } = meta;
-
-    const item = {
-      producer_id: producerId,
-      computed_key: computedObjectKey,
-      original_key: originalKey,
-      producer_arn: producerArn,
-      content_type: data.ContentType,
-      last_modified: data.LastModified.toISOString(), // ISO-8601 date
-      content_length: Number(data.ContentLength),
-      metadata: otherMeta,
-      status: STATUS.UPLOADED,
-    };
-
-    // elasticsearch client instantiation
-    const client = elasticsearch.Client({
-      host: `https://${API}`,
-      apiVersion: '6.0',
-      connectionClass,
-      index: INDEX,
-    });
-
-    await client.index({
-      index: INDEX,
-      type: 'file',
-      body: item,
-    });
-
-    return callback(null, 'All fine');
   } catch (err) {
     return callback(err.message);
   }
