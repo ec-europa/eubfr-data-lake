@@ -1,7 +1,7 @@
 import path from 'path';
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
+import Logger from '@eubfr/logger-listener/src/lib/Logger';
 
-import Logger from '../../../../../../logger/listener/src/lib/Logger';
 import transformRecord from '../lib/transform';
 import { STATUS } from '../../../../../../storage/meta-index/src/lib/status';
 

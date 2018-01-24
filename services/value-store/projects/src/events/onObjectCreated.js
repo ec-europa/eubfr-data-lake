@@ -4,11 +4,10 @@ import elasticsearch from 'elasticsearch';
 import connectionClass from 'http-aws-es';
 import through2 from 'through2';
 import split2 from 'split2';
+import Logger from '@eubfr/logger-listener/src/lib/Logger';
 
 import deleteProjects from '../lib/deleteProjects';
 import SaveStream from '../lib/SaveStream';
-
-import Logger from '../../../../logger/listener/src/lib/Logger';
 
 // Import constants
 import { STATUS } from '../../../../storage/meta-index/src/lib/status';

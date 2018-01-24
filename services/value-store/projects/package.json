@@ -6,6 +6,13 @@
     "deploy": "sls deploy -v",
     "test:unit": "jest --testPathPattern=unit"
   },
+  "dependencies": {
+    "@eubfr/logger-listener": "0.0.1",
+    "elasticsearch": "14.0.0",
+    "http-aws-es": "4.0.0",
+    "split2": "2.2.0",
+    "through2": "2.0.3"
+  },
   "devDependencies": {
     "aws-sdk": "2.179.0",
     "babel-core": "6.26.0",
@@ -16,11 +23,5 @@
     "serverless-stack-output": "0.2.3",
     "serverless-webpack": "4.2.0",
     "webpack": "3.10.0"
-  },
-  "dependencies": {
-    "elasticsearch": "14.0.0",
-    "http-aws-es": "4.0.0",
-    "split2": "2.2.0",
-    "through2": "2.0.3"
   }
 }

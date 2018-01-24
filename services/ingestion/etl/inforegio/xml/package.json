@@ -7,6 +7,7 @@
     "test:unit": "jest --testPathPattern=unit"
   },
   "dependencies": {
+    "@eubfr/logger-listener": "0.0.1",
     "xml2js": "0.4.19"
   },
   "devDependencies": {
