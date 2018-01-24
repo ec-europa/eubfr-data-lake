@@ -31,7 +31,7 @@ For more information about access key setup, see [this serverless guide](https:/
 
 ## Deploy
 
-Follow [these instructions](../README.md) to start your staged development environment.
+Follow [these instructions](../README.md) to deploy a project under your name and stage.
 
 ## Send data
 
