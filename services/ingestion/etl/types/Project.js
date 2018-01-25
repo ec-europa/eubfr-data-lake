@@ -58,7 +58,7 @@ type Budget = {
 
 type Coordinates = {
   lat: number,
-  long: number,
+  lon: number,
 };
 
 type Coordinator = {
