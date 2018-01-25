@@ -70,15 +70,15 @@ export default (record: Object): Project => {
   });
 
   const partnerArray = [];
-  for (let i = 0; i < partnerKeys.length; i += 1) {
-    if (record[`Partner ${i + 1} name`]) {
+  for (let i = 1; i <= partnerKeys.length; i += 1) {
+    if (record[`Partner ${i} name`]) {
       partnerArray.push({
-        name: record[`Partner ${i + 1} name`],
-        type: record[`Partner ${i + 1} organisation type`],
-        address: record[`Partner ${i + 1} address`],
-        region: record[`Partner ${i + 1} region`],
-        country: record[`Partner ${i + 1} country`],
-        website: record[`Partner ${i + 1} website`],
+        name: record[`Partner ${i} name`],
+        type: record[`Partner ${i} organisation type`],
+        address: record[`Partner ${i} address`],
+        region: record[`Partner ${i} region`],
+        country: record[`Partner ${i} country`],
+        website: record[`Partner ${i} website`],
       });
     }
   }
@@ -86,6 +86,7 @@ export default (record: Object): Project => {
   // Preprocess locations
   const locationArray = record['Participating countries']
     .split(',')
+    .filter(loc => loc)
     .map(country => ({
       country_code: country,
       region: '',
@@ -93,6 +94,7 @@ export default (record: Object): Project => {
       address: '',
       postal_code: '',
       town: '',
+      centroid: null,
       location: null,
     }));
 
