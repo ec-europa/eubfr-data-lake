@@ -87,7 +87,7 @@ export default (record: Object): Project => {
         centroid: hasCoordinates
           ? {
               lat: parseFloat(latArray[index]) || 0,
-              long: parseFloat(longArray[index]) || 0,
+              lon: parseFloat(longArray[index]) || 0,
             }
           : null,
         location: hasCoordinates

@@ -154,7 +154,7 @@ Object {
       "address": "",
       "centroid": Object {
         "lat": 48.211312,
-        "long": 16.367315,
+        "lon": 16.367315,
       },
       "country_code": "AT",
       "location": Object {
@@ -173,7 +173,7 @@ Object {
       "address": "",
       "centroid": Object {
         "lat": 45.803508,
-        "long": 16.017459,
+        "lon": 16.017459,
       },
       "country_code": "HR",
       "location": Object {
@@ -192,7 +192,7 @@ Object {
       "address": "",
       "centroid": Object {
         "lat": 49.449922,
-        "long": 11.10347,
+        "lon": 11.10347,
       },
       "country_code": "DE",
       "location": Object {
@@ -211,7 +211,7 @@ Object {
       "address": "",
       "centroid": Object {
         "lat": 48.143047,
-        "long": 17.12426,
+        "lon": 17.12426,
       },
       "country_code": "SK",
       "location": Object {
@@ -230,7 +230,7 @@ Object {
       "address": "",
       "centroid": Object {
         "lat": 46.048183,
-        "long": 14.501456,
+        "lon": 14.501456,
       },
       "country_code": "SI",
       "location": Object {
@@ -279,7 +279,7 @@ Object {
   "address": "",
   "centroid": Object {
     "lat": 48.211312,
-    "long": 16.367315,
+    "lon": 16.367315,
   },
   "country_code": "AT",
   "location": Object {
@@ -344,7 +344,7 @@ Object {
       "address": "",
       "centroid": Object {
         "lat": 42.73806663,
-        "long": 23.40014509,
+        "lon": 23.40014509,
       },
       "country_code": "",
       "location": Object {
