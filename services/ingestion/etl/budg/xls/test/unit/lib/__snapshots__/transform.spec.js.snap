@@ -98,6 +98,7 @@ Object {
   "project_locations": Array [
     Object {
       "address": "",
+      "centroid": null,
       "country_code": "NL",
       "location": null,
       "nuts2": "",
@@ -107,6 +108,7 @@ Object {
     },
     Object {
       "address": "",
+      "centroid": null,
       "country_code": "ES",
       "location": null,
       "nuts2": "",
@@ -116,6 +118,7 @@ Object {
     },
     Object {
       "address": "",
+      "centroid": null,
       "country_code": "IT",
       "location": null,
       "nuts2": "",
@@ -125,6 +128,7 @@ Object {
     },
     Object {
       "address": "",
+      "centroid": null,
       "country_code": "BA",
       "location": null,
       "nuts2": "",
@@ -134,6 +138,7 @@ Object {
     },
     Object {
       "address": "",
+      "centroid": null,
       "country_code": "PL",
       "location": null,
       "nuts2": "",
@@ -143,6 +148,7 @@ Object {
     },
     Object {
       "address": "",
+      "centroid": null,
       "country_code": "UK",
       "location": null,
       "nuts2": "",
@@ -270,6 +276,7 @@ Object {
   "project_locations": Array [
     Object {
       "address": "",
+      "centroid": null,
       "country_code": "NL",
       "location": null,
       "nuts2": "",
@@ -279,6 +286,7 @@ Object {
     },
     Object {
       "address": "",
+      "centroid": null,
       "country_code": "ES",
       "location": null,
       "nuts2": "",
@@ -288,6 +296,7 @@ Object {
     },
     Object {
       "address": "",
+      "centroid": null,
       "country_code": "IT",
       "location": null,
       "nuts2": "",
@@ -297,6 +306,7 @@ Object {
     },
     Object {
       "address": "",
+      "centroid": null,
       "country_code": "BA",
       "location": null,
       "nuts2": "",
@@ -306,6 +316,7 @@ Object {
     },
     Object {
       "address": "",
+      "centroid": null,
       "country_code": "PL",
       "location": null,
       "nuts2": "",
@@ -315,6 +326,7 @@ Object {
     },
     Object {
       "address": "",
+      "centroid": null,
       "country_code": "UK",
       "location": null,
       "nuts2": "",
