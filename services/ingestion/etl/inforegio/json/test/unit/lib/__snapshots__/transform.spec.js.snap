@@ -58,6 +58,7 @@ Object {
   "project_locations": Array [
     Object {
       "address": "",
+      "centroid": null,
       "country_code": "HU",
       "location": null,
       "nuts2": "HU10",

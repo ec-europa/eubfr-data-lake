@@ -56,6 +56,11 @@ type Budget = {
   total_cost: BudgetItem,
 };
 
+type Coordinates = {
+  lat: number,
+  lon: number,
+};
+
 type Coordinator = {
   address: string,
   country: string,
@@ -69,6 +74,7 @@ type Coordinator = {
 
 type Location = {
   address: string,
+  centroid: Coordinates | null,
   country_code: string,
   // If nothing else, provide null in transform function for this field.
   // Never null project_locations field which is typed on ES level.

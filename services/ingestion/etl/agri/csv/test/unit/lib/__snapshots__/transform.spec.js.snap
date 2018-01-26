@@ -152,6 +152,10 @@ Object {
   "project_locations": Array [
     Object {
       "address": "",
+      "centroid": Object {
+        "lat": 48.211312,
+        "lon": 16.367315,
+      },
       "country_code": "AT",
       "location": Object {
         "coordinates": Array [
@@ -167,6 +171,10 @@ Object {
     },
     Object {
       "address": "",
+      "centroid": Object {
+        "lat": 45.803508,
+        "lon": 16.017459,
+      },
       "country_code": "HR",
       "location": Object {
         "coordinates": Array [
@@ -182,6 +190,10 @@ Object {
     },
     Object {
       "address": "",
+      "centroid": Object {
+        "lat": 49.449922,
+        "lon": 11.10347,
+      },
       "country_code": "DE",
       "location": Object {
         "coordinates": Array [
@@ -197,6 +209,10 @@ Object {
     },
     Object {
       "address": "",
+      "centroid": Object {
+        "lat": 48.143047,
+        "lon": 17.12426,
+      },
       "country_code": "SK",
       "location": Object {
         "coordinates": Array [
@@ -212,6 +228,10 @@ Object {
     },
     Object {
       "address": "",
+      "centroid": Object {
+        "lat": 46.048183,
+        "lon": 14.501456,
+      },
       "country_code": "SI",
       "location": Object {
         "coordinates": Array [
@@ -257,6 +277,10 @@ Object {
 exports[`DG AGRI CSV transformer Project location information is correctly mapped 1`] = `
 Object {
   "address": "",
+  "centroid": Object {
+    "lat": 48.211312,
+    "lon": 16.367315,
+  },
   "country_code": "AT",
   "location": Object {
     "coordinates": Array [
@@ -305,41 +329,23 @@ Object {
     },
   },
   "call_year": "",
-  "coordinators": Array [
-    Object {
-      "address": "",
-      "country": "",
-      "email": "",
-      "name": "",
-      "phone": "",
-      "region": "",
-      "type": "",
-      "website": "",
-    },
-  ],
+  "coordinators": Array [],
   "description": "",
-  "ec_priorities": Array [
-    "",
-  ],
+  "ec_priorities": Array [],
   "media": Object {
     "cover_image": "",
     "video": "",
   },
-  "partners": Array [
-    Object {
-      "address": "",
-      "country": "",
-      "name": "",
-      "region": "",
-      "type": "",
-      "website": "",
-    },
-  ],
+  "partners": Array [],
   "programme_name": "",
   "project_id": "",
   "project_locations": Array [
     Object {
       "address": "",
+      "centroid": Object {
+        "lat": 42.73806663,
+        "lon": 23.40014509,
+      },
       "country_code": "",
       "location": Object {
         "coordinates": Array [
@@ -355,12 +361,7 @@ Object {
     },
   ],
   "project_website": "",
-  "related_links": Array [
-    Object {
-      "label": "",
-      "url": "",
-    },
-  ],
+  "related_links": Array [],
   "results": Object {
     "available": "",
     "result": "",

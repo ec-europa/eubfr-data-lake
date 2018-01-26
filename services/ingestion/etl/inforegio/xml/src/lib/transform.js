@@ -90,6 +90,7 @@ export default (record: Object): Project => {
     ? checkData(record.Project_country)
         .toString()
         .split('; ')
+        .filter(country => country)
     : null;
   const previousCountries = [];
   if (countryArray !== null && countryArray.length > 1) {
@@ -103,6 +104,7 @@ export default (record: Object): Project => {
           postal_code: '',
           town: '',
           location: null,
+          centroid: null,
         });
         previousCountries.push(countryArray[i]);
       }
@@ -116,6 +118,7 @@ export default (record: Object): Project => {
       postal_code: '',
       town: '',
       location: null,
+      centroid: null,
     });
   }
 
@@ -127,6 +130,7 @@ export default (record: Object): Project => {
     ? checkData(record.Themes)
         .toString()
         .split('; ')
+        .filter(theme => theme)
     : [];
 
   // Preprocess partners

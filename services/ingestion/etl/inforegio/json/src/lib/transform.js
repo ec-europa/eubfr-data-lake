@@ -8,10 +8,7 @@ import type { Project } from '../../../../types/Project';
 
 const getFundingArea = record =>
   // Get value for 'Funding area' if property is present.
-  (record.Funds ? record.Funds.split(';') : []).filter(
-    // Remove empty strings.
-    item => item
-  );
+  record.Funds ? record.Funds.split(';').filter(fund => fund) : [];
 
 // Formats date from DD/MM/YYYY to ISO 8601 date format.
 const formatDate = date => {
@@ -103,7 +100,7 @@ export default (record: Object): Project => {
   // Preprocess project locations
   const locationArray = [];
   const countryArray = record.Project_country
-    ? record.Project_country.split('; ')
+    ? record.Project_country.split('; ').filter(country => country)
     : null;
   const previousCountries = [];
   if (countryArray !== null && countryArray.length > 1) {
@@ -117,6 +114,7 @@ export default (record: Object): Project => {
           postal_code: '',
           town: '',
           location: null,
+          centroid: null,
         });
         previousCountries.push(countryArray[i]);
       }
@@ -130,6 +128,7 @@ export default (record: Object): Project => {
       postal_code: '',
       town: '',
       location: null,
+      centroid: null,
     });
   }
 
