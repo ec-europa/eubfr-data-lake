@@ -8,7 +8,6 @@ const { META_ENDPOINT, META_INDEX, REGION, STAGE } = process.env;
 
 const shouldPersist = message => !!message.persist;
 const getAccountId = context => context.invokedFunctionArn.split(':')[4];
-// const getAccountId = context => `491621799026`;
 const getClients = context => {
   // AWS clients
   const sns = new AWS.SNS();

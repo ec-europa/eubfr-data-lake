@@ -8,9 +8,6 @@
     "http-aws-es": "4.0.0"
   },
   "devDependencies": {
-    "aws-sdk": "2.179.0",
-    "babel-core": "6.26.0",
-    "babel-loader": "7.1.2",
-    "babel-preset-env": "1.6.1"
+    "aws-sdk": "2.179.0"
   }
 }
