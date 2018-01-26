@@ -8,10 +8,7 @@ import type { Project } from '../../../../types/Project';
 
 const getFundingArea = record =>
   // Get value for 'Funding area' if property is present.
-  (record.Funds ? record.Funds.split(';').filter(fund => fund) : []).filter(
-    // Remove empty strings.
-    item => item
-  );
+  record.Funds ? record.Funds.split(';').filter(fund => fund) : [];
 
 // Formats date from DD/MM/YYYY to ISO 8601 date format.
 const formatDate = date => {
