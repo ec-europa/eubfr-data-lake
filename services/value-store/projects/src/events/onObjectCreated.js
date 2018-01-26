@@ -115,7 +115,7 @@ export const handler = async (event, context, callback) => {
           const item = Object.assign(
             {
               computed_key: s3record.s3.object.key,
-              producer_id: s3record.userIdentity.principalId,
+              created_by: s3record.userIdentity.principalId, // which service created the harmonized file
               last_modified: data.LastModified.toISOString(), // ISO-8601 date
             },
             chunk
