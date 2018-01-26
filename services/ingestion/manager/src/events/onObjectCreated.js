@@ -1,7 +1,7 @@
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 import path from 'path';
 
-import CreateMessengerFactory from '@eubfr/logger-listener/src/lib/CreateMessengerFactory';
+import MessengerFactory from '@eubfr/logger-messenger/src/lib/MessengerFactory';
 import { STATUS } from '@eubfr/storage-meta-index/src/lib/status';
 
 export const handler = async (event, context, callback) => {
@@ -9,7 +9,9 @@ export const handler = async (event, context, callback) => {
   const { REGION, STAGE } = process.env;
 
   if (!REGION || !STAGE) {
-    callback(Error('REGION and STAGE environment variables are required!'));
+    return callback(
+      Error('REGION and STAGE environment variables are required!')
+    );
   }
 
   /*
@@ -17,7 +19,7 @@ export const handler = async (event, context, callback) => {
    */
 
   if (!event.Records) {
-    callback(Error('No record'));
+    return callback(Error('No record'));
   }
 
   // Only work on the first record
@@ -25,7 +27,7 @@ export const handler = async (event, context, callback) => {
 
   // Was the lambda triggered correctly? Is the file extension supported? etc.
   if (!snsRecord || snsRecord.EventSource !== 'aws:sns') {
-    callback(Error('Bad record'));
+    return callback(Error('Bad record'));
   }
 
   /*
@@ -46,7 +48,7 @@ export const handler = async (event, context, callback) => {
   const s3 = new AWS.S3();
   const sns = new AWS.SNS();
 
-  const messenger = CreateMessengerFactory({ event, context });
+  const messenger = MessengerFactory.Create({ context });
 
   // Try to get meta data about raw file being uploaded.
   try {
@@ -78,30 +80,36 @@ export const handler = async (event, context, callback) => {
     };
 
     // Send success message for file being uploaded.
-    await messenger.info(
-      {
-        message: {
-          computed_key: computedObjectKey,
-          status_message: STATUS.UPLOADED,
+    // This must: 1) save record to meta es index
+    // https://github.com/ec-europa/eubfr-data-lake/blob/d23c4f18958f721932802e64481d48ca672864fb/services/ingestion/manager/src/events/onObjectCreated.js#L116
+    // 2) notify meta index sns topic https://github.com/ec-europa/eubfr-data-lake/blob/d23c4f18958f721932802e64481d48ca672864fb/services/ingestion/manager/src/events/onObjectCreated.js#L123
+    await messenger.send({
+      type: 'success',
+      message: {
+        computed_key: computedObjectKey,
+        status_message: 'File uploaded. Forwarding to the right ETL...',
+        status_code: STATUS.UPLOADED,
+        persist: {
           type: 'file',
           body: item,
+          in: ['meta'],
         },
       },
-      ['logs', 'meta']
-    );
+      to: ['logs'],
+    });
   } catch (err) {
     // Log error uploading a file for ingestion.
-    await messenger.error(
-      {
-        message: {
-          computed_key: computedObjectKey,
-          status_message: STATUS.ERROR,
-        },
+    await messenger.send({
+      type: 'error',
+      message: {
+        computed_key: computedObjectKey,
+        status_message: `Failed file upload`,
+        status_code: STATUS.ERROR,
       },
-      ['logs', 'meta']
-    );
+      to: ['logs', 'meta'],
+    });
 
-    callback(err.message);
+    return callback(err.message);
   }
 
   try {
@@ -116,18 +124,16 @@ export const handler = async (event, context, callback) => {
     };
 
     // Log success pinging an ETL
-    await messenger.info(
-      {
-        message: {
-          computed_key: computedObjectKey,
-          status_message: `ETL "${producer}-${extension}" has been pinged!`,
-        },
+    await messenger.send({
+      message: {
+        computed_key: computedObjectKey,
+        status_message: `ETL "${producer}-${extension}" has been pinged!`,
       },
-      ['logs', 'meta']
-    );
+      to: ['logs', 'meta'],
+    });
 
     // Send an sns message success pinging an ETL
-    await sns
+    return await sns
       .publish({
         Message: JSON.stringify(snsMessage),
         MessageStructure: 'json',
@@ -136,15 +142,17 @@ export const handler = async (event, context, callback) => {
       .promise();
   } catch (err) {
     // Log error pinging the right ETL topic.
-    await messenger.error(
-      {
-        message: {
-          computed_key: computedObjectKey,
-          status_message: `Unable to ping ETL "${producer}-${extension}".`,
-        },
+    await messenger.send({
+      type: 'error',
+      message: {
+        computed_key: computedObjectKey,
+        status_code: STATUS.ERROR,
+        status_message: `Unable to ping ETL "${producer}-${extension}".`,
       },
-      ['logs', 'meta']
-    );
+      to: ['logs', 'meta'],
+    });
+
+    return callback(err.message);
   }
 };
 
