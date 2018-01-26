@@ -47,6 +47,7 @@ Object {
   "project_locations": Array [
     Object {
       "address": "",
+      "centroid": null,
       "country_code": "EL",
       "location": null,
       "nuts2": "EL0",
