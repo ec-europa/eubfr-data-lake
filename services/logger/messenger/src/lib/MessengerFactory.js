@@ -8,6 +8,7 @@ const { META_ENDPOINT, META_INDEX, REGION, STAGE } = process.env;
 
 const shouldPersist = message => !!message.persist;
 const getAccountId = context => context.invokedFunctionArn.split(':')[4];
+// const getAccountId = context => `491621799026`;
 const getClients = context => {
   // AWS clients
   const sns = new AWS.SNS();
@@ -21,6 +22,8 @@ const getClients = context => {
     sns,
     targetArn: this.loggerIndexSnsEndpointArn,
     emitter: context.invokedFunctionArn,
+    // emitter:
+    // 'arn:aws:lambda:eu-central-1:491621799026:function:chernka1222-ingestion-manager-onCreate',
   });
 
   this.metaIndexClient = elasticsearch.Client({
@@ -43,22 +46,21 @@ const getClients = context => {
 
 const MessengerFactory = {
   Create({ context }) {
-    this.targets = this.getIndexTypes();
-    this.clients = getClients(context);
+    MessengerFactory.context = context;
+    MessengerFactory.clients = getClients(context);
 
     return Object.create(this.messenger);
   },
 
   messenger: {
-    async send({ message, to }) {
-      console.log(message.to);
+    send({ message, to }) {
       // In case message should be saved to persistence directly.
       // For example when initial meta message is to be created.
       if (shouldPersist(message)) {
         if (message.persist.in && message.persist.in.includes('meta')) {
           const item = message.persist.body;
 
-          await this.clients.meta.es.index({
+          MessengerFactory.clients.meta.es.index({
             index: META_INDEX,
             type: 'file',
             body: item,
@@ -66,12 +68,15 @@ const MessengerFactory = {
         }
       }
 
-      if (to.logs) {
-        await this.clients.logs.logger.info({ message });
+      if (to.includes('logs')) {
+        MessengerFactory.clients.logs.logger.info({ message });
       }
 
-      if (to.meta) {
-        await this.clients.meta.sns
+      if (to.includes('meta')) {
+        const accountId = getAccountId(MessengerFactory.context);
+        const TargetArn = `arn:aws:sns:${REGION}:${accountId}:${STAGE}-MetaStatusReported`;
+
+        MessengerFactory.clients.meta.sns
           .publish({
             Message: JSON.stringify({
               default: JSON.stringify({
@@ -81,7 +86,7 @@ const MessengerFactory = {
               }),
             }),
             MessageStructure: 'json',
-            TargetArn: this.metaIndexSnsEndpointArn,
+            TargetArn,
           })
           .promise();
       }

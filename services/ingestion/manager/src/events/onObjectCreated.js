@@ -44,6 +44,7 @@ export const handler = async (event, context, callback) => {
   const extension = path.extname(computedObjectKey).slice(1);
 
   const accountId = context.invokedFunctionArn.split(':')[4];
+  // const accountId = `491621799026`;
   const producerEtlSnsEndpointArn = `arn:aws:sns:${REGION}:${accountId}:${STAGE}-etl-${producer}-${extension}`;
 
   // AWS clients
@@ -81,10 +82,6 @@ export const handler = async (event, context, callback) => {
       status: STATUS.UPLOADED,
     };
 
-    // Send success message for file being uploaded.
-    // This must: 1) save record to meta es index
-    // https://github.com/ec-europa/eubfr-data-lake/blob/d23c4f18958f721932802e64481d48ca672864fb/services/ingestion/manager/src/events/onObjectCreated.js#L116
-    // 2) notify meta index sns topic https://github.com/ec-europa/eubfr-data-lake/blob/d23c4f18958f721932802e64481d48ca672864fb/services/ingestion/manager/src/events/onObjectCreated.js#L123
     await messenger.send({
       message: {
         computed_key: computedObjectKey,
