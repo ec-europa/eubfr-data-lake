@@ -4,7 +4,7 @@ plugins:
   - serverless-webpack
 
 custom:
-  esIndex: ${self:provider.stage}-meta
+  metaIndex: ${self:provider.stage}-meta
   webpackIncludeModules: true
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
 
@@ -21,9 +21,9 @@ provider:
   stackTags:
     ENV: ${self:custom.eubfrEnvironment}
   environment:
-    API:
+    META_ENDPOINT:
       Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:MetaEndpoint
-    INDEX: ${self:custom.esIndex}
+    META_INDEX: ${self:custom.metaIndex}
     STAGE: ${self:provider.stage}
     REGION: ${self:provider.region}
   iamRoleStatements:

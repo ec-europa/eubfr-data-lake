@@ -6,9 +6,9 @@ import { STATUS } from '@eubfr/storage-meta-index/src/lib/status';
 
 export const handler = async (event, context, callback) => {
   // Extract env vars
-  const { REGION, STAGE } = process.env;
+  const { META_ENDPOINT, META_INDEX, REGION, STAGE } = process.env;
 
-  if (!REGION || !STAGE) {
+  if (!META_ENDPOINT || !META_INDEX || !REGION || !STAGE) {
     return callback(
       Error('REGION and STAGE environment variables are required!')
     );
@@ -84,7 +84,6 @@ export const handler = async (event, context, callback) => {
     // https://github.com/ec-europa/eubfr-data-lake/blob/d23c4f18958f721932802e64481d48ca672864fb/services/ingestion/manager/src/events/onObjectCreated.js#L116
     // 2) notify meta index sns topic https://github.com/ec-europa/eubfr-data-lake/blob/d23c4f18958f721932802e64481d48ca672864fb/services/ingestion/manager/src/events/onObjectCreated.js#L123
     await messenger.send({
-      type: 'success',
       message: {
         computed_key: computedObjectKey,
         status_message: 'File uploaded. Forwarding to the right ETL...',
@@ -100,7 +99,6 @@ export const handler = async (event, context, callback) => {
   } catch (err) {
     // Log error uploading a file for ingestion.
     await messenger.send({
-      type: 'error',
       message: {
         computed_key: computedObjectKey,
         status_message: `Failed file upload`,
@@ -143,7 +141,6 @@ export const handler = async (event, context, callback) => {
   } catch (err) {
     // Log error pinging the right ETL topic.
     await messenger.send({
-      type: 'error',
       message: {
         computed_key: computedObjectKey,
         status_code: STATUS.ERROR,
