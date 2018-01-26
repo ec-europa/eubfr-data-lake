@@ -10,7 +10,7 @@ describe(`Function onCreate in "@eubfr/ingestion-manager"`, () => {
     const context = {};
     const callback = error => {
       expect(error.message).toEqual(
-        'API, INDEX, REGION and STAGE environment variables are required!'
+        'META_ENDPOINT, META_INDEX, REGION and STAGE environment variables are required!'
       );
     };
 

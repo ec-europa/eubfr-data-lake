@@ -10,7 +10,9 @@ export const handler = async (event, context, callback) => {
 
   if (!META_ENDPOINT || !META_INDEX || !REGION || !STAGE) {
     return callback(
-      Error('REGION and STAGE environment variables are required!')
+      Error(
+        'META_ENDPOINT, META_INDEX, REGION and STAGE environment variables are required!'
+      )
     );
   }
 
