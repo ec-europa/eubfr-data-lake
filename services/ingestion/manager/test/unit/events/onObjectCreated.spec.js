@@ -5,7 +5,7 @@
 import onObjectCreated from '../../../src/events/onObjectCreated';
 
 describe(`Function onCreate in "@eubfr/ingestion-manager"`, () => {
-  test('The function expects a correct SNS record', async () => {
+  test('The function expects META_ENDPOINT, META_INDEX, REGION and STAGE environment variables', async () => {
     const event = {};
     const context = {};
     const callback = error => {

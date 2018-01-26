@@ -2,18 +2,20 @@
  * @jest-environment node
  */
 
-import { promisify } from 'util';
 import onObjectRemoved from '../../../src/events/onObjectRemoved';
 
-const handler = promisify(onObjectRemoved);
-
 describe(`Function onObjectRemoved in "@eubfr/ingestion-manager"`, () => {
-  test('The function expects records', () => {
+  test('The function expects META_ENDPOINT and META_INDEX environment variables', async () => {
     const event = {};
     const context = {};
+    const callback = error => {
+      expect(error.message).toEqual(
+        'META_ENDPOINT and META_INDEX environment variables are required!'
+      );
+    };
 
     expect.assertions(1);
-    const result = handler(event, context);
-    return expect(result).rejects.toBe(`No record`);
+
+    await onObjectRemoved(event, context, callback);
   });
 });
