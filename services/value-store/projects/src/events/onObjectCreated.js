@@ -11,6 +11,8 @@ import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 import deleteProjects from '../lib/deleteProjects';
 import SaveStream from '../lib/SaveStream';
 
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
 export const handler = async (event, context, callback) => {
   const { API, INDEX } = process.env;
 
@@ -78,6 +80,9 @@ export const handler = async (event, context, callback) => {
       index: INDEX,
       key: s3record.s3.object.key,
     });
+
+    // Avoid conflict with another SNS.
+    await delay(5000);
 
     await messenger.send({
       message: {
