@@ -2,7 +2,7 @@ import path from 'path';
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 import XLSX from 'xlsx';
 import Logger from '@eubfr/logger-listener/src/lib/Logger';
-import { STATUS } from '@eubfr/storage-meta-index/src/lib/status';
+import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 
 import transformRecord from '../lib/transform';
 
@@ -157,8 +157,7 @@ export const handler = async (event, context, callback) => {
             default: JSON.stringify({
               key: message.object.key,
               status: STATUS.PARSED,
-              message:
-                'ETL successfully uploaded a parsed (harmonized) version of incoming data!',
+              message: 'ETL successful',
             }),
           }),
           MessageStructure: 'json',

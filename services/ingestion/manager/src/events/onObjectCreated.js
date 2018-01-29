@@ -2,7 +2,7 @@ import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependenc
 import path from 'path';
 
 import MessengerFactory from '@eubfr/logger-messenger/src/lib/MessengerFactory';
-import { STATUS } from '@eubfr/storage-meta-index/src/lib/status';
+import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 
 export const handler = async (event, context, callback) => {
   // Extract env vars
@@ -125,6 +125,7 @@ export const handler = async (event, context, callback) => {
       message: {
         computed_key: computedObjectKey,
         status_message: `ETL "${producer}-${extension}" has been pinged!`,
+        status_code: STATUS.PROGRESS,
       },
       to: ['logs', 'meta'],
     });

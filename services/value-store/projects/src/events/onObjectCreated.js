@@ -5,7 +5,7 @@ import connectionClass from 'http-aws-es';
 import through2 from 'through2';
 import split2 from 'split2';
 import Logger from '@eubfr/logger-listener/src/lib/Logger';
-import { STATUS } from '@eubfr/storage-meta-index/src/lib/status';
+import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 
 import deleteProjects from '../lib/deleteProjects';
 import SaveStream from '../lib/SaveStream';

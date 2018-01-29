@@ -1,10 +1,11 @@
 import stream from 'stream';
-import { STATUS } from '@eubfr/storage-meta-index/src/lib/status';
 
-import { prepareMessage } from './sns';
+import MessengerFactory from '@eubfr/logger-messenger/src/lib/MessengerFactory';
+import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 
-export default ({ key, BUCKET, s3, sns, endpointArn, onError, callback }) => {
+export default async ({ key, BUCKET, s3, onError, context }) => {
   const pass = new stream.PassThrough();
+  const messenger = MessengerFactory.Create({ context });
 
   const params = {
     Bucket: BUCKET,
@@ -13,35 +14,19 @@ export default ({ key, BUCKET, s3, sns, endpointArn, onError, callback }) => {
     ContentType: 'application/x-ndjson',
   };
 
-  s3.upload(params, err => {
+  await s3.upload(params, err => {
     if (err) {
       return onError(err);
     }
 
-    // Publish message to ETL Success topic
-
-    /*
-     * Send the SNS message
-     */
-    return sns.publish(
-      prepareMessage(
-        {
-          key,
-          status: STATUS.PARSED,
-          message:
-            'ETL successfully uploaded a parsed (harmonized) version of incoming data!',
-        },
-        endpointArn
-      ),
-      snsErr => {
-        if (snsErr) {
-          callback(snsErr);
-          return;
-        }
-
-        callback(null, 'push sent');
-      }
-    );
+    return messenger.send({
+      message: {
+        computed_key: key,
+        status_message: 'ETL successful',
+        status_code: STATUS.SUCCESS_ETL,
+      },
+      to: ['logs', 'meta'],
+    });
   });
 
   return pass;

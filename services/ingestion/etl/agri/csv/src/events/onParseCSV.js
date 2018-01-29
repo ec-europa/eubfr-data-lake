@@ -2,11 +2,11 @@ import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependenc
 import parse from 'csv-parse';
 import transform from 'stream-transform';
 
-import Logger from '@eubfr/logger-listener/src/lib/Logger';
-import { STATUS } from '@eubfr/storage-meta-index/src/lib/status';
+import MessengerFactory from '@eubfr/logger-messenger/src/lib/MessengerFactory';
+import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 
 // Import logic
-import { extractMessage, prepareMessage } from '../lib/sns';
+import { extractMessage } from '../lib/sns';
 import transformRecord from '../lib/transform';
 import uploadFromStream from '../lib/uploadFromStream';
 
@@ -20,48 +20,20 @@ export const handler = async (event, context, callback) => {
     );
   }
 
-  // 1. Validate handler execution
-  // check event, context
+  // Validate handler execution and check event, context, etc.
   const snsMessage = extractMessage(event);
 
-  // Get Account ID from lambda function arn in the context
-  const accountId = context.invokedFunctionArn.split(':')[4];
-
-  // Get the endpoint arn
-  const endpointArn = `arn:aws:sns:${REGION}:${accountId}:${STAGE}-MetaStatusReported`;
-
-  const sns = new AWS.SNS();
-  const logger = new Logger({
-    sns,
-    targetArn: `arn:aws:sns:${REGION}:${accountId}:${STAGE}-onLogEmitted`,
-    emitter: context.invokedFunctionArn,
-  });
+  const messenger = MessengerFactory.Create({ context });
 
   const onError = e =>
-    sns.publish(
-      prepareMessage(
-        {
-          key: snsMessage.object.key,
-          status: STATUS.ERROR,
-          message: JSON.stringify(e),
-        },
-        endpointArn
-      ),
-      async snsErr => {
-        if (snsErr) {
-          return callback(snsErr);
-        }
-
-        await logger.error({
-          message: {
-            computed_key: snsMessage.object.key,
-            status_message: JSON.stringify(e),
-          },
-        });
-
-        return callback(e);
-      }
-    );
+    messenger.send({
+      message: {
+        computed_key: snsMessage.object.key,
+        status_message: e,
+        status_code: STATUS.ERROR,
+      },
+      to: ['logs', 'meta'],
+    });
 
   const s3 = new AWS.S3();
 
@@ -88,11 +60,13 @@ export const handler = async (event, context, callback) => {
   /*
    * Start the hard work
    */
-  await logger.info({
+  await messenger.send({
     message: {
       computed_key: snsMessage.object.key,
       status_message: 'Start parsing CSV...',
+      status_code: STATUS.PARSING,
     },
+    to: ['logs', 'meta'],
   });
 
   return s3
@@ -106,26 +80,26 @@ export const handler = async (event, context, callback) => {
     .pipe(transformer)
     .on('error', e => onError(`Error on transform: ${e.message}`))
     .pipe(
-      uploadFromStream({
+      await uploadFromStream({
         key: snsMessage.object.key,
         BUCKET,
         s3,
-        sns,
-        endpointArn,
         onError,
-        callback,
+        context,
       })
     )
     .on('error', e => onError(`Error on upload: ${e.message}`))
-    .on('end', async () =>
-      logger.info({
+    .on('end', async () => {
+      await messenger.send({
         message: {
           computed_key: snsMessage.object.key,
           status_message:
             'CSV parsed successfully. Results will be uploaded to ElasticSearch soon...',
+          status_code: STATUS.PARSED,
         },
-      })
-    );
+        to: ['logs', 'meta'],
+      });
+    });
 };
 
 export default handler;
