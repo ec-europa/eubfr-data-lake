@@ -16,9 +16,6 @@ export const handler = async (event, context, callback) => {
     );
   }
 
-  const messenger = MessengerFactory.Create({ context });
-  const s3 = new AWS.S3();
-
   /*
    * Some checks here before going any further
    */
@@ -33,7 +30,7 @@ export const handler = async (event, context, callback) => {
     !snsRecord.Sns ||
     !snsRecord.Sns.Message
   ) {
-    return callback(Error('Bad record'));
+    return callback(new Error('Bad record'));
   }
 
   /*
@@ -56,6 +53,9 @@ export const handler = async (event, context, callback) => {
   if (path.extname(message.object.key) !== '.json') {
     return callback(new Error('File extension should be .json'));
   }
+
+  const messenger = MessengerFactory.Create({ context });
+  const s3 = new AWS.S3();
 
   const handleError = e =>
     messenger.send({

@@ -4,15 +4,21 @@ import elasticsearch from 'elasticsearch';
 import connectionClass from 'http-aws-es';
 import through2 from 'through2';
 import split2 from 'split2';
-import Logger from '@eubfr/logger-listener/src/lib/Logger';
+
+import MessengerFactory from '@eubfr/logger-messenger/src/lib/MessengerFactory';
 import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 
 import deleteProjects from '../lib/deleteProjects';
 import SaveStream from '../lib/SaveStream';
-import prepareMessage from '../lib/prepareMessage';
 
 export const handler = async (event, context, callback) => {
-  const { API, INDEX, REGION, STAGE } = process.env;
+  const { API, INDEX } = process.env;
+
+  if (!API || !INDEX) {
+    return callback(
+      new Error('API and INDEX environment variables are required!')
+    );
+  }
 
   /*
    * Some checks here before going any further
@@ -29,16 +35,16 @@ export const handler = async (event, context, callback) => {
     return callback('Bad record');
   }
 
-  // Get Account ID from lambda function arn in the context
-  const accountId = context.invokedFunctionArn.split(':')[4];
-  const endpointMetaIndexArn = `arn:aws:sns:${REGION}:${accountId}:${STAGE}-MetaStatusReported`;
-
-  const sns = new AWS.SNS();
-  const logger = new Logger({
-    sns,
-    targetArn: `arn:aws:sns:${REGION}:${accountId}:${STAGE}-onLogEmitted`,
-    emitter: context.invokedFunctionArn,
+  // Insantiate clients
+  const client = elasticsearch.Client({
+    host: `https://${API}`,
+    apiVersion: '6.0',
+    connectionClass,
+    index: INDEX,
   });
+
+  const messenger = MessengerFactory.Create({ context });
+  const s3 = new AWS.S3();
 
   /*
    * Extract information from the event
@@ -51,15 +57,14 @@ export const handler = async (event, context, callback) => {
   const originalComputedKey = s3record.s3.object.key.replace('.ndjson', '');
 
   try {
-    await logger.info({
+    await messenger.send({
       message: {
         computed_key: originalComputedKey,
         status_message: 'Preparing the upload to ElasticSearch...',
+        status_code: STATUS.PROGRESS,
       },
+      to: ['logs', 'meta'],
     });
-
-    // s3 client instantiation
-    const s3 = new AWS.S3();
 
     const data = await s3
       .headObject({
@@ -68,25 +73,19 @@ export const handler = async (event, context, callback) => {
       })
       .promise();
 
-    // elasticsearch client instantiation
-    const client = elasticsearch.Client({
-      host: `https://${API}`,
-      apiVersion: '6.0',
-      connectionClass,
-      index: INDEX,
-    });
-
     await deleteProjects({
       client,
       index: INDEX,
       key: s3record.s3.object.key,
     });
 
-    await logger.info({
+    await messenger.send({
       message: {
         computed_key: originalComputedKey,
         status_message: 'Start uploading to ElasticSearch',
+        status_code: STATUS.PROGRESS,
       },
+      to: ['logs', 'meta'],
     });
 
     // Prepare upload
@@ -97,11 +96,13 @@ export const handler = async (event, context, callback) => {
     });
 
     const onPipeError = async e =>
-      logger.error({
+      messenger.send({
         message: {
           computed_key: originalComputedKey,
           status_message: e.message,
+          status_code: STATUS.ERROR,
         },
+        to: ['logs', 'meta'],
       });
 
     return s3
@@ -131,34 +132,25 @@ export const handler = async (event, context, callback) => {
       .pipe(saveStream)
       .on('error', onPipeError)
       .on('finish', async () => {
-        await logger.info({
+        await messenger.send({
           message: {
             computed_key: originalComputedKey,
             status_message: 'Results uploaded successfully, all went well.',
+            status_code: STATUS.INGESTED,
           },
+          to: ['logs', 'meta'],
         });
-
-        await sns
-          .publish(
-            prepareMessage(
-              {
-                key: originalComputedKey,
-                status: STATUS.INGESTED,
-                message: 'Data ingested in the data lake!',
-              },
-              endpointMetaIndexArn
-            )
-          )
-          .promise();
 
         return callback(null, 'Results uploaded successfully, all went well.');
       });
   } catch (err) {
-    await logger.error({
+    await messenger.send({
       message: {
         computed_key: originalComputedKey,
         status_message: err.message,
+        status_code: STATUS.ERROR,
       },
+      to: ['logs', 'meta'],
     });
 
     return callback(err.message);
