@@ -17,6 +17,7 @@ export const handler = async (event, context, callback) => {
   }
 
   const messenger = MessengerFactory.Create({ context });
+  const s3 = new AWS.S3();
 
   /*
    * Some checks here before going any further
@@ -65,8 +66,6 @@ export const handler = async (event, context, callback) => {
       },
       to: ['logs', 'meta'],
     });
-
-  const s3 = new AWS.S3();
 
   await messenger.send({
     message: {

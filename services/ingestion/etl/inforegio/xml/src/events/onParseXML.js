@@ -1,7 +1,8 @@
 import path from 'path';
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 import xml2js from 'xml2js';
-import Logger from '@eubfr/logger-listener/src/lib/Logger';
+
+import MessengerFactory from '@eubfr/logger-messenger/src/lib/MessengerFactory';
 import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 
 import transformRecord from '../lib/transform';
@@ -12,13 +13,12 @@ export const handler = async (event, context, callback) => {
 
   if (!BUCKET || !REGION || !STAGE) {
     return callback(
-      Error('BUCKET, REGION and STAGE environment variables are required!')
+      new Error('BUCKET, REGION and STAGE environment variables are required!')
     );
   }
 
-  /*
-   * Some checks here before going any further
-   */
+  const s3 = new AWS.S3();
+  const messenger = MessengerFactory.Create({ context });
 
   // Only work on the first record
   const snsRecord = event.Records ? event.Records[0] : undefined;
@@ -40,58 +40,23 @@ export const handler = async (event, context, callback) => {
     return callback('File extension should be .xml');
   }
 
-  /*
-   * Prepare the SNS message
-   */
-
-  // Get Account ID from lambda function arn in the context
-  const accountId = context.invokedFunctionArn.split(':')[4];
-
-  // Get the endpoint arn
-  const endpointArn = `arn:aws:sns:${REGION}:${accountId}:${STAGE}-MetaStatusReported`;
-  const sns = new AWS.SNS();
-  const logger = new Logger({
-    sns,
-    targetArn: `arn:aws:sns:${REGION}:${accountId}:${STAGE}-onLogEmitted`,
-    emitter: context.invokedFunctionArn,
-  });
-
   const handleError = e =>
-    sns.publish(
-      {
-        Message: JSON.stringify({
-          default: JSON.stringify({
-            key: message.object.key,
-            status: STATUS.ERROR,
-            message: e,
-          }),
-        }),
-        MessageStructure: 'json',
-        TargetArn: endpointArn,
+    messenger.send({
+      message: {
+        computed_key: message.object.key,
+        status_message: e,
+        status_code: STATUS.ERROR,
       },
-      async snsErr => {
-        if (snsErr) {
-          return callback(snsErr);
-        }
+      to: ['logs', 'meta'],
+    });
 
-        await logger.error({
-          message: {
-            computed_key: message.object.key,
-            status_message: JSON.stringify(e),
-          },
-        });
-
-        return callback(e);
-      }
-    );
-
-  const s3 = new AWS.S3();
-
-  await logger.info({
+  await messenger.send({
     message: {
       computed_key: message.object.key,
       status_message: 'Start parsing XML...',
+      status_code: STATUS.PARSING,
     },
+    to: ['logs', 'meta'],
   });
 
   // Get file
@@ -146,39 +111,15 @@ export const handler = async (event, context, callback) => {
         return handleError(err);
       }
 
-      await logger.info({
+      return messenger.send({
         message: {
           computed_key: message.object.key,
           status_message:
             'XML parsed successfully. Results will be uploaded to ElasticSearch soon...',
+          status_code: STATUS.PARSED,
         },
+        to: ['logs', 'meta'],
       });
-
-      // Publish message to ETL Success topic
-
-      /*
-       * Send the SNS message
-       */
-      return sns.publish(
-        {
-          Message: JSON.stringify({
-            default: JSON.stringify({
-              key: message.object.key,
-              status: STATUS.PARSED,
-              message: 'ETL successful',
-            }),
-          }),
-          MessageStructure: 'json',
-          TargetArn: endpointArn,
-        },
-        snsErr => {
-          if (snsErr) {
-            return callback(snsErr);
-          }
-
-          return callback(null, 'XML file has been parsed');
-        }
-      );
     });
   });
 
