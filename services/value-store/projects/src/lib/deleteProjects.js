@@ -4,5 +4,3 @@ export default ({ client, index, key }) =>
     type: 'project',
     q: `computed_key:"${key}"`,
   });
-// .then(console.log)
-// .catch(console.log);

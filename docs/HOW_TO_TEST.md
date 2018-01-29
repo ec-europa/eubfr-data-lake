@@ -4,28 +4,7 @@ If the environment has already been setup, you can skip to [Send data](#send-dat
 
 ## Setup your environment
 
-Get latest version of eubfr (clone from github)
-
-Copy config.example.json to config.json and set the values according to your environment:
-
-```json
-{
-  "eubfr_env": "test",
-  "region": "eu-central-1",
-  "stage": "<username><n>"
-}
-
-```
-
-For example:
-
-```json
-{
-  "eubfr_env": "test",
-  "region": "eu-central-1",
-  "stage": "chernka3"
-}
-```
+Follow [these instructions](../README.md) to start your staged development environment.
 
 ## Get your AWS credentials
 
@@ -36,31 +15,23 @@ To get an account at the project's AWS namespace, please contact a PM to have an
 When you receive your initial credentials for your account related to the project, please do not forget to change your password and enable a MFA following the [best practices](http://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html).
 
 Given you have access to the project's namespace in AWS, bear in mind the following regarding your account:
-- We use a shared AWS account with several users. Each user has his own stage variable to separate his work.
-- [Create an access key](http://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html) for your account to be able to use it programatically.
-- Get also your private key, it comes hand in hand with your personal id.
+
+* We use a shared AWS account with several users. Each user has his own stage variable to separate his work.
+* [Create an access key](http://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html) for your account to be able to use it programatically.
+* Get also your private key, it comes hand in hand with your personal id.
 
 By the end of the process of organizing your account at AWS, you must come up with 2 environment variables `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` for managing sessions programatically.
 
 In your terminal application, write the following:
-- `export AWS_ACCESS_KEY_ID=<your_access_key>`
-- `export AWS_SECRET_ACCESS_KEY=<your_secret_key>`
+
+* `export AWS_ACCESS_KEY_ID=<your_access_key>`
+* `export AWS_SECRET_ACCESS_KEY=<your_secret_key>`
 
 For more information about access key setup, see [this serverless guide](https://serverless.com/framework/docs/providers/aws/guide/credentials/)
 
 ## Deploy
 
-Make sure your local environment meets the [requirements](https://github.com/ec-europa/eubfr-data-lake#requirements)
-
-Make sure your environment is ready
-  - `yarn`
-
-Deploy on root
-  - go to root of the project
-  - `yarn deploy`
-  - `yarn deploy-demo`
-
-It automatically creates everything you need (bucket, database, ...)
+Follow [these instructions](../README.md) to deploy a project under your name and stage.
 
 ## Send data
 

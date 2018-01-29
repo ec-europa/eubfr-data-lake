@@ -55,6 +55,9 @@ module.exports = () => ({
       },
       project_locations: {
         properties: {
+          centroid: {
+            type: 'geo_point',
+          },
           location: {
             type: 'geo_shape',
           },

@@ -6,7 +6,7 @@ import transformRecord from '../lib/transform';
 import Logger from '../../../../../../logger/listener/src/lib/Logger';
 
 // Import constants
-import { STATUS } from '../../../../../../storage/meta-index/src/events/onStatusReported';
+import { STATUS } from '../../../../../../storage/meta-index/src/lib/status';
 
 export const handler = async (event, context, callback) => {
   /*
@@ -14,11 +14,11 @@ export const handler = async (event, context, callback) => {
    */
 
   // Only work on the first record
-  const snsRecord = event.Records[0];
+  const snsRecord = event.Records ? event.Records[0] : undefined;
 
   // Was the lambda triggered correctly? Is the file extension supported? etc.
   if (!snsRecord || snsRecord.EventSource !== 'aws:sns') {
-    return callback('Bad record');
+    throw new Error('Bad record');
   }
 
   /*

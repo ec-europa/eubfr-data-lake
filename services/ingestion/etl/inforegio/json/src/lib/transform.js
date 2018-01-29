@@ -8,18 +8,20 @@ import type { Project } from '../../../../types/Project';
 
 const getFundingArea = record =>
   // Get value for 'Funding area' if property is present.
-  (record.Funds ? record.Funds.split(';') : []).filter(
-    // Remove empty strings.
-    item => item
-  );
+  record.Funds ? record.Funds.split(';').filter(fund => fund) : [];
 
 // Formats date from DD/MM/YYYY to ISO 8601 date format.
 const formatDate = date => {
-  if (!date) return null;
+  if (!date || typeof date !== 'string') return null;
   const d = date.split(/\//);
-  if (d === null || d.length !== 3) return null;
-  if (d[2].length === 2) d[2] = `20${d[2]}`;
-  return new Date(d[2], d[1] - 1, d[0]).toISOString();
+  if (d.length !== 3) return null;
+  const [day, month, year] = d;
+  if (!day || !month || !year) return null;
+  try {
+    return new Date(Date.UTC(year, month - 1, day)).toISOString();
+  } catch (e) {
+    return null;
+  }
 };
 
 const getAddress = record => {
@@ -80,6 +82,7 @@ export default (record: Object): Project => {
     public_fund: { value: 0, currency: '', raw: '' },
     other_contrib: { value: 0, currency: '', raw: '' },
     funding_area: getFundingArea(record),
+    mmf_heading: '',
   };
 
   // Preprocess partners
@@ -97,7 +100,7 @@ export default (record: Object): Project => {
   // Preprocess project locations
   const locationArray = [];
   const countryArray = record.Project_country
-    ? record.Project_country.split('; ')
+    ? record.Project_country.split('; ').filter(country => country)
     : null;
   const previousCountries = [];
   if (countryArray !== null && countryArray.length > 1) {
@@ -111,6 +114,7 @@ export default (record: Object): Project => {
           postal_code: '',
           town: '',
           location: null,
+          centroid: null,
         });
         previousCountries.push(countryArray[i]);
       }
@@ -124,6 +128,7 @@ export default (record: Object): Project => {
       postal_code: '',
       town: '',
       location: null,
+      centroid: null,
     });
   }
 
@@ -139,9 +144,12 @@ export default (record: Object): Project => {
     budget: budgetObject,
     call_year: '',
     coordinators: [],
-    cover_image: '',
     description: record.quote,
     ec_priorities: [],
+    media: {
+      cover_image: '',
+      video: '',
+    },
     partners: partnerArray,
     period: record.Period,
     programme_name: '',

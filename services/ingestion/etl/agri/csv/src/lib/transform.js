@@ -13,15 +13,22 @@ const getFundingArea = record =>
     item => item
   );
 
+const formatDate = date =>
+  date ? new Date(parseInt(date, 10) * 1000).toISOString() : null;
+
 /*
  * Map fields
  */
 export default (record: Object): Project => {
   // Preprocess budget
   const budgetObject = {
-    total_cost: { value: 0, currency: '', raw: '' },
+    total_cost: {
+      value: Number(record['Total project budget']) || 0,
+      currency: '',
+      raw: record['Total project budget'] || '',
+    },
     eu_contrib: {
-      value: Number(record['EU Budget contribution']),
+      value: Number(record['EU Budget contribution']) || 0,
       currency: 'EUR',
       raw: record['EU Budget contribution'] || '',
     },
@@ -29,54 +36,76 @@ export default (record: Object): Project => {
     public_fund: { value: 0, currency: '', raw: '' },
     other_contrib: { value: 0, currency: '', raw: '' },
     funding_area: getFundingArea(record),
+    mmf_heading: record['EU Budget MFF heading'] || '',
   };
 
   // Preprocess coordinators
-  const coordArray = record.Coordinators.split(';').map(coordinator => ({
-    name: coordinator,
-    type: '',
-    address: '',
-    region: '',
-    country: '',
-    website: '',
-    phone: '',
-    email: '',
-  }));
+  const coordArray = record.Coordinators.split(';')
+    .filter(coordinator => coordinator)
+    .map(coordinator => ({
+      name: coordinator,
+      type: '',
+      address: '',
+      region: '',
+      country: '',
+      website: '',
+      phone: '',
+      email: '',
+    }));
 
   // Preprocess partners
-  const partnerArray = record.Partners.split(',').map(partner => ({
-    name: partner,
-    type: '',
-    address: '',
-    region: '',
-    country: '',
-    website: '',
-  }));
+  const partnerArray = record.Partners.split(',')
+    .filter(partner => partner)
+    .map(partner => ({
+      name: partner,
+      type: '',
+      address: '',
+      region: '',
+      country: '',
+      website: '',
+    }));
 
   // Preprocess locations
   const longArray = record['Project location longitude'].split(';');
   const latArray = record['Project location latitude'].split(';');
   const locationArray = record['Project country(ies)']
     .split(';')
-    .map((country, index) => ({
-      country_code: country,
-      region: '',
-      nuts2: '',
-      address: record['Project address(es)'] || '',
-      postal_code: record['Project postal code(s)'] || '',
-      town: record['Project town(s)'] || '',
-      location: {
-        type: 'Point',
-        coordinates: [
-          parseFloat(Array.isArray(longArray) && longArray[index]) || 0,
-          parseFloat(Array.isArray(latArray) && latArray[index]) || 0,
-        ],
-      },
-    }));
+    .map((country, index) => {
+      const hasCoordinates =
+        Array.isArray(longArray) &&
+        longArray[index] &&
+        Array.isArray(latArray) &&
+        latArray[index];
+
+      return {
+        country_code: country,
+        region: '',
+        nuts2: '',
+        address: record['Project address(es)'] || '',
+        postal_code: record['Project postal code(s)'] || '',
+        town: record['Project town(s)'] || '',
+        centroid: hasCoordinates
+          ? {
+              lat: parseFloat(latArray[index]) || 0,
+              lon: parseFloat(longArray[index]) || 0,
+            }
+          : null,
+        location: hasCoordinates
+          ? {
+              type: 'Point',
+              coordinates: [
+                parseFloat(longArray[index]) || 0,
+                parseFloat(latArray[index]) || 0,
+              ],
+            }
+          : null,
+      };
+    });
 
   // Preprocess related links
   const links = (record['Related links'] || '')
     .split(';')
+    .filter(link => link)
     .map(link => {
       const matches = link.match(/<a .*href="(.*)".*>(.*)<\/a>/i);
 
@@ -121,9 +150,13 @@ export default (record: Object): Project => {
     budget: budgetObject,
     call_year: '',
     coordinators: coordArray,
-    cover_image: record.Visual || '',
     description: record['Project description'] || '',
-    ec_priorities: record['EC’s priorities'].split(';') || [],
+    ec_priorities:
+      record['EC’s priorities'].split(';').filter(priority => priority) || [],
+    media: {
+      cover_image: record.Visual || '',
+      video: record['Link to a video'] || '',
+    },
     partners: partnerArray,
     programme_name: record['Programme name'] || '',
     project_id: record.Nid || '',
@@ -136,11 +169,8 @@ export default (record: Object): Project => {
     success_story: '',
     themes: [],
     timeframe: {
-      from:
-        timeframeFrom &&
-        new Date(parseInt(timeframeFrom, 10) * 1000).toISOString(),
-      to:
-        timeframeTo && new Date(parseInt(timeframeTo, 10) * 1000).toISOString(),
+      from: formatDate(timeframeFrom),
+      to: formatDate(timeframeTo),
     },
     title: record.Name || '',
     type: [],

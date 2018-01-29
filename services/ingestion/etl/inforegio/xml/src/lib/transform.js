@@ -18,11 +18,16 @@ const checkData = data => {
 
 // Formats date from DD/MM/YYYY to ISO 8601 date format.
 const formatDate = date => {
-  if (!date) return null;
-  const d = date.toString().split(/\//);
-  if (d === null || d.length !== 3) return null;
-  if (d[2].length === 2) d[2] = `20${d[2]}`;
-  return new Date(d[2], d[1] - 1, d[0]).toISOString();
+  if (!date || typeof date !== 'string') return null;
+  const d = date.split(/\//);
+  if (d.length !== 3) return null;
+  const [day, month, year] = d;
+  if (!day || !month || !year) return null;
+  try {
+    return new Date(Date.UTC(year, month - 1, day)).toISOString();
+  } catch (e) {
+    return null;
+  }
 };
 
 // Get and format adress from different fields.
@@ -43,13 +48,12 @@ const getAddress = record => {
 };
 
 const formatBudget = budget => {
-  if (!budget) return 0;
-  budget
-    .toString()
+  if (!budget || typeof budget !== 'string') return 0;
+  const formattedBudget = budget
     .split(' ')
     .slice(1)
     .join('');
-  return Number(budget);
+  return Number(formattedBudget) || 0;
 };
 
 /*
@@ -77,6 +81,7 @@ export default (record: Object): Project => {
       .split(';')
       // Remove empty strings.
       .filter(item => item),
+    mmf_heading: '',
   };
 
   // Preprocess project locations
@@ -85,6 +90,7 @@ export default (record: Object): Project => {
     ? checkData(record.Project_country)
         .toString()
         .split('; ')
+        .filter(country => country)
     : null;
   const previousCountries = [];
   if (countryArray !== null && countryArray.length > 1) {
@@ -98,6 +104,7 @@ export default (record: Object): Project => {
           postal_code: '',
           town: '',
           location: null,
+          centroid: null,
         });
         previousCountries.push(countryArray[i]);
       }
@@ -111,6 +118,7 @@ export default (record: Object): Project => {
       postal_code: '',
       town: '',
       location: null,
+      centroid: null,
     });
   }
 
@@ -122,6 +130,7 @@ export default (record: Object): Project => {
     ? checkData(record.Themes)
         .toString()
         .split('; ')
+        .filter(theme => theme)
     : [];
 
   // Preprocess partners
@@ -144,9 +153,12 @@ export default (record: Object): Project => {
     budget: budgetObject,
     call_year: '',
     coordinators: [],
-    cover_image: '',
     description: checkData(record.quote),
     ec_priorities: [],
+    media: {
+      cover_image: '',
+      video: '',
+    },
     partners: partnerArray,
     period: checkData(record.Period),
     programme_name: '',
