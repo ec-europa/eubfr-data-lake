@@ -21,8 +21,6 @@ const getClients = context => {
     sns,
     targetArn: this.loggerIndexSnsEndpointArn,
     emitter: context.invokedFunctionArn,
-    // emitter:
-    // 'arn:aws:lambda:eu-central-1:491621799026:function:chernka1222-ingestion-manager-onCreate',
   });
 
   this.metaIndexClient = elasticsearch.Client({
