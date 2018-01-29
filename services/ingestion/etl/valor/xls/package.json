@@ -1,0 +1,22 @@
+{
+  "private": true,
+  "name": "@eubfr/ingestion-etl-valor-xls",
+  "version": "0.0.1",
+  "scripts": {
+    "deploy": "sls deploy -v",
+    "test:unit": "jest --testPathPattern=unit"
+  },
+  "dependencies": {
+    "xlsx": "0.11.17"
+  },
+  "devDependencies": {
+    "aws-sdk": "2.179.0",
+    "babel-core": "6.26.0",
+    "babel-loader": "7.1.2",
+    "babel-preset-env": "1.6.1",
+    "jest": "22.1.1",
+    "serverless": "1.25.0",
+    "serverless-webpack": "4.2.0",
+    "webpack": "3.10.0"
+  }
+}

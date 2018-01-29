@@ -1,0 +1,7 @@
+{
+  "OnObjectCreatedLambdaFunctionQualifiedArn":
+    "arn:aws:lambda:eu-central-1:491621799026:function:devdegliwe3-value-store-projects-onObjectCreated:1",
+  "OnObjectRemovedLambdaFunctionQualifiedArn":
+    "arn:aws:lambda:eu-central-1:491621799026:function:devdegliwe3-value-store-projects-onObjectRemoved:1",
+  "ServerlessDeploymentBucketName": "eubfr-dev-deploy"
+}
