@@ -51,12 +51,12 @@ export default (record: Object): Project => {
   // Preprocess coordinators
   const coordArray = [
     {
-      name: record["Coordinator's name"],
-      type: record['Coordinator organisation type'],
-      address: record["Coordinator's address"],
-      region: record["Coordinator's region"],
-      country: record["Coordinator's country"],
-      website: record["Coordinator's website"],
+      name: record['Coordinating organisation name'] || '',
+      type: record['Coordinating organisation type'] || '',
+      address: record["Coordinator's address"] || '',
+      region: record["Coordinator's region"] || '',
+      country: record["Coordinator's country"] || '',
+      website: record["Coordinator's website"] || '',
       phone: '',
       email: '',
     },
@@ -73,12 +73,12 @@ export default (record: Object): Project => {
   for (let i = 1; i <= partnerKeys.length; i += 1) {
     if (record[`Partner ${i} name`]) {
       partnerArray.push({
-        name: record[`Partner ${i} name`],
-        type: record[`Partner ${i} organisation type`],
-        address: record[`Partner ${i} address`],
-        region: record[`Partner ${i} region`],
-        country: record[`Partner ${i} country`],
-        website: record[`Partner ${i} website`],
+        name: record[`Partner ${i} name`] || '',
+        type: record[`Partner ${i} organisation type`] || '',
+        address: record[`Partner ${i} address`] || '',
+        region: record[`Partner ${i} region`] || '',
+        country: record[`Partner ${i} country`] || '',
+        website: record[`Partner ${i} website`] || '',
       });
     }
   }
@@ -100,8 +100,8 @@ export default (record: Object): Project => {
 
   // Preprocess results
   const resultObject = {
-    available: record['Results Available'],
-    result: record['Results Platform Project Card'],
+    available: record['Results Available'] || '',
+    result: record['Results Platform Project Card'] || '',
   };
 
   // Preprocess type
@@ -113,9 +113,9 @@ export default (record: Object): Project => {
   return {
     action: record.Action,
     budget: budgetObject,
-    call_year: record['Call year'],
+    call_year: record['Call year'] || '',
     coordinators: coordArray,
-    description: record['Project Summary'],
+    description: record['Project Summary'] || '',
     ec_priorities: [],
     media: {
       cover_image: '',
@@ -123,20 +123,20 @@ export default (record: Object): Project => {
     },
     partners: partnerArray,
     programme_name: record.Programme,
-    project_id: record['Project Number'],
+    project_id: record['Project Number'] || '',
     project_locations: locationArray,
-    project_website: record['Project Website'],
+    project_website: record['Project Website'] || '',
     related_links: [],
     results: resultObject,
-    status: record['Project Status'],
-    sub_programme_name: record['Sub-programme'],
-    success_story: record['Is Success Story'],
+    status: record['Project Status'] || '',
+    sub_programme_name: record['Sub-programme'] || '',
+    success_story: record['Is Success Story'] || '',
     themes: [],
     timeframe: {
       from: formatDate(record['Start date']),
       to: formatDate(record['End date']),
     },
-    title: record['Project Title'],
+    title: record['Project Title'] || '',
     type: typeArray,
   };
 };
