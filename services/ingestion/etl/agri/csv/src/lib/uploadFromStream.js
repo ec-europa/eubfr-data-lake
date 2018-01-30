@@ -14,7 +14,7 @@ export default async ({ key, BUCKET, s3, onError, context }) => {
     ContentType: 'application/x-ndjson',
   };
 
-  await s3.upload(params, err => {
+  await s3.upload(params, async err => {
     if (err) {
       return onError(err);
     }

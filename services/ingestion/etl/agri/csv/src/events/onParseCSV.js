@@ -89,8 +89,8 @@ export const handler = async (event, context, callback) => {
       })
     )
     .on('error', e => onError(`Error on upload: ${e.message}`))
-    .on('end', async () => {
-      await messenger.send({
+    .on('end', () =>
+      messenger.send({
         message: {
           computed_key: snsMessage.object.key,
           status_message:
@@ -98,8 +98,8 @@ export const handler = async (event, context, callback) => {
           status_code: STATUS.PARSED,
         },
         to: ['logs', 'meta'],
-      });
-    });
+      })
+    );
 };
 
 export default handler;

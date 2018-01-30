@@ -7,6 +7,7 @@ export default status => {
     case STATUS.PARSING:
     case STATUS.PARSED:
       return 'ecl-icon ecl-icon--info ecl-u-color-info';
+    case STATUS.SUCCESS_ETL:
     case STATUS.INGESTED:
       return 'ecl-icon ecl-icon--success ecl-u-color-success';
     case STATUS.NOT_PARSED:
