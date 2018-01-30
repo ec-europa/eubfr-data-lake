@@ -17,6 +17,7 @@ const services = [
   'ingestion-etl-budg-xls',
   'ingestion-etl-inforegio-json',
   'ingestion-etl-inforegio-xml',
+  'ingestion-etl-valor-xls',
   'value-store-projects',
   'logger-listener',
 ];

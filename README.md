@@ -40,7 +40,7 @@ yarn test
 
 ## Deploy the shared resources
 
-Some resources (like ElasticSearch) are shared between all the stages for a same environment (dev, acc, prod). You need to deploy them first if it's not already done.
+Some resources (like ElasticSearch) are shared between all the stages for a same environment (dev, acc, prod). You need to deploy them first if your indexes don't already exists.
 
 ```sh
 yarn deploy-resources
