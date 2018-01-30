@@ -3,7 +3,7 @@
 import type { Project } from '../../../../types/Project';
 
 /*
- * Transform message (BUDG XLS)
+ * Transform message (VALOR XLS)
  */
 
 const formatDate = date => {
