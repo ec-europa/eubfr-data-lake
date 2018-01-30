@@ -1,23 +1,16 @@
-// ERROR: 0
-// UPLOADED: 1
-// PROGRESS: 2
-// PARSING: 3
-// PARSED: 4
-// NOT_PARSED: 5
-// INGESTED: 6
+import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 
 export default status => {
   switch (status) {
-    case 1:
-    case 2:
-    case 3:
-    case 4:
+    case STATUS.UPLOADED:
+    case STATUS.PROGRESS:
+    case STATUS.PARSING:
+    case STATUS.PARSED:
       return 'ecl-icon ecl-icon--info ecl-u-color-info';
-    case 5:
-    case 7:
+    case STATUS.INGESTED:
       return 'ecl-icon ecl-icon--success ecl-u-color-success';
-    case 0:
-    case 6:
+    case STATUS.NOT_PARSED:
+    case STATUS.ERROR:
     default:
       return 'ecl-icon ecl-icon--error ecl-u-color-error';
   }

@@ -10,6 +10,7 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "@eubfr/logger-messenger": "0.0.1",
     "elasticsearch": "14.0.0",
     "prop-types": "15.6.0",
     "react": "16.2.0",

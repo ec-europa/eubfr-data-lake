@@ -8,7 +8,6 @@
   },
   "dependencies": {
     "@eubfr/logger-messenger": "0.0.1",
-    "@eubfr/storage-meta-index": "0.0.1",
     "babel-plugin-transform-object-rest-spread": "6.26.0",
     "elasticsearch": "14.0.0",
     "http-aws-es": "4.0.0"
