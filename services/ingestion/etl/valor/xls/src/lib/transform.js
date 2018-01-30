@@ -123,7 +123,7 @@ export default (record: Object): Project => {
     },
     partners: partnerArray,
     programme_name: record.Programme,
-    project_id: record['Project Number'] || '',
+    project_id: record['Project Identifier'] || '',
     project_locations: locationArray,
     project_website: record['Project Website'] || '',
     related_links: [],
