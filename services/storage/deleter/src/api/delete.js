@@ -7,8 +7,9 @@ export const handler = (event, context, callback) => {
   const { BUCKET, REGION } = process.env;
 
   if (!BUCKET || !REGION) {
-    callback(Error(`BUCKET and REGION environment variables are required!`));
-    return;
+    return callback(
+      new Error('BUCKET and REGION environment variables are required!')
+    );
   }
 
   const { userArn } = event.requestContext.identity;
@@ -36,7 +37,7 @@ export const handler = (event, context, callback) => {
       const response = {
         statusCode: 400,
         body: JSON.stringify({
-          error: `Missing x-amz-meta-computed-key header`,
+          error: 'Missing x-amz-meta-computed-key header',
         }),
       };
 
@@ -47,7 +48,7 @@ export const handler = (event, context, callback) => {
       const response = {
         statusCode: 400,
         body: JSON.stringify({
-          error: `You can't delete a file you don't own.`,
+          error: "You can't delete a file you don't own.",
         }),
       };
 

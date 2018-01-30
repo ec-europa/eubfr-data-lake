@@ -10,7 +10,7 @@ export const handler = async (event, context, callback) => {
 
   if (!META_ENDPOINT || !META_INDEX || !REGION || !STAGE) {
     return callback(
-      Error(
+      new Error(
         'META_ENDPOINT, META_INDEX, REGION and STAGE environment variables are required!'
       )
     );
@@ -21,7 +21,7 @@ export const handler = async (event, context, callback) => {
    */
 
   if (!event.Records) {
-    return callback(Error('No record'));
+    return callback(new Error('No record'));
   }
 
   // Only work on the first record
@@ -29,7 +29,7 @@ export const handler = async (event, context, callback) => {
 
   // Was the lambda triggered correctly? Is the file extension supported? etc.
   if (!snsRecord || snsRecord.EventSource !== 'aws:sns') {
-    return callback(Error('Bad record'));
+    return callback(new Error('Bad record'));
   }
 
   /*

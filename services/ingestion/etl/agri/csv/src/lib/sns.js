@@ -6,7 +6,7 @@ export const extractMessage = event => {
 
   // Was the lambda triggered correctly?
   if (!snsRecord || snsRecord.EventSource !== 'aws:sns') {
-    throw new Error('Bad record');
+    return new Error('Bad record');
   }
 
   // Extract message
@@ -14,7 +14,7 @@ export const extractMessage = event => {
 
   // Check file extension
   if (path.extname(message.object.key) !== '.csv') {
-    throw new Error('File extension should be .csv');
+    return new Error('File extension should be .csv');
   }
 
   return message;

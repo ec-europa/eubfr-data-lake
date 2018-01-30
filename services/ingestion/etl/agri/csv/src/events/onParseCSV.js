@@ -16,7 +16,7 @@ export const handler = async (event, context, callback) => {
 
   if (!BUCKET || !REGION || !STAGE) {
     return callback(
-      Error('BUCKET, REGION and STAGE environment variables are required!')
+      new Error('BUCKET, REGION and STAGE environment variables are required!')
     );
   }
 

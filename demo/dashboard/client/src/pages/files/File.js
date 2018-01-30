@@ -104,9 +104,7 @@ class File extends React.Component {
             // null because if (!file) later.
           })
         )
-        .catch(error => {
-          throw Error(`An error occured: ${error.message}`);
-        })
+        .catch(error => new Error(`An error occured: ${error.message}`))
     );
   }
 
