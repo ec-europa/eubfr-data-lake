@@ -15,6 +15,10 @@ Create an IAM user with PRODUCER_NAME and assign it the "Producers" group.
 
 In /scripts/deploy.sh, look for the "deploy ETL" section and add the necessary lines.
 
+## Update delete script
+
+In /scripts/delete.js, ladd your ETL to "const services" section and add the necessary lines.
+
 ## Update deploy demo script
 
 In /scripts/deploy-demo.sh, look for the "PRODUCER demo" section and add one for your user.
