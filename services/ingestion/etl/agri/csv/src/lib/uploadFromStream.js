@@ -1,11 +1,7 @@
 import stream from 'stream';
 
-import MessengerFactory from '@eubfr/logger-messenger/src/lib/MessengerFactory';
-import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
-
-export default async ({ key, BUCKET, s3, onError, context }) => {
+export default ({ key, BUCKET, s3, onError, callback }) => {
   const pass = new stream.PassThrough();
-  const messenger = MessengerFactory.Create({ context });
 
   const params = {
     Bucket: BUCKET,
@@ -14,19 +10,11 @@ export default async ({ key, BUCKET, s3, onError, context }) => {
     ContentType: 'application/x-ndjson',
   };
 
-  await s3.upload(params, async err => {
+  s3.upload(params, err => {
     if (err) {
       return onError(err);
     }
-
-    return messenger.send({
-      message: {
-        computed_key: key,
-        status_message: 'ETL successful',
-        status_code: STATUS.SUCCESS_ETL,
-      },
-      to: ['logs', 'meta'],
-    });
+    return callback(null, 'uploaded');
   });
 
   return pass;

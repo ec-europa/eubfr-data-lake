@@ -80,12 +80,12 @@ export const handler = async (event, context, callback) => {
     .pipe(transformer)
     .on('error', e => onError(`Error on transform: ${e.message}`))
     .pipe(
-      await uploadFromStream({
+      uploadFromStream({
         key: snsMessage.object.key,
         BUCKET,
         s3,
         onError,
-        context,
+        callback,
       })
     )
     .on('error', e => onError(`Error on upload: ${e.message}`))

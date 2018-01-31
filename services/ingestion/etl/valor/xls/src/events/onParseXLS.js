@@ -1,12 +1,12 @@
 import path from 'path';
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 import XLSX from 'xlsx';
+// Import constants
+import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
+
 import transformRecord from '../lib/transform';
 
 import Logger from '../../../../../../logger/listener/src/lib/Logger';
-
-// Import constants
-import { STATUS } from '../../../../../../storage/meta-index/src/lib/status';
 
 export const handler = async (event, context, callback) => {
   /*

@@ -2,6 +2,9 @@ import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependenc
 import { checkAccess } from '../lib/checkAccess';
 import { extractUsername } from '../lib/extractUsername';
 
+// As each case has a return + cb and still some branching of the checks are problematic:
+// https://eslint.org/docs/rules/consistent-return#when-not-to-use-it
+// eslint-disable-next-line
 export const handler = (event, context, callback) => {
   // Extract env vars
   const { BUCKET, REGION } = process.env;
