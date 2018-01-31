@@ -30,10 +30,10 @@ export const handler = async (event, context, callback) => {
      */
 
     // Extract S3 record
-    const snsMessage = JSON.parse(snsRecord.Sns.Message.message);
+    const snsMessage = JSON.parse(snsRecord.Sns.Message);
 
     // eslint-disable-next-line
-    const { computed_key, status_code, status_message } = snsMessage;
+    const { computed_key, status_code, status_message } = snsMessage.message;
 
     // Update record
     const client = elasticsearch.Client({

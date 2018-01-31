@@ -50,10 +50,12 @@ const MessengerFactory = {
       to.forEach(channel => {
         if (MessengerFactory.clients[channel]) {
           if (message.status_code === STATUS.ERROR) {
-            MessengerFactory.clients[channel].logger.error({ message });
+            return MessengerFactory.clients[channel].logger.error({ message });
           }
-          MessengerFactory.clients[channel].logger.info({ message });
+          return MessengerFactory.clients[channel].logger.info({ message });
         }
+        // consistent-return
+        return Promise.resolve(true);
       });
     },
     // Expose available channels.
