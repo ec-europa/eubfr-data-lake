@@ -1,5 +1,7 @@
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 import path from 'path';
+import elasticsearch from 'elasticsearch';
+import connectionClass from 'http-aws-es';
 
 import MessengerFactory from '@eubfr/logger-messenger/src/lib/MessengerFactory';
 import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
@@ -71,27 +73,37 @@ export const handler = async (event, context, callback) => {
     } = meta;
 
     const item = {
-      producer_id: producerId,
       computed_key: computedObjectKey,
-      original_key: originalKey,
-      producer_arn: producerArn,
+      content_length: Number(data.ContentLength),
       content_type: data.ContentType,
       last_modified: data.LastModified.toISOString(), // ISO-8601 date
-      content_length: Number(data.ContentLength),
+      message: 'File uploaded. Forwarding to the right ETL...',
       metadata: otherMeta,
+      original_key: originalKey,
+      producer_arn: producerArn,
+      producer_id: producerId,
       status: STATUS.UPLOADED,
     };
+
+    // elasticsearch client instantiation
+    const client = elasticsearch.Client({
+      host: `https://${META_ENDPOINT}`,
+      apiVersion: '6.0',
+      connectionClass,
+      index: META_INDEX,
+    });
+
+    await client.index({
+      index: META_INDEX,
+      type: 'file',
+      body: item,
+    });
 
     await messenger.send({
       message: {
         computed_key: computedObjectKey,
         status_message: 'File uploaded. Forwarding to the right ETL...',
         status_code: STATUS.UPLOADED,
-        persist: {
-          type: 'file',
-          body: item,
-          in: ['meta'],
-        },
       },
       to: ['logs'],
     });
@@ -103,7 +115,7 @@ export const handler = async (event, context, callback) => {
         status_message: `Failed file upload`,
         status_code: STATUS.ERROR,
       },
-      to: ['logs', 'meta'],
+      to: ['logs'],
     });
 
     return callback(err.message);

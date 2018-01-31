@@ -3,9 +3,7 @@
   "name": "@eubfr/logger-messenger",
   "version": "0.0.1",
   "dependencies": {
-    "@eubfr/logger-listener": "0.0.1",
-    "elasticsearch": "14.0.0",
-    "http-aws-es": "4.0.0"
+    "@eubfr/logger-listener": "0.0.1"
   },
   "devDependencies": {
     "aws-sdk": "2.179.0"
