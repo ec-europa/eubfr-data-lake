@@ -2,28 +2,36 @@ import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependenc
 import connectionClass from 'http-aws-es';
 import elasticsearch from 'elasticsearch';
 import Logger from '@eubfr/logger-listener/src/lib/Logger';
+import { STATUS } from './status';
 
 // Env vars
 const { META_ENDPOINT, META_INDEX, REGION, STAGE } = process.env;
 
 const shouldPersist = message => !!message.persist;
-const getAccountId = context => context.invokedFunctionArn.split(':')[4];
+const getLambdaArn = context => context.invokedFunctionArn;
+const getAccountId = context => getLambdaArn(context).split(':')[4];
+
 const getClients = context => {
+  const emitter = getLambdaArn(context);
+  const accountId = getAccountId(context);
+  const snsEndpoint = `arn:aws:sns:${REGION}:${accountId}:${STAGE}`;
+
   // AWS clients
   const sns = new AWS.SNS();
 
-  const accountId = getAccountId(context);
-
-  this.loggerIndexSnsEndpointArn = `arn:aws:sns:${REGION}:${accountId}:${STAGE}-onLogEmitted`;
-  this.metaIndexSnsEndpointArn = `arn:aws:sns:${REGION}:${accountId}:${STAGE}-MetaStatusReported`;
-
-  this.logsLoggerclient = new Logger({
+  const logsLoggerclient = new Logger({
     sns,
-    targetArn: this.loggerIndexSnsEndpointArn,
-    emitter: context.invokedFunctionArn,
+    targetArn: `${snsEndpoint}-onLogEmitted`,
+    emitter,
   });
 
-  this.metaIndexClient = elasticsearch.Client({
+  const metaLoggerclient = new Logger({
+    sns,
+    targetArn: `${snsEndpoint}-MetaStatusReported`,
+    emitter,
+  });
+
+  const metaIndexClient = elasticsearch.Client({
     host: `https://${META_ENDPOINT}`,
     apiVersion: '6.0',
     connectionClass,
@@ -32,18 +40,17 @@ const getClients = context => {
 
   return {
     logs: {
-      logger: this.logsLoggerclient,
+      logger: logsLoggerclient,
     },
     meta: {
-      es: this.metaIndexClient,
-      sns,
+      logger: metaLoggerclient,
+      es: metaIndexClient,
     },
   };
 };
 
 const MessengerFactory = {
   Create({ context }) {
-    MessengerFactory.context = context;
     MessengerFactory.clients = getClients(context);
 
     return Object.create(this.messenger);
@@ -55,40 +62,25 @@ const MessengerFactory = {
       // For example when initial meta message is to be created.
       if (shouldPersist(message)) {
         if (message.persist.in && message.persist.in.includes('meta')) {
-          const item = message.persist.body;
-
           MessengerFactory.clients.meta.es.index({
             index: META_INDEX,
             type: 'file',
-            body: item,
+            body: message.persist.body,
           });
         }
       }
 
-      if (to.includes('logs')) {
-        MessengerFactory.clients.logs.logger.info({ message });
-      }
-
-      if (to.includes('meta')) {
-        const accountId = getAccountId(MessengerFactory.context);
-        const TargetArn = `arn:aws:sns:${REGION}:${accountId}:${STAGE}-MetaStatusReported`;
-
-        MessengerFactory.clients.meta.sns
-          .publish({
-            Message: JSON.stringify({
-              default: JSON.stringify({
-                key: message.computed_key,
-                status: message.status_code,
-                message: message.status_message,
-              }),
-            }),
-            MessageStructure: 'json',
-            TargetArn,
-          })
-          .promise();
-      }
+      to.forEach(channel => {
+        if (MessengerFactory.clients[channel]) {
+          if (message.status_code === STATUS.ERROR) {
+            MessengerFactory.clients[channel].logger.error({ message });
+          }
+          MessengerFactory.clients[channel].logger.info({ message });
+        }
+      });
     },
-    getIndexTypes: () => ['meta', 'logs'],
+    // Expose available channels.
+    getSupportedChannels: () => ['meta', 'logs'],
   },
 };
 
