@@ -30,8 +30,10 @@ export const handler = async (event, context, callback) => {
      */
 
     // Extract S3 record
-    const snsMessage = JSON.parse(snsRecord.Sns.Message);
-    const { key, status, message } = snsMessage;
+    const snsMessage = JSON.parse(snsRecord.Sns.Message.message);
+
+    // eslint-disable-next-line
+    const { computed_key, status_code, status_message } = snsMessage;
 
     // Update record
     const client = elasticsearch.Client({
@@ -47,7 +49,7 @@ export const handler = async (event, context, callback) => {
       body: {
         query: {
           term: {
-            computed_key: key,
+            computed_key,
           },
         },
         script: {
@@ -55,8 +57,8 @@ export const handler = async (event, context, callback) => {
             'ctx._source.message = params.message ; ctx._source.status = params.status',
           lang: 'painless',
           params: {
-            message,
-            status,
+            message: status_message,
+            status: status_code,
           },
         },
       },
