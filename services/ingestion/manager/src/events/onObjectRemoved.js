@@ -54,7 +54,7 @@ export const handler = async (event, context, callback) => {
 
     return callback(null, 'All fine');
   } catch (err) {
-    return callback(err.message);
+    return callback(err);
   }
 };
 

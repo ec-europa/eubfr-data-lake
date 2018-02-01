@@ -9,7 +9,7 @@ export const handler = async (event, context, callback) => {
    */
 
   if (!event.Records) {
-    return callback('No record');
+    return callback(new Error('No record'));
   }
 
   // Only work on the first record
@@ -21,7 +21,7 @@ export const handler = async (event, context, callback) => {
     !snsRecord.EventSubscriptionArn ||
     snsRecord.EventSource !== 'aws:sns'
   ) {
-    return callback('Bad record');
+    return callback(new Error('Bad record'));
   }
 
   try {
@@ -66,7 +66,7 @@ export const handler = async (event, context, callback) => {
 
     return callback(null, 'All fine');
   } catch (err) {
-    return callback(err.message);
+    return callback(err);
   }
 };
 

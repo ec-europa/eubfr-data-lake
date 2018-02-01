@@ -30,7 +30,7 @@ export const handler = async (event, context, callback) => {
 
   // Check file extension
   if (['.xls', '.xlsx'].indexOf(path.extname(message.object.key)) === -1) {
-    return callback('File extension should be .xls or .xlsx');
+    return callback(new Error('File extension should be .xls or .xlsx'));
   }
 
   /*

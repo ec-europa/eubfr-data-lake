@@ -118,7 +118,7 @@ export const handler = async (event, context, callback) => {
       to: ['logs'],
     });
 
-    return callback(err.message);
+    return callback(err);
   }
 
   try {
@@ -161,7 +161,7 @@ export const handler = async (event, context, callback) => {
       to: ['logs', 'meta'],
     });
 
-    return callback(err.message);
+    return callback(err);
   }
 };
 

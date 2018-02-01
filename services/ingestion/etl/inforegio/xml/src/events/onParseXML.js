@@ -37,7 +37,7 @@ export const handler = async (event, context, callback) => {
 
   // Check file extension
   if (path.extname(message.object.key) !== '.xml') {
-    return callback('File extension should be .xml');
+    return callback(new Error('File extension should be .xml'));
   }
 
   const handleError = e =>

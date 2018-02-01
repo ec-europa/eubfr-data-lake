@@ -29,12 +29,8 @@ const getClients = context => {
   });
 
   return {
-    logs: {
-      logger: logsLoggerclient,
-    },
-    meta: {
-      logger: metaLoggerclient,
-    },
+    logs: logsLoggerclient,
+    meta: metaLoggerclient,
   };
 };
 
@@ -47,17 +43,22 @@ const MessengerFactory = {
 
   messenger: {
     send({ message, to }) {
-      to.forEach(channel => {
-        if (MessengerFactory.clients[channel]) {
-          if (message.status_code === STATUS.ERROR) {
-            return MessengerFactory.clients[channel].logger.error({ message });
+      return Promise.all(
+        to.map(channel => {
+          if (MessengerFactory.clients[channel]) {
+            const level =
+              message.status_code === STATUS.ERROR ? 'error' : 'info';
+
+            // Return promise from AWS SNS "publish".promise()
+            return MessengerFactory.clients[channel].log({ level, message });
           }
-          return MessengerFactory.clients[channel].logger.info({ message });
-        }
-        // consistent-return
-        return Promise.resolve(true);
-      });
+
+          // consistent-return
+          return Promise.resolve(true);
+        })
+      );
     },
+
     // Expose available channels.
     getSupportedChannels: () => ['meta', 'logs'],
   },

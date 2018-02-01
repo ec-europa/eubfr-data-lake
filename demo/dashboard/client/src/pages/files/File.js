@@ -104,7 +104,9 @@ class File extends React.Component {
             // null because if (!file) later.
           })
         )
-        .catch(error => new Error(`An error occured: ${error.message}`))
+        .catch(error => {
+          console.error(`An error occured: ${error.message}`);
+        })
     );
   }
 
@@ -125,7 +127,7 @@ class File extends React.Component {
         .then(response => response.json())
         .then(() => this.props.history.push('/files'))
         .catch(error => {
-          console.log(`An error happened: ${error.message}`);
+          console.error(`An error occured: ${error.message}`);
         });
     }
   }
