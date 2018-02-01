@@ -1,17 +1,14 @@
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 
-import elasticsearch from 'elasticsearch';
-import connectionClass from 'http-aws-es';
 import through2 from 'through2';
 import split2 from 'split2';
 
-import deleteProjects from '../lib/deleteProjects';
-import SaveStream from '../lib/SaveStream';
+import QueueStream from '../lib/QueueStream';
 
 import Logger from '../../../../logger/listener/src/lib/Logger';
 
 export const handler = async (event, context, callback) => {
-  const { API, INDEX, REGION, STAGE } = process.env;
+  const { REGION, STAGE } = process.env;
 
   /*
    * Some checks here before going any further
@@ -42,16 +39,16 @@ export const handler = async (event, context, callback) => {
    */
 
   // Extract S3 record
-  const s3record = JSON.parse(snsRecord.Sns.Message).Records[0];
+  const s3Record = JSON.parse(snsRecord.Sns.Message).Records[0];
 
   // Get original computed key (without '.ndjson')
-  const originalComputedKey = s3record.s3.object.key.replace('.ndjson', '');
+  const originalComputedKey = s3Record.object.key.replace('.ndjson', '');
 
   try {
     await logger.info({
       message: {
         computed_key: originalComputedKey,
-        status_message: 'Preparing the upload to ElasticSearch...',
+        status_message: 'Enrichment starting',
       },
     });
 
@@ -60,37 +57,16 @@ export const handler = async (event, context, callback) => {
 
     const data = await s3
       .headObject({
-        Bucket: s3record.s3.bucket.name,
-        Key: s3record.s3.object.key,
+        Bucket: s3Record.bucket.name,
+        Key: s3Record.object.key,
       })
       .promise();
 
-    // elasticsearch client instantiation
-    const client = elasticsearch.Client({
-      host: `https://${API}`,
-      apiVersion: '6.0',
-      connectionClass,
-      index: INDEX,
-    });
-
-    await deleteProjects({
-      client,
-      index: INDEX,
-      key: s3record.s3.object.key,
-    });
-
-    await logger.info({
-      message: {
-        computed_key: originalComputedKey,
-        status_message: 'Start uploading to ElasticSearch',
-      },
-    });
-
     // Prepare upload
-    const saveStream = new SaveStream({
+    const saveStream = new QueueStream({
       objectMode: true,
-      client,
-      index: INDEX,
+      // client,
+      // index: INDEX,
     });
 
     const onPipeError = async e =>
@@ -103,8 +79,8 @@ export const handler = async (event, context, callback) => {
 
     return s3
       .getObject({
-        Bucket: s3record.s3.bucket.name,
-        Key: s3record.s3.object.key,
+        Bucket: s3Record.bucket.name,
+        Key: s3Record.object.key,
       })
       .createReadStream()
       .pipe(split2(JSON.parse))
@@ -114,7 +90,7 @@ export const handler = async (event, context, callback) => {
           // Enhance item to save
           const item = Object.assign(
             {
-              computed_key: s3record.s3.object.key,
+              computed_key: s3Record.object.key,
               created_by: s3record.userIdentity.principalId, // which service created the harmonized file
               last_modified: data.LastModified.toISOString(), // ISO-8601 date
             },
@@ -134,18 +110,6 @@ export const handler = async (event, context, callback) => {
             status_message: 'Results uploaded successfully, all went well.',
           },
         });
-
-        const enrichmentTargetArn = `arn:aws:sns:${REGION}:${accountId}:${STAGE}-onEnrichmentRequested`;
-
-        await sns
-          .publish({
-            Message: JSON.stringify({
-              default: JSON.stringify(s3record.s3),
-            }),
-            MessageStructure: 'json',
-            TargetArn: enrichmentTargetArn,
-          })
-          .promise();
 
         return callback(null, 'Results uploaded successfully, all went well.');
       });
