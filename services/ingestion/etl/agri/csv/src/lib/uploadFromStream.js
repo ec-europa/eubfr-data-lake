@@ -1,6 +1,6 @@
 import stream from 'stream';
 
-export default ({ key, BUCKET, s3, onError, callback }) => {
+export default ({ key, BUCKET, s3, onError }) => {
   const pass = new stream.PassThrough();
 
   const params = {
@@ -11,10 +11,7 @@ export default ({ key, BUCKET, s3, onError, callback }) => {
   };
 
   s3.upload(params, err => {
-    if (err) {
-      return onError(err);
-    }
-    return callback(null, 'uploaded');
+    if (err) onError(err);
   });
 
   return pass;

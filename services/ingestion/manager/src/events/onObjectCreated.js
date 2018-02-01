@@ -143,13 +143,15 @@ export const handler = async (event, context, callback) => {
     });
 
     // Send an sns message success pinging an ETL
-    return await sns
+    await sns
       .publish({
         Message: JSON.stringify(snsMessage),
         MessageStructure: 'json',
         TargetArn: producerEtlSnsEndpointArn,
       })
       .promise();
+
+    return callback(null, 'Everything is fine');
   } catch (err) {
     // Log error pinging the right ETL topic.
     await messenger.send({

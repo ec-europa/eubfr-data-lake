@@ -22,18 +22,22 @@ export const handler = async (event, context, callback) => {
 
   // Validate handler execution and check event, context, etc.
   const snsMessage = extractMessage(event);
+  const { key } = snsMessage.object;
 
   const messenger = MessengerFactory.Create({ context });
 
-  const onError = e =>
-    messenger.send({
+  const onError = async e => {
+    await messenger.send({
       message: {
-        computed_key: snsMessage.object.key,
-        status_message: e,
+        computed_key: key,
+        status_message: e.message,
         status_code: STATUS.ERROR,
       },
       to: ['logs', 'meta'],
     });
+
+    return callback(e);
+  };
 
   const s3 = new AWS.S3();
 
@@ -62,7 +66,7 @@ export const handler = async (event, context, callback) => {
    */
   await messenger.send({
     message: {
-      computed_key: snsMessage.object.key,
+      computed_key: key,
       status_message: 'Start parsing CSV...',
       status_code: STATUS.PARSING,
     },
@@ -70,36 +74,27 @@ export const handler = async (event, context, callback) => {
   });
 
   return s3
-    .getObject({
-      Bucket: snsMessage.bucket.name,
-      Key: snsMessage.object.key,
-    })
+    .getObject({ Bucket: snsMessage.bucket.name, Key: key })
     .createReadStream()
     .pipe(parser)
-    .on('error', e => onError(`Error on parse: ${e.message}`))
+    .on('error', e => onError(new Error(`Error on parse: ${e.message}`)))
     .pipe(transformer)
-    .on('error', e => onError(`Error on transform: ${e.message}`))
-    .pipe(
-      uploadFromStream({
-        key: snsMessage.object.key,
-        BUCKET,
-        s3,
-        onError,
-        callback,
-      })
-    )
-    .on('error', e => onError(`Error on upload: ${e.message}`))
-    .on('end', () =>
-      messenger.send({
+    .on('error', e => onError(new Error(`Error on transform: ${e.message}`)))
+    .pipe(uploadFromStream({ key, BUCKET, s3, onError }))
+    .on('error', e => onError(new Error(`Error on upload: ${e.message}`)))
+    .on('end', async () => {
+      await messenger.send({
         message: {
-          computed_key: snsMessage.object.key,
+          computed_key: key,
           status_message:
             'CSV parsed successfully. Results will be uploaded to ElasticSearch soon...',
           status_code: STATUS.PARSED,
         },
         to: ['logs', 'meta'],
-      })
-    );
+      });
+
+      return callback(null, 'CSV parsed successfully');
+    });
 };
 
 export default handler;

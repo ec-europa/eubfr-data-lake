@@ -46,6 +46,7 @@ export const handler = async (event, context, callback) => {
     await client.updateByQuery({
       index: INDEX,
       type: 'file',
+      conflicts: 'proceed',
       body: {
         query: {
           term: {

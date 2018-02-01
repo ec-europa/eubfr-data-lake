@@ -40,15 +40,18 @@ export const handler = async (event, context, callback) => {
     return callback(new Error('File extension should be .xml'));
   }
 
-  const handleError = e =>
-    messenger.send({
+  const handleError = async e => {
+    await messenger.send({
       message: {
         computed_key: message.object.key,
-        status_message: e,
+        status_message: e.message,
         status_code: STATUS.ERROR,
       },
       to: ['logs', 'meta'],
     });
+
+    return callback(e);
+  };
 
   await messenger.send({
     message: {
@@ -95,7 +98,7 @@ export const handler = async (event, context, callback) => {
         }
       });
     } catch (e) {
-      return handleError(e.message);
+      return handleError(e);
     }
 
     // Load data
@@ -111,7 +114,7 @@ export const handler = async (event, context, callback) => {
         return handleError(err);
       }
 
-      return messenger.send({
+      await messenger.send({
         message: {
           computed_key: message.object.key,
           status_message:
@@ -120,6 +123,8 @@ export const handler = async (event, context, callback) => {
         },
         to: ['logs', 'meta'],
       });
+
+      return callback(null, 'XML parsed successfully');
     });
   });
 
