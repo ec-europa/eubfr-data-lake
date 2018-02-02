@@ -54,3 +54,7 @@ cd ../../../../value-store/projects
 # Deploy logger - listener
 cd ../../logger/listener
 ./node_modules/.bin/serverless deploy -v
+
+# Deploy enrichment - manger
+cd ../../enrichment/manager
+./node_modules/.bin/serverless deploy -v
