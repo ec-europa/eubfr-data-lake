@@ -12,14 +12,12 @@ export const handler = (event, context, callback) => {
   const Q = new Lawos(queueUrl, SQS, Lambda);
 
   // Process every message with a lambda
-  Q.item(lambda); // item => new Promise(done => done()));
+  Q.item(lambda); // TODO: test if Q.list is faster
 
-  // Run until all messages are processed or less than tens seconds runtime is
-  // left for the lambda function.
+  // Run until all messages are processed or less than tens seconds runtime is left for the lambda function
   Q.work(() =>
     Promise.resolve(context.getRemainingTimeInMillis() < 10000)
   ).then(data => {
-    console.log(data);
     callback(null, data);
   });
 };

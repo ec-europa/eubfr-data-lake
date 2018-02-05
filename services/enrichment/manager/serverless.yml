@@ -14,7 +14,6 @@ package:
 provider:
   name: aws
   runtime: nodejs6.10
-  timeout: 300
   stage: ${opt:stage, file(../../../config.json):stage, 'dev'}
   region: ${opt:region, file(../../../config.json):region, 'eu-central-1'}
   deploymentBucket:
@@ -34,6 +33,7 @@ functions:
     handler: src/events/onFileIngested.handler
     name: ${self:provider.stage}-${self:service}-onFileIngested
     memorySize: 256
+    timeout: 300
     environment:
       REGION: ${self:provider.region}
       STAGE: ${self:provider.stage}
@@ -54,6 +54,7 @@ functions:
     handler: src/events/onWorkerScheduled.handler
     name: ${self:provider.stage}-${self:service}-onWorkerScheduled
     memorySize: 256
+    timeout: 120
     environment:
       REGION: ${self:provider.region}
       QUEUE_NAME: ${self:custom.queueName}
@@ -63,6 +64,7 @@ functions:
   onTaskCalled:
     handler: src/events/onTaskCalled.handler
     name: ${self:provider.stage}-${self:service}-onTaskCalled
+    timeout: 300
     memorySize: 256
 
 resources:
