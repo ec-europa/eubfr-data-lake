@@ -135,6 +135,18 @@ export const handler = async (event, context, callback) => {
           },
         });
 
+        const enrichmentTargetArn = `arn:aws:sns:${REGION}:${accountId}:${STAGE}-onEnrichmentRequested`;
+
+        await sns
+          .publish({
+            Message: JSON.stringify({
+              default: JSON.stringify(s3record.s3),
+            }),
+            MessageStructure: 'json',
+            TargetArn: enrichmentTargetArn,
+          })
+          .promise();
+
         return callback(null, 'Results uploaded successfully, all went well.');
       });
   } catch (err) {
