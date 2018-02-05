@@ -64,7 +64,7 @@ functions:
   onTaskCalled:
     handler: src/events/onTaskCalled.handler
     name: ${self:provider.stage}-${self:service}-onTaskCalled
-    timeout: 300
+    timeout: 30
     memorySize: 256
 
 resources:

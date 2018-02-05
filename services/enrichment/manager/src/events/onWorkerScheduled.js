@@ -14,9 +14,9 @@ export const handler = (event, context, callback) => {
   // Process every message with a lambda
   Q.item(lambda); // TODO: test if Q.list is faster
 
-  // Run until all messages are processed or less than tens seconds runtime is left for the lambda function
+  // Run until all messages are processed or less than 30 seconds runtime is left for the lambda function
   Q.work(() =>
-    Promise.resolve(context.getRemainingTimeInMillis() < 10000)
+    Promise.resolve(context.getRemainingTimeInMillis() < 30000)
   ).then(data => {
     callback(null, data);
   });
