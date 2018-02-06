@@ -146,7 +146,7 @@ POST `https://PROJECTS_INDEX/project/_search`
   "aggs": {
     "project_bucket": {
       "terms": {
-        "field": "project_id.keyword"
+        "field": "project_id"
       },
       "aggs": {
         "most_recent": {
