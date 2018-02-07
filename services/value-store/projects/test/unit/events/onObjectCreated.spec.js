@@ -10,7 +10,7 @@ describe(`Function onObjectCreated in "@eubfr/value-store-projects"`, () => {
     const context = {};
     const callback = error => {
       expect(error.message).toEqual(
-        'API and INDEX environment variables are required!'
+        'API, INDEX, REGION and STAGE environment variables are required!'
       );
     };
 
