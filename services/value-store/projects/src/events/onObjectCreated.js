@@ -12,11 +12,13 @@ import deleteProjects from '../lib/deleteProjects';
 import SaveStream from '../lib/SaveStream';
 
 export const handler = async (event, context, callback) => {
-  const { API, INDEX } = process.env;
+  const { API, INDEX, REGION, STAGE } = process.env;
 
-  if (!API || !INDEX) {
+  if (!API || !INDEX || !REGION || !STAGE) {
     return callback(
-      new Error('API and INDEX environment variables are required!')
+      new Error(
+        'API, INDEX, REGION and STAGE environment variables are required!'
+      )
     );
   }
 
@@ -34,6 +36,10 @@ export const handler = async (event, context, callback) => {
   if (!snsRecord || snsRecord.EventSource !== 'aws:sns') {
     return callback(new Error('Bad record'));
   }
+
+  // Get Account ID from lambda function arn in the context
+  const accountId = context.invokedFunctionArn.split(':')[4];
+  const sns = new AWS.SNS();
 
   // Insantiate clients
   const client = elasticsearch.Client({
