@@ -5951,6 +5951,10 @@ latest-version@^3.0.0:
   dependencies:
     package-json "^4.0.0"
 
+lawos@1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/lawos/-/lawos-1.1.5.tgz#ab76ffd3e32fedcfe5300a08a676b93b1f644886"
+
 lazy-cache@^1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/lazy-cache/-/lazy-cache-1.0.4.tgz#a1d78fc3a50474cb80845d3b3b6e1da49a446e8e"

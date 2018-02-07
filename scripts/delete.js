@@ -17,6 +17,7 @@ const services = [
   'ingestion-etl-valor-xls',
   'value-store-projects',
   'logger-listener',
+  'enrichment-manager',
 ];
 
 services.forEach(deleteServerlessService);
