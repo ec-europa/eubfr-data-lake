@@ -22,15 +22,8 @@ const getClients = context => {
     emitter,
   });
 
-  const metaLoggerclient = new Logger({
-    sns,
-    targetArn: `${snsEndpoint}-MetaStatusReported`,
-    emitter,
-  });
-
   return {
     logs: logsLoggerclient,
-    meta: metaLoggerclient,
   };
 };
 
@@ -46,8 +39,13 @@ const MessengerFactory = {
       return Promise.all(
         to.map(channel => {
           if (MessengerFactory.clients[channel]) {
-            const level =
-              message.status_code === STATUS.ERROR ? 'error' : 'info';
+            let level = 'info';
+
+            if (message.status_code === STATUS.ERROR) {
+              level = 'error';
+            } else if (message.status_code === STATUS.INGESTED) {
+              level = 'success';
+            }
 
             // Return promise from AWS SNS "publish".promise()
             return MessengerFactory.clients[channel].log({ level, message });
@@ -60,7 +58,7 @@ const MessengerFactory = {
     },
 
     // Expose available channels.
-    getSupportedChannels: () => ['meta', 'logs'],
+    getSupportedChannels: () => ['logs'],
   },
 };
 

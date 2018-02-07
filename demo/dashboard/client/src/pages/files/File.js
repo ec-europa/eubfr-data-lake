@@ -15,6 +15,7 @@ const demoServerEndpoint = `https://${process.env.REACT_APP_DEMO_SERVER}/demo`;
 
 const metaApiEndpoint = `https://${process.env.REACT_APP_ES_META_ENDPOINT}`;
 const metaIndex = `${process.env.REACT_APP_STAGE}-meta`;
+const logsIndex = `${process.env.REACT_APP_STAGE}-logs`;
 
 const projectsApiEndpoint = `https://${
   process.env.REACT_APP_ES_PROJECTS_ENDPOINT
@@ -32,6 +33,7 @@ class File extends React.Component {
       linkLoading: false,
       projectsCount: 0,
       projectsCountLoading: true,
+      status: {},
     };
 
     this.projectsClient = null;
@@ -39,6 +41,7 @@ class File extends React.Component {
     this.deleteFile = this.deleteFile.bind(this);
     this.generateLink = this.generateLink.bind(this);
     this.loadFile = this.loadFile.bind(this);
+    this.loadStatus = this.loadStatus.bind(this);
     this.getProjectsCount = this.getProjectsCount.bind(this);
   }
 
@@ -56,6 +59,7 @@ class File extends React.Component {
     });
 
     this.loadFile();
+    this.loadStatus();
     this.getProjectsCount();
   }
 
@@ -110,6 +114,39 @@ class File extends React.Component {
     );
   }
 
+  loadStatus() {
+    const { match } = this.props;
+    const computedKey = decodeURIComponent(match.params.id);
+
+    this.metaClient
+      .search({
+        index: logsIndex,
+        type: 'file',
+        body: {
+          query: {
+            nested: {
+              path: 'message',
+              query: {
+                match: {
+                  'message.computed_key': computedKey,
+                },
+              },
+            },
+          },
+          sort: [{ time: { order: 'desc' } }],
+          size: 1,
+        },
+      })
+      .then(data => {
+        this.setState({
+          status: data.hits.hits[0]._source,
+        });
+      })
+      .catch(error => {
+        console.error(`An error occured: ${error.message}`);
+      });
+  }
+
   deleteFile() {
     const { match } = this.props;
     const computedKey = decodeURIComponent(match.params.id);
@@ -156,7 +193,7 @@ class File extends React.Component {
             })
           )
           .catch(error => {
-            console.log(`An error happened: ${error.message}`);
+            console.error(`An error happened: ${error.message}`);
           })
     );
   }
@@ -170,6 +207,7 @@ class File extends React.Component {
       linkLoading,
       projectsCountLoading,
       projectsCount,
+      status,
     } = this.state;
 
     if (fileLoading) {
@@ -191,14 +229,22 @@ class File extends React.Component {
 
     const computedKey = decodeURIComponent(match.params.id);
 
+    let message = 'Loading status...';
+    let statusCode = 1;
+
+    if (status && status.message) {
+      message = status.message.status_message;
+      statusCode = status.message.status_code;
+    }
+
     return (
       <Fragment>
         <h1 className="ecl-heading ecl-heading--h1 ecl-u-mt-none">
           {file.original_key}
         </h1>
         <p>
-          <b>Ingestions status</b>: {file.message}{' '}
-          <span className={getIcon(file.status)} title={file.message} />
+          <b>Ingestions status</b>: {`${message} `}
+          <span title={message} className={getIcon(statusCode)} />
         </p>
         <Link to="/files" className="ecl-button ecl-button--secondary">
           <span className="ecl-icon ecl-icon--left" />Go Back to My Files

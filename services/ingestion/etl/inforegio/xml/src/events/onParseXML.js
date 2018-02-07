@@ -47,7 +47,7 @@ export const handler = async (event, context, callback) => {
         status_message: e.message,
         status_code: STATUS.ERROR,
       },
-      to: ['logs', 'meta'],
+      to: ['logs'],
     });
 
     return callback(e);
@@ -59,7 +59,7 @@ export const handler = async (event, context, callback) => {
       status_message: 'Start parsing XML...',
       status_code: STATUS.PARSING,
     },
-    to: ['logs', 'meta'],
+    to: ['logs'],
   });
 
   // Get file
@@ -121,7 +121,7 @@ export const handler = async (event, context, callback) => {
             'XML parsed successfully. Results will be uploaded to ElasticSearch soon...',
           status_code: STATUS.PARSED,
         },
-        to: ['logs', 'meta'],
+        to: ['logs'],
       });
 
       return callback(null, 'XML parsed successfully');

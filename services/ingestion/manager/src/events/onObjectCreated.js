@@ -139,7 +139,7 @@ export const handler = async (event, context, callback) => {
         status_message: `ETL "${producer}-${extension}" has been pinged!`,
         status_code: STATUS.PROGRESS,
       },
-      to: ['logs', 'meta'],
+      to: ['logs'],
     });
 
     // Send an sns message success pinging an ETL
@@ -160,7 +160,7 @@ export const handler = async (event, context, callback) => {
         status_code: STATUS.ERROR,
         status_message: `Unable to ping ETL "${producer}-${extension}".`,
       },
-      to: ['logs', 'meta'],
+      to: ['logs'],
     });
 
     return callback(err);

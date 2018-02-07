@@ -1,6 +1,6 @@
 # Helper "messenger" module
 
-Used when 1 message needs to be pushed to several SNS topics at the same time. For example, when logging a message to logs via `@eubfr/logger-listener` but also updating meta index via `@eubfr/storage-meta-index`.
+Used when 1 message needs to be pushed to several SNS topics at the same time. For example, when logging a message to logs via `@eubfr/logger-listener`.
 
 A potentially good place to store utilities for:
 
@@ -43,6 +43,6 @@ await messenger.send({
     status_code: STATUS.ERROR,
     status_message: `Unable to ping ETL "${producer}-${extension}".`,
   },
-  to: ['logs', 'meta'],
+  to: ['logs'],
 });
 ```

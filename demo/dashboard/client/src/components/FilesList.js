@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import getIcon from '../lib/getIcon';
 
-const List = ({ files }) => (
+const List = ({ files, statuses }) => (
   <table className="ecl-table">
     <thead>
       <tr>
@@ -17,6 +17,19 @@ const List = ({ files }) => (
     <tbody>
       {files.map(file => {
         const hit = file._source;
+
+        let message = 'Not parsed';
+        let status = 0;
+
+        if (
+          statuses &&
+          statuses[hit.computed_key] &&
+          statuses[hit.computed_key].message
+        ) {
+          message = statuses[hit.computed_key].message.status_message;
+          status = statuses[hit.computed_key].message.status_code;
+        }
+
         return (
           <tr key={hit.computed_key}>
             <td>
@@ -30,11 +43,8 @@ const List = ({ files }) => (
             <td>{new Date(hit.last_modified).toLocaleString()}</td>
             <td>{Math.floor(hit.content_length / 1024) || 0} kB</td>
             <td>
-              {hit.message || 'Not parsed'}{' '}
-              <span
-                title={hit.message || 'Not parsed'}
-                className={getIcon(hit.status)}
-              />
+              {`${message} `}
+              <span title={message} className={getIcon(status)} />
             </td>
           </tr>
         );
@@ -45,6 +55,7 @@ const List = ({ files }) => (
 
 List.propTypes = {
   files: PropTypes.array,
+  statuses: PropTypes.array,
 };
 
 export default List;

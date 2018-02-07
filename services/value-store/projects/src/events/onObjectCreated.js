@@ -63,7 +63,7 @@ export const handler = async (event, context, callback) => {
         status_message: 'Preparing the upload to ElasticSearch...',
         status_code: STATUS.PROGRESS,
       },
-      to: ['logs', 'meta'],
+      to: ['logs'],
     });
 
     const data = await s3
@@ -85,7 +85,7 @@ export const handler = async (event, context, callback) => {
         status_message: 'Start uploading to ElasticSearch',
         status_code: STATUS.PROGRESS,
       },
-      to: ['logs', 'meta'],
+      to: ['logs'],
     });
 
     // Prepare upload
@@ -102,7 +102,7 @@ export const handler = async (event, context, callback) => {
           status_message: e.message,
           status_code: STATUS.ERROR,
         },
-        to: ['logs', 'meta'],
+        to: ['logs'],
       });
 
     return s3
@@ -138,7 +138,7 @@ export const handler = async (event, context, callback) => {
             status_message: 'Results uploaded successfully, all went well.',
             status_code: STATUS.INGESTED,
           },
-          to: ['logs', 'meta'],
+          to: ['logs'],
         });
 
         return callback(null, 'Results uploaded successfully, all went well.');
@@ -150,7 +150,7 @@ export const handler = async (event, context, callback) => {
         status_message: err.message,
         status_code: STATUS.ERROR,
       },
-      to: ['logs', 'meta'],
+      to: ['logs'],
     });
 
     return callback(err);

@@ -3,6 +3,7 @@ const AwsConfigCredentials = require('serverless/lib/plugins/aws/configCredentia
 const elasticsearch = require('elasticsearch');
 const connectionClass = require('http-aws-es');
 const listExports = require('./lib/listExports');
+const isEqual = require('lodash.isequal');
 
 class CreateElasticIndexDeploy {
   constructor(serverless, options) {
@@ -62,30 +63,28 @@ class CreateElasticIndexDeploy {
 
     await indices.forEach(async indexConfig => {
       const client = await this.setupElasticClient(indexConfig);
-      const { index, type, mapping } = indexConfig;
+      const { index, mapping } = indexConfig;
 
-      client.indices
-        .exists({ index: this.index })
-        .then(exists => {
-          if (!exists) {
-            return client.indices.create({ index });
+      client.indices.exists({ index }).then(exists => {
+        if (!exists) {
+          return client.indices.create({ index, body: mapping });
+        }
+
+        return client.indices.getMapping({ index }).then(existingMappping => {
+          if (!isEqual(existingMappping[index], mapping)) {
+            const types = Object.keys(mapping.mappings);
+
+            types.forEach(type =>
+              // Update mapping (if possible)
+              client.indices.putMapping({
+                index,
+                type,
+                body: mapping.mappings[type],
+              })
+            );
           }
-          return exists;
-        })
-        .catch(() => client.indices.create({ index }))
-        .then(() =>
-          client.indices.getMapping({
-            index,
-            type,
-          })
-        )
-        .catch(() =>
-          client.indices.putMapping({
-            index,
-            type,
-            body: mapping[type],
-          })
-        );
+        });
+      });
     });
   }
 }

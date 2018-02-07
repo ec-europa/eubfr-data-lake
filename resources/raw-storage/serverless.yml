@@ -1,14 +1,13 @@
-service: harmonized-storage
+service: resources-raw-storage
 
 plugins:
   - serverless-s3-remover
 
 custom:
   eubfrEnvironment: ${opt:eubfr_env, file(../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
-  bucketName: eubfr-${self:provider.stage}-harmonized
   remover:
      buckets:
-       - ${self:custom.bucketName}
+       - eubfr-${self:provider.stage}
 
 provider:
   name: aws
@@ -21,15 +20,15 @@ provider:
 
 resources:
   Resources:
-    HarmonizedObjectCreatedTopic:
+    ObjectCreatedTopic:
       Type: AWS::SNS::Topic
       Properties:
-        TopicName: ${self:provider.stage}-harmonized-object-created
-    HarmonizedObjectRemovedTopic:
+        TopicName: ${self:provider.stage}-object-created
+    ObjectRemovedTopic:
       Type: AWS::SNS::Topic
       Properties:
-        TopicName: ${self:provider.stage}-harmonized-object-removed
-    HarmonizedObjectEventsTopicPolicy:
+        TopicName: ${self:provider.stage}-object-removed
+    ObjectEventsTopicPolicy:
       Type: AWS::SNS::TopicPolicy
       Properties:
         PolicyDocument:
@@ -46,28 +45,44 @@ resources:
                     Fn::Join:
                     - ''
                     - - 'arn:aws:s3:::'
-                      - ${self:custom.bucketName}
+                      - eubfr-${self:provider.stage}
         Topics:
-        - Ref: HarmonizedObjectCreatedTopic
-        - Ref: HarmonizedObjectRemovedTopic
-    HarmonizedSourceBucket:
+        - Ref: ObjectCreatedTopic
+        - Ref: ObjectRemovedTopic
+    SourceBucket:
       Type: AWS::S3::Bucket
+      DependsOn: ObjectEventsTopicPolicy
       Properties:
-        BucketName: ${self:custom.bucketName}
+        BucketName: eubfr-${self:provider.stage}
+        CorsConfiguration:
+          CorsRules:
+            - AllowedHeaders:
+                - "Authorization"
+              AllowedMethods:
+                - GET
+              AllowedOrigins:
+                - "*"
+            - AllowedHeaders:
+                - "*"
+              AllowedMethods:
+                - PUT
+              AllowedOrigins:
+                - "*"
         NotificationConfiguration:
           TopicConfigurations:
             -
               Event: s3:ObjectCreated:*
               Topic:
-                Ref: HarmonizedObjectCreatedTopic
+                Ref: ObjectCreatedTopic
             -
               Event: s3:ObjectRemoved:*
               Topic:
-                Ref: HarmonizedObjectRemovedTopic
-    HarmonizedSourceBucketPolicy:
+                Ref: ObjectRemovedTopic
+    SourceBucketPolicy:
       Type: AWS::S3::BucketPolicy
       Properties:
-        Bucket: ${self:custom.bucketName}
+        Bucket:
+          Ref: SourceBucket
         PolicyDocument:
           Statement:
             -
@@ -79,5 +94,5 @@ resources:
                   - ''
                   -
                     - 'arn:aws:s3:::'
-                    - ${self:custom.bucketName}
+                    - eubfr-${self:provider.stage}
                     - '/*'
