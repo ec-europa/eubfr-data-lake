@@ -4,7 +4,7 @@ If the environment has already been setup, you can skip to [Send data](#send-dat
 
 ## Setup your environment
 
-Follow [these instructions](../README.md) to start your staged development environment.
+Follow [these instructions](./GETTING_STARTED.md) to start your staged development environment.
 
 ## Get your AWS credentials
 
@@ -31,7 +31,7 @@ For more information about access key setup, see [this serverless guide](https:/
 
 ## Deploy
 
-Follow [these instructions](../README.md) to deploy a project under your name and stage.
+Follow [these instructions](./GETTING_STARTED.md) to deploy a project under your name and stage.
 
 ## Send data
 
