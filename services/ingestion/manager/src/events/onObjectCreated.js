@@ -6,7 +6,16 @@ import connectionClass from 'http-aws-es';
 import MessengerFactory from '@eubfr/logger-messenger/src/lib/MessengerFactory';
 import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 
+let lastReqId;
+
 export const handler = async (event, context, callback) => {
+  // This function should not retry.
+  if (lastReqId === context.awsRequestId) {
+    console.info('Lambda auto retry detected. Aborting.');
+    return context.succeed();
+  }
+  lastReqId = context.awsRequestId;
+
   // Extract env vars
   const { API, INDEX, REGION, STAGE } = process.env;
 
