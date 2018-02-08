@@ -2,13 +2,11 @@ import elasticsearch from 'elasticsearch';
 import connectionClass from 'http-aws-es';
 
 export const handler = async (event, context, callback) => {
-  const { META_ENDPOINT, META_INDEX } = process.env;
+  const { API, INDEX } = process.env;
 
-  if (!META_ENDPOINT || !META_INDEX) {
+  if (!API || !INDEX) {
     return callback(
-      new Error(
-        'META_ENDPOINT and META_INDEX environment variables are required!'
-      )
+      new Error('API and INDEX environment variables are required!')
     );
   }
 
@@ -40,14 +38,14 @@ export const handler = async (event, context, callback) => {
 
     // elasticsearch client instantiation
     const client = elasticsearch.Client({
-      host: `https://${META_ENDPOINT}`,
+      host: `https://${API}`,
       apiVersion: '6.0',
       connectionClass,
-      index: META_INDEX,
+      index: INDEX,
     });
 
     await client.deleteByQuery({
-      index: META_INDEX,
+      index: INDEX,
       type: 'file',
       q: `computed_key:"${computedKey}"`,
     });

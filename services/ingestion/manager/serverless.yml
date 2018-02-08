@@ -21,9 +21,9 @@ provider:
   stackTags:
     ENV: ${self:custom.eubfrEnvironment}
   environment:
-    META_ENDPOINT:
+    API:
       Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:MetaEndpoint
-    META_INDEX: ${self:custom.metaIndex}
+    INDEX: ${self:custom.metaIndex}
     STAGE: ${self:provider.stage}
     REGION: ${self:provider.region}
   iamRoleStatements:

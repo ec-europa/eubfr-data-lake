@@ -8,12 +8,12 @@ import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 
 export const handler = async (event, context, callback) => {
   // Extract env vars
-  const { META_ENDPOINT, META_INDEX, REGION, STAGE } = process.env;
+  const { API, INDEX, REGION, STAGE } = process.env;
 
-  if (!META_ENDPOINT || !META_INDEX || !REGION || !STAGE) {
+  if (!API || !INDEX || !REGION || !STAGE) {
     return callback(
       new Error(
-        'META_ENDPOINT, META_INDEX, REGION and STAGE environment variables are required!'
+        'API, INDEX, REGION and STAGE environment variables are required!'
       )
     );
   }
@@ -77,24 +77,22 @@ export const handler = async (event, context, callback) => {
       content_length: Number(data.ContentLength),
       content_type: data.ContentType,
       last_modified: data.LastModified.toISOString(), // ISO-8601 date
-      message: 'File uploaded. Forwarding to the right ETL...',
       metadata: otherMeta,
       original_key: originalKey,
       producer_arn: producerArn,
       producer_id: producerId,
-      status: STATUS.UPLOADED,
     };
 
     // elasticsearch client instantiation
     const client = elasticsearch.Client({
-      host: `https://${META_ENDPOINT}`,
+      host: `https://${API}`,
       apiVersion: '6.0',
       connectionClass,
-      index: META_INDEX,
+      index: INDEX,
     });
 
     await client.index({
-      index: META_INDEX,
+      index: INDEX,
       type: 'file',
       body: item,
     });
