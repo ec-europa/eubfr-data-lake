@@ -8,7 +8,7 @@ import type { Project } from '../../../../types/Project';
 
 /**
  * Converts a single string to an array of multiple values.
- * @memberof AgriCsvTrasnform
+ * @memberof AgriCsvTransform
  * @param {Object} record The row received from harmonized storage.
  * @returns {Array} List of string values for `funding_area` field.
  * @example
@@ -24,7 +24,7 @@ const getFundingArea = record =>
 
 /**
  * Preprocess coordinators
- * @memberof AgriCsvTrasnform
+ * @memberof AgriCsvTransform
  * @param {Object} record The row received from harmonized storage.
  * @returns {Array} List of {Coordinator} objects for `coordinators` field.
  * @example
@@ -47,7 +47,7 @@ const getCoordinators = record =>
 
 /**
  * Preprocess partners
- * @memberof AgriCsvTrasnform
+ * @memberof AgriCsvTransform
  * @param {Object} record The row received from harmonized storage.
  * @returns {Array} List of {Partner} objects for `partners` field.
  * @example
@@ -78,7 +78,7 @@ const getPartners = record =>
  * - `Project postal code(s)`
  * - `Project town(s)`
  *
- * @memberof AgriCsvTrasnform
+ * @memberof AgriCsvTransform
  * @param {Object} record The row received from harmonized storage.
  * @returns {Array} List of {Location} objects for `project_locations` field.
  */
@@ -121,12 +121,18 @@ const getLocations = record => {
 
 /**
  * Preprocess related links
- * @memberof AgriCsvTrasnform
+ *
+ * Depends on record['Related links'] field.
+ *
+ * @memberof AgriCsvTransform
  * @param {Object} record The row received from harmonized storage.
- * @returns {RelatedLink} A list of related link objects containing a `label` and `url` or a single object.
+ * @returns {Array|Object} List of {RelatedLink}.
  * @example
  * input => "<a href=\"https://ec.europa.eu/inea/en/ten-t/ten-t-projects/projects-by-country/multi-country/2013-eu-92069-s\">INEA</a>;<a href=\"https://europa.eu/investeu/projects/central-european-green-corridors_en\">InvestEU</a>"
- * output => {label: "InvestEU", url: "https://ec.europa.eu/inea/en/ten-t/ten-t-projects/projects-by-country/multi-country/2013-eu-92069-s\">INEA</a>;<a href=\"https://europa.eu/investeu/projects/central-european-green-corridors_en"}
+ * output => [
+ *    { label: "INEA", url: "https://ec.europa.eu/inea/en/ten-t/ten-t-projects/projects-by-country/multi-country/2013-eu-92069-s" }
+ *    { label: "InvestEU", url: "https://europa.eu/investeu/projects/central-european-green-corridors_en" }
+ *  ]
  */
 const getRelatedLinks = record =>
   (record['Related links'] || '')
@@ -151,7 +157,7 @@ const getRelatedLinks = record =>
 
 /**
  * Format date
- * @memberof AgriCsvTrasnform
+ * @memberof AgriCsvTransform
  * @param {Date} date Date in timestamp
  * @returns {Date} The date formatted into an ISO 8601 date format.
  * @example
@@ -167,7 +173,7 @@ const formatDate = date =>
  * Example input data: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/agri/csv/test/stubs/record.json|stub}
  *
  * Transform function: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/agri/csv/src/lib/transform.js|implementation details}
- * @name AgriCsvTrasnform
+ * @name AgriCsvTransform
  * @param {Object} record The row received from harmonized storage.
  * @returns {Project} JSON matching the type fields.
  */
