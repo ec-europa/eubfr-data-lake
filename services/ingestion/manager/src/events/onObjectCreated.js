@@ -11,8 +11,7 @@ let lastReqId;
 export const handler = async (event, context, callback) => {
   // This function should not retry.
   if (lastReqId === context.awsRequestId) {
-    console.info('Lambda auto retry detected. Aborting.');
-    return context.succeed();
+    return callback(null, 'Lambda auto retry detected. Aborting.');
   }
   lastReqId = context.awsRequestId;
 
