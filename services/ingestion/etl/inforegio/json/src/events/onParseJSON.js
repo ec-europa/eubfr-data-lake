@@ -1,14 +1,21 @@
 import path from 'path';
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 
-import Logger from '../../../../../../logger/listener/src/lib/Logger';
-import transformRecord from '../lib/transform';
-import { STATUS } from '../../../../../../storage/meta-index/src/lib/status';
+import MessengerFactory from '@eubfr/logger-messenger/src/lib/MessengerFactory';
+import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 
-// Destination bucket
-const { BUCKET } = process.env;
+import transformRecord from '../lib/transform';
 
 export const handler = async (event, context, callback) => {
+  // Extract env vars
+  const { BUCKET, REGION, STAGE } = process.env;
+
+  if (!BUCKET || !REGION || !STAGE) {
+    return callback(
+      new Error('BUCKET, REGION and STAGE environment variables are required!')
+    );
+  }
+
   /*
    * Some checks here before going any further
    */
@@ -23,7 +30,7 @@ export const handler = async (event, context, callback) => {
     !snsRecord.Sns ||
     !snsRecord.Sns.Message
   ) {
-    return callback(Error('Bad record'));
+    return callback(new Error('Bad record'));
   }
 
   /*
@@ -39,70 +46,37 @@ export const handler = async (event, context, callback) => {
   }
 
   if (!message.object || !message.object.key) {
-    return callback(Error('The message is not valid'));
+    return callback(new Error('The message is not valid'));
   }
 
   // Check file extension
   if (path.extname(message.object.key) !== '.json') {
-    return callback(Error('File extension should be .json'));
+    return callback(new Error('File extension should be .json'));
   }
 
-  /*
-   * Prepare the SNS message
-   */
-
-  // Get Account ID from lambda function arn in the context
-  const accountId = context.invokedFunctionArn.split(':')[4];
-
-  // Get stage and region from environment variables
-  const stage = process.env.STAGE;
-  const region = process.env.REGION;
-
-  // Get the endpoint arn
-  const endpointArn = `arn:aws:sns:${region}:${accountId}:${stage}-MetaStatusReported`;
-  const sns = new AWS.SNS();
-  const logger = new Logger({
-    sns,
-    targetArn: `arn:aws:sns:${region}:${accountId}:${stage}-onLogEmitted`,
-    emitter: context.invokedFunctionArn,
-  });
-
-  const handleError = e =>
-    sns.publish(
-      {
-        Message: JSON.stringify({
-          default: JSON.stringify({
-            key: message.object.key,
-            status: STATUS.ERROR,
-            message: e,
-          }),
-        }),
-        MessageStructure: 'json',
-        TargetArn: endpointArn,
-      },
-      async snsErr => {
-        if (snsErr) {
-          return callback(snsErr);
-        }
-
-        await logger.error({
-          message: {
-            computed_key: message.object.key,
-            status_message: JSON.stringify(e),
-          },
-        });
-
-        return callback(e);
-      }
-    );
-
+  const messenger = MessengerFactory.Create({ context });
   const s3 = new AWS.S3();
 
-  await logger.info({
+  const handleError = async e => {
+    await messenger.send({
+      message: {
+        computed_key: message.object.key,
+        status_message: e.message,
+        status_code: STATUS.ERROR,
+      },
+      to: ['logs'],
+    });
+
+    return callback(e);
+  };
+
+  await messenger.send({
     message: {
       computed_key: message.object.key,
       status_message: 'Start parsing JSON...',
+      status_code: STATUS.PARSING,
     },
+    to: ['logs'],
   });
 
   // Get file
@@ -139,7 +113,7 @@ export const handler = async (event, context, callback) => {
         dataString += `${JSON.stringify(data)}\n`;
       }
     } catch (e) {
-      return handleError(e.message);
+      return handleError(e);
     }
 
     // Load data
@@ -155,37 +129,17 @@ export const handler = async (event, context, callback) => {
         return handleError(err);
       }
 
-      await logger.info({
+      await messenger.send({
         message: {
           computed_key: message.object.key,
           status_message:
             'JSON parsed successfully. Results will be uploaded to ElasticSearch soon...',
+          status_code: STATUS.PARSED,
         },
+        to: ['logs'],
       });
 
-      /*
-       * Send the SNS message
-       */
-      return sns.publish(
-        {
-          Message: JSON.stringify({
-            default: JSON.stringify({
-              key: message.object.key,
-              status: STATUS.PARSED,
-              message: 'ETL successful',
-            }),
-          }),
-          MessageStructure: 'json',
-          TargetArn: endpointArn,
-        },
-        snsErr => {
-          if (snsErr) {
-            return callback(snsErr);
-          }
-
-          return callback(null, 'JSON file has been parsed');
-        }
-      );
+      return callback(null, 'JSON parsed successfully');
     });
   });
 };

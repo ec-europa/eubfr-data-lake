@@ -31,6 +31,14 @@ class Logger {
     });
   }
 
+  success({ type = 'file', message = '' }) {
+    return this.log({
+      level: 'success',
+      type,
+      message,
+    });
+  }
+
   error({ type = 'file', message = '' }) {
     return this.log({
       level: 'error',

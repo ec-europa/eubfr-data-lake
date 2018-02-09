@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@eubfr/harmonized-storage",
+  "name": "@eubfr/resources-raw-storage",
   "version": "0.0.1",
   "scripts": {
     "deploy": "sls deploy -v"

@@ -6,6 +6,7 @@ import Spinner from '../../components/Spinner';
 
 const metaApiEndpoint = `https://${process.env.REACT_APP_ES_META_ENDPOINT}`;
 const metaIndex = `${process.env.REACT_APP_STAGE}-meta`;
+const logsIndex = `${process.env.REACT_APP_STAGE}-logs`;
 
 class List extends Component {
   constructor() {
@@ -14,11 +15,13 @@ class List extends Component {
     this.state = {
       loading: true,
       files: [],
+      statuses: [],
       filesCount: 0,
     };
 
     this.esClient = null;
     this.loadFiles = this.loadFiles.bind(this);
+    this.loadStatuses = this.loadStatuses.bind(this);
   }
 
   componentDidMount() {
@@ -51,11 +54,14 @@ class List extends Component {
             },
           })
           .then(data =>
-            this.setState({
-              loading: false,
-              files: data.hits.hits,
-              filesCount: data.hits.total,
-            })
+            this.setState(
+              {
+                loading: false,
+                files: data.hits.hits,
+                filesCount: data.hits.total,
+              },
+              this.loadStatuses
+            )
           )
           .catch(error => {
             throw Error(`An error occured: ${error.message}`);
@@ -63,8 +69,82 @@ class List extends Component {
     );
   }
 
+  loadStatuses() {
+    const keys = (this.state.files || [])
+      .map(file => (file._source || {}).computed_key)
+      .filter(file => file);
+
+    return this.esClient
+      .search({
+        index: logsIndex,
+        type: 'file',
+        body: {
+          size: 0,
+          query: {
+            nested: {
+              path: 'message',
+              query: {
+                terms: {
+                  'message.computed_key': keys,
+                },
+              },
+            },
+          },
+          aggs: {
+            logs: {
+              nested: {
+                path: 'message',
+              },
+              aggs: {
+                logs_by_computed_key: {
+                  terms: {
+                    field: 'message.computed_key',
+                  },
+                  aggs: {
+                    full_logs: {
+                      reverse_nested: {},
+                      aggs: {
+                        most_recent: {
+                          top_hits: {
+                            size: 1,
+                            sort: [
+                              {
+                                time: {
+                                  order: 'desc',
+                                },
+                              },
+                            ],
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      })
+      .then(data => {
+        // Dangerous
+        const { buckets } = data.aggregations.logs.logs_by_computed_key;
+        const statuses = [];
+        buckets.forEach(bucket => {
+          statuses[bucket.key] =
+            bucket.full_logs.most_recent.hits.hits[0]._source;
+        });
+
+        this.setState({
+          statuses,
+        });
+      })
+      .catch(error => {
+        throw Error(`An error occured: ${error.message}`);
+      });
+  }
+
   render() {
-    const { loading, files } = this.state;
+    const { loading, files, statuses } = this.state;
 
     if (loading) {
       return <Spinner />;
@@ -90,7 +170,7 @@ class List extends Component {
 
     return (
       <div className="files-list">
-        <FilesList files={files} />
+        <FilesList files={files} statuses={statuses} />
         <div className="ecl-u-mv-s">
           <RefreshButton />
         </div>

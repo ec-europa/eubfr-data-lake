@@ -2,7 +2,19 @@ import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependenc
 import { checkAccess } from '../lib/checkAccess';
 import { extractUsername } from '../lib/extractUsername';
 
+// As each case has a return + cb and still some branching of the checks are problematic:
+// https://eslint.org/docs/rules/consistent-return#when-not-to-use-it
+// eslint-disable-next-line
 export const handler = (event, context, callback) => {
+  // Extract env vars
+  const { BUCKET, REGION } = process.env;
+
+  if (!BUCKET || !REGION) {
+    return callback(
+      new Error('BUCKET and REGION environment variables are required!')
+    );
+  }
+
   const { userArn } = event.requestContext.identity;
   const username = extractUsername(userArn);
 
@@ -17,14 +29,7 @@ export const handler = (event, context, callback) => {
       });
     }
 
-    const bucket = process.env.BUCKET;
-    const region = process.env.REGION;
-
-    if (!bucket || !region) {
-      return callback(`BUCKET and REGION environment variable are required.`);
-    }
-
-    const s3 = new AWS.S3({ signatureVersion: 'v4', region });
+    const s3 = new AWS.S3({ signatureVersion: 'v4', REGION });
 
     const file =
       event.headers && event.headers['x-amz-meta-computed-key']
@@ -35,7 +40,7 @@ export const handler = (event, context, callback) => {
       const response = {
         statusCode: 400,
         body: JSON.stringify({
-          error: `Missing x-amz-meta-computed-key header`,
+          error: 'Missing x-amz-meta-computed-key header',
         }),
       };
 
@@ -46,7 +51,7 @@ export const handler = (event, context, callback) => {
       const response = {
         statusCode: 400,
         body: JSON.stringify({
-          error: `You can't delete a file you don't own.`,
+          error: "You can't delete a file you don't own.",
         }),
       };
 
@@ -55,7 +60,7 @@ export const handler = (event, context, callback) => {
 
     // If producer has correctly submitted a key.
     const params = {
-      Bucket: bucket,
+      Bucket: BUCKET,
       Key: file,
     };
 

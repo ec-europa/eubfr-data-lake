@@ -6,11 +6,8 @@ require('./utils/protectStage')();
 const deleteServerlessService = require('./utils/deleteServerlessService');
 
 const services = [
-  'storage-objects',
   'storage-signed-uploads',
   'storage-deleter',
-  'storage-meta-index',
-  'harmonized-storage',
   'ingestion-manager',
   'ingestion-cleaner',
   'ingestion-etl-agri-csv',
