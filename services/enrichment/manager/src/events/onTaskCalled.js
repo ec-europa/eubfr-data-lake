@@ -1,14 +1,66 @@
-const countries = require('i18n-iso-countries');
-const request = require('request-promise-native');
+import countries from 'i18n-iso-countries';
+import request from 'request-promise-native';
+import elasticsearch from 'elasticsearch';
+import connectionClass from 'http-aws-es';
+import { needsEnrichment, alreadyEnriched } from '../lib/checks';
+import { computeId } from '../lib/computeId';
 
 export const handler = async (event, context, callback) => {
   const record = JSON.parse(event.Body);
 
-  let enriched = false;
-
-  if (!record || !record.project_locations) {
+  /**
+   * 1. Pre-check if the document needs to be enriched
+   */
+  if (!needsEnrichment(record)) {
     return callback(null, 'nothing to do');
   }
+
+  /**
+   * 2. If the pre-check passes, retrieves the existing record
+   */
+  const { API, INDEX } = process.env;
+
+  // Elasticsearch client instantiation
+  const client = elasticsearch.Client({
+    host: `https://${API}`,
+    apiVersion: '6.0',
+    connectionClass,
+    index: INDEX,
+  });
+
+  // Compute ID
+  const id = computeId({
+    computedKey: record.computed_key,
+    projectId: record.project_id,
+  });
+
+  let elasticHit = null;
+
+  try {
+    elasticHit = await client.get({
+      index: INDEX,
+      type: 'project',
+      id,
+    });
+  } catch (e) {
+    return callback(e);
+  }
+
+  if (!elasticHit || !elasticHit._source) {
+    return callback(null, 'record does not exist, stop enrichment');
+  }
+
+  /**
+   * 3. Check if the existing record has already been enriched
+   */
+  const existingRecord = elasticHit._source;
+
+  if (alreadyEnriched(record, existingRecord)) {
+    return callback(null, 'the record has already been enriched');
+  }
+
+  // 4. Finally, enrich the record
+  let enriched = false;
 
   record.project_locations.forEach(async loc => {
     if (!loc) {
