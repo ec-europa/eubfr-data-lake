@@ -1,9 +1,7 @@
 ## Request
 
-Endpoint: `https://PROJECTS_INDEX/project/_search`
-Method: `POST`
-
-Payload:
+* Endpoint: `https://PROJECTS_INDEX/project/_search`
+* Method: `POST`
 
 ```json
 {

@@ -9,7 +9,7 @@
 
 ## Cookbook
 
-Re-use working [example Elasticsearch queries](./cookbook/README.md)
+Re-use working [example Elasticsearch queries](./cookbook/README.md).
 
 ## Troubleshooting
 

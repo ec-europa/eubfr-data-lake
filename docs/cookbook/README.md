@@ -19,4 +19,4 @@ List of Elasticsearch recipes for developers.
 
 ### Aggregate projects per project_id then aggregate buckets per most_recent
 
-* [Example](./aggregation/aggregate-projects-project_id-then-aggregate-buckets.md.md)
+* [Example](./aggregation/aggregate-projects-project_id-then-aggregate-buckets.md)
