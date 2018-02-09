@@ -3,11 +3,16 @@ import { checkAccess } from '../lib/checkAccess';
 import { extractUsername } from '../lib/extractUsername';
 
 export const handler = (event, context, callback) => {
+  // Extract env vars
+  const { BUCKET, REGION } = process.env;
+
+  if (!BUCKET || !REGION) {
+    callback(`BUCKET and REGION environment variables are required!`);
+    return;
+  }
+
   const { userArn } = event.requestContext.identity;
   const username = extractUsername(userArn);
-
-  console.log(event);
-  console.log(context);
 
   checkAccess(username).then(accessGranted => {
     if (!accessGranted) {
@@ -20,14 +25,7 @@ export const handler = (event, context, callback) => {
       });
     }
 
-    const bucket = process.env.BUCKET;
-    const region = process.env.REGION;
-
-    if (!bucket || !region) {
-      return callback(`BUCKET and REGION environment variable are required.`);
-    }
-
-    const s3 = new AWS.S3({ signatureVersion: 'v4', region });
+    const s3 = new AWS.S3({ signatureVersion: 'v4', REGION });
 
     const file =
       event.headers && event.headers['x-amz-meta-computed-key']
@@ -47,7 +45,7 @@ export const handler = (event, context, callback) => {
 
     // If producer has correctly submitted a key.
     const params = {
-      Bucket: bucket,
+      Bucket: BUCKET,
       Key: file,
       Expires: 300,
     };

@@ -5,7 +5,7 @@
 import mapper from '../../../src/lib/transform';
 import testRecord from '../../stubs/record.json';
 
-describe(`DG BUDG CSV transformer`, () => {
+describe(`DG AGRI CSV transformer`, () => {
   let result = {};
 
   beforeAll(() => {
@@ -26,7 +26,7 @@ describe(`DG BUDG CSV transformer`, () => {
   });
 });
 
-describe(`DG BUDG transformer handling incomplete or inconsistent data`, () => {
+describe(`DG AGRI transformer handling incomplete or inconsistent data`, () => {
   const partialRecord = {
     Name: 'Bulgaria’s capital expands metro network',
     'Timeframe start': '1388530800',

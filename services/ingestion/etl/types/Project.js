@@ -19,16 +19,27 @@ type GeoJSON =
   | MultiPolygon2D;
 
 /**
+ * Describes field `project.budget.eu_contrib`.
+ * @type {BudgetItem}
+ */
+type BudgetItem = {
+  currency: string,
+  raw: string,
+  value: number,
+};
+
+/**
  * Describes field `project.budget`.
  * @type {Budget}
  */
 type Budget = {
-  eu_contrib: number,
-  total_cost: number,
-  private_fund: number,
-  public_fund: number,
-  other_contrib: number,
+  eu_contrib: BudgetItem,
   funding_area: Array<string>,
+  mmf_heading: string,
+  other_contrib: BudgetItem,
+  private_fund: BudgetItem,
+  public_fund: BudgetItem,
+  total_cost: BudgetItem,
 };
 
 /**
@@ -36,14 +47,23 @@ type Budget = {
  * @type {Coordinator}
  */
 type Coordinator = {
-  name: string,
-  type: string,
   address: string,
-  region: string,
   country: string,
-  website: string,
-  phone: string,
   email: string,
+  name: string,
+  phone: string,
+  region: string,
+  type: string,
+  website: string,
+};
+
+/**
+ * Describes field `project.project_locations.centroid`.
+ * @type {Coordinates}
+ */
+type Coordinates = {
+  lat: number,
+  lon: number,
 };
 
 /**
@@ -51,15 +71,25 @@ type Coordinator = {
  * @type {Location}
  */
 type Location = {
-  country_code: string,
-  region: string,
-  nuts2: string,
   address: string,
-  postal_code: string,
-  town: string,
+  centroid: Coordinates | null,
+  country_code: string,
   // If nothing else, provide null in transform function for this field.
   // Never null project_locations field which is typed on ES level.
   location: GeoJSON | null,
+  nuts2: string,
+  postal_code: string,
+  region: string,
+  town: string,
+};
+
+/**
+ * Describes field `project.media`.
+ * @type {Media}
+ */
+type Media = {
+  cover_image: string,
+  video: string,
 };
 
 /**
@@ -67,12 +97,12 @@ type Location = {
  * @type {Partner}
  */
 type Partner = {
-  name: string,
-  type: string,
   address: string,
-  region: string,
   country: string,
-  website?: string,
+  name: string,
+  region: string,
+  type: string,
+  website: string,
 };
 
 /**
@@ -80,8 +110,8 @@ type Partner = {
  * @type {RelatedLink}
  */
 type RelatedLink = {
-  url: string,
   label: string,
+  url: string,
 };
 
 /**
@@ -111,9 +141,9 @@ export type Project = {
   budget: Budget,
   call_year: string,
   coordinators: Array<Coordinator>,
-  cover_image: string,
   description: string,
   ec_priorities: Array<string>,
+  media: Media,
   partners: Array<Partner>,
   programme_name: string,
   project_id: string,

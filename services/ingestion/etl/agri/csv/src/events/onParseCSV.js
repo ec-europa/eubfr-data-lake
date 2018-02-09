@@ -2,62 +2,42 @@ import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependenc
 import parse from 'csv-parse';
 import transform from 'stream-transform';
 
-import Logger from '../../../../../../logger/listener/src/lib/Logger';
-
-// Import constants
-import { STATUS } from '../../../../../../storage/meta-index/src/events/onStatusReported';
+import MessengerFactory from '@eubfr/logger-messenger/src/lib/MessengerFactory';
+import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 
 // Import logic
-import { extractMessage, prepareMessage } from '../lib/sns';
+import { extractMessage } from '../lib/sns';
 import transformRecord from '../lib/transform';
 import uploadFromStream from '../lib/uploadFromStream';
 
 export const handler = async (event, context, callback) => {
-  // 1. Validate handler execution
-  // check event, context
-  const snsMessage = extractMessage(event);
-
   // Extract env vars
   const { BUCKET, REGION, STAGE } = process.env;
 
-  // Get Account ID from lambda function arn in the context
-  const accountId = context.invokedFunctionArn.split(':')[4];
-
-  // Get the endpoint arn
-  const endpointArn = `arn:aws:sns:${REGION}:${accountId}:${STAGE}-MetaStatusReported`;
-
-  const sns = new AWS.SNS();
-  const logger = new Logger({
-    sns,
-    targetArn: `arn:aws:sns:${REGION}:${accountId}:${STAGE}-onLogEmitted`,
-    emitter: context.invokedFunctionArn,
-  });
-
-  const onError = e =>
-    sns.publish(
-      prepareMessage(
-        {
-          key: snsMessage.object.key,
-          status: STATUS.ERROR,
-          message: JSON.stringify(e),
-        },
-        endpointArn
-      ),
-      async snsErr => {
-        if (snsErr) {
-          return callback(snsErr);
-        }
-
-        await logger.error({
-          message: {
-            computed_key: snsMessage.object.key,
-            status_message: JSON.stringify(e),
-          },
-        });
-
-        return callback(e);
-      }
+  if (!BUCKET || !REGION || !STAGE) {
+    return callback(
+      new Error('BUCKET, REGION and STAGE environment variables are required!')
     );
+  }
+
+  // Validate handler execution and check event, context, etc.
+  const snsMessage = extractMessage(event);
+  const { key } = snsMessage.object;
+
+  const messenger = MessengerFactory.Create({ context });
+
+  const onError = async e => {
+    await messenger.send({
+      message: {
+        computed_key: key,
+        status_message: e.message,
+        status_code: STATUS.ERROR,
+      },
+      to: ['logs'],
+    });
+
+    return callback(e);
+  };
 
   const s3 = new AWS.S3();
 
@@ -84,44 +64,37 @@ export const handler = async (event, context, callback) => {
   /*
    * Start the hard work
    */
-  await logger.info({
+  await messenger.send({
     message: {
-      computed_key: snsMessage.object.key,
+      computed_key: key,
       status_message: 'Start parsing CSV...',
+      status_code: STATUS.PARSING,
     },
+    to: ['logs'],
   });
 
   return s3
-    .getObject({
-      Bucket: snsMessage.bucket.name,
-      Key: snsMessage.object.key,
-    })
+    .getObject({ Bucket: snsMessage.bucket.name, Key: key })
     .createReadStream()
     .pipe(parser)
-    .on('error', e => onError(`Error on parse: ${e.message}`))
+    .on('error', e => onError(new Error(`Error on parse: ${e.message}`)))
     .pipe(transformer)
-    .on('error', e => onError(`Error on transform: ${e.message}`))
-    .pipe(
-      uploadFromStream({
-        key: snsMessage.object.key,
-        BUCKET,
-        s3,
-        sns,
-        endpointArn,
-        onError,
-        callback,
-      })
-    )
-    .on('error', e => onError(`Error on upload: ${e.message}`))
-    .on('end', async () =>
-      logger.info({
+    .on('error', e => onError(new Error(`Error on transform: ${e.message}`)))
+    .pipe(uploadFromStream({ key, BUCKET, s3, onError }))
+    .on('error', e => onError(new Error(`Error on upload: ${e.message}`)))
+    .on('end', async () => {
+      await messenger.send({
         message: {
-          computed_key: snsMessage.object.key,
+          computed_key: key,
           status_message:
             'CSV parsed successfully. Results will be uploaded to ElasticSearch soon...',
+          status_code: STATUS.PARSED,
         },
-      })
-    );
+        to: ['logs'],
+      });
+
+      return callback(null, 'CSV parsed successfully');
+    });
 };
 
 export default handler;

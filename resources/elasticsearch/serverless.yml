@@ -6,21 +6,23 @@ plugins:
 custom:
   eubfrEnvironment: ${opt:eubfr_env, file(../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
   projectsDomain: ${self:custom.eubfrEnvironment}-projects
-  logsDomain: ${self:custom.eubfrEnvironment}-logs
+  metaDomain: ${self:custom.eubfrEnvironment}-meta
   slsEsIndices:
     -
-      type: project
       index: ${opt:stage, file(../../config.json):stage, 'dev'}-projects
       mapping: '${file(./mappings/project.js)}'
       region: ${opt:region, file(../../config.json):region, 'eu-central-1'}
       endpointName: ${self:custom.eubfrEnvironment}:resources-elasticsearch:ProjectsEndpoint
     -
-      type: file
+      index: ${opt:stage, file(../../config.json):stage, 'dev'}-meta
+      mapping: ${file(./mappings/meta.js)}
+      region: ${opt:region, file(../../config.json):region, 'eu-central-1'}
+      endpointName: ${self:custom.eubfrEnvironment}:resources-elasticsearch:MetaEndpoint
+    -
       index: ${opt:stage, file(../../config.json):stage, 'dev'}-logs
       mapping: ${file(./mappings/logs.js)}
       region: ${opt:region, file(../../config.json):region, 'eu-central-1'}
-      endpointName: ${self:custom.eubfrEnvironment}:resources-elasticsearch:LogsEndpoint
-
+      endpointName: ${self:custom.eubfrEnvironment}:resources-elasticsearch:MetaEndpoint
 
 provider:
   name: aws
@@ -76,12 +78,12 @@ resources:
                 aws:SourceIp:
                 - 147.67.241.226
             Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.projectsDomain}/*"
-    LogsElasticSearchDomain:
+    MetaElasticSearchDomain:
       Type: AWS::Elasticsearch::Domain
       # Don't delete the elastic search instance when the CF stack is deleted
       DeletionPolicy: Retain
       Properties:
-        DomainName: ${self:custom.logsDomain}
+        DomainName: ${self:custom.metaDomain}
         ElasticsearchVersion: '6.0'
         EBSOptions:
           EBSEnabled: true
@@ -102,7 +104,7 @@ resources:
              - "es:ESHttpHead"
              - "es:ESHttpGet"
              - "es:ESHttpPost"
-            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.logsDomain}/*"
+            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.metaDomain}/*"
           # Lambda can take actions on the ES domain
           - Effect: Allow
             Principal:
@@ -117,7 +119,7 @@ resources:
               IpAddress:
                 aws:SourceIp:
                 - 147.67.241.226
-            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.logsDomain}/*"
+            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.metaDomain}/*"
   Outputs:
     ProjectsEndpoint:
       Description: The API endpoint of the projects' elasticsearch domain.
@@ -126,10 +128,10 @@ resources:
       Export:
         # Global varibale, uses eubfrEnvironment instead of stage
         Name: "${self:custom.eubfrEnvironment}:${self:service}:ProjectsEndpoint"
-    LogsEndpoint:
-      Description: The API endpoint of the logs' elasticsearch domain.
+    MetaEndpoint:
+      Description: The API endpoint of the meta's elasticsearch domain.
       Value:
-        Fn::GetAtt: ["LogsElasticSearchDomain", "DomainEndpoint"]
+        Fn::GetAtt: ["MetaElasticSearchDomain", "DomainEndpoint"]
       Export:
         # Global varibale, uses eubfrEnvironment instead of stage
-        Name: "${self:custom.eubfrEnvironment}:${self:service}:LogsEndpoint"
+        Name: "${self:custom.eubfrEnvironment}:${self:service}:MetaEndpoint"

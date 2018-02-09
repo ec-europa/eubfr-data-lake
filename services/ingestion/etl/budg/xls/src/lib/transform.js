@@ -1,10 +1,25 @@
 // @flow
 
+import type { Project } from '../../../../types/Project';
+
 /*
  * Transform message (BUDG XLS)
  */
 
-import type { Project } from '../../../../types/Project';
+const formatDate = date => {
+  if (!date || typeof date !== 'string') return null;
+  const d = date.split(/\//);
+  if (d.length !== 3) return null;
+  // If year is given as 2 digits, make it 4 digits.
+  if (d[2].length === 2) d[2] = `20${d[2]}`;
+  const [month, day, year] = d;
+  if (!day || !month || !year) return null;
+  try {
+    return new Date(Date.UTC(year, month - 1, day)).toISOString();
+  } catch (e) {
+    return null;
+  }
+};
 
 /**
  * Map fields for BUDG producer, XLS file types.
@@ -17,16 +32,25 @@ import type { Project } from '../../../../types/Project';
 export default (record: Object): Project => {
   // Preprocess budget
   const budgetObject = {
-    total_cost: 0,
-    eu_contrib: Number(
-      record[
-        "EU Grant award in euros (This amount represents the grant awarded after the selection stage and is indicative. Please note that any changes made during or after the project's lifetime will not be reflected here.)"
-      ].replace(/,/g, '')
-    ),
-    private_fund: 0,
-    public_fund: 0,
-    other_contrib: 0,
+    total_cost: { value: 0, currency: '', raw: '' },
+    eu_contrib: {
+      value:
+        Number(
+          record[
+            "EU Grant award in euros (This amount represents the grant awarded after the selection stage and is indicative. Please note that any changes made during or after the project's lifetime will not be reflected here.)"
+          ].replace(/,/g, '')
+        ) || 0,
+      currency: 'EUR',
+      raw:
+        record[
+          "EU Grant award in euros (This amount represents the grant awarded after the selection stage and is indicative. Please note that any changes made during or after the project's lifetime will not be reflected here.)"
+        ] || '',
+    },
+    private_fund: { value: 0, currency: '', raw: '' },
+    public_fund: { value: 0, currency: '', raw: '' },
+    other_contrib: { value: 0, currency: '', raw: '' },
     funding_area: [],
+    mmf_heading: '',
   };
 
   // Preprocess coordinators
@@ -51,15 +75,15 @@ export default (record: Object): Project => {
   });
 
   const partnerArray = [];
-  for (let i = 0; i < partnerKeys.length; i += 1) {
-    if (record[`Partner ${i + 1} name`] != null) {
+  for (let i = 1; i <= partnerKeys.length; i += 1) {
+    if (record[`Partner ${i} name`]) {
       partnerArray.push({
-        name: record[`Partner ${i + 1} name`],
-        type: record[`Partner ${i + 1} organisation type`],
-        address: record[`Partner ${i + 1} address`],
-        region: record[`Partner ${i + 1} region`],
-        country: record[`Partner ${i + 1} country`],
-        website: record[`Partner ${i + 1} website`],
+        name: record[`Partner ${i} name`],
+        type: record[`Partner ${i} organisation type`],
+        address: record[`Partner ${i} address`],
+        region: record[`Partner ${i} region`],
+        country: record[`Partner ${i} country`],
+        website: record[`Partner ${i} website`],
       });
     }
   }
@@ -67,6 +91,7 @@ export default (record: Object): Project => {
   // Preprocess locations
   const locationArray = record['Participating countries']
     .split(',')
+    .filter(loc => loc)
     .map(country => ({
       country_code: country,
       region: '',
@@ -74,6 +99,7 @@ export default (record: Object): Project => {
       address: '',
       postal_code: '',
       town: '',
+      centroid: null,
       location: null,
     }));
 
@@ -82,14 +108,6 @@ export default (record: Object): Project => {
     available: record['Results Available'],
     result: record['Results Platform Project Card'],
   };
-
-  // Preprocess timeframe
-  const timeframeFrom = record['Start date']
-    ? new Date(record['Start date']).toISOString()
-    : null;
-  const timeframeTo = record['End date']
-    ? new Date(record['End date']).toISOString()
-    : null;
 
   // Preprocess type
   const typeArray =
@@ -102,9 +120,12 @@ export default (record: Object): Project => {
     budget: budgetObject,
     call_year: record['Call year'],
     coordinators: coordArray,
-    cover_image: '',
     description: record['Project Summary'],
     ec_priorities: [],
+    media: {
+      cover_image: '',
+      video: '',
+    },
     partners: partnerArray,
     programme_name: record.Programme,
     project_id: record['Project Number'],
@@ -117,8 +138,8 @@ export default (record: Object): Project => {
     success_story: record['Is Success Story'],
     themes: [],
     timeframe: {
-      from: timeframeFrom,
-      to: timeframeTo,
+      from: formatDate(record['Start date']),
+      to: formatDate(record['End date']),
     },
     title: record['Project Title'],
     type: typeArray,

@@ -1,8 +1,6 @@
 import stream from 'stream';
-import { STATUS } from '../../../../../../storage/meta-index/src/events/onStatusReported';
 
-// Load
-export default ({ key, BUCKET, s3, sns, endpointArn, onError, callback }) => {
+export default ({ key, BUCKET, s3, onError }) => {
   const pass = new stream.PassThrough();
 
   const params = {
@@ -13,36 +11,7 @@ export default ({ key, BUCKET, s3, sns, endpointArn, onError, callback }) => {
   };
 
   s3.upload(params, err => {
-    if (err) {
-      return onError(err);
-    }
-
-    // Publish message to ETL Success topic
-
-    /*
-     * Send the SNS message
-     */
-    return sns.publish(
-      {
-        Message: JSON.stringify({
-          default: JSON.stringify({
-            key,
-            status: STATUS.PARSED,
-            message: 'ETL successful',
-          }),
-        }),
-        MessageStructure: 'json',
-        TargetArn: endpointArn,
-      },
-      snsErr => {
-        if (snsErr) {
-          callback(snsErr);
-          return;
-        }
-
-        callback(null, 'push sent');
-      }
-    );
+    if (err) onError(err);
   });
 
   return pass;

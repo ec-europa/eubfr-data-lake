@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "name": "@eubfr/resources-harmonized-storage",
+  "version": "0.0.1",
+  "scripts": {
+    "deploy": "sls deploy -v"
+  },
+  "devDependencies": {
+    "serverless": "1.25.0",
+    "serverless-s3-remover": "0.4.1"
+  }
+}

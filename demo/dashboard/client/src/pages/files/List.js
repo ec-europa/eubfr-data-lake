@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import elasticsearch from 'elasticsearch';
 import FilesList from '../../components/FilesList';
-import handleErrors from '../../lib/handleErrors';
 
 import Spinner from '../../components/Spinner';
 
-const demoServer = `https://${process.env.REACT_APP_DEMO_SERVER}/demo`;
+const metaApiEndpoint = `https://${process.env.REACT_APP_ES_META_ENDPOINT}`;
+const metaIndex = `${process.env.REACT_APP_STAGE}-meta`;
+const logsIndex = `${process.env.REACT_APP_STAGE}-logs`;
 
 class List extends Component {
   constructor() {
@@ -13,39 +15,136 @@ class List extends Component {
     this.state = {
       loading: true,
       files: [],
+      statuses: [],
+      filesCount: 0,
     };
 
+    this.esClient = null;
     this.loadFiles = this.loadFiles.bind(this);
+    this.loadStatuses = this.loadStatuses.bind(this);
   }
 
   componentDidMount() {
+    this.esClient = elasticsearch.Client({
+      host: metaApiEndpoint,
+      apiVersion: '6.0',
+      log: 'warning',
+    });
+
     this.loadFiles();
   }
 
   loadFiles() {
-    this.setState(
+    return this.setState(
       {
         loading: true,
       },
       () =>
-        window
-          .fetch(`${demoServer}/meta`)
-          .then(handleErrors)
-          .then(response => response.json())
+        this.esClient
+          .search({
+            index: metaIndex,
+            type: 'file',
+            body: {
+              query: {
+                term: {
+                  producer_id: process.env.REACT_APP_PRODUCER,
+                },
+              },
+              sort: [{ last_modified: { order: 'desc' } }],
+            },
+          })
           .then(data =>
-            this.setState({
-              loading: false,
-              files: data,
-            })
+            this.setState(
+              {
+                loading: false,
+                files: data.hits.hits,
+                filesCount: data.hits.total,
+              },
+              this.loadStatuses
+            )
           )
           .catch(error => {
-            console.log(`An error happened: ${error.message}`);
+            throw Error(`An error occured: ${error.message}`);
           })
     );
   }
 
+  loadStatuses() {
+    const keys = (this.state.files || [])
+      .map(file => (file._source || {}).computed_key)
+      .filter(file => file);
+
+    return this.esClient
+      .search({
+        index: logsIndex,
+        type: 'file',
+        body: {
+          size: 0,
+          query: {
+            nested: {
+              path: 'message',
+              query: {
+                terms: {
+                  'message.computed_key': keys,
+                },
+              },
+            },
+          },
+          aggs: {
+            logs: {
+              nested: {
+                path: 'message',
+              },
+              aggs: {
+                logs_by_computed_key: {
+                  terms: {
+                    field: 'message.computed_key',
+                  },
+                  aggs: {
+                    full_logs: {
+                      reverse_nested: {},
+                      aggs: {
+                        most_recent: {
+                          top_hits: {
+                            size: 1,
+                            sort: [
+                              {
+                                time: {
+                                  order: 'desc',
+                                },
+                              },
+                            ],
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      })
+      .then(data => {
+        // Dangerous
+        const { buckets } = data.aggregations.logs.logs_by_computed_key;
+        const statuses = [];
+        buckets.forEach(bucket => {
+          statuses[bucket.key] =
+            bucket.full_logs.most_recent.hits.hits[0]._source;
+        });
+
+        this.setState({
+          statuses,
+        });
+      })
+      .catch(error => {
+        throw Error(`An error occured: ${error.message}`);
+      });
+  }
+
   render() {
-    const { loading, files } = this.state;
+    const { loading, files, statuses } = this.state;
 
     if (loading) {
       return <Spinner />;
@@ -71,7 +170,7 @@ class List extends Component {
 
     return (
       <div className="files-list">
-        <FilesList files={files} />
+        <FilesList files={files} statuses={statuses} />
         <div className="ecl-u-mv-s">
           <RefreshButton />
         </div>

@@ -2,18 +2,21 @@
  * @jest-environment node
  */
 
-import { promisify } from 'util';
 import onObjectRemoved from '../../../src/events/onObjectRemoved';
 
-const handler = promisify(onObjectRemoved);
-
 describe(`Function onObjectRemoved in "@eubfr/value-store-projects"`, () => {
-  test('The function expects records', () => {
+  test('The function expects records', async () => {
     const event = {};
     const context = {};
 
     expect.assertions(1);
-    const result = handler(event, context);
-    return expect(result).rejects.toBe(`No record`);
+
+    const callback = error => {
+      expect(error.message).toEqual('No record');
+    };
+
+    expect.assertions(1);
+
+    await onObjectRemoved(event, context, callback);
   });
 });

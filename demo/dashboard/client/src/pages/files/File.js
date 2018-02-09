@@ -9,21 +9,18 @@ import LogsTab from './file/Logs';
 import ProjectsTab from './file/Projects';
 
 import './File.css';
+import getIcon from '../../lib/getIcon';
 
 const demoServerEndpoint = `https://${process.env.REACT_APP_DEMO_SERVER}/demo`;
+
+const metaApiEndpoint = `https://${process.env.REACT_APP_ES_META_ENDPOINT}`;
+const metaIndex = `${process.env.REACT_APP_STAGE}-meta`;
+const logsIndex = `${process.env.REACT_APP_STAGE}-logs`;
+
 const projectsApiEndpoint = `https://${
   process.env.REACT_APP_ES_PROJECTS_ENDPOINT
 }`;
 const projectsIndex = `${process.env.REACT_APP_STAGE}-projects`;
-
-const getIcon = status => {
-  if (status === 'parsed')
-    return 'ecl-icon ecl-icon--success ecl-u-color-success';
-  else if (status === 'not parsed')
-    return 'ecl-icon ecl-icon--warning ecl-u-color-warning';
-
-  return 'ecl-icon ecl-icon--error ecl-u-color-error';
-};
 
 class File extends React.Component {
   constructor() {
@@ -36,23 +33,33 @@ class File extends React.Component {
       linkLoading: false,
       projectsCount: 0,
       projectsCountLoading: true,
+      status: {},
     };
 
+    this.projectsClient = null;
+    this.metaClient = null;
     this.deleteFile = this.deleteFile.bind(this);
     this.generateLink = this.generateLink.bind(this);
-    this.getFileMeta = this.getFileMeta.bind(this);
     this.loadFile = this.loadFile.bind(this);
+    this.loadStatus = this.loadStatus.bind(this);
     this.getProjectsCount = this.getProjectsCount.bind(this);
   }
 
   componentDidMount() {
-    this.client = elasticsearch.Client({
+    this.metaClient = elasticsearch.Client({
+      host: metaApiEndpoint,
+      apiVersion: '6.0',
+      log: 'warning',
+    });
+
+    this.projectsClient = elasticsearch.Client({
       host: projectsApiEndpoint,
       apiVersion: '6.0',
       log: 'warning',
     });
 
     this.loadFile();
+    this.loadStatus();
     this.getProjectsCount();
   }
 
@@ -60,7 +67,7 @@ class File extends React.Component {
     const { match } = this.props;
     const computedKey = decodeURIComponent(match.params.id);
 
-    return this.client
+    return this.projectsClient
       .count({
         index: projectsIndex,
         type: 'project',
@@ -77,36 +84,67 @@ class File extends React.Component {
       });
   }
 
-  getFileMeta(computedKey) {
-    return () =>
-      window
-        .fetch(
-          `${demoServerEndpoint}/filemeta?key=${encodeURIComponent(
-            computedKey
-          )}`
-        )
-        .then(handleErrors)
-        .then(response => response.json())
-        .then(data =>
-          this.setState({
-            fileLoading: false,
-            file: data[0],
-          })
-        )
-        .catch(error => {
-          console.log(`An error occured: ${error.message}`);
-        });
-  }
-
   loadFile() {
-    this.setState({
-      fileLoading: true,
-    });
-
     const { match } = this.props;
     const computedKey = decodeURIComponent(match.params.id);
 
-    this.setState({ fileLoading: true }, this.getFileMeta(computedKey));
+    this.setState({ fileLoading: true }, () =>
+      this.metaClient
+        .search({
+          index: metaIndex,
+          type: 'file',
+          q: `computed_key:"${computedKey}"`,
+        })
+        .then(data =>
+          this.setState({
+            fileLoading: false,
+            file:
+              data.hits &&
+              data.hits.hits &&
+              data.hits.hits[0] &&
+              data.hits.hits[0]._source
+                ? data.hits.hits[0]._source
+                : null,
+            // null because if (!file) later.
+          })
+        )
+        .catch(error => {
+          console.error(`An error occured: ${error.message}`);
+        })
+    );
+  }
+
+  loadStatus() {
+    const { match } = this.props;
+    const computedKey = decodeURIComponent(match.params.id);
+
+    this.metaClient
+      .search({
+        index: logsIndex,
+        type: 'file',
+        body: {
+          query: {
+            nested: {
+              path: 'message',
+              query: {
+                match: {
+                  'message.computed_key': computedKey,
+                },
+              },
+            },
+          },
+          sort: [{ time: { order: 'desc' } }],
+          size: 1,
+        },
+      })
+      .then(data => {
+        this.setState({
+          status: data.hits.hits[0]._source,
+        });
+      })
+      .catch(error => {
+        console.error(`An error occured: ${error.message}`);
+      });
   }
 
   deleteFile() {
@@ -126,7 +164,7 @@ class File extends React.Component {
         .then(response => response.json())
         .then(() => this.props.history.push('/files'))
         .catch(error => {
-          console.log(`An error happened: ${error.message}`);
+          console.error(`An error occured: ${error.message}`);
         });
     }
   }
@@ -155,7 +193,7 @@ class File extends React.Component {
             })
           )
           .catch(error => {
-            console.log(`An error happened: ${error.message}`);
+            console.error(`An error happened: ${error.message}`);
           })
     );
   }
@@ -169,6 +207,7 @@ class File extends React.Component {
       linkLoading,
       projectsCountLoading,
       projectsCount,
+      status,
     } = this.state;
 
     if (fileLoading) {
@@ -190,12 +229,23 @@ class File extends React.Component {
 
     const computedKey = decodeURIComponent(match.params.id);
 
+    let message = 'Loading status...';
+    let statusCode = 1;
+
+    if (status && status.message) {
+      message = status.message.status_message;
+      statusCode = status.message.status_code;
+    }
+
     return (
       <Fragment>
         <h1 className="ecl-heading ecl-heading--h1 ecl-u-mt-none">
-          <span className={getIcon(file.status)} title={file.message} />
           {file.original_key}
         </h1>
+        <p>
+          <b>Ingestions status</b>: {`${message} `}
+          <span title={message} className={getIcon(statusCode)} />
+        </p>
         <Link to="/files" className="ecl-button ecl-button--secondary">
           <span className="ecl-icon ecl-icon--left" />Go Back to My Files
         </Link>

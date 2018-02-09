@@ -4,7 +4,7 @@ export const handler = (event, context, callback) => {
   const { BUCKET } = process.env;
 
   if (!BUCKET) {
-    return callback(`BUCKET environment variable is required`);
+    return callback(new Error('BUCKET environment variable is required'));
   }
 
   /*
@@ -16,7 +16,7 @@ export const handler = (event, context, callback) => {
 
   // Was the lambda triggered correctly? Is the file extension supported? etc.
   if (!snsRecord || snsRecord.EventSource !== 'aws:sns') {
-    return callback('Bad record');
+    return callback(new Error('Bad record'));
   }
 
   /*
@@ -27,7 +27,7 @@ export const handler = (event, context, callback) => {
     snsRecord.Sns && snsRecord.Sns.Message ? snsRecord.Sns.Message : undefined;
 
   if (!message) {
-    return callback(`Missing message body`);
+    return callback(new Error('Missing message body'));
   }
 
   // Extract S3 record

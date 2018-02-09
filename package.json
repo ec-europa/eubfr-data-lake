@@ -8,11 +8,8 @@
     "delete": "node ./scripts/delete.js",
     "delete-demo": "./scripts/delete-demo.js",
     "delete-resources": "./scripts/delete-resources.js",
-    "docs": "run-s docs:gen-html docs:gen-md",
-    "docs:gen-md":
-      "documentation build **/lib/transform.js services/**/types/*.js -f md -o docs/README.md",
-    "docs:gen-html":
-      "documentation build **/lib/transform.js services/**/types/*.js -f html -o docs",
+    "docs":
+      "documentation build **/lib/transform.js services/**/types/*.js -f md -o docs/TYPES.md",
     "flow": "flow",
     "flow-watch": "flow-watch",
     "lint": "eslint .",

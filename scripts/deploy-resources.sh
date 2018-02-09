@@ -7,6 +7,14 @@ set -ex
 cd "$(dirname "$0")"
 cd ..
 
-# Deploy elasticsearch domains
-cd ./resources/elasticsearch
+# Deploy storage
+cd ./resources/raw-storage
+./node_modules/.bin/serverless deploy -v
+
+# Deploy harmonized storage
+cd ../harmonized-storage
+./node_modules/.bin/serverless deploy -v
+
+# Deploy elasticsearch domains and indices
+cd ../elasticsearch
 ./node_modules/.bin/serverless deploy -v

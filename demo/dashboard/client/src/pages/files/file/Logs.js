@@ -5,7 +5,7 @@ import elasticsearch from 'elasticsearch';
 import PropTypes from 'prop-types';
 import Spinner from '../../../components/Spinner';
 
-const logsApiEndpoint = `https://${process.env.REACT_APP_ES_LOGS_ENDPOINT}`;
+const logsApiEndpoint = `https://${process.env.REACT_APP_ES_META_ENDPOINT}`;
 const logsIndex = `${process.env.REACT_APP_STAGE}-logs`;
 
 class Logs extends React.Component {
@@ -18,6 +18,7 @@ class Logs extends React.Component {
       logsCount: 0,
     };
 
+    this.logClient = null;
     this.loadLogs = this.loadLogs.bind(this);
     this.setLogs = this.setLogs.bind(this);
     this.setEmptyLogs = this.setEmptyLogs.bind(this);
