@@ -1,3 +1,7 @@
+# Aggregate projects per field and then aggregate buckets per field
+
+This example shows how to aggregate projects per `project_id` field and then aggregate resulting buckets per `most_recent` field.
+
 ## Request
 
 * Endpoint: `https://PROJECTS_INDEX/project/_search`

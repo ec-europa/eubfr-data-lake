@@ -1,22 +1,20 @@
 # COOKBOOK
 
-List of Elasticsearch recipes for developers.
+Following is a list of Elasticsearch recipes for developers. Please set your [Elasticsearch client](https://www.elastic.co/guide/en/elasticsearch/client/index.html) to use `6.0`. If your query yield a warning or an error, please verify it's in the [list of supported operations](https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/aes-supported-es-operations.html#es_version_6_0).
 
 ## Search queries
 
-### Geo Query - Bounding box
+General information on the topic could be found in the [reference documentation](https://www.elastic.co/guide/en/elasticsearch/reference/6.0/query-dsl.html).
 
-* [Reference documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-geo-bounding-box-query.html)
-* [Example](./search/geo-query-bounding-box.md)
+Examples:
+
+* [Geo Query - Bounding box](./search/geo-query-bounding-box.md)
 
 ## Aggregations
 
-* [Reference documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations.html)
+General information on the topic could be found in the [reference documentation](https://www.elastic.co/guide/en/elasticsearch/reference/6.0/search-aggregations.html).
 
-### Aggregate projects per computed key with a limit of 5 results
+Examples:
 
-* [Example](./aggregation/aggregate-projects-computed-key-with-limit.md)
-
-### Aggregate projects per project_id then aggregate buckets per most_recent
-
-* [Example](./aggregation/aggregate-projects-project_id-then-aggregate-buckets.md)
+* [Aggregate projects per field and limit results](./aggregation/aggregate-projects-by-field-with-limit.md)
+* [Aggregate projects per field then aggregate buckets per field](./aggregation/aggregate-projects-by-field-then-aggregate-buckets-by-field.md)

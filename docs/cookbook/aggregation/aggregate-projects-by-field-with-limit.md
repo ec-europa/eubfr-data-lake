@@ -1,3 +1,7 @@
+# Aggregate projects per field and limit number of results
+
+In the following example, the aggregation is on the `computed_key` field and results are limited to 5.
+
 ## Request
 
 * Endpoint: `https://PROJECTS_INDEX/project/_search`

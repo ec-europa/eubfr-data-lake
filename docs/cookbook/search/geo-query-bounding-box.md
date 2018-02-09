@@ -1,3 +1,7 @@
+# Geo Query - Bounding box
+
+This query will facilitate you in visualizing geo information on maps.
+
 ## Request
 
 * Endpoint: `https://PROJECTS_INDEX/project/_search`
