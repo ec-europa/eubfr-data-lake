@@ -1,6 +1,6 @@
-# Aggregate projects per field and then aggregate buckets per field
+# Aggregate projects per field and apply a second aggregation on buckets
 
-This example shows how to aggregate projects per `project_id` field and then aggregate resulting buckets per `most_recent` field.
+This example shows how to aggregate projects per `project_id` field and then aggregate resulting buckets per `most_recent`.
 
 ## Request
 
