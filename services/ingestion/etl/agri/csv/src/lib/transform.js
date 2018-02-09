@@ -54,7 +54,7 @@ const getCoordinators = record =>
  * input => "foo, bar, baz"
  * output => ["foo", "bar", "baz"]
  */
-const getPatners = record =>
+const getPartners = record =>
   record.Partners.split(',')
     .filter(partner => partner)
     .map(partner => ({
@@ -65,6 +65,50 @@ const getPatners = record =>
       country: '',
       website: '',
     }));
+
+/**
+ * Preprocess locations.
+ * Source fields used by the method: `Project location longitude`, `Project location latitude`, `Project country(ies)`, `Project address(es)`, `Project postal code(s)`, `Project town(s)`
+ * @memberof transformAgriCsv
+ * @param {Object} record The row received from harmonized storage.
+ * @returns {Array} List of {Location} objects for `project_locations` field.
+ */
+const getLocations = record => {
+  const longArray = record['Project location longitude'].split(';');
+  const latArray = record['Project location latitude'].split(';');
+
+  return record['Project country(ies)'].split(';').map((country, index) => {
+    const hasCoordinates =
+      Array.isArray(longArray) &&
+      longArray[index] &&
+      Array.isArray(latArray) &&
+      latArray[index];
+
+    return {
+      country_code: country,
+      region: '',
+      nuts2: '',
+      address: record['Project address(es)'] || '',
+      postal_code: record['Project postal code(s)'] || '',
+      town: record['Project town(s)'] || '',
+      centroid: hasCoordinates
+        ? {
+            lat: parseFloat(latArray[index]) || 0,
+            lon: parseFloat(longArray[index]) || 0,
+          }
+        : null,
+      location: hasCoordinates
+        ? {
+            type: 'Point',
+            coordinates: [
+              parseFloat(longArray[index]) || 0,
+              parseFloat(latArray[index]) || 0,
+            ],
+          }
+        : null,
+    };
+  });
+};
 
 /**
  * Preprocess related links
@@ -142,44 +186,10 @@ export default (record: Object): Project => {
   const coordArray = getCoordinators(record);
 
   // Preprocess partners
-  const partnerArray = getPatners(record);
+  const partnerArray = getPartners(record);
 
   // Preprocess locations
-  const longArray = record['Project location longitude'].split(';');
-  const latArray = record['Project location latitude'].split(';');
-  const locationArray = record['Project country(ies)']
-    .split(';')
-    .map((country, index) => {
-      const hasCoordinates =
-        Array.isArray(longArray) &&
-        longArray[index] &&
-        Array.isArray(latArray) &&
-        latArray[index];
-
-      return {
-        country_code: country,
-        region: '',
-        nuts2: '',
-        address: record['Project address(es)'] || '',
-        postal_code: record['Project postal code(s)'] || '',
-        town: record['Project town(s)'] || '',
-        centroid: hasCoordinates
-          ? {
-              lat: parseFloat(latArray[index]) || 0,
-              lon: parseFloat(longArray[index]) || 0,
-            }
-          : null,
-        location: hasCoordinates
-          ? {
-              type: 'Point',
-              coordinates: [
-                parseFloat(longArray[index]) || 0,
-                parseFloat(latArray[index]) || 0,
-              ],
-            }
-          : null,
-      };
-    });
+  const locationArray = getLocations(record);
 
   // Preprocess related links
   const links = getRelatedLinks(record);

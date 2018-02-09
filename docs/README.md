@@ -13,7 +13,7 @@ Re-use working [example Elasticsearch queries](./cookbook/README.md).
 
 ## Types
 
-The `Project` model is central for the data lake. All ETLs should comply with the [EUBFR types](./TYPES.md) in order to store data throughout consistently.
+The `Project` model is central for the data lake. All ETLs should comply with the [EUBFR types](./types/README.md) in order to store data throughout consistently.
 
 ## Troubleshooting
 

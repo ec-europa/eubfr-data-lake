@@ -8,8 +8,7 @@
     "delete": "node ./scripts/delete.js",
     "delete-demo": "./scripts/delete-demo.js",
     "delete-resources": "./scripts/delete-resources.js",
-    "docs":
-      "documentation build **/lib/transform.js services/**/types/*.js -f md -o docs/TYPES.md",
+    "docs": "node ./scripts/docs.js",
     "flow": "flow",
     "flow-watch": "flow-watch",
     "lint": "eslint .",

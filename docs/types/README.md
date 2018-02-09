@@ -1,0 +1,7 @@
+# EUBFR Types
+
+The EUBFR project uses several types which aim to make the results of ETLs data persistence uniform and concise regardless of the target persistence layer. Definitions are based on [Flow](https://flow.org/) and [jsDocs comments](http://usejsdoc.org/) which enable automatic documentation generation.
+
+## Types
+
+* [Project model](./Project.md)
