@@ -1,12 +1,11 @@
 import path from 'path';
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 import XLSX from 'xlsx';
+
+import MessengerFactory from '@eubfr/logger-messenger/src/lib/MessengerFactory';
+import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
+
 import transformRecord from '../lib/transform';
-
-import Logger from '../../../../../../logger/listener/src/lib/Logger';
-
-// Import constants
-import { STATUS } from '../../../../../../storage/meta-index/src/lib/status';
 
 export const handler = async (event, context, callback) => {
   /*
@@ -30,65 +29,36 @@ export const handler = async (event, context, callback) => {
 
   // Check file extension
   if (['.xls', '.xlsx'].indexOf(path.extname(message.object.key)) === -1) {
-    return callback('File extension should be .xls or .xlsx');
+    return callback(new Error('File extension should be .xls or .xlsx'));
   }
 
-  /*
-   * Prepare the SNS message
-   */
-
-  // Get Account ID from lambda function arn in the context
-  const accountId = context.invokedFunctionArn.split(':')[4];
-
   // Get environment variables
-  const { BUCKET, REGION, STAGE } = process.env;
+  const { BUCKET } = process.env;
 
-  // Get the endpoint arn
-  const endpointArn = `arn:aws:sns:${REGION}:${accountId}:${STAGE}-MetaStatusReported`;
-  const sns = new AWS.SNS();
+  const messenger = MessengerFactory.Create({ context });
 
-  const logger = new Logger({
-    sns,
-    targetArn: `arn:aws:sns:${REGION}:${accountId}:${STAGE}-onLogEmitted`,
-    emitter: context.invokedFunctionArn,
-  });
-
-  const handleError = e =>
-    sns.publish(
-      {
-        Message: JSON.stringify({
-          default: JSON.stringify({
-            key: message.object.key,
-            status: STATUS.ERROR,
-            message: JSON.stringify(e),
-          }),
-        }),
-        MessageStructure: 'json',
-        TargetArn: endpointArn,
+  const handleError = async e => {
+    await messenger.send({
+      message: {
+        computed_key: message.object.key,
+        status_message: e.message,
+        status_code: STATUS.ERROR,
       },
-      async snsErr => {
-        if (snsErr) {
-          return callback(snsErr);
-        }
+      to: ['logs'],
+    });
 
-        await logger.error({
-          message: {
-            computed_key: message.object.key,
-            status_message: JSON.stringify(e),
-          },
-        });
-
-        return callback(e);
-      }
-    );
+    return callback(e);
+  };
 
   const s3 = new AWS.S3();
 
-  await logger.info({
+  await messenger.send({
     message: {
       computed_key: message.object.key,
       status_message: 'Start parsing XLS...',
+      status_code: STATUS.PARSING,
     },
+    to: ['logs'],
   });
 
   // Get file
@@ -126,7 +96,7 @@ export const handler = async (event, context, callback) => {
         dataString += `${JSON.stringify(data)}\n`;
       }
     } catch (e) {
-      return handleError(e.message);
+      return handleError(e);
     }
 
     // Load data
@@ -142,37 +112,17 @@ export const handler = async (event, context, callback) => {
         return handleError(err);
       }
 
-      await logger.info({
+      await messenger.send({
         message: {
           computed_key: message.object.key,
           status_message:
             'XLS parsed successfully. Results will be uploaded to ElasticSearch soon...',
+          status_code: STATUS.PARSED,
         },
+        to: ['logs'],
       });
 
-      /*
-       * Send the SNS message
-       */
-      return sns.publish(
-        {
-          Message: JSON.stringify({
-            default: JSON.stringify({
-              key: message.object.key,
-              status: STATUS.PARSED,
-              message: 'ETL successful',
-            }),
-          }),
-          MessageStructure: 'json',
-          TargetArn: endpointArn,
-        },
-        snsErr => {
-          if (snsErr) {
-            return callback(snsErr);
-          }
-
-          return callback(null, 'XLS file has been parsed');
-        }
-      );
+      return callback(null, 'XLS parsed successfully');
     });
   });
 

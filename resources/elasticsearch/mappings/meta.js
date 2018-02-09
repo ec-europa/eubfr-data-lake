@@ -2,16 +2,18 @@
 // https://serverless.com/framework/docs/providers/aws/guide/variables/#reference-variables-in-javascript-files
 
 module.exports = () => ({
-  file: {
-    properties: {
-      producer_id: { type: 'keyword' },
-      computed_key: { type: 'keyword' },
-      original_key: { type: 'keyword' },
-      producer_arn: { type: 'keyword' },
-      content_type: { type: 'keyword' },
-      last_modified: { type: 'date' },
-      content_length: { type: 'long' },
-      // metadata: otherMeta,
+  mappings: {
+    file: {
+      properties: {
+        computed_key: { type: 'keyword' },
+        content_length: { type: 'long' },
+        content_type: { type: 'keyword' },
+        last_modified: { type: 'date' },
+        metadata: { type: 'object' },
+        original_key: { type: 'keyword' },
+        producer_arn: { type: 'keyword' },
+        producer_id: { type: 'keyword' },
+      },
     },
   },
 });

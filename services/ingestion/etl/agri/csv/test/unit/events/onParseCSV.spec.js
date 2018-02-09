@@ -5,16 +5,18 @@
 import onParseCSV from '../../../src/events/onParseCSV';
 
 describe(`Function parseCsv in "@eubfr/ingestion-etl-agri-csv"`, () => {
-  test('The function expects a correct SNS record', async () => {
+  test('The function requires BUCKET, REGION and STAGE environment variables', async () => {
     const event = {};
     const context = {};
 
+    const callback = error => {
+      expect(error.message).toEqual(
+        'BUCKET, REGION and STAGE environment variables are required!'
+      );
+    };
+
     expect.assertions(1);
 
-    try {
-      await onParseCSV(event, context);
-    } catch (e) {
-      expect(e.message).toEqual('Bad record');
-    }
+    await onParseCSV(event, context, callback);
   });
 });

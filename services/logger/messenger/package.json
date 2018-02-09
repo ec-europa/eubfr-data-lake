@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "name": "@eubfr/logger-messenger",
+  "version": "0.0.1",
+  "dependencies": {
+    "@eubfr/logger-listener": "0.0.1"
+  },
+  "devDependencies": {
+    "aws-sdk": "2.179.0"
+  }
+}

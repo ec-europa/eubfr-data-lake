@@ -4,15 +4,14 @@
 
 import onObjectRemoved from '../../../src/events/onObjectRemoved';
 
-describe(`Function onObjectRemoved in "@eubfr/value-store-projects"`, () => {
-  test('The function expects records', async () => {
+describe(`Function onObjectRemoved in "@eubfr/ingestion-manager"`, () => {
+  test('The function expects API and INDEX environment variables', async () => {
     const event = {};
     const context = {};
-
-    expect.assertions(1);
-
     const callback = error => {
-      expect(error.message).toEqual('No record');
+      expect(error.message).toEqual(
+        'API and INDEX environment variables are required!'
+      );
     };
 
     expect.assertions(1);

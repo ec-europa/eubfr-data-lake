@@ -4,6 +4,7 @@ plugins:
   - serverless-webpack
 
 custom:
+  metaIndex: ${self:provider.stage}-meta
   webpackIncludeModules: true
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
 
@@ -19,14 +20,22 @@ provider:
     name: eubfr-${self:custom.eubfrEnvironment}-deploy
   stackTags:
     ENV: ${self:custom.eubfrEnvironment}
+  environment:
+    API:
+      Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:MetaEndpoint
+    INDEX: ${self:custom.metaIndex}
+    STAGE: ${self:provider.stage}
+    REGION: ${self:provider.region}
+  iamRoleStatements:
+    # http://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-aws-integrations.html?shortFooter=true#es-aws-integrations-s3-lambda-es-authorizations
+    - Effect: "Allow"
+      Action: "es:*"
+      Resource: "arn:aws:es:${self:provider.region}:*:domain/*"
 
 functions:
   onCreate:
     handler: src/events/onObjectCreated.handler
     name: ${self:provider.stage}-${self:service}-onCreate
-    environment:
-      STAGE: ${self:provider.stage}
-      REGION: ${self:provider.region}
     events:
       - sns:
           arn:
@@ -39,3 +48,18 @@ functions:
                 - Ref: "AWS::AccountId"
                 - ":${self:provider.stage}-object-created"
           topicName: ${self:provider.stage}-object-created
+  onObjectRemoved:
+    handler: src/events/onObjectRemoved.handler
+    name: ${self:provider.stage}-${self:service}-onObjectRemoved
+    events:
+      - sns:
+          arn:
+            Fn::Join:
+              - ""
+              -
+                - "arn:aws:sns:"
+                - Ref: "AWS::Region"
+                - ":"
+                - Ref: "AWS::AccountId"
+                - ":${self:provider.stage}-object-removed"
+          topicName: ${self:provider.stage}-object-removed

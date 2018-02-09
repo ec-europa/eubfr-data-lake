@@ -22,42 +22,48 @@ describe(`Function onObjectRemoved in "@eubfr/ingestion-cleaner"`, () => {
     delete process.env.BUCKET;
   });
 
-  test('The function requires a BUCKET environment variable', () => {
+  test('The function requires a BUCKET environment variable', async () => {
     // Intentionally remove the environment variable to test the requirement.
     delete process.env.BUCKET;
     const event = {};
     const context = {};
 
+    const callback = error => {
+      expect(error.message).toEqual('BUCKET environment variable is required');
+    };
+
     expect.assertions(1);
-    const result = handler(event, context);
-    return expect(result).rejects.toBe(
-      `BUCKET environment variable is required`
-    );
+    await onObjectRemoved(event, context, callback);
   });
 
-  test('The function expects SNS record with the official event stub', () => {
+  test('The function expects SNS record with the official event stub', async () => {
     process.env.BUCKET = 'foo';
     const event = eventOfficial;
     const context = {};
 
+    const callback = error => {
+      expect(error.message).toEqual('Bad record');
+    };
+
     expect.assertions(1);
-    const result = handler(event, context);
-    return expect(result).rejects.toBe(`Bad record`);
+    await onObjectRemoved(event, context, callback);
   });
 
-  test('The function expects a message body from the actual event stub', () => {
+  test('The function expects a message body from the actual event stub', async () => {
     process.env.BUCKET = 'foo';
-    // The JSON.stringify is used as a simple means of deep cloning the original object.
+    // Deep clone
     const copy = JSON.parse(JSON.stringify(eventEubfr));
 
     // Remove the message from the actual event to check that the function asserts it.
     delete copy.Records[0].Sns.Message;
 
     const context = {};
+    const callback = error => {
+      expect(error.message).toEqual('Missing message body');
+    };
 
     expect.assertions(1);
-    const result = handler(copy, context);
-    return expect(result).rejects.toBe(`Missing message body`);
+    await onObjectRemoved(copy, context, callback);
   });
 });
 

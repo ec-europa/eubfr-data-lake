@@ -4,12 +4,18 @@ import connectionClass from 'http-aws-es';
 export const handler = async (event, context, callback) => {
   const { API, INDEX } = process.env;
 
+  if (!API || !INDEX) {
+    return callback(
+      new Error('API and INDEX environment variables are required!')
+    );
+  }
+
   /*
    * Some checks here before going any further
    */
 
   if (!event.Records) {
-    return callback('No record');
+    return callback(new Error('No record'));
   }
 
   // Only work on the first record
@@ -17,7 +23,7 @@ export const handler = async (event, context, callback) => {
 
   // Was the lambda triggered correctly? Is the file extension supported? etc.
   if (!snsRecord || snsRecord.EventSource !== 'aws:sns') {
-    return callback('Bad record');
+    return callback(new Error('Bad record'));
   }
 
   try {
@@ -46,7 +52,7 @@ export const handler = async (event, context, callback) => {
 
     return callback(null, 'All fine');
   } catch (err) {
-    return callback(err.message);
+    return callback(err);
   }
 };
 

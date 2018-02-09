@@ -2,18 +2,20 @@
  * @jest-environment node
  */
 
-import { promisify } from 'util';
 import onObjectCreated from '../../../src/events/onObjectCreated';
 
-const handler = promisify(onObjectCreated);
-
 describe(`Function onObjectCreated in "@eubfr/value-store-projects"`, () => {
-  test('The function expects records', () => {
+  test('The function requires API and INDEX environment variables', async () => {
     const event = {};
     const context = {};
+    const callback = error => {
+      expect(error.message).toEqual(
+        'API, INDEX, REGION and STAGE environment variables are required!'
+      );
+    };
 
     expect.assertions(1);
-    const result = handler(event, context);
-    return expect(result).rejects.toBe(`No record`);
+
+    await onObjectCreated(event, context, callback);
   });
 });
