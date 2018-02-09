@@ -46,6 +46,9 @@ module.exports = () => ({
         producer_id: {
           type: 'keyword',
         },
+        project_id: {
+          type: 'keyword',
+        },
         programme_name: {
           type: 'text',
           fields: {
