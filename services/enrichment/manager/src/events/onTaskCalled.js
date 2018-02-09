@@ -15,7 +15,7 @@ export const handler = async (event, context, callback) => {
   }
 
   /**
-   * 2. If the pre-check passes, retrieves the existing record
+   * 2. If the pre-check passes, retrieve the existing record
    */
   const { API, INDEX } = process.env;
 
