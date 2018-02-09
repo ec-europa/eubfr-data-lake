@@ -6,7 +6,7 @@ plugins:
 custom:
   webpackIncludeModules: true
   eubfrEnvironment: ${opt:eubfr_env, file(../../../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
-  bucketName: ${file(../../../../harmonized-storage/serverless.yml):custom.bucketName}
+  bucketName: ${file(../../../../../resources/harmonized-storage/serverless.yml):custom.bucketName}
 
 package:
   individually: true

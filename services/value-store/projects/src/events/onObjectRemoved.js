@@ -11,7 +11,7 @@ export const handler = (event, context, callback) => {
    */
 
   if (!event.Records) {
-    return callback('No record');
+    return callback(new Error('No record'));
   }
 
   // Only work on the first record
@@ -19,7 +19,7 @@ export const handler = (event, context, callback) => {
 
   // Was the lambda triggered correctly? Is the file extension supported? etc.
   if (!snsRecord || snsRecord.EventSource !== 'aws:sns') {
-    return callback('Bad record');
+    return callback(new Error('Bad record'));
   }
 
   /*

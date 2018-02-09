@@ -7,28 +7,16 @@ set -ex
 cd "$(dirname "$0")"
 cd ..
 
-# Deploy storage
-cd ./services/storage/objects
-./node_modules/.bin/serverless deploy -v
-
 # Deploy signed uploads service
-cd ../../storage/signed-uploads
+cd ./services/storage/signed-uploads
 ./node_modules/.bin/serverless deploy -v
 
 # Deploy deleter service
 cd ../deleter
 ./node_modules/.bin/serverless deploy -v
 
-# Deploy storage meta index
-cd ../meta-index
-./node_modules/.bin/serverless deploy -v
-
-# Deploy harmonized storage
-cd ../../harmonized-storage
-./node_modules/.bin/serverless deploy -v
-
 # Deploy manager
-cd ../ingestion/manager
+cd ../../ingestion/manager
 ./node_modules/.bin/serverless deploy -v
 
 # Deploy cleaner
