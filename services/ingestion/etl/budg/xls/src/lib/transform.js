@@ -37,8 +37,8 @@ const getCoordinators = record => [
  * @param {Date} date Date in "10/9/14" (MM/DD/YY) or "10/9/2014" (MM/DD/YYYY) format.
  * @returns {Date} The date formatted into an ISO 8601 date format.
  * @example
- * input => "1388530800"
- * output => "2013-12-31T23:00:00.000Z"
+ * input => "10/9/2014"
+ * output => "2014-10-09T00:00:00.000Z"
  */
 const formatDate = date => {
   if (!date || typeof date !== 'string') return null;

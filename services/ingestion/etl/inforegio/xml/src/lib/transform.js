@@ -60,7 +60,7 @@ const formatBudget = budget => {
  * Map fields for INFOREGIO producer, XML file types.
  *
  * Transform function: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/xml/src/lib/transform.js|implementation details}
- * @name transformInforegioXml
+ * @name inforegioXmlTransform
  * @param {Object} record The row received from harmonized storage.
  * @returns {Project} JSON matching the type fields.
  */

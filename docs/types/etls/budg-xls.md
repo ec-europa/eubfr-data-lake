@@ -2,6 +2,8 @@
 
 ## BudgXlsTransform
 
+[services/ingestion/etl/budg/xls/src/lib/transform.js:133-207](https://github.com/ec-europa/eubfr-data-lake/blob/e81d0b3b7ae802053270430defd8706d02b75be9/services/ingestion/etl/budg/xls/src/lib/transform.js#L133-L207 "Source code on GitHub")
+
 Map fields for BUDG producer, XLS file types.
 
 Example input data: [stub](https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/budg/xls/test/stubs/record.json)
@@ -15,6 +17,8 @@ Transform function: [implementation details](https://github.com/ec-europa/eubfr-
 Returns **Project** JSON matching the type fields.
 
 ### getCoordinators
+
+[services/ingestion/etl/budg/xls/src/lib/transform.js:21-32](https://github.com/ec-europa/eubfr-data-lake/blob/e81d0b3b7ae802053270430defd8706d02b75be9/services/ingestion/etl/budg/xls/src/lib/transform.js#L21-L32 "Source code on GitHub")
 
 Preprocess coordinators.
 
@@ -35,6 +39,8 @@ Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Gl
 
 ### formatDate
 
+[services/ingestion/etl/budg/xls/src/lib/transform.js:43-56](https://github.com/ec-europa/eubfr-data-lake/blob/e81d0b3b7ae802053270430defd8706d02b75be9/services/ingestion/etl/budg/xls/src/lib/transform.js#L43-L56 "Source code on GitHub")
+
 Format date
 
 **Parameters**
@@ -44,13 +50,15 @@ Format date
 **Examples**
 
 ```javascript
-input => "1388530800"
-output => "2013-12-31T23:00:00.000Z"
+input => "10/9/2014"
+output => "2014-10-09T00:00:00.000Z"
 ```
 
 Returns **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** The date formatted into an ISO 8601 date format.
 
 ### getPartners
+
+[services/ingestion/etl/budg/xls/src/lib/transform.js:74-95](https://github.com/ec-europa/eubfr-data-lake/blob/e81d0b3b7ae802053270430defd8706d02b75be9/services/ingestion/etl/budg/xls/src/lib/transform.js#L74-L95 "Source code on GitHub")
 
 Preprocess partners.
 
@@ -70,6 +78,8 @@ Input fields taken from the `record` are:
 Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** A list of {Partner} objects.
 
 ### getLocations
+
+[services/ingestion/etl/budg/xls/src/lib/transform.js:108-121](https://github.com/ec-europa/eubfr-data-lake/blob/e81d0b3b7ae802053270430defd8706d02b75be9/services/ingestion/etl/budg/xls/src/lib/transform.js#L108-L121 "Source code on GitHub")
 
 Preprocess locations.
 

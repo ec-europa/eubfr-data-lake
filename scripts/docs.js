@@ -21,7 +21,9 @@ transforms.forEach(transform => {
   const etl = transform.split('-');
 
   documentation
-    .build(`**/etl/${etl[0]}/${etl[1]}/**/transform.js`, {})
+    .build(`**/etl/${etl[0]}/${etl[1]}/**/transform.js`, {
+      github: true,
+    })
     .then(documentation.formats.md)
     .then(output => {
       fs.writeFileSync(
