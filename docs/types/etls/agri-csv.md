@@ -2,8 +2,6 @@
 
 ## AgriCsvTransform
 
-[services/ingestion/etl/agri/csv/src/lib/transform.js:189-273](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/agri/csv/src/lib/transform.js#L189-L273 "Source code on GitHub")
-
 Map fields for AGRI producer, CSV file types
 
 Example input data: [stub](https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/agri/csv/test/stubs/record.json)
@@ -17,8 +15,6 @@ Transform function: [implementation details](https://github.com/ec-europa/eubfr-
 Returns **Project** JSON matching the type fields.
 
 ### getFundingArea
-
-[services/ingestion/etl/agri/csv/src/lib/transform.js:20-25](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/agri/csv/src/lib/transform.js#L20-L25 "Source code on GitHub")
 
 Converts a single string to an array
 
@@ -37,8 +33,6 @@ Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Gl
 
 ### getCoordinators
 
-[services/ingestion/etl/agri/csv/src/lib/transform.js:38-50](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/agri/csv/src/lib/transform.js#L38-L50 "Source code on GitHub")
-
 Preprocess coordinators
 
 **Parameters**
@@ -56,8 +50,6 @@ Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Gl
 
 ### getPartners
 
-[services/ingestion/etl/agri/csv/src/lib/transform.js:63-73](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/agri/csv/src/lib/transform.js#L63-L73 "Source code on GitHub")
-
 Preprocess partners
 
 **Parameters**
@@ -74,8 +66,6 @@ output => ["foo", "bar", "baz"]
 Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of {Partner} objects for `partners` field
 
 ### getLocations
-
-[services/ingestion/etl/agri/csv/src/lib/transform.js:91-126](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/agri/csv/src/lib/transform.js#L91-L126 "Source code on GitHub")
 
 Preprocess locations
 
@@ -95,8 +85,6 @@ Input fields taken from the `record` are:
 Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of {Location} objects for `project_locations` field
 
 ### getRelatedLinks
-
-[services/ingestion/etl/agri/csv/src/lib/transform.js:144-163](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/agri/csv/src/lib/transform.js#L144-L163 "Source code on GitHub")
 
 Preprocess related links
 
@@ -119,8 +107,6 @@ output => [
 Returns **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array) \| [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object))** List of {RelatedLink}
 
 ### formatDate
-
-[services/ingestion/etl/agri/csv/src/lib/transform.js:176-177](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/agri/csv/src/lib/transform.js#L176-L177 "Source code on GitHub")
 
 Format date
 

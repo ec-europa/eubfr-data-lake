@@ -2,8 +2,6 @@
 
 ## inforegioXmlTransform
 
-[services/ingestion/etl/inforegio/xml/src/lib/transform.js:238-305](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/inforegio/xml/src/lib/transform.js#L238-L305 "Source code on GitHub")
-
 Map fields for INFOREGIO producer, XML file types
 
 Transform function: [implementation details](https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/xml/src/lib/transform.js)
@@ -15,8 +13,6 @@ Transform function: [implementation details](https://github.com/ec-europa/eubfr-
 Returns **Project** JSON matching the type fields
 
 ### checkData
-
-[services/ingestion/etl/inforegio/xml/src/lib/transform.js:20-27](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/inforegio/xml/src/lib/transform.js#L20-L27 "Source code on GitHub")
 
 Check if field is an array or a sting
 
@@ -35,8 +31,6 @@ Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 ### formatDate
 
-[services/ingestion/etl/inforegio/xml/src/lib/transform.js:40-51](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/inforegio/xml/src/lib/transform.js#L40-L51 "Source code on GitHub")
-
 Format date
 
 **Parameters**
@@ -54,8 +48,6 @@ Returns **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Glo
 
 ### getAddress
 
-[services/ingestion/etl/inforegio/xml/src/lib/transform.js:66-80](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/inforegio/xml/src/lib/transform.js#L66-L80 "Source code on GitHub")
-
 Get adress from different fields
 
 Input fields taken from the `record` are:
@@ -71,8 +63,6 @@ Input fields taken from the `record` are:
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The address as consumed by {Partner}
 
 ### formatBudget
-
-[services/ingestion/etl/inforegio/xml/src/lib/transform.js:93-102](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/inforegio/xml/src/lib/transform.js#L93-L102 "Source code on GitHub")
 
 Formats information for the `value` of {BudgetItem}
 
@@ -90,8 +80,6 @@ output => "329000000"
 Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The value for `value` of {BudgetItem}
 
 ### getFundingArea
-
-[services/ingestion/etl/inforegio/xml/src/lib/transform.js:119-122](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/inforegio/xml/src/lib/transform.js#L119-L122 "Source code on GitHub")
 
 Get funding areas from a string
 
@@ -114,8 +102,6 @@ Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Gl
 
 ### getLocations
 
-[services/ingestion/etl/inforegio/xml/src/lib/transform.js:137-178](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/inforegio/xml/src/lib/transform.js#L137-L178 "Source code on GitHub")
-
 Get a list of {Location}
 
 Input fields taken from the `record` are:
@@ -131,8 +117,6 @@ Input fields taken from the `record` are:
 Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of {Location}
 
 ### getThemes
-
-[services/ingestion/etl/inforegio/xml/src/lib/transform.js:195-201](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/inforegio/xml/src/lib/transform.js#L195-L201 "Source code on GitHub")
 
 Get themes from a string
 
@@ -154,8 +138,6 @@ output => ['foo', 'bar', 'baz']
 Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of values for themes
 
 ### getPartners
-
-[services/ingestion/etl/inforegio/xml/src/lib/transform.js:216-228](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/inforegio/xml/src/lib/transform.js#L216-L228 "Source code on GitHub")
 
 Get a list of a single {Partner}
 Depends on getAddress()

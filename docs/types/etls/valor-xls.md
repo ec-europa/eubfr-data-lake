@@ -2,8 +2,6 @@
 
 ## valorXlsTransform
 
-[services/ingestion/etl/valor/xls/src/lib/transform.js:32-147](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/valor/xls/src/lib/transform.js#L32-L147 "Source code on GitHub")
-
 Map fields for VALOR producer, XLS file types.
 
 Transform function: [implementation details](https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/valor/xml/src/lib/transform.js)

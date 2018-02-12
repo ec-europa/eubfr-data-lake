@@ -3,7 +3,7 @@ const path = require('path');
 const documentation = require('documentation'); // eslint-disable-line import/no-extraneous-dependencies
 
 documentation
-  .build('**/Project.js', {})
+  .build('**/_types/Project.js', {})
   .then(documentation.formats.md)
   .then(output => {
     fs.writeFileSync(path.resolve('./docs/types/Project.md'), output);
@@ -21,9 +21,7 @@ transforms.forEach(transform => {
   const etl = transform.split('-');
 
   documentation
-    .build(`**/etl/${etl[0]}/${etl[1]}/**/transform.js`, {
-      github: true,
-    })
+    .build(`**/etl/${etl[0]}/${etl[1]}/**/transform.js`, {})
     .then(documentation.formats.md)
     .then(output => {
       fs.writeFileSync(

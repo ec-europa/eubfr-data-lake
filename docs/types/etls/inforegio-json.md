@@ -2,8 +2,6 @@
 
 ## InforegioJsonTransform
 
-[services/ingestion/etl/inforegio/json/src/lib/transform.js:196-262](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/inforegio/json/src/lib/transform.js#L196-L262 "Source code on GitHub")
-
 Map fields for INFOREGIO producer, JSON file types
 
 Transform function: [implementation details](https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/json/src/lib/transform.js)
@@ -15,8 +13,6 @@ Transform function: [implementation details](https://github.com/ec-europa/eubfr-
 Returns **Project** JSON matching the type fields.
 
 ### getFundingArea
-
-[services/ingestion/etl/inforegio/json/src/lib/transform.js:18-19](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/inforegio/json/src/lib/transform.js#L18-L19 "Source code on GitHub")
 
 Preprocess `funding_area`
 
@@ -37,8 +33,6 @@ Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Gl
 
 ### formatDate
 
-[services/ingestion/etl/inforegio/json/src/lib/transform.js:32-43](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/inforegio/json/src/lib/transform.js#L32-L43 "Source code on GitHub")
-
 Format date
 
 **Parameters**
@@ -56,8 +50,6 @@ Returns **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Glo
 
 ### getAddress
 
-[services/ingestion/etl/inforegio/json/src/lib/transform.js:58-72](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/inforegio/json/src/lib/transform.js#L58-L72 "Source code on GitHub")
-
 Preprocess address
 
 Input fields taken from the `record` are:
@@ -74,8 +66,6 @@ Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Gl
 
 ### getPartners
 
-[services/ingestion/etl/inforegio/json/src/lib/transform.js:86-95](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/inforegio/json/src/lib/transform.js#L86-L95 "Source code on GitHub")
-
 Preprocess partners
 
 Input fields taken from the `record` are:
@@ -90,8 +80,6 @@ Input fields taken from the `record` are:
 Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** A list of a single {Partner} object
 
 ### getLocations
-
-[services/ingestion/etl/inforegio/json/src/lib/transform.js:110-146](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/inforegio/json/src/lib/transform.js#L110-L146 "Source code on GitHub")
 
 Preprocess locations
 
@@ -109,8 +97,6 @@ Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Gl
 
 ### getProjectWebsite
 
-[services/ingestion/etl/inforegio/json/src/lib/transform.js:159-166](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/inforegio/json/src/lib/transform.js#L159-L166 "Source code on GitHub")
-
 Preprocess `project_website` field
 
 Input fields taken from the `record` are:
@@ -124,8 +110,6 @@ Input fields taken from the `record` are:
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
 ### formatBudget
-
-[services/ingestion/etl/inforegio/json/src/lib/transform.js:175-186](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/inforegio/json/src/lib/transform.js#L175-L186 "Source code on GitHub")
 
 Preprocess value field of {BudgetItem}.
 

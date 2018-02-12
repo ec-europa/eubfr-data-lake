@@ -2,8 +2,6 @@
 
 ## BudgXlsTransform
 
-[services/ingestion/etl/budg/xls/src/lib/transform.js:154-226](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/budg/xls/src/lib/transform.js#L154-L226 "Source code on GitHub")
-
 Map fields for BUDG producer, XLS file types
 
 Example input data: [stub](https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/budg/xls/test/stubs/record.json)
@@ -17,8 +15,6 @@ Transform function: [implementation details](https://github.com/ec-europa/eubfr-
 Returns **Project** JSON matching the type fields.
 
 ### getCoordinators
-
-[services/ingestion/etl/budg/xls/src/lib/transform.js:21-32](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/budg/xls/src/lib/transform.js#L21-L32 "Source code on GitHub")
 
 Preprocess coordinators
 
@@ -39,8 +35,6 @@ Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Gl
 
 ### formatDate
 
-[services/ingestion/etl/budg/xls/src/lib/transform.js:45-58](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/budg/xls/src/lib/transform.js#L45-L58 "Source code on GitHub")
-
 Format date
 
 **Parameters**
@@ -57,8 +51,6 @@ output => "2014-10-09T00:00:00.000Z"
 Returns **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** The date formatted into an ISO 8601 date format
 
 ### getPartners
-
-[services/ingestion/etl/budg/xls/src/lib/transform.js:76-97](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/budg/xls/src/lib/transform.js#L76-L97 "Source code on GitHub")
 
 Preprocess partners
 
@@ -79,8 +71,6 @@ Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Gl
 
 ### getLocations
 
-[services/ingestion/etl/budg/xls/src/lib/transform.js:110-123](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/budg/xls/src/lib/transform.js#L110-L123 "Source code on GitHub")
-
 Preprocess locations
 
 Input fields taken from the `record` are:
@@ -94,8 +84,6 @@ Input fields taken from the `record` are:
 Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of {Location} objects for `project_locations` field
 
 ### getTypes
-
-[services/ingestion/etl/budg/xls/src/lib/transform.js:141-142](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/budg/xls/src/lib/transform.js#L141-L142 "Source code on GitHub")
 
 Converts a single string with commas to an array
 
