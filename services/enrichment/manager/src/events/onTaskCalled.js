@@ -1,6 +1,6 @@
 import elasticsearch from 'elasticsearch';
 import connectionClass from 'http-aws-es';
-import { needsEnrichment, alreadyEnriched } from '../lib/checks';
+import { needsEnrichment } from '../lib/checks';
 import { computeId } from '../lib/computeId';
 import { enrich } from '../lib/enrich';
 
@@ -49,16 +49,11 @@ export const handler = async (event, context, callback) => {
     return callback(null, 'record does not exist, stop enrichment');
   }
 
-  /**
-   * 3. Check if the existing record has already been enriched
-   */
   const existingRecord = elasticHit._source;
 
-  if (alreadyEnriched(record, existingRecord)) {
-    return callback(null, 'the record has already been enriched');
-  }
-
-  // 4. Finally, enrich the record
+  /*
+   * 3. Finally, enrich the record
+   */
   const enrichedRecord = await enrich(record, existingRecord);
 
   try {

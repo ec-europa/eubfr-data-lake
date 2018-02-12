@@ -5,16 +5,12 @@ export const canLocationsBeEnriched = locations =>
       return false;
     }
 
-    // Country code is provided but location is empty
-    const needsLocation = loc.country_code && !loc.location;
+    // Centroid is empty but country code is provided
+    const needsLocation = !loc.centroid && loc.country_code;
     if (needsLocation) return true;
 
-    // Location is provided but country code is empty
-    const needsCountryCode =
-      !loc.country_code &&
-      loc.location &&
-      loc.location.type === 'Point' &&
-      loc.location.coordinates;
+    // Country code is empty but centroid is provided
+    const needsCountryCode = !loc.country_code && loc.centroid;
 
     if (needsCountryCode) return true;
 
@@ -25,5 +21,3 @@ export const needsEnrichment = record =>
   record &&
   record.project_locations &&
   canLocationsBeEnriched(record.project_locations);
-
-export const alreadyEnriched = (newRecord, existingRecord) => false;
