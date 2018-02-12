@@ -1,16 +1,34 @@
 // @flow
 
-import type { Project } from '../../../../types/Project';
+import type { Project } from '../../../../_types/Project';
 
-/*
- * Transform message (REGIO JSON)
+/**
+ * Preprocess `funding_area`
+ *
+ * Converts a single string to an array of multiple values
+ *
+ * @memberof InforegioJsonTransform
+ * @param {Object} record The row received from harmonized storage
+ * @returns {Array} List of string values for `funding_area` field
+ *
+ * @example
+ * input => "Research & innovation; Investment for growth; Transport"
+ * output => ["Research & innovation", "Investment for growth", "Transport"]
  */
-
 const getFundingArea = record =>
-  // Get value for 'Funding area' if property is present.
   record.Funds ? record.Funds.split(';').filter(fund => fund) : [];
 
-// Formats date from DD/MM/YYYY to ISO 8601 date format.
+/**
+ * Format date
+ *
+ * @memberof InforegioJsonTransform
+ * @param {Date} date Date in "10/9/2014" (DD/MM/YYYY) format
+ * @returns {Date} The date formatted into an ISO 8601 date format
+ *
+ * @example
+ * input => "01/01/2009"
+ * output => "2009-01-01T00:00:00.000Z"
+ */
 const formatDate = date => {
   if (!date || typeof date !== 'string') return null;
   const d = date.split(/\//);
@@ -24,6 +42,19 @@ const formatDate = date => {
   }
 };
 
+/**
+ * Preprocess address
+ *
+ * Input fields taken from the `record` are:
+ *
+ * - `Beneficiary_address`
+ * - `Beneficiary_Post_Code`
+ * - `Beneficiary_City`
+ *
+ * @memberof InforegioJsonTransform
+ * @param {Object} record The row received from harmonized storage
+ * @returns {Array} A list of {Partner} objects
+ */
 const getAddress = record => {
   let address = '';
   if (record.Beneficiary_address) {
@@ -40,64 +71,43 @@ const getAddress = record => {
   return address;
 };
 
-const getProjectWebsite = record => {
-  if (record.URL && typeof record.URL === 'object') {
-    return record.URL[0];
-  } else if (record.URL && typeof record.URL === 'string') {
-    return record.URL;
-  }
-  return '';
-};
-
-const formatBudget = budget => {
-  if (!budget) return 0;
-  const b = budget.split(' ');
-
-  if (b === null || b.length < 2) return 0;
-
-  let s = '';
-  for (let i = 1; i < b.length; i += 1) {
-    s += b[i];
-  }
-  return Number(s);
-};
-
-/*
- * Map fields
+/**
+ * Preprocess partners
+ *
+ * Input fields taken from the `record` are:
+ *
+ * - `Beneficiary`
+ * - `Beneficiary_Country`
+ *
+ * @memberof InforegioJsonTransform
+ * @param {Object} record The row received from harmonized storage
+ * @returns {Array} A list of a single {Partner} object
  */
-export default (record: Object): Project => {
-  // Preprocess budget
-  const budgetObject = {
-    total_cost: {
-      value: formatBudget(record.Total_project_budget),
-      currency: '',
-      raw: record.Total_project_budget || '',
-    },
-    eu_contrib: {
-      value: formatBudget(record.EU_Budget_contribution),
-      currency: '',
-      raw: record.EU_Budget_contribution || '',
-    },
-    private_fund: { value: 0, currency: '', raw: '' },
-    public_fund: { value: 0, currency: '', raw: '' },
-    other_contrib: { value: 0, currency: '', raw: '' },
-    funding_area: getFundingArea(record),
-    mmf_heading: '',
-  };
+const getPartners = record => [
+  {
+    name: record.Beneficiary,
+    type: '',
+    address: getAddress(record),
+    region: '',
+    country: record.Beneficiary_Country,
+    website: '',
+  },
+];
 
-  // Preprocess partners
-  const partnerArray = [
-    {
-      name: record.Beneficiary,
-      type: '',
-      address: getAddress(record),
-      region: '',
-      country: record.Beneficiary_Country,
-      website: '',
-    },
-  ];
-
-  // Preprocess project locations
+/**
+ * Preprocess locations
+ *
+ * Input fields taken from the `record` are:
+ *
+ * - `Project_country`
+ * - `Project_region`
+ * - `Project_NUTS2_code`
+ *
+ * @memberof InforegioJsonTransform
+ * @param {Object} record The row received from harmonized storage
+ * @returns {Array} List of {Location} objects for `project_locations` field
+ */
+const getLocations = record => {
   const locationArray = [];
   const countryArray = record.Project_country
     ? record.Project_country.split('; ').filter(country => country)
@@ -131,6 +141,83 @@ export default (record: Object): Project => {
       centroid: null,
     });
   }
+
+  return locationArray;
+};
+
+/**
+ * Preprocess `project_website` field
+ *
+ * Input fields taken from the `record` are:
+ *
+ * - `URL`
+ *
+ * @memberof InforegioJsonTransform
+ * @param {Object} record The row received from harmonized storage
+ * @returns {string}
+ */
+const getProjectWebsite = record => {
+  if (record.URL && typeof record.URL === 'object') {
+    return record.URL[0];
+  } else if (record.URL && typeof record.URL === 'string') {
+    return record.URL;
+  }
+  return '';
+};
+
+/**
+ * Preprocess value field of {BudgetItem}.
+ *
+ * @memberof InforegioJsonTransform
+ * @param {string} budget String containing numeric data
+ * @returns {number}
+ */
+const formatBudget = budget => {
+  if (!budget) return 0;
+  const b = budget.split(' ');
+
+  if (b === null || b.length < 2) return 0;
+
+  let s = '';
+  for (let i = 1; i < b.length; i += 1) {
+    s += b[i];
+  }
+  return Number(s);
+};
+
+/**
+ * Map fields for INFOREGIO producer, JSON file types
+ *
+ * Transform function: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/json/src/lib/transform.js|implementation details}
+ * @name InforegioJsonTransform
+ * @param {Object} record The row received from harmonized storage.
+ * @returns {Project} JSON matching the type fields.
+ */
+export default (record: Object): Project => {
+  // Preprocess budget
+  const budgetObject = {
+    total_cost: {
+      value: formatBudget(record.Total_project_budget),
+      currency: '',
+      raw: record.Total_project_budget || '',
+    },
+    eu_contrib: {
+      value: formatBudget(record.EU_Budget_contribution),
+      currency: '',
+      raw: record.EU_Budget_contribution || '',
+    },
+    private_fund: { value: 0, currency: '', raw: '' },
+    public_fund: { value: 0, currency: '', raw: '' },
+    other_contrib: { value: 0, currency: '', raw: '' },
+    funding_area: getFundingArea(record),
+    mmf_heading: '',
+  };
+
+  // Preprocess partners
+  const partnerArray = getPartners(record);
+
+  // Preprocess project locations
+  const locationArray = getLocations(record);
 
   // Preprocess themes
   const themeArray = record.Thèmes ? record.Thèmes.split('; ') : [];
