@@ -5,6 +5,7 @@ module.exports = () => ({
   mappings: {
     project: {
       properties: {
+        last_modified: { type: 'date' },
         title: {
           type: 'text',
           fields: {

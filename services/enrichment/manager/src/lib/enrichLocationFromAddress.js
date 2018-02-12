@@ -5,18 +5,24 @@ export const enrichLocationFromAddress = async loc => {
   // Get country name from ISO 3166-1 Alpha-2 code (doesn't seem mandatory after some testing...)
   const country = countries.getName(loc.country_code, 'en');
 
-  // TODO: add town, address, etc.
-  // if (loc.address ...)
+  const qs = {
+    format: 'json',
+    country,
+  };
 
-  const url = `http://europa.eu/webtools/rest/gisco/nominatim/search.php?format=json&country=${encodeURIComponent(
-    country
-  )}`;
+  // If the town has been provided, use it
+  if (loc.town) {
+    qs.city = loc.town;
+  }
+
+  const url = 'http://europa.eu/webtools/rest/gisco/nominatim/search.php';
 
   let results;
 
   try {
     results = await request.get({
       url,
+      qs,
       json: true,
       headers: {
         'User-Agent': 'eubfr',
