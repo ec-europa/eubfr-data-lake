@@ -2,9 +2,9 @@
 
 ## InforegioJsonTransform
 
-[services/ingestion/etl/inforegio/json/src/lib/transform.js:193-259](https://github.com/ec-europa/eubfr-data-lake/blob/e81d0b3b7ae802053270430defd8706d02b75be9/services/ingestion/etl/inforegio/json/src/lib/transform.js#L193-L259 "Source code on GitHub")
+[services/ingestion/etl/inforegio/json/src/lib/transform.js:196-262](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/inforegio/json/src/lib/transform.js#L196-L262 "Source code on GitHub")
 
-Map fields for INFOREGIO producer, JSON file types.
+Map fields for INFOREGIO producer, JSON file types
 
 Transform function: [implementation details](https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/json/src/lib/transform.js)
 
@@ -16,15 +16,15 @@ Returns **Project** JSON matching the type fields.
 
 ### getFundingArea
 
-[services/ingestion/etl/inforegio/json/src/lib/transform.js:17-18](https://github.com/ec-europa/eubfr-data-lake/blob/e81d0b3b7ae802053270430defd8706d02b75be9/services/ingestion/etl/inforegio/json/src/lib/transform.js#L17-L18 "Source code on GitHub")
+[services/ingestion/etl/inforegio/json/src/lib/transform.js:18-19](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/inforegio/json/src/lib/transform.js#L18-L19 "Source code on GitHub")
 
-Preprocess `funding_area`.
+Preprocess `funding_area`
 
-Converts a single string to an array of multiple values.
+Converts a single string to an array of multiple values
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage.
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage
 
 **Examples**
 
@@ -33,17 +33,17 @@ input => "Research & innovation; Investment for growth; Transport"
 output => ["Research & innovation", "Investment for growth", "Transport"]
 ```
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of string values for `funding_area` field.
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of string values for `funding_area` field
 
 ### formatDate
 
-[services/ingestion/etl/inforegio/json/src/lib/transform.js:29-40](https://github.com/ec-europa/eubfr-data-lake/blob/e81d0b3b7ae802053270430defd8706d02b75be9/services/ingestion/etl/inforegio/json/src/lib/transform.js#L29-L40 "Source code on GitHub")
+[services/ingestion/etl/inforegio/json/src/lib/transform.js:32-43](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/inforegio/json/src/lib/transform.js#L32-L43 "Source code on GitHub")
 
 Format date
 
 **Parameters**
 
--   `date` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** Date in "10/9/2014" (DD/MM/YYYY) format.
+-   `date` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** Date in "10/9/2014" (DD/MM/YYYY) format
 
 **Examples**
 
@@ -52,13 +52,13 @@ input => "01/01/2009"
 output => "2009-01-01T00:00:00.000Z"
 ```
 
-Returns **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** The date formatted into an ISO 8601 date format.
+Returns **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** The date formatted into an ISO 8601 date format
 
 ### getAddress
 
-[services/ingestion/etl/inforegio/json/src/lib/transform.js:55-69](https://github.com/ec-europa/eubfr-data-lake/blob/e81d0b3b7ae802053270430defd8706d02b75be9/services/ingestion/etl/inforegio/json/src/lib/transform.js#L55-L69 "Source code on GitHub")
+[services/ingestion/etl/inforegio/json/src/lib/transform.js:58-72](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/inforegio/json/src/lib/transform.js#L58-L72 "Source code on GitHub")
 
-Preprocess address.
+Preprocess address
 
 Input fields taken from the `record` are:
 
@@ -68,15 +68,15 @@ Input fields taken from the `record` are:
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage.
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** A list of {Partner} objects.
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** A list of {Partner} objects
 
 ### getPartners
 
-[services/ingestion/etl/inforegio/json/src/lib/transform.js:83-92](https://github.com/ec-europa/eubfr-data-lake/blob/e81d0b3b7ae802053270430defd8706d02b75be9/services/ingestion/etl/inforegio/json/src/lib/transform.js#L83-L92 "Source code on GitHub")
+[services/ingestion/etl/inforegio/json/src/lib/transform.js:86-95](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/inforegio/json/src/lib/transform.js#L86-L95 "Source code on GitHub")
 
-Preprocess partners.
+Preprocess partners
 
 Input fields taken from the `record` are:
 
@@ -85,15 +85,15 @@ Input fields taken from the `record` are:
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage.
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** A list of a single {Partner} object.
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** A list of a single {Partner} object
 
 ### getLocations
 
-[services/ingestion/etl/inforegio/json/src/lib/transform.js:107-143](https://github.com/ec-europa/eubfr-data-lake/blob/e81d0b3b7ae802053270430defd8706d02b75be9/services/ingestion/etl/inforegio/json/src/lib/transform.js#L107-L143 "Source code on GitHub")
+[services/ingestion/etl/inforegio/json/src/lib/transform.js:110-146](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/inforegio/json/src/lib/transform.js#L110-L146 "Source code on GitHub")
 
-Preprocess locations.
+Preprocess locations
 
 Input fields taken from the `record` are:
 
@@ -103,15 +103,15 @@ Input fields taken from the `record` are:
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage.
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of {Location} objects for `project_locations` field.
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of {Location} objects for `project_locations` field
 
 ### getProjectWebsite
 
-[services/ingestion/etl/inforegio/json/src/lib/transform.js:156-163](https://github.com/ec-europa/eubfr-data-lake/blob/e81d0b3b7ae802053270430defd8706d02b75be9/services/ingestion/etl/inforegio/json/src/lib/transform.js#L156-L163 "Source code on GitHub")
+[services/ingestion/etl/inforegio/json/src/lib/transform.js:159-166](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/inforegio/json/src/lib/transform.js#L159-L166 "Source code on GitHub")
 
-Preprocess `project_website` field.
+Preprocess `project_website` field
 
 Input fields taken from the `record` are:
 
@@ -119,18 +119,18 @@ Input fields taken from the `record` are:
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage.
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
 ### formatBudget
 
-[services/ingestion/etl/inforegio/json/src/lib/transform.js:172-183](https://github.com/ec-europa/eubfr-data-lake/blob/e81d0b3b7ae802053270430defd8706d02b75be9/services/ingestion/etl/inforegio/json/src/lib/transform.js#L172-L183 "Source code on GitHub")
+[services/ingestion/etl/inforegio/json/src/lib/transform.js:175-186](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/inforegio/json/src/lib/transform.js#L175-L186 "Source code on GitHub")
 
 Preprocess value field of {BudgetItem}.
 
 **Parameters**
 
--   `budget` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** String containing numeric data.
+-   `budget` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** String containing numeric data
 
 Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 

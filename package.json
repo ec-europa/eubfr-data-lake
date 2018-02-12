@@ -8,7 +8,7 @@
     "delete": "node ./scripts/delete.js",
     "delete-demo": "./scripts/delete-demo.js",
     "delete-resources": "./scripts/delete-resources.js",
-    "docs": "node ./scripts/docs.js",
+    "docs:md": "node ./scripts/docs-md.js",
     "flow": "flow",
     "flow-watch": "flow-watch",
     "lint": "eslint .",

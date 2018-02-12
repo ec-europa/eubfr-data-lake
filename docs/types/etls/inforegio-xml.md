@@ -2,14 +2,171 @@
 
 ## inforegioXmlTransform
 
-[services/ingestion/etl/inforegio/xml/src/lib/transform.js:67-189](https://github.com/ec-europa/eubfr-data-lake/blob/e81d0b3b7ae802053270430defd8706d02b75be9/services/ingestion/etl/inforegio/xml/src/lib/transform.js#L67-L189 "Source code on GitHub")
+[services/ingestion/etl/inforegio/xml/src/lib/transform.js:238-305](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/inforegio/xml/src/lib/transform.js#L238-L305 "Source code on GitHub")
 
-Map fields for INFOREGIO producer, XML file types.
+Map fields for INFOREGIO producer, XML file types
 
 Transform function: [implementation details](https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/xml/src/lib/transform.js)
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage.
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage
 
-Returns **Project** JSON matching the type fields.
+Returns **Project** JSON matching the type fields
+
+### checkData
+
+[services/ingestion/etl/inforegio/xml/src/lib/transform.js:20-27](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/inforegio/xml/src/lib/transform.js#L20-L27 "Source code on GitHub")
+
+Check if field is an array or a sting
+
+**Parameters**
+
+-   `data` **([Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String))** The input piece of data
+
+**Examples**
+
+```javascript
+input => ['foo']
+output => 'foo'
+```
+
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The string value of the input data
+
+### formatDate
+
+[services/ingestion/etl/inforegio/xml/src/lib/transform.js:40-51](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/inforegio/xml/src/lib/transform.js#L40-L51 "Source code on GitHub")
+
+Format date
+
+**Parameters**
+
+-   `date` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** Date in `DD/MM/YYYY` format
+
+**Examples**
+
+```javascript
+input => "02/02/2018"
+output => '2018-02-02T00:00:00.000Z'
+```
+
+Returns **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** The date formatted into an ISO 8601 date format
+
+### getAddress
+
+[services/ingestion/etl/inforegio/xml/src/lib/transform.js:66-80](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/inforegio/xml/src/lib/transform.js#L66-L80 "Source code on GitHub")
+
+Get adress from different fields
+
+Input fields taken from the `record` are:
+
+-   `Beneficiary_address`
+-   `Beneficiary_Post_Code`
+-   `Beneficiary_City`
+
+**Parameters**
+
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage
+
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The address as consumed by {Partner}
+
+### formatBudget
+
+[services/ingestion/etl/inforegio/xml/src/lib/transform.js:93-102](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/inforegio/xml/src/lib/transform.js#L93-L102 "Source code on GitHub")
+
+Formats information for the `value` of {BudgetItem}
+
+**Parameters**
+
+-   `budget` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Prefixed currency value
+
+**Examples**
+
+```javascript
+input => "EUR 329 000 000"
+output => "329000000"
+```
+
+Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The value for `value` of {BudgetItem}
+
+### getFundingArea
+
+[services/ingestion/etl/inforegio/xml/src/lib/transform.js:119-122](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/inforegio/xml/src/lib/transform.js#L119-L122 "Source code on GitHub")
+
+Get funding areas from a string
+
+Input fields taken from the `record` are:
+
+-   `Funds`
+
+**Parameters**
+
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage
+
+**Examples**
+
+```javascript
+input => 'foo;bar;baz'
+output => ['foo', 'bar', 'baz']
+```
+
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of values for funding area
+
+### getLocations
+
+[services/ingestion/etl/inforegio/xml/src/lib/transform.js:137-178](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/inforegio/xml/src/lib/transform.js#L137-L178 "Source code on GitHub")
+
+Get a list of {Location}
+
+Input fields taken from the `record` are:
+
+-   `Project_country`
+-   `Project_region`
+-   `Project_NUTS2_code`
+
+**Parameters**
+
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage
+
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of {Location}
+
+### getThemes
+
+[services/ingestion/etl/inforegio/xml/src/lib/transform.js:195-201](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/inforegio/xml/src/lib/transform.js#L195-L201 "Source code on GitHub")
+
+Get themes from a string
+
+Input fields taken from the `record` are:
+
+-   `Themes`
+
+**Parameters**
+
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage
+
+**Examples**
+
+```javascript
+input => 'foo; bar; baz'
+output => ['foo', 'bar', 'baz']
+```
+
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of values for themes
+
+### getPartners
+
+[services/ingestion/etl/inforegio/xml/src/lib/transform.js:216-228](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/inforegio/xml/src/lib/transform.js#L216-L228 "Source code on GitHub")
+
+Get a list of a single {Partner}
+Depends on getAddress()
+
+Input fields taken from the `record` are:
+
+-   `Beneficiary`
+-   `Beneficiary_Country`
+
+**Parameters**
+
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage
+
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of a single {Partner}

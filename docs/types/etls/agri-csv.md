@@ -2,9 +2,9 @@
 
 ## AgriCsvTransform
 
-[services/ingestion/etl/agri/csv/src/lib/transform.js:180-264](https://github.com/ec-europa/eubfr-data-lake/blob/e81d0b3b7ae802053270430defd8706d02b75be9/services/ingestion/etl/agri/csv/src/lib/transform.js#L180-L264 "Source code on GitHub")
+[services/ingestion/etl/agri/csv/src/lib/transform.js:189-273](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/agri/csv/src/lib/transform.js#L189-L273 "Source code on GitHub")
 
-Map fields for AGRI producer, CSV file types.
+Map fields for AGRI producer, CSV file types
 
 Example input data: [stub](https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/agri/csv/test/stubs/record.json)
 
@@ -18,13 +18,13 @@ Returns **Project** JSON matching the type fields.
 
 ### getFundingArea
 
-[services/ingestion/etl/agri/csv/src/lib/transform.js:18-23](https://github.com/ec-europa/eubfr-data-lake/blob/e81d0b3b7ae802053270430defd8706d02b75be9/services/ingestion/etl/agri/csv/src/lib/transform.js#L18-L23 "Source code on GitHub")
+[services/ingestion/etl/agri/csv/src/lib/transform.js:20-25](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/agri/csv/src/lib/transform.js#L20-L25 "Source code on GitHub")
 
-Converts a single string to an array of multiple values.
+Converts a single string to an array
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage.
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage
 
 **Examples**
 
@@ -33,17 +33,17 @@ input => "Research & innovation; Investment for growth; Transport"
 output => ["Research & innovation", "Investment for growth", "Transport"]
 ```
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of string values for `funding_area` field.
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of string values for `funding_area` field
 
 ### getCoordinators
 
-[services/ingestion/etl/agri/csv/src/lib/transform.js:34-46](https://github.com/ec-europa/eubfr-data-lake/blob/e81d0b3b7ae802053270430defd8706d02b75be9/services/ingestion/etl/agri/csv/src/lib/transform.js#L34-L46 "Source code on GitHub")
+[services/ingestion/etl/agri/csv/src/lib/transform.js:38-50](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/agri/csv/src/lib/transform.js#L38-L50 "Source code on GitHub")
 
 Preprocess coordinators
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage.
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage
 
 **Examples**
 
@@ -52,17 +52,17 @@ input => "Eva Maria Plunger (VERBUND AG); foo; bar"
 output => ["Eva Maria Plunger (VERBUND AG)", "foo", "bar"]
 ```
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of {Coordinator} objects for `coordinators` field.
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of {Coordinator} objects for `coordinators` field
 
 ### getPartners
 
-[services/ingestion/etl/agri/csv/src/lib/transform.js:57-67](https://github.com/ec-europa/eubfr-data-lake/blob/e81d0b3b7ae802053270430defd8706d02b75be9/services/ingestion/etl/agri/csv/src/lib/transform.js#L57-L67 "Source code on GitHub")
+[services/ingestion/etl/agri/csv/src/lib/transform.js:63-73](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/agri/csv/src/lib/transform.js#L63-L73 "Source code on GitHub")
 
 Preprocess partners
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage.
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage
 
 **Examples**
 
@@ -71,13 +71,13 @@ input => "foo, bar, baz"
 output => ["foo", "bar", "baz"]
 ```
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of {Partner} objects for `partners` field.
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of {Partner} objects for `partners` field
 
 ### getLocations
 
-[services/ingestion/etl/agri/csv/src/lib/transform.js:85-120](https://github.com/ec-europa/eubfr-data-lake/blob/e81d0b3b7ae802053270430defd8706d02b75be9/services/ingestion/etl/agri/csv/src/lib/transform.js#L85-L120 "Source code on GitHub")
+[services/ingestion/etl/agri/csv/src/lib/transform.js:91-126](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/agri/csv/src/lib/transform.js#L91-L126 "Source code on GitHub")
 
-Preprocess locations.
+Preprocess locations
 
 Input fields taken from the `record` are:
 
@@ -90,21 +90,21 @@ Input fields taken from the `record` are:
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage.
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of {Location} objects for `project_locations` field.
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of {Location} objects for `project_locations` field
 
 ### getRelatedLinks
 
-[services/ingestion/etl/agri/csv/src/lib/transform.js:137-156](https://github.com/ec-europa/eubfr-data-lake/blob/e81d0b3b7ae802053270430defd8706d02b75be9/services/ingestion/etl/agri/csv/src/lib/transform.js#L137-L156 "Source code on GitHub")
+[services/ingestion/etl/agri/csv/src/lib/transform.js:144-163](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/agri/csv/src/lib/transform.js#L144-L163 "Source code on GitHub")
 
 Preprocess related links
 
-Depends on record['Related links'] field.
+Depends on record['Related links'] field
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage.
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage
 
 **Examples**
 
@@ -116,11 +116,11 @@ output => [
  ]
 ```
 
-Returns **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array) \| [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object))** List of {RelatedLink}.
+Returns **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array) \| [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object))** List of {RelatedLink}
 
 ### formatDate
 
-[services/ingestion/etl/agri/csv/src/lib/transform.js:167-168](https://github.com/ec-europa/eubfr-data-lake/blob/e81d0b3b7ae802053270430defd8706d02b75be9/services/ingestion/etl/agri/csv/src/lib/transform.js#L167-L168 "Source code on GitHub")
+[services/ingestion/etl/agri/csv/src/lib/transform.js:176-177](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/agri/csv/src/lib/transform.js#L176-L177 "Source code on GitHub")
 
 Format date
 
@@ -135,4 +135,4 @@ input => "1388530800"
 output => "2013-12-31T23:00:00.000Z"
 ```
 
-Returns **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** The date formatted into an ISO 8601 date format.
+Returns **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** The date formatted into an ISO 8601 date format

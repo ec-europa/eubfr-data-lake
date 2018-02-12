@@ -2,9 +2,9 @@
 
 ## BudgXlsTransform
 
-[services/ingestion/etl/budg/xls/src/lib/transform.js:133-207](https://github.com/ec-europa/eubfr-data-lake/blob/e81d0b3b7ae802053270430defd8706d02b75be9/services/ingestion/etl/budg/xls/src/lib/transform.js#L133-L207 "Source code on GitHub")
+[services/ingestion/etl/budg/xls/src/lib/transform.js:154-226](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/budg/xls/src/lib/transform.js#L154-L226 "Source code on GitHub")
 
-Map fields for BUDG producer, XLS file types.
+Map fields for BUDG producer, XLS file types
 
 Example input data: [stub](https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/budg/xls/test/stubs/record.json)
 
@@ -18,9 +18,9 @@ Returns **Project** JSON matching the type fields.
 
 ### getCoordinators
 
-[services/ingestion/etl/budg/xls/src/lib/transform.js:21-32](https://github.com/ec-europa/eubfr-data-lake/blob/e81d0b3b7ae802053270430defd8706d02b75be9/services/ingestion/etl/budg/xls/src/lib/transform.js#L21-L32 "Source code on GitHub")
+[services/ingestion/etl/budg/xls/src/lib/transform.js:21-32](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/budg/xls/src/lib/transform.js#L21-L32 "Source code on GitHub")
 
-Preprocess coordinators.
+Preprocess coordinators
 
 Input fields taken from the `record` are:
 
@@ -33,19 +33,19 @@ Input fields taken from the `record` are:
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage.
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** A list with a single {Coordinator} object.
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** A list with a single {Coordinator} object
 
 ### formatDate
 
-[services/ingestion/etl/budg/xls/src/lib/transform.js:43-56](https://github.com/ec-europa/eubfr-data-lake/blob/e81d0b3b7ae802053270430defd8706d02b75be9/services/ingestion/etl/budg/xls/src/lib/transform.js#L43-L56 "Source code on GitHub")
+[services/ingestion/etl/budg/xls/src/lib/transform.js:45-58](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/budg/xls/src/lib/transform.js#L45-L58 "Source code on GitHub")
 
 Format date
 
 **Parameters**
 
--   `date` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** Date in "10/9/14" (MM/DD/YY) or "10/9/2014" (MM/DD/YYYY) format.
+-   `date` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** Date in "10/9/14" (MM/DD/YY) or "10/9/2014" (MM/DD/YYYY) format
 
 **Examples**
 
@@ -54,13 +54,13 @@ input => "10/9/2014"
 output => "2014-10-09T00:00:00.000Z"
 ```
 
-Returns **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** The date formatted into an ISO 8601 date format.
+Returns **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** The date formatted into an ISO 8601 date format
 
 ### getPartners
 
-[services/ingestion/etl/budg/xls/src/lib/transform.js:74-95](https://github.com/ec-europa/eubfr-data-lake/blob/e81d0b3b7ae802053270430defd8706d02b75be9/services/ingestion/etl/budg/xls/src/lib/transform.js#L74-L95 "Source code on GitHub")
+[services/ingestion/etl/budg/xls/src/lib/transform.js:76-97](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/budg/xls/src/lib/transform.js#L76-L97 "Source code on GitHub")
 
-Preprocess partners.
+Preprocess partners
 
 Input fields taken from the `record` are:
 
@@ -73,15 +73,15 @@ Input fields taken from the `record` are:
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage.
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** A list of {Partner} objects.
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** A list of {Partner} objects
 
 ### getLocations
 
-[services/ingestion/etl/budg/xls/src/lib/transform.js:108-121](https://github.com/ec-europa/eubfr-data-lake/blob/e81d0b3b7ae802053270430defd8706d02b75be9/services/ingestion/etl/budg/xls/src/lib/transform.js#L108-L121 "Source code on GitHub")
+[services/ingestion/etl/budg/xls/src/lib/transform.js:110-123](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/budg/xls/src/lib/transform.js#L110-L123 "Source code on GitHub")
 
-Preprocess locations.
+Preprocess locations
 
 Input fields taken from the `record` are:
 
@@ -89,6 +89,29 @@ Input fields taken from the `record` are:
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage.
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of {Location} objects for `project_locations` field.
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of {Location} objects for `project_locations` field
+
+### getTypes
+
+[services/ingestion/etl/budg/xls/src/lib/transform.js:141-142](https://github.com/ec-europa/eubfr-data-lake/blob/c21f3dedd3b0e335a255a53cc263a7f19612a3cb/services/ingestion/etl/budg/xls/src/lib/transform.js#L141-L142 "Source code on GitHub")
+
+Converts a single string with commas to an array
+
+Input fields taken from the `record` are:
+
+-   `Activity type`
+
+**Parameters**
+
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage
+
+**Examples**
+
+```javascript
+input => "foo, bar, baz"
+output => ["foo", "bar", "baz"]
+```
+
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of activity types
