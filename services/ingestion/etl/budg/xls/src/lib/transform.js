@@ -1,6 +1,6 @@
 // @flow
 
-import type { Project } from '../../../../types/Project';
+import type { Project } from '../../../../_types/Project';
 
 /**
  * Preprocess coordinators.
@@ -121,6 +121,24 @@ const getLocations = record =>
     }));
 
 /**
+ *
+ * Converts a single string with commas to an array.
+ *
+ * Input fields taken from the `record` are:
+ *
+ * - `Activity type`
+ *
+ * @memberof BudgXlsTransform
+ * @param {Object} record The row received from harmonized storage.
+ * @returns {Array} List of activity types.
+ * @example
+ * input => "foo, bar, baz"
+ * output => ["foo", "bar", "baz"]
+ */
+const getTypes = record =>
+  (record['Activity type'] != null && record['Activity type'].split(',')) || [];
+
+/**
  * Map fields for BUDG producer, XLS file types.
  *
  * Example input data: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/budg/xls/test/stubs/record.json|stub}
@@ -170,9 +188,7 @@ export default (record: Object): Project => {
   };
 
   // Preprocess type
-  const typeArray =
-    (record['Activity type'] != null && record['Activity type'].split(',')) ||
-    [];
+  const typeArray = getTypes(record);
 
   // Map the fields
   return {

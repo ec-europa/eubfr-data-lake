@@ -4,10 +4,11 @@
  * Transform message (AGRI CSV)
  */
 
-import type { Project } from '../../../../types/Project';
+import type { Project } from '../../../../_types/Project';
 
 /**
- * Converts a single string to an array of multiple values.
+ * Converts a single string to an array.
+ *
  * @memberof AgriCsvTransform
  * @param {Object} record The row received from harmonized storage.
  * @returns {Array} List of string values for `funding_area` field.
@@ -24,9 +25,11 @@ const getFundingArea = record =>
 
 /**
  * Preprocess coordinators
+ *
  * @memberof AgriCsvTransform
  * @param {Object} record The row received from harmonized storage.
  * @returns {Array} List of {Coordinator} objects for `coordinators` field.
+ *
  * @example
  * input => "Eva Maria Plunger (VERBUND AG); foo; bar"
  * output => ["Eva Maria Plunger (VERBUND AG)", "foo", "bar"]
@@ -47,9 +50,11 @@ const getCoordinators = record =>
 
 /**
  * Preprocess partners
+ *
  * @memberof AgriCsvTransform
  * @param {Object} record The row received from harmonized storage.
  * @returns {Array} List of {Partner} objects for `partners` field.
+ *
  * @example
  * input => "foo, bar, baz"
  * output => ["foo", "bar", "baz"]

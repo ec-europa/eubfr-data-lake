@@ -1,6 +1,6 @@
 // @flow
 
-import type { Project } from '../../../../types/Project';
+import type { Project } from '../../../../_types/Project';
 
 /*
  * Transform message (VALOR XLS)
