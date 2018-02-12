@@ -7,11 +7,12 @@
 import type { Project } from '../../../../_types/Project';
 
 /**
- * Converts a single string to an array.
+ * Converts a single string to an array
  *
  * @memberof AgriCsvTransform
- * @param {Object} record The row received from harmonized storage.
- * @returns {Array} List of string values for `funding_area` field.
+ * @param {Object} record The row received from harmonized storage
+ * @returns {Array} List of string values for `funding_area` field
+ *
  * @example
  * input => "Research & innovation; Investment for growth; Transport"
  * output => ["Research & innovation", "Investment for growth", "Transport"]
@@ -27,8 +28,8 @@ const getFundingArea = record =>
  * Preprocess coordinators
  *
  * @memberof AgriCsvTransform
- * @param {Object} record The row received from harmonized storage.
- * @returns {Array} List of {Coordinator} objects for `coordinators` field.
+ * @param {Object} record The row received from harmonized storage
+ * @returns {Array} List of {Coordinator} objects for `coordinators` field
  *
  * @example
  * input => "Eva Maria Plunger (VERBUND AG); foo; bar"
@@ -52,8 +53,8 @@ const getCoordinators = record =>
  * Preprocess partners
  *
  * @memberof AgriCsvTransform
- * @param {Object} record The row received from harmonized storage.
- * @returns {Array} List of {Partner} objects for `partners` field.
+ * @param {Object} record The row received from harmonized storage
+ * @returns {Array} List of {Partner} objects for `partners` field
  *
  * @example
  * input => "foo, bar, baz"
@@ -72,7 +73,7 @@ const getPartners = record =>
     }));
 
 /**
- * Preprocess locations.
+ * Preprocess locations
  *
  * Input fields taken from the `record` are:
  *
@@ -84,8 +85,8 @@ const getPartners = record =>
  * - `Project town(s)`
  *
  * @memberof AgriCsvTransform
- * @param {Object} record The row received from harmonized storage.
- * @returns {Array} List of {Location} objects for `project_locations` field.
+ * @param {Object} record The row received from harmonized storage
+ * @returns {Array} List of {Location} objects for `project_locations` field
  */
 const getLocations = record => {
   const longArray = record['Project location longitude'].split(';');
@@ -127,11 +128,12 @@ const getLocations = record => {
 /**
  * Preprocess related links
  *
- * Depends on record['Related links'] field.
+ * Depends on record['Related links'] field
  *
  * @memberof AgriCsvTransform
- * @param {Object} record The row received from harmonized storage.
- * @returns {Array|Object} List of {RelatedLink}.
+ * @param {Object} record The row received from harmonized storage
+ * @returns {Array|Object} List of {RelatedLink}
+ *
  * @example
  * input => "<a href=\"https://ec.europa.eu/inea/en/ten-t/ten-t-projects/projects-by-country/multi-country/2013-eu-92069-s\">INEA</a>;<a href=\"https://europa.eu/investeu/projects/central-european-green-corridors_en\">InvestEU</a>"
  * output => [
@@ -162,9 +164,11 @@ const getRelatedLinks = record =>
 
 /**
  * Format date
+ *
  * @memberof AgriCsvTransform
  * @param {Date} date Date in timestamp
- * @returns {Date} The date formatted into an ISO 8601 date format.
+ * @returns {Date} The date formatted into an ISO 8601 date format
+ *
  * @example
  * input => "1388530800"
  * output => "2013-12-31T23:00:00.000Z"
@@ -173,7 +177,7 @@ const formatDate = date =>
   date ? new Date(parseInt(date, 10) * 1000).toISOString() : null;
 
 /**
- * Map fields for AGRI producer, CSV file types.
+ * Map fields for AGRI producer, CSV file types
  *
  * Example input data: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/agri/csv/test/stubs/record.json|stub}
  *

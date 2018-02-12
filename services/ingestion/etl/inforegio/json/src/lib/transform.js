@@ -3,13 +3,14 @@
 import type { Project } from '../../../../_types/Project';
 
 /**
- * Preprocess `funding_area`.
+ * Preprocess `funding_area`
  *
- * Converts a single string to an array of multiple values.
+ * Converts a single string to an array of multiple values
  *
  * @memberof InforegioJsonTransform
- * @param {Object} record The row received from harmonized storage.
- * @returns {Array} List of string values for `funding_area` field.
+ * @param {Object} record The row received from harmonized storage
+ * @returns {Array} List of string values for `funding_area` field
+ *
  * @example
  * input => "Research & innovation; Investment for growth; Transport"
  * output => ["Research & innovation", "Investment for growth", "Transport"]
@@ -19,9 +20,11 @@ const getFundingArea = record =>
 
 /**
  * Format date
+ *
  * @memberof InforegioJsonTransform
- * @param {Date} date Date in "10/9/2014" (DD/MM/YYYY) format.
- * @returns {Date} The date formatted into an ISO 8601 date format.
+ * @param {Date} date Date in "10/9/2014" (DD/MM/YYYY) format
+ * @returns {Date} The date formatted into an ISO 8601 date format
+ *
  * @example
  * input => "01/01/2009"
  * output => "2009-01-01T00:00:00.000Z"
@@ -40,7 +43,7 @@ const formatDate = date => {
 };
 
 /**
- * Preprocess address.
+ * Preprocess address
  *
  * Input fields taken from the `record` are:
  *
@@ -49,8 +52,8 @@ const formatDate = date => {
  * - `Beneficiary_City`
  *
  * @memberof InforegioJsonTransform
- * @param {Object} record The row received from harmonized storage.
- * @returns {Array} A list of {Partner} objects.
+ * @param {Object} record The row received from harmonized storage
+ * @returns {Array} A list of {Partner} objects
  */
 const getAddress = record => {
   let address = '';
@@ -69,7 +72,7 @@ const getAddress = record => {
 };
 
 /**
- * Preprocess partners.
+ * Preprocess partners
  *
  * Input fields taken from the `record` are:
  *
@@ -77,8 +80,8 @@ const getAddress = record => {
  * - `Beneficiary_Country`
  *
  * @memberof InforegioJsonTransform
- * @param {Object} record The row received from harmonized storage.
- * @returns {Array} A list of a single {Partner} object.
+ * @param {Object} record The row received from harmonized storage
+ * @returns {Array} A list of a single {Partner} object
  */
 const getPartners = record => [
   {
@@ -92,7 +95,7 @@ const getPartners = record => [
 ];
 
 /**
- * Preprocess locations.
+ * Preprocess locations
  *
  * Input fields taken from the `record` are:
  *
@@ -101,8 +104,8 @@ const getPartners = record => [
  * - `Project_NUTS2_code`
  *
  * @memberof InforegioJsonTransform
- * @param {Object} record The row received from harmonized storage.
- * @returns {Array} List of {Location} objects for `project_locations` field.
+ * @param {Object} record The row received from harmonized storage
+ * @returns {Array} List of {Location} objects for `project_locations` field
  */
 const getLocations = record => {
   const locationArray = [];
@@ -143,14 +146,14 @@ const getLocations = record => {
 };
 
 /**
- * Preprocess `project_website` field.
+ * Preprocess `project_website` field
  *
  * Input fields taken from the `record` are:
  *
  * - `URL`
  *
  * @memberof InforegioJsonTransform
- * @param {Object} record The row received from harmonized storage.
+ * @param {Object} record The row received from harmonized storage
  * @returns {string}
  */
 const getProjectWebsite = record => {
@@ -166,7 +169,7 @@ const getProjectWebsite = record => {
  * Preprocess value field of {BudgetItem}.
  *
  * @memberof InforegioJsonTransform
- * @param {string} budget String containing numeric data.
+ * @param {string} budget String containing numeric data
  * @returns {number}
  */
 const formatBudget = budget => {
@@ -183,7 +186,7 @@ const formatBudget = budget => {
 };
 
 /**
- * Map fields for INFOREGIO producer, JSON file types.
+ * Map fields for INFOREGIO producer, JSON file types
  *
  * Transform function: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/json/src/lib/transform.js|implementation details}
  * @name InforegioJsonTransform

@@ -3,7 +3,7 @@
 import type { Project } from '../../../../_types/Project';
 
 /**
- * Preprocess coordinators.
+ * Preprocess coordinators
  *
  * Input fields taken from the `record` are:
  *
@@ -15,8 +15,8 @@ import type { Project } from '../../../../_types/Project';
  * - `Coordinator's website`
  *
  * @memberof BudgXlsTransform
- * @param {Object} record The row received from harmonized storage.
- * @returns {Array} A list with a single {Coordinator} object.
+ * @param {Object} record The row received from harmonized storage
+ * @returns {Array} A list with a single {Coordinator} object
  */
 const getCoordinators = record => [
   {
@@ -33,9 +33,11 @@ const getCoordinators = record => [
 
 /**
  * Format date
+ *
  * @memberof BudgXlsTransform
- * @param {Date} date Date in "10/9/14" (MM/DD/YY) or "10/9/2014" (MM/DD/YYYY) format.
- * @returns {Date} The date formatted into an ISO 8601 date format.
+ * @param {Date} date Date in "10/9/14" (MM/DD/YY) or "10/9/2014" (MM/DD/YYYY) format
+ * @returns {Date} The date formatted into an ISO 8601 date format
+ *
  * @example
  * input => "10/9/2014"
  * output => "2014-10-09T00:00:00.000Z"
@@ -56,7 +58,7 @@ const formatDate = date => {
 };
 
 /**
- * Preprocess partners.
+ * Preprocess partners
  *
  * Input fields taken from the `record` are:
  *
@@ -68,8 +70,8 @@ const formatDate = date => {
  * - `Partner {n} website`
  *
  * @memberof BudgXlsTransform
- * @param {Object} record The row received from harmonized storage.
- * @returns {Array} A list of {Partner} objects.
+ * @param {Object} record The row received from harmonized storage
+ * @returns {Array} A list of {Partner} objects
  */
 const getPartners = record => {
   const partnerKeys = Object.keys(record).filter(elem => {
@@ -95,15 +97,15 @@ const getPartners = record => {
 };
 
 /**
- * Preprocess locations.
+ * Preprocess locations
  *
  * Input fields taken from the `record` are:
  *
  * - `Participating countries`
  *
  * @memberof BudgXlsTransform
- * @param {Object} record The row received from harmonized storage.
- * @returns {Array} List of {Location} objects for `project_locations` field.
+ * @param {Object} record The row received from harmonized storage
+ * @returns {Array} List of {Location} objects for `project_locations` field
  */
 const getLocations = record =>
   record['Participating countries']
@@ -122,15 +124,16 @@ const getLocations = record =>
 
 /**
  *
- * Converts a single string with commas to an array.
+ * Converts a single string with commas to an array
  *
  * Input fields taken from the `record` are:
  *
  * - `Activity type`
  *
  * @memberof BudgXlsTransform
- * @param {Object} record The row received from harmonized storage.
- * @returns {Array} List of activity types.
+ * @param {Object} record The row received from harmonized storage
+ * @returns {Array} List of activity types
+ *
  * @example
  * input => "foo, bar, baz"
  * output => ["foo", "bar", "baz"]
@@ -139,7 +142,7 @@ const getTypes = record =>
   (record['Activity type'] != null && record['Activity type'].split(',')) || [];
 
 /**
- * Map fields for BUDG producer, XLS file types.
+ * Map fields for BUDG producer, XLS file types
  *
  * Example input data: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/budg/xls/test/stubs/record.json|stub}
  *
