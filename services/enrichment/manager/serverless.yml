@@ -4,6 +4,7 @@ plugins:
   - serverless-webpack
 
 custom:
+  esIndex: ${self:provider.stage}-projects
   webpackIncludeModules: true
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
   queueName: ${self:provider.stage}-enrichment-backlog
@@ -66,6 +67,10 @@ functions:
     name: ${self:provider.stage}-${self:service}-onTaskCalled
     timeout: 30
     memorySize: 256
+    environment:
+      API:
+        Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:ProjectsEndpoint
+      INDEX: ${self:custom.esIndex}
 
 resources:
   Resources:
