@@ -28,7 +28,7 @@
     "babel-core": "6.26.0",
     "babel-eslint": "8.2.1",
     "documentation": "5.3.5",
-    "documentation-theme-ecl": "1.0.0",
+    "documentation-theme-ecl": "1.0.1",
     "eslint": "4.15.0",
     "eslint-config-airbnb-base": "12.1.0",
     "eslint-config-prettier": "2.9.0",

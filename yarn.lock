@@ -3084,9 +3084,9 @@ doctrine@^2.0.0, doctrine@^2.0.2:
   dependencies:
     esutils "^2.0.2"
 
-documentation-theme-ecl@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/documentation-theme-ecl/-/documentation-theme-ecl-1.0.0.tgz#07c82c102b1c2a04c4bfe8be3ff01d3b6daa21c6"
+documentation-theme-ecl@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/documentation-theme-ecl/-/documentation-theme-ecl-1.0.1.tgz#a8c18920545207dc439ec46678dca206a4af1356"
   dependencies:
     concat-stream "1.6.0"
     documentation "5.4.0"
