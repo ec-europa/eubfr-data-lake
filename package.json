@@ -8,6 +8,7 @@
     "delete": "node ./scripts/delete.js",
     "delete-demo": "./scripts/delete-demo.js",
     "delete-resources": "./scripts/delete-resources.js",
+    "docs:html": "node ./scripts/docs-html.js",
     "docs:md": "node ./scripts/docs-md.js",
     "flow": "flow",
     "flow-watch": "flow-watch",
@@ -27,6 +28,7 @@
     "babel-core": "6.26.0",
     "babel-eslint": "8.2.1",
     "documentation": "5.3.5",
+    "documentation-theme-ecl": "1.0.0",
     "eslint": "4.15.0",
     "eslint-config-airbnb-base": "12.1.0",
     "eslint-config-prettier": "2.9.0",
@@ -42,7 +44,9 @@
     "lerna": "2.6.0",
     "lint-staged": "6.0.0",
     "npm-run-all": "4.1.2",
-    "prettier": "1.9.2"
+    "prettier": "1.9.2",
+    "stream-array": "1.1.2",
+    "vinyl-fs": "3.0.2"
   },
   "workspaces": ["demo/**", "plugins/**", "resources/**", "services/**"]
 }
