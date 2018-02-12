@@ -6,6 +6,7 @@ export const enrichLocationFromAddress = async loc => {
   const country = countries.getName(loc.country_code, 'en');
 
   // TODO: add town, address, etc.
+  // if (loc.address ...)
 
   const url = `http://europa.eu/webtools/rest/gisco/nominatim/search.php?format=json&country=${encodeURIComponent(
     country
