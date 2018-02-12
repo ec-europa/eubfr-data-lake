@@ -1,6 +1,6 @@
 // @flow
 
-import type { Project } from '../../../../types/Project';
+import type { Project } from '../../../../_types/Project';
 
 /*
  * Transform message (VALOR XLS)
@@ -21,8 +21,13 @@ const formatDate = date => {
   }
 };
 
-/*
- * Map fields
+/**
+ * Map fields for VALOR producer, XLS file types.
+ *
+ * Transform function: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/valor/xml/src/lib/transform.js|implementation details}
+ * @name valorXlsTransform
+ * @param {Object} record The row received from harmonized storage.
+ * @returns {Project} JSON matching the type fields.
  */
 export default (record: Object): Project => {
   // Preprocess budget
