@@ -34,7 +34,7 @@ functions:
     memorySize: 256
     environment:
       API:
-        Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:MetaEndpoint
+        Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PrivateEndpoint
       INDEX: ${self:custom.index}
     events:
       - sns:

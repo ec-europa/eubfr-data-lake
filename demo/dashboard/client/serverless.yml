@@ -26,9 +26,9 @@ provider:
     REACT_APP_DEMO_SERVER:
       Fn::ImportValue: ${self:provider.stage}:demo-dash-server-${self:custom.EUBFR_USERNAME}:ServiceEndpoint
     REACT_APP_ES_PROJECTS_ENDPOINT:
-      Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:ProjectsEndpoint
+      Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
     REACT_APP_ES_META_ENDPOINT:
-      Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:MetaEndpoint
+      Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PrivateEndpoint
 
 resources:
   Resources:

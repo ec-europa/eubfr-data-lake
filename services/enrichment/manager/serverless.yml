@@ -69,7 +69,7 @@ functions:
     memorySize: 256
     environment:
       API:
-        Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:ProjectsEndpoint
+        Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
       INDEX: ${self:custom.esIndex}
 
 resources:

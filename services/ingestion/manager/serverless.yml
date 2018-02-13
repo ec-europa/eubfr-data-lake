@@ -22,7 +22,7 @@ provider:
     ENV: ${self:custom.eubfrEnvironment}
   environment:
     API:
-      Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:MetaEndpoint
+      Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PrivateEndpoint
     INDEX: ${self:custom.metaIndex}
     STAGE: ${self:provider.stage}
     REGION: ${self:provider.region}

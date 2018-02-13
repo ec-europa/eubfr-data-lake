@@ -97,7 +97,7 @@ functions:
 
 resources:
   Outputs:
-    ProjectsEndpoint:
+    PublicEndpoint:
       Description: The demo server endpoint
       Value:
         Fn::Join:
