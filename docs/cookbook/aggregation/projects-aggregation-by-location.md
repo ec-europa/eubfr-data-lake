@@ -12,14 +12,60 @@ while the second example adds _Geo Centroid Aggregation_ as a second aggregation
 ### Request
 
 ```json
-
+{
+  "size": 0,
+  "query": {
+    "constant_score": {
+      "filter": {
+        "geo_bounding_box": {
+          "project_locations.centroid": {
+            "top_left": {
+              "lat": 65.494,
+              "lon": -22.192
+            },
+            "bottom_right": {
+              "lat": 37.892,
+              "lon": 28.784
+            }
+          }
+        }
+      }
+    }
+  },
+  "aggregations": {
+    "europe_grid": {
+      "geohash_grid": {
+        "field": "project_locations.centroid",
+        "precision": 2
+      }
+    }
+  }
+}
 ```
 
 ### Response
 
 ```json
-
+"aggregations": {
+  "europe_grid": {
+    "buckets": [
+      {
+        "key": "u2",
+        "doc_count": 39
+      },
+      {
+        "key": "u1",
+        "doc_count": 20
+      },
+      {
+        "key": "u0",
+        "doc_count": 19
+      }
+  }
+}
 ```
+
+You need a library to convert the geohashes from `key` into bounding boxes or points.
 
 ### Result
 
@@ -38,12 +84,12 @@ while the second example adds _Geo Centroid Aggregation_ as a second aggregation
         "geo_bounding_box": {
           "project_locations.centroid": {
             "top_left": {
-              "lat": 65.494741,
-              "lon": -22.192383
+              "lat": 65.494,
+              "lon": -22.192
             },
             "bottom_right": {
-              "lat": 37.892196,
-              "lon": 28.78418
+              "lat": 37.892,
+              "lon": 28.784
             }
           }
         }
@@ -96,11 +142,6 @@ while the second example adds _Geo Centroid Aggregation_ as a second aggregation
           "count": 16
         }
       },
-
-    ...
-    ...
-    ...
-
     ]
   }
 ```
