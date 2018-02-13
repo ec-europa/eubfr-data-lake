@@ -1,59 +1,110 @@
-# Aggregate projects per field and limit number of results
+# Aggregate projects by location (server-side clustering)
 
-In the following example, the aggregation is on the `computed_key` field and results are limited to 5.
-
-## Request
+This example shows how to aggregate projects by the `centroid` field in an attempt of doing server side clustering.
+First example makes use of the _GeoHash grid Aggregation_ with a defined precision (from 1-12)
+while the second example adds _Geo Centroid Aggregation_ as a second aggregation for a more realistic display of the markers.
 
 * Endpoint: `https://PROJECTS_INDEX/project/_search`
 * Method: `POST`
 
+## Example: GeoHash grid Aggregation
+
+### Request
+
+```json
+
+```
+
+### Response
+
+```json
+
+```
+
+### Result
+
+![GeoHash grid Aggregation](./aggregation_geohash.gif)
+
+## Example: GeoHash grid Aggregation
+
+### Request
+
 ```json
 {
   "size": 0,
-  "aggs": {
-    "project_bucket": {
-      "terms": {
-        "field": "computed_key",
-        "size": 5
+  "query": {
+    "constant_score": {
+      "filter": {
+        "geo_bounding_box": {
+          "project_locations.centroid": {
+            "top_left": {
+              "lat": 65.494741,
+              "lon": -22.192383
+            },
+            "bottom_right": {
+              "lat": 37.892196,
+              "lon": 28.78418
+            }
+          }
+        }
+      }
+    }
+  },
+  "aggregations": {
+    "europe_grid": {
+      "geohash_grid": {
+        "field": "project_locations.centroid",
+        "precision": 2
+      },
+      "aggs": {
+        "myCentroid": {
+          "geo_centroid": {
+            "field": "project_locations.centroid"
+          }
+        }
       }
     }
   }
 }
 ```
 
-## Response
+### Response
 
 ```json
-{
-  "took": 29,
-  "timed_out": false,
-  "_shards": {
-    "total": 5,
-    "successful": 5,
-    "skipped": 0,
-    "failed": 0
-  },
-  "hits": {
-    "total": 72090,
-    "max_score": 0,
-    "hits": []
-  },
-  "aggregations": {
-    "project_bucket": {
-      "doc_count_error_upper_bound": 0,
-      "sum_other_doc_count": 22100,
-      "buckets": [
-        {
-          "key": "PRODUCER/COMPUTED_KEY.xls.ndjson",
-          "doc_count": 4999
-        },
-        ...,
-        {
-          "key": "PRODUCER/COMPUTED_KEY_2.xls.ndjson",
-          "doc_count": 1999
+"aggregations": {
+  "europe_grid": {
+    "buckets": [
+      {
+        "key": "u2",
+        "doc_count": 39,
+        "myCentroid": {
+          "location": {
+            "lat": 47.36625675971691,
+            "lon": 17.0201318560598
+          },
+          "count": 39
         }
-      ]
-    }
+      },
+      {
+        "key": "ud",
+        "doc_count": 16,
+        "myCentroid": {
+          "location": {
+            "lat": 58.12248645670479,
+            "lon": 24.922883544350043
+          },
+          "count": 16
+        }
+      },
+
+    ...
+    ...
+    ...
+
+    ]
   }
-}
 ```
+
+### Result
+
+![GeoHash grid Aggregation](./aggregation_centroid.gif)
