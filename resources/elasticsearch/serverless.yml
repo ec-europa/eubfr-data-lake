@@ -5,24 +5,24 @@ plugins:
 
 custom:
   eubfrEnvironment: ${opt:eubfr_env, file(../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
-  projectsDomain: ${self:custom.eubfrEnvironment}-projects
-  metaDomain: ${self:custom.eubfrEnvironment}-meta
+  publicDomain: ${self:custom.eubfrEnvironment}-public
+  privateDomain: ${self:custom.eubfrEnvironment}-private
   slsEsIndices:
     -
       index: ${opt:stage, file(../../config.json):stage, 'dev'}-projects
       mapping: '${file(./mappings/project.js)}'
       region: ${opt:region, file(../../config.json):region, 'eu-central-1'}
-      endpointName: ${self:custom.eubfrEnvironment}:resources-elasticsearch:ProjectsEndpoint
+      endpointName: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
     -
       index: ${opt:stage, file(../../config.json):stage, 'dev'}-meta
       mapping: ${file(./mappings/meta.js)}
       region: ${opt:region, file(../../config.json):region, 'eu-central-1'}
-      endpointName: ${self:custom.eubfrEnvironment}:resources-elasticsearch:MetaEndpoint
+      endpointName: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PrivateEndpoint
     -
       index: ${opt:stage, file(../../config.json):stage, 'dev'}-logs
       mapping: ${file(./mappings/logs.js)}
       region: ${opt:region, file(../../config.json):region, 'eu-central-1'}
-      endpointName: ${self:custom.eubfrEnvironment}:resources-elasticsearch:MetaEndpoint
+      endpointName: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PrivateEndpoint
 
 provider:
   name: aws
@@ -36,12 +36,12 @@ provider:
 
 resources:
   Resources:
-    ProjectsElasticSearchDomain:
+    PublicElasticSearchDomain:
       Type: AWS::Elasticsearch::Domain
       # Don't delete the elastic search instance when the CF stack is deleted
       DeletionPolicy: Retain
       Properties:
-        DomainName: ${self:custom.projectsDomain}
+        DomainName: ${self:custom.publicDomain}
         ElasticsearchVersion: '6.0'
         EBSOptions:
           EBSEnabled: true
@@ -62,7 +62,7 @@ resources:
              - "es:ESHttpHead"
              - "es:ESHttpGet"
              - "es:ESHttpPost"
-            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.projectsDomain}/*"
+            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*"
           # Lambda can take actions on the ES domain
           - Effect: Allow
             Principal:
@@ -77,13 +77,13 @@ resources:
               IpAddress:
                 aws:SourceIp:
                 - 147.67.241.226
-            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.projectsDomain}/*"
-    MetaElasticSearchDomain:
+            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*"
+    PrivateElasticSearchDomain:
       Type: AWS::Elasticsearch::Domain
       # Don't delete the elastic search instance when the CF stack is deleted
       DeletionPolicy: Retain
       Properties:
-        DomainName: ${self:custom.metaDomain}
+        DomainName: ${self:custom.privateDomain}
         ElasticsearchVersion: '6.0'
         EBSOptions:
           EBSEnabled: true
@@ -104,7 +104,7 @@ resources:
              - "es:ESHttpHead"
              - "es:ESHttpGet"
              - "es:ESHttpPost"
-            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.metaDomain}/*"
+            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.privateDomain}/*"
           # Lambda can take actions on the ES domain
           - Effect: Allow
             Principal:
@@ -119,19 +119,19 @@ resources:
               IpAddress:
                 aws:SourceIp:
                 - 147.67.241.226
-            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.metaDomain}/*"
+            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.privateDomain}/*"
   Outputs:
-    ProjectsEndpoint:
-      Description: The API endpoint of the projects' elasticsearch domain.
+    PublicEndpoint:
+      Description: The public elasticsearch domain.
       Value:
-        Fn::GetAtt: ["ProjectsElasticSearchDomain", "DomainEndpoint"]
+        Fn::GetAtt: ["PublicElasticSearchDomain", "DomainEndpoint"]
       Export:
         # Global varibale, uses eubfrEnvironment instead of stage
-        Name: "${self:custom.eubfrEnvironment}:${self:service}:ProjectsEndpoint"
-    MetaEndpoint:
-      Description: The API endpoint of the meta's elasticsearch domain.
+        Name: "${self:custom.eubfrEnvironment}:${self:service}:PublicEndpoint"
+    PrivateEndpoint:
+      Description: The private elasticsearch domain.
       Value:
-        Fn::GetAtt: ["MetaElasticSearchDomain", "DomainEndpoint"]
+        Fn::GetAtt: ["PrivateElasticSearchDomain", "DomainEndpoint"]
       Export:
         # Global varibale, uses eubfrEnvironment instead of stage
-        Name: "${self:custom.eubfrEnvironment}:${self:service}:MetaEndpoint"
+        Name: "${self:custom.eubfrEnvironment}:${self:service}:PrivateEndpoint"

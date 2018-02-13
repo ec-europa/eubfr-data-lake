@@ -5,7 +5,9 @@ import elasticsearch from 'elasticsearch';
 import PropTypes from 'prop-types';
 import Spinner from '../../../components/Spinner';
 
-const logsApiEndpoint = `https://${process.env.REACT_APP_ES_META_ENDPOINT}`;
+const privateApiEndpoint = `https://${
+  process.env.REACT_APP_ES_PRIVATE_ENDPOINT
+}`;
 const logsIndex = `${process.env.REACT_APP_STAGE}-logs`;
 
 class Logs extends React.Component {
@@ -26,7 +28,7 @@ class Logs extends React.Component {
 
   componentDidMount() {
     this.logClient = elasticsearch.Client({
-      host: logsApiEndpoint,
+      host: privateApiEndpoint,
       apiVersion: '6.0',
       log: 'warning',
     });

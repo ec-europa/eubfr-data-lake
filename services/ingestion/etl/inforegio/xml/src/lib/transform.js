@@ -1,12 +1,22 @@
 // @flow
 
-import type { Project } from '../../../../types/Project';
-
 /*
  * Transform message (INFOREGIO XML)
  */
 
-// Check if field is an array or a sting.
+import type { Project } from '../../../../_types/Project';
+
+/**
+ * Check if field is an array or a sting
+ *
+ * @memberof inforegioXmlTransform
+ * @param {Object|string} data The input piece of data
+ * @returns {string} The string value of the input data
+ *
+ * @example
+ * input => ['foo']
+ * output => 'foo'
+ */
 const checkData = data => {
   if (data && typeof data === 'object') {
     return data[0];
@@ -16,7 +26,17 @@ const checkData = data => {
   return '';
 };
 
-// Formats date from DD/MM/YYYY to ISO 8601 date format.
+/**
+ * Format date
+ *
+ * @memberof inforegioXmlTransform
+ * @param {Date} date Date in `DD/MM/YYYY` format
+ * @returns {Date} The date formatted into an ISO 8601 date format
+ *
+ * @example
+ * input => "02/02/2018"
+ * output => '2018-02-02T00:00:00.000Z'
+ */
 const formatDate = date => {
   if (!date || typeof date !== 'string') return null;
   const d = date.split(/\//);
@@ -30,7 +50,19 @@ const formatDate = date => {
   }
 };
 
-// Get and format adress from different fields.
+/**
+ * Get adress from different fields
+ *
+ * Input fields taken from the `record` are:
+ *
+ * - `Beneficiary_address`
+ * - `Beneficiary_Post_Code`
+ * - `Beneficiary_City`
+ *
+ * @memberof inforegioXmlTransform
+ * @param {Object} record The row received from harmonized storage
+ * @returns {string} The address as consumed by {Partner}
+ */
 const getAddress = record => {
   let address = '';
   if (record.Beneficiary_address) {
@@ -47,52 +79,72 @@ const getAddress = record => {
   return address;
 };
 
+/**
+ * Formats information for the `value` of {BudgetItem}
+ *
+ * @memberof inforegioXmlTransform
+ * @param {string} budget Prefixed currency value
+ * @returns {number} The value for `value` of {BudgetItem}
+ *
+ * @example
+ * input => "EUR 329 000 000"
+ * output => "329000000"
+ */
 const formatBudget = budget => {
   if (!budget || typeof budget !== 'string') return 0;
+
   const formattedBudget = budget
     .split(' ')
     .slice(1)
     .join('');
+
   return Number(formattedBudget) || 0;
 };
 
-/*
- * Map fields
+/**
+ * Get funding areas from a string
+ *
+ * Input fields taken from the `record` are:
+ *
+ * - `Funds`
+ *
+ * @memberof inforegioXmlTransform
+ * @param {Object} record The row received from harmonized storage
+ * @returns {Array} List of values for funding area
+ *
+ * @example
+ * input => 'foo;bar;baz'
+ * output => ['foo', 'bar', 'baz']
  */
-export default (record: Object): Project => {
-  // Preprocess budget
-  const budgetObject = {
-    total_cost: {
-      value: formatBudget(checkData(record.Total_project_budget)),
-      currency: '',
-      raw: checkData(record.Total_project_budget) || '',
-    },
-    eu_contrib: {
-      value: formatBudget(checkData(record.EU_Budget_contribution)),
-      currency: '',
-      raw: checkData(record.EU_Budget_contribution) || '',
-    },
-    private_fund: { value: 0, currency: '', raw: '' },
-    public_fund: { value: 0, currency: '', raw: '' },
-    other_contrib: { value: 0, currency: '', raw: '' },
-    // Check data and return an array or a string.
-    funding_area: checkData(record.Funds)
-      // Make an array of strings if multiple items in the field.
-      .split(';')
-      // Remove empty strings.
-      .filter(item => item),
-    mmf_heading: '',
-  };
+const getFundingArea = record =>
+  checkData(record.Funds)
+    .split(';')
+    .filter(item => item);
 
-  // Preprocess project locations
+/**
+ * Get a list of {Location}
+ *
+ * Input fields taken from the `record` are:
+ *
+ * - `Project_country`
+ * - `Project_region`
+ * - `Project_NUTS2_code`
+ *
+ * @memberof inforegioXmlTransform
+ * @param {Object} record The row received from harmonized storage
+ * @returns {Array} List of {Location}
+ */
+const getLocations = record => {
   const locationArray = [];
+  const previousCountries = [];
+
   const countryArray = record.Project_country
     ? checkData(record.Project_country)
         .toString()
         .split('; ')
         .filter(country => country)
     : null;
-  const previousCountries = [];
+
   if (countryArray !== null && countryArray.length > 1) {
     for (let i = 0; i < countryArray.length; i += 1) {
       if (previousCountries.indexOf(countryArray[i] === -1)) {
@@ -122,19 +174,47 @@ export default (record: Object): Project => {
     });
   }
 
-  // Preprocess type
-  const typeArray = record.Project_type || [];
+  return locationArray;
+};
 
-  // Preprocess themes
-  const themeArray = record.Themes
+/**
+ * Get themes from a string
+ *
+ * Input fields taken from the `record` are:
+ *
+ * - `Themes`
+ *
+ * @memberof inforegioXmlTransform
+ * @param {Object} record The row received from harmonized storage
+ * @returns {Array} List of values for themes
+ *
+ * @example
+ * input => 'foo; bar; baz'
+ * output => ['foo', 'bar', 'baz']
+ */
+const getThemes = record =>
+  record.Themes
     ? checkData(record.Themes)
         .toString()
         .split('; ')
         .filter(theme => theme)
     : [];
 
-  // Preprocess partners
-  const partnerArray = record.Beneficiary
+/**
+ * Get a list of a single {Partner}
+ * Depends on getAddress()
+ *
+ * Input fields taken from the `record` are:
+ *
+ * - `Beneficiary`
+ * - `Beneficiary_Country`
+ *
+ * @memberof inforegioXmlTransform
+ * @param {Object} record The row received from harmonized storage
+ * @returns {Array} List of a single {Partner}
+ */
+const getPartners = record =>
+  record.Beneficiary
     ? [
         {
           name: checkData(record.Beneficiary),
@@ -146,6 +226,47 @@ export default (record: Object): Project => {
         },
       ]
     : [];
+
+/**
+ * Map fields for INFOREGIO producer, XML file types
+ *
+ * Transform function: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/xml/src/lib/transform.js|implementation details}
+ * @name inforegioXmlTransform
+ * @param {Object} record The row received from harmonized storage
+ * @returns {Project} JSON matching the type fields
+ */
+export default (record: Object): Project => {
+  // Preprocess budget
+  const budgetObject = {
+    total_cost: {
+      value: formatBudget(checkData(record.Total_project_budget)),
+      currency: '',
+      raw: checkData(record.Total_project_budget) || '',
+    },
+    eu_contrib: {
+      value: formatBudget(checkData(record.EU_Budget_contribution)),
+      currency: '',
+      raw: checkData(record.EU_Budget_contribution) || '',
+    },
+    private_fund: { value: 0, currency: '', raw: '' },
+    public_fund: { value: 0, currency: '', raw: '' },
+    other_contrib: { value: 0, currency: '', raw: '' },
+    // Check data and return an array or a string.
+    funding_area: getFundingArea(record),
+    mmf_heading: '',
+  };
+
+  // Preprocess project locations
+  const locationArray = getLocations(record);
+
+  // Preprocess type
+  const typeArray = record.Project_type || [];
+
+  // Preprocess themes
+  const themeArray = getThemes(record);
+
+  // Preprocess partners
+  const partnerArray = getPartners(record);
 
   // Map the fields
   return {

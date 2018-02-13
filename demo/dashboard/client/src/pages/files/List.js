@@ -4,7 +4,9 @@ import FilesList from '../../components/FilesList';
 
 import Spinner from '../../components/Spinner';
 
-const metaApiEndpoint = `https://${process.env.REACT_APP_ES_META_ENDPOINT}`;
+const privateApiEndpoint = `https://${
+  process.env.REACT_APP_ES_PRIVATE_ENDPOINT
+}`;
 const metaIndex = `${process.env.REACT_APP_STAGE}-meta`;
 const logsIndex = `${process.env.REACT_APP_STAGE}-logs`;
 
@@ -26,7 +28,7 @@ class List extends Component {
 
   componentDidMount() {
     this.esClient = elasticsearch.Client({
-      host: metaApiEndpoint,
+      host: privateApiEndpoint,
       apiVersion: '6.0',
       log: 'warning',
     });

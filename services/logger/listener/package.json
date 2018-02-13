@@ -15,7 +15,6 @@
     "babel-loader": "7.1.2",
     "babel-preset-env": "1.6.1",
     "serverless": "1.25.0",
-    "serverless-stack-output": "0.2.3",
     "serverless-webpack": "4.2.0",
     "webpack": "3.10.0"
   }

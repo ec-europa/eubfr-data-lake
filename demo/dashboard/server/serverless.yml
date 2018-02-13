@@ -11,10 +11,10 @@ custom:
   EUBFR_USERNAME: ${opt:username, env:EUBFR_USERNAME, file(../../../config.json):username, ''}
   PRODUCER_KEY_ID: ${opt:PRODUCER_KEY_ID, file(../../../config.json):demo.${self:custom.EUBFR_USERNAME}.AWS_ACCESS_KEY_ID, env:PRODUCER_KEY_ID, ''}
   PRODUCER_SECRET_ACCESS_KEY: ${opt:PRODUCER_SECRET_ACCESS_KEY, file(../../../config.json):demo.${self:custom.EUBFR_USERNAME}.AWS_SECRET_ACCESS_KEY, env:PRODUCER_SECRET_ACCESS_KEY, ''}
-  SIGNED_UPLOADS_API: ${opt:SIGNED_UPLOADS_API, file(../../../services/storage/signed-uploads/.serverless/stack-output.json):ServiceEndpoint, env:SIGNED_UPLOADS_API, ''}
-  DELETER_API: ${opt:DELETER_API, file(../../../services/storage/deleter/.serverless/stack-output.json):ServiceEndpoint, env:DELETER_API, ''}
-  output:
-    file: .serverless/stack-output.json
+  SIGNED_UPLOADS_API:
+    Fn::ImportValue: ${self:provider.stage}:storage-signed-uploads:ServiceEndpoint
+  DELETER_API:
+    Fn::ImportValue: ${self:provider.stage}:storage-deleter:ServiceEndpoint
   serverless-offline:
     port: 4000
 
@@ -97,7 +97,7 @@ functions:
 
 resources:
   Outputs:
-    ProjectsEndpoint:
+    PublicEndpoint:
       Description: The demo server endpoint
       Value:
         Fn::Join:

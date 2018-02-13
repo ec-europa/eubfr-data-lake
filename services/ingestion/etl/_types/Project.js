@@ -1,27 +1,5 @@
 // @flow
 
-/**
- *
- * Project model has been continously discussed in EUBFR-4 EUBFR-5 and EUBFR-70.
- *
- * Exported Project interface should ALWAYS have fields as required. When a producer
- * does not provide data for a field, provide null or '' from transform function.
- *
- * Note that this file describes types which are used during static code analysis.
- * This helps developers write consistend transform functions in ETLs.
- * This does not mean other layers are safe: elasticsearch, HTTP requests, etc.
- *
- * Following is a list of specifics which are here to interoperate with other layers.
- *
- * Dates:
- * Put default `null` when missing data. Elasticsearch will not accept empty string.
- * More: https://www.elastic.co/guide/en/elasticsearch/reference/6.0/date.html
- *
- * Geolocation:
- * Put default `null` when missing data. Elasticsearch has the notion of geo_shape.
- * More: https://www.elastic.co/guide/en/elasticsearch/reference/6.0/geo-shape.html
- */
-
 // eslint-disable-next-line
 import type {
   Point2D,
@@ -40,12 +18,20 @@ type GeoJSON =
   | Polygon2D
   | MultiPolygon2D;
 
+/**
+ * Describes field `project.budget.eu_contrib`.
+ * @type {BudgetItem}
+ */
 type BudgetItem = {
   currency: string,
   raw: string,
   value: number,
 };
 
+/**
+ * Describes field `project.budget`.
+ * @type {Budget}
+ */
 type Budget = {
   eu_contrib: BudgetItem,
   funding_area: Array<string>,
@@ -56,11 +42,10 @@ type Budget = {
   total_cost: BudgetItem,
 };
 
-type Coordinates = {
-  lat: number,
-  lon: number,
-};
-
+/**
+ * Describes field `project.coordinators`.
+ * @type {Coordinator}
+ */
 type Coordinator = {
   address: string,
   country: string,
@@ -72,6 +57,19 @@ type Coordinator = {
   website: string,
 };
 
+/**
+ * Describes field `project.project_locations.centroid`.
+ * @type {Coordinates}
+ */
+type Coordinates = {
+  lat: number,
+  lon: number,
+};
+
+/**
+ * Describes field `project.project_locations`.
+ * @type {Location}
+ */
 type Location = {
   address: string,
   centroid: Coordinates | null,
@@ -85,11 +83,19 @@ type Location = {
   town: string,
 };
 
+/**
+ * Describes field `project.media`.
+ * @type {Media}
+ */
 type Media = {
   cover_image: string,
   video: string,
 };
 
+/**
+ * Describes field `project.partners`.
+ * @type {Partner}
+ */
 type Partner = {
   address: string,
   country: string,
@@ -99,21 +105,37 @@ type Partner = {
   website: string,
 };
 
+/**
+ * Describes field `project.related_links`.
+ * @type {RelatedLink}
+ */
 type RelatedLink = {
   label: string,
   url: string,
 };
 
+/**
+ * Describes field `project.results`.
+ * @type {Result}
+ */
 type Result = {
   available: string,
   result: string,
 };
 
+/**
+ * Describes field `project.timeframe`.
+ * @type {Timeframe}
+ */
 type Timeframe = {
   from: string | null,
   to: string | null,
 };
 
+/**
+ * Describes `project`.
+ * @type {Project}
+ */
 export type Project = {
   action: string,
   budget: Budget,
