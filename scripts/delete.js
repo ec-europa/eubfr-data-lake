@@ -20,4 +20,4 @@ const services = [
   'enrichment-manager',
 ];
 
-services.forEach(deleteServerlessService);
+services.forEach(async service => deleteServerlessService(service, {}));
