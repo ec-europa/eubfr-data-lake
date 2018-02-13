@@ -29,7 +29,7 @@ export const enrichLocationFromAddress = async loc => {
       },
     });
   } catch (e) {
-    console.error(e);
+    console.error(url, qs, e);
     return loc; // location not enriched
   }
 

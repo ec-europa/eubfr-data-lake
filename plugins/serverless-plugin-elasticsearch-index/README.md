@@ -34,7 +34,7 @@ custom:
     index: projects
     mapping: ${file(./src/mappings/project.js)}
     region: ${opt:region, file(../../../config.json):region, 'eu-central-1'}
-    endpointName: ${self:custom.eubfrEnvironment}:resources-elasticsearch:ProjectsEndpoint
+    endpointName: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
 
 ...
 ```
@@ -51,13 +51,13 @@ From the service which creates the elasticsearch domain in AWS, add an export in
 
 ```yaml
 Outputs:
-  ProjectsEndpoint:
+  PublicEndpoint:
     Description: The API endpoint of elasticsearch domain.
     Value:
-      Fn::GetAtt: ["ProjectsElasticSearchDomain", "DomainEndpoint"]
+      Fn::GetAtt: ["PublicElasticSearchDomain", "DomainEndpoint"]
     Export:
       # Global varibale, uses eubfrEnvironment instead of stage
-      Name: "${self:custom.eubfrEnvironment}:${self:service}:ProjectsEndpoint"
+      Name: "${self:custom.eubfrEnvironment}:${self:service}:PublicEndpoint"
 ```
 
 By adding this export, other plugins such as [serverless-stack-output](https://github.com/sbstjn/serverless-stack-output)
