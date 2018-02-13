@@ -1,0 +1,24 @@
+{
+  "private": true,
+  "name": "@eubfr/proxy-elasticsearch",
+  "description": "",
+  "version": "0.0.1",
+  "scripts": {
+    "deploy": "sls deploy -v",
+    "start": "sls offline start"
+  },
+  "dependencies": {
+    "elasticsearch": "14.1.0",
+    "http-aws-es": "4.0.0"
+  },
+  "devDependencies": {
+    "aws-sdk": "2.179.0",
+    "babel-core": "6.26.0",
+    "babel-loader": "7.1.2",
+    "babel-preset-env": "1.6.1",
+    "serverless": "1.25.0",
+    "serverless-offline": "3.16.0",
+    "serverless-webpack": "4.2.0",
+    "webpack": "3.10.0"
+  }
+}
