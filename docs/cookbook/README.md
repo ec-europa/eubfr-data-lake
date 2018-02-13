@@ -18,3 +18,4 @@ Examples:
 
 * [Aggregate projects per field and limit results](./aggregation/projects-by-field-with-limit.md)
 * [Aggregate projects per field with second aggregation](./aggregation/projects-by-field-with-second-aggregation-on-buckets.md)
+* [Aggregate projects by location](./aggregation/projects-aggregation-by-location.md)
