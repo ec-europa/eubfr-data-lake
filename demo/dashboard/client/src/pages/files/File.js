@@ -13,13 +13,13 @@ import getIcon from '../../lib/getIcon';
 
 const demoServerEndpoint = `https://${process.env.REACT_APP_DEMO_SERVER}/demo`;
 
-const metaApiEndpoint = `https://${process.env.REACT_APP_ES_META_ENDPOINT}`;
+const privateApiEndpoint = `https://${
+  process.env.REACT_APP_ES_PRIVATE_ENDPOINT
+}`;
 const metaIndex = `${process.env.REACT_APP_STAGE}-meta`;
 const logsIndex = `${process.env.REACT_APP_STAGE}-logs`;
 
-const projectsApiEndpoint = `https://${
-  process.env.REACT_APP_ES_PROJECTS_ENDPOINT
-}`;
+const publicApiEndpoint = `https://${process.env.REACT_APP_ES_PUBLIC_ENDPOINT}`;
 const projectsIndex = `${process.env.REACT_APP_STAGE}-projects`;
 
 class File extends React.Component {
@@ -47,13 +47,13 @@ class File extends React.Component {
 
   componentDidMount() {
     this.metaClient = elasticsearch.Client({
-      host: metaApiEndpoint,
+      host: privateApiEndpoint,
       apiVersion: '6.0',
       log: 'warning',
     });
 
     this.projectsClient = elasticsearch.Client({
-      host: projectsApiEndpoint,
+      host: publicApiEndpoint,
       apiVersion: '6.0',
       log: 'warning',
     });

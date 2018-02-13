@@ -20,7 +20,7 @@ provider:
     ENV: ${self:custom.eubfrEnvironment}
   environment:
     REACT_APP_STAGE: ${self:provider.stage}
-    REACT_APP_ES_PROJECTS_ENDPOINT:
+    REACT_APP_ES_PUBLIC_ENDPOINT:
       Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
 
 resources:

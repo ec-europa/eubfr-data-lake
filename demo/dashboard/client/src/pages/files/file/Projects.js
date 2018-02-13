@@ -3,9 +3,7 @@ import elasticsearch from 'elasticsearch';
 import PropTypes from 'prop-types';
 import Spinner from '../../../components/Spinner';
 
-const projectsApiEndpoint = `https://${
-  process.env.REACT_APP_ES_PROJECTS_ENDPOINT
-}`;
+const publicApiEndpoint = `https://${process.env.REACT_APP_ES_PUBLIC_ENDPOINT}`;
 const projectsIndex = `${process.env.REACT_APP_STAGE}-projects`;
 
 class Projects extends React.Component {
@@ -25,7 +23,7 @@ class Projects extends React.Component {
 
   componentDidMount() {
     this.client = elasticsearch.Client({
-      host: projectsApiEndpoint,
+      host: publicApiEndpoint,
       apiVersion: '6.0',
       log: 'warning',
     });
