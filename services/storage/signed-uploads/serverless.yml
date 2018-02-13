@@ -1,7 +1,6 @@
 service: storage-signed-uploads
 
 plugins:
-  - serverless-stack-output
   - serverless-webpack
   - serverless-offline #serverless-offline needs to be last in the list
 
@@ -10,8 +9,6 @@ custom:
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
   serverless-offline:
     port: 4000
-  output:
-    file: .serverless/stack-output.json
 
 provider:
   name: aws
@@ -77,3 +74,18 @@ functions:
           path: storage/signed_url
           method: get
           authorizer: aws_iam
+
+resources:
+  Outputs:
+    ServiceEndpoint:
+      Description: The service endpoint
+      Value:
+        Fn::Join:
+          - ''
+          - - Ref: ApiGatewayRestApi
+            - '.execute-api.'
+            - ${self:provider.region}
+            - '.amazonaws.com/'
+            - ${self:provider.stage}
+      Export:
+        Name: "${self:provider.stage}:${self:service}:ServiceEndpoint"

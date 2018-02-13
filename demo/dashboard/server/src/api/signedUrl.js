@@ -3,7 +3,7 @@ const aws4 = require('aws4');
 const url = require('url');
 
 export const handler = (event, context, callback) => {
-  const apiEndpoint = url.parse(process.env.SIGNED_UPLOADS_API);
+  const apiEndpoint = url.parse(`https://${process.env.SIGNED_UPLOADS_API}`);
   const endpoint = '/storage/signed_url';
   const accessKeyId = process.env.PRODUCER_KEY_ID;
   const secretAccessKey = process.env.PRODUCER_SECRET_ACCESS_KEY;

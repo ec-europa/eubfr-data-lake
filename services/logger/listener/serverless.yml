@@ -1,15 +1,12 @@
 service: logger-listener
 
 plugins:
-  - serverless-stack-output
   - serverless-webpack
 
 custom:
   webpackIncludeModules: true
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
   index: ${self:provider.stage}-logs
-  output:
-    file: .serverless/stack-output.json
 
 package:
   individually: true
