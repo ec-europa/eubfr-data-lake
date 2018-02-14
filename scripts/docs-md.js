@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const fs = require('fs');
 const path = require('path');
 const documentation = require('documentation'); // eslint-disable-line import/no-extraneous-dependencies
