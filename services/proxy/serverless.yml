@@ -9,10 +9,6 @@ custom:
   publicDomain: ${self:custom.eubfrEnvironment}-public
   webpackIncludeModules: true
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
-  # EUBFR_USERNAME comes from cli parameter, but for spawn() and similar, it's from env var.
-  EUBFR_USERNAME: ${opt:username, env:EUBFR_USERNAME, file(../../../config.json):username, ''}
-  PRODUCER_KEY_ID: ${opt:PRODUCER_KEY_ID, file(../../../config.json):demo.${self:custom.EUBFR_USERNAME}.AWS_ACCESS_KEY_ID, env:PRODUCER_KEY_ID, ''}
-  PRODUCER_SECRET_ACCESS_KEY: ${opt:PRODUCER_SECRET_ACCESS_KEY, file(../../../config.json):demo.${self:custom.EUBFR_USERNAME}.AWS_SECRET_ACCESS_KEY, env:PRODUCER_SECRET_ACCESS_KEY, ''}
   API:
     Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
   INDEX: ${self:custom.esIndex}
@@ -31,7 +27,8 @@ provider:
   iamRoleStatements:
     - Effect: "Allow"
       Action: "es:*"
-      Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*"
+      Resource: "arn:aws:es:eu-central-1:*:domain/tmp/*"
+      # Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*"
 
 functions:
   proxy-elasticsearch:
@@ -49,7 +46,6 @@ functions:
           method: put
           path: proxy
 
-// TODO, check if useful https://github.com/ec-europa/eubfr-data-lake/blob/3d3f1102cd07cc621cadb268f0ecbded3d3ffa71/services/ingestion/facade/serverless.yml#L25
 resources:
   Outputs:
     ProxyEndpoint:

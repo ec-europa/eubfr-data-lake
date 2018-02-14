@@ -1,4 +1,8 @@
 export const handler = (event, context, callback) => {
+  console.log(`The event`);
+  console.log(JSON.stringify(event));
+  console.log(`The context`);
+  console.log(JSON.stringify(context));
   // make some checks before allow the request
 
   const response = {
