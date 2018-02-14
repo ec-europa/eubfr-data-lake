@@ -5,10 +5,14 @@ require(`./utils/protectStage`)();
 // Dependencies
 const deleteServerlessService = require('./utils/deleteServerlessService');
 
-const services = [
+const deleteResources = async resources =>
+  Promise.all(resources.map(deleteServerlessService));
+
+// Start
+deleteResources([
   'resources-raw-storage',
   'resources-harmonized-storage',
-  'resources-elasticsearch',
-];
-
-services.forEach(deleteServerlessService);
+  // ES is tied to the environment (dev, test, prod) and should not be deleted with the stage
+  // If you want to remove it, do it manually
+  // 'resources-elasticsearch',
+]);
