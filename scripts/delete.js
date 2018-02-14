@@ -5,7 +5,11 @@ require('./utils/protectStage')();
 // Dependencies
 const deleteServerlessService = require('./utils/deleteServerlessService');
 
-const services = [
+const deleteServices = async services =>
+  Promise.all(services.map(deleteServerlessService));
+
+// Start the deletion
+deleteServices([
   'storage-signed-uploads',
   'storage-deleter',
   'ingestion-manager',
@@ -18,6 +22,4 @@ const services = [
   'value-store-projects',
   'logger-listener',
   'enrichment-manager',
-];
-
-services.forEach(async service => deleteServerlessService(service, {}));
+]);
