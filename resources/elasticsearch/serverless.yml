@@ -55,29 +55,23 @@ resources:
         AccessPolicies:
           Version: '2012-10-17'
           Statement:
-          # Public can query for information
+          # Public can 'get' anything
           - Effect: Allow
             Principal: "*"
             Action:
              - "es:ESHttpHead"
              - "es:ESHttpGet"
-             - "es:ESHttpPost"
             Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*"
+          - Effect: Allow
+            Principal: "*"
+            Action:
+             - "es:ESHttpPost"
+            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/_search"
           # Lambda can take actions on the ES domain
           - Effect: Allow
             Principal:
               Service: lambda.amazonaws.com
             Action: sts:AssumeRole
-          # Admin access to Kibana from an IP
-          # http://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-kibana.html?shortFooter=true
-          - Effect: Allow
-            Principal: "*"
-            Action: es:*
-            Condition:
-              IpAddress:
-                aws:SourceIp:
-                - 147.67.241.226
-            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*"
     PrivateElasticSearchDomain:
       Type: AWS::Elasticsearch::Domain
       # Don't delete the elastic search instance when the CF stack is deleted
@@ -103,23 +97,17 @@ resources:
             Action:
              - "es:ESHttpHead"
              - "es:ESHttpGet"
-             - "es:ESHttpPost"
             Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.privateDomain}/*"
+          - Effect: Allow
+            Principal: "*"
+            Action:
+             - "es:ESHttpPost"
+            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.privateDomain}/_search"
           # Lambda can take actions on the ES domain
           - Effect: Allow
             Principal:
               Service: lambda.amazonaws.com
             Action: sts:AssumeRole
-          # Admin access to Kibana from an IP
-          # https://goo.gl/eiGgpD
-          - Effect: Allow
-            Principal: "*"
-            Action: es:*
-            Condition:
-              IpAddress:
-                aws:SourceIp:
-                - 147.67.241.226
-            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.privateDomain}/*"
   Outputs:
     PublicEndpoint:
       Description: The public elasticsearch domain.
