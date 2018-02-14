@@ -34,7 +34,6 @@ const deleteWebsite = async () => {
   await deleteServerlessService('demo-website', {});
 };
 
-// Remove dashboards
 const deleteDemo = async () =>
   Promise.all([
     ...usernames.map(async username =>
@@ -43,4 +42,5 @@ const deleteDemo = async () =>
     deleteWebsite(),
   ]);
 
+// Start
 deleteDemo();
