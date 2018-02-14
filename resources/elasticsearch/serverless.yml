@@ -55,29 +55,34 @@ resources:
         AccessPolicies:
           Version: '2012-10-17'
           Statement:
-          # Public can query for information
+          # Public can 'get' anything
           - Effect: Allow
             Principal: "*"
             Action:
              - "es:ESHttpHead"
              - "es:ESHttpGet"
-             - "es:ESHttpPost"
             Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*"
+          - Effect: Allow
+            Principal: "*"
+            Action:
+             - "es:ESHttpPost"
+            Resource:
+              - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*_analyze"
+              - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*_cat"
+              - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*_count"
+              # _field_stats and _field_caps are same https://www.elastic.co/guide/en/elasticsearch/reference/5.6/search-field-stats.html
+              # though AWS supports only the deprecated _field_stats for the moment
+              - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*_field_stats"
+              - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*_field_caps"
+              - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*_mtermvectors"
+              - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*_search"
           # Lambda can take actions on the ES domain
           - Effect: Allow
             Principal:
               Service: lambda.amazonaws.com
-            Action: sts:AssumeRole
-          # Admin access to Kibana from an IP
-          # http://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-kibana.html?shortFooter=true
-          - Effect: Allow
-            Principal: "*"
-            Action: es:*
-            Condition:
-              IpAddress:
-                aws:SourceIp:
-                - 147.67.241.226
-            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*"
+            Action:
+              - "sts:AssumeRole"
+              - "es:*"
     PrivateElasticSearchDomain:
       Type: AWS::Elasticsearch::Domain
       # Don't delete the elastic search instance when the CF stack is deleted
@@ -103,23 +108,28 @@ resources:
             Action:
              - "es:ESHttpHead"
              - "es:ESHttpGet"
-             - "es:ESHttpPost"
             Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.privateDomain}/*"
+          - Effect: Allow
+            Principal: "*"
+            Action:
+             - "es:ESHttpPost"
+            Resource:
+              - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.privateDomain}/*_analyze"
+              - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.privateDomain}/*_cat"
+              - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.privateDomain}/*_count"
+              # _field_stats and _field_caps are same https://www.elastic.co/guide/en/elasticsearch/reference/5.6/search-field-stats.html
+              # though AWS supports only the deprecated _field_stats for the moment
+              - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.privateDomain}/*_field_stats"
+              - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.privateDomain}/*_field_caps"
+              - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.privateDomain}/*_mtermvectors"
+              - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.privateDomain}/*_search"
           # Lambda can take actions on the ES domain
           - Effect: Allow
             Principal:
               Service: lambda.amazonaws.com
-            Action: sts:AssumeRole
-          # Admin access to Kibana from an IP
-          # https://goo.gl/eiGgpD
-          - Effect: Allow
-            Principal: "*"
-            Action: es:*
-            Condition:
-              IpAddress:
-                aws:SourceIp:
-                - 147.67.241.226
-            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.privateDomain}/*"
+            Action:
+              - "sts:AssumeRole"
+              - "es:*"
   Outputs:
     PublicEndpoint:
       Description: The public elasticsearch domain.
