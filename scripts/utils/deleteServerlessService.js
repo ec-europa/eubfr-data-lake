@@ -15,7 +15,9 @@ const resolveSymbolicLink = filePath => {
 
 module.exports = (service, { isClient = false, username = '' }) =>
   new Promise((resolve, reject) => {
-    const serviceName = `${service}${username ? `-${username}` : ''}`;
+    const serviceName = `${service}${username ? `-${username}` : ''}${
+      isClient ? ' (client)' : ''
+    }`;
     console.log(`Start deletion of ${serviceName}`);
     console.time(serviceName);
 
