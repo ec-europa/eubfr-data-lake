@@ -91,7 +91,7 @@ module.exports = () => ({
         },
         results: {
           properties: {
-            available: { type: 'keyowrd' },
+            available: { type: 'keyword' },
             result: { type: 'text' },
           },
         },
