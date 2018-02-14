@@ -12,5 +12,7 @@ const deleteResources = async resources =>
 deleteResources([
   'resources-raw-storage',
   'resources-harmonized-storage',
-  'resources-elasticsearch',
+  // ES is tied to the environment (dev, test, prod) and should not be deleted with the stage
+  // If you want to remove it, do it manually
+  // 'resources-elasticsearch',
 ]);
