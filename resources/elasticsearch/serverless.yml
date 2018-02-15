@@ -81,7 +81,6 @@ resources:
             Principal:
               Service: lambda.amazonaws.com
             Action:
-              - "sts:AssumeRole"
               - "es:*"
     PrivateElasticSearchDomain:
       Type: AWS::Elasticsearch::Domain
@@ -128,7 +127,6 @@ resources:
             Principal:
               Service: lambda.amazonaws.com
             Action:
-              - "sts:AssumeRole"
               - "es:*"
   Outputs:
     PublicEndpoint:
