@@ -61,6 +61,7 @@ while the second example adds _Geo Centroid Aggregation_ as a second aggregation
         "key": "u0",
         "doc_count": 19
       }
+    ]
   }
 }
 ```
