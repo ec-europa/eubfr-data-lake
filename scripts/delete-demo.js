@@ -15,14 +15,32 @@ if (process.env.EUBFR_USERNAME) {
   );
 }
 
-// Remove dashboards
-usernames.forEach(username => {
-  deleteServerlessService('demo-dashboard-client', {
+const deleteClient = async username => {
+  // Delete S3 buckets holding static assets (the React apps)
+  await deleteServerlessService('demo-dashboard-client', {
     isClient: true,
     username,
   });
-  deleteServerlessService('demo-dashboard-server', { username });
-});
 
-// Remove website
-deleteServerlessService('demo-website', { isClient: true });
+  // Delete also the CloudFormation stacks created by SLS
+  await deleteServerlessService('demo-dashboard-client', { username });
+};
+
+const deleteServer = async username =>
+  deleteServerlessService('demo-dashboard-server', { username });
+
+const deleteWebsite = async () => {
+  await deleteServerlessService('demo-website', { isClient: true });
+  await deleteServerlessService('demo-website', {});
+};
+
+const deleteDemo = async () =>
+  Promise.all([
+    ...usernames.map(async username =>
+      Promise.all([deleteClient(username), deleteServer(username)])
+    ),
+    deleteWebsite(),
+  ]);
+
+// Start
+deleteDemo();

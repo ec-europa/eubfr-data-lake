@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const documentation = require('documentation'); // eslint-disable-line import/no-extraneous-dependencies
 const streamArray = require('stream-array'); // eslint-disable-line import/no-extraneous-dependencies
 const vfs = require('vinyl-fs'); // eslint-disable-line import/no-extraneous-dependencies
