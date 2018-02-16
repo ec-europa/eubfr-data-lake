@@ -9,22 +9,22 @@ This example shows how to aggregate projects by the `centroid` field in an attem
 
 ```json
 {
-  size: 0,
-  query: {
-    nested: {
-      path: "project_locations",
-      query: {
-        constant_score: {
-          filter: {
-            geo_bounding_box: {
-              project_locations.centroid: {
-                top_left: {
-                  lat: 65.494,
-                  lon: -22.192
+  "size": 0,
+  "query": {
+    "nested": {
+      "path": "project_locations",
+      "query": {
+        "constant_score": {
+          "filter": {
+            "geo_bounding_box": {
+              "project_locations.centroid": {
+                "top_left": {
+                  "lat": 65.494,
+                  "lon": -22.192
                 },
-                bottom_right: {
-                  lat: 37.892,
-                  lon: 28.784
+                "bottom_right": {
+                  "lat": 37.892,
+                  "lon": 28.784
                 }
               }
             }
@@ -33,20 +33,20 @@ This example shows how to aggregate projects by the `centroid` field in an attem
       }
     }
   },
-  aggregations: {
-    locations: {
-      nested: {
-        path: "project_locations"
+  "aggregations": {
+    "locations": {
+      "nested": {
+        "path": "project_locations"
       },
-      aggs: {
-        countries: {
-          terms: {
-            field: "project_locations.country_code"
+      "aggs": {
+        "countries": {
+          "terms": {
+            "field": "project_locations.country_code"
           },
-          aggs: {
-            centroid: {
-              geo_centroid: {
-                field: "project_locations.centroid"
+          "aggs": {
+            "centroid": {
+              "geo_centroid": {
+                "field": "project_locations.centroid"
               }
             }
           }

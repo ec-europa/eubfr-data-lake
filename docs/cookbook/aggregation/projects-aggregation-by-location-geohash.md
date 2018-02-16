@@ -11,22 +11,22 @@ The returned buckets will contain geohashes and you will need a library to conve
 
 ```json
 {
-  size: 0,
-  query: {
-    nested: {
-      path: "project_locations",
-      query: {
-        constant_score: {
-          filter: {
-            geo_bounding_box: {
+  "size": 0,
+  "query": {
+    "nested": {
+      "path": "project_locations",
+      "query": {
+        "constant_score": {
+          "filter": {
+            "geo_bounding_box": {
               "project_locations.centroid": {
-                top_left: {
-                  lat: 65.494,
-                  lon: -22.192
+                "top_left": {
+                  "lat": 65.494,
+                  "lon": -22.192
                 },
-                bottom_right: {
-                  lat: 37.892,
-                  lon: 28.784
+                "bottom_right": {
+                  "lat": 37.892,
+                  "lon": 28.784
                 }
               }
             }
@@ -35,16 +35,16 @@ The returned buckets will contain geohashes and you will need a library to conve
       }
     }
   },
-  aggregations: {
-    locations: {
-      nested: {
-        path: "project_locations"
+  "aggregations": {
+    "locations": {
+      "nested": {
+        "path": "project_locations"
       },
-      aggs: {
-        grid: {
-          geohash_grid: {
-            field: "project_locations.centroid",
-            precision: 2
+      "aggs": {
+        "grid": {
+          "geohash_grid": {
+            "field": "project_locations.centroid",
+            "precision": 2
           }
         }
       }
