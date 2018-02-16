@@ -18,4 +18,5 @@ Examples:
 
 * [Aggregate projects per field and limit results](./aggregation/projects-by-field-with-limit.md)
 * [Aggregate projects per field with second aggregation](./aggregation/projects-by-field-with-second-aggregation-on-buckets.md)
-* [Aggregate projects by location](./aggregation/projects-aggregation-by-location.md)
+* [Aggregate projects by location (Geohash Grid Aggregation)](./aggregation/projects-aggregation-by-location-geohash.md)
+* [Aggregate projects by location (Geo Centroid Aggregation)](./aggregation/projects-aggregation-by-location-centroid.md)
