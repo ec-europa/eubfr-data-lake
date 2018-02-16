@@ -10,20 +10,25 @@ This query will facilitate you in visualizing geo information on maps.
 ```json
 {
   "query": {
-    "bool": {
-      "must": {
-        "match_all": {}
-      },
-      "filter": {
-        "geo_bounding_box": {
-          "project_locations.centroid": {
-            "top_left": {
-              "lat": 41,
-              "lon": -74
-            },
-            "bottom_right": {
-              "lat": 40,
-              "lon": -71
+    "nested": {
+      "path": "project_locations",
+      "query": {
+        "bool": {
+          "must": {
+            "match_all": {}
+          },
+          "filter": {
+            "geo_bounding_box": {
+              "project_locations.centroid": {
+                "top_left": {
+                  "lat": 41,
+                  "lon": -74
+                },
+                "bottom_right": {
+                  "lat": 40,
+                  "lon": -71
+                }
+              }
             }
           }
         }
