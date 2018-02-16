@@ -13,30 +13,42 @@ while the second example adds _Geo Centroid Aggregation_ as a second aggregation
 
 ```json
 {
-  "size": 0,
-  "query": {
-    "constant_score": {
-      "filter": {
-        "geo_bounding_box": {
-          "project_locations.centroid": {
-            "top_left": {
-              "lat": 65.494,
-              "lon": -22.192
-            },
-            "bottom_right": {
-              "lat": 37.892,
-              "lon": 28.784
+  size: 0,
+  query: {
+    nested: {
+      path: "project_locations",
+      query: {
+        constant_score: {
+          filter: {
+            geo_bounding_box: {
+              "project_locations.centroid": {
+                top_left: {
+                  lat: 65.494,
+                  lon: -22.192
+                },
+                bottom_right: {
+                  lat: 37.892,
+                  lon: 28.784
+                }
+              }
             }
           }
         }
       }
     }
   },
-  "aggregations": {
-    "grid": {
-      "geohash_grid": {
-        "field": "project_locations.centroid",
-        "precision": 2
+  aggregations: {
+    locations: {
+      nested: {
+        path: "project_locations"
+      },
+      aggs: {
+        grid: {
+          geohash_grid: {
+            field: "project_locations.centroid",
+            precision: 2
+          }
+        }
       }
     }
   }
@@ -47,21 +59,20 @@ while the second example adds _Geo Centroid Aggregation_ as a second aggregation
 
 ```json
 "aggregations": {
-  "grid": {
-    "buckets": [
-      {
-        "key": "u2",
-        "doc_count": 39
-      },
-      {
-        "key": "u1",
-        "doc_count": 20
-      },
-      {
-        "key": "u0",
-        "doc_count": 19
-      }
-    ]
+  "locations": {
+    "doc_count": 161,
+    "grid": {
+      "buckets": [{
+          "key": "u2",
+          "doc_count": 39
+      }, {
+          "key": "u1",
+          "doc_count": 21
+      }, {
+          "key": "u0",
+          "doc_count": 19
+      }]
+    }
   }
 }
 ```
@@ -78,22 +89,22 @@ You will need a library to convert the geohashes into bounding boxes or points.
 
 ```json
 {
-  "size": 0,
-  "query": {
-    "nested": {
-      "path": "project_locations",
-      "query": {
-        "constant_score": {
-          "filter": {
-            "geo_bounding_box": {
-              "project_locations.centroid": {
-                "top_left": {
-                  "lat": 65.494,
-                  "lon": -22.192
+  size: 0,
+  query: {
+    nested: {
+      path: "project_locations",
+      query: {
+        constant_score: {
+          filter: {
+            geo_bounding_box: {
+              project_locations.centroid: {
+                top_left: {
+                  lat: 65.494,
+                  lon: -22.192
                 },
-                "bottom_right": {
-                  "lat": 37.892,
-                  "lon": 28.784
+                bottom_right: {
+                  lat: 37.892,
+                  lon: 28.784
                 }
               }
             }
@@ -102,20 +113,20 @@ You will need a library to convert the geohashes into bounding boxes or points.
       }
     }
   },
-  "aggregations": {
-    "locations": {
-      "nested": {
-        "path": "project_locations"
+  aggregations: {
+    locations: {
+      nested: {
+        path: "project_locations"
       },
-      "aggs": {
-        "countries": {
-          "terms": {
-            "field": "project_locations.country_code"
+      aggs: {
+        countries: {
+          terms: {
+            field: "project_locations.country_code"
           },
-          "aggs": {
-            "centroid": {
-              "geo_centroid": {
-                "field": "project_locations.centroid"
+          aggs: {
+            centroid: {
+              geo_centroid: {
+                field: "project_locations.centroid"
               }
             }
           }
