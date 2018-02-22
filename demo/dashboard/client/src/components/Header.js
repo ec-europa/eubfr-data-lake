@@ -22,7 +22,6 @@ const Header = () => (
         </li>
       </ul>
     </div>
-
     <div className="ecl-container ecl-site-header__banner">
       <a
         href="https://ec.europa.eu"
