@@ -1,14 +1,11 @@
 /* eslint-disable no-underscore-dangle */
 
 import React from 'react';
-import elasticsearch from 'elasticsearch';
 import PropTypes from 'prop-types';
 import Spinner from '../../../components/Spinner';
 
-const privateApiEndpoint = `https://${
-  process.env.REACT_APP_ES_PRIVATE_ENDPOINT
-}`;
-const logsIndex = `${process.env.REACT_APP_STAGE}-logs`;
+import clients from '../../../clientFactory';
+import indices from '../../../clientFactory/esIndices';
 
 class Logs extends React.Component {
   constructor() {
@@ -20,19 +17,14 @@ class Logs extends React.Component {
       logsCount: 0,
     };
 
-    this.logClient = null;
+    this.clients = null;
     this.loadLogs = this.loadLogs.bind(this);
     this.setLogs = this.setLogs.bind(this);
     this.setEmptyLogs = this.setEmptyLogs.bind(this);
   }
 
   componentDidMount() {
-    this.logClient = elasticsearch.Client({
-      host: privateApiEndpoint,
-      apiVersion: '6.0',
-      log: 'warning',
-    });
-
+    this.clients = clients.Create();
     this.loadLogs();
   }
 
@@ -45,16 +37,16 @@ class Logs extends React.Component {
 
   setLogs(computedKey) {
     return () =>
-      this.logClient.indices
+      this.clients.private.indices
         .exists({
-          index: logsIndex,
+          index: indices.logs,
         })
         .then(
           exists =>
             exists
-              ? this.logClient
+              ? this.clients.private
                   .search({
-                    index: logsIndex,
+                    index: indices.logs,
                     type: 'file',
                     body: {
                       query: {
