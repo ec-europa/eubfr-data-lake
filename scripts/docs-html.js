@@ -9,6 +9,7 @@ documentation
   .build(['**/_types/Project.js', '**/lib/transform.js'], {})
   .then(comments =>
     documentation.formats.html(comments, {
+      'project-name': 'EUBFR API docs',
       theme: 'node_modules/documentation-theme-ecl',
     })
   )

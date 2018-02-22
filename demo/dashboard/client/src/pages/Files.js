@@ -13,7 +13,9 @@ const Files = ({ match }) => (
 );
 
 Files.propTypes = {
-  match: PropTypes.object,
+  match: PropTypes.shape({
+    url: PropTypes.string,
+  }),
 };
 
 export default Files;
