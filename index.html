@@ -1,0 +1,3608 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>EUBFR API docs | Documentation: </title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#034ea1">
+  <meta name="msapplication-TileColor" content="#034ea1">
+  <link rel="apple-touch-icon" sizes="144x144" href="assets/favicon/apple-touch-icon-144x144.png">
+  <meta name="msapplication-square70x70logo" content="assets/favicon/mstile-70x70.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="assets/favicon/apple-touch-icon-120x120.png">
+  <meta name="msapplication-square150x150logo" content="assets/favicon/mstile-150x150.png">
+  <link rel="apple-touch-icon" sizes="57x57" href="assets/favicon/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="assets/favicon/apple-touch-icon-152x152.png">
+  <meta name="msapplication-square310x310logo" content="assets/favicon/mstile-310x310.png">
+  <meta name="msapplication-wide310x150logo" content="assets/favicon/mstile-310x150.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="assets/favicon/apple-touch-icon-114x114.png">
+  <meta name="msapplication-TileImage" content="assets/favicon/mstile-144x144.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/android-chrome-192x192.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="assets/favicon/apple-touch-icon-60x60.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon/favicon-96x96.png">
+  <link rel="shortcut icon" href="assets/favicon/favicon.ico" type="image/ico">
+  <link href="assets/bundle/main.css" type="text/css" rel="stylesheet">
+  <link href="assets/vendor/ecl/styles/europa.css" type="text/css" rel="stylesheet">
+</head>
+<body class="language-en">
+  <div class="ecl-skip-link__wrapper" id="skip-link">
+    <a href="#main-content" class="ecl-skip-link">Skip to main content</a>
+  </div>
+  <header class="ecl-site-header" role="banner">
+  <div class="ecl-site-switcher">
+    <ul class="ecl-site-switcher__list ecl-container">
+      <li class="ecl-site-switcher__option">
+        <a class="ecl-link ecl-site-switcher__link" href=
+        "#">Commission and its priorities</a>
+      </li>
+      <li class=
+      "ecl-site-switcher__option ecl-site-switcher__option--is-selected">
+        <a class="ecl-link ecl-site-switcher__link" href=
+        "#">Policies, information and services</a>
+      </li>
+    </ul>
+  </div>
+  <div class="ecl-container">
+    <a href="https://ec.europa.eu" class=
+    "ecl-logo ecl-logo--logotype ecl-site-header__logo ecl-u-mb-s ecl-u-mt-s"
+    title="Home - European Commission"><span class=
+    "ecl-u-sr-only">Home - European Commission</span></a>
+  </div>
+</header>
+<div class="ecl-page-header">
+  <div class="ecl-container">
+    <div class="ecl-page-header__body">
+      <div class="ecl-page-header__identity">
+        EUBFR API docs
+      </div>
+    </div>
+  </div>
+</div>
+
+  <main>
+    <a id="main-content" tabindex="-1"></a>
+    <div class="ecl-container ecl-u-mv-l">
+      <div class="ecl-row">
+        <aside class="ecl-col-lg-3" role="complementary">
+          <h3 class="ecl-heading ecl-heading--h3">Filter</h3>
+          <input placeholder="Filter" id="filter-input"
+          type="text" class="ecl-text-input" name="filter-input">
+          <h3 class="ecl-heading ecl-heading--h3">Interfaces</h3>
+          <div class="ecl-link-block" id="toc">
+            <ul class="ecl-link-block__list">
+              
+                
+                <li class="ecl-link-block__item">
+                  <a href="#budgetitem"
+                     class="ecl-link ecl-link--standalone ecl-link-block__link">
+                    BudgetItem
+                  </a>
+                
+                </li>
+              
+                
+                <li class="ecl-link-block__item">
+                  <a href="#budget"
+                     class="ecl-link ecl-link--standalone ecl-link-block__link">
+                    Budget
+                  </a>
+                
+                </li>
+              
+                
+                <li class="ecl-link-block__item">
+                  <a href="#coordinator"
+                     class="ecl-link ecl-link--standalone ecl-link-block__link">
+                    Coordinator
+                  </a>
+                
+                </li>
+              
+                
+                <li class="ecl-link-block__item">
+                  <a href="#coordinates"
+                     class="ecl-link ecl-link--standalone ecl-link-block__link">
+                    Coordinates
+                  </a>
+                
+                </li>
+              
+                
+                <li class="ecl-link-block__item">
+                  <a href="#location"
+                     class="ecl-link ecl-link--standalone ecl-link-block__link">
+                    Location
+                  </a>
+                
+                </li>
+              
+                
+                <li class="ecl-link-block__item">
+                  <a href="#media"
+                     class="ecl-link ecl-link--standalone ecl-link-block__link">
+                    Media
+                  </a>
+                
+                </li>
+              
+                
+                <li class="ecl-link-block__item">
+                  <a href="#partner"
+                     class="ecl-link ecl-link--standalone ecl-link-block__link">
+                    Partner
+                  </a>
+                
+                </li>
+              
+                
+                <li class="ecl-link-block__item">
+                  <a href="#relatedlink"
+                     class="ecl-link ecl-link--standalone ecl-link-block__link">
+                    RelatedLink
+                  </a>
+                
+                </li>
+              
+                
+                <li class="ecl-link-block__item">
+                  <a href="#result"
+                     class="ecl-link ecl-link--standalone ecl-link-block__link">
+                    Result
+                  </a>
+                
+                </li>
+              
+                
+                <li class="ecl-link-block__item">
+                  <a href="#timeframe"
+                     class="ecl-link ecl-link--standalone ecl-link-block__link">
+                    Timeframe
+                  </a>
+                
+                </li>
+              
+                
+                <li class="ecl-link-block__item">
+                  <a href="#project"
+                     class="ecl-link ecl-link--standalone ecl-link-block__link">
+                    Project
+                  </a>
+                
+                </li>
+              
+                
+                <li class="ecl-link-block__item">
+                  <a href="#agricsvtransform"
+                     class="ecl-link ecl-link--standalone ecl-link-block__link">
+                    AgriCsvTransform
+                  </a>
+                
+                  
+                  <ul class="ecl-list">
+                    
+                      <li><a
+                        href="#agricsvtransformgetfundingarea"
+                        class="ecl-link pre-open">
+                        getFundingArea
+                      </a></li>
+                    
+                      <li><a
+                        href="#agricsvtransformgetcoordinators"
+                        class="ecl-link pre-open">
+                        getCoordinators
+                      </a></li>
+                    
+                      <li><a
+                        href="#agricsvtransformgetpartners"
+                        class="ecl-link pre-open">
+                        getPartners
+                      </a></li>
+                    
+                      <li><a
+                        href="#agricsvtransformgetlocations"
+                        class="ecl-link pre-open">
+                        getLocations
+                      </a></li>
+                    
+                      <li><a
+                        href="#agricsvtransformgetrelatedlinks"
+                        class="ecl-link pre-open">
+                        getRelatedLinks
+                      </a></li>
+                    
+                      <li><a
+                        href="#agricsvtransformformatdate"
+                        class="ecl-link pre-open">
+                        formatDate
+                      </a></li>
+                    
+                    </ul>
+                  
+                
+                </li>
+              
+                
+                <li class="ecl-link-block__item">
+                  <a href="#budgxlstransform"
+                     class="ecl-link ecl-link--standalone ecl-link-block__link">
+                    BudgXlsTransform
+                  </a>
+                
+                  
+                  <ul class="ecl-list">
+                    
+                      <li><a
+                        href="#budgxlstransformgetcoordinators"
+                        class="ecl-link pre-open">
+                        getCoordinators
+                      </a></li>
+                    
+                      <li><a
+                        href="#budgxlstransformformatdate"
+                        class="ecl-link pre-open">
+                        formatDate
+                      </a></li>
+                    
+                      <li><a
+                        href="#budgxlstransformgetpartners"
+                        class="ecl-link pre-open">
+                        getPartners
+                      </a></li>
+                    
+                      <li><a
+                        href="#budgxlstransformgetlocations"
+                        class="ecl-link pre-open">
+                        getLocations
+                      </a></li>
+                    
+                      <li><a
+                        href="#budgxlstransformgettypes"
+                        class="ecl-link pre-open">
+                        getTypes
+                      </a></li>
+                    
+                    </ul>
+                  
+                
+                </li>
+              
+                
+                <li class="ecl-link-block__item">
+                  <a href="#inforegiojsontransform"
+                     class="ecl-link ecl-link--standalone ecl-link-block__link">
+                    InforegioJsonTransform
+                  </a>
+                
+                  
+                  <ul class="ecl-list">
+                    
+                      <li><a
+                        href="#inforegiojsontransformgetfundingarea"
+                        class="ecl-link pre-open">
+                        getFundingArea
+                      </a></li>
+                    
+                      <li><a
+                        href="#inforegiojsontransformformatdate"
+                        class="ecl-link pre-open">
+                        formatDate
+                      </a></li>
+                    
+                      <li><a
+                        href="#inforegiojsontransformgetaddress"
+                        class="ecl-link pre-open">
+                        getAddress
+                      </a></li>
+                    
+                      <li><a
+                        href="#inforegiojsontransformgetpartners"
+                        class="ecl-link pre-open">
+                        getPartners
+                      </a></li>
+                    
+                      <li><a
+                        href="#inforegiojsontransformgetlocations"
+                        class="ecl-link pre-open">
+                        getLocations
+                      </a></li>
+                    
+                      <li><a
+                        href="#inforegiojsontransformgetprojectwebsite"
+                        class="ecl-link pre-open">
+                        getProjectWebsite
+                      </a></li>
+                    
+                      <li><a
+                        href="#inforegiojsontransformformatbudget"
+                        class="ecl-link pre-open">
+                        formatBudget
+                      </a></li>
+                    
+                    </ul>
+                  
+                
+                </li>
+              
+                
+                <li class="ecl-link-block__item">
+                  <a href="#inforegioxmltransform"
+                     class="ecl-link ecl-link--standalone ecl-link-block__link">
+                    inforegioXmlTransform
+                  </a>
+                
+                  
+                  <ul class="ecl-list">
+                    
+                      <li><a
+                        href="#inforegioxmltransformcheckdata"
+                        class="ecl-link pre-open">
+                        checkData
+                      </a></li>
+                    
+                      <li><a
+                        href="#inforegioxmltransformformatdate"
+                        class="ecl-link pre-open">
+                        formatDate
+                      </a></li>
+                    
+                      <li><a
+                        href="#inforegioxmltransformgetaddress"
+                        class="ecl-link pre-open">
+                        getAddress
+                      </a></li>
+                    
+                      <li><a
+                        href="#inforegioxmltransformformatbudget"
+                        class="ecl-link pre-open">
+                        formatBudget
+                      </a></li>
+                    
+                      <li><a
+                        href="#inforegioxmltransformgetfundingarea"
+                        class="ecl-link pre-open">
+                        getFundingArea
+                      </a></li>
+                    
+                      <li><a
+                        href="#inforegioxmltransformgetlocations"
+                        class="ecl-link pre-open">
+                        getLocations
+                      </a></li>
+                    
+                      <li><a
+                        href="#inforegioxmltransformgetthemes"
+                        class="ecl-link pre-open">
+                        getThemes
+                      </a></li>
+                    
+                      <li><a
+                        href="#inforegioxmltransformgetpartners"
+                        class="ecl-link pre-open">
+                        getPartners
+                      </a></li>
+                    
+                    </ul>
+                  
+                
+                </li>
+              
+                
+                <li class="ecl-link-block__item">
+                  <a href="#valorxlstransform"
+                     class="ecl-link ecl-link--standalone ecl-link-block__link">
+                    valorXlsTransform
+                  </a>
+                
+                </li>
+              
+            </ul>
+          </div>
+        </aside>
+        <section class="ecl-col-lg-9">
+          <ul class="ecl-listing">
+          
+            
+              <li class='ecl-list-item ecl-u-pv-m'>
+  
+    
+    <h3 class='ecl-heading ecl-heading--h3' id='budgetitem'>
+      BudgetItem
+    </h3>
+    
+    
+  
+
+  <p>Describes field <code>project.budget.eu_contrib</code>.</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Properties</h4>
+      <ul class="ecl-list">
+        
+          <li>
+            currency (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            raw (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            value (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)
+            
+            
+            
+        </li>
+      
+      </ul>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+                  
+            
+              <li class='ecl-list-item ecl-u-pv-m'>
+  
+    
+    <h3 class='ecl-heading ecl-heading--h3' id='budget'>
+      Budget
+    </h3>
+    
+    
+  
+
+  <p>Describes field <code>project.budget</code>.</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Properties</h4>
+      <ul class="ecl-list">
+        
+          <li>
+            eu_contrib (<a href="#budgetitem">BudgetItem</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            funding_area (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>>)
+            
+            
+            
+        </li>
+      
+          <li>
+            mmf_heading (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            other_contrib (<a href="#budgetitem">BudgetItem</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            private_fund (<a href="#budgetitem">BudgetItem</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            public_fund (<a href="#budgetitem">BudgetItem</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            total_cost (<a href="#budgetitem">BudgetItem</a>)
+            
+            
+            
+        </li>
+      
+      </ul>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+                  
+            
+              <li class='ecl-list-item ecl-u-pv-m'>
+  
+    
+    <h3 class='ecl-heading ecl-heading--h3' id='coordinator'>
+      Coordinator
+    </h3>
+    
+    
+  
+
+  <p>Describes field <code>project.coordinators</code>.</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Properties</h4>
+      <ul class="ecl-list">
+        
+          <li>
+            address (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            country (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            email (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            name (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            phone (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            region (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            type (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            website (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+      </ul>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+                  
+            
+              <li class='ecl-list-item ecl-u-pv-m'>
+  
+    
+    <h3 class='ecl-heading ecl-heading--h3' id='coordinates'>
+      Coordinates
+    </h3>
+    
+    
+  
+
+  <p>Describes field <code>project.project_locations.centroid</code>.</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Properties</h4>
+      <ul class="ecl-list">
+        
+          <li>
+            lat (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            lon (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)
+            
+            
+            
+        </li>
+      
+      </ul>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+                  
+            
+              <li class='ecl-list-item ecl-u-pv-m'>
+  
+    
+    <h3 class='ecl-heading ecl-heading--h3' id='location'>
+      Location
+    </h3>
+    
+    
+  
+
+  <p>Describes field <code>project.project_locations</code>.</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Properties</h4>
+      <ul class="ecl-list">
+        
+          <li>
+            address (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            centroid ((<a href="#coordinates">Coordinates</a> | null))
+            
+            
+            
+        </li>
+      
+          <li>
+            country_code (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            location ((GeoJSON | null))
+            
+            
+            
+        </li>
+      
+          <li>
+            nuts2 (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            postal_code (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            region (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            town (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+      </ul>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+                  
+            
+              <li class='ecl-list-item ecl-u-pv-m'>
+  
+    
+    <h3 class='ecl-heading ecl-heading--h3' id='media'>
+      Media
+    </h3>
+    
+    
+  
+
+  <p>Describes field <code>project.media</code>.</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Properties</h4>
+      <ul class="ecl-list">
+        
+          <li>
+            cover_image (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            video (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+      </ul>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+                  
+            
+              <li class='ecl-list-item ecl-u-pv-m'>
+  
+    
+    <h3 class='ecl-heading ecl-heading--h3' id='partner'>
+      Partner
+    </h3>
+    
+    
+  
+
+  <p>Describes field <code>project.partners</code>.</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Properties</h4>
+      <ul class="ecl-list">
+        
+          <li>
+            address (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            country (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            name (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            region (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            type (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            website (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+      </ul>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+                  
+            
+              <li class='ecl-list-item ecl-u-pv-m'>
+  
+    
+    <h3 class='ecl-heading ecl-heading--h3' id='relatedlink'>
+      RelatedLink
+    </h3>
+    
+    
+  
+
+  <p>Describes field <code>project.related_links</code>.</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Properties</h4>
+      <ul class="ecl-list">
+        
+          <li>
+            label (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            url (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+      </ul>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+                  
+            
+              <li class='ecl-list-item ecl-u-pv-m'>
+  
+    
+    <h3 class='ecl-heading ecl-heading--h3' id='result'>
+      Result
+    </h3>
+    
+    
+  
+
+  <p>Describes field <code>project.results</code>.</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Properties</h4>
+      <ul class="ecl-list">
+        
+          <li>
+            available (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            result (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+      </ul>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+                  
+            
+              <li class='ecl-list-item ecl-u-pv-m'>
+  
+    
+    <h3 class='ecl-heading ecl-heading--h3' id='timeframe'>
+      Timeframe
+    </h3>
+    
+    
+  
+
+  <p>Describes field <code>project.timeframe</code>.</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Properties</h4>
+      <ul class="ecl-list">
+        
+          <li>
+            from ((<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | null))
+            
+            
+            
+        </li>
+      
+          <li>
+            to ((<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | null))
+            
+            
+            
+        </li>
+      
+      </ul>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+                  
+            
+              <li class='ecl-list-item ecl-u-pv-m'>
+  
+    
+    <h3 class='ecl-heading ecl-heading--h3' id='project'>
+      Project
+    </h3>
+    
+    
+  
+
+  <p>Describes <code>project</code>.</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Properties</h4>
+      <ul class="ecl-list">
+        
+          <li>
+            action (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            budget (<a href="#budget">Budget</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            call_year (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            coordinators (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#coordinator">Coordinator</a>>)
+            
+            
+            
+        </li>
+      
+          <li>
+            description (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            ec_priorities (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>>)
+            
+            
+            
+        </li>
+      
+          <li>
+            media (<a href="#media">Media</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            partners (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#partner">Partner</a>>)
+            
+            
+            
+        </li>
+      
+          <li>
+            programme_name (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            project_id (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            project_locations (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#location">Location</a>>)
+            
+            
+            
+        </li>
+      
+          <li>
+            project_website (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            related_links (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#relatedlink">RelatedLink</a>>)
+            
+            
+            
+        </li>
+      
+          <li>
+            results (<a href="#result">Result</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            status (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            sub_programme_name (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            success_story (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            themes (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>>)
+            
+            
+            
+        </li>
+      
+          <li>
+            timeframe (<a href="#timeframe">Timeframe</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            title (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            type (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>>)
+            
+            
+            
+        </li>
+      
+      </ul>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+                  
+            
+              <li class='ecl-list-item ecl-u-pv-m'>
+  
+    
+    <h3 class='ecl-heading ecl-heading--h3' id='agricsvtransform'>
+      AgriCsvTransform
+    </h3>
+    
+    
+  
+
+  <p>Map fields for AGRI producer, CSV file types</p>
+<p>Example input data: <a href="https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/agri/csv/test/stubs/record.json">stub</a></p>
+<p>Transform function: <a href="https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/agri/csv/src/lib/transform.js">implementation details</a></p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from harmonized storage.
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="#project">Project</a>
+      :
+        JSON matching the type fields.
+
+      
+    
+  
+
+  
+
+  
+
+  
+    <ul class="ecl-list">
+    <section class='ecl-u-clearfix ecl-u-pt-xs'>
+  
+    <a id='agricsvtransformgetfundingarea' class="ecl-link ecl-link--standalone" aria-controls='agricsvtransformgetfundingarea-panel' aria-expanded="true" href="#">
+      getFundingArea
+    </a>
+    <div id='agricsvtransformgetfundingarea-panel' aria-labelledby='agricsvtransformgetfundingarea' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Converts a single string to an array</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from harmonized storage
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>
+      :
+        List of string values for 
+<code>funding_area</code>
+ field
+
+      
+    
+  
+
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Example</h4>
+    
+      
+      <pre style="background-color: #f5f5f5;" class="ecl-u-pa-xs">input =&gt; <span class="hljs-string">"Research &amp; innovation; Investment for growth; Transport"</span>
+output =&gt; [<span class="hljs-string">"Research &amp; innovation"</span>, <span class="hljs-string">"Investment for growth"</span>, <span class="hljs-string">"Transport"</span>]</pre>
+    
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='agricsvtransformgetcoordinators' class="ecl-link ecl-link--standalone" aria-controls='agricsvtransformgetcoordinators-panel' aria-expanded="true" href="#">
+      getCoordinators
+    </a>
+    <div id='agricsvtransformgetcoordinators-panel' aria-labelledby='agricsvtransformgetcoordinators' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess coordinators</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from harmonized storage
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>
+      :
+        List of {Coordinator} objects for 
+<code>coordinators</code>
+ field
+
+      
+    
+  
+
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Example</h4>
+    
+      
+      <pre style="background-color: #f5f5f5;" class="ecl-u-pa-xs">input =&gt; <span class="hljs-string">"Eva Maria Plunger (VERBUND AG); foo; bar"</span>
+output =&gt; [<span class="hljs-string">"Eva Maria Plunger (VERBUND AG)"</span>, <span class="hljs-string">"foo"</span>, <span class="hljs-string">"bar"</span>]</pre>
+    
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='agricsvtransformgetpartners' class="ecl-link ecl-link--standalone" aria-controls='agricsvtransformgetpartners-panel' aria-expanded="true" href="#">
+      getPartners
+    </a>
+    <div id='agricsvtransformgetpartners-panel' aria-labelledby='agricsvtransformgetpartners' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess partners</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from harmonized storage
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>
+      :
+        List of {Partner} objects for 
+<code>partners</code>
+ field
+
+      
+    
+  
+
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Example</h4>
+    
+      
+      <pre style="background-color: #f5f5f5;" class="ecl-u-pa-xs">input =&gt; <span class="hljs-string">"foo, bar, baz"</span>
+output =&gt; [<span class="hljs-string">"foo"</span>, <span class="hljs-string">"bar"</span>, <span class="hljs-string">"baz"</span>]</pre>
+    
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='agricsvtransformgetlocations' class="ecl-link ecl-link--standalone" aria-controls='agricsvtransformgetlocations-panel' aria-expanded="true" href="#">
+      getLocations
+    </a>
+    <div id='agricsvtransformgetlocations-panel' aria-labelledby='agricsvtransformgetlocations' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess locations</p>
+<p>Input fields taken from the <code>record</code> are:</p>
+<ul>
+<li><code>Project location longitude</code></li>
+<li><code>Project location latitude</code></li>
+<li><code>Project country(ies)</code></li>
+<li><code>Project address(es)</code></li>
+<li><code>Project postal code(s)</code></li>
+<li><code>Project town(s)</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from harmonized storage
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>
+      :
+        List of {Location} objects for 
+<code>project_locations</code>
+ field
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='agricsvtransformgetrelatedlinks' class="ecl-link ecl-link--standalone" aria-controls='agricsvtransformgetrelatedlinks-panel' aria-expanded="true" href="#">
+      getRelatedLinks
+    </a>
+    <div id='agricsvtransformgetrelatedlinks-panel' aria-labelledby='agricsvtransformgetrelatedlinks' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess related links</p>
+<p>Depends on record['Related links'] field</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from harmonized storage
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+      :
+        List of {RelatedLink}
+
+      
+    
+  
+
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Example</h4>
+    
+      
+      <pre style="background-color: #f5f5f5;" class="ecl-u-pa-xs">input =&gt; <span class="hljs-string">"&lt;a href=\"https://ec.europa.eu/inea/en/ten-t/ten-t-projects/projects-by-country/multi-country/2013-eu-92069-s\"&gt;INEA&lt;/a&gt;;&lt;a href=\"https://europa.eu/investeu/projects/central-european-green-corridors_en\"&gt;InvestEU&lt;/a&gt;"</span>
+output =&gt; [
+   { <span class="hljs-attr">label</span>: <span class="hljs-string">"INEA"</span>, <span class="hljs-attr">url</span>: <span class="hljs-string">"https://ec.europa.eu/inea/en/ten-t/ten-t-projects/projects-by-country/multi-country/2013-eu-92069-s"</span> }
+   { <span class="hljs-attr">label</span>: <span class="hljs-string">"InvestEU"</span>, <span class="hljs-attr">url</span>: <span class="hljs-string">"https://europa.eu/investeu/projects/central-european-green-corridors_en"</span> }
+ ]</pre>
+    
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='agricsvtransformformatdate' class="ecl-link ecl-link--standalone" aria-controls='agricsvtransformformatdate-panel' aria-expanded="true" href="#">
+      formatDate
+    </a>
+    <div id='agricsvtransformformatdate-panel' aria-labelledby='agricsvtransformformatdate' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Format date</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>date (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date">Date</a>)
+	        Date in timestamp
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date">Date</a>
+      :
+        The date formatted into an ISO 8601 date format
+
+      
+    
+  
+
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Example</h4>
+    
+      
+      <pre style="background-color: #f5f5f5;" class="ecl-u-pa-xs">input =&gt; <span class="hljs-string">"1388530800"</span>
+output =&gt; <span class="hljs-string">"2013-12-31T23:00:00.000Z"</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+</section>
+
+    </ul>
+  
+
+  
+
+  
+</li>
+
+                  
+            
+              <li class='ecl-list-item ecl-u-pv-m'>
+  
+    
+    <h3 class='ecl-heading ecl-heading--h3' id='budgxlstransform'>
+      BudgXlsTransform
+    </h3>
+    
+    
+  
+
+  <p>Map fields for BUDG producer, XLS file types</p>
+<p>Example input data: <a href="https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/budg/xls/test/stubs/record.json">stub</a></p>
+<p>Transform function: <a href="https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/budg/xls/src/lib/transform.js">implementation details</a></p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from harmonized storage.
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="#project">Project</a>
+      :
+        JSON matching the type fields.
+
+      
+    
+  
+
+  
+
+  
+
+  
+    <ul class="ecl-list">
+    <section class='ecl-u-clearfix ecl-u-pt-xs'>
+  
+    <a id='budgxlstransformgetcoordinators' class="ecl-link ecl-link--standalone" aria-controls='budgxlstransformgetcoordinators-panel' aria-expanded="true" href="#">
+      getCoordinators
+    </a>
+    <div id='budgxlstransformgetcoordinators-panel' aria-labelledby='budgxlstransformgetcoordinators' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess coordinators</p>
+<p>Input fields taken from the <code>record</code> are:</p>
+<ul>
+<li><code>Coordinator's name</code></li>
+<li><code>Coordinator organisation type</code></li>
+<li><code>Coordinator's address</code></li>
+<li><code>Coordinator's region</code></li>
+<li><code>Coordinator's country</code></li>
+<li><code>Coordinator's website</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from harmonized storage
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>
+      :
+        A list with a single {Coordinator} object
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='budgxlstransformformatdate' class="ecl-link ecl-link--standalone" aria-controls='budgxlstransformformatdate-panel' aria-expanded="true" href="#">
+      formatDate
+    </a>
+    <div id='budgxlstransformformatdate-panel' aria-labelledby='budgxlstransformformatdate' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Format date</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>date (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date">Date</a>)
+	        Date in "10/9/14" (MM/DD/YY) or "10/9/2014" (MM/DD/YYYY) format
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date">Date</a>
+      :
+        The date formatted into an ISO 8601 date format
+
+      
+    
+  
+
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Example</h4>
+    
+      
+      <pre style="background-color: #f5f5f5;" class="ecl-u-pa-xs">input =&gt; <span class="hljs-string">"10/9/2014"</span>
+output =&gt; <span class="hljs-string">"2014-10-09T00:00:00.000Z"</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='budgxlstransformgetpartners' class="ecl-link ecl-link--standalone" aria-controls='budgxlstransformgetpartners-panel' aria-expanded="true" href="#">
+      getPartners
+    </a>
+    <div id='budgxlstransformgetpartners-panel' aria-labelledby='budgxlstransformgetpartners' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess partners</p>
+<p>Input fields taken from the <code>record</code> are:</p>
+<ul>
+<li><code>Partner {n} name</code></li>
+<li><code>Partner {n} organisation type</code></li>
+<li><code>Partner {n} address</code></li>
+<li><code>Partner {n} region</code></li>
+<li><code>Partner {n} country</code></li>
+<li><code>Partner {n} website</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from harmonized storage
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>
+      :
+        A list of {Partner} objects
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='budgxlstransformgetlocations' class="ecl-link ecl-link--standalone" aria-controls='budgxlstransformgetlocations-panel' aria-expanded="true" href="#">
+      getLocations
+    </a>
+    <div id='budgxlstransformgetlocations-panel' aria-labelledby='budgxlstransformgetlocations' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess locations</p>
+<p>Input fields taken from the <code>record</code> are:</p>
+<ul>
+<li><code>Participating countries</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from harmonized storage
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>
+      :
+        List of {Location} objects for 
+<code>project_locations</code>
+ field
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='budgxlstransformgettypes' class="ecl-link ecl-link--standalone" aria-controls='budgxlstransformgettypes-panel' aria-expanded="true" href="#">
+      getTypes
+    </a>
+    <div id='budgxlstransformgettypes-panel' aria-labelledby='budgxlstransformgettypes' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Converts a single string with commas to an array</p>
+<p>Input fields taken from the <code>record</code> are:</p>
+<ul>
+<li><code>Activity type</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from harmonized storage
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>
+      :
+        List of activity types
+
+      
+    
+  
+
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Example</h4>
+    
+      
+      <pre style="background-color: #f5f5f5;" class="ecl-u-pa-xs">input =&gt; <span class="hljs-string">"foo, bar, baz"</span>
+output =&gt; [<span class="hljs-string">"foo"</span>, <span class="hljs-string">"bar"</span>, <span class="hljs-string">"baz"</span>]</pre>
+    
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+</section>
+
+    </ul>
+  
+
+  
+
+  
+</li>
+
+                  
+            
+              <li class='ecl-list-item ecl-u-pv-m'>
+  
+    
+    <h3 class='ecl-heading ecl-heading--h3' id='inforegiojsontransform'>
+      InforegioJsonTransform
+    </h3>
+    
+    
+  
+
+  <p>Map fields for INFOREGIO producer, JSON file types</p>
+<p>Transform function: <a href="https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/json/src/lib/transform.js">implementation details</a></p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from harmonized storage.
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="#project">Project</a>
+      :
+        JSON matching the type fields.
+
+      
+    
+  
+
+  
+
+  
+
+  
+    <ul class="ecl-list">
+    <section class='ecl-u-clearfix ecl-u-pt-xs'>
+  
+    <a id='inforegiojsontransformgetfundingarea' class="ecl-link ecl-link--standalone" aria-controls='inforegiojsontransformgetfundingarea-panel' aria-expanded="true" href="#">
+      getFundingArea
+    </a>
+    <div id='inforegiojsontransformgetfundingarea-panel' aria-labelledby='inforegiojsontransformgetfundingarea' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess <code>funding_area</code></p>
+<p>Converts a single string to an array of multiple values</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from harmonized storage
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>
+      :
+        List of string values for 
+<code>funding_area</code>
+ field
+
+      
+    
+  
+
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Example</h4>
+    
+      
+      <pre style="background-color: #f5f5f5;" class="ecl-u-pa-xs">input =&gt; <span class="hljs-string">"Research &amp; innovation; Investment for growth; Transport"</span>
+output =&gt; [<span class="hljs-string">"Research &amp; innovation"</span>, <span class="hljs-string">"Investment for growth"</span>, <span class="hljs-string">"Transport"</span>]</pre>
+    
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='inforegiojsontransformformatdate' class="ecl-link ecl-link--standalone" aria-controls='inforegiojsontransformformatdate-panel' aria-expanded="true" href="#">
+      formatDate
+    </a>
+    <div id='inforegiojsontransformformatdate-panel' aria-labelledby='inforegiojsontransformformatdate' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Format date</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>date (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date">Date</a>)
+	        Date in "10/9/2014" (DD/MM/YYYY) format
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date">Date</a>
+      :
+        The date formatted into an ISO 8601 date format
+
+      
+    
+  
+
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Example</h4>
+    
+      
+      <pre style="background-color: #f5f5f5;" class="ecl-u-pa-xs">input =&gt; <span class="hljs-string">"01/01/2009"</span>
+output =&gt; <span class="hljs-string">"2009-01-01T00:00:00.000Z"</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='inforegiojsontransformgetaddress' class="ecl-link ecl-link--standalone" aria-controls='inforegiojsontransformgetaddress-panel' aria-expanded="true" href="#">
+      getAddress
+    </a>
+    <div id='inforegiojsontransformgetaddress-panel' aria-labelledby='inforegiojsontransformgetaddress' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess address</p>
+<p>Input fields taken from the <code>record</code> are:</p>
+<ul>
+<li><code>Beneficiary_address</code></li>
+<li><code>Beneficiary_Post_Code</code></li>
+<li><code>Beneficiary_City</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from harmonized storage
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>
+      :
+        A list of {Partner} objects
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='inforegiojsontransformgetpartners' class="ecl-link ecl-link--standalone" aria-controls='inforegiojsontransformgetpartners-panel' aria-expanded="true" href="#">
+      getPartners
+    </a>
+    <div id='inforegiojsontransformgetpartners-panel' aria-labelledby='inforegiojsontransformgetpartners' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess partners</p>
+<p>Input fields taken from the <code>record</code> are:</p>
+<ul>
+<li><code>Beneficiary</code></li>
+<li><code>Beneficiary_Country</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from harmonized storage
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>
+      :
+        A list of a single {Partner} object
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='inforegiojsontransformgetlocations' class="ecl-link ecl-link--standalone" aria-controls='inforegiojsontransformgetlocations-panel' aria-expanded="true" href="#">
+      getLocations
+    </a>
+    <div id='inforegiojsontransformgetlocations-panel' aria-labelledby='inforegiojsontransformgetlocations' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess locations</p>
+<p>Input fields taken from the <code>record</code> are:</p>
+<ul>
+<li><code>Project_country</code></li>
+<li><code>Project_region</code></li>
+<li><code>Project_NUTS2_code</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from harmonized storage
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>
+      :
+        List of {Location} objects for 
+<code>project_locations</code>
+ field
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='inforegiojsontransformgetprojectwebsite' class="ecl-link ecl-link--standalone" aria-controls='inforegiojsontransformgetprojectwebsite-panel' aria-expanded="true" href="#">
+      getProjectWebsite
+    </a>
+    <div id='inforegiojsontransformgetprojectwebsite-panel' aria-labelledby='inforegiojsontransformgetprojectwebsite' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess <code>project_website</code> field</p>
+<p>Input fields taken from the <code>record</code> are:</p>
+<ul>
+<li><code>URL</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from harmonized storage
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>
+      :
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='inforegiojsontransformformatbudget' class="ecl-link ecl-link--standalone" aria-controls='inforegiojsontransformformatbudget-panel' aria-expanded="true" href="#">
+      formatBudget
+    </a>
+    <div id='inforegiojsontransformformatbudget-panel' aria-labelledby='inforegiojsontransformformatbudget' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess value field of {BudgetItem}.</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>budget (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+	        String containing numeric data
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>
+      :
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+</section>
+
+    </ul>
+  
+
+  
+
+  
+</li>
+
+                  
+            
+              <li class='ecl-list-item ecl-u-pv-m'>
+  
+    
+    <h3 class='ecl-heading ecl-heading--h3' id='inforegioxmltransform'>
+      inforegioXmlTransform
+    </h3>
+    
+    
+  
+
+  <p>Map fields for INFOREGIO producer, XML file types</p>
+<p>Transform function: <a href="https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/xml/src/lib/transform.js">implementation details</a></p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from harmonized storage
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="#project">Project</a>
+      :
+        JSON matching the type fields
+
+      
+    
+  
+
+  
+
+  
+
+  
+    <ul class="ecl-list">
+    <section class='ecl-u-clearfix ecl-u-pt-xs'>
+  
+    <a id='inforegioxmltransformcheckdata' class="ecl-link ecl-link--standalone" aria-controls='inforegioxmltransformcheckdata-panel' aria-expanded="true" href="#">
+      checkData
+    </a>
+    <div id='inforegioxmltransformcheckdata-panel' aria-labelledby='inforegioxmltransformcheckdata' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Check if field is an array or a sting</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>data ((<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>))
+	        The input piece of data
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>
+      :
+        The string value of the input data
+
+      
+    
+  
+
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Example</h4>
+    
+      
+      <pre style="background-color: #f5f5f5;" class="ecl-u-pa-xs">input =&gt; [<span class="hljs-string">'foo'</span>]
+output =&gt; <span class="hljs-string">'foo'</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='inforegioxmltransformformatdate' class="ecl-link ecl-link--standalone" aria-controls='inforegioxmltransformformatdate-panel' aria-expanded="true" href="#">
+      formatDate
+    </a>
+    <div id='inforegioxmltransformformatdate-panel' aria-labelledby='inforegioxmltransformformatdate' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Format date</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>date (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date">Date</a>)
+	        Date in 
+<code>DD/MM/YYYY</code>
+ format
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date">Date</a>
+      :
+        The date formatted into an ISO 8601 date format
+
+      
+    
+  
+
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Example</h4>
+    
+      
+      <pre style="background-color: #f5f5f5;" class="ecl-u-pa-xs">input =&gt; <span class="hljs-string">"02/02/2018"</span>
+output =&gt; <span class="hljs-string">'2018-02-02T00:00:00.000Z'</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='inforegioxmltransformgetaddress' class="ecl-link ecl-link--standalone" aria-controls='inforegioxmltransformgetaddress-panel' aria-expanded="true" href="#">
+      getAddress
+    </a>
+    <div id='inforegioxmltransformgetaddress-panel' aria-labelledby='inforegioxmltransformgetaddress' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Get adress from different fields</p>
+<p>Input fields taken from the <code>record</code> are:</p>
+<ul>
+<li><code>Beneficiary_address</code></li>
+<li><code>Beneficiary_Post_Code</code></li>
+<li><code>Beneficiary_City</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from harmonized storage
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>
+      :
+        The address as consumed by {Partner}
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='inforegioxmltransformformatbudget' class="ecl-link ecl-link--standalone" aria-controls='inforegioxmltransformformatbudget-panel' aria-expanded="true" href="#">
+      formatBudget
+    </a>
+    <div id='inforegioxmltransformformatbudget-panel' aria-labelledby='inforegioxmltransformformatbudget' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Formats information for the <code>value</code> of {BudgetItem}</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>budget (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+	        Prefixed currency value
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>
+      :
+        The value for 
+<code>value</code>
+ of {BudgetItem}
+
+      
+    
+  
+
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Example</h4>
+    
+      
+      <pre style="background-color: #f5f5f5;" class="ecl-u-pa-xs">input =&gt; <span class="hljs-string">"EUR 329 000 000"</span>
+output =&gt; <span class="hljs-string">"329000000"</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='inforegioxmltransformgetfundingarea' class="ecl-link ecl-link--standalone" aria-controls='inforegioxmltransformgetfundingarea-panel' aria-expanded="true" href="#">
+      getFundingArea
+    </a>
+    <div id='inforegioxmltransformgetfundingarea-panel' aria-labelledby='inforegioxmltransformgetfundingarea' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Get funding areas from a string</p>
+<p>Input fields taken from the <code>record</code> are:</p>
+<ul>
+<li><code>Funds</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from harmonized storage
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>
+      :
+        List of values for funding area
+
+      
+    
+  
+
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Example</h4>
+    
+      
+      <pre style="background-color: #f5f5f5;" class="ecl-u-pa-xs">input =&gt; <span class="hljs-string">'foo;bar;baz'</span>
+output =&gt; [<span class="hljs-string">'foo'</span>, <span class="hljs-string">'bar'</span>, <span class="hljs-string">'baz'</span>]</pre>
+    
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='inforegioxmltransformgetlocations' class="ecl-link ecl-link--standalone" aria-controls='inforegioxmltransformgetlocations-panel' aria-expanded="true" href="#">
+      getLocations
+    </a>
+    <div id='inforegioxmltransformgetlocations-panel' aria-labelledby='inforegioxmltransformgetlocations' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Get a list of {Location}</p>
+<p>Input fields taken from the <code>record</code> are:</p>
+<ul>
+<li><code>Project_country</code></li>
+<li><code>Project_region</code></li>
+<li><code>Project_NUTS2_code</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from harmonized storage
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>
+      :
+        List of {Location}
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='inforegioxmltransformgetthemes' class="ecl-link ecl-link--standalone" aria-controls='inforegioxmltransformgetthemes-panel' aria-expanded="true" href="#">
+      getThemes
+    </a>
+    <div id='inforegioxmltransformgetthemes-panel' aria-labelledby='inforegioxmltransformgetthemes' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Get themes from a string</p>
+<p>Input fields taken from the <code>record</code> are:</p>
+<ul>
+<li><code>Themes</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from harmonized storage
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>
+      :
+        List of values for themes
+
+      
+    
+  
+
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Example</h4>
+    
+      
+      <pre style="background-color: #f5f5f5;" class="ecl-u-pa-xs">input =&gt; <span class="hljs-string">'foo; bar; baz'</span>
+output =&gt; [<span class="hljs-string">'foo'</span>, <span class="hljs-string">'bar'</span>, <span class="hljs-string">'baz'</span>]</pre>
+    
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='inforegioxmltransformgetpartners' class="ecl-link ecl-link--standalone" aria-controls='inforegioxmltransformgetpartners-panel' aria-expanded="true" href="#">
+      getPartners
+    </a>
+    <div id='inforegioxmltransformgetpartners-panel' aria-labelledby='inforegioxmltransformgetpartners' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Get a list of a single {Partner}
+Depends on getAddress()</p>
+<p>Input fields taken from the <code>record</code> are:</p>
+<ul>
+<li><code>Beneficiary</code></li>
+<li><code>Beneficiary_Country</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from harmonized storage
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>
+      :
+        List of a single {Partner}
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+</section>
+
+    </ul>
+  
+
+  
+
+  
+</li>
+
+                  
+            
+              <li class='ecl-list-item ecl-u-pv-m'>
+  
+    
+    <h3 class='ecl-heading ecl-heading--h3' id='valorxlstransform'>
+      valorXlsTransform
+    </h3>
+    
+    
+  
+
+  <p>Map fields for VALOR producer, XLS file types.</p>
+<p>Transform function: <a href="https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/valor/xml/src/lib/transform.js">implementation details</a></p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from harmonized storage.
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="#project">Project</a>
+      :
+        JSON matching the type fields.
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+                  
+          <ul>
+        </section>
+      </div>
+    </div>
+  </main>
+  <footer class="ecl-footer">
+  <div class="ecl-footer__site-corporate">
+    <div class="ecl-container">
+      <div class="ecl-row">
+        <div class="ecl-col-sm ecl-footer__column">
+          <h4 class="ecl-h4 ecl-footer__title">European Commission</h4>
+
+          <ul class="ecl-footer__menu">
+            <li class="ecl-footer__menu-item">
+              <a
+                class="ecl-link ecl-link--inverted ecl-footer__link"
+                href="https://ec.europa.eu/commission/index_en"
+              >
+                Commission and its priorities
+              </a>
+            </li>
+            <li class="ecl-footer__menu-item">
+              <a
+                class="ecl-link ecl-link--inverted ecl-footer__link"
+                href="https://ec.europa.eu/info/index_en"
+              >
+                Policies information and services
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="ecl-col-sm ecl-footer__column">
+          <h4 class="ecl-h4 ecl-footer__title">
+            Follow the European Commission
+          </h4>
+
+          <ul class="ecl-footer__menu ecl-list--inline ecl-footer__social-links">
+            <li class="ecl-footer__menu-item">
+              <a class="ecl-link ecl-link--inverted ecl-footer__link" href="#">
+                <span class="ecl-icon ecl-icon--facebook ecl-footer__social-icon" />Facebook
+              </a>
+            </li>
+            <li class="ecl-footer__menu-item">
+              <a class="ecl-link ecl-link--inverted ecl-footer__link" href="#">
+                <span class="ecl-icon ecl-icon--twitter ecl-footer__social-icon" />Twitter
+              </a>
+            </li>
+            <li class="ecl-footer__menu-item">
+              <a
+                class="ecl-link ecl-link--inverted ecl-link--external ecl-footer__link"
+                href="#"
+              >
+                Other social media
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="ecl-col-sm ecl-footer__column">
+          <h4 class="ecl-h4 ecl-footer__title">European Union</h4>
+
+          <ul class="ecl-footer__menu">
+            <li class="ecl-footer__menu-item">
+              <a
+                class="ecl-link ecl-link--inverted ecl-link--external ecl-footer__link"
+                href="#"
+              >
+                EU institutions
+              </a>
+            </li>
+            <li class="ecl-footer__menu-item">
+              <a
+                class="ecl-link ecl-link--inverted ecl-link--external ecl-footer__link"
+                href="#"
+              >
+                European Union
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ecl-footer__ec">
+    <div class="ecl-container">
+      <div class="ecl-row">
+        <div class="ecl-col-sm ">
+          <ul class="ecl-list--inline ecl-footer__menu">
+            <li class="ecl-footer__menu-item">
+              <a
+                class="ecl-link ecl-link--inverted ecl-footer__link"
+                href="http://ec.europa.eu/info/about-commissions-new-web-presence_en"
+              >
+                About the Commission's new web presence
+              </a>
+            </li>
+            <li class="ecl-footer__menu-item">
+              <a
+                class="ecl-link ecl-link--inverted ecl-footer__link"
+                href="http://ec.europa.eu/info/resources-partners_en"
+              >
+                Resources for partners
+              </a>
+            </li>
+            <li class="ecl-footer__menu-item">
+              <a
+                class="ecl-link ecl-link--inverted ecl-footer__link"
+                href="http://ec.europa.eu/info/cookies_en"
+              >
+                Cookies
+              </a>
+            </li>
+            <li class="ecl-footer__menu-item">
+              <a
+                class="ecl-link ecl-link--inverted ecl-footer__link"
+                href="http://ec.europa.eu/info/legal-notice_en"
+              >
+                Legal notice
+              </a>
+            </li>
+            <li class="ecl-footer__menu-item">
+              <a
+                class="ecl-link ecl-link--inverted ecl-footer__link"
+                href="http://ec.europa.eu/info/contact_en"
+              >
+                Contact
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>;
+
+  <script src="assets/bundle/main.js"></script>
+  <script src="assets/vendor/ecl/scripts/europa.js"></script>
+  <script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function() {
+  ECL.initExpandables();
+});
+</script>
+</body>
+</html>
