@@ -7,7 +7,6 @@ const Footer = () => (
         <div className="ecl-row">
           <div className="ecl-col-sm ecl-footer__column">
             <h4 className="ecl-h4 ecl-footer__title">European Commission</h4>
-
             <ul className="ecl-footer__menu">
               <li className="ecl-footer__menu-item">
                 <a
@@ -31,7 +30,6 @@ const Footer = () => (
             <h4 className="ecl-h4 ecl-footer__title">
               Follow the European Commission
             </h4>
-
             <ul className="ecl-footer__menu ecl-list--inline ecl-footer__social-links">
               <li className="ecl-footer__menu-item">
                 <a
@@ -94,7 +92,7 @@ const Footer = () => (
                   className="ecl-link ecl-link--inverted ecl-footer__link"
                   href="http://ec.europa.eu/info/about-commissions-new-web-presence_en"
                 >
-                  About the Commission's new web presence
+                  About the Commission&apos;s new web presence
                 </a>
               </li>
               <li className="ecl-footer__menu-item">
