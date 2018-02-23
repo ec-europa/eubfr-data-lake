@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-require(`./utils/protectStage`)();
+require('../utils/protectStage')();
 
 // Dependencies
 const deleteServerlessService = require('../utils/deleteServerlessService');

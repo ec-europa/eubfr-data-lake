@@ -38,12 +38,20 @@ Test the services:
 yarn test
 ```
 
+## Deploy an environment
+
+To deploy all necessary resources for a development environment:
+
+```sh
+yarn deploy
+```
+
 ## Deploy the shared resources
 
 Some resources (like ElasticSearch) are shared between all the stages for a same environment (dev, acc, prod). You need to deploy them first if your indexes don't already exists.
 
 ```sh
-yarn deploy-resources
+yarn deploy:resources
 ```
 
 ## Deploy the services
@@ -55,7 +63,7 @@ First, you need to [set up your AWS credentials](https://serverless.com/framewor
 Go to the project's root and type:
 
 ```sh
-yarn deploy
+yarn deploy:services
 ```
 
 ### Manually
@@ -71,7 +79,7 @@ yarn deploy
 First, make sure you have deployed the resources and the services. Then, to deploy all the demos at once, you can run:
 
 ```sh
-yarn deploy-demo
+yarn deploy:demo
 ```
 
 On the other hand, if you want to work on the demo client locally, first deploy the demo server and then start the client:
@@ -90,27 +98,41 @@ EUBFR_USERNAME=agri yarn start
 
 If you don't provide the `EUBFR_USERNAME` variable, it will fall back to the producer defined in your `config.json` (`username` field).
 
-## Remove the services and the demo
+## Remove the services and demo apps
 
-You can remove all the services with the following command:
+To delete all AWS services and resources for a given stage:
 
 ```sh
-yarn run delete
+yarn delete
 ```
 
-If you want to delete the demos, you can run:
+You can remove per-resource groups as following:
+
+All resources:
 
 ```sh
-yarn run delete-demo
+yarn delete:resources
 ```
 
-Or, if you want to target a specific producer demo:
+All services:
 
 ```sh
-EUBFR_USERNAME=budg yarn run delete-demo
+yarn delete:services
+```
+
+All demo apps:
+
+```sh
+yarn delete:demo
+```
+
+Or, if you want to target a specific producer demo app:
+
+```sh
+EUBFR_USERNAME=budg yarn run delete:demo
 ```
 
 ## Notes
 
-* Deploy `services/storage` first.
+* Deploy `resources/` first.
 * Keep the same stage name for every services so they can work together.
