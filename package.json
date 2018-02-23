@@ -48,5 +48,8 @@
     "stream-array": "1.1.2",
     "vinyl-fs": "3.0.2"
   },
-  "workspaces": ["demo/**", "plugins/**", "resources/**", "services/**"]
+  "workspaces": ["demo/**", "plugins/**", "resources/**", "services/**"],
+  "dependencies": {
+    "gh-pages": "1.1.0"
+  }
 }
