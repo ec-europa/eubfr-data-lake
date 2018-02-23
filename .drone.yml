@@ -48,7 +48,7 @@ pipeline:
       - yarn docs:html
     when:
       event: [push]
-      branch: feat/automate-docs-EUBFR-144
+      branch: master
 
   deploy-pages:
     image: node:8.5
@@ -57,4 +57,4 @@ pipeline:
       - ./scripts/deployment/deploy-documentation.sh
     when:
       event: [push]
-      branch: feat/automate-docs-EUBFR-144
+      branch: master
