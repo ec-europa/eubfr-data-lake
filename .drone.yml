@@ -42,6 +42,14 @@ pipeline:
     commands:
       - yarn test:unit
 
+  build-documentation:
+    image: node:8.5
+    commands:
+      - yarn docs:html
+    when:
+      event: [push]
+      branch: feat/automate-docs-EUBFR-144
+
   deploy-pages:
     image: node:8.5
     secrets: [ github_api_token ]
