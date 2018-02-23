@@ -3,7 +3,7 @@
 require(`./utils/protectStage`)();
 
 // Dependencies
-const deleteServerlessService = require('./utils/deleteServerlessService');
+const deleteServerlessService = require('../utils/deleteServerlessService');
 
 const config = require('../config'); // eslint-disable-line import/no-unresolved
 

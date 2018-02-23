@@ -5,44 +5,44 @@ set -ex
 
 # Go to project root
 cd "$(dirname "$0")"
-cd ..
+cd ../../
 
 # Deploy signed uploads service
 cd ./services/storage/signed-uploads
-./node_modules/.bin/serverless deploy -v
+npx serverless deploy -v
 
 # Deploy deleter service
 cd ../deleter
-./node_modules/.bin/serverless deploy -v
+npx serverless deploy -v
 
 # Deploy manager
 cd ../../ingestion/manager
-./node_modules/.bin/serverless deploy -v
+npx serverless deploy -v
 
 # Deploy cleaner
 cd ../cleaner
-./node_modules/.bin/serverless deploy -v
+npx serverless deploy -v
 
 # Deploy ETL
 cd ../etl/agri/csv
-./node_modules/.bin/serverless deploy -v
+npx serverless deploy -v
 cd ../../budg/xls
-./node_modules/.bin/serverless deploy -v
+npx serverless deploy -v
 cd ../../inforegio/json
-./node_modules/.bin/serverless deploy -v
+npx serverless deploy -v
 cd ../../inforegio/xml
-./node_modules/.bin/serverless deploy -v
+npx serverless deploy -v
 cd ../../valor/xls
-./node_modules/.bin/serverless deploy -v
+npx serverless deploy -v
 
 # Deploy value store - projects' functions
 cd ../../../../value-store/projects
-./node_modules/.bin/serverless deploy -v
+npx serverless deploy -v
 
 # Deploy logger - listener
 cd ../../logger/listener
-./node_modules/.bin/serverless deploy -v
+npx serverless deploy -v
 
 # Deploy enrichment - manager
 cd ../../enrichment/manager
-./node_modules/.bin/serverless deploy -v
+npx serverless deploy -v
