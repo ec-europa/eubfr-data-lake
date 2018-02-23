@@ -4,6 +4,7 @@
     "bootstrap": "lerna bootstrap",
     "deploy": "./scripts/deployment/deploy.sh",
     "deploy-demo": "./scripts/deployment/deploy-demo.sh",
+    "deploy-documentation": "./scripts/deployment/deploy-documentation.sh",
     "deploy-resources": "./scripts/deployment/deploy-resources.sh",
     "delete": "./scripts/cleaning/delete.js",
     "delete-demo": "./scripts/cleaning/delete-demo.js",
