@@ -14,7 +14,7 @@ fi
 
 # Deploy
 ./node_modules/.bin/gh-pages \
-  --silent \
-  --repo https://${github_api_token}@github.com/ec-europa/eubfr-data-lake.git \
+  # --silent \
+  --repo https://${GH_TOKEN}@github.com/ec-europa/eubfr-data-lake.git \
   --dist dist \
   --message "Update GitHub Pages [SKIP CI]"

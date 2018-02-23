@@ -52,7 +52,7 @@ pipeline:
 
   deploy-pages:
     image: node:8.5
-    secrets: [ github_api_token ]
+    secrets: [ GH_TOKEN ]
     commands:
       - ./scripts/deployment/deploy-documentation.sh
     when:
