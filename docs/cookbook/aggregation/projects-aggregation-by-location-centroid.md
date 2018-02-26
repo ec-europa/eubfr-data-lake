@@ -48,6 +48,26 @@ This example shows how to aggregate projects by the `centroid` field in an attem
               "geo_centroid": {
                 "field": "project_locations.centroid"
               }
+            },
+            "aggs": {
+              "reverse_nested": {},
+              "aggs": {
+                "place": {
+                  "top_hits": {
+                    "size": 1,
+                    "sort": [
+                      {
+                        "last_modified": {
+                          "order": "desc"
+                        }
+                      }
+                    ],
+                    "_source": {
+                      "includes": ["title", "description"]
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -62,34 +82,41 @@ This example shows how to aggregate projects by the `centroid` field in an attem
 ```json
 "aggregations": {
   "locations": {
-    "doc_count": 158,
+    "doc_count": 10,
     "countries": {
       "doc_count_error_upper_bound": 0,
-      "sum_other_doc_count": 58,
-      "buckets": [
-        {
-          "key": "BE",
-          "doc_count": 12,
-          "centroid": {
-            "location": {
-              "lat": 49.888557717204,
-              "lon": 5.3766092984006
-            },
-            "count": 12
-          }
+      "sum_other_doc_count": 0,
+      "buckets": [{
+        "key": "BE",
+        "doc_count": 1,
+        "centroid": {
+          "location": {
+            "lat": 40.400,
+            "lon": 10.001
+          },
+          "count": 1
         },
-        {
-          "key": "HU",
-          "doc_count": 11,
-          "centroid": {
-            "location": {
-              "lat": 47.463543887081,
-              "lon": 19.826251053336
-            },
-            "count": 11
+        "aggs": {
+          "doc_count": 1,
+          "place": {
+            "hits": {
+              "total": 1,
+              "max_score": null,
+              "hits": [{
+                "_index": "my_index_dev",
+                "_type": "project",
+                "_id": "ID",
+                "_score": null,
+                "_source": {
+                  "description": "description",
+                  "title": "Title"
+                },
+                "sort": [1518690764000]
+              }]
+            }
           }
-        },
-      ]
+        }
+      }]
     }
   }
 }
