@@ -28,6 +28,9 @@ provider:
     - Effect: "Allow"
       Action: "lambda:InvokeFunction"
       Resource: "arn:aws:lambda:${self:provider.region}:*:${self:provider.stage}-${self:service}-onTaskCalled"
+    - Effect: "Allow"
+      Action: "es:*"
+      Resource: "arn:aws:es:${self:provider.region}:*:domain/*"
 
 functions:
   onFileIngested:
