@@ -17,5 +17,5 @@ documentation
     })
   )
   .then(output => {
-    streamArray(output).pipe(vfs.dest(path.resolve('./.tmp')));
+    streamArray(output).pipe(vfs.dest(path.resolve('./dist')));
   });

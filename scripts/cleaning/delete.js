@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-require('./utils/protectStage')();
+require('../utils/protectStage')();
 
 // Dependencies
-const deleteServerlessService = require('./utils/deleteServerlessService');
+const deleteServerlessService = require('../utils/deleteServerlessService');
 
 const deleteServices = async services =>
   Promise.all(services.map(deleteServerlessService));

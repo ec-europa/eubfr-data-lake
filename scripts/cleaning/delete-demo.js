@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
-require(`./utils/protectStage`)();
+require('../utils/protectStage')();
 
 // Dependencies
-const deleteServerlessService = require('./utils/deleteServerlessService');
+const deleteServerlessService = require('../utils/deleteServerlessService');
 
-const config = require('../config'); // eslint-disable-line import/no-unresolved
+const config = require('../../config'); // eslint-disable-line import/no-unresolved
 
 let usernames = Object.keys(config.demo);
 
