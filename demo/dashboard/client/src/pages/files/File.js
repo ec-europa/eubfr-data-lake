@@ -1,26 +1,22 @@
 import React, { Fragment } from 'react';
 import { Link, NavLink, Route } from 'react-router-dom';
-import elasticsearch from 'elasticsearch';
 import PropTypes from 'prop-types';
+
+import clients from '../../clientFactory';
+import indices from '../../clientFactory/esIndices';
+
+import handleErrors from '../../lib/handleErrors';
+import getIcon from '../../lib/getIcon';
+
 import Spinner from '../../components/Spinner';
 import FormUpload from '../../components/FormUpload';
-import handleErrors from '../../lib/handleErrors';
+
 import LogsTab from './file/Logs';
 import ProjectsTab from './file/Projects';
 
 import './File.css';
-import getIcon from '../../lib/getIcon';
 
 const demoServerEndpoint = `https://${process.env.REACT_APP_DEMO_SERVER}/demo`;
-
-const privateApiEndpoint = `https://${
-  process.env.REACT_APP_ES_PRIVATE_ENDPOINT
-}`;
-const metaIndex = `${process.env.REACT_APP_STAGE}-meta`;
-const logsIndex = `${process.env.REACT_APP_STAGE}-logs`;
-
-const publicApiEndpoint = `https://${process.env.REACT_APP_ES_PUBLIC_ENDPOINT}`;
-const projectsIndex = `${process.env.REACT_APP_STAGE}-projects`;
 
 class File extends React.Component {
   constructor() {
@@ -36,8 +32,7 @@ class File extends React.Component {
       status: {},
     };
 
-    this.projectsClient = null;
-    this.metaClient = null;
+    this.clients = null;
     this.deleteFile = this.deleteFile.bind(this);
     this.generateLink = this.generateLink.bind(this);
     this.loadFile = this.loadFile.bind(this);
@@ -46,18 +41,7 @@ class File extends React.Component {
   }
 
   componentDidMount() {
-    this.metaClient = elasticsearch.Client({
-      host: privateApiEndpoint,
-      apiVersion: '6.0',
-      log: 'warning',
-    });
-
-    this.projectsClient = elasticsearch.Client({
-      host: publicApiEndpoint,
-      apiVersion: '6.0',
-      log: 'warning',
-    });
-
+    this.clients = clients.Create();
     this.loadFile();
     this.loadStatus();
     this.getProjectsCount();
@@ -67,9 +51,9 @@ class File extends React.Component {
     const { match } = this.props;
     const computedKey = decodeURIComponent(match.params.id);
 
-    return this.projectsClient
+    return this.clients.public
       .count({
-        index: projectsIndex,
+        index: indices.projects,
         type: 'project',
         q: `computed_key:"${computedKey}.ndjson"`,
       })
@@ -89,9 +73,9 @@ class File extends React.Component {
     const computedKey = decodeURIComponent(match.params.id);
 
     this.setState({ fileLoading: true }, () =>
-      this.metaClient
+      this.clients.private
         .search({
-          index: metaIndex,
+          index: indices.meta,
           type: 'file',
           q: `computed_key:"${computedKey}"`,
         })
@@ -118,9 +102,9 @@ class File extends React.Component {
     const { match } = this.props;
     const computedKey = decodeURIComponent(match.params.id);
 
-    this.metaClient
+    this.clients.private
       .search({
-        index: logsIndex,
+        index: indices.logs,
         type: 'file',
         body: {
           query: {
