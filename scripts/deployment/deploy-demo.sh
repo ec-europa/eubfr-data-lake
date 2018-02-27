@@ -5,7 +5,7 @@ set -ex
 
 # Go to project root
 cd "$(dirname "$0")"
-cd ..
+cd ../../
 
 # Deploy demos
 

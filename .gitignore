@@ -4,4 +4,4 @@ node_modules
 *.log
 config.json
 coverage
-.tmp
+dist
