@@ -41,3 +41,20 @@ pipeline:
     group: test
     commands:
       - yarn test:unit
+
+  build-documentation:
+    image: node:8.5
+    commands:
+      - yarn docs:html
+    when:
+      event: [push]
+      branch: master
+
+  deploy-pages:
+    image: node:8.5
+    secrets: [ GH_TOKEN ]
+    commands:
+      - ./scripts/deployment/deploy-documentation.sh
+    when:
+      event: [push]
+      branch: master

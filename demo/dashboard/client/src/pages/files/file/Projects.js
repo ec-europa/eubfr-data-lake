@@ -1,10 +1,9 @@
 import React from 'react';
-import elasticsearch from 'elasticsearch';
 import PropTypes from 'prop-types';
 import Spinner from '../../../components/Spinner';
 
-const publicApiEndpoint = `https://${process.env.REACT_APP_ES_PUBLIC_ENDPOINT}`;
-const projectsIndex = `${process.env.REACT_APP_STAGE}-projects`;
+import clients from '../../../clientFactory';
+import indices from '../../../clientFactory/esIndices';
 
 class Projects extends React.Component {
   constructor() {
@@ -22,11 +21,7 @@ class Projects extends React.Component {
   }
 
   componentDidMount() {
-    this.client = elasticsearch.Client({
-      host: publicApiEndpoint,
-      apiVersion: '6.0',
-      log: 'warning',
-    });
+    this.clients = clients.Create();
 
     this.loadProjects();
   }
@@ -39,16 +34,16 @@ class Projects extends React.Component {
 
   setProjects(computedKey) {
     return () =>
-      this.client.indices
+      this.clients.public.indices
         .exists({
-          index: projectsIndex,
+          index: indices.projects,
         })
         .then(
           exists =>
             exists
-              ? this.client
+              ? this.clients.public
                   .search({
-                    index: projectsIndex,
+                    index: indices.projects,
                     type: 'project',
                     q: `computed_key:"${computedKey}.ndjson"`,
                   })

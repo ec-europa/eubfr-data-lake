@@ -11,7 +11,7 @@ const Footer = () => (
             <ul className="ecl-footer__menu">
               <li className="ecl-footer__menu-item">
                 <a
-                  className="ecl-link ecl-footer__link"
+                  className="ecl-link ecl-link--inverted ecl-footer__link"
                   href="https://ec.europa.eu/commission/index_en"
                 >
                   Commission and its priorities
@@ -19,7 +19,7 @@ const Footer = () => (
               </li>
               <li className="ecl-footer__menu-item">
                 <a
-                  className="ecl-link ecl-footer__link"
+                  className="ecl-link ecl-link--inverted ecl-footer__link"
                   href="https://ec.europa.eu/info/index_en"
                 >
                   Policies information and services
@@ -32,10 +32,10 @@ const Footer = () => (
               Follow the European Commission
             </h4>
 
-            <ul className="ecl-footer__menu ecl-list--inline">
+            <ul className="ecl-footer__menu ecl-list--inline ecl-footer__social-links">
               <li className="ecl-footer__menu-item">
                 <a
-                  className="ecl-link ecl-footer__link"
+                  className="ecl-link ecl-link--inverted ecl-footer__link"
                   href="https://www.facebook.com/EuropeanCommission"
                 >
                   <span className="ecl-icon ecl-icon--facebook ecl-footer__social-icon" />Facebook
@@ -43,7 +43,7 @@ const Footer = () => (
               </li>
               <li className="ecl-footer__menu-item">
                 <a
-                  className="ecl-link ecl-footer__link"
+                  className="ecl-link ecl-link--inverted ecl-footer__link"
                   href="https://twitter.com/EU_commission"
                 >
                   <span className="ecl-icon ecl-icon--twitter ecl-footer__social-icon" />Twitter
@@ -51,7 +51,7 @@ const Footer = () => (
               </li>
               <li className="ecl-footer__menu-item">
                 <a
-                  className="ecl-link ecl-footer__link ecl-link--external"
+                  className="ecl-link ecl-link--inverted ecl-link--external ecl-footer__link"
                   href="https://europa.eu/european-union/contact/social-networks_en"
                 >
                   Other social media
@@ -65,7 +65,7 @@ const Footer = () => (
             <ul className="ecl-footer__menu">
               <li className="ecl-footer__menu-item">
                 <a
-                  className="ecl-link ecl-footer__link ecl-link--external"
+                  className="ecl-link ecl-link--inverted ecl-link--external ecl-footer__link"
                   href="https://europa.eu/european-union/about-eu/institutions-bodies_en"
                 >
                   EU institutions
@@ -73,7 +73,7 @@ const Footer = () => (
               </li>
               <li className="ecl-footer__menu-item">
                 <a
-                  className="ecl-link ecl-footer__link ecl-link--external"
+                  className="ecl-link ecl-link--inverted ecl-link--external ecl-footer__link"
                   href="https://europa.eu/european-union/index_en"
                 >
                   European Union
@@ -91,7 +91,7 @@ const Footer = () => (
             <ul className="ecl-list--inline ecl-footer__menu">
               <li className="ecl-footer__menu-item">
                 <a
-                  className="ecl-link ecl-footer__link"
+                  className="ecl-link ecl-link--inverted ecl-footer__link"
                   href="http://ec.europa.eu/info/about-commissions-new-web-presence_en"
                 >
                   About the Commission&apos;s new web presence
@@ -99,7 +99,7 @@ const Footer = () => (
               </li>
               <li className="ecl-footer__menu-item">
                 <a
-                  className="ecl-link ecl-footer__link"
+                  className="ecl-link ecl-link--inverted ecl-footer__link"
                   href="http://ec.europa.eu/info/resources-partners_en"
                 >
                   Resources for partners
@@ -107,7 +107,7 @@ const Footer = () => (
               </li>
               <li className="ecl-footer__menu-item">
                 <a
-                  className="ecl-link ecl-footer__link"
+                  className="ecl-link ecl-link--inverted ecl-footer__link"
                   href="http://ec.europa.eu/info/cookies_en"
                 >
                   Cookies
@@ -115,7 +115,7 @@ const Footer = () => (
               </li>
               <li className="ecl-footer__menu-item">
                 <a
-                  className="ecl-link ecl-footer__link"
+                  className="ecl-link ecl-link--inverted ecl-footer__link"
                   href="http://ec.europa.eu/info/legal-notice_en"
                 >
                   Legal notice
@@ -123,7 +123,7 @@ const Footer = () => (
               </li>
               <li className="ecl-footer__menu-item">
                 <a
-                  className="ecl-link ecl-footer__link"
+                  className="ecl-link ecl-link--inverted ecl-footer__link"
                   href="http://ec.europa.eu/info/contact_en"
                 >
                   Contact
