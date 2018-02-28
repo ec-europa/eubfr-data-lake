@@ -2,8 +2,6 @@
 
 This example shows how to aggregate projects by the `centroid` field in an attempt of doing a simple server side clustering. We make use of the _GeoHash grid Aggregation_ with a defined precision that goes from 1 to 12.
 
-The returned buckets will contain geohashes and you will need a library to convert these into equivalent bounding boxes or points.
-
 * Endpoint: `https://PROJECTS_INDEX/project/_search`
 * Method: `POST`
 
@@ -12,11 +10,13 @@ The returned buckets will contain geohashes and you will need a library to conve
 ```json
 {
   "size": 0,
-  "query": {
-    "nested": {
-      "path": "project_locations",
-      "query": {
-        "constant_score": {
+  "aggregations": {
+    "locations": {
+      "nested": {
+        "path": "project_locations"
+      },
+      "aggregations": {
+        "filtered": {
           "filter": {
             "geo_bounding_box": {
               "project_locations.centroid": {
@@ -30,21 +30,42 @@ The returned buckets will contain geohashes and you will need a library to conve
                 }
               }
             }
-          }
-        }
-      }
-    }
-  },
-  "aggregations": {
-    "locations": {
-      "nested": {
-        "path": "project_locations"
-      },
-      "aggs": {
-        "grid": {
-          "geohash_grid": {
-            "field": "project_locations.centroid",
-            "precision": 2
+          },
+          "aggregations": {
+            "countries": {
+              "geohash_grid": {
+                "size": 500,
+                "field": "project_locations.centroid",
+                "precision": 10
+              },
+              "aggregations": {
+                "centroid": {
+                  "geo_centroid": {
+                    "field": "project_locations.centroid"
+                  }
+                },
+                "info": {
+                  "reverse_nested": {},
+                  "aggregations": {
+                    "place": {
+                      "top_hits": {
+                        "size": 1,
+                        "sort": [
+                          {
+                            "last_modified": {
+                              "order": "desc"
+                            }
+                          }
+                        ],
+                        "_source": {
+                          "includes": ["title", "description"]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -56,20 +77,50 @@ The returned buckets will contain geohashes and you will need a library to conve
 ## Response
 
 ```json
-"aggregations": {
-  "locations": {
-    "doc_count": 161,
-    "grid": {
-      "buckets": [{
-          "key": "u2",
-          "doc_count": 39
-      }, {
-          "key": "u1",
-          "doc_count": 21
-      }, {
-          "key": "u0",
-          "doc_count": 19
-      }]
+{
+  "aggregations": {
+    "locations": {
+      "doc_count": 195432,
+      "filtered": {
+        "doc_count": 90496,
+        "countries": {
+          "buckets": [
+            {
+              "key": "ezj5sfm10y",
+              "doc_count": 10812,
+              "centroid": {
+                "location": {
+                  "lat": 40.00280278734863,
+                  "lon": -4.003103915601969
+                },
+                "count": 10812
+              },
+              "info": {
+                "doc_count": 10726,
+                "place": {
+                  "hits": {
+                    "total": 10726,
+                    "max_score": null,
+                    "hits": [
+                      {
+                        "_index": "test-projects",
+                        "_type": "project",
+                        "_id": "06949bcf046ffbb6420c08c23acccc8c",
+                        "_score": null,
+                        "_source": {
+                          "description": "description",
+                          "title": "Title"
+                        },
+                        "sort": [1519739025581]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
     }
   }
 }
