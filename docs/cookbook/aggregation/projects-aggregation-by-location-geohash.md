@@ -1,6 +1,6 @@
 # Aggregate projects by location (Geohash Grid Aggregation)
 
-This example shows how to aggregate projects by the `centroid` field in an attempt of doing a simple server side clustering. We make use of the _GeoHash grid Aggregation_ with a defined precision that goes from 1 to 12
+This example shows how to aggregate projects by the `centroid` field in an attempt of doing a simple server side clustering. We make use of the _GeoHash grid Aggregation_ with a defined precision that goes from 1 to 12.
 
 Read more about the dimensions of the precisions in the official documentation: [https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-geohashgrid-aggregation.html#\_cell_dimensions_at_the_equator](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-geohashgrid-aggregation.html#_cell_dimensions_at_the_equator)
 
@@ -38,7 +38,7 @@ Read more about the dimensions of the precisions in the official documentation: 
               "geohash_grid": {
                 "size": 500,
                 "field": "project_locations.centroid",
-                "precision": 2
+                "precision": 3
               },
               "aggregations": {
                 "centroid": {
@@ -119,7 +119,8 @@ Read more about the dimensions of the precisions in the official documentation: 
                   }
                 }
               }
-            }
+            },
+            ...
           ]
         }
       }
