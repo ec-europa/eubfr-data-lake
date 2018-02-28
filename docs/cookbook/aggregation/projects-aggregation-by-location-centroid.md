@@ -1,6 +1,6 @@
 # Aggregate projects by location (Geo Centroid computing)
 
-This example shows how to aggregate projects by the `contry_code` field and then compute the `centroid` field in an attempt of doing a simple server side clustering. We make use of the _Geo Centroid Aggregation_
+This example shows how to aggregate projects by the `contry_code` field and then compute the `centroid` field in an attempt of doing a simple server side clustering. We make use of the _Geo Centroid Aggregation_.
 
 * Endpoint: `https://PROJECTS_INDEX/project/_search`
 * Method: `POST`
