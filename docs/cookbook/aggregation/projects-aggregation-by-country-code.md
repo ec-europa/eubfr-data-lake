@@ -118,7 +118,8 @@ This example shows how to aggregate projects by the `contry_code` field and then
                   }
                 }
               }
-            }
+            },
+            ...
           ]
         }
       }
