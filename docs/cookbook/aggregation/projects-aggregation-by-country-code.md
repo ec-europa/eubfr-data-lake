@@ -1,8 +1,6 @@
-# Aggregate projects by location (Geohash Grid Aggregation)
+# Aggregate projects by location (Geo Centroid computing)
 
-This example shows how to aggregate projects by the `centroid` field in an attempt of doing a simple server side clustering. We make use of the _GeoHash grid Aggregation_ with a defined precision that goes from 1 to 12.
-
-Read more about the dimensions of the precisions in the official documentation: [https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-geohashgrid-aggregation.html#\_cell_dimensions_at_the_equator](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-geohashgrid-aggregation.html#_cell_dimensions_at_the_equator)
+This example shows how to aggregate projects by the `contry_code` field and then compute the `centroid` field in an attempt of doing a simple server side clustering. We make use of the _Geo Centroid Aggregation_.
 
 * Endpoint: `https://PROJECTS_INDEX/project/_search`
 * Method: `POST`
@@ -35,10 +33,9 @@ Read more about the dimensions of the precisions in the official documentation: 
           },
           "aggregations": {
             "countries": {
-              "geohash_grid": {
-                "size": 500,
-                "field": "project_locations.centroid",
-                "precision": 3
+              "terms": {
+                "size": 100,
+                "field": "project_locations.country_code"
               },
               "aggregations": {
                 "centroid": {
@@ -86,22 +83,24 @@ Read more about the dimensions of the precisions in the official documentation: 
       "filtered": {
         "doc_count": 90496,
         "countries": {
+          "doc_count_error_upper_bound": 0,
+          "sum_other_doc_count": 0,
           "buckets": [
             {
-              "key": "ezj5sfm10y",
-              "doc_count": 10812,
+              "key": "ES",
+              "doc_count": 10818,
               "centroid": {
                 "location": {
-                  "lat": 40.00280278734863,
-                  "lon": -4.003103915601969
+                  "lat": 40.003254453612094,
+                  "lon": -4.002229473282414
                 },
-                "count": 10812
+                "count": 10818
               },
               "info": {
-                "doc_count": 10726,
+                "doc_count": 10732,
                 "place": {
                   "hits": {
-                    "total": 10726,
+                    "total": 10732,
                     "max_score": null,
                     "hits": [
                       {
@@ -131,4 +130,4 @@ Read more about the dimensions of the precisions in the official documentation: 
 
 ## Result
 
-![GeoHash grid Aggregation](./aggregation_geohash.gif)
+![Geo Centroid Aggregation](./aggregation_centroid.gif)
