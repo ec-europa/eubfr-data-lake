@@ -12,21 +12,22 @@ export const enrich = async (record, existingRecord) => {
         return null;
       }
 
-      if (!loc.centroid) {
-        loc = await enrichLocationFromAddress(loc);
+      let location = Object.assign({}, loc);
+      if (!location.centroid) {
+        location = await enrichLocationFromAddress(location);
       }
 
-      if (loc.centroid) {
-        if (!loc.country_code) {
-          loc = await enrichLocationFromCentroid(loc);
+      if (location.centroid) {
+        if (!location.country_code) {
+          location = await enrichLocationFromCentroid(location);
         }
 
-        if (!loc.nuts2) {
-          loc = await enrichLocationNuts2FromCentroid(loc);
+        if (!location.nuts2) {
+          location = await enrichLocationNuts2FromCentroid(location);
         }
       }
 
-      return loc;
+      return location;
     })
   )).filter(loc => loc);
 

@@ -54,7 +54,6 @@ export const handler = async (event, context, callback) => {
   const extension = path.extname(computedObjectKey).slice(1);
 
   const accountId = context.invokedFunctionArn.split(':')[4];
-  // const accountId = `491621799026`;
   const producerEtlSnsEndpointArn = `arn:aws:sns:${REGION}:${accountId}:${STAGE}-etl-${producer}-${extension}`;
 
   // AWS clients

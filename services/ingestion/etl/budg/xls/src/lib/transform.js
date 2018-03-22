@@ -111,16 +111,19 @@ const getLocations = record =>
   record['Participating countries']
     .split(',')
     .filter(loc => loc)
-    .map(country => ({
-      country_code: country,
-      region: '',
-      nuts2: '',
-      address: '',
-      postal_code: '',
-      town: '',
-      centroid: null,
-      location: null,
-    }));
+    .map(country => {
+      const countryCode = country === 'UK' ? 'GB' : country;
+      return {
+        country_code: countryCode,
+        region: '',
+        nuts2: '',
+        address: '',
+        postal_code: '',
+        town: '',
+        centroid: null,
+        location: null,
+      };
+    });
 
 /**
  *
