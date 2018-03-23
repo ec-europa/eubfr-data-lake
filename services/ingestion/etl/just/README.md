@@ -1,6 +1,6 @@
 # JUST ETL mapping
 
-Date of document revision: 22/03/2018
+Date of document revision: 23/03/2018
 
 Model to compare with is available at: https://ec-europa.github.io/eubfr-data-lake/
 
