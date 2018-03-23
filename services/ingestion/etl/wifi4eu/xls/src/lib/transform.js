@@ -1,5 +1,7 @@
 // @flow
 
+import crypto from 'crypto';
+
 import type { Project } from '../../../../_types/Project';
 
 /**
@@ -66,6 +68,20 @@ const getPartners = record => {
     },
   ];
 };
+
+/**
+ * Generates values for `project_id` field since source data misses these.
+ * It's needed for having separate projects in the Elasticsearch database.
+ *
+ * @memberof Wifi4EuXlsTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {String}
+ */
+const getProjectId = record =>
+  crypto
+    .createHash('md5')
+    .update(record['municipality name'])
+    .digest('hex');
 
 /**
  * Preprocess `project_locations` field.
@@ -178,7 +194,7 @@ export default (record: Object): Project =>
     },
     partners: getPartners(record),
     programme_name: '',
-    project_id: '',
+    project_id: getProjectId(record),
     project_locations: getLocations(record),
     project_website: getProjectWebsite(record),
     related_links: [
