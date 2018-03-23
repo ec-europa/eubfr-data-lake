@@ -34,6 +34,8 @@ cd ../../inforegio/xml
 npx serverless deploy -v
 cd ../../valor/xls
 npx serverless deploy -v
+cd ../../wifi4eu/xls
+npx serverless deploy -v
 
 # Deploy value store - projects' functions
 cd ../../../../value-store/projects
