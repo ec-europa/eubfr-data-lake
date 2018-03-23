@@ -190,7 +190,7 @@ const formatBudget = budget => {
  *
  * Transform function: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/json/src/lib/transform.js|implementation details}
  * @name InforegioJsonTransform
- * @param {Object} record The row received from harmonized storage.
+ * @param {Object} record Piece of data to transform before going to harmonized storage.
  * @returns {Project} JSON matching the type fields.
  */
 export default (record: Object): Project => {
