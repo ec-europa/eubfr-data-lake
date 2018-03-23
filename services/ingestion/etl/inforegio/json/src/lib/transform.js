@@ -8,7 +8,7 @@ import type { Project } from '../../../../_types/Project';
  * Converts a single string to an array of multiple values
  *
  * @memberof InforegioJsonTransform
- * @param {Object} record The row received from harmonized storage
+ * @param {Object} record The row received from parsed file
  * @returns {Array} List of string values for `funding_area` field
  *
  * @example
@@ -52,7 +52,7 @@ const formatDate = date => {
  * - `Beneficiary_City`
  *
  * @memberof InforegioJsonTransform
- * @param {Object} record The row received from harmonized storage
+ * @param {Object} record The row received from parsed file
  * @returns {Array} A list of {Partner} objects
  */
 const getAddress = record => {
@@ -80,7 +80,7 @@ const getAddress = record => {
  * - `Beneficiary_Country`
  *
  * @memberof InforegioJsonTransform
- * @param {Object} record The row received from harmonized storage
+ * @param {Object} record The row received from parsed file
  * @returns {Array} A list of a single {Partner} object
  */
 const getPartners = record => [
@@ -104,7 +104,7 @@ const getPartners = record => [
  * - `Project_NUTS2_code`
  *
  * @memberof InforegioJsonTransform
- * @param {Object} record The row received from harmonized storage
+ * @param {Object} record The row received from parsed file
  * @returns {Array} List of {Location} objects for `project_locations` field
  */
 const getLocations = record => {
@@ -153,7 +153,7 @@ const getLocations = record => {
  * - `URL`
  *
  * @memberof InforegioJsonTransform
- * @param {Object} record The row received from harmonized storage
+ * @param {Object} record The row received from parsed file
  * @returns {string}
  */
 const getProjectWebsite = record => {

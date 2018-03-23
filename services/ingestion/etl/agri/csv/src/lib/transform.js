@@ -10,7 +10,7 @@ import type { Project } from '../../../../_types/Project';
  * Converts a single string to an array
  *
  * @memberof AgriCsvTransform
- * @param {Object} record The row received from harmonized storage
+ * @param {Object} record The row received from parsed file
  * @returns {Array} List of string values for `funding_area` field
  *
  * @example
@@ -28,7 +28,7 @@ const getFundingArea = record =>
  * Preprocess coordinators
  *
  * @memberof AgriCsvTransform
- * @param {Object} record The row received from harmonized storage
+ * @param {Object} record The row received from parsed file
  * @returns {Array} List of {Coordinator} objects for `coordinators` field
  *
  * @example
@@ -53,7 +53,7 @@ const getCoordinators = record =>
  * Preprocess partners
  *
  * @memberof AgriCsvTransform
- * @param {Object} record The row received from harmonized storage
+ * @param {Object} record The row received from parsed file
  * @returns {Array} List of {Partner} objects for `partners` field
  *
  * @example
@@ -85,7 +85,7 @@ const getPartners = record =>
  * - `Project town(s)`
  *
  * @memberof AgriCsvTransform
- * @param {Object} record The row received from harmonized storage
+ * @param {Object} record The row received from parsed file
  * @returns {Array} List of {Location} objects for `project_locations` field
  */
 const getLocations = record => {
@@ -131,7 +131,7 @@ const getLocations = record => {
  * Depends on record['Related links'] field
  *
  * @memberof AgriCsvTransform
- * @param {Object} record The row received from harmonized storage
+ * @param {Object} record The row received from parsed file
  * @returns {Array|Object} List of {RelatedLink}
  *
  * @example

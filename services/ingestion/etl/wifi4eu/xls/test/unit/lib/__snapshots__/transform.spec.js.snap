@@ -3,31 +3,87 @@
 exports[`XLS transformer for WIFI4EU Produces correct JSON output structure 1`] = `
 Object {
   "action": "",
-  "budget": Object {},
-  "call_year": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "EUR",
+      "raw": "",
+      "value": 0,
+    },
+    "funding_area": Array [],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+  },
+  "call_year": "2018",
   "coordinators": Array [],
-  "description": "",
+  "description": "The European Commission wishes to promote free Wi-Fi connectivity for citizens and visitors in public spaces such as parks, squares, public building, libraries, health centres, and museums everywhere in Europe through WiFi4EU.",
   "ec_priorities": Array [],
   "media": Object {
     "cover_image": "",
     "video": "",
   },
-  "partners": Array [],
+  "partners": Array [
+    Object {
+      "address": "",
+      "country": "",
+      "name": "Долни чифлик-Dolni chiflik",
+      "region": "",
+      "type": "",
+      "website": "",
+    },
+  ],
   "programme_name": "",
   "project_id": "",
-  "project_locations": Array [],
-  "project_website": "",
-  "related_links": Array [],
-  "results": Object {},
+  "project_locations": Array [
+    Object {
+      "address": "гр. Долни чифлик, пл. \\"Тича\\" №1",
+      "centroid": null,
+      "country_code": "",
+      "location": null,
+      "nuts2": "",
+      "postal_code": "9120",
+      "region": "",
+      "town": "",
+    },
+  ],
+  "project_website": "https://www.wifi4eu.eu",
+  "related_links": Array [
+    Object {
+      "label": "",
+      "url": "",
+    },
+  ],
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
   "status": "",
   "sub_programme_name": "",
   "success_story": "",
   "themes": Array [],
   "timeframe": Object {
-    "from": "",
-    "to": "",
+    "from": "2018-03-22T00:00:00.000Z",
+    "to": null,
   },
-  "title": "",
+  "title": "Wifi4EU - Registrations",
   "type": Array [],
 }
 `;

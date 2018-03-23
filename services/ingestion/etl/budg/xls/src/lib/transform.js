@@ -104,7 +104,7 @@ const getPartners = record => {
  * - `Participating countries`
  *
  * @memberof BudgXlsTransform
- * @param {Object} record The row received from harmonized storage
+ * @param {Object} record The row received from parsed file
  * @returns {Array} List of {Location} objects for `project_locations` field
  */
 const getLocations = record =>
