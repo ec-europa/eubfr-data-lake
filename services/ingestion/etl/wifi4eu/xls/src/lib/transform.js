@@ -1,6 +1,7 @@
 // @flow
 
 import crypto from 'crypto';
+import getCountryCode from './getCountryCode';
 
 import type { Project } from '../../../../_types/Project';
 
@@ -102,7 +103,7 @@ const getLocations = record => {
     {
       address,
       centroid: null,
-      country_code: '',
+      country_code: getCountryCode(record.country),
       location: null,
       nuts2: '',
       postal_code: postCode,
