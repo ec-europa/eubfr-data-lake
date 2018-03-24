@@ -81,7 +81,9 @@ const getPartners = record => {
 const getProjectId = record =>
   crypto
     .createHash('md5')
-    .update(record['municipality name'])
+    .update(
+      record['municipality name'] + record.address + record['address num']
+    )
     .digest('hex');
 
 /**
