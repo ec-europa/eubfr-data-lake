@@ -1,6 +1,6 @@
 import request from 'request-promise-native';
 
-export const enrichLocationNuts2FromCentroid = async loc => {
+export const enrichLocationNutsFromCentroid = async loc => {
   // Use centroid to determine country_code
   const { lat, lon } = loc.centroid;
 
@@ -31,10 +31,10 @@ export const enrichLocationNuts2FromCentroid = async loc => {
   }
 
   if (results.results.length) {
-    return Object.assign({}, loc, { nuts2: results.results[2].value });
+    return Object.assign({}, loc, { nuts: results.results });
   }
 
   return loc; // location not enriched
 };
 
-export default enrichLocationNuts2FromCentroid;
+export default enrichLocationNutsFromCentroid;

@@ -1,7 +1,7 @@
 import { mergeRecords } from './merge';
 import { enrichLocationFromAddress } from './enrichLocationFromAddress';
 import { enrichLocationFromCentroid } from './enrichLocationFromCentroid';
-import { enrichLocationNuts2FromCentroid } from './enrichLocationNuts2FromCentroid';
+import { enrichLocationNutsFromCentroid } from './enrichLocationNutsFromCentroid';
 
 export const enrich = async (record, existingRecord) => {
   const enrichedRecord = mergeRecords(record, existingRecord);
@@ -22,8 +22,8 @@ export const enrich = async (record, existingRecord) => {
           location = await enrichLocationFromCentroid(location);
         }
 
-        if (!location.nuts2) {
-          location = await enrichLocationNuts2FromCentroid(location);
+        if (!location.nuts) {
+          location = await enrichLocationNutsFromCentroid(location);
         }
       }
 
