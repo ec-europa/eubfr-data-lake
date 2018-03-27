@@ -116,7 +116,7 @@ const getLocations = record =>
       return {
         country_code: countryCode,
         region: '',
-        nuts: {},
+        nuts: [],
         address: '',
         postal_code: '',
         town: '',

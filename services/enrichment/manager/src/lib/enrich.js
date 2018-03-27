@@ -12,6 +12,13 @@ export const enrich = async (record, existingRecord) => {
         return null;
       }
 
+      /*
+      country code = NUTS0 (= country code)
+      region = NUTS 2 or 1
+      postal code = NUTS 3 or 2
+      lat/lon = NUTS3
+      */
+
       let location = Object.assign({}, loc);
       if (!location.centroid) {
         location = await enrichLocationFromAddress(location);
@@ -22,10 +29,12 @@ export const enrich = async (record, existingRecord) => {
           location = await enrichLocationFromCentroid(location);
         }
 
-        if (!location.nuts) {
+        if (!location.nuts.length) {
           location = await enrichLocationNutsFromCentroid(location);
         }
       }
+
+      debugger;
 
       return location;
     })

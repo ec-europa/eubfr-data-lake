@@ -31,7 +31,14 @@ export const enrichLocationNutsFromCentroid = async loc => {
   }
 
   if (results.results.length) {
-    return Object.assign({}, loc, { nuts: results.results });
+    return Object.assign({}, loc, {
+      nuts: results.results.map(result => ({
+        code: result.attributes.NUTS_ID,
+        name: result.attributes.NUTS_NAME,
+        level: result.attributes.LEVL_CODE,
+        year: result.layerName,
+      })),
+    });
   }
 
   return loc; // location not enriched
