@@ -32,19 +32,6 @@ module.exports = () => ({
         },
         call_year: { type: 'text' },
         computed_key: { type: 'keyword' },
-        coordinators: {
-          type: 'nested',
-          properties: {
-            address: { type: 'text' },
-            country: { type: 'keyword' },
-            email: { type: 'keyword' },
-            name: { type: 'keyword' },
-            phone: { type: 'keyword' },
-            region: { type: 'keyword' },
-            type: { type: 'keyword' },
-            website: { type: 'keyword' },
-          },
-        },
         created_by: { type: 'keyword' },
         description: { type: 'text' },
         ec_priorities: textWithKeyword,
@@ -53,17 +40,6 @@ module.exports = () => ({
           properties: {
             cover_image: { type: 'text' },
             video: { type: 'text' },
-          },
-        },
-        partners: {
-          type: 'nested',
-          properties: {
-            address: { type: 'text' },
-            country: { type: 'keyword' },
-            name: { type: 'keyword' },
-            region: { type: 'keyword' },
-            type: { type: 'keyword' },
-            website: { type: 'keyword' },
           },
         },
         producer_id: { type: 'keyword' },
@@ -98,6 +74,20 @@ module.exports = () => ({
         status: { type: 'text' },
         sub_programme_name: { type: 'text' },
         success_story: { type: 'text' },
+        third_parties: {
+          type: 'nested',
+          properties: {
+            address: { type: 'text' },
+            country: { type: 'keyword' },
+            email: { type: 'keyword' },
+            name: { type: 'keyword' },
+            phone: { type: 'keyword' },
+            region: { type: 'keyword' },
+            role: { type: 'keyword' },
+            type: { type: 'keyword' },
+            website: { type: 'keyword' },
+          },
+        },
         timeframe: {
           properties: {
             from: { type: 'date' },

@@ -201,7 +201,7 @@ const getThemes = record =>
     : [];
 
 /**
- * Get a list of a single {Partner}
+ * Get a list of a single {Beneficiary}
  * Depends on getAddress()
  *
  * Input fields taken from the `record` are:
@@ -211,9 +211,9 @@ const getThemes = record =>
  *
  * @memberof inforegioXmlTransform
  * @param {Object} record The row received from harmonized storage
- * @returns {Array} List of a single {Partner}
+ * @returns {Array} List of a single {Beneficiary}
  */
-const getPartners = record =>
+const getBeneficiaries = record =>
   record.Beneficiary
     ? [
         {
@@ -221,8 +221,11 @@ const getPartners = record =>
           type: '',
           address: getAddress(record),
           region: '',
+          role: 'beneficiary',
           country: checkData(record.Beneficiary_Country),
           website: '',
+          phone: '',
+          email: '',
         },
       ]
     : [];
@@ -265,22 +268,20 @@ export default (record: Object): Project => {
   // Preprocess themes
   const themeArray = getThemes(record);
 
-  // Preprocess partners
-  const partnerArray = getPartners(record);
+  // Preprocess third parties
+  const thirdPartiesArray = getBeneficiaries(record);
 
   // Map the fields
   return {
     action: '',
     budget: budgetObject,
     call_year: '',
-    coordinators: [],
     description: checkData(record.quote),
     ec_priorities: [],
     media: {
       cover_image: '',
       video: '',
     },
-    partners: partnerArray,
     period: checkData(record.Period),
     programme_name: '',
     project_id: checkData(record.PROJECTID).toString(),
@@ -295,6 +296,7 @@ export default (record: Object): Project => {
     sub_programme_name: '',
     success_story: '',
     themes: themeArray,
+    third_parties: thirdPartiesArray,
     timeframe: {
       from: formatDate(checkData(record.Project_Timeframe_start_date)),
       to: formatDate(checkData(record.Project_Timeframe_end_date)),
