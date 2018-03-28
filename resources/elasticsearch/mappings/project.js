@@ -81,7 +81,7 @@ module.exports = () => ({
                 code: { type: 'keyword' },
                 name: { type: 'keyword' },
                 level: { type: 'integer' },
-                year: { type: 'integer' },
+                year: { type: 'keyword' },
               },
             },
             postal_code: { type: 'keyword' },

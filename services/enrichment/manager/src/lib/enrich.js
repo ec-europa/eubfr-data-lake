@@ -34,8 +34,6 @@ export const enrich = async (record, existingRecord) => {
         }
       }
 
-      debugger;
-
       return location;
     })
   )).filter(loc => loc);

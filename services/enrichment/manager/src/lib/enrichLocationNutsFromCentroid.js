@@ -35,7 +35,7 @@ export const enrichLocationNutsFromCentroid = async loc => {
       nuts: results.results.map(result => ({
         code: result.attributes.NUTS_ID,
         name: result.attributes.NUTS_NAME,
-        level: result.attributes.LEVL_CODE,
+        level: +result.attributes.LEVL_CODE,
         year: result.layerName,
       })),
     });
