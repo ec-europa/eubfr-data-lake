@@ -93,9 +93,9 @@
               
                 
                 <li class="ecl-link-block__item">
-                  <a href="#coordinator"
+                  <a href="#thirdparty"
                      class="ecl-link ecl-link--standalone ecl-link-block__link">
-                    Coordinator
+                    ThirdParty
                   </a>
                 
                 </li>
@@ -123,15 +123,6 @@
                   <a href="#media"
                      class="ecl-link ecl-link--standalone ecl-link-block__link">
                     Media
-                  </a>
-                
-                </li>
-              
-                
-                <li class="ecl-link-block__item">
-                  <a href="#partner"
-                     class="ecl-link ecl-link--standalone ecl-link-block__link">
-                    Partner
                   </a>
                 
                 </li>
@@ -297,9 +288,9 @@
                       </a></li>
                     
                       <li><a
-                        href="#inforegiojsontransformgetpartners"
+                        href="#inforegiojsontransformgetbeneficiaries"
                         class="ecl-link pre-open">
-                        getPartners
+                        getBeneficiaries
                       </a></li>
                     
                       <li><a
@@ -378,9 +369,9 @@
                       </a></li>
                     
                       <li><a
-                        href="#inforegioxmltransformgetpartners"
+                        href="#inforegioxmltransformgetbeneficiaries"
                         class="ecl-link pre-open">
-                        getPartners
+                        getBeneficiaries
                       </a></li>
                     
                     </ul>
@@ -569,14 +560,14 @@
               <li class='ecl-list-item ecl-u-pv-m'>
   
     
-    <h3 class='ecl-heading ecl-heading--h3' id='coordinator'>
-      Coordinator
+    <h3 class='ecl-heading ecl-heading--h3' id='thirdparty'>
+      ThirdParty
     </h3>
     
     
   
 
-  <p>Describes field <code>project.coordinators</code>.</p>
+  <p>Describes field <code>project.third_party</code>.</p>
 
 
   
@@ -631,6 +622,13 @@
       
           <li>
             region (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            role (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
             
             
             
@@ -893,94 +891,6 @@
               <li class='ecl-list-item ecl-u-pv-m'>
   
     
-    <h3 class='ecl-heading ecl-heading--h3' id='partner'>
-      Partner
-    </h3>
-    
-    
-  
-
-  <p>Describes field <code>project.partners</code>.</p>
-
-
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-    <h4 class="ecl-heading ecl-heading--h4">Properties</h4>
-      <ul class="ecl-list">
-        
-          <li>
-            address (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-            
-            
-            
-        </li>
-      
-          <li>
-            country (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-            
-            
-            
-        </li>
-      
-          <li>
-            name (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-            
-            
-            
-        </li>
-      
-          <li>
-            region (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-            
-            
-            
-        </li>
-      
-          <li>
-            type (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-            
-            
-            
-        </li>
-      
-          <li>
-            website (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-            
-            
-            
-        </li>
-      
-      </ul>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</li>
-
-                  
-            
-              <li class='ecl-list-item ecl-u-pv-m'>
-  
-    
     <h3 class='ecl-heading ecl-heading--h3' id='relatedlink'>
       RelatedLink
     </h3>
@@ -1208,13 +1118,6 @@
         </li>
       
           <li>
-            coordinators (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#coordinator">Coordinator</a>>)
-            
-            
-            
-        </li>
-      
-          <li>
             description (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
             
             
@@ -1230,13 +1133,6 @@
       
           <li>
             media (<a href="#media">Media</a>)
-            
-            
-            
-        </li>
-      
-          <li>
-            partners (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#partner">Partner</a>>)
             
             
             
@@ -1307,6 +1203,13 @@
       
           <li>
             themes (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>>)
+            
+            
+            
+        </li>
+      
+          <li>
+            third_parties (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#thirdparty">ThirdParty</a>>)
             
             
             
@@ -2515,14 +2418,14 @@ output =&gt; <span class="hljs-string">"2009-01-01T00:00:00.000Z"</span></pre>
 
     </div>
   
-    <a id='inforegiojsontransformgetpartners' class="ecl-link ecl-link--standalone" aria-controls='inforegiojsontransformgetpartners-panel' aria-expanded="true" href="#">
-      getPartners
+    <a id='inforegiojsontransformgetbeneficiaries' class="ecl-link ecl-link--standalone" aria-controls='inforegiojsontransformgetbeneficiaries-panel' aria-expanded="true" href="#">
+      getBeneficiaries
     </a>
-    <div id='inforegiojsontransformgetpartners-panel' aria-labelledby='inforegiojsontransformgetpartners' aria-hidden="false">
+    <div id='inforegiojsontransformgetbeneficiaries-panel' aria-labelledby='inforegiojsontransformgetbeneficiaries' aria-hidden="false">
       <li class='ecl-list-item ecl-u-pv-m'>
   
 
-  <p>Preprocess partners</p>
+  <p>Preprocess beneficiaries</p>
 <p>Input fields taken from the <code>record</code> are:</p>
 <ul>
 <li><code>Beneficiary</code></li>
@@ -2561,7 +2464,7 @@ output =&gt; <span class="hljs-string">"2009-01-01T00:00:00.000Z"</span></pre>
       <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
       <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>
       :
-        A list of a single {Partner} object
+        A list of a single {Beneficiary} object
 
       
     
@@ -3322,14 +3225,14 @@ output =&gt; [<span class="hljs-string">'foo'</span>, <span class="hljs-string">
 
     </div>
   
-    <a id='inforegioxmltransformgetpartners' class="ecl-link ecl-link--standalone" aria-controls='inforegioxmltransformgetpartners-panel' aria-expanded="true" href="#">
-      getPartners
+    <a id='inforegioxmltransformgetbeneficiaries' class="ecl-link ecl-link--standalone" aria-controls='inforegioxmltransformgetbeneficiaries-panel' aria-expanded="true" href="#">
+      getBeneficiaries
     </a>
-    <div id='inforegioxmltransformgetpartners-panel' aria-labelledby='inforegioxmltransformgetpartners' aria-hidden="false">
+    <div id='inforegioxmltransformgetbeneficiaries-panel' aria-labelledby='inforegioxmltransformgetbeneficiaries' aria-hidden="false">
       <li class='ecl-list-item ecl-u-pv-m'>
   
 
-  <p>Get a list of a single {Partner}
+  <p>Get a list of a single {Beneficiary}
 Depends on getAddress()</p>
 <p>Input fields taken from the <code>record</code> are:</p>
 <ul>
@@ -3369,7 +3272,7 @@ Depends on getAddress()</p>
       <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
       <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>
       :
-        List of a single {Partner}
+        List of a single {Beneficiary}
 
       
     
