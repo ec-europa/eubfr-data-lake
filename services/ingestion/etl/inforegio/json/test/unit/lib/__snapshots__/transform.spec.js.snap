@@ -35,23 +35,12 @@ Object {
     },
   },
   "call_year": "",
-  "coordinators": Array [],
   "description": "<p>An extension to a boat docked on the river Danube has proved a hugely popular entertainment and cultural hub. A38, a former Ukrainian freighter ship, was initially transformed into a multi-functional space in 2003. With ERDF-funding, an adjacent second unit was constructed in 2010 and has been a resounding success.</p>",
   "ec_priorities": Array [],
   "media": Object {
     "cover_image": "",
     "video": "",
   },
-  "partners": Array [
-    Object {
-      "address": "Petőfi bridge, Budapest",
-      "country": "HU",
-      "name": "A38 Ship Budapest",
-      "region": "",
-      "type": "",
-      "website": "",
-    },
-  ],
   "period": "2007-2013",
   "programme_name": "",
   "project_id": "3479",
@@ -80,6 +69,19 @@ Object {
     "Business Support",
     "Tourism and Culture",
     "Urban development",
+  ],
+  "third_parties": Array [
+    Object {
+      "address": "Petőfi bridge, Budapest",
+      "country": "HU",
+      "email": "",
+      "name": "A38 Ship Budapest",
+      "phone": "",
+      "region": "",
+      "role": "beneficiary",
+      "type": "",
+      "website": "",
+    },
   ],
   "timeframe": Object {
     "from": "2009-01-01T00:00:00.000Z",
