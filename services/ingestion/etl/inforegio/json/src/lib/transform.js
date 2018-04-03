@@ -72,7 +72,7 @@ const getAddress = record => {
 };
 
 /**
- * Preprocess partners
+ * Preprocess beneficiaries
  *
  * Input fields taken from the `record` are:
  *
@@ -80,17 +80,20 @@ const getAddress = record => {
  * - `Beneficiary_Country`
  *
  * @memberof InforegioJsonTransform
- * @param {Object} record The row received from parsed file
- * @returns {Array} A list of a single {Partner} object
+ * @param {Object} record The row received from harmonized storage
+ * @returns {Array} A list of a single {Beneficiary} object
  */
-const getPartners = record => [
+const getBeneficiaries = record => [
   {
     name: record.Beneficiary,
     type: '',
     address: getAddress(record),
     region: '',
+    role: 'beneficiary',
     country: record.Beneficiary_Country,
     website: '',
+    phone: '',
+    email: '',
   },
 ];
 
@@ -213,8 +216,8 @@ export default (record: Object): Project => {
     mmf_heading: '',
   };
 
-  // Preprocess partners
-  const partnerArray = getPartners(record);
+  // Preprocess third parties
+  const thirdPartiesArray = getBeneficiaries(record);
 
   // Preprocess project locations
   const locationArray = getLocations(record);
@@ -230,14 +233,12 @@ export default (record: Object): Project => {
     action: '',
     budget: budgetObject,
     call_year: '',
-    coordinators: [],
     description: record.quote,
     ec_priorities: [],
     media: {
       cover_image: '',
       video: '',
     },
-    partners: partnerArray,
     period: record.Period,
     programme_name: '',
     project_id: record.PROJECTID.toString(),
@@ -252,6 +253,7 @@ export default (record: Object): Project => {
     sub_programme_name: '',
     success_story: '',
     themes: themeArray,
+    third_parties: thirdPartiesArray,
     timeframe: {
       from: formatDate(record.Project_Timeframe_start_date),
       to: formatDate(record.Project_Timeframe_end_date),

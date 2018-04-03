@@ -33,23 +33,12 @@ Object {
     },
   },
   "call_year": "2018",
-  "coordinators": Array [],
   "description": "The European Commission wishes to promote free Wi-Fi connectivity for citizens and visitors in public spaces such as parks, squares, public building, libraries, health centres, and museums everywhere in Europe through WiFi4EU.",
   "ec_priorities": Array [],
   "media": Object {
     "cover_image": "",
     "video": "",
   },
-  "partners": Array [
-    Object {
-      "address": "",
-      "country": "",
-      "name": "Долни чифлик-Dolni chiflik",
-      "region": "",
-      "type": "",
-      "website": "",
-    },
-  ],
   "programme_name": "",
   "project_id": "505ddc4503ba7bd63ea008ea40a8d769",
   "project_locations": Array [
@@ -79,6 +68,19 @@ Object {
   "sub_programme_name": "",
   "success_story": "",
   "themes": Array [],
+  "third_parties": Array [
+    Object {
+      "address": "",
+      "country": "",
+      "email": "",
+      "name": "Долни чифлик-Dolni chiflik",
+      "phone": "",
+      "region": "",
+      "role": "beneficiary",
+      "type": "",
+      "website": "",
+    },
+  ],
   "timeframe": Object {
     "from": "2018-03-22T00:00:00.000Z",
     "to": null,

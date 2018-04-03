@@ -43,6 +43,7 @@ const getCoordinators = record =>
       type: '',
       address: '',
       region: '',
+      role: 'coordinator',
       country: '',
       website: '',
       phone: '',
@@ -68,8 +69,11 @@ const getPartners = record =>
       type: '',
       address: '',
       region: '',
+      role: 'partner',
       country: '',
       website: '',
+      phone: '',
+      email: '',
     }));
 
 /**
@@ -206,11 +210,8 @@ export default (record: Object): Project => {
     mmf_heading: record['EU Budget MFF heading'] || '',
   };
 
-  // Preprocess coordinators
-  const coordArray = getCoordinators(record);
-
-  // Preprocess partners
-  const partnerArray = getPartners(record);
+  // Preprocess third parties
+  const thirdPartiesArray = getCoordinators(record).concat(getPartners(record));
 
   // Preprocess locations
   const locationArray = getLocations(record);
@@ -244,7 +245,6 @@ export default (record: Object): Project => {
     action: '',
     budget: budgetObject,
     call_year: '',
-    coordinators: coordArray,
     description: record['Project description'] || '',
     ec_priorities:
       record['EC’s priorities'].split(';').filter(priority => priority) || [],
@@ -252,7 +252,6 @@ export default (record: Object): Project => {
       cover_image: record.Visual || '',
       video: record['Link to a video'] || '',
     },
-    partners: partnerArray,
     programme_name: record['Programme name'] || '',
     project_id: record.Nid || '',
     project_locations: locationArray,
@@ -263,6 +262,7 @@ export default (record: Object): Project => {
     sub_programme_name: '',
     success_story: '',
     themes: [],
+    third_parties: thirdPartiesArray || [],
     timeframe: {
       from: formatDate(timeframeFrom),
       to: formatDate(timeframeTo),

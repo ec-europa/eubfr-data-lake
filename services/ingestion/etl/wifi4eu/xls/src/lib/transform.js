@@ -55,15 +55,18 @@ const getProjectDescription = record =>
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
-const getPartners = record => {
+const getBeneficieries = record => {
   const name = record['municipality name'] ? record['municipality name'] : '';
 
   return [
     {
       address: '',
       country: '',
+      email: '',
       name,
+      phone: '',
       region: '',
+      role: 'beneficiary',
       type: '',
       website: '',
     },
@@ -186,14 +189,13 @@ export default (record: Object): Project =>
     action: '',
     budget: getBudget(),
     call_year: getCallYear(record),
-    coordinators: [],
     description: getProjectDescription(record),
     ec_priorities: [],
     media: {
       cover_image: '',
       video: '',
     },
-    partners: getPartners(record),
+    third_parties: getBeneficieries(record),
     programme_name: '',
     project_id: getProjectId(record),
     project_locations: getLocations(record),
