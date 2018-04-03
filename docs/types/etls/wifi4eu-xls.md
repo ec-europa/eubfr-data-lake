@@ -44,7 +44,7 @@ Preprocess `description` field. Data comes from `record['Project Description']`.
 
 Returns **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
-### getPartners
+### getBeneficieries
 
 Preprocess `partners` field.
 

@@ -65,18 +65,16 @@ Type: {budget: [Budget](#budget), funding: [Array](https://developer.mozilla.org
 
 Describes `project`.
 
-Type: {action: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), budget: [Budget](#budget), call_year: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), coordinators: [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Coordinator](#coordinator)>, description: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), ec_priorities: [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>, media: [Media](#media), partners: [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Partner](#partner)>, programme_name: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), project_id: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), project_locations: [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Location](#location)>, project_website: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), related_links: [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[RelatedLink](#relatedlink)>, results: [Result](#result), status: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), sub_programme_name: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), success_story: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), themes: [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>, timeframe: [Timeframe](#timeframe), title: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), type: [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>}
+Type: {action: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), budget: [Budget](#budget), call_year: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), description: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), ec_priorities: [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>, media: [Media](#media), programme_name: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), project_id: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), project_locations: [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Location](#location)>, project_website: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), related_links: [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[RelatedLink](#relatedlink)>, results: [Result](#result), status: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), sub_programme_name: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), success_story: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), themes: [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>, third_parties: [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[ThirdParty](#thirdparty)>, timeframe: [Timeframe](#timeframe), title: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), type: [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>}
 
 **Properties**
 
 -   `action` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `budget` **[Budget](#budget)** 
 -   `call_year` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
--   `coordinators` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Coordinator](#coordinator)>** 
 -   `description` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `ec_priorities` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>** 
 -   `media` **[Media](#media)** 
--   `partners` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Partner](#partner)>** 
 -   `programme_name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `project_id` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `project_locations` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Location](#location)>** 
@@ -87,15 +85,16 @@ Type: {action: [string](https://developer.mozilla.org/docs/Web/JavaScript/Refere
 -   `sub_programme_name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `success_story` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `themes` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>** 
+-   `third_parties` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[ThirdParty](#thirdparty)>** 
 -   `timeframe` **[Timeframe](#timeframe)** 
 -   `title` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `type` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>** 
 
-## Coordinator
+## ThirdParty
 
-Describes field `project.coordinators`.
+Describes field `project.third_party`.
 
-Type: {address: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), country: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), email: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), name: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), phone: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), region: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), website: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)}
+Type: {address: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), country: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), email: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), name: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), phone: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), region: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), role: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), website: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)}
 
 **Properties**
 
@@ -105,6 +104,7 @@ Type: {address: [string](https://developer.mozilla.org/docs/Web/JavaScript/Refer
 -   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `phone` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `region` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `role` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `type` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `website` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
@@ -146,21 +146,6 @@ Type: {cover_image: [string](https://developer.mozilla.org/docs/Web/JavaScript/R
 
 -   `cover_image` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `video` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-
-## Partner
-
-Describes field `project.partners`.
-
-Type: {address: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), country: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), name: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), region: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), website: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)}
-
-**Properties**
-
--   `address` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
--   `country` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
--   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
--   `region` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
--   `type` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
--   `website` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
 ## RelatedLink
 

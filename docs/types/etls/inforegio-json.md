@@ -64,9 +64,9 @@ Input fields taken from the `record` are:
 
 Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** A list of {Partner} objects
 
-### getPartners
+### getBeneficiaries
 
-Preprocess partners
+Preprocess beneficiaries
 
 Input fields taken from the `record` are:
 
@@ -75,9 +75,9 @@ Input fields taken from the `record` are:
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from parsed file
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** A list of a single {Partner} object
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** A list of a single {Beneficiary} object
 
 ### getLocations
 
