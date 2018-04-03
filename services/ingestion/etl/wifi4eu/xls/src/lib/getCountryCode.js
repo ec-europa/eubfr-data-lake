@@ -1,3 +1,10 @@
+/**
+ * Retrieve a country code based on non-standartized input values.
+ *
+ * @memberof Wifi4EuXlsTransform
+ * @param {Object} country Country in the form of 'БЪЛГАРИЯ (BULGARIA)', 'ΕΛΛΑΔΑ (ELLADA)' and similar.
+ * @returns {String} ISO ALPHA-2 code  used by i18n-iso-countries in the enrichment manager.
+ */
 export default country => {
   switch (country) {
     case 'БЪЛГАРИЯ (BULGARIA)':

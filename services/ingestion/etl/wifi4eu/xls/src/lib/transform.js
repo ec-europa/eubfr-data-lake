@@ -74,8 +74,38 @@ const getBeneficieries = record => {
 };
 
 /**
+ * Helper to build an address value.
+ *
+ * Data comes from the following source fields:
+ * - `address`
+ * - `address num`
+ *
+ * @memberof Wifi4EuXlsTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {String} Optimistic concatenation between `address` and `address num`.
+ */
+const getAddress = record => {
+  let address = '';
+
+  const addressLoc = record.address ? record.address : '';
+  const addressNum =
+    record['address num'] !== 's/n' && undefined ? record['address num'] : '';
+
+  // Build address based on available information.
+  if (addressLoc && addressNum) {
+    address = `${addressLoc} ${addressNum}`;
+  } else if (addressLoc) {
+    address = addressLoc;
+  }
+
+  return address;
+};
+
+/**
  * Generates values for `project_id` field since source data misses these.
  * It's needed for having separate projects in the Elasticsearch database.
+ *
+ * Depends on `getAddress` helper function.
  *
  * @memberof Wifi4EuXlsTransform
  * @param {Object} record The row received from parsed file
@@ -84,22 +114,25 @@ const getBeneficieries = record => {
 const getProjectId = record =>
   crypto
     .createHash('md5')
-    .update(record['municipality name'])
+    .update(getAddress(record))
     .digest('hex');
 
 /**
  * Preprocess `project_locations` field.
+ * Depends on:
+ * - `getAddress`
+ * - `getCountryCode`
  *
  * Data comes from the following source fields:
- * - `address`
  * - `country`
+ * - `postal code`
  *
  * @memberof Wifi4EuXlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {Array<Location>}
  */
 const getLocations = record => {
-  const address = record.address ? record.address : '';
+  const address = getAddress(record);
   const postCode = record['postal code'] ? record['postal code'] : '';
 
   return [

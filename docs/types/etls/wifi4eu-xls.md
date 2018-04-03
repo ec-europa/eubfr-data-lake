@@ -58,10 +58,27 @@ Data comes from the following source fields:
 
 Returns **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
+### getAddress
+
+Helper to build an address value.
+
+Data comes from the following source fields:
+
+-   `address`
+-   `address num`
+
+**Parameters**
+
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from parsed file
+
+Returns **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Optimistic concatenation between `address` and `address num`.
+
 ### getProjectId
 
 Generates values for `project_id` field since source data misses these.
 It's needed for having separate projects in the Elasticsearch database.
+
+Depends on `getAddress` helper function.
 
 **Parameters**
 
@@ -72,11 +89,15 @@ Returns **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 ### getLocations
 
 Preprocess `project_locations` field.
+Depends on:
+
+-   `getAddress`
+-   `getCountryCode`
 
 Data comes from the following source fields:
 
--   `address`
 -   `country`
+-   `postal code`
 
 **Parameters**
 
@@ -130,3 +151,13 @@ Preprocess `title` field. Data comes from `record['Project Title']`.
 -   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from parsed file
 
 Returns **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+### getCountryCode
+
+Retrieve a country code based on non-standartized input values.
+
+**Parameters**
+
+-   `country` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Country in the form of 'БЪЛГАРИЯ (BULGARIA)', 'ΕΛΛΑΔΑ (ELLADA)' and similar.
+
+Returns **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** ISO ALPHA-2 code  used by i18n-iso-countries in the enrichment manager.
