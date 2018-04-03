@@ -92,7 +92,7 @@ Type: {action: [string](https://developer.mozilla.org/docs/Web/JavaScript/Refere
 
 ## ThirdParty
 
-Describes field `project.third_party`.
+Describes field `project.third_parties`.
 
 Type: {address: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), country: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), email: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), name: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), phone: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), region: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), role: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), website: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)}
 
