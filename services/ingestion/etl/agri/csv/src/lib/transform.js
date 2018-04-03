@@ -102,7 +102,7 @@ const getLocations = record => {
     return {
       country_code: country,
       region: '',
-      nuts2: '',
+      nuts: [],
       address: record['Project address(es)'] || '',
       postal_code: record['Project postal code(s)'] || '',
       town: record['Project town(s)'] || '',

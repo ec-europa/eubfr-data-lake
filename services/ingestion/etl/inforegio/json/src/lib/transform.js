@@ -119,7 +119,7 @@ const getLocations = record => {
         locationArray.push({
           country_code: countryArray[i],
           region: '',
-          nuts2: '',
+          nuts: [],
           address: '',
           postal_code: '',
           town: '',

@@ -1,6 +1,6 @@
 import request from 'request-promise-native';
 
-export const enrichLocationNutsFromCentroid = async loc => {
+export const enrichLocationNutsFromCentroid = async (loc, precision = 0) => {
   // Use centroid to determine country_code
   const { lat, lon } = loc.centroid;
 
@@ -32,12 +32,14 @@ export const enrichLocationNutsFromCentroid = async loc => {
 
   if (results.results.length) {
     return Object.assign({}, loc, {
-      nuts: results.results.map(result => ({
-        code: result.attributes.NUTS_ID,
-        name: result.attributes.NUTS_NAME,
-        level: +result.attributes.LEVL_CODE,
-        year: result.layerName,
-      })),
+      nuts: results.results
+        .map(result => ({
+          code: result.attributes.NUTS_ID,
+          name: result.attributes.NUTS_NAME,
+          level: +result.attributes.LEVL_CODE,
+          year: result.layerName,
+        }))
+        .splice(0, precision + 1),
     });
   }
 

@@ -95,7 +95,7 @@ export default (record: Object): Project => {
     .map(country => ({
       country_code: country,
       region: '',
-      nuts2: '',
+      nuts: [],
       address: '',
       postal_code: '',
       town: '',

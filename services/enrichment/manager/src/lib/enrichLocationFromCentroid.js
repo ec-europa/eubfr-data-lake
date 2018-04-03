@@ -42,7 +42,7 @@ export const enrichLocationFromCentroid = async loc => {
     return enrichedLocation;
   }
 
-  return Promise.resolve(loc); // location not enriched
+  return loc; // location not enriched
 };
 
 export default enrichLocationFromCentroid;
