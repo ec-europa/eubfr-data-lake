@@ -78,8 +78,6 @@ Returns **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 Generates values for `project_id` field since source data misses these.
 It's needed for having separate projects in the Elasticsearch database.
 
-Depends on `getAddress` helper function.
-
 **Parameters**
 
 -   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from parsed file
@@ -98,6 +96,7 @@ Data comes from the following source fields:
 
 -   `country`
 -   `postal code`
+-   `municipality name`
 
 **Parameters**
 

@@ -88,14 +88,19 @@ const getAddress = record => {
   let address = '';
 
   const addressLoc = record.address ? record.address : '';
+
   const addressNum =
-    record['address num'] !== 's/n' && undefined ? record['address num'] : '';
+    record['address num'] !== 's/n' && record['address num']
+      ? record['address num']
+      : '';
 
   // Build address based on available information.
+  if (addressLoc) {
+    address = addressLoc;
+  }
+
   if (addressLoc && addressNum) {
     address = `${addressLoc} ${addressNum}`;
-  } else if (addressLoc) {
-    address = addressLoc;
   }
 
   return address;
@@ -105,8 +110,6 @@ const getAddress = record => {
  * Generates values for `project_id` field since source data misses these.
  * It's needed for having separate projects in the Elasticsearch database.
  *
- * Depends on `getAddress` helper function.
- *
  * @memberof Wifi4EuXlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
@@ -114,7 +117,7 @@ const getAddress = record => {
 const getProjectId = record =>
   crypto
     .createHash('md5')
-    .update(getAddress(record))
+    .update(record['municipality name'])
     .digest('hex');
 
 /**
@@ -126,6 +129,7 @@ const getProjectId = record =>
  * Data comes from the following source fields:
  * - `country`
  * - `postal code`
+ * - `municipality name`
  *
  * @memberof Wifi4EuXlsTransform
  * @param {Object} record The row received from parsed file
@@ -144,7 +148,7 @@ const getLocations = record => {
       nuts2: '',
       postal_code: postCode,
       region: '',
-      town: '',
+      town: record['municipality name'],
     },
   ];
 };

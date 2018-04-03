@@ -36,7 +36,7 @@ export default country => {
     case 'SVERIGE':
       return 'SE';
     case 'SLOVENSKO':
-      return 'sk';
+      return 'SK';
     case 'BELGIQUE-BELGIË':
       return 'BE';
     case 'ČESKÁ REPUBLIKA':
