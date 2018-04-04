@@ -60,6 +60,7 @@ export default (record: Object): Project => {
       type: record['Coordinating organisation type'] || '',
       address: record["Coordinator's address"] || '',
       region: record["Coordinator's region"] || '',
+      role: 'coordinator',
       country: record["Coordinator's country"] || '',
       website: record["Coordinator's website"] || '',
       phone: '',
@@ -82,8 +83,11 @@ export default (record: Object): Project => {
         type: record[`Partner ${i} organisation type`] || '',
         address: record[`Partner ${i} address`] || '',
         region: record[`Partner ${i} region`] || '',
+        role: 'partner',
         country: record[`Partner ${i} country`] || '',
         website: record[`Partner ${i} website`] || '',
+        phone: '',
+        email: '',
       });
     }
   }
@@ -114,19 +118,20 @@ export default (record: Object): Project => {
     (record['Activity type'] != null && record['Activity type'].split(',')) ||
     [];
 
+  // Preprocess third parties
+  const thirdPartiesArray = coordArray.concat(partnerArray);
+
   // Map the fields
   return {
     action: record.Action,
     budget: budgetObject,
     call_year: record['Call year'] || '',
-    coordinators: coordArray,
     description: record['Project Summary'] || '',
     ec_priorities: [],
     media: {
       cover_image: '',
       video: '',
     },
-    partners: partnerArray,
     programme_name: record.Programme,
     project_id: record['Project Identifier'] || '',
     project_locations: locationArray,
@@ -137,6 +142,7 @@ export default (record: Object): Project => {
     sub_programme_name: record['Sub-programme'] || '',
     success_story: record['Is Success Story'] || '',
     themes: [],
+    third_parties: thirdPartiesArray || [],
     timeframe: {
       from: formatDate(record['Start date']),
       to: formatDate(record['End date']),
