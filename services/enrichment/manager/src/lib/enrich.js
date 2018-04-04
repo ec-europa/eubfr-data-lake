@@ -28,7 +28,6 @@ export const enrich = async (record, existingRecord) => {
         if (!location.nuts.length) {
           location = await enrichLocationNutsFromCentroid(location, precision);
         }
-        debugger;
       }
 
       return location;
