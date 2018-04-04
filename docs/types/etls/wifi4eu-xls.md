@@ -148,12 +148,13 @@ Returns **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 ### getAddressNumber
 
-Returns an address number.
+Returns an address number
 
-Operations:
+Ignores the following:
 
--   remove phone numbers (items starting with + sign)
--   remove items which are string only, Pi, NR, etc.
+-   trash: na, snc, S/n, dots, dashes, and other custom means to say data is not available
+-   phone numbers,: items with more than 8 digits, in any syntax
+-   string-only values: Pi, NR, etc.
 
 **Parameters**
 

@@ -1,9 +1,10 @@
 /**
- * Returns an address number.
+ * Returns an address number
  *
- * Operations:
- * - remove phone numbers (items starting with + sign)
- * - remove items which are string only, Pi, NR, etc.
+ * Ignores the following:
+ * - trash: na, snc, S/n, dots, dashes, and other custom means to say data is not available
+ * - phone numbers,: items with more than 8 digits, in any syntax
+ * - string-only values: Pi, NR, etc.
  *
  * @memberof Wifi4EuXlsTransform
  * @param {Object} record The row received from parsed file
