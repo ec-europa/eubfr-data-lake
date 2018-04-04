@@ -43,7 +43,8 @@ Object {
   "project_id": "505ddc4503ba7bd63ea008ea40a8d769",
   "project_locations": Array [
     Object {
-      "address": "гр. Долни чифлик, пл. \\"Тича\\" №1 05142 2001",
+      "address": "гр. Долни чифлик, пл. \\"Тича\\" №1",
+      "address_number": "",
       "centroid": null,
       "country_code": "BG",
       "location": null,
@@ -54,12 +55,7 @@ Object {
     },
   ],
   "project_website": "https://www.wifi4eu.eu",
-  "related_links": Array [
-    Object {
-      "label": "",
-      "url": "",
-    },
-  ],
+  "related_links": Array [],
   "results": Object {
     "available": "",
     "result": "",

@@ -2,6 +2,7 @@
 
 import crypto from 'crypto';
 import getCountryCode from './getCountryCode';
+import getAddressNumber from './getAddressNumber';
 
 import type { Project } from '../../../../_types/Project';
 
@@ -74,39 +75,6 @@ const getBeneficieries = record => {
 };
 
 /**
- * Helper to build an address value.
- *
- * Data comes from the following source fields:
- * - `address`
- * - `address num`
- *
- * @memberof Wifi4EuXlsTransform
- * @param {Object} record The row received from parsed file
- * @returns {String} Optimistic concatenation between `address` and `address num`.
- */
-const getAddress = record => {
-  let address = '';
-
-  const addressLoc = record.address ? record.address : '';
-
-  const addressNum =
-    record['address num'] !== 's/n' && record['address num']
-      ? record['address num']
-      : '';
-
-  // Build address based on available information.
-  if (addressLoc) {
-    address = addressLoc;
-  }
-
-  if (addressLoc && addressNum) {
-    address = `${addressLoc} ${addressNum}`;
-  }
-
-  return address;
-};
-
-/**
  * Generates values for `project_id` field since source data misses these.
  * It's needed for having separate projects in the Elasticsearch database.
  *
@@ -123,10 +91,10 @@ const getProjectId = record =>
 /**
  * Preprocess `project_locations` field.
  * Depends on:
- * - `getAddress`
  * - `getCountryCode`
  *
  * Data comes from the following source fields:
+ * - `address`
  * - `country`
  * - `postal code`
  * - `municipality name`
@@ -135,23 +103,19 @@ const getProjectId = record =>
  * @param {Object} record The row received from parsed file
  * @returns {Array<Location>}
  */
-const getLocations = record => {
-  const address = getAddress(record);
-  const postCode = record['postal code'] ? record['postal code'] : '';
-
-  return [
-    {
-      address,
-      centroid: null,
-      country_code: getCountryCode(record.country),
-      location: null,
-      nuts2: '',
-      postal_code: postCode,
-      region: '',
-      town: record['municipality name'],
-    },
-  ];
-};
+const getLocations = record => [
+  {
+    address: record.address || '',
+    address_number: getAddressNumber(record),
+    centroid: null,
+    country_code: getCountryCode(record.country),
+    location: null,
+    nuts2: '',
+    postal_code: record['postal code'] || '',
+    region: '',
+    town: record['municipality name'],
+  },
+];
 
 /**
  * Preprocess `project_website` field. Data comes from `record.link`.
@@ -237,12 +201,7 @@ export default (record: Object): Project =>
     project_id: getProjectId(record),
     project_locations: getLocations(record),
     project_website: getProjectWebsite(record),
-    related_links: [
-      {
-        label: '',
-        url: '',
-      },
-    ],
+    related_links: [],
     results: {
       available: '',
       result: '',

@@ -4,6 +4,7 @@
 
 Map fields for VALOR producer, XLS file types.
 
+Mapping document: [markdown version](https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/valor/xml/mapping.md)
 Transform function: [implementation details](https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/valor/xml/src/lib/transform.js)
 
 **Parameters**

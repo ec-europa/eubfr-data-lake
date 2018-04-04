@@ -6,7 +6,7 @@
  * @returns {String} ISO ALPHA-2 code  used by i18n-iso-countries in the enrichment manager.
  */
 export default country => {
-  switch (country) {
+  switch (country.trim()) {
     case 'БЪЛГАРИЯ (BULGARIA)':
       return 'BG';
     case 'HRVATSKA':

@@ -120,6 +120,7 @@ const getLocations = record =>
       region: '',
       nuts2: '',
       address: '',
+      address_number: '',
       postal_code: '',
       town: '',
       centroid: null,

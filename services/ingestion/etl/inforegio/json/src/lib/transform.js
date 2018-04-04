@@ -124,6 +124,7 @@ const getLocations = record => {
           region: '',
           nuts2: '',
           address: '',
+          address_number: '',
           postal_code: '',
           town: '',
           location: null,
@@ -138,6 +139,7 @@ const getLocations = record => {
       region: record.Project_region,
       nuts2: record.Project_NUTS2_code,
       address: '',
+      address_number: '',
       postal_code: '',
       town: '',
       location: null,
@@ -191,6 +193,7 @@ const formatBudget = budget => {
 /**
  * Map fields for INFOREGIO producer, JSON file types
  *
+ * Mapping document: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/mapping.md|markdown version}
  * Transform function: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/json/src/lib/transform.js|implementation details}
  * @name InforegioJsonTransform
  * @param {Object} record Piece of data to transform before going to harmonized storage.

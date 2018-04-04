@@ -108,6 +108,7 @@ const getLocations = record => {
       region: '',
       nuts2: '',
       address: record['Project address(es)'] || '',
+      address_number: '',
       postal_code: record['Project postal code(s)'] || '',
       town: record['Project town(s)'] || '',
       centroid: hasCoordinates

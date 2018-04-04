@@ -4,6 +4,7 @@
 
 Map fields for INFOREGIO producer, XML file types
 
+Mapping document: [markdown version](https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/mapping.md)
 Transform function: [implementation details](https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/xml/src/lib/transform.js)
 
 **Parameters**

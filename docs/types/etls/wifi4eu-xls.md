@@ -58,21 +58,6 @@ Data comes from the following source fields:
 
 Returns **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
-### getAddress
-
-Helper to build an address value.
-
-Data comes from the following source fields:
-
--   `address`
--   `address num`
-
-**Parameters**
-
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from parsed file
-
-Returns **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Optimistic concatenation between `address` and `address num`.
-
 ### getProjectId
 
 Generates values for `project_id` field since source data misses these.
@@ -89,11 +74,11 @@ Returns **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 Preprocess `project_locations` field.
 Depends on:
 
--   `getAddress`
 -   `getCountryCode`
 
 Data comes from the following source fields:
 
+-   `address`
 -   `country`
 -   `postal code`
 -   `municipality name`
@@ -160,3 +145,18 @@ Retrieve a country code based on non-standartized input values.
 -   `country` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Country in the form of 'БЪЛГАРИЯ (BULGARIA)', 'ΕΛΛΑΔΑ (ELLADA)' and similar.
 
 Returns **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** ISO ALPHA-2 code  used by i18n-iso-countries in the enrichment manager.
+
+### getAddressNumber
+
+Returns an address number.
+
+Operations:
+
+-   remove phone numbers (items starting with + sign)
+-   remove items which are string only, Pi, NR, etc.
+
+**Parameters**
+
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from parsed file
+
+Returns **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The address number

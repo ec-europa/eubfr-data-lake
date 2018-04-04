@@ -44,6 +44,7 @@ Object {
   "project_locations": Array [
     Object {
       "address": "",
+      "address_number": "",
       "centroid": null,
       "country_code": "NL",
       "location": null,
@@ -54,6 +55,7 @@ Object {
     },
     Object {
       "address": "",
+      "address_number": "",
       "centroid": null,
       "country_code": "ES",
       "location": null,
@@ -64,6 +66,7 @@ Object {
     },
     Object {
       "address": "",
+      "address_number": "",
       "centroid": null,
       "country_code": "IT",
       "location": null,
@@ -74,6 +77,7 @@ Object {
     },
     Object {
       "address": "",
+      "address_number": "",
       "centroid": null,
       "country_code": "BA",
       "location": null,
@@ -84,6 +88,7 @@ Object {
     },
     Object {
       "address": "",
+      "address_number": "",
       "centroid": null,
       "country_code": "PL",
       "location": null,
@@ -94,6 +99,7 @@ Object {
     },
     Object {
       "address": "",
+      "address_number": "",
       "centroid": null,
       "country_code": "UK",
       "location": null,
@@ -236,6 +242,7 @@ Object {
   "project_locations": Array [
     Object {
       "address": "",
+      "address_number": "",
       "centroid": null,
       "country_code": "NL",
       "location": null,
@@ -246,6 +253,7 @@ Object {
     },
     Object {
       "address": "",
+      "address_number": "",
       "centroid": null,
       "country_code": "ES",
       "location": null,
@@ -256,6 +264,7 @@ Object {
     },
     Object {
       "address": "",
+      "address_number": "",
       "centroid": null,
       "country_code": "IT",
       "location": null,
@@ -266,6 +275,7 @@ Object {
     },
     Object {
       "address": "",
+      "address_number": "",
       "centroid": null,
       "country_code": "BA",
       "location": null,
@@ -276,6 +286,7 @@ Object {
     },
     Object {
       "address": "",
+      "address_number": "",
       "centroid": null,
       "country_code": "PL",
       "location": null,
@@ -286,6 +297,7 @@ Object {
     },
     Object {
       "address": "",
+      "address_number": "",
       "centroid": null,
       "country_code": "UK",
       "location": null,

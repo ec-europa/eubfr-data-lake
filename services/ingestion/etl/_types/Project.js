@@ -73,6 +73,7 @@ type Coordinates = {
  */
 type Location = {
   address: string,
+  address_number: string,
   centroid: Coordinates | null,
   country_code: string,
   // If nothing else, provide null in transform function for this field.

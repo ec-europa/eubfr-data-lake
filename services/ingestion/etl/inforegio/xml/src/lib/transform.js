@@ -153,6 +153,7 @@ const getLocations = record => {
           region: '',
           nuts2: '',
           address: '',
+          address_number: '',
           postal_code: '',
           town: '',
           location: null,
@@ -167,6 +168,7 @@ const getLocations = record => {
       region: checkData(record.Project_region),
       nuts2: checkData(record.Project_NUTS2_code),
       address: '',
+      address_number: '',
       postal_code: '',
       town: '',
       location: null,
@@ -233,6 +235,7 @@ const getBeneficiaries = record =>
 /**
  * Map fields for INFOREGIO producer, XML file types
  *
+ * Mapping document: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/mapping.md|markdown version}
  * Transform function: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/xml/src/lib/transform.js|implementation details}
  * @name inforegioXmlTransform
  * @param {Object} record The row received from parsed file
