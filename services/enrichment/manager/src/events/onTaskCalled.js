@@ -1,6 +1,5 @@
 import elasticsearch from 'elasticsearch';
 import connectionClass from 'http-aws-es';
-import { needsEnrichment } from '../lib/checks';
 import { computeId } from '../lib/computeId';
 import { enrich } from '../lib/enrich';
 
@@ -10,7 +9,7 @@ export const handler = async (event, context, callback) => {
   /**
    * 1. Pre-check if the document needs to be enriched
    */
-  if (!needsEnrichment(record)) {
+  if (record.enriched) {
     return callback(null, 'nothing to do');
   }
 
