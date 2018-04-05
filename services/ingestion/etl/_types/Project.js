@@ -43,7 +43,7 @@ type Budget = {
 };
 
 /**
- * Describes field `project.third_party`.
+ * Describes field `project.third_parties`.
  * @type {ThirdParty}
  */
 type ThirdParty = {

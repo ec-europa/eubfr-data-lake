@@ -4,11 +4,12 @@
 
 Map fields for INFOREGIO producer, XML file types
 
+Mapping document: [markdown version](https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/mapping.md)
 Transform function: [implementation details](https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/xml/src/lib/transform.js)
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from parsed file
 
 Returns **Project** JSON matching the type fields
 
@@ -58,7 +59,7 @@ Input fields taken from the `record` are:
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from parsed file
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The address as consumed by {Partner}
 
@@ -89,7 +90,7 @@ Input fields taken from the `record` are:
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from parsed file
 
 **Examples**
 
@@ -112,7 +113,7 @@ Input fields taken from the `record` are:
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from parsed file
 
 Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of {Location}
 
@@ -126,7 +127,7 @@ Input fields taken from the `record` are:
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from parsed file
 
 **Examples**
 
@@ -137,9 +138,9 @@ output => ['foo', 'bar', 'baz']
 
 Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of values for themes
 
-### getPartners
+### getBeneficiaries
 
-Get a list of a single {Partner}
+Get a list of a single {Beneficiary}
 Depends on getAddress()
 
 Input fields taken from the `record` are:
@@ -151,4 +152,4 @@ Input fields taken from the `record` are:
 
 -   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of a single {Partner}
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of a single {Beneficiary}

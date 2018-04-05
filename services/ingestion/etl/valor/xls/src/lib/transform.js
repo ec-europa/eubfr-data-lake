@@ -24,9 +24,10 @@ const formatDate = date => {
 /**
  * Map fields for VALOR producer, XLS file types.
  *
+ * Mapping document: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/valor/xml/mapping.md|markdown version}
  * Transform function: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/valor/xml/src/lib/transform.js|implementation details}
  * @name valorXlsTransform
- * @param {Object} record The row received from harmonized storage.
+ * @param {Object} record Piece of data to transform before going to harmonized storage.
  * @returns {Project} JSON matching the type fields.
  */
 export default (record: Object): Project => {
