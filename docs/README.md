@@ -6,6 +6,7 @@
 * [Architecture](./ARCHITECTURE.md)
 * [How to test](./HOW_TO_TEST.md)
 * [Pushing data](./PUSHING_DATA.md)
+* [Data Availability](./DATA_AVAILABILITY.md)
 
 ## Cookbook
 
