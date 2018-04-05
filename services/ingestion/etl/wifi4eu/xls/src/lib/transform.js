@@ -2,7 +2,7 @@
 
 import crypto from 'crypto';
 import getCountryCode from './getCountryCode';
-import getAddressNumber from './getAddressNumber';
+import getAddress from './getAddress';
 
 import type { Project } from '../../../../_types/Project';
 
@@ -105,8 +105,7 @@ const getProjectId = record =>
  */
 const getLocations = record => [
   {
-    address: record.address || '',
-    address_number: getAddressNumber(record),
+    address: getAddress(record),
     centroid: null,
     country_code: getCountryCode(record.country),
     location: null,

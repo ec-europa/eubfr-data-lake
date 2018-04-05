@@ -123,12 +123,11 @@ Type: {lat: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference
 
 Describes field `project.project_locations`.
 
-Type: {address: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), address_number: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), centroid: ([Coordinates](#coordinates) | null), country_code: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), location: (GeoJSON | null), nuts2: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), postal_code: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), region: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), town: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)}
+Type: {address: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), centroid: ([Coordinates](#coordinates) | null), country_code: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), location: (GeoJSON | null), nuts2: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), postal_code: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), region: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String), town: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)}
 
 **Properties**
 
 -   `address` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
--   `address_number` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `centroid` **([Coordinates](#coordinates) | null)** 
 -   `country_code` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `location` **(GeoJSON | null)** 

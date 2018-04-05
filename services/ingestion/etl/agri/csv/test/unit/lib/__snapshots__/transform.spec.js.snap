@@ -50,7 +50,6 @@ Object {
   "project_locations": Array [
     Object {
       "address": "",
-      "address_number": "",
       "centroid": Object {
         "lat": 48.211312,
         "lon": 16.367315,
@@ -70,7 +69,6 @@ Object {
     },
     Object {
       "address": "",
-      "address_number": "",
       "centroid": Object {
         "lat": 45.803508,
         "lon": 16.017459,
@@ -90,7 +88,6 @@ Object {
     },
     Object {
       "address": "",
-      "address_number": "",
       "centroid": Object {
         "lat": 49.449922,
         "lon": 11.10347,
@@ -110,7 +107,6 @@ Object {
     },
     Object {
       "address": "",
-      "address_number": "",
       "centroid": Object {
         "lat": 48.143047,
         "lon": 17.12426,
@@ -130,7 +126,6 @@ Object {
     },
     Object {
       "address": "",
-      "address_number": "",
       "centroid": Object {
         "lat": 46.048183,
         "lon": 14.501456,
@@ -314,7 +309,6 @@ Object {
 exports[`DG AGRI CSV transformer Project location information is correctly mapped 1`] = `
 Object {
   "address": "",
-  "address_number": "",
   "centroid": Object {
     "lat": 48.211312,
     "lon": 16.367315,
@@ -378,7 +372,6 @@ Object {
   "project_locations": Array [
     Object {
       "address": "",
-      "address_number": "",
       "centroid": Object {
         "lat": 42.73806663,
         "lon": 23.40014509,

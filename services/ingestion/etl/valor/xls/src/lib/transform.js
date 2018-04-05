@@ -102,7 +102,6 @@ export default (record: Object): Project => {
       region: '',
       nuts2: '',
       address: '',
-      address_number: '',
       postal_code: '',
       town: '',
       centroid: null,

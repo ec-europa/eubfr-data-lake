@@ -146,13 +146,13 @@ Retrieve a country code based on non-standartized input values.
 
 Returns **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** ISO ALPHA-2 code  used by i18n-iso-countries in the enrichment manager.
 
-### getAddressNumber
+### getAddress
 
-Returns an address number
+Returns an address of the form of street + street number
 
-Ignores the following:
+For address/street number, ignores the following:
 
--   trash: na, snc, S/n, dots, dashes, and other custom means to say data is not available
+-   trashStrings: na, snc, S/n, dots, dashes, and other custom means to say data is not available
 -   phone numbers,: items with more than 8 digits, in any syntax
 -   string-only values: Pi, NR, etc.
 
@@ -160,4 +160,4 @@ Ignores the following:
 
 -   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from parsed file
 
-Returns **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The address number
+Returns **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The address
