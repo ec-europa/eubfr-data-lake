@@ -1,6 +1,7 @@
 // @flow
 
 import type { Project } from '../../../../_types/Project';
+import getCountryCode from './getCountryCode';
 
 /**
  * Preprocess coordinators
@@ -115,19 +116,16 @@ const getLocations = record =>
   record['Participating countries']
     .split(',')
     .filter(loc => loc)
-    .map(country => {
-      const countryCode = country === 'UK' ? 'GB' : country;
-      return {
-        country_code: countryCode,
-        region: '',
-        nuts: [],
-        address: '',
-        postal_code: '',
-        town: '',
-        centroid: null,
-        location: null,
-      };
-    });
+    .map(country => ({
+      country_code: getCountryCode(country),
+      region: '',
+      nuts: [],
+      address: '',
+      postal_code: '',
+      town: '',
+      centroid: null,
+      location: null,
+    }));
 
 /**
  *
