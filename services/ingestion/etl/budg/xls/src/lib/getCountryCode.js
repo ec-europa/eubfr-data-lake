@@ -1,11 +1,11 @@
 // Helper to get country code based on few exceptions
 export default countryCode => {
   switch (countryCode.trim().toUpperCase()) {
-    case 'uk':
+    case 'UK':
       return 'GB';
 
     // Greece
-    case 'el':
+    case 'EL':
       return 'GR';
 
     default:
