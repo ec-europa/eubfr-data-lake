@@ -41,7 +41,6 @@ Object {
   "ec_priorities": Array [
     "Jobs, Growth and Investment",
   ],
-  "enriched": false,
   "media": Object {
     "cover_image": "https://ec.europa.eu/budget/euprojects/sites/euprojects/files/at_cegc_985x270_0.jpg",
     "video": "",
@@ -56,6 +55,7 @@ Object {
         "lon": 16.367315,
       },
       "country_code": "AT",
+      "enriched": false,
       "location": Object {
         "coordinates": Array [
           16.367315,
@@ -75,6 +75,7 @@ Object {
         "lon": 16.017459,
       },
       "country_code": "HR",
+      "enriched": false,
       "location": Object {
         "coordinates": Array [
           16.017459,
@@ -94,6 +95,7 @@ Object {
         "lon": 11.10347,
       },
       "country_code": "DE",
+      "enriched": false,
       "location": Object {
         "coordinates": Array [
           11.10347,
@@ -113,6 +115,7 @@ Object {
         "lon": 17.12426,
       },
       "country_code": "SK",
+      "enriched": false,
       "location": Object {
         "coordinates": Array [
           17.12426,
@@ -132,6 +135,7 @@ Object {
         "lon": 14.501456,
       },
       "country_code": "SI",
+      "enriched": false,
       "location": Object {
         "coordinates": Array [
           14.501456,
@@ -315,6 +319,7 @@ Object {
     "lon": 16.367315,
   },
   "country_code": "AT",
+  "enriched": false,
   "location": Object {
     "coordinates": Array [
       16.367315,
@@ -364,7 +369,6 @@ Object {
   "call_year": "",
   "description": "",
   "ec_priorities": Array [],
-  "enriched": false,
   "media": Object {
     "cover_image": "",
     "video": "",
@@ -379,6 +383,7 @@ Object {
         "lon": 23.40014509,
       },
       "country_code": "",
+      "enriched": false,
       "location": Object {
         "coordinates": Array [
           23.40014509,

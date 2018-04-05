@@ -87,6 +87,7 @@ type Location = {
   address: string,
   centroid: Coordinates | null,
   country_code: string,
+  enriched: boolean,
   // If nothing else, provide null in transform function for this field.
   // Never null project_locations field which is typed on ES level.
   location: GeoJSON | null,
@@ -142,7 +143,6 @@ export type Project = {
   call_year: string,
   description: string,
   ec_priorities: Array<string>,
-  enriched: boolean,
   media: Media,
   programme_name: string,
   project_id: string,

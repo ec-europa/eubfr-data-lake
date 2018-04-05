@@ -116,6 +116,7 @@ const getLocations = record => {
             lon: parseFloat(longArray[index]) || 0,
           }
         : null,
+      enriched: false,
       location: hasCoordinates
         ? {
             type: 'Point',
@@ -248,7 +249,6 @@ export default (record: Object): Project => {
     description: record['Project description'] || '',
     ec_priorities:
       record['EC’s priorities'].split(';').filter(priority => priority) || [],
-    enriched: false,
     media: {
       cover_image: record.Visual || '',
       video: record['Link to a video'] || '',

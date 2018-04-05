@@ -98,14 +98,15 @@ export default (record: Object): Project => {
     .split(',')
     .filter(loc => loc)
     .map(country => ({
-      country_code: country,
-      region: '',
-      nuts: [],
       address: '',
-      postal_code: '',
-      town: '',
       centroid: null,
+      country_code: country,
+      enriched: false,
       location: null,
+      nuts: [],
+      postal_code: '',
+      region: '',
+      town: '',
     }));
 
   // Preprocess results
@@ -129,7 +130,6 @@ export default (record: Object): Project => {
     call_year: record['Call year'] || '',
     description: record['Project Summary'] || '',
     ec_priorities: [],
-    enriched: false,
     media: {
       cover_image: '',
       video: '',

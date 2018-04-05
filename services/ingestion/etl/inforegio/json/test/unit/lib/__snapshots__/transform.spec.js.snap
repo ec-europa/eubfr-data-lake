@@ -37,7 +37,6 @@ Object {
   "call_year": "",
   "description": "<p>An extension to a boat docked on the river Danube has proved a hugely popular entertainment and cultural hub. A38, a former Ukrainian freighter ship, was initially transformed into a multi-functional space in 2003. With ERDF-funding, an adjacent second unit was constructed in 2010 and has been a resounding success.</p>",
   "ec_priorities": Array [],
-  "enriched": false,
   "media": Object {
     "cover_image": "",
     "video": "",
@@ -50,6 +49,7 @@ Object {
       "address": "",
       "centroid": null,
       "country_code": "HU",
+      "enriched": false,
       "location": null,
       "nuts": Array [
         Object {

@@ -117,14 +117,15 @@ const getLocations = record =>
     .split(',')
     .filter(loc => loc)
     .map(country => ({
-      country_code: getCountryCode(country),
-      region: '',
-      nuts: [],
       address: '',
-      postal_code: '',
-      town: '',
       centroid: null,
+      country_code: getCountryCode(country),
+      enriched: false,
       location: null,
+      nuts: [],
+      postal_code: '',
+      region: '',
+      town: '',
     }));
 
 /**
@@ -202,7 +203,6 @@ export default (record: Object): Project => {
     call_year: record['Call year'],
     description: record['Project Summary'],
     ec_priorities: [],
-    enriched: false,
     media: {
       cover_image: '',
       video: '',

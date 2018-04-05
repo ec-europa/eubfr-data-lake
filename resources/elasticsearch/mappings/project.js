@@ -35,7 +35,6 @@ module.exports = () => ({
         created_by: { type: 'keyword' },
         description: { type: 'text' },
         ec_priorities: textWithKeyword,
-        enriched: 'boolean',
         last_modified: { type: 'date' },
         media: {
           properties: {
@@ -52,6 +51,7 @@ module.exports = () => ({
             address: { type: 'text' },
             centroid: { type: 'geo_point' },
             country_code: { type: 'keyword' },
+            enriched: { type: 'boolean' },
             location: { type: 'geo_shape' },
             nuts: {
               properties: {

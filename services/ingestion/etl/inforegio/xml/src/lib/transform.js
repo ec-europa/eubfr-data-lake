@@ -149,14 +149,15 @@ const getLocations = record => {
     for (let i = 0; i < countryArray.length; i += 1) {
       if (previousCountries.indexOf(countryArray[i] === -1)) {
         locationArray.push({
-          country_code: countryArray[i],
-          region: '',
-          nuts: [],
           address: '',
-          postal_code: '',
-          town: '',
-          location: null,
           centroid: null,
+          country_code: countryArray[i],
+          enriched: false,
+          location: null,
+          nuts: [],
+          postal_code: '',
+          region: '',
+          town: '',
         });
         previousCountries.push(countryArray[i]);
       }
@@ -164,6 +165,7 @@ const getLocations = record => {
   } else {
     locationArray.push({
       country_code: checkData(record.Project_country),
+      enriched: false,
       region: checkData(record.Project_region),
       nuts: [
         {
@@ -286,7 +288,6 @@ export default (record: Object): Project => {
     call_year: '',
     description: checkData(record.quote),
     ec_priorities: [],
-    enriched: false,
     media: {
       cover_image: '',
       video: '',
