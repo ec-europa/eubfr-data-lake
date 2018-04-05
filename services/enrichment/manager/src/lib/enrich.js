@@ -1,8 +1,6 @@
 import { mergeRecords } from './merge';
-import { precisionHelper } from './precisionHelper';
 import { enrichLocationFromAddress } from './enrichLocationFromAddress';
 import { enrichLocationFromCentroid } from './enrichLocationFromCentroid';
-import { enrichLocationNutsFromCentroid } from './enrichLocationNutsFromCentroid';
 
 export const enrich = async (record, existingRecord) => {
   const enrichedRecord = mergeRecords(record, existingRecord);
@@ -13,24 +11,15 @@ export const enrich = async (record, existingRecord) => {
         return null;
       }
 
-      let location = Object.assign({}, loc);
-      let precision = precisionHelper(loc);
-
-      if (!location.centroid) {
-        location = await enrichLocationFromAddress(location);
+      if (!loc.centroid && loc.country_code) {
+        // Centroid is empty but country code is provided
+        return enrichLocationFromAddress(loc);
+      } else if (!loc.country_code && loc.centroid) {
+        // Country code is empty but centroid is provided
+        return enrichLocationFromCentroid(loc);
       }
 
-      if (location.centroid) {
-        if (!location.country_code) {
-          location = await enrichLocationFromCentroid(location);
-        }
-
-        if (!location.nuts.length) {
-          location = await enrichLocationNutsFromCentroid(location, precision);
-        }
-      }
-
-      return location;
+      return loc;
     })
   )).filter(loc => loc);
 

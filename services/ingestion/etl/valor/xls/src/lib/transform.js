@@ -129,6 +129,7 @@ export default (record: Object): Project => {
     call_year: record['Call year'] || '',
     description: record['Project Summary'] || '',
     ec_priorities: [],
+    enriched: false,
     media: {
       cover_image: '',
       video: '',

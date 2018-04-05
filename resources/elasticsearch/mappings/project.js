@@ -35,6 +35,7 @@ module.exports = () => ({
         created_by: { type: 'keyword' },
         description: { type: 'text' },
         ec_priorities: textWithKeyword,
+        enriched: 'boolean',
         last_modified: { type: 'date' },
         media: {
           properties: {

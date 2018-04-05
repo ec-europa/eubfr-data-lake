@@ -10,16 +10,10 @@ export const enrichLocationFromAddress = async loc => {
     country,
   };
 
-  // If the town/postal_code/region have been provided, use them
+  // If the town has been provided, use it
   if (loc.town) {
     qs.city = loc.town;
   }
-  // if (loc.postal_code) {
-  //   qs.postalcode = loc.postal_code;
-  // }
-  // if (loc.region) {
-  //   qs.state = loc.region;
-  // }
 
   const url = 'http://europa.eu/webtools/rest/gisco/nominatim/search.php';
 

@@ -75,7 +75,8 @@ type Nuts = {
   code: string,
   name: string,
   level: number,
-  year: number,
+  // Empty string if nothing
+  year: number | string,
 };
 
 /**
@@ -141,6 +142,7 @@ export type Project = {
   call_year: string,
   description: string,
   ec_priorities: Array<string>,
+  enriched: boolean,
   media: Media,
   programme_name: string,
   project_id: string,

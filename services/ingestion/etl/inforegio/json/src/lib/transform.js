@@ -136,7 +136,14 @@ const getLocations = record => {
     locationArray.push({
       country_code: record.Project_country,
       region: record.Project_region,
-      nuts2: record.Project_NUTS2_code,
+      nuts: [
+        {
+          code: record.Project_NUTS2_code,
+          name: '',
+          level: 2,
+          year: '',
+        },
+      ],
       address: '',
       postal_code: '',
       town: '',
@@ -236,6 +243,7 @@ export default (record: Object): Project => {
     call_year: '',
     description: record.quote,
     ec_priorities: [],
+    enriched: false,
     media: {
       cover_image: '',
       video: '',

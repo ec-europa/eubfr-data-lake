@@ -109,7 +109,7 @@ const getLocations = record => [
     centroid: null,
     country_code: getCountryCode(record.country),
     location: null,
-    nuts2: '',
+    nuts: [],
     postal_code: record['postal code'] || '',
     region: '',
     town: record['municipality name'],
@@ -191,6 +191,7 @@ export default (record: Object): Project =>
     call_year: getCallYear(record),
     description: getProjectDescription(record),
     ec_priorities: [],
+    enriched: false,
     media: {
       cover_image: '',
       video: '',

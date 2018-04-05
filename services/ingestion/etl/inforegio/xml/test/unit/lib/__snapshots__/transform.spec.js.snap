@@ -35,6 +35,7 @@ Object {
   "call_year": "",
   "description": "The colour of the sky never had much effect on the irksome rail trip between Greece's two principal cities of Athens and Thessaloniki: passengers had to wait for hours since there was only one set of tracks for trains travelling in both directions. Now all this has changed thanks to a huge programme carried out with the help of the European Union.",
   "ec_priorities": Array [],
+  "enriched": false,
   "media": Object {
     "cover_image": "",
     "video": "",
@@ -48,7 +49,14 @@ Object {
       "centroid": null,
       "country_code": "EL",
       "location": null,
-      "nuts2": "EL0",
+      "nuts": Array [
+        Object {
+          "code": "EL0",
+          "level": 2,
+          "name": "",
+          "year": "",
+        },
+      ],
       "postal_code": "",
       "region": "GREECE",
       "town": "",
