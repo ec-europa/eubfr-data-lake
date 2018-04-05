@@ -7,11 +7,11 @@ Below is a table with a list of producers and the data they provide (`×` marks 
 | AGRI      | .csv   |     | [sample](#agri1)      | ×       | ×      | ×           | ×        | ×      |      | ×        |
 | BUDG      | .xls   |     | [sample](#budg1)      | ×       | ×      |             |          | ×      |      |          |
 | INFOREGIO | .json  |     | [sample](#inforegio1) | ×       | ×      |             |          |        | ×    |          |
-| INFOREGIO | .xls   |     | [sample](#inforegio2) | ×       |        | ×           | ×        | ×      |      | ×        |
+| INFOREGIO | .xml   |     | [sample](#inforegio2) | ×       | ×      |             |          |        | ×    |          |
 | VALOR     | .xls   |     | [sample](#valor1)     | ×       | ×      |             |          | ×      |      |          |
 | WIFI4EU   | .xls   |     | [sample](#wifi4eu1)   | ×       |        | ×           | ×        | ×      |      |          |
 
-## Sample data and their exceptions
+## Sample data
 
 ### <a name="agri1"></a>1. AGRI (.csv)
 
@@ -23,18 +23,6 @@ Below is a table with a list of producers and the data they provide (`×` marks 
   "Project country(ies)": "EE",
   "Project location latitude": "58.374614000000",
   "Project location longitude": "26.728486000000"
-}
-```
-
-exceptions: multiple countries
-
-```json
-{
-  "Project country(ies)": "FR;DE;DK;SE;BE;NL;UK;IT",
-  "Project location latitude":
-    "51.512323000000;50.835494000000;55.680346000000;48.861548000000;41.898743000000;52.081973000000;59.332504000000;52.516235000000",
-  "Project location longitude":
-    "-0.127697000000;4.361198000000;12.563584000000;2.350989000000;12.494792000000;4.304030000000;18.061970000000;13.298101000000"
 }
 ```
 
@@ -62,30 +50,13 @@ exceptions: multiple countries
 }
 ```
 
-### <a name="inforegio2"></a>4. INFOREGIO (.xls)
+### <a name="inforegio2"></a>4. INFOREGIO (.xml)
 
 ```json
 {
-  "Project address(es)": "Metropolitan JSC, 121 Kniaz Boris І str.",
-  "Project postal code(s)": "BG-1000",
-  "Project town(s)": "Sofia",
-  "Project country(ies)": "BG",
-  "Project latitude(s)": "42.73806663",
-  "Project longitude(s)": "23.40014509"
-}
-```
-
-exceptions: multiple countries
-
-```json
-{
-  "Project address(es)":
-    "AXEGA (Axencia Galega de Emerxencias), Roma, 25/27-1º",
-  "Project postal code(s)": "15703",
-  "Project town(s)": "Santiago de Compostella",
-  "Project country(ies)": "ES;ES;PT",
-  "Project latitude(s)": "40.45834289999999",
-  "Project longitude(s)": "-3.6893450999999686"
+  "Project_region": "Kujawsko-Pomorskie",
+  "Project_NUTS2_code": "PL61",
+  "Project_country": "PL"
 }
 ```
 
