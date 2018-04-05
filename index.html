@@ -388,6 +388,93 @@
                 
                 </li>
               
+                
+                <li class="ecl-link-block__item">
+                  <a href="#wifi4euxlstransform"
+                     class="ecl-link ecl-link--standalone ecl-link-block__link">
+                    Wifi4EuXlsTransform
+                  </a>
+                
+                  
+                  <ul class="ecl-list">
+                    
+                      <li><a
+                        href="#wifi4euxlstransformgetbudget"
+                        class="ecl-link pre-open">
+                        getBudget
+                      </a></li>
+                    
+                      <li><a
+                        href="#wifi4euxlstransformgetcallyear"
+                        class="ecl-link pre-open">
+                        getCallYear
+                      </a></li>
+                    
+                      <li><a
+                        href="#wifi4euxlstransformgetprojectdescription"
+                        class="ecl-link pre-open">
+                        getProjectDescription
+                      </a></li>
+                    
+                      <li><a
+                        href="#wifi4euxlstransformgetbeneficieries"
+                        class="ecl-link pre-open">
+                        getBeneficieries
+                      </a></li>
+                    
+                      <li><a
+                        href="#wifi4euxlstransformgetprojectid"
+                        class="ecl-link pre-open">
+                        getProjectId
+                      </a></li>
+                    
+                      <li><a
+                        href="#wifi4euxlstransformgetlocations"
+                        class="ecl-link pre-open">
+                        getLocations
+                      </a></li>
+                    
+                      <li><a
+                        href="#wifi4euxlstransformgetprojectwebsite"
+                        class="ecl-link pre-open">
+                        getProjectWebsite
+                      </a></li>
+                    
+                      <li><a
+                        href="#wifi4euxlstransformformatdate"
+                        class="ecl-link pre-open">
+                        formatDate
+                      </a></li>
+                    
+                      <li><a
+                        href="#wifi4euxlstransformgetprojecttimeframe"
+                        class="ecl-link pre-open">
+                        getProjectTimeframe
+                      </a></li>
+                    
+                      <li><a
+                        href="#wifi4euxlstransformgetprojecttitle"
+                        class="ecl-link pre-open">
+                        getProjectTitle
+                      </a></li>
+                    
+                      <li><a
+                        href="#wifi4euxlstransformgetcountrycode"
+                        class="ecl-link pre-open">
+                        getCountryCode
+                      </a></li>
+                    
+                      <li><a
+                        href="#wifi4euxlstransformgetaddress"
+                        class="ecl-link pre-open">
+                        getAddress
+                      </a></li>
+                    
+                    </ul>
+                  
+                
+                </li>
+              
             </ul>
           </div>
         </aside>
@@ -567,7 +654,7 @@
     
   
 
-  <p>Describes field <code>project.third_party</code>.</p>
+  <p>Describes field <code>project.third_parties</code>.</p>
 
 
   
@@ -1284,7 +1371,7 @@
       <ul class="ecl-list">
       
         <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
-	        The row received from harmonized storage.
+	        Piece of data to transform before going to harmonized storage.
 
           
         </li>
@@ -1339,7 +1426,7 @@
       <ul class="ecl-list">
       
         <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
-	        The row received from harmonized storage
+	        The row received from parsed file
 
           
         </li>
@@ -1408,7 +1495,7 @@ output =&gt; [<span class="hljs-string">"Research &amp; innovation"</span>, <spa
       <ul class="ecl-list">
       
         <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
-	        The row received from harmonized storage
+	        The row received from parsed file
 
           
         </li>
@@ -1477,7 +1564,7 @@ output =&gt; [<span class="hljs-string">"Eva Maria Plunger (VERBUND AG)"</span>,
       <ul class="ecl-list">
       
         <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
-	        The row received from harmonized storage
+	        The row received from parsed file
 
           
         </li>
@@ -1555,7 +1642,7 @@ output =&gt; [<span class="hljs-string">"foo"</span>, <span class="hljs-string">
       <ul class="ecl-list">
       
         <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
-	        The row received from harmonized storage
+	        The row received from parsed file
 
           
         </li>
@@ -1618,7 +1705,7 @@ output =&gt; [<span class="hljs-string">"foo"</span>, <span class="hljs-string">
       <ul class="ecl-list">
       
         <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
-	        The row received from harmonized storage
+	        The row received from parsed file
 
           
         </li>
@@ -1772,7 +1859,7 @@ output =&gt; <span class="hljs-string">"2013-12-31T23:00:00.000Z"</span></pre>
       <ul class="ecl-list">
       
         <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
-	        The row received from harmonized storage.
+	        Piece of data to transform before going to harmonized storage.
 
           
         </li>
@@ -2036,7 +2123,7 @@ output =&gt; <span class="hljs-string">"2014-10-09T00:00:00.000Z"</span></pre>
       <ul class="ecl-list">
       
         <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
-	        The row received from harmonized storage
+	        The row received from parsed file
 
           
         </li>
@@ -2167,7 +2254,8 @@ output =&gt; [<span class="hljs-string">"foo"</span>, <span class="hljs-string">
   
 
   <p>Map fields for INFOREGIO producer, JSON file types</p>
-<p>Transform function: <a href="https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/json/src/lib/transform.js">implementation details</a></p>
+<p>Mapping document: <a href="https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/mapping.md">markdown version</a>
+Transform function: <a href="https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/json/src/lib/transform.js">implementation details</a></p>
 
 
   
@@ -2185,7 +2273,7 @@ output =&gt; [<span class="hljs-string">"foo"</span>, <span class="hljs-string">
       <ul class="ecl-list">
       
         <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
-	        The row received from harmonized storage.
+	        Piece of data to transform before going to harmonized storage.
 
           
         </li>
@@ -2241,7 +2329,7 @@ output =&gt; [<span class="hljs-string">"foo"</span>, <span class="hljs-string">
       <ul class="ecl-list">
       
         <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
-	        The row received from harmonized storage
+	        The row received from parsed file
 
           
         </li>
@@ -2383,7 +2471,7 @@ output =&gt; <span class="hljs-string">"2009-01-01T00:00:00.000Z"</span></pre>
       <ul class="ecl-list">
       
         <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
-	        The row received from harmonized storage
+	        The row received from parsed file
 
           
         </li>
@@ -2514,7 +2602,7 @@ output =&gt; <span class="hljs-string">"2009-01-01T00:00:00.000Z"</span></pre>
       <ul class="ecl-list">
       
         <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
-	        The row received from harmonized storage
+	        The row received from parsed file
 
           
         </li>
@@ -2580,7 +2668,7 @@ output =&gt; <span class="hljs-string">"2009-01-01T00:00:00.000Z"</span></pre>
       <ul class="ecl-list">
       
         <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
-	        The row received from harmonized storage
+	        The row received from parsed file
 
           
         </li>
@@ -2698,7 +2786,8 @@ output =&gt; <span class="hljs-string">"2009-01-01T00:00:00.000Z"</span></pre>
   
 
   <p>Map fields for INFOREGIO producer, XML file types</p>
-<p>Transform function: <a href="https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/xml/src/lib/transform.js">implementation details</a></p>
+<p>Mapping document: <a href="https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/mapping.md">markdown version</a>
+Transform function: <a href="https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/xml/src/lib/transform.js">implementation details</a></p>
 
 
   
@@ -2716,7 +2805,7 @@ output =&gt; <span class="hljs-string">"2009-01-01T00:00:00.000Z"</span></pre>
       <ul class="ecl-list">
       
         <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
-	        The row received from harmonized storage
+	        The row received from parsed file
 
           
         </li>
@@ -2913,7 +3002,7 @@ output =&gt; <span class="hljs-string">'2018-02-02T00:00:00.000Z'</span></pre>
       <ul class="ecl-list">
       
         <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
-	        The row received from harmonized storage
+	        The row received from parsed file
 
           
         </li>
@@ -3046,7 +3135,7 @@ output =&gt; <span class="hljs-string">"329000000"</span></pre>
       <ul class="ecl-list">
       
         <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
-	        The row received from harmonized storage
+	        The row received from parsed file
 
           
         </li>
@@ -3119,7 +3208,7 @@ output =&gt; [<span class="hljs-string">'foo'</span>, <span class="hljs-string">
       <ul class="ecl-list">
       
         <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
-	        The row received from harmonized storage
+	        The row received from parsed file
 
           
         </li>
@@ -3183,7 +3272,7 @@ output =&gt; [<span class="hljs-string">'foo'</span>, <span class="hljs-string">
       <ul class="ecl-list">
       
         <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
-	        The row received from harmonized storage
+	        The row received from parsed file
 
           
         </li>
@@ -3314,7 +3403,8 @@ Depends on getAddress()</p>
   
 
   <p>Map fields for VALOR producer, XLS file types.</p>
-<p>Transform function: <a href="https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/valor/xml/src/lib/transform.js">implementation details</a></p>
+<p>Mapping document: <a href="https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/valor/xml/mapping.md">markdown version</a>
+Transform function: <a href="https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/valor/xml/src/lib/transform.js">implementation details</a></p>
 
 
   
@@ -3332,7 +3422,7 @@ Depends on getAddress()</p>
       <ul class="ecl-list">
       
         <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
-	        The row received from harmonized storage.
+	        Piece of data to transform before going to harmonized storage.
 
           
         </li>
@@ -3358,6 +3448,827 @@ Depends on getAddress()</p>
 
   
 
+  
+
+  
+
+  
+</li>
+
+                  
+            
+              <li class='ecl-list-item ecl-u-pv-m'>
+  
+    
+    <h3 class='ecl-heading ecl-heading--h3' id='wifi4euxlstransform'>
+      Wifi4EuXlsTransform
+    </h3>
+    
+    
+  
+
+  <p>Map fields for WIFI4EU producer, XLS and XLSX file types</p>
+<p>Example input data: <a href="https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/wifi4eu/xls/test/stubs/record.json">stub</a></p>
+<p>Transform function: <a href="https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/wifi4eu/xls/src/lib/transform.js">implementation details</a></p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        Piece of data to transform before going to harmonized storage.
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="#project">Project</a>
+      :
+        JSON matching the type fields.
+
+      
+    
+  
+
+  
+
+  
+
+  
+    <ul class="ecl-list">
+    <section class='ecl-u-clearfix ecl-u-pt-xs'>
+  
+    <a id='wifi4euxlstransformgetbudget' class="ecl-link ecl-link--standalone" aria-controls='wifi4euxlstransformgetbudget-panel' aria-expanded="true" href="#">
+      getBudget
+    </a>
+    <div id='wifi4euxlstransformgetbudget-panel' aria-labelledby='wifi4euxlstransformgetbudget' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess budget field. For the moment, we don't have this data.</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="#budget">Budget</a>
+      :
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='wifi4euxlstransformgetcallyear' class="ecl-link ecl-link--standalone" aria-controls='wifi4euxlstransformgetcallyear-panel' aria-expanded="true" href="#">
+      getCallYear
+    </a>
+    <div id='wifi4euxlstransformgetcallyear-panel' aria-labelledby='wifi4euxlstransformgetcallyear' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess <code>call_year</code> field. Data comes from <code>record['Call year']</code>.</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>
+      :
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='wifi4euxlstransformgetprojectdescription' class="ecl-link ecl-link--standalone" aria-controls='wifi4euxlstransformgetprojectdescription-panel' aria-expanded="true" href="#">
+      getProjectDescription
+    </a>
+    <div id='wifi4euxlstransformgetprojectdescription-panel' aria-labelledby='wifi4euxlstransformgetprojectdescription' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess <code>description</code> field. Data comes from <code>record['Project Description']</code>.</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>
+      :
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='wifi4euxlstransformgetbeneficieries' class="ecl-link ecl-link--standalone" aria-controls='wifi4euxlstransformgetbeneficieries-panel' aria-expanded="true" href="#">
+      getBeneficieries
+    </a>
+    <div id='wifi4euxlstransformgetbeneficieries-panel' aria-labelledby='wifi4euxlstransformgetbeneficieries' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess <code>partners</code> field.</p>
+<p>Data comes from the following source fields:</p>
+<ul>
+<li><code>municipality name</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>
+      :
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='wifi4euxlstransformgetprojectid' class="ecl-link ecl-link--standalone" aria-controls='wifi4euxlstransformgetprojectid-panel' aria-expanded="true" href="#">
+      getProjectId
+    </a>
+    <div id='wifi4euxlstransformgetprojectid-panel' aria-labelledby='wifi4euxlstransformgetprojectid' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Generates values for <code>project_id</code> field since source data misses these.
+It's needed for having separate projects in the Elasticsearch database.</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>
+      :
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='wifi4euxlstransformgetlocations' class="ecl-link ecl-link--standalone" aria-controls='wifi4euxlstransformgetlocations-panel' aria-expanded="true" href="#">
+      getLocations
+    </a>
+    <div id='wifi4euxlstransformgetlocations-panel' aria-labelledby='wifi4euxlstransformgetlocations' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess <code>project_locations</code> field.
+Depends on:</p>
+<ul>
+<li><code>getCountryCode</code></li>
+</ul>
+<p>Data comes from the following source fields:</p>
+<ul>
+<li><code>address</code></li>
+<li><code>country</code></li>
+<li><code>postal code</code></li>
+<li><code>municipality name</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#location">Location</a>>
+      :
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='wifi4euxlstransformgetprojectwebsite' class="ecl-link ecl-link--standalone" aria-controls='wifi4euxlstransformgetprojectwebsite-panel' aria-expanded="true" href="#">
+      getProjectWebsite
+    </a>
+    <div id='wifi4euxlstransformgetprojectwebsite-panel' aria-labelledby='wifi4euxlstransformgetprojectwebsite' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess <code>project_website</code> field. Data comes from <code>record.link</code>.</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>
+      :
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='wifi4euxlstransformformatdate' class="ecl-link ecl-link--standalone" aria-controls='wifi4euxlstransformformatdate-panel' aria-expanded="true" href="#">
+      formatDate
+    </a>
+    <div id='wifi4euxlstransformformatdate-panel' aria-labelledby='wifi4euxlstransformformatdate' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Format date</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>date (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date">Date</a>)
+	        Date in "10/9/14" (MM/DD/YY) or "10/9/2014" (MM/DD/YYYY) format
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date">Date</a>
+      :
+        The date formatted into an ISO 8601 date format
+
+      
+    
+  
+
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Example</h4>
+    
+      
+      <pre style="background-color: #f5f5f5;" class="ecl-u-pa-xs">input =&gt; <span class="hljs-string">"10/9/2014"</span>
+output =&gt; <span class="hljs-string">"2014-10-09T00:00:00.000Z"</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='wifi4euxlstransformgetprojecttimeframe' class="ecl-link ecl-link--standalone" aria-controls='wifi4euxlstransformgetprojecttimeframe-panel' aria-expanded="true" href="#">
+      getProjectTimeframe
+    </a>
+    <div id='wifi4euxlstransformgetprojecttimeframe-panel' aria-labelledby='wifi4euxlstransformgetprojecttimeframe' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess <code>timeframe</code> field. Data comes from <code>record['Date from']</code>.</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="#timeframe">Timeframe</a>
+      :
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='wifi4euxlstransformgetprojecttitle' class="ecl-link ecl-link--standalone" aria-controls='wifi4euxlstransformgetprojecttitle-panel' aria-expanded="true" href="#">
+      getProjectTitle
+    </a>
+    <div id='wifi4euxlstransformgetprojecttitle-panel' aria-labelledby='wifi4euxlstransformgetprojecttitle' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess <code>title</code> field. Data comes from <code>record['Project Title']</code>.</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>
+      :
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='wifi4euxlstransformgetcountrycode' class="ecl-link ecl-link--standalone" aria-controls='wifi4euxlstransformgetcountrycode-panel' aria-expanded="true" href="#">
+      getCountryCode(country)
+    </a>
+    <div id='wifi4euxlstransformgetcountrycode-panel' aria-labelledby='wifi4euxlstransformgetcountrycode' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Retrieve a country code based on non-standartized input values.</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>country (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        Country in the form of 'БЪЛГАРИЯ (BULGARIA)', 'ΕΛΛΑΔΑ (ELLADA)' and similar.
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>
+      :
+        ISO ALPHA-2 code  used by i18n-iso-countries in the enrichment manager.
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='wifi4euxlstransformgetaddress' class="ecl-link ecl-link--standalone" aria-controls='wifi4euxlstransformgetaddress-panel' aria-expanded="true" href="#">
+      getAddress(record)
+    </a>
+    <div id='wifi4euxlstransformgetaddress-panel' aria-labelledby='wifi4euxlstransformgetaddress' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Returns an address of the form of street + street number</p>
+<p>For address/street number, ignores the following:</p>
+<ul>
+<li>trashStrings: na, snc, S/n, dots, dashes, and other custom means to say data is not available</li>
+<li>phone numbers,: items with more than 8 digits, in any syntax</li>
+<li>string-only values: Pi, NR, etc.</li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>
+      :
+        The address
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+</section>
+
+    </ul>
   
 
   
