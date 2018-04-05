@@ -8,7 +8,7 @@ import type { Project } from '../../../../_types/Project';
  * Converts a single string to an array of multiple values
  *
  * @memberof InforegioJsonTransform
- * @param {Object} record The row received from harmonized storage
+ * @param {Object} record The row received from parsed file
  * @returns {Array} List of string values for `funding_area` field
  *
  * @example
@@ -52,7 +52,7 @@ const formatDate = date => {
  * - `Beneficiary_City`
  *
  * @memberof InforegioJsonTransform
- * @param {Object} record The row received from harmonized storage
+ * @param {Object} record The row received from parsed file
  * @returns {Array} A list of {Partner} objects
  */
 const getAddress = record => {
@@ -107,7 +107,7 @@ const getBeneficiaries = record => [
  * - `Project_NUTS2_code`
  *
  * @memberof InforegioJsonTransform
- * @param {Object} record The row received from harmonized storage
+ * @param {Object} record The row received from parsed file
  * @returns {Array} List of {Location} objects for `project_locations` field
  */
 const getLocations = record => {
@@ -156,7 +156,7 @@ const getLocations = record => {
  * - `URL`
  *
  * @memberof InforegioJsonTransform
- * @param {Object} record The row received from harmonized storage
+ * @param {Object} record The row received from parsed file
  * @returns {string}
  */
 const getProjectWebsite = record => {
@@ -191,9 +191,10 @@ const formatBudget = budget => {
 /**
  * Map fields for INFOREGIO producer, JSON file types
  *
+ * Mapping document: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/mapping.md|markdown version}
  * Transform function: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/json/src/lib/transform.js|implementation details}
  * @name InforegioJsonTransform
- * @param {Object} record The row received from harmonized storage.
+ * @param {Object} record Piece of data to transform before going to harmonized storage.
  * @returns {Project} JSON matching the type fields.
  */
 export default (record: Object): Project => {

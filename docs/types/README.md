@@ -15,3 +15,4 @@ Here's a list of the transformations made in ETLs around the `Project` model.
 * [INFOREGIO - JSON](./etls/inforegio-json.md)
 * [INFOREGIO - XML](./etls/inforegio-xml.md)
 * [VALOR - XLS](./etls/valor-xls.md)
+* [WIFI4EU - XLS](./etls/wifi4eu-xls.md)

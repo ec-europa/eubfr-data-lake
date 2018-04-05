@@ -4,10 +4,11 @@
 
 Map fields for VALOR producer, XLS file types.
 
+Mapping document: [markdown version](https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/valor/xml/mapping.md)
 Transform function: [implementation details](https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/valor/xml/src/lib/transform.js)
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage.
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Piece of data to transform before going to harmonized storage.
 
 Returns **Project** JSON matching the type fields.

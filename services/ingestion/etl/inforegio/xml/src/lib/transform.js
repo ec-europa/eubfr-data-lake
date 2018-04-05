@@ -60,7 +60,7 @@ const formatDate = date => {
  * - `Beneficiary_City`
  *
  * @memberof inforegioXmlTransform
- * @param {Object} record The row received from harmonized storage
+ * @param {Object} record The row received from parsed file
  * @returns {string} The address as consumed by {Partner}
  */
 const getAddress = record => {
@@ -109,7 +109,7 @@ const formatBudget = budget => {
  * - `Funds`
  *
  * @memberof inforegioXmlTransform
- * @param {Object} record The row received from harmonized storage
+ * @param {Object} record The row received from parsed file
  * @returns {Array} List of values for funding area
  *
  * @example
@@ -131,7 +131,7 @@ const getFundingArea = record =>
  * - `Project_NUTS2_code`
  *
  * @memberof inforegioXmlTransform
- * @param {Object} record The row received from harmonized storage
+ * @param {Object} record The row received from parsed file
  * @returns {Array} List of {Location}
  */
 const getLocations = record => {
@@ -185,7 +185,7 @@ const getLocations = record => {
  * - `Themes`
  *
  * @memberof inforegioXmlTransform
- * @param {Object} record The row received from harmonized storage
+ * @param {Object} record The row received from parsed file
  * @returns {Array} List of values for themes
  *
  * @example
@@ -233,9 +233,10 @@ const getBeneficiaries = record =>
 /**
  * Map fields for INFOREGIO producer, XML file types
  *
+ * Mapping document: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/mapping.md|markdown version}
  * Transform function: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/xml/src/lib/transform.js|implementation details}
  * @name inforegioXmlTransform
- * @param {Object} record The row received from harmonized storage
+ * @param {Object} record The row received from parsed file
  * @returns {Project} JSON matching the type fields
  */
 export default (record: Object): Project => {

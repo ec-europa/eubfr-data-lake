@@ -1,0 +1,86 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`XLS transformer for WIFI4EU Produces correct JSON output structure 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "EUR",
+      "raw": "",
+      "value": 0,
+    },
+    "funding_area": Array [],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+  },
+  "call_year": "2018",
+  "description": "The European Commission wishes to promote free Wi-Fi connectivity for citizens and visitors in public spaces such as parks, squares, public building, libraries, health centres, and museums everywhere in Europe through WiFi4EU.",
+  "ec_priorities": Array [],
+  "media": Object {
+    "cover_image": "",
+    "video": "",
+  },
+  "programme_name": "",
+  "project_id": "505ddc4503ba7bd63ea008ea40a8d769",
+  "project_locations": Array [
+    Object {
+      "address": "гр. Долни чифлик, пл. \\"Тича\\" №1",
+      "centroid": null,
+      "country_code": "BG",
+      "location": null,
+      "nuts2": "",
+      "postal_code": "9120",
+      "region": "",
+      "town": "Долни чифлик-Dolni chiflik",
+    },
+  ],
+  "project_website": "https://www.wifi4eu.eu",
+  "related_links": Array [],
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
+  "status": "",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [],
+  "third_parties": Array [
+    Object {
+      "address": "",
+      "country": "",
+      "email": "",
+      "name": "Долни чифлик-Dolni chiflik",
+      "phone": "",
+      "region": "",
+      "role": "beneficiary",
+      "type": "",
+      "website": "",
+    },
+  ],
+  "timeframe": Object {
+    "from": "2018-03-22T00:00:00.000Z",
+    "to": null,
+  },
+  "title": "Wifi4EU - Registrations",
+  "type": Array [],
+}
+`;
