@@ -12,10 +12,12 @@ export const enrich = async (record, existingRecord) => {
         return null;
       }
 
+      let location = Object.assign({}, loc);
+
       // Best scenario: we have coordinates
       if (loc.centroid) {
         // get nuts information from coordinates
-        enrichFromCoordinates(loc);
+        location = await enrichFromCoordinates(location);
       } else if (loc.address) {
         // get coordinates from address
         // if data added, call previous enrichFromCoordinates plugin here as well
@@ -28,14 +30,10 @@ export const enrich = async (record, existingRecord) => {
       }
 
       if (loc.country_code) {
-        // find centroid's coordinates and add them
-        enrichFromCountry(loc);
-        // marked as enriched in order to avoid further enrichment based on low precision
-        // eslint-disable-next-line
-        loc.enriched = true;
+        location = await enrichFromCountry(location);
       }
 
-      return loc;
+      return location;
     })
   )).filter(loc => loc);
 

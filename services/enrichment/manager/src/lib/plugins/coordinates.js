@@ -46,6 +46,7 @@ export const enrichFromCoordinates = async loc => {
     }
 
     return Object.assign({}, loc, {
+      enriched: true,
       nuts: results.results.map(result => ({
         code: result.attributes.NUTS_ID,
         name: result.attributes.NUTS_NAME,

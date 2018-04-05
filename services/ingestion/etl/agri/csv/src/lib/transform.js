@@ -1,5 +1,7 @@
 // @flow
 
+import getCountryCode from './getCountryCode';
+
 /*
  * Transform message (AGRI CSV)
  */
@@ -104,7 +106,7 @@ const getLocations = record => {
       latArray[index];
 
     return {
-      country_code: country,
+      country_code: getCountryCode(country),
       region: '',
       nuts: [],
       address: record['Project address(es)'] || '',

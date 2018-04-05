@@ -51,6 +51,9 @@ export const enrichFromCountry = async loc => {
       coordinates: [parseFloat(lon) || 0, parseFloat(lat) || 0],
     };
 
+    // Mark as enriched, as coordinates are going to give any more precise info.
+    enrichedLocation.enriched = true;
+
     return enrichedLocation;
   }
 
