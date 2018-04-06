@@ -118,7 +118,6 @@ const getLocations = record => {
             lon: parseFloat(longArray[index]) || 0,
           }
         : null,
-      enriched: false,
       location: hasCoordinates
         ? {
             type: 'Point',

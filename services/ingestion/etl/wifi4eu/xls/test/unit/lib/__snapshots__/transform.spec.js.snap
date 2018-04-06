@@ -46,7 +46,6 @@ Object {
       "address": "гр. Долни чифлик, пл. \\"Тича\\" №1",
       "centroid": null,
       "country_code": "BG",
-      "enriched": false,
       "location": null,
       "nuts": Array [],
       "postal_code": "9120",

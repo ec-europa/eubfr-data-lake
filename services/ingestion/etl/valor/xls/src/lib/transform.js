@@ -101,7 +101,6 @@ export default (record: Object): Project => {
       address: '',
       centroid: null,
       country_code: country,
-      enriched: false,
       location: null,
       nuts: [],
       postal_code: '',

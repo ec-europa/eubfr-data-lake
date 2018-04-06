@@ -152,7 +152,6 @@ const getLocations = record => {
           address: '',
           centroid: null,
           country_code: countryArray[i],
-          enriched: false,
           location: null,
           nuts: [],
           postal_code: '',
@@ -165,7 +164,6 @@ const getLocations = record => {
   } else {
     locationArray.push({
       country_code: checkData(record.Project_country),
-      enriched: false,
       region: checkData(record.Project_region),
       nuts: [
         {

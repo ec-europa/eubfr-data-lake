@@ -101,6 +101,8 @@ export const enrichFromCentroid = async loc => {
       }
     }
 
+    enrichedLocation.enriched = true;
+
     return enrichedLocation;
   }
 

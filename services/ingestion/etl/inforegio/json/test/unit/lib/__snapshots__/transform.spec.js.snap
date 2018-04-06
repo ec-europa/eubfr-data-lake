@@ -49,7 +49,6 @@ Object {
       "address": "",
       "centroid": null,
       "country_code": "HU",
-      "enriched": false,
       "location": null,
       "nuts": Array [
         Object {

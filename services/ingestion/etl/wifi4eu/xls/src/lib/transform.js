@@ -108,7 +108,6 @@ const getLocations = record => [
     address: getAddress(record),
     centroid: null,
     country_code: getCountryCode(record.country),
-    enriched: false,
     location: null,
     nuts: [],
     postal_code: record['postal code'] || '',

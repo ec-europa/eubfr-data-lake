@@ -47,7 +47,6 @@ Object {
       "address": "",
       "centroid": null,
       "country_code": "EL",
-      "enriched": false,
       "location": null,
       "nuts": Array [
         Object {
