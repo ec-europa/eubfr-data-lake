@@ -15,15 +15,14 @@ export default class SaveStream extends stream.Writable {
     // md5 hash of computed_key + project_id
     const { computed_key: computedKey, project_id: projectId } = chunk;
 
-    const body = Object.assign({}, chunk, {
-      enriched: false,
-    });
-
     const id = crypto
       .createHash('md5')
       .update(`${computedKey}/${projectId}`)
       .digest('hex');
 
-    return this.client.index({ index: this.index, type, id, body }, next);
+    return this.client.index(
+      { index: this.index, type, id, body: chunk },
+      next
+    );
   }
 }

@@ -85,7 +85,7 @@ export const enrichFromCentroid = async loc => {
       year: result.layerName,
     }));
 
-    enrichedLocation.nuts.push(nutsData);
+    enrichedLocation.nuts = [...enrichedLocation.nuts, ...nutsData];
 
     // Get the country code
     if (!enrichedLocation.country_code) {
