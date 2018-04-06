@@ -5,6 +5,7 @@
  */
 
 import type { Project } from '../../../../_types/Project';
+import getCountryCode from '../../../../../helpers/getCountryCode';
 
 /**
  * Check if field is an array or a sting
@@ -151,7 +152,7 @@ const getLocations = record => {
         locationArray.push({
           address: '',
           centroid: null,
-          country_code: countryArray[i],
+          country_code: getCountryCode(countryArray[i]),
           location: null,
           nuts: [],
           postal_code: '',
@@ -163,7 +164,7 @@ const getLocations = record => {
     }
   } else {
     locationArray.push({
-      country_code: checkData(record.Project_country),
+      country_code: getCountryCode(checkData(record.Project_country)),
       region: checkData(record.Project_region),
       nuts: [
         {

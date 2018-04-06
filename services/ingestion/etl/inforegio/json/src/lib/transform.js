@@ -1,6 +1,7 @@
 // @flow
 
 import type { Project } from '../../../../_types/Project';
+import getCountryCode from '../../../../../helpers/getCountryCode';
 
 /**
  * Preprocess `funding_area`
@@ -122,7 +123,7 @@ const getLocations = record => {
         locationArray.push({
           address: '',
           centroid: null,
-          country_code: countryArray[i],
+          country_code: getCountryCode(countryArray[i]),
           location: null,
           nuts: [],
           postal_code: '',
@@ -134,7 +135,7 @@ const getLocations = record => {
     }
   } else {
     locationArray.push({
-      country_code: record.Project_country,
+      country_code: getCountryCode(record.Project_country),
       region: record.Project_region,
       nuts: [
         {

@@ -1,7 +1,7 @@
 // @flow
 
 import type { Project } from '../../../../_types/Project';
-import getCountryCode from './getCountryCode';
+import getCountryCode from '../../../../../helpers/getCountryCode';
 
 /**
  * Preprocess coordinators

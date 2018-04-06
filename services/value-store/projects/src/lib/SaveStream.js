@@ -24,14 +24,6 @@ export default class SaveStream extends stream.Writable {
       .update(`${computedKey}/${projectId}`)
       .digest('hex');
 
-    return this.client.index(
-      {
-        index: this.index,
-        type,
-        id,
-        body,
-      },
-      next
-    );
+    return this.client.index({ index: this.index, type, id, body }, next);
   }
 }

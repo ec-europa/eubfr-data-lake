@@ -1,5 +1,5 @@
 // Helper to get country code based on few exceptions
-export default countryCode => {
+module.exports = countryCode => {
   switch (countryCode.trim().toUpperCase()) {
     case 'UK':
       return 'GB';

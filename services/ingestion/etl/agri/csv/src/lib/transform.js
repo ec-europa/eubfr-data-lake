@@ -1,6 +1,6 @@
 // @flow
 
-import getCountryCode from './getCountryCode';
+import getCountryCode from '../../../../../helpers/getCountryCode';
 
 /*
  * Transform message (AGRI CSV)
