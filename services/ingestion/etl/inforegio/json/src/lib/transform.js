@@ -141,8 +141,8 @@ const getLocations = record => {
         {
           code: record.Project_NUTS2_code,
           name: '',
-          level: 2,
-          year: '',
+          level: null,
+          year: null,
         },
       ],
       address: '',

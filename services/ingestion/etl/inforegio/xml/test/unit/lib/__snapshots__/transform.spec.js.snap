@@ -50,10 +50,10 @@ Object {
       "location": null,
       "nuts": Array [
         Object {
-          "code": "EL0",
-          "level": 2,
+          "code": "EL30",
+          "level": null,
           "name": "",
-          "year": "",
+          "year": null,
         },
       ],
       "postal_code": "",

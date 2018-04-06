@@ -53,9 +53,9 @@ Object {
       "nuts": Array [
         Object {
           "code": "HU10",
-          "level": 2,
+          "level": null,
           "name": "",
-          "year": "",
+          "year": null,
         },
       ],
       "postal_code": "",

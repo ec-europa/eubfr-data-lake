@@ -74,9 +74,8 @@ type Coordinates = {
 type Nuts = {
   code: string,
   name: string,
-  level: number,
-  // Empty string if nothing
-  year: number | string,
+  level: number | null,
+  year: number | null,
 };
 
 /**
