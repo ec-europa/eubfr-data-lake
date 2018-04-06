@@ -6,7 +6,6 @@
 * [Architecture](./ARCHITECTURE.md)
 * [How to test](./HOW_TO_TEST.md)
 * [Pushing data](./PUSHING_DATA.md)
-* [Data Availability](./DATA_AVAILABILITY.md)
 
 ## Cookbook
 
@@ -19,6 +18,12 @@ The `Project` model is central for the data lake. All ETLs should comply with th
 To generate documentation:
 
 * `yarn docs:md` for markdown version in `docs/types/etl`
+
+## Data enrichment
+
+When data is ingested, an `enrichment manager` calls various data enrichment plugins in order to include additional information which hasn't been initially available.
+
+[Detailed information about the enrichment processes](./enrichment/README.md).
 
 ## Troubleshooting
 

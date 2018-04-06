@@ -1,4 +1,4 @@
-# ETLs data availability grid
+# Producers' location data availability grid
 
 Below is a table with a list of producers and the data they provide (`×` marks the presence of that field)
 
