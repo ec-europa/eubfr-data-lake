@@ -123,6 +123,20 @@ const getFundingArea = record =>
     .filter(item => item);
 
 /**
+ * Gets NUTS code level from a string
+ *
+ * @memberof inforegioXmlTransform
+ * @param {String} code The NUTS code
+ * @returns {Number} The level of NUTS or null if one can't be extracted
+ */
+const getNutsCodeLevel = code => {
+  if (code.length >= 2) {
+    return code.length - 2;
+  }
+  return null;
+};
+
+/**
  * Get a list of {Location}
  *
  * Input fields taken from the `record` are:
@@ -170,7 +184,7 @@ const getLocations = record => {
         {
           code: checkData(record.Project_NUTS2_code),
           name: '',
-          level: null,
+          level: getNutsCodeLevel(record.Project_NUTS2_code),
           year: null,
         },
       ],

@@ -53,7 +53,7 @@ Object {
       "nuts": Array [
         Object {
           "code": "HU10",
-          "level": null,
+          "level": 2,
           "name": "",
           "year": null,
         },
