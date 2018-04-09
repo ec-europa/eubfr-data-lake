@@ -111,6 +111,15 @@
               
                 
                 <li class="ecl-link-block__item">
+                  <a href="#nuts"
+                     class="ecl-link ecl-link--standalone ecl-link-block__link">
+                    Nuts
+                  </a>
+                
+                </li>
+              
+                
+                <li class="ecl-link-block__item">
                   <a href="#location"
                      class="ecl-link ecl-link--standalone ecl-link-block__link">
                     Location
@@ -325,6 +334,18 @@
                 
                   
                   <ul class="ecl-list">
+                    
+                      <li><a
+                        href="#inforegioxmltransformgetnutscodelevel"
+                        class="ecl-link pre-open">
+                        getNutsCodeLevel
+                      </a></li>
+                    
+                      <li><a
+                        href="#inforegioxmltransformgetnutscodelevel"
+                        class="ecl-link pre-open">
+                        getNutsCodeLevel
+                      </a></li>
                     
                       <li><a
                         href="#inforegioxmltransformcheckdata"
@@ -816,6 +837,80 @@
               <li class='ecl-list-item ecl-u-pv-m'>
   
     
+    <h3 class='ecl-heading ecl-heading--h3' id='nuts'>
+      Nuts
+    </h3>
+    
+    
+  
+
+  <p>Describes field <code>project.project_locations.nuts</code>.</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Properties</h4>
+      <ul class="ecl-list">
+        
+          <li>
+            code (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            name (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            level ((<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a> | null))
+            
+            
+            
+        </li>
+      
+          <li>
+            year ((<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a> | null))
+            
+            
+            
+        </li>
+      
+      </ul>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+                  
+            
+              <li class='ecl-list-item ecl-u-pv-m'>
+  
+    
     <h3 class='ecl-heading ecl-heading--h3' id='location'>
       Location
     </h3>
@@ -870,7 +965,7 @@
         </li>
       
           <li>
-            nuts2 (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            nuts ((<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#nuts">Nuts</a>> | null))
             
             
             
@@ -2834,6 +2929,126 @@ Transform function: <a href="https://github.com/ec-europa/eubfr-data-lake/blob/m
   
     <ul class="ecl-list">
     <section class='ecl-u-clearfix ecl-u-pt-xs'>
+  
+    <a id='inforegioxmltransformgetnutscodelevel' class="ecl-link ecl-link--standalone" aria-controls='inforegioxmltransformgetnutscodelevel-panel' aria-expanded="true" href="#">
+      getNutsCodeLevel
+    </a>
+    <div id='inforegioxmltransformgetnutscodelevel-panel' aria-labelledby='inforegioxmltransformgetnutscodelevel' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Gets NUTS code level from a string</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>code (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)
+	        The NUTS code
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>
+      :
+        The level of NUTS or null if one can't be extracted
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='inforegioxmltransformgetnutscodelevel' class="ecl-link ecl-link--standalone" aria-controls='inforegioxmltransformgetnutscodelevel-panel' aria-expanded="true" href="#">
+      getNutsCodeLevel
+    </a>
+    <div id='inforegioxmltransformgetnutscodelevel-panel' aria-labelledby='inforegioxmltransformgetnutscodelevel' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Gets NUTS code level from a string</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>code (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)
+	        The NUTS code
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>
+      :
+        The level of NUTS or null if one can't be extracted
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
   
     <a id='inforegioxmltransformcheckdata' class="ecl-link ecl-link--standalone" aria-controls='inforegioxmltransformcheckdata-panel' aria-expanded="true" href="#">
       checkData
