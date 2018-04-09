@@ -19,6 +19,7 @@ deleteServices([
   'ingestion-etl-inforegio-json',
   'ingestion-etl-inforegio-xml',
   'ingestion-etl-valor-xls',
+  'ingestion-etl-wifi4eu-xls',
   'value-store-projects',
   'logger-listener',
   'enrichment-manager',
