@@ -47,7 +47,7 @@ Object {
       "centroid": null,
       "country_code": "BG",
       "location": null,
-      "nuts2": "",
+      "nuts": Array [],
       "postal_code": "9120",
       "region": "",
       "town": "Долни чифлик-Dolni chiflik",

@@ -1,6 +1,7 @@
 // @flow
 
 import type { Project } from '../../../../_types/Project';
+import getCountryCode from '../../../../../helpers/getCountryCode';
 
 /*
  * Transform message (VALOR XLS)
@@ -98,14 +99,14 @@ export default (record: Object): Project => {
     .split(',')
     .filter(loc => loc)
     .map(country => ({
-      country_code: country,
-      region: '',
-      nuts2: '',
       address: '',
-      postal_code: '',
-      town: '',
       centroid: null,
+      country_code: getCountryCode(country),
       location: null,
+      nuts: [],
+      postal_code: '',
+      region: '',
+      town: '',
     }));
 
   // Preprocess results

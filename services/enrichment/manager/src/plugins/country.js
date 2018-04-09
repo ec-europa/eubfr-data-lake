@@ -1,7 +1,7 @@
 import countries from 'i18n-iso-countries';
 import request from 'request-promise-native';
 
-export const enrichLocationFromAddress = async loc => {
+export const enrichFromCountry = async loc => {
   // Get country name from ISO 3166-1 Alpha-2 code (doesn't seem mandatory after some testing...)
   const country = countries.getName(loc.country_code, 'en');
 
@@ -51,10 +51,13 @@ export const enrichLocationFromAddress = async loc => {
       coordinates: [parseFloat(lon) || 0, parseFloat(lat) || 0],
     };
 
+    // Mark as enriched, as coordinates are going to give any more precise info.
+    enrichedLocation.enriched = true;
+
     return enrichedLocation;
   }
 
   return loc; // location not enriched
 };
 
-export default enrichLocationFromAddress;
+export default enrichFromCountry;

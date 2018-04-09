@@ -51,8 +51,16 @@ module.exports = () => ({
             address: { type: 'text' },
             centroid: { type: 'geo_point' },
             country_code: { type: 'keyword' },
+            enriched: { type: 'boolean' },
             location: { type: 'geo_shape' },
-            nuts2: { type: 'keyword' },
+            nuts: {
+              properties: {
+                code: { type: 'keyword' },
+                name: { type: 'keyword' },
+                level: { type: 'integer' },
+                year: { type: 'keyword' },
+              },
+            },
             postal_code: { type: 'keyword' },
             region: { type: 'keyword' },
             town: { type: 'keyword' },

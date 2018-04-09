@@ -50,7 +50,14 @@ Object {
       "centroid": null,
       "country_code": "HU",
       "location": null,
-      "nuts2": "HU10",
+      "nuts": Array [
+        Object {
+          "code": "HU10",
+          "level": 2,
+          "name": "",
+          "year": null,
+        },
+      ],
       "postal_code": "",
       "region": "Közép-Magyarország",
       "town": "",
