@@ -46,9 +46,16 @@ Object {
     Object {
       "address": "",
       "centroid": null,
-      "country_code": "EL",
+      "country_code": "GR",
       "location": null,
-      "nuts2": "EL0",
+      "nuts": Array [
+        Object {
+          "code": "EL30",
+          "level": null,
+          "name": "",
+          "year": null,
+        },
+      ],
       "postal_code": "",
       "region": "GREECE",
       "town": "",

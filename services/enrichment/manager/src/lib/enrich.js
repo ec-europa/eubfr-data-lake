@@ -1,27 +1,25 @@
 import { mergeRecords } from './merge';
-import { enrichLocationFromAddress } from './enrichLocationFromAddress';
-import { enrichLocationFromCentroid } from './enrichLocationFromCentroid';
+import { enrichFromCentroid } from '../plugins/centroid';
+import { enrichFromCountry } from '../plugins/country';
 
 export const enrich = async (record, existingRecord) => {
   const enrichedRecord = mergeRecords(record, existingRecord);
 
-  const newLocations = (await Promise.all(
-    enrichedRecord.project_locations.map(async loc => {
-      if (!loc) {
-        return null;
+  const newLocations = await Promise.all(
+    enrichedRecord.project_locations.filter(loc => loc).map(async loc => {
+      let location = JSON.parse(JSON.stringify(loc));
+
+      if (loc.centroid) {
+        location = await enrichFromCentroid(location);
       }
 
-      if (!loc.centroid && loc.country_code) {
-        // Centroid is empty but country code is provided
-        return enrichLocationFromAddress(loc);
-      } else if (!loc.country_code && loc.centroid) {
-        // Country code is empty but centroid is provided
-        return enrichLocationFromCentroid(loc);
+      if (loc.country_code) {
+        location = await enrichFromCountry(location);
       }
 
-      return loc;
+      return location;
     })
-  )).filter(loc => loc);
+  );
 
   // Update locations
   enrichedRecord.project_locations = newLocations;

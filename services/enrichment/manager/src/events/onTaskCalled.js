@@ -1,6 +1,5 @@
 import elasticsearch from 'elasticsearch';
 import connectionClass from 'http-aws-es';
-import { needsEnrichment } from '../lib/checks';
 import { computeId } from '../lib/computeId';
 import { enrich } from '../lib/enrich';
 
@@ -10,7 +9,20 @@ export const handler = async (event, context, callback) => {
   /**
    * 1. Pre-check if the document needs to be enriched
    */
-  if (!needsEnrichment(record)) {
+  if (!record.project_locations || record.project_locations.length === 0) {
+    return callback(null, 'no locations to enrich');
+  }
+
+  const numLocations = record.project_locations.length;
+  const numLocationsEnriched = record.project_locations.filter(
+    loc => loc.enriched
+  ).length;
+
+  if (
+    numLocations &&
+    numLocationsEnriched &&
+    numLocations === numLocationsEnriched
+  ) {
     return callback(null, 'nothing to do');
   }
 

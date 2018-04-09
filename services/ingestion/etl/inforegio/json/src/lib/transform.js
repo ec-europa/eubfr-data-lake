@@ -1,6 +1,7 @@
 // @flow
 
 import type { Project } from '../../../../_types/Project';
+import getCountryCode from '../../../../../helpers/getCountryCode';
 
 /**
  * Preprocess `funding_area`
@@ -98,6 +99,20 @@ const getBeneficiaries = record => [
 ];
 
 /**
+ * Gets NUTS code level from a string
+ *
+ * @memberof inforegioXmlTransform
+ * @param {String} code The NUTS code
+ * @returns {Number} The level of NUTS or null if one can't be extracted
+ */
+const getNutsCodeLevel = code => {
+  if (code.length >= 2) {
+    return code.length - 2;
+  }
+  return null;
+};
+
+/**
  * Preprocess locations
  *
  * Input fields taken from the `record` are:
@@ -120,23 +135,30 @@ const getLocations = record => {
     for (let i = 0; i < countryArray.length; i += 1) {
       if (previousCountries.indexOf(countryArray[i] === -1)) {
         locationArray.push({
-          country_code: countryArray[i],
-          region: '',
-          nuts2: '',
           address: '',
-          postal_code: '',
-          town: '',
-          location: null,
           centroid: null,
+          country_code: getCountryCode(countryArray[i]),
+          location: null,
+          nuts: [],
+          postal_code: '',
+          region: '',
+          town: '',
         });
         previousCountries.push(countryArray[i]);
       }
     }
   } else {
     locationArray.push({
-      country_code: record.Project_country,
+      country_code: getCountryCode(record.Project_country),
       region: record.Project_region,
-      nuts2: record.Project_NUTS2_code,
+      nuts: [
+        {
+          code: record.Project_NUTS2_code,
+          name: '',
+          level: getNutsCodeLevel(record.Project_NUTS2_code),
+          year: null,
+        },
+      ],
       address: '',
       postal_code: '',
       town: '',
