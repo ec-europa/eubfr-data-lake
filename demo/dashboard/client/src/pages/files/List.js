@@ -29,7 +29,7 @@ class List extends Component {
   componentDidMount() {
     this.esClient = elasticsearch.Client({
       host: privateApiEndpoint,
-      apiVersion: '6.2',
+      apiVersion: '6.x',
       log: 'warning',
     });
 
