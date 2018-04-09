@@ -3783,9 +3783,9 @@ doctrine@^2.0.0, doctrine@^2.0.2:
   dependencies:
     esutils "^2.0.2"
 
-documentation-theme-ecl@1.0.9:
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/documentation-theme-ecl/-/documentation-theme-ecl-1.0.9.tgz#8fead1aab8083fcbd185ee5c0bf3ba9a7e0d49f9"
+documentation-theme-ecl@1.0.10:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/documentation-theme-ecl/-/documentation-theme-ecl-1.0.10.tgz#158dca2ede8bc89b30cb5522a237f96f81f22799"
   dependencies:
     "@ec-europa/ecl-preset-full" "0.6.0"
     anchor-js "4.1.0"

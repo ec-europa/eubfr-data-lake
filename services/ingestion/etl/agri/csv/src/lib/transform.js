@@ -10,7 +10,7 @@ import type { Project } from '../../../../_types/Project';
  * Converts a single string to an array
  *
  * @memberof AgriCsvTransform
- * @param {Object} record The row received from harmonized storage
+ * @param {Object} record The row received from parsed file
  * @returns {Array} List of string values for `funding_area` field
  *
  * @example
@@ -28,7 +28,7 @@ const getFundingArea = record =>
  * Preprocess coordinators
  *
  * @memberof AgriCsvTransform
- * @param {Object} record The row received from harmonized storage
+ * @param {Object} record The row received from parsed file
  * @returns {Array} List of {Coordinator} objects for `coordinators` field
  *
  * @example
@@ -43,6 +43,7 @@ const getCoordinators = record =>
       type: '',
       address: '',
       region: '',
+      role: 'coordinator',
       country: '',
       website: '',
       phone: '',
@@ -53,7 +54,7 @@ const getCoordinators = record =>
  * Preprocess partners
  *
  * @memberof AgriCsvTransform
- * @param {Object} record The row received from harmonized storage
+ * @param {Object} record The row received from parsed file
  * @returns {Array} List of {Partner} objects for `partners` field
  *
  * @example
@@ -68,8 +69,11 @@ const getPartners = record =>
       type: '',
       address: '',
       region: '',
+      role: 'partner',
       country: '',
       website: '',
+      phone: '',
+      email: '',
     }));
 
 /**
@@ -85,7 +89,7 @@ const getPartners = record =>
  * - `Project town(s)`
  *
  * @memberof AgriCsvTransform
- * @param {Object} record The row received from harmonized storage
+ * @param {Object} record The row received from parsed file
  * @returns {Array} List of {Location} objects for `project_locations` field
  */
 const getLocations = record => {
@@ -131,7 +135,7 @@ const getLocations = record => {
  * Depends on record['Related links'] field
  *
  * @memberof AgriCsvTransform
- * @param {Object} record The row received from harmonized storage
+ * @param {Object} record The row received from parsed file
  * @returns {Array|Object} List of {RelatedLink}
  *
  * @example
@@ -183,7 +187,7 @@ const formatDate = date =>
  *
  * Transform function: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/agri/csv/src/lib/transform.js|implementation details}
  * @name AgriCsvTransform
- * @param {Object} record The row received from harmonized storage.
+ * @param {Object} record Piece of data to transform before going to harmonized storage.
  * @returns {Project} JSON matching the type fields.
  */
 export default (record: Object): Project => {
@@ -206,11 +210,8 @@ export default (record: Object): Project => {
     mmf_heading: record['EU Budget MFF heading'] || '',
   };
 
-  // Preprocess coordinators
-  const coordArray = getCoordinators(record);
-
-  // Preprocess partners
-  const partnerArray = getPartners(record);
+  // Preprocess third parties
+  const thirdPartiesArray = getCoordinators(record).concat(getPartners(record));
 
   // Preprocess locations
   const locationArray = getLocations(record);
@@ -244,7 +245,6 @@ export default (record: Object): Project => {
     action: '',
     budget: budgetObject,
     call_year: '',
-    coordinators: coordArray,
     description: record['Project description'] || '',
     ec_priorities:
       record['EC’s priorities'].split(';').filter(priority => priority) || [],
@@ -252,7 +252,6 @@ export default (record: Object): Project => {
       cover_image: record.Visual || '',
       video: record['Link to a video'] || '',
     },
-    partners: partnerArray,
     programme_name: record['Programme name'] || '',
     project_id: record.Nid || '',
     project_locations: locationArray,
@@ -263,6 +262,7 @@ export default (record: Object): Project => {
     sub_programme_name: '',
     success_story: '',
     themes: [],
+    third_parties: thirdPartiesArray || [],
     timeframe: {
       from: formatDate(timeframeFrom),
       to: formatDate(timeframeTo),

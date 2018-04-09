@@ -43,16 +43,17 @@ type Budget = {
 };
 
 /**
- * Describes field `project.coordinators`.
- * @type {Coordinator}
+ * Describes field `project.third_parties`.
+ * @type {ThirdParty}
  */
-type Coordinator = {
+type ThirdParty = {
   address: string,
   country: string,
   email: string,
   name: string,
   phone: string,
   region: string,
+  role: string,
   type: string,
   website: string,
 };
@@ -93,19 +94,6 @@ type Media = {
 };
 
 /**
- * Describes field `project.partners`.
- * @type {Partner}
- */
-type Partner = {
-  address: string,
-  country: string,
-  name: string,
-  region: string,
-  type: string,
-  website: string,
-};
-
-/**
  * Describes field `project.related_links`.
  * @type {RelatedLink}
  */
@@ -140,11 +128,9 @@ export type Project = {
   action: string,
   budget: Budget,
   call_year: string,
-  coordinators: Array<Coordinator>,
   description: string,
   ec_priorities: Array<string>,
   media: Media,
-  partners: Array<Partner>,
   programme_name: string,
   project_id: string,
   project_locations: Array<Location>,
@@ -155,6 +141,7 @@ export type Project = {
   sub_programme_name: string,
   success_story: string,
   themes: Array<string>,
+  third_parties: Array<ThirdParty>,
   timeframe: Timeframe,
   title: string,
   type: Array<string>,

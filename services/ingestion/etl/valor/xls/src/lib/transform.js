@@ -24,9 +24,10 @@ const formatDate = date => {
 /**
  * Map fields for VALOR producer, XLS file types.
  *
+ * Mapping document: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/valor/xml/mapping.md|markdown version}
  * Transform function: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/valor/xml/src/lib/transform.js|implementation details}
  * @name valorXlsTransform
- * @param {Object} record The row received from harmonized storage.
+ * @param {Object} record Piece of data to transform before going to harmonized storage.
  * @returns {Project} JSON matching the type fields.
  */
 export default (record: Object): Project => {
@@ -60,6 +61,7 @@ export default (record: Object): Project => {
       type: record['Coordinating organisation type'] || '',
       address: record["Coordinator's address"] || '',
       region: record["Coordinator's region"] || '',
+      role: 'coordinator',
       country: record["Coordinator's country"] || '',
       website: record["Coordinator's website"] || '',
       phone: '',
@@ -82,8 +84,11 @@ export default (record: Object): Project => {
         type: record[`Partner ${i} organisation type`] || '',
         address: record[`Partner ${i} address`] || '',
         region: record[`Partner ${i} region`] || '',
+        role: 'partner',
         country: record[`Partner ${i} country`] || '',
         website: record[`Partner ${i} website`] || '',
+        phone: '',
+        email: '',
       });
     }
   }
@@ -114,19 +119,20 @@ export default (record: Object): Project => {
     (record['Activity type'] != null && record['Activity type'].split(',')) ||
     [];
 
+  // Preprocess third parties
+  const thirdPartiesArray = coordArray.concat(partnerArray);
+
   // Map the fields
   return {
     action: record.Action,
     budget: budgetObject,
     call_year: record['Call year'] || '',
-    coordinators: coordArray,
     description: record['Project Summary'] || '',
     ec_priorities: [],
     media: {
       cover_image: '',
       video: '',
     },
-    partners: partnerArray,
     programme_name: record.Programme,
     project_id: record['Project Identifier'] || '',
     project_locations: locationArray,
@@ -137,6 +143,7 @@ export default (record: Object): Project => {
     sub_programme_name: record['Sub-programme'] || '',
     success_story: record['Is Success Story'] || '',
     themes: [],
+    third_parties: thirdPartiesArray || [],
     timeframe: {
       from: formatDate(record['Start date']),
       to: formatDate(record['End date']),

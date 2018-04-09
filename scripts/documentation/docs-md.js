@@ -17,6 +17,7 @@ const transforms = [
   'inforegio-json',
   'inforegio-xml',
   'valor-xls',
+  'wifi4eu-xls',
 ];
 
 transforms.forEach(transform => {

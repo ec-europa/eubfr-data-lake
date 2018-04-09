@@ -60,7 +60,7 @@ const formatDate = date => {
  * - `Beneficiary_City`
  *
  * @memberof inforegioXmlTransform
- * @param {Object} record The row received from harmonized storage
+ * @param {Object} record The row received from parsed file
  * @returns {string} The address as consumed by {Partner}
  */
 const getAddress = record => {
@@ -109,7 +109,7 @@ const formatBudget = budget => {
  * - `Funds`
  *
  * @memberof inforegioXmlTransform
- * @param {Object} record The row received from harmonized storage
+ * @param {Object} record The row received from parsed file
  * @returns {Array} List of values for funding area
  *
  * @example
@@ -131,7 +131,7 @@ const getFundingArea = record =>
  * - `Project_NUTS2_code`
  *
  * @memberof inforegioXmlTransform
- * @param {Object} record The row received from harmonized storage
+ * @param {Object} record The row received from parsed file
  * @returns {Array} List of {Location}
  */
 const getLocations = record => {
@@ -185,7 +185,7 @@ const getLocations = record => {
  * - `Themes`
  *
  * @memberof inforegioXmlTransform
- * @param {Object} record The row received from harmonized storage
+ * @param {Object} record The row received from parsed file
  * @returns {Array} List of values for themes
  *
  * @example
@@ -201,7 +201,7 @@ const getThemes = record =>
     : [];
 
 /**
- * Get a list of a single {Partner}
+ * Get a list of a single {Beneficiary}
  * Depends on getAddress()
  *
  * Input fields taken from the `record` are:
@@ -211,9 +211,9 @@ const getThemes = record =>
  *
  * @memberof inforegioXmlTransform
  * @param {Object} record The row received from harmonized storage
- * @returns {Array} List of a single {Partner}
+ * @returns {Array} List of a single {Beneficiary}
  */
-const getPartners = record =>
+const getBeneficiaries = record =>
   record.Beneficiary
     ? [
         {
@@ -221,8 +221,11 @@ const getPartners = record =>
           type: '',
           address: getAddress(record),
           region: '',
+          role: 'beneficiary',
           country: checkData(record.Beneficiary_Country),
           website: '',
+          phone: '',
+          email: '',
         },
       ]
     : [];
@@ -230,9 +233,10 @@ const getPartners = record =>
 /**
  * Map fields for INFOREGIO producer, XML file types
  *
+ * Mapping document: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/mapping.md|markdown version}
  * Transform function: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/xml/src/lib/transform.js|implementation details}
  * @name inforegioXmlTransform
- * @param {Object} record The row received from harmonized storage
+ * @param {Object} record The row received from parsed file
  * @returns {Project} JSON matching the type fields
  */
 export default (record: Object): Project => {
@@ -265,22 +269,20 @@ export default (record: Object): Project => {
   // Preprocess themes
   const themeArray = getThemes(record);
 
-  // Preprocess partners
-  const partnerArray = getPartners(record);
+  // Preprocess third parties
+  const thirdPartiesArray = getBeneficiaries(record);
 
   // Map the fields
   return {
     action: '',
     budget: budgetObject,
     call_year: '',
-    coordinators: [],
     description: checkData(record.quote),
     ec_priorities: [],
     media: {
       cover_image: '',
       video: '',
     },
-    partners: partnerArray,
     period: checkData(record.Period),
     programme_name: '',
     project_id: checkData(record.PROJECTID).toString(),
@@ -295,6 +297,7 @@ export default (record: Object): Project => {
     sub_programme_name: '',
     success_story: '',
     themes: themeArray,
+    third_parties: thirdPartiesArray,
     timeframe: {
       from: formatDate(checkData(record.Project_Timeframe_start_date)),
       to: formatDate(checkData(record.Project_Timeframe_end_date)),
