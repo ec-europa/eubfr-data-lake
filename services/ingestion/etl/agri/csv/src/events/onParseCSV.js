@@ -104,7 +104,7 @@ export const handler = async (event, context, callback) => {
           to: ['logs'],
         });
 
-        return resolve(null, 'CSV parsed successfully');
+        return resolve('CSV parsed successfully');
       });
   });
 };

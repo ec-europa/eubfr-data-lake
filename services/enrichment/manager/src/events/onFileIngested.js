@@ -83,7 +83,7 @@ export const handler = async (event, context, callback) => {
         .pipe(queueStream)
         .on('error', reject)
         .on('finish', async () =>
-          resolve(null, 'All projects have been sent to enrichment')
+          resolve('All projects have been sent to enrichment')
         );
     });
   } catch (err) {

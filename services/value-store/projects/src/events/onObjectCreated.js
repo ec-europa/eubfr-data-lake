@@ -165,7 +165,7 @@ export const handler = async (event, context, callback) => {
             })
             .promise();
 
-          return resolve(null, 'Results uploaded successfully, all went well.');
+          return resolve('Results uploaded successfully, all went well.');
         });
     });
   } catch (err) {

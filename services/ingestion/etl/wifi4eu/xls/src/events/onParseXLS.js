@@ -129,7 +129,7 @@ export const handler = async (event, context, callback) => {
           to: ['logs'],
         });
 
-        return resolve(null, 'XLS parsed successfully');
+        return resolve('XLS parsed successfully');
       });
     });
   });

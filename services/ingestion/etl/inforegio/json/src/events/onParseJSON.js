@@ -140,7 +140,7 @@ export const handler = async (event, context, callback) => {
           to: ['logs'],
         });
 
-        return resolve(null, 'JSON parsed successfully');
+        return resolve('JSON parsed successfully');
       });
     });
   });

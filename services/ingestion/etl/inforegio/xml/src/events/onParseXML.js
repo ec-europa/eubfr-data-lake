@@ -125,7 +125,7 @@ export const handler = async (event, context, callback) => {
           to: ['logs'],
         });
 
-        return resolve(null, 'XML parsed successfully');
+        return resolve('XML parsed successfully');
       });
     });
   });
