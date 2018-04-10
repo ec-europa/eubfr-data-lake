@@ -57,7 +57,7 @@ export const handler = async (event, context, callback) => {
   const messenger = MessengerFactory.Create({ context });
   const s3 = new AWS.S3();
 
-  const handleError = async e => {
+  const handleError = async (e, cb) => {
     await messenger.send({
       message: {
         computed_key: message.object.key,
@@ -67,7 +67,7 @@ export const handler = async (event, context, callback) => {
       to: ['logs'],
     });
 
-    return callback(e);
+    return cb(e);
   };
 
   await messenger.send({
@@ -80,66 +80,68 @@ export const handler = async (event, context, callback) => {
   });
 
   // Get file
-  const file = s3
+  const readStream = s3
     .getObject({
       Bucket: message.bucket.name,
       Key: message.object.key,
     })
     .createReadStream();
 
-  // Put data in buffer
-  const buffers = [];
-  file.on('data', data => {
-    buffers.push(data);
-  });
+  return new Promise((resolve, reject) => {
+    // Put data in buffer
+    const buffers = [];
+    readStream.on('data', data => {
+      buffers.push(data);
+    });
 
-  file.on('error', handleError);
+    readStream.on('error', e => handleError(e, reject));
 
-  // Manage data
-  return file.on('end', () => {
-    let dataString = '';
+    // Manage data
+    readStream.on('end', () => {
+      let dataString = '';
 
-    try {
-      // Parse file
-      const buffer = Buffer.concat(buffers);
-      let parser = JSON.parse(buffer);
+      try {
+        // Parse file
+        const buffer = Buffer.concat(buffers);
+        let parser = JSON.parse(buffer);
 
-      // Sometimes records are nested in items key.
-      parser = parser.items ? parser.items : parser;
+        // Sometimes records are nested in items key.
+        parser = parser.items ? parser.items : parser;
 
-      for (let i = 0; i < parser.length; i += 1) {
-        // Transform data
-        const data = transformRecord(parser[i]);
-        dataString += `${JSON.stringify(data)}\n`;
-      }
-    } catch (e) {
-      return handleError(e);
-    }
-
-    // Load data
-    const params = {
-      Bucket: BUCKET,
-      Key: `${message.object.key}.ndjson`,
-      Body: dataString,
-      ContentType: 'application/x-ndjson',
-    };
-
-    return s3.upload(params, async err => {
-      if (err) {
-        return handleError(err);
+        for (let i = 0; i < parser.length; i += 1) {
+          // Transform data
+          const data = transformRecord(parser[i]);
+          dataString += `${JSON.stringify(data)}\n`;
+        }
+      } catch (e) {
+        return handleError(e, reject);
       }
 
-      await messenger.send({
-        message: {
-          computed_key: message.object.key,
-          status_message:
-            'JSON parsed successfully. Results will be uploaded to ElasticSearch soon...',
-          status_code: STATUS.PARSED,
-        },
-        to: ['logs'],
+      // Load data
+      const params = {
+        Bucket: BUCKET,
+        Key: `${message.object.key}.ndjson`,
+        Body: dataString,
+        ContentType: 'application/x-ndjson',
+      };
+
+      return s3.upload(params, async err => {
+        if (err) {
+          return handleError(err, reject);
+        }
+
+        await messenger.send({
+          message: {
+            computed_key: message.object.key,
+            status_message:
+              'JSON parsed successfully. Results will be uploaded to ElasticSearch soon...',
+            status_code: STATUS.PARSED,
+          },
+          to: ['logs'],
+        });
+
+        return resolve('JSON parsed successfully');
       });
-
-      return callback(null, 'JSON parsed successfully');
     });
   });
 };

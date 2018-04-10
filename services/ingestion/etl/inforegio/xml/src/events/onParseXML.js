@@ -40,7 +40,7 @@ export const handler = async (event, context, callback) => {
     return callback(new Error('File extension should be .xml'));
   }
 
-  const handleError = async e => {
+  const handleError = async (e, cb) => {
     await messenger.send({
       message: {
         computed_key: message.object.key,
@@ -50,7 +50,7 @@ export const handler = async (event, context, callback) => {
       to: ['logs'],
     });
 
-    return callback(e);
+    return cb(e);
   };
 
   await messenger.send({
@@ -63,72 +63,72 @@ export const handler = async (event, context, callback) => {
   });
 
   // Get file
-  const file = s3
+  const readStream = s3
     .getObject({
       Bucket: message.bucket.name,
       Key: message.object.key,
     })
     .createReadStream();
 
-  // Put data in buffer
-  const buffers = [];
-  file.on('data', data => {
-    buffers.push(data);
-  });
+  return new Promise((resolve, reject) => {
+    // Put data in buffer
+    const buffers = [];
+    readStream.on('data', data => {
+      buffers.push(data);
+    });
 
-  file.on('error', handleError);
+    readStream.on('error', e => handleError(e, reject));
 
-  // Manage data
-  file.on('end', () => {
-    let dataString = '';
+    // Manage data
+    readStream.on('end', () => {
+      let dataString = '';
 
-    try {
-      // Parse file
-      const buffer = Buffer.concat(buffers);
+      try {
+        // Parse file
+        const buffer = Buffer.concat(buffers);
 
-      const parser = xml2js.Parser();
-      parser.parseString(buffer, (err, result) => {
-        if (result.main && result.main.DATA_RECORD) {
-          const res = result.main.DATA_RECORD;
-          for (let i = 0; i < res.length; i += 1) {
-            // Transform data
-            const data = transformRecord(res[i]);
-            dataString += `${JSON.stringify(data)}\n`;
+        const parser = xml2js.Parser();
+        parser.parseString(buffer, (err, result) => {
+          if (result.main && result.main.DATA_RECORD) {
+            const res = result.main.DATA_RECORD;
+            for (let i = 0; i < res.length; i += 1) {
+              // Transform data
+              const data = transformRecord(res[i]);
+              dataString += `${JSON.stringify(data)}\n`;
+            }
           }
-        }
-      });
-    } catch (e) {
-      return handleError(e);
-    }
-
-    // Load data
-    const params = {
-      Bucket: BUCKET,
-      Key: `${message.object.key}.ndjson`,
-      Body: dataString,
-      ContentType: 'application/x-ndjson',
-    };
-
-    return s3.upload(params, async err => {
-      if (err) {
-        return handleError(err);
+        });
+      } catch (e) {
+        return handleError(e, reject);
       }
 
-      await messenger.send({
-        message: {
-          computed_key: message.object.key,
-          status_message:
-            'XML parsed successfully. Results will be uploaded to ElasticSearch soon...',
-          status_code: STATUS.PARSED,
-        },
-        to: ['logs'],
-      });
+      // Load data
+      const params = {
+        Bucket: BUCKET,
+        Key: `${message.object.key}.ndjson`,
+        Body: dataString,
+        ContentType: 'application/x-ndjson',
+      };
 
-      return callback(null, 'XML parsed successfully');
+      return s3.upload(params, async err => {
+        if (err) {
+          return handleError(err, reject);
+        }
+
+        await messenger.send({
+          message: {
+            computed_key: message.object.key,
+            status_message:
+              'XML parsed successfully. Results will be uploaded to ElasticSearch soon...',
+            status_code: STATUS.PARSED,
+          },
+          to: ['logs'],
+        });
+
+        return resolve('XML parsed successfully');
+      });
     });
   });
-
-  return file;
 };
 
 export default handler;

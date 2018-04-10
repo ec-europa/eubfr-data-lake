@@ -101,7 +101,7 @@ export const handler = async (event, context, callback) => {
       index: INDEX,
     });
 
-    const onPipeError = async e =>
+    const onPipeError = async (e, cb) => {
       messenger.send({
         message: {
           computed_key: originalComputedKey,
@@ -111,56 +111,63 @@ export const handler = async (event, context, callback) => {
         to: ['logs'],
       });
 
-    return s3
+      return cb(e);
+    };
+
+    const readStream = s3
       .getObject({
         Bucket: s3record.s3.bucket.name,
         Key: s3record.s3.object.key,
       })
-      .createReadStream()
-      .pipe(split2(JSON.parse))
-      .on('error', onPipeError)
-      .pipe(
-        through2.obj((chunk, enc, cb) => {
-          // Enhance item to save
-          const item = Object.assign(
-            {
-              computed_key: s3record.s3.object.key,
-              created_by: s3record.userIdentity.principalId, // which service created the harmonized file
-              last_modified: data.LastModified.toISOString(), // ISO-8601 date
-            },
-            chunk
-          );
+      .createReadStream();
 
-          return cb(null, item);
-        })
-      )
-      .on('error', onPipeError)
-      .pipe(saveStream)
-      .on('error', onPipeError)
-      .on('finish', async () => {
-        await messenger.send({
-          message: {
-            computed_key: originalComputedKey,
-            status_message: 'Results uploaded successfully, all went well.',
-            status_code: STATUS.INGESTED,
-          },
-          to: ['logs'],
-        });
+    return new Promise((resolve, reject) => {
+      readStream
+        .pipe(split2(JSON.parse))
+        .on('error', e => onPipeError(e, reject))
+        .pipe(
+          through2.obj((chunk, enc, cb) => {
+            // Enhance item to save
+            const item = Object.assign(
+              {
+                computed_key: s3record.s3.object.key,
+                created_by: s3record.userIdentity.principalId, // which service created the harmonized file
+                last_modified: data.LastModified.toISOString(), // ISO-8601 date
+              },
+              chunk
+            );
 
-        const enrichmentTargetArn = `arn:aws:sns:${REGION}:${accountId}:${STAGE}-onEnrichmentRequested`;
-
-        await sns
-          .publish({
-            Message: JSON.stringify({
-              default: JSON.stringify(s3record.s3),
-            }),
-            MessageStructure: 'json',
-            TargetArn: enrichmentTargetArn,
+            return cb(null, item);
           })
-          .promise();
+        )
+        .on('error', e => onPipeError(e, reject))
+        .pipe(saveStream)
+        .on('error', e => onPipeError(e, reject))
+        .on('finish', async () => {
+          await messenger.send({
+            message: {
+              computed_key: originalComputedKey,
+              status_message: 'Results uploaded successfully, all went well.',
+              status_code: STATUS.INGESTED,
+            },
+            to: ['logs'],
+          });
 
-        return callback(null, 'Results uploaded successfully, all went well.');
-      });
+          const enrichmentTargetArn = `arn:aws:sns:${REGION}:${accountId}:${STAGE}-onEnrichmentRequested`;
+
+          await sns
+            .publish({
+              Message: JSON.stringify({
+                default: JSON.stringify(s3record.s3),
+              }),
+              MessageStructure: 'json',
+              TargetArn: enrichmentTargetArn,
+            })
+            .promise();
+
+          return resolve('Results uploaded successfully, all went well.');
+        });
+    });
   } catch (err) {
     await messenger.send({
       message: {

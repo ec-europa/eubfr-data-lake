@@ -106,7 +106,7 @@ const getBeneficiaries = record => [
  * @returns {Number} The level of NUTS or null if one can't be extracted
  */
 const getNutsCodeLevel = code => {
-  if (code.length >= 2) {
+  if (code && code.length >= 2) {
     return code.length - 2;
   }
   return null;
