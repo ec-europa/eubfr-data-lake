@@ -26,7 +26,9 @@ export const handler = async (event, context, callback) => {
 
   const messenger = MessengerFactory.Create({ context });
 
-  const onError = async e => {
+  const onError = async (e, cb) => {
+    // cb was callback of lambda, after update to node 8,
+    // streams use promises on close and cb can also be the reject case of a promise
     await messenger.send({
       message: {
         computed_key: key,
@@ -36,7 +38,7 @@ export const handler = async (event, context, callback) => {
       to: ['logs'],
     });
 
-    return callback(e);
+    return cb(e);
   };
 
   const s3 = new AWS.S3();
@@ -73,28 +75,38 @@ export const handler = async (event, context, callback) => {
     to: ['logs'],
   });
 
-  return s3
+  const readStream = s3
     .getObject({ Bucket: snsMessage.bucket.name, Key: key })
-    .createReadStream()
-    .pipe(parser)
-    .on('error', e => onError(new Error(`Error on parse: ${e.message}`)))
-    .pipe(transformer)
-    .on('error', e => onError(new Error(`Error on transform: ${e.message}`)))
-    .pipe(uploadFromStream({ key, BUCKET, s3, onError }))
-    .on('error', e => onError(new Error(`Error on upload: ${e.message}`)))
-    .on('end', async () => {
-      await messenger.send({
-        message: {
-          computed_key: key,
-          status_message:
-            'CSV parsed successfully. Results will be uploaded to ElasticSearch soon...',
-          status_code: STATUS.PARSED,
-        },
-        to: ['logs'],
-      });
+    .createReadStream();
 
-      return callback(null, 'CSV parsed successfully');
-    });
+  return new Promise((resolve, reject) => {
+    readStream
+      .pipe(parser)
+      .on('error', e =>
+        onError(new Error(`Error on parse: ${e.message}`, reject))
+      )
+      .pipe(transformer)
+      .on('error', e =>
+        onError(new Error(`Error on transform: ${e.message}`, reject))
+      )
+      .pipe(uploadFromStream({ key, BUCKET, s3, onError }))
+      .on('error', e =>
+        onError(new Error(`Error on upload: ${e.message}`, reject))
+      )
+      .on('end', async () => {
+        await messenger.send({
+          message: {
+            computed_key: key,
+            status_message:
+              'CSV parsed successfully. Results will be uploaded to ElasticSearch soon...',
+            status_code: STATUS.PARSED,
+          },
+          to: ['logs'],
+        });
+
+        return resolve(null, 'CSV parsed successfully');
+      });
+  });
 };
 
 export default handler;
