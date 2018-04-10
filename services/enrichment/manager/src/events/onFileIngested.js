@@ -54,17 +54,17 @@ export const handler = async (event, context, callback) => {
       queueUrl,
     });
 
-    const onPipeError = e => callback(e);
+    const readStream = s3
+      .getObject({
+        Bucket: s3Record.bucket.name,
+        Key: s3Record.object.key,
+      })
+      .createReadStream();
 
-    return (
-      s3
-        .getObject({
-          Bucket: s3Record.bucket.name,
-          Key: s3Record.object.key,
-        })
-        .createReadStream()
+    return new Promise((resolve, reject) => {
+      readStream
         .pipe(split2(JSON.parse))
-        .on('error', onPipeError)
+        .on('error', reject)
         .pipe(
           through2.obj((chunk, enc, cb) => {
             // Enhance item to save
@@ -78,14 +78,14 @@ export const handler = async (event, context, callback) => {
             return cb(null, item);
           })
         )
-        .on('error', onPipeError)
+        .on('error', reject)
         // TODO: batch queue (SendMessageBatch)
         .pipe(queueStream)
-        .on('error', onPipeError)
+        .on('error', reject)
         .on('finish', async () =>
-          callback(null, 'All projects have been sent to enrichment')
-        )
-    );
+          resolve(null, 'All projects have been sent to enrichment')
+        );
+    });
   } catch (err) {
     return callback(err.message);
   }

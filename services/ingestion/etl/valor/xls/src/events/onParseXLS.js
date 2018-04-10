@@ -37,7 +37,7 @@ export const handler = async (event, context, callback) => {
 
   const messenger = MessengerFactory.Create({ context });
 
-  const handleError = async e => {
+  const handleError = async (e, cb) => {
     await messenger.send({
       message: {
         computed_key: message.object.key,
@@ -47,7 +47,7 @@ export const handler = async (event, context, callback) => {
       to: ['logs'],
     });
 
-    return callback(e);
+    return cb(e);
   };
 
   const s3 = new AWS.S3();
@@ -62,71 +62,72 @@ export const handler = async (event, context, callback) => {
   });
 
   // Get file
-  const file = s3
+  const readStream = s3
     .getObject({
       Bucket: message.bucket.name,
       Key: message.object.key,
     })
     .createReadStream();
 
-  // Put data in buffer
-  const buffers = [];
-  file.on('data', data => {
-    buffers.push(data);
-  });
+  return new Promise((resolve, reject) => {
+    // Put data in buffer
+    const buffers = [];
 
-  file.on('error', handleError);
+    readStream.on('data', data => {
+      buffers.push(data);
+    });
 
-  // Manage data
-  file.on('end', () => {
-    let dataString = '';
+    readStream.on('error', e => handleError(e, reject));
 
-    try {
-      // Parse file
-      const buffer = Buffer.concat(buffers);
-      const workbook = XLSX.read(buffer);
-      const sheetNameList = workbook.SheetNames;
-      const parser = XLSX.utils.sheet_to_json(
-        workbook.Sheets[sheetNameList[0]]
-      );
+    // Manage data
+    readStream.on('end', () => {
+      let dataString = '';
 
-      for (let i = 0; i < parser.length; i += 1) {
-        // Transform data
-        const data = transformRecord(parser[i]);
-        dataString += `${JSON.stringify(data)}\n`;
-      }
-    } catch (e) {
-      return handleError(e);
-    }
+      try {
+        // Parse file
+        const buffer = Buffer.concat(buffers);
+        const workbook = XLSX.read(buffer);
+        const sheetNameList = workbook.SheetNames;
+        const parser = XLSX.utils.sheet_to_json(
+          workbook.Sheets[sheetNameList[0]]
+        );
 
-    // Load data
-    const params = {
-      Bucket: BUCKET,
-      Key: `${message.object.key}.ndjson`,
-      Body: dataString,
-      ContentType: 'application/x-ndjson',
-    };
-
-    return s3.upload(params, async err => {
-      if (err) {
-        return handleError(err);
+        for (let i = 0; i < parser.length; i += 1) {
+          // Transform data
+          const data = transformRecord(parser[i]);
+          dataString += `${JSON.stringify(data)}\n`;
+        }
+      } catch (e) {
+        return handleError(e, reject);
       }
 
-      await messenger.send({
-        message: {
-          computed_key: message.object.key,
-          status_message:
-            'XLS parsed successfully. Results will be uploaded to ElasticSearch soon...',
-          status_code: STATUS.PARSED,
-        },
-        to: ['logs'],
+      // Load data
+      const params = {
+        Bucket: BUCKET,
+        Key: `${message.object.key}.ndjson`,
+        Body: dataString,
+        ContentType: 'application/x-ndjson',
+      };
+
+      return s3.upload(params, async err => {
+        if (err) {
+          return handleError(err, reject);
+        }
+
+        await messenger.send({
+          message: {
+            computed_key: message.object.key,
+            status_message:
+              'XLS parsed successfully. Results will be uploaded to ElasticSearch soon...',
+            status_code: STATUS.PARSED,
+          },
+          to: ['logs'],
+        });
+
+        return resolve(null, 'XLS parsed successfully');
       });
-
-      return callback(null, 'XLS parsed successfully');
     });
   });
-
-  return file;
 };
 
 export default handler;
