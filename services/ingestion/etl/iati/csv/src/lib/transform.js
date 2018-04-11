@@ -11,176 +11,61 @@ import type { Project } from '../../../../_types/Project';
 /**
  * Converts a single string to an array
  *
- * @memberof IatiCsvTransform
- * @param {Object} record The row received from parsed file
- * @returns {Array} List of string values for `funding_area` field
- *
- * @example
- * input => "Research & innovation; Investment for growth; Transport"
- * output => ["Research & innovation", "Investment for growth", "Transport"]
- */
-const getFundingArea = record =>
-  // Get value for 'Funding area' if property is present.
-  (record['Funding area'] ? record['Funding area'].split(';') : []).filter(
-    // Remove empty strings.
-    item => item
-  );
-
-/**
- * Preprocess coordinators
+ * Fields taken into account from raw data:
+ * - currency
+ * - total-Commitment
+ * - total-Disbursement
+ * - total-Expenditure
  *
  * @memberof IatiCsvTransform
  * @param {Object} record The row received from parsed file
- * @returns {Array} List of {Coordinator} objects for `coordinators` field
+ * @returns {Budget} Field containing {BudgetItem}
  *
- * @example
- * input => "Eva Maria Plunger (VERBUND AG); foo; bar"
- * output => ["Eva Maria Plunger (VERBUND AG)", "foo", "bar"]
  */
-const getCoordinators = record =>
-  record.Coordinators.split(';')
-    .filter(coordinator => coordinator)
-    .map(coordinator => ({
-      name: coordinator,
-      type: '',
-      address: '',
-      region: '',
-      role: 'coordinator',
-      country: '',
-      website: '',
-      phone: '',
-      email: '',
-    }));
+const getBudget = record => {
+  const currency = record.currency || '';
+  const raw = record['total-Commitment'] || '';
 
-/**
- * Preprocess partners
- *
- * @memberof IatiCsvTransform
- * @param {Object} record The row received from parsed file
- * @returns {Array} List of {Partner} objects for `partners` field
- *
- * @example
- * input => "foo, bar, baz"
- * output => ["foo", "bar", "baz"]
- */
-const getPartners = record =>
-  record.Partners.split(',')
-    .filter(partner => partner)
-    .map(partner => ({
-      name: partner,
-      type: '',
-      address: '',
-      region: '',
-      role: 'partner',
-      country: '',
-      website: '',
-      phone: '',
-      email: '',
-    }));
-
-/**
- * Preprocess locations
- *
- * Input fields taken from the `record` are:
- *
- * - `Project location longitude`
- * - `Project location latitude`
- * - `Project country(ies)`
- * - `Project address(es)`
- * - `Project postal code(s)`
- * - `Project town(s)`
- *
- * @memberof IatiCsvTransform
- * @param {Object} record The row received from parsed file
- * @returns {Array} List of {Location} objects for `project_locations` field
- */
-const getLocations = record => {
-  const longArray = record['Project location longitude'].split(';');
-  const latArray = record['Project location latitude'].split(';');
-
-  return record['Project country(ies)'].split(';').map((country, index) => {
-    const hasCoordinates =
-      Array.isArray(longArray) &&
-      longArray[index] &&
-      Array.isArray(latArray) &&
-      latArray[index];
-
-    return {
-      country_code: getCountryCode(country),
-      region: '',
-      nuts: [],
-      address: record['Project address(es)'] || '',
-      postal_code: record['Project postal code(s)'] || '',
-      town: record['Project town(s)'] || '',
-      centroid: hasCoordinates
-        ? {
-            lat: parseFloat(latArray[index]) || 0,
-            lon: parseFloat(longArray[index]) || 0,
-          }
-        : null,
-      location: hasCoordinates
-        ? {
-            type: 'Point',
-            coordinates: [
-              parseFloat(longArray[index]) || 0,
-              parseFloat(latArray[index]) || 0,
-            ],
-          }
-        : null,
-    };
-  });
+  return {
+    eu_contrib: {
+      value: 0,
+      currency,
+      raw,
+    },
+    total_cost: { value: 0, currency: '', raw: '' },
+    private_fund: { value: 0, currency: '', raw: '' },
+    public_fund: { value: 0, currency: '', raw: '' },
+    other_contrib: { value: 0, currency: '', raw: '' },
+    funding_area: [],
+    mmf_heading: '',
+  };
 };
 
 /**
- * Preprocess related links
+ * Preprocess `project_locations` field.
+ * Depends on:
+ * - `getCountryCode`
  *
- * Depends on record['Related links'] field
+ * Data comes from the following source fields:
+ * - `country_code`
+ * - `region`
  *
  * @memberof IatiCsvTransform
  * @param {Object} record The row received from parsed file
- * @returns {Array|Object} List of {RelatedLink}
- *
- * @example
- * input => "<a href=\"https://ec.europa.eu/inea/en/ten-t/ten-t-projects/projects-by-country/multi-country/2013-eu-92069-s\">INEA</a>;<a href=\"https://europa.eu/investeu/projects/central-european-green-corridors_en\">InvestEU</a>"
- * output => [
- *    { label: "INEA", url: "https://ec.europa.eu/inea/en/ten-t/ten-t-projects/projects-by-country/multi-country/2013-eu-92069-s" }
- *    { label: "InvestEU", url: "https://europa.eu/investeu/projects/central-european-green-corridors_en" }
- *  ]
+ * @returns {Array<Location>}
  */
-const getRelatedLinks = record =>
-  (record['Related links'] || '')
-    .split(';')
-    .filter(link => link)
-    .map(link => {
-      const matches = link.match(/<a .*href="(.*)".*>(.*)<\/a>/i);
-
-      if (Array.isArray(matches) && matches.length === 3) {
-        return {
-          url: matches[1],
-          label: matches[2],
-        };
-      }
-
-      return {
-        url: '',
-        label: '',
-      };
-    })
-    .filter(link => link !== null);
-
-/**
- * Format date
- *
- * @memberof IatiCsvTransform
- * @param {Date} date Date in timestamp
- * @returns {Date} The date formatted into an ISO 8601 date format
- *
- * @example
- * input => "1388530800"
- * output => "2013-12-31T23:00:00.000Z"
- */
-const formatDate = date =>
-  date ? new Date(parseInt(date, 10) * 1000).toISOString() : null;
+const getLocations = record => [
+  {
+    address: '',
+    centroid: null,
+    country_code: getCountryCode(record['recipient-country-code']),
+    location: null,
+    nuts: [],
+    postal_code: record['postal code'] || '',
+    region: record['recipient-region-code'] || '',
+    town: '',
+  },
+];
 
 /**
  * Map fields for IATI producer, CSV file types
@@ -193,83 +78,36 @@ const formatDate = date =>
  * @returns {Project} JSON matching the type fields.
  */
 export default (record: Object): Project => {
-  // Preprocess budget
-  const budgetObject = {
-    total_cost: {
-      value: Number(record['total-Commitment']) || 0,
-      currency: record['currency'],
-      raw: record['total-Commitment'] || '',
-    },
-    eu_contrib: {
-      value: Number(record['EU Budget contribution']) || 0,
-      currency: record['currency'],
-      raw: record['EU Budget contribution'] || '',
-    },
-    private_fund: { value: 0, currency: '', raw: '' },
-    public_fund: { value: 0, currency: '', raw: '' },
-    other_contrib: { value: 0, currency: '', raw: '' },
-    funding_area: getFundingArea(record),
-    mmf_heading: record['EU Budget MFF heading'] || '',
-  };
-
-  // Preprocess third parties
-  const thirdPartiesArray = getCoordinators(record).concat(getPartners(record));
-
-  // Preprocess locations
-  const locationArray = getLocations(record);
-
-  // Preprocess related links
-  const links = getRelatedLinks(record);
-
-  // Preprocess results
-  const resultObject = {
-    available: '',
-    result: record.Results || '',
-  };
-
-  // Preprocess timeframe
-  let timeframeFrom = null;
-  let timeframeTo = null;
-
-  if (record['Timeframe start'].indexOf(' to ') !== -1) {
-    const timeframe = (record['Timeframe start'] || '').split(' to ');
-
-    if (Array.isArray(timeframe) && timeframe.length === 2) {
-      [timeframeFrom, timeframeTo] = timeframe;
-    }
-  } else {
-    timeframeFrom = record['Timeframe start'];
-    timeframeTo = record['Timeframe end'];
-  }
+  // For taking a stub
+  console.log(JSON.stringify(record));
 
   // Map the fields
   return {
     action: '',
-    budget: budgetObject,
+    budget: getBudget(record),
     call_year: '',
-    description: record['description'] || '',
-    ec_priorities:
-      record['EC’s priorities'].split(';').filter(priority => priority) || [],
+    description: record.description || '',
+    ec_priorities: '',
     media: {
-      cover_image: record.Visual || '',
-      video: record['Link to a video'] || '',
+      cover_image: '',
+      video: '',
     },
-    programme_name: record['title'] || '',
-    project_id: record.Nid || '',
-    project_locations: locationArray,
-    project_website: record['Project webpage'] || '',
-    related_links: links,
-    results: resultObject,
+    programme_name: '',
+    project_id: '',
+    project_locations: getLocations(record),
+    project_website: '',
+    related_links: [],
+    results: {},
     status: '',
     sub_programme_name: '',
     success_story: '',
     themes: [],
-    third_parties: thirdPartiesArray || [],
+    third_parties: [],
     timeframe: {
-      from: formatDate(timeframeFrom),
-      to: formatDate(timeframeTo),
+      from: '',
+      to: '',
     },
-    title: record.Name || '',
+    title: '',
     type: [],
   };
 };

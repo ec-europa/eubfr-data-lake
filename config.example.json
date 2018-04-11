@@ -12,11 +12,19 @@
       "AWS_ACCESS_KEY_ID": "",
       "AWS_SECRET_ACCESS_KEY": ""
     },
+    "iati": {
+      "AWS_ACCESS_KEY_ID": "",
+      "AWS_SECRET_ACCESS_KEY": ""
+    },
     "inforegio": {
       "AWS_ACCESS_KEY_ID": "",
       "AWS_SECRET_ACCESS_KEY": ""
     },
     "valor": {
+      "AWS_ACCESS_KEY_ID": "",
+      "AWS_SECRET_ACCESS_KEY": ""
+    },
+    "wifi4eu": {
       "AWS_ACCESS_KEY_ID": "",
       "AWS_SECRET_ACCESS_KEY": ""
     }

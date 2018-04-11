@@ -32,6 +32,8 @@ cd ../../inforegio/json
 npx serverless deploy -v
 cd ../../inforegio/xml
 npx serverless deploy -v
+cd ../../iati/csv
+npx serverless deploy -v
 cd ../../valor/xls
 npx serverless deploy -v
 cd ../../wifi4eu/xls
