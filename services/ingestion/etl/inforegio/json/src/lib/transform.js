@@ -268,6 +268,7 @@ export default (record: Object): Project => {
     project_locations: locationArray,
     project_website: getProjectWebsite(record),
     related_links: [],
+    reporting_organisation: '',
     results: {
       available: '',
       result: '',

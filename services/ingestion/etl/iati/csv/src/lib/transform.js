@@ -1,5 +1,6 @@
 // @flow
 
+import crypto from 'crypto';
 import getCountryCode from '../../../../../helpers/getCountryCode';
 
 /*
@@ -39,6 +40,22 @@ const getBudget = record => {
     funding_area: [],
     mmf_heading: '',
   };
+};
+
+/**
+ * Generates values for `project_id` field since source data misses these.
+ * It's needed for having separate projects in the Elasticsearch database.
+ *
+ * @memberof IatiCsvTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {String}
+ */
+const getProjectId = record => {
+  const title = record.title || '';
+  return crypto
+    .createHash('md5')
+    .update(title)
+    .digest('hex');
 };
 
 /**
@@ -111,10 +128,11 @@ export default (record: Object): Project =>
       video: '',
     },
     programme_name: '',
-    project_id: '',
+    project_id: getProjectId(record),
     project_locations: getLocations(record),
     project_website: '',
     related_links: [],
+    reporting_organisation: record['reporting-org'] || '',
     results: {
       available: '',
       result: '',

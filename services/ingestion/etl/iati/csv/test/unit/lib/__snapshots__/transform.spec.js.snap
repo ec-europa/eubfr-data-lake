@@ -40,7 +40,7 @@ Object {
     "video": "",
   },
   "programme_name": "",
-  "project_id": "",
+  "project_id": "c45d1416baf1563c9a23e61b01ce2343",
   "project_locations": Array [
     Object {
       "address": "",
@@ -55,6 +55,7 @@ Object {
   ],
   "project_website": "",
   "related_links": Array [],
+  "reporting_organisation": "European Commission - Development and Cooperation-EuropeAid",
   "results": Object {
     "available": "",
     "result": "",
@@ -126,7 +127,7 @@ Object {
     "video": "",
   },
   "programme_name": "",
-  "project_id": "",
+  "project_id": "d41d8cd98f00b204e9800998ecf8427e",
   "project_locations": Array [
     Object {
       "address": "",
@@ -141,6 +142,7 @@ Object {
   ],
   "project_website": "",
   "related_links": Array [],
+  "reporting_organisation": "",
   "results": Object {
     "available": "",
     "result": "",
