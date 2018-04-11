@@ -1,0 +1,411 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DG IATI CSV transformer Produces correct JSON output structure 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "EUR",
+      "raw": "3562000",
+      "value": 3562000,
+    },
+    "funding_area": Array [
+      "Research & innovation",
+      "Investment for growth",
+      "Transport",
+    ],
+    "mmf_heading": "Smart and Inclusive Growth: Competitiveness for growth and jobs",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+  },
+  "call_year": "",
+  "description": "<p>Under the EU-funded Central European Green Corridors project, 115 fast-charging stations for electric cars have opened in Germany, Austria, Slovenia, Slovakia and Croatia – allowing cross-border electromobility with your e-car between Munich and Zagreb. Further network expansion, offers and services for customers and energy supply solutions also drive the project’s roll-out of electric transport. Partners include public sector bodies and private companies.</p>",
+  "ec_priorities": Array [
+    "Jobs, Growth and Investment",
+  ],
+  "media": Object {
+    "cover_image": "https://ec.europa.eu/budget/euprojects/sites/euprojects/files/at_cegc_985x270_0.jpg",
+    "video": "",
+  },
+  "programme_name": "Connecting Europe Facility",
+  "project_id": "8155",
+  "project_locations": Array [
+    Object {
+      "address": "",
+      "centroid": Object {
+        "lat": 48.211312,
+        "lon": 16.367315,
+      },
+      "country_code": "AT",
+      "location": Object {
+        "coordinates": Array [
+          16.367315,
+          48.211312,
+        ],
+        "type": "Point",
+      },
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "",
+      "town": "",
+    },
+    Object {
+      "address": "",
+      "centroid": Object {
+        "lat": 45.803508,
+        "lon": 16.017459,
+      },
+      "country_code": "HR",
+      "location": Object {
+        "coordinates": Array [
+          16.017459,
+          45.803508,
+        ],
+        "type": "Point",
+      },
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "",
+      "town": "",
+    },
+    Object {
+      "address": "",
+      "centroid": Object {
+        "lat": 49.449922,
+        "lon": 11.10347,
+      },
+      "country_code": "DE",
+      "location": Object {
+        "coordinates": Array [
+          11.10347,
+          49.449922,
+        ],
+        "type": "Point",
+      },
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "",
+      "town": "",
+    },
+    Object {
+      "address": "",
+      "centroid": Object {
+        "lat": 48.143047,
+        "lon": 17.12426,
+      },
+      "country_code": "SK",
+      "location": Object {
+        "coordinates": Array [
+          17.12426,
+          48.143047,
+        ],
+        "type": "Point",
+      },
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "",
+      "town": "",
+    },
+    Object {
+      "address": "",
+      "centroid": Object {
+        "lat": 46.048183,
+        "lon": 14.501456,
+      },
+      "country_code": "SI",
+      "location": Object {
+        "coordinates": Array [
+          14.501456,
+          46.048183,
+        ],
+        "type": "Point",
+      },
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "",
+      "town": "",
+    },
+  ],
+  "project_website": "http://www.cegc-project.eu/",
+  "related_links": Array [
+    Object {
+      "label": "INEA",
+      "url": "https://ec.europa.eu/inea/en/ten-t/ten-t-projects/projects-by-country/multi-country/2013-eu-92069-s",
+    },
+    Object {
+      "label": "InvestEU",
+      "url": "https://europa.eu/investeu/projects/central-european-green-corridors_en",
+    },
+  ],
+  "results": Object {
+    "available": "",
+    "result": "Installation and operation of 115 fast-charging stations in 5 European countries,Development and implementation of electromobility and cross-border services for e-car users,Strategic planning for a European fast-charging network.Since the implementation of the Central European Green Corridors project, the European fast-charging network for electric vehicles has continued to grow. An additional 200 fast-charging stations – 180 in Italy and 20 in Austria – are developed. The charging networks in the various countries are compatible with each other. This gives even more citizens the chance to take advantage of cross-border electromobility.",
+  },
+  "status": "",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [],
+  "third_parties": Array [
+    Object {
+      "address": "",
+      "country": "",
+      "email": "",
+      "name": "Eva Maria Plunger (VERBUND AG)",
+      "phone": "",
+      "region": "",
+      "role": "coordinator",
+      "type": "",
+      "website": "",
+    },
+    Object {
+      "address": "",
+      "country": "",
+      "email": "",
+      "name": "Bayern Innovativ",
+      "phone": "",
+      "region": "",
+      "role": "partner",
+      "type": "",
+      "website": "",
+    },
+    Object {
+      "address": "",
+      "country": "",
+      "email": "",
+      "name": " BMW",
+      "phone": "",
+      "region": "",
+      "role": "partner",
+      "type": "",
+      "website": "",
+    },
+    Object {
+      "address": "",
+      "country": "",
+      "email": "",
+      "name": " Nissan",
+      "phone": "",
+      "region": "",
+      "role": "partner",
+      "type": "",
+      "website": "",
+    },
+    Object {
+      "address": "",
+      "country": "",
+      "email": "",
+      "name": " Renault",
+      "phone": "",
+      "region": "",
+      "role": "partner",
+      "type": "",
+      "website": "",
+    },
+    Object {
+      "address": "",
+      "country": "",
+      "email": "",
+      "name": " Volkswagen",
+      "phone": "",
+      "region": "",
+      "role": "partner",
+      "type": "",
+      "website": "",
+    },
+    Object {
+      "address": "",
+      "country": "",
+      "email": "",
+      "name": " Republic of Slovenia",
+      "phone": "",
+      "region": "",
+      "role": "partner",
+      "type": "",
+      "website": "",
+    },
+    Object {
+      "address": "",
+      "country": "",
+      "email": "",
+      "name": " ZSE",
+      "phone": "",
+      "region": "",
+      "role": "partner",
+      "type": "",
+      "website": "",
+    },
+    Object {
+      "address": "",
+      "country": "",
+      "email": "",
+      "name": " Schrack Technik",
+      "phone": "",
+      "region": "",
+      "role": "partner",
+      "type": "",
+      "website": "",
+    },
+    Object {
+      "address": "",
+      "country": "",
+      "email": "",
+      "name": " GreenWay",
+      "phone": "",
+      "region": "",
+      "role": "partner",
+      "type": "",
+      "website": "",
+    },
+    Object {
+      "address": "",
+      "country": "",
+      "email": "",
+      "name": " City of Zagreb",
+      "phone": "",
+      "region": "",
+      "role": "partner",
+      "type": "",
+      "website": "",
+    },
+    Object {
+      "address": "",
+      "country": "",
+      "email": "",
+      "name": " SMATRICS",
+      "phone": "",
+      "region": "",
+      "role": "partner",
+      "type": "",
+      "website": "",
+    },
+  ],
+  "timeframe": Object {
+    "from": "2013-12-31T23:00:00.000Z",
+    "to": "2014-12-31T23:00:00.000Z",
+  },
+  "title": "Central European Green Corridors",
+  "type": Array [],
+}
+`;
+
+exports[`DG IATI CSV transformer Project location information is correctly mapped 1`] = `
+Object {
+  "address": "",
+  "centroid": Object {
+    "lat": 48.211312,
+    "lon": 16.367315,
+  },
+  "country_code": "AT",
+  "location": Object {
+    "coordinates": Array [
+      16.367315,
+      48.211312,
+    ],
+    "type": "Point",
+  },
+  "nuts": Array [],
+  "postal_code": "",
+  "region": "",
+  "town": "",
+}
+`;
+
+exports[`DG IATI transformer handling incomplete or inconsistent data Certain fields should always be present after transformation 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "EUR",
+      "raw": "",
+      "value": 0,
+    },
+    "funding_area": Array [],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+  },
+  "call_year": "",
+  "description": "",
+  "ec_priorities": Array [],
+  "media": Object {
+    "cover_image": "",
+    "video": "",
+  },
+  "programme_name": "",
+  "project_id": "",
+  "project_locations": Array [
+    Object {
+      "address": "",
+      "centroid": Object {
+        "lat": 42.73806663,
+        "lon": 23.40014509,
+      },
+      "country_code": "",
+      "location": Object {
+        "coordinates": Array [
+          23.40014509,
+          42.73806663,
+        ],
+        "type": "Point",
+      },
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "",
+      "town": "",
+    },
+  ],
+  "project_website": "",
+  "related_links": Array [],
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
+  "status": "",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [],
+  "third_parties": Array [],
+  "timeframe": Object {
+    "from": "2013-12-31T23:00:00.000Z",
+    "to": "2014-12-31T23:00:00.000Z",
+  },
+  "title": "Bulgaria’s capital expands metro network",
+  "type": Array [],
+}
+`;
