@@ -47,8 +47,8 @@ const getBudget = record => {
  * - `getCountryCode`
  *
  * Data comes from the following source fields:
- * - `country_code`
- * - `region`
+ * - `recipient-country-code`
+ * - `recipient-region-code`
  *
  * @memberof IatiCsvTransform
  * @param {Object} record The row received from parsed file
@@ -61,11 +61,32 @@ const getLocations = record => [
     country_code: getCountryCode(record['recipient-country-code']),
     location: null,
     nuts: [],
-    postal_code: record['postal code'] || '',
+    postal_code: '',
     region: record['recipient-region-code'] || '',
     town: '',
   },
 ];
+
+/**
+ * Format date
+ *
+ * @memberof IatiCsvTransform
+ * @param {Date} date Date in `YYYY-MM-DD` (ISO) format
+ * @returns {Date} The date formatted into an ISO 8601 date format
+ *
+ * @example
+ * input => "2018-12-31"
+ * output => "2018-12-31T00:00:00.000Z"
+ */
+const formatDate = date => {
+  if (!date || typeof date !== 'string') return null;
+
+  try {
+    return new Date(date).toISOString();
+  } catch (e) {
+    return null;
+  }
+};
 
 /**
  * Map fields for IATI producer, CSV file types
@@ -77,17 +98,14 @@ const getLocations = record => [
  * @param {Object} record Piece of data to transform before going to harmonized storage.
  * @returns {Project} JSON matching the type fields.
  */
-export default (record: Object): Project => {
-  // For taking a stub
-  console.log(JSON.stringify(record));
-
+export default (record: Object): Project =>
   // Map the fields
-  return {
+  ({
     action: '',
     budget: getBudget(record),
     call_year: '',
     description: record.description || '',
-    ec_priorities: '',
+    ec_priorities: [],
     media: {
       cover_image: '',
       video: '',
@@ -97,17 +115,19 @@ export default (record: Object): Project => {
     project_locations: getLocations(record),
     project_website: '',
     related_links: [],
-    results: {},
+    results: {
+      available: '',
+      result: '',
+    },
     status: '',
     sub_programme_name: '',
     success_story: '',
     themes: [],
     third_parties: [],
     timeframe: {
-      from: '',
-      to: '',
+      from: formatDate(record['start-actual']),
+      to: formatDate(record['end-actual']),
     },
-    title: '',
+    title: record.title || '',
     type: [],
-  };
-};
+  });
