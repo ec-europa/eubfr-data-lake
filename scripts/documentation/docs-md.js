@@ -14,6 +14,7 @@ documentation
 const transforms = [
   'agri-csv',
   'budg-xls',
+  'iati-csv',
   'inforegio-json',
   'inforegio-xml',
   'valor-xls',

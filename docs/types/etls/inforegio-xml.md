@@ -101,6 +101,16 @@ output => ['foo', 'bar', 'baz']
 
 Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of values for funding area
 
+### getNutsCodeLevel
+
+Gets NUTS code level from a string
+
+**Parameters**
+
+-   `code` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The NUTS code
+
+Returns **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The level of NUTS or null if one can't be extracted
+
 ### getLocations
 
 Get a list of {Location}

@@ -119,3 +119,13 @@ Preprocess value field of {BudgetItem}.
 -   `budget` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** String containing numeric data
 
 Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+
+## getNutsCodeLevel
+
+Gets NUTS code level from a string
+
+**Parameters**
+
+-   `code` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The NUTS code
+
+Returns **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The level of NUTS or null if one can't be extracted
