@@ -1,6 +1,6 @@
 import stream from 'stream';
 
-export default ({ key, BUCKET, s3, onError }) => {
+export default ({ key, BUCKET, s3, handleError }) => {
   const pass = new stream.PassThrough();
 
   const params = {
@@ -10,8 +10,8 @@ export default ({ key, BUCKET, s3, onError }) => {
     ContentType: 'application/x-ndjson',
   };
 
-  s3.upload(params, err => {
-    if (err) onError(err);
+  s3.upload(params, async err => {
+    if (err) handleError(err);
   });
 
   return pass;
