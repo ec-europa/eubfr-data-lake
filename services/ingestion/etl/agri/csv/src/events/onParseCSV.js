@@ -26,9 +26,7 @@ export const handler = async (event, context, callback) => {
 
   const messenger = MessengerFactory.Create({ context });
 
-  const onError = async (e, cb) => {
-    // cb was callback of lambda, after update to node 8,
-    // streams use promises on close and cb can also be the reject case of a promise
+  const handleError = async (e, cb) => {
     await messenger.send({
       message: {
         computed_key: key,
@@ -82,16 +80,16 @@ export const handler = async (event, context, callback) => {
   return new Promise((resolve, reject) => {
     readStream
       .pipe(parser)
-      .on('error', e =>
-        onError(new Error(`Error on parse: ${e.message}`, reject))
+      .on('error', async e =>
+        handleError(new Error(`Error on parse: ${e.message}`, reject))
       )
       .pipe(transformer)
-      .on('error', e =>
-        onError(new Error(`Error on transform: ${e.message}`, reject))
+      .on('error', async e =>
+        handleError(new Error(`Error on transform: ${e.message}`, reject))
       )
-      .pipe(uploadFromStream({ key, BUCKET, s3, onError }))
-      .on('error', e =>
-        onError(new Error(`Error on upload: ${e.message}`, reject))
+      .pipe(uploadFromStream({ key, BUCKET, s3, handleError }))
+      .on('error', async e =>
+        handleError(new Error(`Error on upload: ${e.message}`, reject))
       )
       .on('end', async () => {
         await messenger.send({

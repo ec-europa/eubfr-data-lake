@@ -101,8 +101,8 @@ export const handler = async (event, context, callback) => {
       index: INDEX,
     });
 
-    const onPipeError = async (e, cb) => {
-      messenger.send({
+    const handleError = async (e, cb) => {
+      await messenger.send({
         message: {
           computed_key: originalComputedKey,
           status_message: e.message,
@@ -124,7 +124,7 @@ export const handler = async (event, context, callback) => {
     return new Promise((resolve, reject) => {
       readStream
         .pipe(split2(JSON.parse))
-        .on('error', e => onPipeError(e, reject))
+        .on('error', async e => handleError(e, reject))
         .pipe(
           through2.obj((chunk, enc, cb) => {
             // Enhance item to save
@@ -140,9 +140,9 @@ export const handler = async (event, context, callback) => {
             return cb(null, item);
           })
         )
-        .on('error', e => onPipeError(e, reject))
+        .on('error', async e => handleError(e, reject))
         .pipe(saveStream)
-        .on('error', e => onPipeError(e, reject))
+        .on('error', async e => handleError(e, reject))
         .on('finish', async () => {
           await messenger.send({
             message: {
