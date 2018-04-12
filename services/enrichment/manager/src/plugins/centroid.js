@@ -47,9 +47,10 @@ export const getCountryCode = async loc => {
 
 // Now getting only NUTS information, coordinates could be useful for other fields as well, such as address, post code, region, etc.
 export const enrichFromCentroid = async loc => {
-  const { lat, lon } = loc.centroid;
+  // Don't do anything if input is not sufficient
+  if (!loc.centroid || !loc.centroid.lat || !loc.centroid.lat) return loc;
 
-  if (!lat || !lon) return loc; // location not enriched
+  const { lat, lon } = loc.centroid;
 
   const qs = {
     format: 'json',
