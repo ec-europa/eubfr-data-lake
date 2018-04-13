@@ -259,6 +259,7 @@ export default (record: Object): Project => {
     project_locations: locationArray,
     project_website: record['Project webpage'] || '',
     related_links: links,
+    reporting_organisation: '',
     results: resultObject,
     status: '',
     sub_programme_name: '',

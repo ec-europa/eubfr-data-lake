@@ -1,0 +1,1 @@
+# IATI CSV ETL rules

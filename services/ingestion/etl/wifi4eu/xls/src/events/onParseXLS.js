@@ -82,7 +82,7 @@ export const handler = async (event, context, callback) => {
       buffers.push(data);
     });
 
-    readStream.on('error', e => handleError(e, reject));
+    readStream.on('error', async e => handleError(e, reject));
 
     // Manage data
     readStream.on('end', () => {

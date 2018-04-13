@@ -18,6 +18,7 @@ deleteServices([
   'ingestion-etl-budg-xls',
   'ingestion-etl-inforegio-json',
   'ingestion-etl-inforegio-xml',
+  'ingestion-etl-iati-csv',
   'ingestion-etl-valor-xls',
   'ingestion-etl-wifi4eu-xls',
   'value-store-projects',

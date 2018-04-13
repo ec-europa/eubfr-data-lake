@@ -1,0 +1,151 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DG IATI CSV transformer Produces correct JSON output structure 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "EUR",
+      "raw": "0",
+      "value": 0,
+    },
+    "funding_area": Array [],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+  },
+  "call_year": "",
+  "description": "ce contrat permet à l'établissement d'utilité publique qui assure les opérations décentraliser indirectes publiques dans la Province orientale de fonctionner",
+  "ec_priorities": Array [],
+  "media": Object {
+    "cover_image": "",
+    "video": "",
+  },
+  "programme_name": "",
+  "project_id": "c45d1416baf1563c9a23e61b01ce2343",
+  "project_locations": Array [
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "CD",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "",
+      "town": "",
+    },
+  ],
+  "project_website": "",
+  "related_links": Array [],
+  "reporting_organisation": "European Commission - Development and Cooperation-EuropeAid",
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
+  "status": "",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [],
+  "third_parties": Array [],
+  "timeframe": Object {
+    "from": "2011-07-05T00:00:00.000Z",
+    "to": "2015-02-04T00:00:00.000Z",
+  },
+  "title": "Gestion de l'achat de services et lamélioration du fonctionnement des services de santé dans la Province Orientale",
+  "type": Array [],
+}
+`;
+
+exports[`DG IATI CSV transformer Project location information is correctly mapped 1`] = `
+Object {
+  "address": "",
+  "centroid": null,
+  "country_code": "CD",
+  "location": null,
+  "nuts": Array [],
+  "postal_code": "",
+  "region": "",
+  "town": "",
+}
+`;
+
+exports[`DG IATI transformer handling incomplete or inconsistent data Certain fields should always be present after transformation 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "funding_area": Array [],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+  },
+  "call_year": "",
+  "description": "",
+  "ec_priorities": Array [],
+  "media": Object {
+    "cover_image": "",
+    "video": "",
+  },
+  "programme_name": "",
+  "project_id": "d41d8cd98f00b204e9800998ecf8427e",
+  "project_locations": Array [],
+  "project_website": "",
+  "related_links": Array [],
+  "reporting_organisation": "",
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
+  "status": "",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [],
+  "third_parties": Array [],
+  "timeframe": Object {
+    "from": null,
+    "to": null,
+  },
+  "title": "",
+  "type": Array [],
+}
+`;
