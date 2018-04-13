@@ -49,7 +49,7 @@ Object {
       "location": null,
       "nuts": Array [],
       "postal_code": "",
-      "region": "235",
+      "region": "",
       "town": "",
     },
   ],
@@ -82,7 +82,7 @@ Object {
   "location": null,
   "nuts": Array [],
   "postal_code": "",
-  "region": "235",
+  "region": "",
   "town": "",
 }
 `;
@@ -128,18 +128,7 @@ Object {
   },
   "programme_name": "",
   "project_id": "d41d8cd98f00b204e9800998ecf8427e",
-  "project_locations": Array [
-    Object {
-      "address": "",
-      "centroid": null,
-      "country_code": undefined,
-      "location": null,
-      "nuts": Array [],
-      "postal_code": "",
-      "region": "",
-      "town": "",
-    },
-  ],
+  "project_locations": Array [],
   "project_website": "",
   "related_links": Array [],
   "reporting_organisation": "",

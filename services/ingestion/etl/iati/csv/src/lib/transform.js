@@ -65,24 +65,26 @@ const getProjectId = record => {
  *
  * Data comes from the following source fields:
  * - `recipient-country-code`
- * - `recipient-region-code`
  *
  * @memberof IatiCsvTransform
  * @param {Object} record The row received from parsed file
  * @returns {Array<Location>}
  */
-const getLocations = record => [
-  {
-    address: '',
-    centroid: null,
-    country_code: getCountryCode(record['recipient-country-code']),
-    location: null,
-    nuts: [],
-    postal_code: '',
-    region: record['recipient-region-code'] || '',
-    town: '',
-  },
-];
+const getLocations = record =>
+  record['recipient-country-code']
+    ? [
+        {
+          address: '',
+          centroid: null,
+          country_code: getCountryCode(record['recipient-country-code']),
+          location: null,
+          nuts: [],
+          postal_code: '',
+          region: '',
+          town: '',
+        },
+      ]
+    : [];
 
 /**
  * Format date
