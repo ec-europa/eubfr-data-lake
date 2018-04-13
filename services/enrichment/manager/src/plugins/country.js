@@ -1,9 +1,7 @@
-import countries from 'i18n-iso-countries';
 import request from 'request-promise-native';
 
 export const enrichFromCountry = async loc => {
-  // Get country name from ISO 3166-1 Alpha-2 code (doesn't seem mandatory after some testing...)
-  const country = countries.getName(loc.country_code, 'en');
+  const country = loc.country_code;
 
   const qs = {
     format: 'json',
