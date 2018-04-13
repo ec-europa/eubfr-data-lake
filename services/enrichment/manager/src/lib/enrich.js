@@ -3,6 +3,10 @@ import { enrichFromCentroid } from '../plugins/centroid';
 import { enrichFromCountry } from '../plugins/country';
 
 export const enrich = async (record, existingRecord) => {
+  if (!record.project_locations || !existingRecord.project_locations) {
+    return record;
+  }
+
   const enrichedRecord = mergeRecords(record, existingRecord);
 
   const newLocations = await Promise.all(
