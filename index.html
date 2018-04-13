@@ -270,6 +270,45 @@
               
                 
                 <li class="ecl-link-block__item">
+                  <a href="#iaticsvtransform"
+                     class="ecl-link ecl-link--standalone ecl-link-block__link">
+                    IatiCsvTransform
+                  </a>
+                
+                  
+                  <ul class="ecl-list">
+                    
+                      <li><a
+                        href="#iaticsvtransformgetbudget"
+                        class="ecl-link pre-open">
+                        getBudget
+                      </a></li>
+                    
+                      <li><a
+                        href="#iaticsvtransformgetprojectid"
+                        class="ecl-link pre-open">
+                        getProjectId
+                      </a></li>
+                    
+                      <li><a
+                        href="#iaticsvtransformgetlocations"
+                        class="ecl-link pre-open">
+                        getLocations
+                      </a></li>
+                    
+                      <li><a
+                        href="#iaticsvtransformformatdate"
+                        class="ecl-link pre-open">
+                        formatDate
+                      </a></li>
+                    
+                    </ul>
+                  
+                
+                </li>
+              
+                
+                <li class="ecl-link-block__item">
                   <a href="#inforegiojsontransform"
                      class="ecl-link ecl-link--standalone ecl-link-block__link">
                     InforegioJsonTransform
@@ -1356,6 +1395,13 @@
         </li>
       
           <li>
+            reporting_organisation (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
             results (<a href="#result">Result</a>)
             
             
@@ -2314,6 +2360,343 @@ output =&gt; <span class="hljs-string">"2014-10-09T00:00:00.000Z"</span></pre>
       
       <pre style="background-color: #f5f5f5;" class="ecl-u-pa-xs">input =&gt; <span class="hljs-string">"foo, bar, baz"</span>
 output =&gt; [<span class="hljs-string">"foo"</span>, <span class="hljs-string">"bar"</span>, <span class="hljs-string">"baz"</span>]</pre>
+    
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+</section>
+
+    </ul>
+  
+
+  
+
+  
+</li>
+
+                  
+            
+              <li class='ecl-list-item ecl-u-pv-m'>
+  
+    
+    <h3 class='ecl-heading ecl-heading--h3' id='iaticsvtransform'>
+      IatiCsvTransform
+    </h3>
+    
+    
+  
+
+  <p>Map fields for IATI producer, CSV file types</p>
+<p>Example input data: <a href="https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/iati/csv/test/stubs/record.json">stub</a></p>
+<p>Transform function: <a href="https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/iati/csv/src/lib/transform.js">implementation details</a></p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        Piece of data to transform before going to harmonized storage.
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="#project">Project</a>
+      :
+        JSON matching the type fields.
+
+      
+    
+  
+
+  
+
+  
+
+  
+    <ul class="ecl-list">
+    <section class='ecl-u-clearfix ecl-u-pt-xs'>
+  
+    <a id='iaticsvtransformgetbudget' class="ecl-link ecl-link--standalone" aria-controls='iaticsvtransformgetbudget-panel' aria-expanded="true" href="#">
+      getBudget
+    </a>
+    <div id='iaticsvtransformgetbudget-panel' aria-labelledby='iaticsvtransformgetbudget' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Converts a single string to an array</p>
+<p>Fields taken into account from raw data:</p>
+<ul>
+<li>currency</li>
+<li>total-Commitment</li>
+<li>total-Disbursement</li>
+<li>total-Expenditure</li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="#budget">Budget</a>
+      :
+        Field containing {BudgetItem}
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='iaticsvtransformgetprojectid' class="ecl-link ecl-link--standalone" aria-controls='iaticsvtransformgetprojectid-panel' aria-expanded="true" href="#">
+      getProjectId
+    </a>
+    <div id='iaticsvtransformgetprojectid-panel' aria-labelledby='iaticsvtransformgetprojectid' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Generates values for <code>project_id</code> field since source data misses these.
+It's needed for having separate projects in the Elasticsearch database.</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>
+      :
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='iaticsvtransformgetlocations' class="ecl-link ecl-link--standalone" aria-controls='iaticsvtransformgetlocations-panel' aria-expanded="true" href="#">
+      getLocations
+    </a>
+    <div id='iaticsvtransformgetlocations-panel' aria-labelledby='iaticsvtransformgetlocations' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess <code>project_locations</code> field.
+Depends on:</p>
+<ul>
+<li><code>getCountryCode</code></li>
+</ul>
+<p>Data comes from the following source fields:</p>
+<ul>
+<li><code>recipient-country-code</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#location">Location</a>>
+      :
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='iaticsvtransformformatdate' class="ecl-link ecl-link--standalone" aria-controls='iaticsvtransformformatdate-panel' aria-expanded="true" href="#">
+      formatDate
+    </a>
+    <div id='iaticsvtransformformatdate-panel' aria-labelledby='iaticsvtransformformatdate' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Format date</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>date (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date">Date</a>)
+	        Date in 
+<code>YYYY-MM-DD</code>
+ (ISO) format
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date">Date</a>
+      :
+        The date formatted into an ISO 8601 date format
+
+      
+    
+  
+
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Example</h4>
+    
+      
+      <pre style="background-color: #f5f5f5;" class="ecl-u-pa-xs">input =&gt; <span class="hljs-string">"2018-12-31"</span>
+output =&gt; <span class="hljs-string">"2018-12-31T00:00:00.000Z"</span></pre>
     
   
 
