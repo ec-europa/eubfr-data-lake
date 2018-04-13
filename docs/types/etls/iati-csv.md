@@ -52,7 +52,6 @@ Depends on:
 Data comes from the following source fields:
 
 -   `recipient-country-code`
--   `recipient-region-code`
 
 **Parameters**
 

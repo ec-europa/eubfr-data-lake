@@ -10,7 +10,7 @@ Below is a table with a list of producers and the data they provide (`×` marks 
 | INFOREGIO | xml    | [record.json][4] |         |          | x            | x    |             | x      |      |
 | VALOR     | xls    | [record.json][5] |         |          | x            |      |             |        |      |
 | WIFI4EU   | xls    | [record.json][6] | x       |          | x            |      | x           |        | x    |
-| IATI      | csv    | [record.json][7] |         |          | x            |      |             | x      |      |
+| IATI      | csv    | [record.json][7] |         |          | x            |      |             |        |      |
 
 [1]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/agri/csv/test/stubs/record.json
 [2]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/budg/xls/test/stubs/record.json
