@@ -1,0 +1,10 @@
+{
+  "country_code": "LT",
+  "region": "",
+  "nuts": [],
+  "address": "",
+  "postal_code": "03500",
+  "town": "Vilnius",
+  "centroid": { "lat": 54.6380366, "lon": 25.2865583 },
+  "location": { "type": "Point", "coordinates": [25.2865583, 54.6380366] }
+}

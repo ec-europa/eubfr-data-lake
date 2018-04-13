@@ -3,7 +3,8 @@
   "name": "@eubfr/enrichment-manager",
   "version": "0.0.1",
   "scripts": {
-    "deploy": "sls deploy -v"
+    "deploy": "sls deploy -v",
+    "test:unit": "jest --testPathPattern=unit"
   },
   "devDependencies": {
     "aws-sdk": "2.179.0",
@@ -17,7 +18,7 @@
   "dependencies": {
     "elasticsearch": "14.0.0",
     "http-aws-es": "4.0.0",
-    "i18n-iso-countries": "3.5.0",
+    "jest": "22.0.5",
     "lawos": "1.1.5",
     "request-promise-native": "1.0.5",
     "split2": "2.2.0",
