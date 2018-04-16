@@ -5,7 +5,10 @@ plugins:
 
 custom:
   esIndex: ${self:provider.stage}-projects
-  webpackIncludeModules: true
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules: true
+    packager: yarn
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
   queueName: ${self:provider.stage}-enrichment-backlog
 

@@ -5,7 +5,10 @@ plugins:
   - serverless-offline #serverless-offline needs to be last in the list
 
 custom:
-  webpackIncludeModules: true
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules: true
+    packager: yarn
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
   # EUBFR_USERNAME comes from cli parameter, but for spawn() and similar, it's from env var.
   EUBFR_USERNAME: ${opt:username, env:EUBFR_USERNAME, file(../../../config.json):username, ''}

@@ -8,18 +8,18 @@
   },
   "dependencies": {
     "@eubfr/logger-messenger": "0.0.1",
-    "csv-parse": "2.0.0",
-    "stream-transform": "1.0.0"
+    "csv-parse": "2.2.0",
+    "stream-transform": "1.0.2"
   },
   "devDependencies": {
-    "aws-sdk": "2.179.0",
+    "aws-sdk": "2.224.1",
     "babel-core": "6.26.0",
-    "babel-loader": "7.1.2",
+    "babel-loader": "7.1.4",
     "babel-preset-env": "1.6.1",
     "babel-preset-flow": "6.23.0",
-    "jest": "22.0.5",
-    "serverless": "1.25.0",
-    "serverless-webpack": "4.2.0",
-    "webpack": "3.10.0"
+    "jest": "22.4.3",
+    "serverless": "1.26.1",
+    "serverless-webpack": "5.1.1",
+    "webpack": "4.5.0"
   }
 }

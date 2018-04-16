@@ -4,7 +4,10 @@ plugins:
   - serverless-webpack
 
 custom:
-  webpackIncludeModules: true
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules: true
+    packager: yarn
   eubfrEnvironment: ${opt:eubfr_env, file(../../../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
   bucketName: ${file(../../../../../resources/harmonized-storage/serverless.yml):custom.bucketName}
 
