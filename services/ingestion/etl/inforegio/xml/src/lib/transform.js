@@ -301,10 +301,7 @@ export default (record: Object): Project => {
     call_year: '',
     description: checkData(record.quote),
     ec_priorities: [],
-    media: {
-      cover_image: '',
-      video: '',
-    },
+    media: [],
     period: checkData(record.Period),
     programme_name: '',
     project_id: checkData(record.PROJECTID).toString(),

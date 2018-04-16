@@ -191,10 +191,7 @@ export default (record: Object): Project =>
     call_year: getCallYear(record),
     description: getProjectDescription(record),
     ec_priorities: [],
-    media: {
-      cover_image: '',
-      video: '',
-    },
+    media: [],
     third_parties: getBeneficieries(record),
     programme_name: '',
     project_id: getProjectId(record),
