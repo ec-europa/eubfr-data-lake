@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "scripts": {
     "start": "npm run prepare && react-scripts start",
-    "build": "npm run prepare && react-scripts build && mv build client/dist",
+    "build": "npm run prepare && react-scripts build",
     "deploy": "sls client deploy",
     "prepare": "serverless deploy && serverless export-env",
     "test": "react-scripts test --env=jsdom",

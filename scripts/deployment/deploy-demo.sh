@@ -19,10 +19,7 @@ cd ../client
 echo 'Start demo dashboard client deploy ...'
 
 echo 'Cleaning previous builds ...'
-rm -rf build client
-
-echo 'serverless-finch needs a /client folder'
-mkdir client
+rm -rf build
 
 echo 'Deploying dashboard client...'
 EUBFR_USERNAME=agri yarn run build
@@ -38,10 +35,7 @@ cd ../client
 echo 'Start demo dashboard client deploy ...'
 
 echo 'Cleaning previous builds ...'
-rm -rf build client
-
-echo 'serverless-finch needs a /client folder'
-mkdir client
+rm -rf build
 
 echo 'Deploying dashboard client...'
 EUBFR_USERNAME=budg yarn run build
@@ -57,10 +51,7 @@ cd ../client
 echo 'Start demo dashboard client deploy ...'
 
 echo 'Cleaning previous builds ...'
-rm -rf build client
-
-echo 'serverless-finch needs a /client folder'
-mkdir client
+rm -rf build
 
 echo 'Deploying dashboard client...'
 EUBFR_USERNAME=inforegio yarn run build
@@ -76,10 +67,7 @@ cd ../client
 echo 'Start demo dashboard client deploy ...'
 
 echo 'Cleaning previous builds ...'
-rm -rf build client
-
-echo 'serverless-finch needs a /client folder'
-mkdir client
+rm -rf build
 
 echo 'Deploying dashboard client...'
 EUBFR_USERNAME=iati yarn run build
@@ -95,10 +83,7 @@ cd ../client
 echo 'Start demo dashboard client deploy ...'
 
 echo 'Cleaning previous builds ...'
-rm -rf build client
-
-echo 'serverless-finch needs a /client folder'
-mkdir client
+rm -rf build
 
 echo 'Deploying dashboard client...'
 EUBFR_USERNAME=valor yarn run build
@@ -114,10 +99,7 @@ cd ../client
 echo 'Start demo dashboard client deploy ...'
 
 echo 'Cleaning previous builds ...'
-rm -rf build client
-
-echo 'serverless-finch needs a /client folder'
-mkdir client
+rm -rf build
 
 echo 'Deploying dashboard client...'
 EUBFR_USERNAME=wifi4eu yarn run build
@@ -129,10 +111,7 @@ cd ../../website
 echo 'Start demo website deploy ...'
 
 echo 'Cleaning previous builds ...'
-rm -rf build client
-
-echo 'serverless-finch needs a /client folder'
-mkdir client
+rm -rf build
 
 echo 'Deploying website...'
 yarn run release

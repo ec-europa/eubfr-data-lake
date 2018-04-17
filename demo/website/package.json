@@ -11,7 +11,7 @@
   },
   "scripts": {
     "start": "npm run prepare && react-scripts start",
-    "build": "npm run prepare && react-scripts build && mv build client/dist",
+    "build": "npm run prepare && react-scripts build",
     "deploy": "sls client deploy",
     "prepare": "serverless deploy && serverless export-env",
     "release": "npm run build && npm run deploy",
