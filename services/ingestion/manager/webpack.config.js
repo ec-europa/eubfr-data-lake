@@ -6,7 +6,7 @@ module.exports = {
   target: 'node',
   mode: slsw.lib.webpack.isLocal ? 'development' : 'production',
   optimization: {
-    minimize: false,
+    minimize: process.env.EUBFR_ENV && process.env.EUBFR_ENV === 'prod',
   },
   devtool: 'nosources-source-map',
   externals: [{ 'aws-sdk': true }],

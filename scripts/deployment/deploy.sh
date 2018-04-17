@@ -7,6 +7,9 @@ set -ex
 cd "$(dirname "$0")"
 cd ../../
 
+# Minimize code of lambda functions
+export EUBFR_ENV=prod
+
 # Deploy signed uploads service
 cd ./services/storage/signed-uploads
 npx serverless deploy -v

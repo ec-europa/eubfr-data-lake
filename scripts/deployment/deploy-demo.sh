@@ -7,7 +7,8 @@ set -ex
 cd "$(dirname "$0")"
 cd ../../
 
-# Deploy demos
+# Minimize code of lambda functions
+export EUBFR_ENV=prod
 
 ## AGRI demo
 
@@ -17,7 +18,6 @@ yarn deploy --username agri
 
 cd ../client
 echo 'Start demo dashboard client deploy ...'
-
 echo 'Cleaning previous builds ...'
 rm -rf build
 
@@ -33,7 +33,6 @@ yarn deploy --username budg
 
 cd ../client
 echo 'Start demo dashboard client deploy ...'
-
 echo 'Cleaning previous builds ...'
 rm -rf build
 
@@ -49,7 +48,6 @@ yarn deploy --username inforegio
 
 cd ../client
 echo 'Start demo dashboard client deploy ...'
-
 echo 'Cleaning previous builds ...'
 rm -rf build
 
@@ -65,7 +63,6 @@ yarn deploy --username iati
 
 cd ../client
 echo 'Start demo dashboard client deploy ...'
-
 echo 'Cleaning previous builds ...'
 rm -rf build
 
@@ -81,7 +78,6 @@ yarn deploy --username valor
 
 cd ../client
 echo 'Start demo dashboard client deploy ...'
-
 echo 'Cleaning previous builds ...'
 rm -rf build
 
@@ -97,7 +93,6 @@ yarn deploy --username wifi4eu
 
 cd ../client
 echo 'Start demo dashboard client deploy ...'
-
 echo 'Cleaning previous builds ...'
 rm -rf build
 
@@ -109,7 +104,6 @@ yarn run sls client deploy --username wifi4eu
 
 cd ../../website
 echo 'Start demo website deploy ...'
-
 echo 'Cleaning previous builds ...'
 rm -rf build
 
