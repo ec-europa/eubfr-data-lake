@@ -7,9 +7,6 @@ set -ex
 cd "$(dirname "$0")"
 cd ../../
 
-# Minimize code of lambda functions
-export EUBFR_ENV=prod
-
 ## AGRI demo
 
 cd ./demo/dashboard/server
