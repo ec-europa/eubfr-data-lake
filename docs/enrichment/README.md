@@ -2,7 +2,7 @@
 
 This page gives an overview of the existing workflows enriching information in the data lake from external services.
 
-## [Producers' data availability grid](../assets/PRODUCERS_DATA_AVAILABILITY_GRID.md)
+## [Producers' data availability grid](./PRODUCERS_DATA_AVAILABILITY_GRID.md)
 
 This document is useful when you need to know the following:
 
