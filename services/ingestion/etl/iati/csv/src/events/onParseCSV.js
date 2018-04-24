@@ -52,7 +52,7 @@ export const handler = async (event, context, callback) => {
     (record, cb) => {
       try {
         const data = transformRecord(record);
-        return cb(null, `${JSON.stringify(data)}\n`);
+        return cb(null, `${JSON.stringify(data)}\r\n`);
       } catch (e) {
         return cb(e);
       }
@@ -77,7 +77,7 @@ export const handler = async (event, context, callback) => {
     .createReadStream();
 
   // Put data in buffer
-  const buffers = [];
+  let activities = '';
 
   return new Promise((resolve, reject) => {
     readStream
@@ -89,7 +89,9 @@ export const handler = async (event, context, callback) => {
       .on('error', async e =>
         handleError(new Error(`Error on transform: ${e.message}`, reject))
       )
-      .on('data', data => buffers.push(data))
+      .on('data', data => {
+        activities += data;
+      })
       .on('error', async e =>
         handleError(new Error(`Error on upload: ${e.message}`, reject))
       )
@@ -98,7 +100,7 @@ export const handler = async (event, context, callback) => {
         const params = {
           Bucket: BUCKET,
           Key: `${key}.ndjson`,
-          Body: buffers.toString(),
+          Body: activities,
           ContentType: 'application/x-ndjson',
         };
 
