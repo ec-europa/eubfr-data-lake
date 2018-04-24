@@ -52,7 +52,7 @@ export const handler = async (event, context, callback) => {
     (record, cb) => {
       try {
         const data = transformRecord(record);
-        return cb(null, `${JSON.stringify(data)}\r\n`);
+        return cb(null, `${JSON.stringify(data)}\n`);
       } catch (e) {
         return cb(e);
       }
@@ -76,7 +76,6 @@ export const handler = async (event, context, callback) => {
     .getObject({ Bucket: snsMessage.bucket.name, Key: key })
     .createReadStream();
 
-  // Put data in buffer
   let activities = '';
 
   return new Promise((resolve, reject) => {
