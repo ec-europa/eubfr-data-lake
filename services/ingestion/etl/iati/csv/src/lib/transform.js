@@ -26,10 +26,11 @@ import type { Project } from '../../../../_types/Project';
 const getBudget = record => {
   const currency = record.currency || '';
   const raw = record['total-Expenditure'] || '';
+  const value = Number(record['total-Expenditure']) || 0;
 
   return {
     eu_contrib: {
-      value: 0,
+      value,
       currency,
       raw,
     },
