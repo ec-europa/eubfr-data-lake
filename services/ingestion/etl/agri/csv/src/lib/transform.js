@@ -183,6 +183,41 @@ const formatDate = date =>
   date ? new Date(parseInt(date, 10) * 1000).toISOString() : null;
 
 /**
+ * Prepare media information
+ *
+ * @memberof AgriCsvTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {Array<Media>}
+ *
+ * */
+const getMedia = record => {
+  const media = [];
+  if (record.Visual) {
+    media.push({
+      name: record.Visual,
+      url: record.Visual,
+      meta: {
+        description: '',
+        mime_type: '',
+        type: 'visual',
+      },
+    });
+  }
+  if (record['Link to a video']) {
+    media.push({
+      name: record['Link to a video'] || '',
+      url: record['Link to a video'] || '',
+      meta: {
+        description: '',
+        mime_type: '',
+        type: 'video',
+      },
+    });
+  }
+  return media;
+};
+
+/**
  * Map fields for AGRI producer, CSV file types
  *
  * Example input data: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/agri/csv/test/stubs/record.json|stub}
@@ -250,10 +285,7 @@ export default (record: Object): Project => {
     description: record['Project description'] || '',
     ec_priorities:
       record['EC’s priorities'].split(';').filter(priority => priority) || [],
-    media: {
-      cover_image: record.Visual || '',
-      video: record['Link to a video'] || '',
-    },
+    media: getMedia(record),
     programme_name: record['Programme name'] || '',
     project_id: record.Nid || '',
     project_locations: locationArray,

@@ -38,8 +38,15 @@ module.exports = () => ({
         last_modified: { type: 'date' },
         media: {
           properties: {
-            cover_image: { type: 'text' },
-            video: { type: 'text' },
+            name: { type: 'text' },
+            url: { type: 'text' },
+            meta: {
+              properties: {
+                description: { type: 'text' },
+                mime_type: { type: 'text' },
+                type: { type: 'text' },
+              },
+            },
           },
         },
         producer_id: { type: 'keyword' },

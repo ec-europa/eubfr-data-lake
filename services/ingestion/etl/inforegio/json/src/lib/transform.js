@@ -258,10 +258,7 @@ export default (record: Object): Project => {
     call_year: '',
     description: record.quote,
     ec_priorities: [],
-    media: {
-      cover_image: '',
-      video: '',
-    },
+    media: [],
     period: record.Period,
     programme_name: '',
     project_id: record.PROJECTID.toString(),

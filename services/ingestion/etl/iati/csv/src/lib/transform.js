@@ -126,10 +126,7 @@ export default (record: Object): Project =>
     call_year: '',
     description: record.description || '',
     ec_priorities: [],
-    media: {
-      cover_image: '',
-      video: '',
-    },
+    media: [],
     programme_name: '',
     project_id: getProjectId(record),
     project_locations: getLocations(record),
