@@ -129,6 +129,15 @@
               
                 
                 <li class="ecl-link-block__item">
+                  <a href="#mediafilemeta"
+                     class="ecl-link ecl-link--standalone ecl-link-block__link">
+                    MediaFileMeta
+                  </a>
+                
+                </li>
+              
+                
+                <li class="ecl-link-block__item">
                   <a href="#media"
                      class="ecl-link ecl-link--standalone ecl-link-block__link">
                     Media
@@ -216,6 +225,12 @@
                         href="#agricsvtransformformatdate"
                         class="ecl-link pre-open">
                         formatDate
+                      </a></li>
+                    
+                      <li><a
+                        href="#agricsvtransformgetmedia"
+                        class="ecl-link pre-open">
+                        getMedia
                       </a></li>
                     
                     </ul>
@@ -1052,14 +1067,14 @@
               <li class='ecl-list-item ecl-u-pv-m'>
   
     
-    <h3 class='ecl-heading ecl-heading--h3' id='media'>
-      Media
+    <h3 class='ecl-heading ecl-heading--h3' id='mediafilemeta'>
+      MediaFileMeta
     </h3>
     
     
   
 
-  <p>Describes field <code>project.media</code>.</p>
+  <p>Describes meta data of a media file</p>
 
 
   
@@ -1078,14 +1093,89 @@
       <ul class="ecl-list">
         
           <li>
-            cover_image (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            description (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
             
             
             
         </li>
       
           <li>
-            video (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            mime_type (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            type (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+      </ul>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+                  
+            
+              <li class='ecl-list-item ecl-u-pv-m'>
+  
+    
+    <h3 class='ecl-heading ecl-heading--h3' id='media'>
+      Media
+    </h3>
+    
+    
+  
+
+  <p>Describes field <code>project.media</code>.
+Answers for what is where</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Properties</h4>
+      <ul class="ecl-list">
+        
+          <li>
+            meta (<a href="#mediafilemeta">MediaFileMeta</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            name (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            
+            
+            
+        </li>
+      
+          <li>
+            url (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
             
             
             
@@ -1353,7 +1443,7 @@
         </li>
       
           <li>
-            media (<a href="#media">Media</a>)
+            media (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#media">Media</a>>)
             
             
             
@@ -1947,6 +2037,66 @@ output =&gt; [
       <pre style="background-color: #f5f5f5;" class="ecl-u-pa-xs">input =&gt; <span class="hljs-string">"1388530800"</span>
 output =&gt; <span class="hljs-string">"2013-12-31T23:00:00.000Z"</span></pre>
     
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='agricsvtransformgetmedia' class="ecl-link ecl-link--standalone" aria-controls='agricsvtransformgetmedia-panel' aria-expanded="true" href="#">
+      getMedia
+    </a>
+    <div id='agricsvtransformgetmedia-panel' aria-labelledby='agricsvtransformgetmedia' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Prepare media information</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#media">Media</a>>
+      :
+        
+
+      
+    
+  
+
+  
+
   
 
   
