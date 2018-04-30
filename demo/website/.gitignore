@@ -9,3 +9,6 @@
 # production
 /build
 /client/dist
+
+# ECL assets
+**/public/ecl
