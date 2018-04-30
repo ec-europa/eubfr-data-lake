@@ -2,26 +2,28 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 const SideNav = () => (
-  <nav className="ecl-navigation-inpage">
-    <div className="ecl-navigation-inpage__body">
+  <nav className="ecl-inpage-navigation ecl-u-align-self-start ecl-inpage-navigation--changed">
+    <div className="ecl-inpage-navigation__body">
       <ul
-        className="ecl-navigation-inpage__list"
-        aria-labelledby="ecl-navigation-inpage-trigger"
+        className="ecl-inpage-navigation__list"
+        aria-hidden="true"
+        aria-labelledby="ecl-inpage-navigation-trigger"
+        id="ecl-inpage-navigation-list"
       >
-        <li className="ecl-navigation-inpage__item">
+        <li className="ecl-inpage-navigation__item">
           <NavLink
+            className="ecl-link ecl-link--standalone ecl-inpage-navigation__link"
+            activeClassName="ecl-inpage-navigation__link--is-active"
             to="/files"
-            className="ecl-navigation-inpage__link ecl-link ecl-link--standalone"
-            activeClassName="ecl-navigation-inpage__link--is-active"
           >
             My Files
           </NavLink>
         </li>
-        <li className="ecl-navigation-inpage__item">
+        <li className="ecl-inpage-navigation__item">
           <NavLink
+            className="ecl-link ecl-link--standalone ecl-inpage-navigation__link"
+            activeClassName="ecl-inpage-navigation__link--is-active"
             to="/upload"
-            className="ecl-navigation-inpage__link ecl-link ecl-link--standalone"
-            activeClassName="ecl-navigation-inpage__link--is-active"
           >
             Upload a new file
           </NavLink>
