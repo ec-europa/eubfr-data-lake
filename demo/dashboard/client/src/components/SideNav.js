@@ -2,10 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 const SideNav = () => (
-  <nav
-    className="ecl-inpage-navigation ecl-u-align-self-start ecl-inpage-navigation--sticky ecl-inpage-navigation--changed"
-    style={{ top: '0px', position: 'sticky' }}
-  >
+  <nav className="ecl-inpage-navigation ecl-u-align-self-start ecl-inpage-navigation--changed">
     <div className="ecl-inpage-navigation__body">
       <ul
         className="ecl-inpage-navigation__list"
