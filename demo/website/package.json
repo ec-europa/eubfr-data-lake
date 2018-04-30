@@ -2,8 +2,8 @@
   "name": "@eubfr/demo-website",
   "version": "0.1.0",
   "scripts": {
-    "ecl": "cp -r ../../../vendors/ecl ./public",
-    "build": "run-s prepare react:build dist",
+    "ecl": "cp -r ../../vendors/ecl ./public",
+    "build": "run-s prepare ecl react:build dist",
     "dist": "mv build client/dist",
     "deploy": "sls client deploy",
     "eject": "react-scripts eject",
@@ -11,6 +11,7 @@
     "react:start": "react-scripts start",
     "react:build": "react-scripts build",
     "start": "run-s prepare ecl react:start",
+    "release": "run-s build deploy",
     "test": "react-scripts test --env=jsdom"
   },
   "dependencies": {
