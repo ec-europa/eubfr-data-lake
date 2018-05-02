@@ -23,6 +23,10 @@ npx serverless deploy -v
 cd ../cleaner
 npx serverless deploy -v
 
+# Deploy quality analyzer
+cd ../quality-analyzer
+npx serverless deploy -v
+
 # Deploy ETL
 cd ../etl/agri/csv
 npx serverless deploy -v

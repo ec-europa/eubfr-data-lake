@@ -1,0 +1,26 @@
+{
+  "private": true,
+  "name": "@eubfr/ingestion-quality-analyzer",
+  "version": "0.0.1",
+  "scripts": {
+    "deploy": "sls deploy -v",
+    "test:unit": "jest --testPathPattern=unit"
+  },
+  "dependencies": {
+    "@eubfr/logger-messenger": "0.0.1",
+    "elasticsearch": "14.0.0",
+    "http-aws-es": "4.0.0",
+    "split2": "2.2.0",
+    "through2": "2.0.3"
+  },
+  "devDependencies": {
+    "aws-sdk": "2.179.0",
+    "babel-core": "6.26.0",
+    "babel-loader": "7.1.2",
+    "babel-preset-env": "1.6.1",
+    "jest": "22.0.5",
+    "serverless": "1.25.0",
+    "serverless-webpack": "4.2.0",
+    "webpack": "3.10.0"
+  }
+}
