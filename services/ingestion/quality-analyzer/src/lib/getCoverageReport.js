@@ -1,5 +1,5 @@
 const counter = collection => {
-  let results = [];
+  const results = [];
 
   collection.forEach(field => {
     if (!results[field]) {
