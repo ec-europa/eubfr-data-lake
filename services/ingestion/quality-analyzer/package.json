@@ -10,8 +10,7 @@
     "@eubfr/logger-messenger": "0.0.1",
     "elasticsearch": "14.0.0",
     "http-aws-es": "4.0.0",
-    "split2": "2.2.0",
-    "through2": "2.0.3"
+    "split2": "2.2.0"
   },
   "devDependencies": {
     "aws-sdk": "2.179.0",

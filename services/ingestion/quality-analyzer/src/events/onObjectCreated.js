@@ -129,7 +129,7 @@ export const handler = async (event, context, callback) => {
           await client.index({
             index: INDEX,
             type: 'report',
-            id: originalComputedKey,
+            id: s3record.s3.object.key,
             body: report,
           });
 
