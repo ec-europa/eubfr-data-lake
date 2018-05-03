@@ -2,10 +2,12 @@ const counter = collection => {
   const results = [];
 
   collection.forEach(field => {
-    if (!results[field]) {
-      results[field] = 1;
+    // existing field
+    if (results[field]) {
+      results[field] += 1;
+      // new field
     } else {
-      results[field] = results[field] + 1;
+      results[field] = 1;
     }
   });
 
