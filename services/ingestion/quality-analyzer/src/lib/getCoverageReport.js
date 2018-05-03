@@ -30,4 +30,4 @@ const getCoverageReport = (input, numRecords) => {
   });
 };
 
-module.exports = getCoverageReport;
+export default getCoverageReport;

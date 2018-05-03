@@ -5,8 +5,7 @@ module.exports = () => ({
   mappings: {
     report: {
       properties: {
-        computed_key: { type: 'keyword' },
-        last_modified: { type: 'date' },
+        meta: { type: 'object' },
         report: { type: 'object' },
       },
     },
