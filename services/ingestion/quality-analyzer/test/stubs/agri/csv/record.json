@@ -1,0 +1,70 @@
+{
+  "action": "",
+  "budget": {
+    "total_cost": { "value": 0, "currency": "", "raw": "" },
+    "eu_contrib": { "value": 20511539, "currency": "EUR", "raw": "20511539" },
+    "private_fund": { "value": 0, "currency": "", "raw": "" },
+    "public_fund": { "value": 0, "currency": "", "raw": "" },
+    "other_contrib": { "value": 0, "currency": "", "raw": "" },
+    "funding_area": ["Agriculture and Rural Development"],
+    "mmf_heading": "Sustainable Growth: Natural Resources"
+  },
+  "call_year": "",
+  "description":
+    "<p>This programme aims to increase the consumption of fruit and vegetables at school to encourage healthier eating habits, in the context of declining consumption of fresh fruit and vegetables and increasing incidence of child obesity. The distribution of products, mainly fresh fruit and vegetables, is supported by educational measures such as school gardens and farm visits, to improve children's awareness of how food is produced and the importance of good nutrition. EU aid per participating Member State (MS) is established by the Commission for each school year. MS participation is voluntary.</p>",
+  "ec_priorities": ["Jobs, Growth and Investment"],
+  "media": [
+    {
+      "name":
+        "https://ec.europa.eu/budget/euprojects/sites/euprojects/files/veg_scheme.jpg",
+      "url":
+        "https://ec.europa.eu/budget/euprojects/sites/euprojects/files/veg_scheme.jpg",
+      "meta": { "description": "", "mime_type": "", "type": "visual" }
+    }
+  ],
+  "programme_name": "Agriculture markets",
+  "project_id": "1276",
+  "project_locations": [
+    {
+      "country_code": "PL",
+      "region": "",
+      "nuts": [],
+      "address": "",
+      "postal_code": "",
+      "town": "",
+      "centroid": { "lat": 52.022163, "lon": 20.914336 },
+      "location": { "type": "Point", "coordinates": [20.914336, 52.022163] }
+    }
+  ],
+  "project_website": "",
+  "related_links": [],
+  "reporting_organisation": "",
+  "results": {
+    "available": "",
+    "result":
+      "Latest available figures, for the 2014/2015 school year, show that 1 351 661 children in 11 338 schools benefited from the programme."
+  },
+  "status": "",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": [],
+  "third_parties": [
+    {
+      "name": "EC",
+      "type": "",
+      "address": "",
+      "region": "",
+      "role": "coordinator",
+      "country": "",
+      "website": "",
+      "phone": "",
+      "email": ""
+    }
+  ],
+  "timeframe": {
+    "from": "2008-12-31T23:00:00.000Z",
+    "to": "2016-12-31T23:00:00.000Z"
+  },
+  "title": "School Fruit and Vegetables Scheme - Poland",
+  "type": []
+}

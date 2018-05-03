@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Helper getAvailableProperties "@eubfr/ingestion-quality-analyzer" works for any existing transform Works with results of agri-csv 1`] = `
+Array [
+  "budget.eu_contrib",
+  "budget.eu_contrib",
+  "budget.funding_area",
+  "budget",
+  "description",
+  "ec_priorities",
+  "media.0",
+  "media.0",
+  "media.0.meta",
+  "programme_name",
+  "project_id",
+  "project_locations.0",
+  "project_locations.0.centroid",
+  "project_locations.0.centroid",
+  "project_locations.0.location",
+  "project_locations.0.location.coordinates",
+  "project_locations.0.location.coordinates",
+  "results",
+  "third_parties.0",
+  "third_parties.0",
+  "timeframe",
+  "timeframe",
+  "title",
+]
+`;

@@ -124,25 +124,39 @@ export const handler = async (event, context, callback) => {
           const fieldStats = getCoverageReport(results, numRecords);
           const report = { meta: fileMeta, report: fieldStats };
 
-          console.log(report);
+          // This nested try/catch will save cases where ES mapping for widely variable report object structure breaks
+          try {
+            await client.index({
+              index: INDEX,
+              type: 'report',
+              id: s3record.s3.object.key,
+              body: report,
+            });
 
-          await client.index({
-            index: INDEX,
-            type: 'report',
-            id: s3record.s3.object.key,
-            body: report,
-          });
+            await messenger.send({
+              message: {
+                computed_key: originalComputedKey,
+                status_message: 'Data quality analysis is ready!',
+                status_code: STATUS.SUCCESS_GENERAL,
+              },
+              to: ['logs'],
+            });
 
-          await messenger.send({
-            message: {
-              computed_key: originalComputedKey,
-              status_message: 'Data quality analysis is ready!',
-              status_code: STATUS.SUCCESS_GENERAL,
-            },
-            to: ['logs'],
-          });
+            return resolve('Data quality analysis report is ready!');
+          } catch (e) {
+            const errorMessage = `Quality report not saved: ${e.message}`;
 
-          return resolve('Data quality analysis is ready!');
+            await messenger.send({
+              message: {
+                computed_key: originalComputedKey,
+                status_message: errorMessage,
+                status_code: STATUS.ERROR,
+              },
+              to: ['logs'],
+            });
+
+            return reject(e);
+          }
         });
     });
   } catch (err) {
