@@ -124,6 +124,8 @@ export const handler = async (event, context, callback) => {
           const fieldStats = getCoverageReport(results, numRecords);
           const report = { meta: fileMeta, report: fieldStats };
 
+          console.log(report);
+
           await client.index({
             index: INDEX,
             type: 'report',
