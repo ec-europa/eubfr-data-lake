@@ -3,6 +3,7 @@ import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependenc
 import elasticsearch from 'elasticsearch';
 import connectionClass from 'http-aws-es';
 import split2 from 'split2';
+import through2 from 'through2';
 
 import MessengerFactory from '@eubfr/logger-messenger/src/lib/MessengerFactory';
 import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
@@ -68,6 +69,13 @@ export const handler = async (event, context, callback) => {
       to: ['logs'],
     });
 
+    const harmonizedFileData = await s3
+      .headObject({
+        Bucket: s3record.s3.bucket.name,
+        Key: s3record.s3.object.key,
+      })
+      .promise();
+
     await deleteReports({
       client,
       index: INDEX,
@@ -101,6 +109,22 @@ export const handler = async (event, context, callback) => {
       readStream
         .pipe(split2(JSON.parse))
         .on('error', async e => handleError(e, reject))
+        .pipe(
+          through2.obj((chunk, _, cb) => {
+            // Enhance item to save
+            const item = Object.assign(
+              {
+                computed_key: s3record.s3.object.key,
+                created_by: s3record.userIdentity.principalId, // which service created the harmonized file
+                last_modified: harmonizedFileData.LastModified.toISOString(), // ISO-8601 date
+              },
+              chunk
+            );
+
+            return cb(null, item);
+          })
+        )
+        .on('error', async e => handleError(e, reject))
         .on('data', record => {
           // increment counter for the final reporting
           numRecords += 1;
@@ -109,18 +133,25 @@ export const handler = async (event, context, callback) => {
         })
         .on('finish', async () => {
           const report = getCoverageReport(results, numRecords);
+
+          client.index({
+            index: INDEX,
+            type: 'report',
+            id: originalComputedKey,
+            body: report,
+          });
           console.log(report);
 
           await messenger.send({
             message: {
               computed_key: originalComputedKey,
-              status_message: 'Data quality analysis is read!',
-              status_code: STATUS.SUCCESS_ETL,
+              status_message: 'Data quality analysis is ready!',
+              status_code: STATUS.SUCCESS_GENERAL,
             },
             to: ['logs'],
           });
 
-          return resolve('Data quality analysis is read!');
+          return resolve('Data quality analysis is ready!');
         });
     });
   } catch (err) {
