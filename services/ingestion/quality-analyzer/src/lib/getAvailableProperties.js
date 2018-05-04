@@ -1,10 +1,13 @@
 const specialFields = [
+  // monetary
   'total_cost',
   'eu_contrib',
   'private_fund',
   'public_fund',
   'other_contrib',
+  // we only need to know if centroid is present
   'centroid',
+  // we care only for the coordinates
   'location',
 ];
 
@@ -17,12 +20,14 @@ const getNormalizedObject = initialObject => {
     return { value: initialObject.value };
   }
 
-  // A centroid with latitude and longitude
-  if (has(initialObject, 'lat') || has(initialObject, 'lon')) {
-    return { skipDepper: true };
+  // A centroid with latitude and longitude, skip as we care only that it has .centroid
+  // This is how we IGNORE the property/field of current level
+  if (has(initialObject, 'lat') && has(initialObject, 'lon')) {
+    return { skip: true };
   }
 
   // We care only if there are coordinates or not, not about their values
+  // This is how we KEEP the property/field of current level
   if (has(initialObject, 'type') && has(initialObject, 'coordinates')) {
     return { coordinates: true };
   }
@@ -48,6 +53,7 @@ const getAvailableProperties = (obj, results, stack = '') => {
   Object.keys(obj).forEach(property => {
     if (typeof obj[property] === 'object') {
       const fieldIsSpecial = specialFields.includes(property);
+
       const ObjectUnderInvestigation = fieldIsSpecial
         ? getNormalizedObject(obj[property])
         : obj[property];
@@ -57,12 +63,13 @@ const getAvailableProperties = (obj, results, stack = '') => {
       // Re-iterate
       getAvailableProperties(ObjectUnderInvestigation, results, setStack);
     } else if (hasUsefulData(obj[property]) && !results[stack]) {
-      // nothing nested, use the property
+      // nothing nested, make this property the root of the stack for this property
       if (stack === '') {
         results.push(property);
       } else {
         // The stack is the nested fields information
-        results.push(stack);
+        const setStack = property === 'skip' ? stack : `${stack}.${property}`;
+        results.push(setStack);
       }
     }
   });

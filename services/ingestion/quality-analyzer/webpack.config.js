@@ -3,6 +3,7 @@ const path = require('path');
 
 module.exports = {
   entry: slsw.lib.entries,
+  devtool: 'source-map',
   target: 'node',
   externals: [{ 'aws-sdk': true }],
   module: {

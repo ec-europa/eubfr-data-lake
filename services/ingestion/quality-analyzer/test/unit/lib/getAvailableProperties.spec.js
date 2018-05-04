@@ -18,6 +18,7 @@ describe(`Helper getAvailableProperties "@eubfr/ingestion-quality-analyzer" work
 
       getAvailableProperties(record, results);
 
+      console.log(results);
       expect(results).toMatchSnapshot();
     });
   });
