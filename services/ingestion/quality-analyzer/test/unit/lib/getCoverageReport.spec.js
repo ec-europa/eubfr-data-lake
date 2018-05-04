@@ -5,20 +5,11 @@
 import fs from 'fs';
 import path from 'path';
 import split2 from 'split2';
+import transforms from '../../transforms';
 import getAvailableProperties from '../../../src/lib/getAvailableProperties';
 import getCoverageReport from '../../../src/lib/getCoverageReport';
 
 describe(`Helper getCoverageReport "@eubfr/ingestion-quality-analyzer" provides reports for number of occurences of a given field and its coverage`, () => {
-  const transforms = [
-    'agri/csv',
-    'budg/xls',
-    'iati/csv',
-    'inforegio/json',
-    'inforegio/xml',
-    'valor/xls',
-    'wifi4eu/xls',
-  ];
-
   transforms.forEach(transform => {
     test(`Works with results of ${transform}`, () => {
       let numRecords = 0;

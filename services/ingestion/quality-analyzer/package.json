@@ -4,7 +4,8 @@
   "version": "0.0.1",
   "scripts": {
     "deploy": "sls deploy -v",
-    "test:unit": "jest --testPathPattern=unit"
+    "test:unit": "jest --testPathPattern=unit",
+    "test-write": "jest --watch"
   },
   "dependencies": {
     "@eubfr/logger-messenger": "0.0.1",

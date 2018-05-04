@@ -3,19 +3,10 @@
  */
 
 import path from 'path';
+import transforms from '../../transforms';
 import getAvailableProperties from '../../../src/lib/getAvailableProperties';
 
 describe(`Helper getAvailableProperties "@eubfr/ingestion-quality-analyzer" works for any existing transform`, () => {
-  const transforms = [
-    'agri/csv',
-    'budg/xls',
-    'iati/csv',
-    'inforegio/json',
-    'inforegio/xml',
-    'valor/xls',
-    'wifi4eu/xls',
-  ];
-
   transforms.forEach(transform => {
     test(`Works with results of ${transform}`, () => {
       const results = [];
