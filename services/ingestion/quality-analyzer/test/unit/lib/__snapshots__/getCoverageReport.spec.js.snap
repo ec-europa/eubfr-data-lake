@@ -9,8 +9,8 @@ Object {
   },
   "report": Array [
     Object {
-      "budget.eu_contrib": 6,
-      "coverage": "200.00",
+      "budget.eu_contrib": 3,
+      "coverage": "100.00",
     },
     Object {
       "budget.funding_area": 3,
@@ -49,16 +49,12 @@ Object {
       "project_locations.0": 3,
     },
     Object {
-      "coverage": "200.00",
-      "project_locations.0.centroid": 6,
+      "coverage": "100.00",
+      "project_locations.0.centroid": 3,
     },
     Object {
       "coverage": "100.00",
       "project_locations.0.location": 3,
-    },
-    Object {
-      "coverage": "200.00",
-      "project_locations.0.location.coordinates": 6,
     },
     Object {
       "coverage": "100.00",
@@ -77,8 +73,8 @@ Object {
       "title": 3,
     },
     Object {
-      "budget.total_cost": 4,
-      "coverage": "133.33",
+      "budget.total_cost": 2,
+      "coverage": "66.67",
     },
     Object {
       "coverage": "66.67",
@@ -101,8 +97,8 @@ Object {
       "coverage": "100.00",
     },
     Object {
-      "budget.eu_contrib": 6,
-      "coverage": "200.00",
+      "budget.eu_contrib": 3,
+      "coverage": "100.00",
     },
     Object {
       "call_year": 3,
@@ -309,8 +305,8 @@ Object {
       "title": 3,
     },
     Object {
-      "budget.eu_contrib": 2,
-      "coverage": "66.67",
+      "budget.eu_contrib": 1,
+      "coverage": "33.33",
     },
   ],
 }
@@ -325,12 +321,12 @@ Object {
   },
   "report": Array [
     Object {
-      "budget.total_cost": 6,
-      "coverage": "200.00",
+      "budget.total_cost": 3,
+      "coverage": "100.00",
     },
     Object {
-      "budget.eu_contrib": 6,
-      "coverage": "200.00",
+      "budget.eu_contrib": 3,
+      "coverage": "100.00",
     },
     Object {
       "budget.funding_area": 2,
@@ -393,12 +389,12 @@ Object {
   },
   "report": Array [
     Object {
-      "budget.total_cost": 6,
-      "coverage": "200.00",
+      "budget.total_cost": 3,
+      "coverage": "100.00",
     },
     Object {
-      "budget.eu_contrib": 6,
-      "coverage": "200.00",
+      "budget.eu_contrib": 3,
+      "coverage": "100.00",
     },
     Object {
       "coverage": "100.00",
@@ -449,8 +445,8 @@ Object {
   },
   "report": Array [
     Object {
-      "budget.eu_contrib": 6,
-      "coverage": "200.00",
+      "budget.eu_contrib": 3,
+      "coverage": "100.00",
     },
     Object {
       "call_year": 3,

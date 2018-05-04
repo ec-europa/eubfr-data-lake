@@ -3,7 +3,6 @@
 exports[`Helper getAvailableProperties "@eubfr/ingestion-quality-analyzer" works for any existing transform Works with results of agri/csv 1`] = `
 Array [
   "budget.eu_contrib",
-  "budget.eu_contrib",
   "budget.funding_area",
   "budget",
   "description",
@@ -15,10 +14,7 @@ Array [
   "project_id",
   "project_locations.0",
   "project_locations.0.centroid",
-  "project_locations.0.centroid",
   "project_locations.0.location",
-  "project_locations.0.location.coordinates",
-  "project_locations.0.location.coordinates",
   "results",
   "third_parties.0",
   "third_parties.0",
@@ -31,7 +27,6 @@ Array [
 exports[`Helper getAvailableProperties "@eubfr/ingestion-quality-analyzer" works for any existing transform Works with results of budg/xls 1`] = `
 Array [
   "action",
-  "budget.eu_contrib",
   "budget.eu_contrib",
   "call_year",
   "description",
@@ -185,7 +180,6 @@ Array [
 exports[`Helper getAvailableProperties "@eubfr/ingestion-quality-analyzer" works for any existing transform Works with results of iati/csv 1`] = `
 Array [
   "budget.eu_contrib",
-  "budget.eu_contrib",
   "description",
   "project_id",
   "project_locations.0",
@@ -199,8 +193,6 @@ Array [
 exports[`Helper getAvailableProperties "@eubfr/ingestion-quality-analyzer" works for any existing transform Works with results of inforegio/json 1`] = `
 Array [
   "budget.total_cost",
-  "budget.total_cost",
-  "budget.eu_contrib",
   "budget.eu_contrib",
   "budget.funding_area",
   "description",
@@ -228,8 +220,6 @@ Array [
 exports[`Helper getAvailableProperties "@eubfr/ingestion-quality-analyzer" works for any existing transform Works with results of inforegio/xml 1`] = `
 Array [
   "budget.total_cost",
-  "budget.total_cost",
-  "budget.eu_contrib",
   "budget.eu_contrib",
   "description",
   "period",
@@ -246,7 +236,6 @@ Array [
 
 exports[`Helper getAvailableProperties "@eubfr/ingestion-quality-analyzer" works for any existing transform Works with results of valor/xls 1`] = `
 Array [
-  "budget.eu_contrib",
   "budget.eu_contrib",
   "call_year",
   "description",
