@@ -1,7 +1,18 @@
-const counter = collection => {
-  const results = [];
+// @flow
 
-  collection.forEach(field => {
+/**
+ * Counts fields occurences.
+ *
+ * @param {Object} analyzedObject
+ * @param {Object} results The outcome of the analysis
+ *
+ * @returns {Object} The results for the report.
+ *
+ */
+const counter = (analyzedObject: Object): Object => {
+  const results = {};
+
+  analyzedObject.forEach(field => {
     // existing field
     if (results[field]) {
       results[field] += 1;
@@ -14,9 +25,21 @@ const counter = collection => {
   return results;
 };
 
-const getCoverageReport = (input, numRecords) => {
+/**
+ * Flags whether a given value is useful or not.
+ *
+ * @param {Object} input The object for analysis.
+ * @param {number} numRecords The number of overall occurences known outside of the scope of this function.
+ *
+ * @returns {Object} The results for the report.
+ *
+ */
+const getCoverageReport = (
+  input: Object,
+  numRecords: number
+): Array<Object> => {
   if (!input) {
-    return {};
+    return [{}];
   }
 
   const results = counter(input);
