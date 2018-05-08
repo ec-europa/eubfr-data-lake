@@ -25,8 +25,29 @@ import type { Project } from '../../../../_types/Project';
  */
 const getBudget = record => {
   const currency = record.currency || '';
-  const raw = record['total-Expenditure'] || '';
-  const value = Number(record['total-Expenditure']) || 0;
+  const totalDisbursement = record['total-Disbursement'];
+  const totalExpenditure = record['total-Expenditure'];
+
+  const totalDisbursementValue = Number(record['total-Disbursement']);
+  const totalExpenditureValue = Number(record['total-Expenditure']);
+
+  let raw = '';
+  if (totalDisbursement && totalExpenditure) {
+    raw = `${totalDisbursement} + ${totalExpenditure}`;
+  } else if (totalDisbursement) {
+    raw = totalDisbursement;
+  } else if (totalExpenditure) {
+    raw = totalExpenditure;
+  }
+
+  let value = 0;
+  if (totalDisbursementValue && totalExpenditureValue) {
+    value = totalDisbursementValue + totalExpenditureValue;
+  } else if (totalDisbursementValue) {
+    value = totalDisbursementValue;
+  } else if (totalExpenditureValue) {
+    value = totalExpenditureValue;
+  }
 
   return {
     eu_contrib: {
