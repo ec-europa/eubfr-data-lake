@@ -39,7 +39,7 @@ const getCoverageReport = (
   numRecords: number
 ): Array<Object> => {
   if (!input) {
-    return [{}];
+    return [];
   }
 
   const results = counter(input);
