@@ -33,19 +33,19 @@ const formatDate = date =>
 export default (record: Object): Project => {
   // Map the fields
   return {
-    action: '',
+    action: record.field_prj_cat_actions,
     budget: {},
-    call_year: '',
-    description: '',
+    call_year: record.field_prj_year,
+    description: record.field_prj_summary,
     ec_priorities: [],
     media: [],
     programme_name: '',
-    project_id: '',
+    project_id: record.field_prj_ref_number,
     project_locations: {},
-    project_website: '',
-    related_links: links,
+    project_website: record.field_prj_website || '',
+    related_links: [],
     reporting_organisation: '',
-    results: resultObject,
+    results: {},
     status: '',
     sub_programme_name: '',
     success_story: '',
@@ -55,7 +55,7 @@ export default (record: Object): Project => {
       from: null,
       to: null,
     },
-    title: '',
+    title: record.title,
     type: [],
   };
 };
