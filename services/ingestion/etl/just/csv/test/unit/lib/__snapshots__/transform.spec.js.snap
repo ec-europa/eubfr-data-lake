@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DG JUST CSV transformer Produces correct JSON output structure 1`] = `
+Object {
+  "action": "",
+  "budget": "",
+  "call_year": "",
+  "description": "",
+  "ec_priorities": "",
+  "media": "",
+  "programme_name": "",
+  "project_id": "",
+  "project_locations": "",
+  "project_website": "",
+  "related_links": "",
+  "reporting_organisation": "",
+  "results": "",
+  "status": "",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [],
+  "third_parties": Array [],
+  "timeframe": Object {
+    "from": null,
+    "to": null,
+  },
+  "title": "",
+  "type": Array [],
+}
+`;
