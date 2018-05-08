@@ -10,11 +10,10 @@ import getCountryCode from '../../../../../helpers/getCountryCode';
 import type { Project } from '../../../../_types/Project';
 
 /**
- * Converts a single string to an array
+ * Makes use of both `total-Disbursement` and `total-Expenditure` fields when present.
  *
  * Fields taken into account from raw data:
  * - currency
- * - total-Commitment
  * - total-Disbursement
  * - total-Expenditure
  *
