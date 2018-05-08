@@ -31,7 +31,7 @@ const counter = (analyzedObject: Object): Object => {
  * @param {Object} input The object for analysis.
  * @param {number} numRecords The number of overall occurences known outside of the scope of this function.
  *
- * @returns {Object} The results for the report.
+ * @returns {Array} The results for the report.
  *
  */
 const getCoverageReport = (
