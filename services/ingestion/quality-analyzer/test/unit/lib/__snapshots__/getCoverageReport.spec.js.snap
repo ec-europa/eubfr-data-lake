@@ -1,0 +1,1049 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Helper getCoverageReport "@eubfr/ingestion-quality-analyzer" provides reports for number of occurences of a given field and its coverage Works with results of agri/csv 1`] = `
+Object {
+  "meta": Object {
+    "computed_key": "foo",
+    "created_by": "bar",
+    "last_modified": "baz",
+  },
+  "report": Array [
+    Object {
+      "budget.eu_contrib.value": 3,
+      "coverage": "100.00",
+    },
+    Object {
+      "budget.funding_area.0": 3,
+      "coverage": "100.00",
+    },
+    Object {
+      "budget.mmf_heading": 3,
+      "coverage": "100.00",
+    },
+    Object {
+      "coverage": "100.00",
+      "description": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "ec_priorities.0": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "media.0.name": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "media.0.url": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "media.0.meta.type": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "programme_name": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "project_id": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "project_locations.0.country_code": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "project_locations.0.centroid": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "project_locations.0.location.coordinates": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "results.result": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.0.name": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.0.role": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "timeframe.from": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "timeframe.to": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "title": 3,
+    },
+    Object {
+      "budget.total_cost.value": 2,
+      "coverage": "66.67",
+    },
+    Object {
+      "coverage": "66.67",
+      "project_website": 2,
+    },
+  ],
+}
+`;
+
+exports[`Helper getCoverageReport "@eubfr/ingestion-quality-analyzer" provides reports for number of occurences of a given field and its coverage Works with results of budg/xls 1`] = `
+Object {
+  "meta": Object {
+    "computed_key": "foo",
+    "created_by": "bar",
+    "last_modified": "baz",
+  },
+  "report": Array [
+    Object {
+      "action": 3,
+      "coverage": "100.00",
+    },
+    Object {
+      "budget.eu_contrib.value": 3,
+      "coverage": "100.00",
+    },
+    Object {
+      "call_year": 3,
+      "coverage": "100.00",
+    },
+    Object {
+      "coverage": "100.00",
+      "description": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "programme_name": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "project_id": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "project_locations.0.country_code": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "project_locations.1.country_code": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "project_locations.2.country_code": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "project_locations.3.country_code": 3,
+    },
+    Object {
+      "coverage": "66.67",
+      "project_locations.4.country_code": 2,
+    },
+    Object {
+      "coverage": "66.67",
+      "project_locations.5.country_code": 2,
+    },
+    Object {
+      "coverage": "100.00",
+      "results.available": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "results.result": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "status": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "sub_programme_name": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "success_story": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.0.name": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.0.type": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.0.address": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.0.region": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.0.role": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.0.country": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.1.name": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.1.type": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.1.address": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.1.region": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.1.role": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.1.country": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.1.website": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.2.name": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.2.type": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.2.address": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.2.region": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.2.role": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.2.country": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.2.website": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.3.name": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.3.type": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.3.address": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.3.region": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.3.role": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.3.country": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.4.name": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.4.type": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.4.address": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.4.region": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.4.role": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.4.country": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.4.website": 3,
+    },
+    Object {
+      "coverage": "66.67",
+      "third_parties.5.name": 2,
+    },
+    Object {
+      "coverage": "66.67",
+      "third_parties.5.type": 2,
+    },
+    Object {
+      "coverage": "66.67",
+      "third_parties.5.address": 2,
+    },
+    Object {
+      "coverage": "66.67",
+      "third_parties.5.region": 2,
+    },
+    Object {
+      "coverage": "66.67",
+      "third_parties.5.role": 2,
+    },
+    Object {
+      "coverage": "66.67",
+      "third_parties.5.country": 2,
+    },
+    Object {
+      "coverage": "66.67",
+      "third_parties.5.website": 2,
+    },
+    Object {
+      "coverage": "100.00",
+      "timeframe.from": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "timeframe.to": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "title": 3,
+    },
+    Object {
+      "coverage": "66.67",
+      "third_parties.0.website": 2,
+    },
+    Object {
+      "coverage": "66.67",
+      "third_parties.3.website": 2,
+    },
+    Object {
+      "coverage": "33.33",
+      "project_locations.6.country_code": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "project_locations.7.country_code": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "project_locations.8.country_code": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "project_locations.9.country_code": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "project_locations.10.country_code": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "project_locations.11.country_code": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "project_locations.12.country_code": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "project_locations.13.country_code": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "project_locations.14.country_code": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.6.name": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.6.type": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.6.address": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.6.region": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.6.role": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.6.country": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.6.website": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.7.name": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.7.type": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.7.address": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.7.region": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.7.role": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.7.country": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.7.website": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.8.name": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.8.type": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.8.address": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.8.region": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.8.role": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.8.country": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.8.website": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.9.name": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.9.type": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.9.address": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.9.region": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.9.role": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.9.country": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.9.website": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.10.name": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.10.type": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.10.address": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.10.region": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.10.role": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.10.country": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.10.website": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.11.name": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.11.type": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.11.address": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.11.region": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.11.role": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.11.country": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.11.website": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.12.name": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.12.type": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.12.address": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.12.region": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.12.role": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.12.country": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.12.website": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.13.name": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.13.type": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.13.address": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.13.region": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.13.role": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.13.country": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.13.website": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.14.name": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.14.type": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.14.address": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.14.region": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.14.role": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.14.country": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.14.website": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.15.name": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.15.type": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.15.address": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.15.region": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.15.role": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.15.country": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.15.website": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.16.name": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.16.type": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.16.address": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.16.region": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.16.role": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.16.country": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.16.website": 1,
+    },
+  ],
+}
+`;
+
+exports[`Helper getCoverageReport "@eubfr/ingestion-quality-analyzer" provides reports for number of occurences of a given field and its coverage Works with results of iati/csv 1`] = `
+Object {
+  "meta": Object {
+    "computed_key": "foo",
+    "created_by": "bar",
+    "last_modified": "baz",
+  },
+  "report": Array [
+    Object {
+      "coverage": "100.00",
+      "description": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "project_id": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "project_locations.0.country_code": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "reporting_organisation": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "timeframe.from": 3,
+    },
+    Object {
+      "coverage": "66.67",
+      "timeframe.to": 2,
+    },
+    Object {
+      "coverage": "100.00",
+      "title": 3,
+    },
+    Object {
+      "budget.eu_contrib.value": 1,
+      "coverage": "33.33",
+    },
+  ],
+}
+`;
+
+exports[`Helper getCoverageReport "@eubfr/ingestion-quality-analyzer" provides reports for number of occurences of a given field and its coverage Works with results of inforegio/json 1`] = `
+Object {
+  "meta": Object {
+    "computed_key": "foo",
+    "created_by": "bar",
+    "last_modified": "baz",
+  },
+  "report": Array [
+    Object {
+      "budget.total_cost.value": 3,
+      "coverage": "100.00",
+    },
+    Object {
+      "budget.eu_contrib.value": 3,
+      "coverage": "100.00",
+    },
+    Object {
+      "budget.funding_area.0": 2,
+      "coverage": "66.67",
+    },
+    Object {
+      "coverage": "100.00",
+      "description": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "period": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "project_id": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "project_locations.0.country_code": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "project_locations.0.region": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "project_locations.0.nuts.0.code": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "project_locations.0.nuts.0.level": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "project_website": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "themes.0": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "themes.1": 3,
+    },
+    Object {
+      "coverage": "66.67",
+      "themes.2": 2,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.0.name": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.0.address": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.0.role": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.0.country": 3,
+    },
+    Object {
+      "coverage": "33.33",
+      "timeframe.from": 1,
+    },
+    Object {
+      "coverage": "33.33",
+      "timeframe.to": 1,
+    },
+    Object {
+      "coverage": "100.00",
+      "title": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "type.0": 3,
+    },
+  ],
+}
+`;
+
+exports[`Helper getCoverageReport "@eubfr/ingestion-quality-analyzer" provides reports for number of occurences of a given field and its coverage Works with results of inforegio/xml 1`] = `
+Object {
+  "meta": Object {
+    "computed_key": "foo",
+    "created_by": "bar",
+    "last_modified": "baz",
+  },
+  "report": Array [
+    Object {
+      "budget.total_cost.value": 3,
+      "coverage": "100.00",
+    },
+    Object {
+      "budget.eu_contrib.value": 3,
+      "coverage": "100.00",
+    },
+    Object {
+      "coverage": "100.00",
+      "description": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "period": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "project_id": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "project_locations.0.country_code": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "project_locations.0.region": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "project_locations.0.nuts.0.code": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "project_website": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "themes.0": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "title": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "type.0": 3,
+    },
+  ],
+}
+`;
+
+exports[`Helper getCoverageReport "@eubfr/ingestion-quality-analyzer" provides reports for number of occurences of a given field and its coverage Works with results of valor/xls 1`] = `
+Object {
+  "meta": Object {
+    "computed_key": "foo",
+    "created_by": "bar",
+    "last_modified": "baz",
+  },
+  "report": Array [
+    Object {
+      "budget.eu_contrib.value": 3,
+      "coverage": "100.00",
+    },
+    Object {
+      "call_year": 3,
+      "coverage": "100.00",
+    },
+    Object {
+      "coverage": "100.00",
+      "description": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "programme_name": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "project_id": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "project_locations.0.country_code": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "results.available": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "results.result": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "status": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "success_story": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.0.name": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.0.type": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.0.address": 3,
+    },
+    Object {
+      "coverage": "33.33",
+      "third_parties.0.region": 1,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.0.role": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.0.country": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.0.website": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "title": 3,
+    },
+  ],
+}
+`;
+
+exports[`Helper getCoverageReport "@eubfr/ingestion-quality-analyzer" provides reports for number of occurences of a given field and its coverage Works with results of wifi4eu/xls 1`] = `
+Object {
+  "meta": Object {
+    "computed_key": "foo",
+    "created_by": "bar",
+    "last_modified": "baz",
+  },
+  "report": Array [
+    Object {
+      "call_year": 3,
+      "coverage": "100.00",
+    },
+    Object {
+      "coverage": "100.00",
+      "description": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.0.name": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "third_parties.0.role": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "project_id": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "project_locations.0.address": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "project_locations.0.country_code": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "project_locations.0.postal_code": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "project_locations.0.town": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "project_website": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "timeframe.from": 3,
+    },
+    Object {
+      "coverage": "100.00",
+      "title": 3,
+    },
+  ],
+}
+`;

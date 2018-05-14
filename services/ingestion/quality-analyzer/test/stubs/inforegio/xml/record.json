@@ -1,0 +1,53 @@
+{
+  "action": "",
+  "budget": {
+    "total_cost": {
+      "value": 7803000000,
+      "currency": "",
+      "raw": "ECU 7 803 000 000"
+    },
+    "eu_contrib": {
+      "value": 427000000,
+      "currency": "",
+      "raw": "ECU 427 000 000"
+    },
+    "private_fund": { "value": 0, "currency": "", "raw": "" },
+    "public_fund": { "value": 0, "currency": "", "raw": "" },
+    "other_contrib": { "value": 0, "currency": "", "raw": "" },
+    "funding_area": [],
+    "mmf_heading": ""
+  },
+  "call_year": "",
+  "description":
+    "To help meet the challenge of the Single Market, Spain decided to build a network of toll-free motorways - a huge programme requiring an unprecedented level of investment, achieved thanks to a contribution from the European Regional Development Fund.",
+  "ec_priorities": [],
+  "media": [],
+  "period": "2000-2006",
+  "programme_name": "",
+  "project_id": "76",
+  "project_locations": [
+    {
+      "country_code": "ES",
+      "region": "ESPAÑA",
+      "nuts": [{ "code": "ES0", "name": "", "level": null, "year": null }],
+      "address": "",
+      "postal_code": "",
+      "town": "",
+      "location": null,
+      "centroid": null
+    }
+  ],
+  "project_website":
+    "http://ec.europa.eu/regional_policy/en/projects/spain/roads-for-europe",
+  "related_links": [],
+  "reporting_organisation": "",
+  "results": { "available": "", "result": "" },
+  "status": "",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": ["Transport"],
+  "third_parties": [],
+  "timeframe": { "from": null, "to": null },
+  "title": "Roads for Europe",
+  "type": ["Standard"]
+}

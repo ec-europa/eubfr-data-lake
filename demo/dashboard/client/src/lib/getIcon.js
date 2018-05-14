@@ -9,6 +9,7 @@ export default status => {
       return 'ecl-icon ecl-icon--info ecl-u-color-info';
     case STATUS.SUCCESS_ETL:
     case STATUS.INGESTED:
+    case STATUS.SUCCESS_GENERAL:
       return 'ecl-icon ecl-icon--success ecl-u-color-success';
     case STATUS.NOT_PARSED:
     case STATUS.ERROR:

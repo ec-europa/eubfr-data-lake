@@ -1,0 +1,58 @@
+{
+  "budget": {
+    "total_cost": { "value": 0, "currency": "", "raw": "" },
+    "eu_contrib": { "value": 372534, "currency": "EUR", "raw": "372,534.00" },
+    "private_fund": { "value": 0, "currency": "", "raw": "" },
+    "public_fund": { "value": 0, "currency": "", "raw": "" },
+    "other_contrib": { "value": 0, "currency": "", "raw": "" },
+    "funding_area": [],
+    "mmf_heading": ""
+  },
+  "call_year": "2016",
+  "description":
+    "This is a higher education student and staff mobility project, please consult the website of the organisation to obtain additional details.",
+  "ec_priorities": [],
+  "media": [],
+  "programme_name": "Erasmus+",
+  "project_id": "2016-1-TR01-KA103-029799",
+  "project_locations": [
+    {
+      "address": "",
+      "centroid": null,
+      "country_code": "TR",
+      "location": null,
+      "nuts": [],
+      "postal_code": "",
+      "region": "",
+      "town": ""
+    }
+  ],
+  "project_website": "",
+  "related_links": [],
+  "reporting_organisation": "",
+  "results": {
+    "available": "No",
+    "result":
+      "https://ec.europa.eu/programmes/erasmus-plus/projects/eplus-project-details/#project/a61c79ab-0fc2-4432-a08f-dd5ccd27a337"
+  },
+  "status": "ongoing",
+  "sub_programme_name": "",
+  "success_story": "No",
+  "themes": [],
+  "third_parties": [
+    {
+      "name": "SELCUK UNIVERSITESI",
+      "type": "Higher education institution (tertiary level)",
+      "address": "Ziraat Fakultesi - Alaaddin Keykubat Kampusu, 42075, KONYA",
+      "region": "",
+      "role": "coordinator",
+      "country": "TR",
+      "website": "http://www.selcuk.edu.tr",
+      "phone": "",
+      "email": ""
+    }
+  ],
+  "timeframe": { "from": null, "to": null },
+  "title": "Higher education student and staff mobility project",
+  "type": []
+}

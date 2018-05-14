@@ -1,0 +1,48 @@
+{
+  "action": "",
+  "budget": {
+    "eu_contrib": { "value": 395640, "currency": "EUR", "raw": "395640" },
+    "total_cost": { "value": 0, "currency": "", "raw": "" },
+    "private_fund": { "value": 0, "currency": "", "raw": "" },
+    "public_fund": { "value": 0, "currency": "", "raw": "" },
+    "other_contrib": { "value": 0, "currency": "", "raw": "" },
+    "funding_area": [],
+    "mmf_heading": ""
+  },
+  "call_year": "",
+  "description":
+    "Fourniture 18 véhicules tout terrain 4X4 Plateau double cabine ",
+  "ec_priorities": [],
+  "media": [],
+  "programme_name": "",
+  "project_id": "4fa60df1b6d0cfac4df630fe205092ce",
+  "project_locations": [
+    {
+      "address": "",
+      "centroid": null,
+      "country_code": "CD",
+      "location": null,
+      "nuts": [],
+      "postal_code": "",
+      "region": "",
+      "town": ""
+    }
+  ],
+  "project_website": "",
+  "related_links": [],
+  "reporting_organisation":
+    "European Commission - Development and Cooperation-EuropeAid",
+  "results": { "available": "", "result": "" },
+  "status": "",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": [],
+  "third_parties": [],
+  "timeframe": {
+    "from": "2010-12-03T00:00:00.000Z",
+    "to": "2011-06-01T00:00:00.000Z"
+  },
+  "title":
+    "Contrat de fourniture de 18 véhicules tout terrain 4X4 pour les services des ministères des mines et  de l'environnement",
+  "type": []
+}
