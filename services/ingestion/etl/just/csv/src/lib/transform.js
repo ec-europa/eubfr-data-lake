@@ -8,21 +8,7 @@ import getCountryCode from '../../../../../helpers/getCountryCode';
 
 import type { Project } from '../../../../_types/Project';
 
-const getFundingArea = record => [];
-
-/**
- * Format date
- *
- * @memberof JustCsvTransform
- * @param {Date} date Date in timestamp
- * @returns {Date} The date formatted into an ISO 8601 date format
- *
- * @example
- * input => "1388530800"
- * output => "2013-12-31T23:00:00.000Z"
- */
-const formatDate = date =>
-  date ? new Date(parseInt(date, 10) * 1000).toISOString() : null;
+const getFundingArea = () => [];
 
 /**
  * Preprocess locations
@@ -38,10 +24,10 @@ const formatDate = date =>
  * @returns {Array} List of {Location} objects for `project_locations` field
  */
 const getLocations = record => {
-  const projectLongitude = record['field_prj_longitude'] || '';
-  const projectLatitude = record['field_prj_latitude'] || '';
+  const projectLongitude = record.field_prj_longitude || '';
+  const projectLatitude = record.field_prj_latitude || '';
 
-  const country = record['field_prj_country_iso'];
+  const country = record.field_prj_country_iso;
   const hasCoordinates = projectLongitude && projectLatitude;
 
   return [
@@ -88,7 +74,7 @@ const getLocations = record => {
  *  ]
  */
 const getRelatedLinks = record =>
-  (record['field_prj_link'] || '')
+  (record.field_prj_link || '')
     .split(';')
     .filter(link => link)
     .map(link => {
@@ -122,19 +108,19 @@ export default (record: Object): Project => {
   // Preprocess budget
   const budgetObject = {
     total_cost: {
-      value: Number(record['field_prj_total_budget']) || 0,
+      value: Number(record.field_prj_total_budget) || 0,
       currency: '',
-      raw: record['field_prj_total_budget'] || '',
+      raw: record.field_prj_total_budget || '',
     },
     eu_contrib: {
-      value: Number(record['field_prj_eu_budget']) || 0,
+      value: Number(record.field_prj_eu_budget) || 0,
       currency: 'EUR',
-      raw: record['field_prj_eu_budget'] || '',
+      raw: record.field_prj_eu_budget || '',
     },
     private_fund: { value: 0, currency: '', raw: '' },
     public_fund: { value: 0, currency: '', raw: '' },
     other_contrib: { value: 0, currency: '', raw: '' },
-    funding_area: getFundingArea(record),
+    funding_area: getFundingArea(),
     mmf_heading: '',
   };
 
