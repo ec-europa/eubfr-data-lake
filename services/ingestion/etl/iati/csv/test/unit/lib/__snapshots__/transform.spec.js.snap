@@ -6,8 +6,8 @@ Object {
   "budget": Object {
     "eu_contrib": Object {
       "currency": "EUR",
-      "raw": "395640",
-      "value": 395640,
+      "raw": "319800.89 + 395640",
+      "value": 715440.89,
     },
     "funding_area": Array [],
     "mmf_heading": "",
