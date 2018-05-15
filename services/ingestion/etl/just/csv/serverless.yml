@@ -55,19 +55,19 @@ functions:
 
 resources:
   Resources:
-    SNSTopicBUDGCSV:
+    SNSTopicJUSTCSV:
       Type: AWS::SNS::Topic
       Properties:
         TopicName: ${self:provider.stage}-etl-just-csv
-        DisplayName: BUDG CSV ETL
-    SNSTopicBUDGCSVPolicy:
+        DisplayName: JUST CSV ETL
+    SNSTopicJUSTCSVPolicy:
       Type: AWS::SNS::TopicPolicy
       Properties:
         PolicyDocument:
           Version: '2012-10-17'
           Statement:
             -
-              Sid: AllowIngestionManagerToPushNotificationEffect
+              Sid: AllowAnyoneToPingSNSTopicJUSTCSV
               Action:
                 - sns:Publish
               Effect: Allow
@@ -75,4 +75,4 @@ resources:
               Principal: "*"
         Topics:
           -
-            Ref: SNSTopicBUDGCSV
+            Ref: SNSTopicJUSTCSV

@@ -15,11 +15,11 @@ const getFundingArea = () => [];
  *
  * Input fields taken from the `record` are:
  *
- * - `Project location longitude`
- * - `Project location latitude`
- * - `Project country`
+ * - `field_prj_longitude`
+ * - `field_prj_latitude`
+ * - `field_prj_country_iso
  *
- * @memberof AgriCsvTransform
+ * @memberof JustCsvTransform
  * @param {Object} record The row received from parsed file
  * @returns {Array} List of {Location} objects for `project_locations` field
  */
@@ -58,13 +58,38 @@ const getLocations = record => {
 };
 
 /**
+ * Preprocess budget
+ *
+ * @memberof JustCsvTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {Object}
+ */
+const getBudget = record => ({
+  total_cost: {
+    value: Number(record.field_prj_total_budget) || 0,
+    currency: '',
+    raw: record.field_prj_total_budget || '',
+  },
+  eu_contrib: {
+    value: Number(record.field_prj_eu_budget) || 0,
+    currency: 'EUR',
+    raw: record.field_prj_eu_budget || '',
+  },
+  private_fund: { value: 0, currency: '', raw: '' },
+  public_fund: { value: 0, currency: '', raw: '' },
+  other_contrib: { value: 0, currency: '', raw: '' },
+  funding_area: getFundingArea(),
+  mmf_heading: '',
+});
+
+/**
  * Preprocess related links
  *
  * Depends on record['Related links'] field
  *
- * @memberof AgriCsvTransform
+ * @memberof JustCsvTransform
  * @param {Object} record The row received from parsed file
- * @returns {Array|Object} List of {RelatedLink}
+ * @returns {Array} List of {RelatedLink}
  *
  * @example
  * input => "<a href=\"https://ec.europa.eu/inea/en/ten-t/ten-t-projects/projects-by-country/multi-country/2013-eu-92069-s\">INEA</a>;<a href=\"https://europa.eu/investeu/projects/central-european-green-corridors_en\">InvestEU</a>"
@@ -105,25 +130,6 @@ const getRelatedLinks = record =>
  * @returns {Project} JSON matching the type fields.
  */
 export default (record: Object): Project => {
-  // Preprocess budget
-  const budgetObject = {
-    total_cost: {
-      value: Number(record.field_prj_total_budget) || 0,
-      currency: '',
-      raw: record.field_prj_total_budget || '',
-    },
-    eu_contrib: {
-      value: Number(record.field_prj_eu_budget) || 0,
-      currency: 'EUR',
-      raw: record.field_prj_eu_budget || '',
-    },
-    private_fund: { value: 0, currency: '', raw: '' },
-    public_fund: { value: 0, currency: '', raw: '' },
-    other_contrib: { value: 0, currency: '', raw: '' },
-    funding_area: getFundingArea(),
-    mmf_heading: '',
-  };
-
   // Preprocess locations
   const locationArray = getLocations(record);
 
@@ -138,14 +144,14 @@ export default (record: Object): Project => {
 
   // Map the fields
   return {
-    action: record.field_prj_cat_actions,
-    budget: budgetObject,
-    call_year: record.field_prj_year,
-    description: record.field_prj_summary,
+    action: record.field_prj_cat_actions || '',
+    budget: getBudget(record),
+    call_year: record.field_prj_year || '',
+    description: record.field_prj_summary || '',
     ec_priorities: [],
     media: [],
     programme_name: '',
-    project_id: record.field_prj_ref_number,
+    project_id: record.field_prj_ref_number || '',
     project_locations: locationArray,
     project_website: record.field_prj_website || '',
     related_links: links,
@@ -160,7 +166,7 @@ export default (record: Object): Project => {
       from: null,
       to: null,
     },
-    title: record.title,
+    title: record.title || '',
     type: [],
   };
 };
