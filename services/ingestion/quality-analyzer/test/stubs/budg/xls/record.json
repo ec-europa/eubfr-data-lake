@@ -1,0 +1,382 @@
+{
+  "action": "Cooperation projects",
+  "budget": {
+    "total_cost": { "value": 0, "currency": "", "raw": "" },
+    "eu_contrib": {
+      "value": 1995000,
+      "currency": "EUR",
+      "raw": "1,995,000.00"
+    },
+    "private_fund": { "value": 0, "currency": "", "raw": "" },
+    "public_fund": { "value": 0, "currency": "", "raw": "" },
+    "other_contrib": { "value": 0, "currency": "", "raw": "" },
+    "funding_area": [],
+    "mmf_heading": ""
+  },
+  "call_year": "2014",
+  "description":
+    "The project has a precise focus: the diffusion of performing arts for children between 0 and 6 years, which is a real “current non-audience”, especially as far as children under 36 months are concerned.A European networking project involving theatres and cultural centres that have been focusing their artistic research on children and that have developed a real, specific professional competence in the field of performing arts for early years.The project promotes audience development, in particular the development of children-spectators, making children approach performing arts both in Europe and worldwide. For we firmly believe that children, even the youngest ones, have the right to be viewed as spectators of today and not only of tomorrow, because they are human beings and not just “human becomings”.A networking project involving 17 theatres and cultural centres of 15 countries: Austria, Belgium, Denmark, Finland, France, Germany, Hungary, Ireland, Italy, Poland, Romania, Slovenia, Spain, Sweden, UK.A Network that promotes:- the mobility of ideas and people;- awareness-raising on the right of children to cultural citizenship;- the lifelong learning of the adults who interact with them at a professional level.The project activities can be divided in:1.JOINT ACTIVITIES give more value to the aspects regarding co-production and cooperation: Wide Eyes co-production project, Small size - final event, Small size days, Mentoring & collaborations, Artistic Directors Meeting, Association Small size, Interactive learning platform, Quality Commission, Mobilities for training & exchange2. PARTNERS’ ACTIVITIES are the “cornerstones of the project”, on which its development is based: Festivals, Showcases, Productions and co-productions, Workshops for children, Research and training activities, Interdisciplinary activities.3. NETWORK ACTIVITIES, through which the shared management of the network takes place: Common Meetings, Annual Books, Promotion, Documentation.",
+  "ec_priorities": [],
+  "media": [],
+  "programme_name": "Creative Europe",
+  "project_id": "552036-CREA-1-2014-1-IT-CULT-COOP2",
+  "project_locations": [
+    {
+      "address": "",
+      "centroid": null,
+      "country_code": "IT",
+      "location": null,
+      "nuts": [],
+      "postal_code": "",
+      "region": "",
+      "town": ""
+    },
+    {
+      "address": "",
+      "centroid": null,
+      "country_code": "IE",
+      "location": null,
+      "nuts": [],
+      "postal_code": "",
+      "region": "",
+      "town": ""
+    },
+    {
+      "address": "",
+      "centroid": null,
+      "country_code": "DE",
+      "location": null,
+      "nuts": [],
+      "postal_code": "",
+      "region": "",
+      "town": ""
+    },
+    {
+      "address": "",
+      "centroid": null,
+      "country_code": "RO",
+      "location": null,
+      "nuts": [],
+      "postal_code": "",
+      "region": "",
+      "town": ""
+    },
+    {
+      "address": "",
+      "centroid": null,
+      "country_code": "HU",
+      "location": null,
+      "nuts": [],
+      "postal_code": "",
+      "region": "",
+      "town": ""
+    },
+    {
+      "address": "",
+      "centroid": null,
+      "country_code": "SE",
+      "location": null,
+      "nuts": [],
+      "postal_code": "",
+      "region": "",
+      "town": ""
+    },
+    {
+      "address": "",
+      "centroid": null,
+      "country_code": "FR",
+      "location": null,
+      "nuts": [],
+      "postal_code": "",
+      "region": "",
+      "town": ""
+    },
+    {
+      "address": "",
+      "centroid": null,
+      "country_code": "SI",
+      "location": null,
+      "nuts": [],
+      "postal_code": "",
+      "region": "",
+      "town": ""
+    },
+    {
+      "address": "",
+      "centroid": null,
+      "country_code": "DK",
+      "location": null,
+      "nuts": [],
+      "postal_code": "",
+      "region": "",
+      "town": ""
+    },
+    {
+      "address": "",
+      "centroid": null,
+      "country_code": "ES",
+      "location": null,
+      "nuts": [],
+      "postal_code": "",
+      "region": "",
+      "town": ""
+    },
+    {
+      "address": "",
+      "centroid": null,
+      "country_code": "GB",
+      "location": null,
+      "nuts": [],
+      "postal_code": "",
+      "region": "",
+      "town": ""
+    },
+    {
+      "address": "",
+      "centroid": null,
+      "country_code": "PL",
+      "location": null,
+      "nuts": [],
+      "postal_code": "",
+      "region": "",
+      "town": ""
+    },
+    {
+      "address": "",
+      "centroid": null,
+      "country_code": "AT",
+      "location": null,
+      "nuts": [],
+      "postal_code": "",
+      "region": "",
+      "town": ""
+    },
+    {
+      "address": "",
+      "centroid": null,
+      "country_code": "FI",
+      "location": null,
+      "nuts": [],
+      "postal_code": "",
+      "region": "",
+      "town": ""
+    },
+    {
+      "address": "",
+      "centroid": null,
+      "country_code": "BE",
+      "location": null,
+      "nuts": [],
+      "postal_code": "",
+      "region": "",
+      "town": ""
+    }
+  ],
+  "related_links": [],
+  "reporting_organisation": "",
+  "results": {
+    "available": "No",
+    "result":
+      "http://ec.europa.eu/programmes/creative-europe/projects/ce-project-details-page/?nodeRef=workspace://SpacesStore/613b6554-5c8e-4100-9972-78ac9b83c2ee"
+  },
+  "status": "ongoing",
+  "sub_programme_name": "Culture",
+  "success_story": "No",
+  "themes": [],
+  "third_parties": [
+    {
+      "name": "LA BARACCA SOCIETA COOPERATIVA SOCIALE ONLUS",
+      "type": "Theatre",
+      "address": "VIA MATTEOTTI 16, 40129, BOLOGNA",
+      "region": "Emilia-Romagna",
+      "role": "coordinator",
+      "country": "IT",
+      "website": "www.testoniragazzi.it",
+      "phone": "",
+      "email": ""
+    },
+    {
+      "name": "BABORO GALWAY INTERNATIONAL CHILDREN'S FESTIVAL LIMITED",
+      "type": "Festival (non Audiovisual)",
+      "address": "HYNES BUILDING, ST CLARKS WALK, MERCHANTS ROAD, GALWAY",
+      "region": "Extra-Regio NUTS 3",
+      "role": "partner",
+      "country": "IE",
+      "website": "www.baboro.ie",
+      "phone": "",
+      "email": ""
+    },
+    {
+      "name": "HELIOS 6 LIVE ART PRODUKTION EV",
+      "type": "Theatre",
+      "address": "WILLY-BRANDT-PLATZ 1 D, 59065, HAMM",
+      "region": "NORDRHEIN-WESTFALEN",
+      "role": "partner",
+      "country": "DE",
+      "website": "www.helios-theater.de",
+      "phone": "",
+      "email": ""
+    },
+    {
+      "name": "TEATRUL ION CREANGA",
+      "type": "Theatre",
+      "address": "GH. MAGHERU BLVD., NO. 27, 010325, BUCHAREST",
+      "region": "Bucureşti - Ilfov",
+      "role": "partner",
+      "country": "RO",
+      "website": "www.teatrulioncreanga.ro",
+      "phone": "",
+      "email": ""
+    },
+    {
+      "name":
+        "KOLIBRI GYERMEK-ES IFJUSAGI SZINHAZ KIEMELKEDOEN KOZHASZNU NONPROFIT KFT",
+      "type": "Theatre",
+      "address": "JOKAI TER 10, 1061, BUDAPEST",
+      "region": "Budapest",
+      "role": "partner",
+      "country": "HU",
+      "website": "www.kolibriszinhaz.hu",
+      "phone": "",
+      "email": ""
+    },
+    {
+      "name": "TEATER TRE STOCKHOLM EKONOMISK FÖRENING",
+      "type": "Theatre",
+      "address": "ROSENLUNDSGATAN 12, 11853, STOCKHOLM",
+      "region": "Stockholms län",
+      "role": "partner",
+      "country": "SE",
+      "website": "www.teatertre.se",
+      "phone": "",
+      "email": ""
+    },
+    {
+      "name": "COMMUNE DE LIMOGES",
+      "type": "Local Public body",
+      "address": "9 PLACE LEON BETOULLE MAIRIE 3120, 87031, LIMOGES 1",
+      "region": "Limousin",
+      "role": "partner",
+      "country": "FR",
+      "website": "www.ville-limoges.fr",
+      "phone": "",
+      "email": ""
+    },
+    {
+      "name": "LUTKOVNO GLEDALISCE LJUBLJANA",
+      "type": "Theatre",
+      "address": "KREKOV TRG 2, 1000, LJUBLJANA",
+      "region": "Extra-Regio NUTS 3",
+      "role": "partner",
+      "country": "SI",
+      "website": "www.lgl.si",
+      "phone": "",
+      "email": ""
+    },
+    {
+      "name": "TEATERWAERKSTEDET MADAM BACH",
+      "type": "Theatre",
+      "address": "SKELLERGAARDSVEJ 2, 8300, ODDER",
+      "region": "Midtjylland",
+      "role": "partner",
+      "country": "DK",
+      "website": "www.madambach.com",
+      "phone": "",
+      "email": ""
+    },
+    {
+      "name": "O'NAVIO THEATRE",
+      "type": "Theatre",
+      "address": "32 RUE DE TOURCOING, 87000, LIMOGES",
+      "region": "Limousin",
+      "role": "partner",
+      "country": "FR",
+      "website": "www.onavio.com",
+      "phone": "",
+      "email": ""
+    },
+    {
+      "name": "TEATRO PARAÍSO SAL",
+      "type": "Theatre",
+      "address": "ABETXUKO PUEBLO 14 14, 01013, VITORIA-GASTEIZ",
+      "region": "País Vasco",
+      "role": "partner",
+      "country": "ES",
+      "website": "www.teatroparaiso.com",
+      "phone": "",
+      "email": ""
+    },
+    {
+      "name": "POLKA CHILDRENS THEATRE LIMITED",
+      "type": "Theatre",
+      "address": "240 THE BROADWAY, SW19 1SB, LONDON",
+      "region": "Extra-Regio NUTS 2",
+      "role": "partner",
+      "country": "UK",
+      "website": "www.polkatheatre.com",
+      "phone": "",
+      "email": ""
+    },
+    {
+      "name": "CENTRUM SZTUKI DZIECKA W POZNANIU",
+      "type": "Research Institute/Centre",
+      "address": "UL. SW MARCIN 80/82, 61809, POZNAN",
+      "region": "Wielkopolskie",
+      "role": "partner",
+      "country": "PL",
+      "website": "www.csdpoznan.pl",
+      "phone": "",
+      "email": ""
+    },
+    {
+      "name": "TOIHAUS THEATER",
+      "type": "Theatre",
+      "address": "FRANZ JOSEF STRASSE 4, 5020, SALZBURG",
+      "region": "Salzburg",
+      "role": "partner",
+      "country": "AT",
+      "website": "www.toihaus.at",
+      "phone": "",
+      "email": ""
+    },
+    {
+      "name": "KUUKULKURIT RY",
+      "type": "Dance Company",
+      "address": "PENTTILANTIE 1-3 D 26, 00740, HELSINKI",
+      "region": "Helsinki-Uusimaa",
+      "role": "partner",
+      "country": "FI",
+      "website": "www.auraco.fi",
+      "phone": "",
+      "email": ""
+    },
+    {
+      "name": "ACCION EDUCATIVA",
+      "type": "Other",
+      "address": "C CRISTO DE LA VICTORIA S/N, 28026, MADRID",
+      "region": "Extra-Regio NUTS 2",
+      "role": "partner",
+      "country": "ES",
+      "website": "www.accioneducativa-mrp.org",
+      "phone": "",
+      "email": ""
+    },
+    {
+      "name": "THEATRE DE LA GUIMBARDE",
+      "type": "Theatre",
+      "address": "PLACE DU MANEGE 1, 6000, CHARLEROI",
+      "region": "Extra-Regio NUTS 2",
+      "role": "partner",
+      "country": "BE",
+      "website": "www.laguimbarde.be",
+      "phone": "",
+      "email": ""
+    }
+  ],
+  "timeframe": {
+    "from": "2014-10-01T00:00:00.000Z",
+    "to": "2018-09-30T00:00:00.000Z"
+  },
+  "title": "SMALL SIZE, PERFORMING ARTS FOR EARLY YEARS",
+  "type": []
+}

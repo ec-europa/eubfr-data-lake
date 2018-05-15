@@ -20,6 +20,7 @@ deleteServices([
   'ingestion-etl-iati-csv',
   'ingestion-etl-valor-xls',
   'ingestion-etl-wifi4eu-xls',
+  'ingestion-quality-analyzer',
   'value-store-projects',
   'logger-listener',
   'storage-signed-uploads',
