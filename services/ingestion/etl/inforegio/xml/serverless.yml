@@ -74,5 +74,4 @@ resources:
               Resource: "*"
               Principal: "*"
         Topics:
-          -
-            Ref: SNSTopicINFOREGIOXML
+          - Ref: SNSTopicINFOREGIOXML

@@ -82,7 +82,7 @@ resources:
           Version: '2012-10-17'
           Statement:
             -
-              Sid: AllowAnyoneToPublishMessageToSNSTopicWIFI4EUXLSPolicy
+              Sid: AllowIngestionManagerToPushNotificationEffect
               Action:
                 - sns:Publish
               Effect: Allow

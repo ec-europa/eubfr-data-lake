@@ -67,12 +67,11 @@ resources:
           Version: '2012-10-17'
           Statement:
             -
-              Sid: AllowAnyoneToPingSNSTopicAGRICSV
+              Sid: AllowIngestionManagerToPushNotificationEffect
               Action:
                 - sns:Publish
               Effect: Allow
               Resource: "*"
               Principal: "*"
         Topics:
-          -
-            Ref: SNSTopicAGRICSV
+          - Ref: SNSTopicAGRICSV

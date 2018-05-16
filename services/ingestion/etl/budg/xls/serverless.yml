@@ -89,7 +89,5 @@ resources:
               Resource: "*"
               Principal: "*"
         Topics:
-          -
-            Ref: SNSTopicBUDGXLS
-          -
-            Ref: SNSTopicBUDGXLSX
+          - Ref: SNSTopicBUDGXLS
+          - Ref: SNSTopicBUDGXLSX
