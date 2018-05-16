@@ -4,14 +4,8 @@ plugins:
   - serverless-webpack
 
 custom:
-  kinesisFirehose: eubfr-${self:provider.stage}-kinesis-firehose
-  kinesisFirehoseBackup: eubfr-${self:provider.stage}-kinesis-backup
-  kinesisFirehoseS3Prefix: 'firehose/'
   esIndex: ${self:provider.stage}-projects
-  webpack:
-    webpackConfig: ./webpack.config.js
-    includeModules: true
-    packager: yarn
+  webpackIncludeModules: true
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
 
 package:
@@ -84,35 +78,38 @@ resources:
     DeliveryBucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: ${self:custom.kinesisFirehoseBackup}
+        BucketName: eubfr-dev-kinesis-backup
 
     DeliveryStream:
       Type: AWS::KinesisFirehose::DeliveryStream
       DependsOn:
         - DeliveryStreamPolicy
       Properties:
-        DeliveryStreamName: ${self.custom.kinesisFirehose}
+        DeliveryStreamName: eubfr-dev-kinesis-firehose
         DeliveryStreamType: DirectPut
         ElasticsearchDestinationConfiguration:
           BufferingHints:
             IntervalInSeconds: 60
             SizeInMBs: 50
           DomainARN:
-            - !GetAtt ${self:custom.eubfrEnvironment}:resources-elasticsearch.Arn
+            Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpointArn
           IndexName: ${self:custom.esIndex}
           IndexRotationPeriod: NoRotation
           ProcessingConfiguration:
             Enabled: false
           RetryOptions: 300
-          RoleARN: !GetAtt DeliveryStreamRole.Arn
+          RoleARN:
+            Fn::GetAtt: DeliveryStreamRole.Arn
           S3BackupMode: FailedDocumentsOnly
           S3Configuration:
-            BucketARN: !GetAtt DeliveryBucket.Arn
+            BucketARN:
+              Fn::GetAtt: DeliveryBucket.Arn
             BufferingHints:
               IntervalInSeconds: 60
               SizeInMBs: 50
-            Prefix: ${self:custom.kinesisFirehoseS3Prefix}
-            RoleARN: !GetAtt DeliveryStreamRole.Arn
+            Prefix: 'firehose/'
+            RoleARN:
+              Fn::GetAtt: DeliveryStreamRole.Arn
             ProcessingConfiguration:
               Enabled: false
             TypeName: project
@@ -133,7 +130,7 @@ resources:
         Type: AWS::IAM::Policy
         Properties:
           Roles:
-            - !Ref DeliveryStreamRole
+            Fn::Ref: DeliveryStreamRole
           PolicyName: firehose_delivery_policy
           PolicyDocument:
             Version: 2012-10-17
@@ -147,9 +144,9 @@ resources:
                   - 's3:ListBucketMultipartUploads'
                   - 's3:PutObject'
                 Resource:
-                  - !GetAtt DeliveryBucket.Arn
-                  - !Join
+                  - Fn::GetAtt: DeliveryBucket.Arn
+                  - Fn::Join:
                     - ''
                     - - 'arn:aws:s3:::'
-                      - !Ref DeliveryBucket
+                      - Fn::Ref: DeliveryBucket
                       - '*'

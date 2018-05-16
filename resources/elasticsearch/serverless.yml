@@ -141,6 +141,12 @@ resources:
       Export:
         # Global varibale, uses eubfrEnvironment instead of stage
         Name: "${self:custom.eubfrEnvironment}:${self:service}:PublicEndpoint"
+    PublicEndpointArn:
+      Description: The ARN of the public elasticsearch domain.
+      Value:
+        Fn::GetAtt: ["PublicElasticSearchDomain", "DomainArn"]
+      Export:
+        Name: "${self:custom.eubfrEnvironment}:${self:service}:PublicEndpointArn"
     PrivateEndpoint:
       Description: The private elasticsearch domain.
       Value:
