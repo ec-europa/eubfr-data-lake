@@ -1,0 +1,55 @@
+{
+  "action": "",
+  "budget": {
+    "total_cost": { "value": 0, "currency": "", "raw": "" },
+    "eu_contrib": { "value": 0, "currency": "EUR", "raw": "" },
+    "private_fund": { "value": 0, "currency": "", "raw": "" },
+    "public_fund": { "value": 0, "currency": "", "raw": "" },
+    "other_contrib": { "value": 0, "currency": "", "raw": "" },
+    "funding_area": [],
+    "mmf_heading": ""
+  },
+  "call_year": "2018",
+  "description":
+    "The European Commission wishes to promote free Wi-Fi connectivity for citizens and visitors in public spaces such as parks, squares, public building, libraries, health centres, and museums everywhere in Europe through WiFi4EU.",
+  "ec_priorities": [],
+  "media": [],
+  "third_parties": [
+    {
+      "address": "",
+      "country": "",
+      "email": "",
+      "name": "Frontignan",
+      "phone": "",
+      "region": "",
+      "role": "beneficiary",
+      "type": "",
+      "website": ""
+    }
+  ],
+  "programme_name": "",
+  "project_id": "08af40f72001d7dec99878e2f468e894",
+  "project_locations": [
+    {
+      "address": "Place de l'Hôtel de ville",
+      "centroid": null,
+      "country_code": "FR",
+      "location": null,
+      "nuts": [],
+      "postal_code": "34110",
+      "region": "",
+      "town": "Frontignan"
+    }
+  ],
+  "project_website": "https://www.wifi4eu.eu",
+  "related_links": [],
+  "reporting_organisation": "",
+  "results": { "available": "", "result": "" },
+  "status": "",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": [],
+  "timeframe": { "from": "2018-03-22T00:00:00.000Z", "to": null },
+  "title": "Wifi4EU - Registrations",
+  "type": []
+}

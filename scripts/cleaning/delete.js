@@ -10,8 +10,7 @@ const deleteServices = async services =>
 
 // Start the deletion
 deleteServices([
-  'storage-signed-uploads',
-  'storage-deleter',
+  'enrichment-manager',
   'ingestion-manager',
   'ingestion-cleaner',
   'ingestion-etl-agri-csv',
@@ -21,7 +20,9 @@ deleteServices([
   'ingestion-etl-iati-csv',
   'ingestion-etl-valor-xls',
   'ingestion-etl-wifi4eu-xls',
+  'ingestion-quality-analyzer',
   'value-store-projects',
   'logger-listener',
-  'enrichment-manager',
+  'storage-signed-uploads',
+  'storage-deleter',
 ]);

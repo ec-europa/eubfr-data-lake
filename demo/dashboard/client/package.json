@@ -5,9 +5,12 @@
     "start": "npm run prepare && react-scripts start",
     "build": "npm run prepare && react-scripts build",
     "deploy": "sls client deploy",
+    "eject": "react-scripts eject",
     "prepare": "serverless deploy && serverless export-env",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "react:start": "react-scripts start",
+    "react:build": "react-scripts build",
+    "start": "run-s prepare ecl react:start",
+    "test": "react-scripts test --env=jsdom"
   },
   "dependencies": {
     "@eubfr/logger-messenger": "0.0.1",

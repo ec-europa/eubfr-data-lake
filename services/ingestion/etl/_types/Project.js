@@ -96,12 +96,25 @@ type Location = {
 };
 
 /**
+ * Describes meta data of a media file
+ * @see {@link http://schema.org/MediaObject|MediaObject}
+ * @type {MediaFileMeta}
+ */
+type MediaFileMeta = {
+  description: string,
+  mime_type: string,
+  type: string,
+};
+
+/**
  * Describes field `project.media`.
+ * Answers for what is where
  * @type {Media}
  */
 type Media = {
-  cover_image: string,
-  video: string,
+  meta: MediaFileMeta,
+  name: string,
+  url: string,
 };
 
 /**
@@ -141,7 +154,7 @@ export type Project = {
   call_year: string,
   description: string,
   ec_priorities: Array<string>,
-  media: Media,
+  media: Array<Media>,
   programme_name: string,
   project_id: string,
   project_locations: Array<Location>,

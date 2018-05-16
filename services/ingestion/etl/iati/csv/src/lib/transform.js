@@ -10,11 +10,10 @@ import getCountryCode from '../../../../../helpers/getCountryCode';
 import type { Project } from '../../../../_types/Project';
 
 /**
- * Converts a single string to an array
+ * Makes use of both `total-Disbursement` and `total-Expenditure` fields when present.
  *
  * Fields taken into account from raw data:
  * - currency
- * - total-Commitment
  * - total-Disbursement
  * - total-Expenditure
  *
@@ -25,11 +24,33 @@ import type { Project } from '../../../../_types/Project';
  */
 const getBudget = record => {
   const currency = record.currency || '';
-  const raw = record['total-Commitment'] || '';
+  const totalDisbursement = record['total-Disbursement'];
+  const totalExpenditure = record['total-Expenditure'];
+
+  const totalDisbursementValue = Number(record['total-Disbursement']);
+  const totalExpenditureValue = Number(record['total-Expenditure']);
+
+  let raw = '';
+  if (totalDisbursement && totalExpenditure) {
+    raw = `${totalDisbursement} + ${totalExpenditure}`;
+  } else if (totalDisbursement) {
+    raw = totalDisbursement;
+  } else if (totalExpenditure) {
+    raw = totalExpenditure;
+  }
+
+  let value = 0;
+  if (totalDisbursementValue && totalExpenditureValue) {
+    value = totalDisbursementValue + totalExpenditureValue;
+  } else if (totalDisbursementValue) {
+    value = totalDisbursementValue;
+  } else if (totalExpenditureValue) {
+    value = totalExpenditureValue;
+  }
 
   return {
     eu_contrib: {
-      value: 0,
+      value,
       currency,
       raw,
     },
@@ -125,10 +146,7 @@ export default (record: Object): Project =>
     call_year: '',
     description: record.description || '',
     ec_priorities: [],
-    media: {
-      cover_image: '',
-      video: '',
-    },
+    media: [],
     programme_name: '',
     project_id: getProjectId(record),
     project_locations: getLocations(record),

@@ -122,3 +122,13 @@ output => "2013-12-31T23:00:00.000Z"
 ```
 
 Returns **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** The date formatted into an ISO 8601 date format
+
+### getMedia
+
+Prepare media information
+
+**Parameters**
+
+-   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from parsed file
+
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;Media>** 

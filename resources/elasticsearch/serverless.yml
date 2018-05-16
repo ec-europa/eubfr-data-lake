@@ -23,6 +23,11 @@ custom:
       mapping: ${file(./mappings/logs.js)}
       region: ${opt:region, file(../../config.json):region, 'eu-central-1'}
       endpointName: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PrivateEndpoint
+    -
+      index: ${opt:stage, file(../../config.json):stage, 'dev'}-quality-reports
+      mapping: ${file(./mappings/quality-report.js)}
+      region: ${opt:region, file(../../config.json):region, 'eu-central-1'}
+      endpointName: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
 
 provider:
   name: aws

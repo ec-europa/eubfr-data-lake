@@ -1,14 +1,6 @@
 {
   "name": "@eubfr/demo-website",
   "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "prop-types": "15.6.1",
-    "elasticsearch": "14.2.2",
-    "react": "16.3.2",
-    "react-dom": "16.3.2",
-    "react-scripts": "1.1.4"
-  },
   "scripts": {
     "start": "npm run prepare && react-scripts start",
     "build": "npm run prepare && react-scripts build",
@@ -17,6 +9,13 @@
     "release": "npm run build && npm run deploy",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "prop-types": "15.6.1",
+    "elasticsearch": "14.2.2",
+    "react": "16.3.2",
+    "react-dom": "16.3.2",
+    "react-scripts": "1.1.4"
   },
   "devDependencies": {
     "serverless": "1.26.1",
