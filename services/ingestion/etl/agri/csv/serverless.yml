@@ -55,19 +55,19 @@ functions:
 
 resources:
   Resources:
-    SNSTopicBUDGCSV:
+    SNSTopicAGRICSV:
       Type: AWS::SNS::Topic
       Properties:
         TopicName: ${self:provider.stage}-etl-agri-csv
-        DisplayName: BUDG CSV ETL
-    SNSTopicBUDGCSVPolicy:
+        DisplayName: AGRI CSV ETL
+    SNSTopicAGRICSVPolicy:
       Type: AWS::SNS::TopicPolicy
       Properties:
         PolicyDocument:
           Version: '2012-10-17'
           Statement:
             -
-              Sid: AllowIngestionManagerToPushNotificationEffect
+              Sid: AllowAnyoneToPingSNSTopicAGRICSV
               Action:
                 - sns:Publish
               Effect: Allow
@@ -75,4 +75,4 @@ resources:
               Principal: "*"
         Topics:
           -
-            Ref: SNSTopicBUDGCSV
+            Ref: SNSTopicAGRICSV

@@ -8,8 +8,6 @@ import getCountryCode from '../../../../../helpers/getCountryCode';
 
 import type { Project } from '../../../../_types/Project';
 
-const getFundingArea = () => [];
-
 /**
  * Preprocess locations
  *
@@ -78,7 +76,7 @@ const getBudget = record => ({
   private_fund: { value: 0, currency: '', raw: '' },
   public_fund: { value: 0, currency: '', raw: '' },
   other_contrib: { value: 0, currency: '', raw: '' },
-  funding_area: getFundingArea(),
+  funding_area: [],
   mmf_heading: '',
 });
 
