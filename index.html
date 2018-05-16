@@ -456,6 +456,39 @@
               
                 
                 <li class="ecl-link-block__item">
+                  <a href="#justcsvtransform"
+                     class="ecl-link ecl-link--standalone ecl-link-block__link">
+                    JustCsvTransform
+                  </a>
+                
+                  
+                  <ul class="ecl-list">
+                    
+                      <li><a
+                        href="#justcsvtransformgetlocations"
+                        class="ecl-link pre-open">
+                        getLocations
+                      </a></li>
+                    
+                      <li><a
+                        href="#justcsvtransformgetbudget"
+                        class="ecl-link pre-open">
+                        getBudget
+                      </a></li>
+                    
+                      <li><a
+                        href="#justcsvtransformgetrelatedlinks"
+                        class="ecl-link pre-open">
+                        getRelatedLinks
+                      </a></li>
+                    
+                    </ul>
+                  
+                
+                </li>
+              
+                
+                <li class="ecl-link-block__item">
                   <a href="#valorxlstransform"
                      class="ecl-link ecl-link--standalone ecl-link-block__link">
                     valorXlsTransform
@@ -4116,6 +4149,277 @@ Depends on getAddress()</p>
 
   
 
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+</section>
+
+    </ul>
+  
+
+  
+
+  
+</li>
+
+                  
+            
+              <li class='ecl-list-item ecl-u-pv-m'>
+  
+    
+    <h3 class='ecl-heading ecl-heading--h3' id='justcsvtransform'>
+      JustCsvTransform
+    </h3>
+    
+    
+  
+
+  <p>Map fields for JUST producer, CSV file types</p>
+<p>Example input data: <a href="https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/just/csv/test/stubs/record.json">stub</a></p>
+<p>Transform function: <a href="https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/just/csv/src/lib/transform.js">implementation details</a></p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        Piece of data to transform before going to harmonized storage.
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="#project">Project</a>
+      :
+        JSON matching the type fields.
+
+      
+    
+  
+
+  
+
+  
+
+  
+    <ul class="ecl-list">
+    <section class='ecl-u-clearfix ecl-u-pt-xs'>
+  
+    <a id='justcsvtransformgetlocations' class="ecl-link ecl-link--standalone" aria-controls='justcsvtransformgetlocations-panel' aria-expanded="true" href="#">
+      getLocations
+    </a>
+    <div id='justcsvtransformgetlocations-panel' aria-labelledby='justcsvtransformgetlocations' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess locations</p>
+<p>Input fields taken from the <code>record</code> are:</p>
+<ul>
+<li><code>field_prj_longitude</code></li>
+<li><code>field_prj_latitude</code></li>
+<li>`field_prj_country_iso</li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>
+      :
+        List of {Location} objects for 
+<code>project_locations</code>
+ field
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='justcsvtransformgetbudget' class="ecl-link ecl-link--standalone" aria-controls='justcsvtransformgetbudget-panel' aria-expanded="true" href="#">
+      getBudget
+    </a>
+    <div id='justcsvtransformgetbudget-panel' aria-labelledby='justcsvtransformgetbudget' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess budget</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+      :
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='justcsvtransformgetrelatedlinks' class="ecl-link ecl-link--standalone" aria-controls='justcsvtransformgetrelatedlinks-panel' aria-expanded="true" href="#">
+      getRelatedLinks
+    </a>
+    <div id='justcsvtransformgetrelatedlinks-panel' aria-labelledby='justcsvtransformgetrelatedlinks' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess related links</p>
+<p>Depends on record['Related links'] field</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>
+      :
+        List of {RelatedLink}
+
+      
+    
+  
+
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Example</h4>
+    
+      
+      <pre style="background-color: #f5f5f5;" class="ecl-u-pa-xs">input =&gt; <span class="hljs-string">"&lt;a href=\"https://ec.europa.eu/inea/en/ten-t/ten-t-projects/projects-by-country/multi-country/2013-eu-92069-s\"&gt;INEA&lt;/a&gt;;&lt;a href=\"https://europa.eu/investeu/projects/central-european-green-corridors_en\"&gt;InvestEU&lt;/a&gt;"</span>
+output =&gt; [
+   { <span class="hljs-attr">label</span>: <span class="hljs-string">"INEA"</span>, <span class="hljs-attr">url</span>: <span class="hljs-string">"https://ec.europa.eu/inea/en/ten-t/ten-t-projects/projects-by-country/multi-country/2013-eu-92069-s"</span> }
+   { <span class="hljs-attr">label</span>: <span class="hljs-string">"InvestEU"</span>, <span class="hljs-attr">url</span>: <span class="hljs-string">"https://europa.eu/investeu/projects/central-european-green-corridors_en"</span> }
+ ]</pre>
+    
   
 
   
