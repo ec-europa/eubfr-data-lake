@@ -18,7 +18,7 @@
     "serverless": "1.26.1",
     "serverless-offline": "3.20.2",
     "serverless-webpack": "5.1.1",
-    "webpack": "4.6.0"
+    "webpack": "4.8.3"
   },
   "dependencies": {
     "uuid": "3.2.1"
