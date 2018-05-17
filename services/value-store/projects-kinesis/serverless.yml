@@ -24,7 +24,7 @@ provider:
     ENV: ${self:custom.eubfrEnvironment}
   iamRoleStatements:
     # http://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-aws-integrations.html?shortFooter=true#es-aws-integrations-s3-lambda-es-authorizations
-    - Effect: 'Allow'
+    - Effect: Allow
       Action: 'es:*'
       Resource: 'arn:aws:es:${self:provider.region}:*:domain/*'
 
@@ -97,3 +97,22 @@ resources:
               StringEquals:
                 sts:ExternalId:
                   - Ref: 'AWS::AccountId'
+
+    DeliveryStreamPolicy:
+      Type: AWS::IAM::Policy
+      Properties:
+        Roles:
+          - Ref: DeliveryStreamRole
+        PolicyName: DeliveryStreamRolePolicy
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action: 'es:*'
+            Resource: 'arn:aws:es:${self:provider.region}:*:domain/*'
+          - Effect: Allow
+            Action: 's3:*'
+            Resource: '*'
+          - Effect: Allow
+            Action: 'kinesis:*'
+            Resource: '*'
