@@ -8,11 +8,10 @@ export default class SaveStream extends stream.Writable {
     super(options);
     this.client = options.client;
     this.index = options.index;
+    this.deliveryStreamName = options.streamName;
   }
 
   _write(chunk, enc, next) {
-    // Manually calculate the ID
-    // md5 hash of computed_key + project_id
     const { computed_key: computedKey, project_id: projectId } = chunk;
 
     const id = crypto
@@ -20,9 +19,15 @@ export default class SaveStream extends stream.Writable {
       .update(`${computedKey}/${projectId}`)
       .digest('hex');
 
-    return this.client.index(
-      { index: this.index, type, id, body: chunk },
-      next
-    );
+    const record = { index: this.index, type, id, body: chunk };
+
+    const params = {
+      DeliveryStreamName: this.deliveryStreamName,
+      Record: {
+        Data: new Buffer(record),
+      },
+    };
+
+    return this.client.putRecord(params, next);
   }
 }

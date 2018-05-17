@@ -3,8 +3,7 @@
   "name": "@eubfr/value-store-projects-kinesis",
   "version": "0.0.1",
   "scripts": {
-    "deploy": "sls deploy -v",
-    "test:unit": "jest --testPathPattern=unit"
+    "deploy": "sls deploy -v"
   },
   "dependencies": {
     "@eubfr/logger-messenger": "0.0.1",

@@ -12,14 +12,10 @@ import deleteProjects from '../lib/deleteProjects';
 import SaveStream from '../lib/SaveStream';
 
 export const handler = async (event, context, callback) => {
-  const { API, INDEX, REGION, STAGE } = process.env;
+  const { API, INDEX, REGION, STAGE, DELIVERY_STREAM_NAME } = process.env;
 
-  if (!API || !INDEX || !REGION || !STAGE) {
-    return callback(
-      new Error(
-        'API, INDEX, REGION and STAGE environment variables are required!'
-      )
-    );
+  if (!API || !INDEX || !REGION || !STAGE || !DELIVERY_STREAM_NAME) {
+    return callback(new Error('Missing required environment variables!'));
   }
 
   /*
@@ -49,6 +45,7 @@ export const handler = async (event, context, callback) => {
     index: INDEX,
   });
 
+  const firehose = new AWS.Firehose();
   const messenger = MessengerFactory.Create({ context });
   const s3 = new AWS.S3();
 
@@ -88,7 +85,7 @@ export const handler = async (event, context, callback) => {
     await messenger.send({
       message: {
         computed_key: originalComputedKey,
-        status_message: 'Start uploading to ElasticSearch',
+        status_message: 'Upload of data started ...',
         status_code: STATUS.PROGRESS,
       },
       to: ['logs'],
@@ -97,8 +94,9 @@ export const handler = async (event, context, callback) => {
     // Prepare upload
     const saveStream = new SaveStream({
       objectMode: true,
-      client,
+      client: firehose,
       index: INDEX,
+      streamName: DELIVERY_STREAM_NAME,
     });
 
     const handleError = async (e, cb) => {
