@@ -80,3 +80,20 @@ resources:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: ${self:custom.kinesisBackupBucket}
+
+    DeliveryStreamRole:
+      Type: AWS::IAM::Role
+      Properties:
+        RoleName: DeliveryStreamRole
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Sid: ''
+            Effect: Allow
+            Principal:
+              Service: firehose.amazonaws.com
+            Action: sts:AssumeRole
+            Condition:
+              StringEquals:
+                sts:ExternalId:
+                  - Ref: 'AWS::AccountId'
