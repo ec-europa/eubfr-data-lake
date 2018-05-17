@@ -5,6 +5,7 @@ plugins:
 
 custom:
   esIndex: ${self:provider.stage}-projects
+  kinesisBackupBucket: eubfr-${self:provider.stage}-kinesis-backup
   webpackIncludeModules: true
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
 
@@ -23,9 +24,9 @@ provider:
     ENV: ${self:custom.eubfrEnvironment}
   iamRoleStatements:
     # http://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-aws-integrations.html?shortFooter=true#es-aws-integrations-s3-lambda-es-authorizations
-    - Effect: "Allow"
-      Action: "es:*"
-      Resource: "arn:aws:es:${self:provider.region}:*:domain/*"
+    - Effect: 'Allow'
+      Action: 'es:*'
+      Resource: 'arn:aws:es:${self:provider.region}:*:domain/*'
 
 functions:
   onObjectCreated:
@@ -42,13 +43,13 @@ functions:
       - sns:
           arn:
             Fn::Join:
-              - ""
+              - ''
               -
-                - "arn:aws:sns:"
-                - Ref: "AWS::Region"
-                - ":"
-                - Ref: "AWS::AccountId"
-                - ":${self:provider.stage}-harmonized-object-created"
+                - 'arn:aws:sns:'
+                - Ref: 'AWS::Region'
+                - ':'
+                - Ref: 'AWS::AccountId'
+                - ':${self:provider.stage}-harmonized-object-created'
           topicName: ${self:provider.stage}-harmonized-object-created
   onObjectRemoved:
     handler: src/events/onObjectRemoved.handler
@@ -63,13 +64,13 @@ functions:
       - sns:
           arn:
             Fn::Join:
-              - ""
+              - ''
               -
-                - "arn:aws:sns:"
-                - Ref: "AWS::Region"
-                - ":"
-                - Ref: "AWS::AccountId"
-                - ":${self:provider.stage}-harmonized-object-removed"
+                - 'arn:aws:sns:'
+                - Ref: 'AWS::Region'
+                - ':'
+                - Ref: 'AWS::AccountId'
+                - ':${self:provider.stage}-harmonized-object-removed'
           topicName: ${self:provider.stage}-harmonized-object-removed
 
 resources:
@@ -78,75 +79,4 @@ resources:
     DeliveryBucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: eubfr-dev-kinesis-backup
-
-    DeliveryStream:
-      Type: AWS::KinesisFirehose::DeliveryStream
-      DependsOn:
-        - DeliveryStreamPolicy
-      Properties:
-        DeliveryStreamName: eubfr-dev-kinesis-firehose
-        DeliveryStreamType: DirectPut
-        ElasticsearchDestinationConfiguration:
-          BufferingHints:
-            IntervalInSeconds: 60
-            SizeInMBs: 50
-          DomainARN:
-            Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpointArn
-          IndexName: ${self:custom.esIndex}
-          IndexRotationPeriod: NoRotation
-          ProcessingConfiguration:
-            Enabled: false
-          RetryOptions: 300
-          RoleARN:
-            Fn::GetAtt: DeliveryStreamRole.Arn
-          S3BackupMode: FailedDocumentsOnly
-          S3Configuration:
-            BucketARN:
-              Fn::GetAtt: DeliveryBucket.Arn
-            BufferingHints:
-              IntervalInSeconds: 60
-              SizeInMBs: 50
-            Prefix: 'firehose/'
-            RoleARN:
-              Fn::GetAtt: DeliveryStreamRole.Arn
-            ProcessingConfiguration:
-              Enabled: false
-            TypeName: project
-
-      DeliveryStreamRole:
-        Type: AWS::IAM::Role
-        Properties:
-          AssumeRolePolicyDocument:
-            Version: 2012-10-17
-            Statement:
-              - Sid: ''
-                Effect: Allow
-                Principal:
-                  Service: firehose.amazonaws.com
-                Action: 'sts:AssumeRole'
-
-      DeliveryStreamPolicy:
-        Type: AWS::IAM::Policy
-        Properties:
-          Roles:
-            Fn::Ref: DeliveryStreamRole
-          PolicyName: firehose_delivery_policy
-          PolicyDocument:
-            Version: 2012-10-17
-            Statement:
-              - Effect: Allow
-                Action:
-                  - 's3:AbortMultipartUpload'
-                  - 's3:GetBucketLocation'
-                  - 's3:GetObject'
-                  - 's3:ListBucket'
-                  - 's3:ListBucketMultipartUploads'
-                  - 's3:PutObject'
-                Resource:
-                  - Fn::GetAtt: DeliveryBucket.Arn
-                  - Fn::Join:
-                    - ''
-                    - - 'arn:aws:s3:::'
-                      - Fn::Ref: DeliveryBucket
-                      - '*'
+        BucketName: ${self:custom.kinesisBackupBucket}
