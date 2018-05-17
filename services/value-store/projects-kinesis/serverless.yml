@@ -6,6 +6,7 @@ plugins:
 custom:
   esIndex: ${self:provider.stage}-projects
   kinesisBackupBucket: eubfr-${self:provider.stage}-kinesis-backup
+  kinesisDeliveryStreamName: eubfr-${self:provider.stage}-projects-delivery-stream
   webpackIncludeModules: true
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
 
@@ -80,6 +81,39 @@ resources:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: ${self:custom.kinesisBackupBucket}
+
+    DeliveryStream:
+      Type: AWS::KinesisFirehose::DeliveryStream
+      DependsOn:
+        - DeliveryStreamPolicy
+      Properties:
+        DeliveryStreamName: ${self:custom.kinesisDeliveryStreamName}
+        DeliveryStreamType: DirectPut
+        ElasticsearchDestinationConfiguration:
+          BufferingHints:
+            IntervalInSeconds: 60
+            SizeInMBs: 50
+          DomainARN:
+            Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpointArn
+          IndexName: ${self:custom.esIndex}
+          IndexRotationPeriod: NoRotation
+          RetryOptions:
+            DurationInSeconds: 300
+          RoleARN:
+            Fn::GetAtt: [ DeliveryStreamRole, Arn ]
+          S3BackupMode: FailedDocumentsOnly
+          S3Configuration:
+            BucketARN:
+              Fn::GetAtt: [ DeliveryBucket, Arn ]
+            BufferingHints:
+              IntervalInSeconds: 60
+              SizeInMBs: 50
+            CompressionFormat: UNCOMPRESSED
+            Prefix: 'firehose/'
+            RoleARN:
+              Fn::GetAtt: [ DeliveryStreamRole, Arn ]
+          TypeName: 'project'
+
 
     DeliveryStreamRole:
       Type: AWS::IAM::Role
