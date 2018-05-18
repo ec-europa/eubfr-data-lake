@@ -30,6 +30,9 @@ provider:
     - Effect: Allow
       Action: 'firehose:*'
       Resource: '*'
+    - Effect: Allow
+      Action: 'logs:*'
+      Resource: 'arn:aws:logs:::*'
 
 functions:
   onObjectCreated:
@@ -94,8 +97,14 @@ resources:
         DeliveryStreamType: DirectPut
         ElasticsearchDestinationConfiguration:
           BufferingHints:
-            IntervalInSeconds: 60
-            SizeInMBs: 50
+            IntervalInSeconds: 300
+            SizeInMBs: 5
+          CloudWatchLoggingOptions:
+            Enabled: true
+            LogGroupName:
+              Ref: ElasticSearchLogs
+            LogStreamName:
+              Ref: ElasticSearchLogsStream
           DomainARN:
             Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpointArn
           IndexName: ${self:custom.esIndex}
@@ -145,3 +154,15 @@ resources:
           - Effect: Allow
             Action: 's3:*'
             Resource: '*'
+
+    ElasticSearchLogs:
+      Type: AWS::Logs::LogGroup
+      Properties:
+        LogGroupName: '${self:service}-eslogs'
+
+    ElasticSearchLogsStream:
+      Type: "AWS::Logs::LogStream"
+      Properties:
+        LogGroupName:
+          Ref: ElasticSearchLogs
+        LogStreamName: '${self:service}-eslogs-stream'
