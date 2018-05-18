@@ -113,13 +113,13 @@ resources:
             DurationInSeconds: 300
           RoleARN:
             Fn::GetAtt: [ DeliveryStreamRole, Arn ]
-          S3BackupMode: FailedDocumentsOnly
+          S3BackupMode: AllDocuments
           S3Configuration:
             BucketARN:
               Fn::GetAtt: [ DeliveryBucket, Arn ]
             BufferingHints:
-              IntervalInSeconds: 60
-              SizeInMBs: 50
+              IntervalInSeconds: 300
+              SizeInMBs: 5
             CompressionFormat: UNCOMPRESSED
             Prefix: 'firehose/'
             RoleARN:
