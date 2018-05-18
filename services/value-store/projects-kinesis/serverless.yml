@@ -24,20 +24,20 @@ provider:
   stackTags:
     ENV: ${self:custom.eubfrEnvironment}
   iamRoleStatements:
-    # http://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-aws-integrations.html?shortFooter=true#es-aws-integrations-s3-lambda-es-authorizations
     - Effect: Allow
       Action: 'es:*'
       Resource: 'arn:aws:es:${self:provider.region}:*:domain/*'
+    - Effect: Allow
+      Action: 'firehose:*'
+      Resource: '*'
 
 functions:
   onObjectCreated:
     handler: src/events/onObjectCreated.handler
     name: ${self:provider.stage}-${self:service}-onObjectCreated
-    memorySize: 256
+    timeout: 300
     environment:
       API:
-        Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
-      API_FIREHOSE:
         Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
       INDEX: ${self:custom.esIndex}
       REGION: ${self:provider.region}
@@ -117,7 +117,6 @@ resources:
               Fn::GetAtt: [ DeliveryStreamRole, Arn ]
           TypeName: 'project'
 
-
     DeliveryStreamRole:
       Type: AWS::IAM::Role
       Properties:
@@ -130,10 +129,6 @@ resources:
             Principal:
               Service: firehose.amazonaws.com
             Action: sts:AssumeRole
-            Condition:
-              StringEquals:
-                sts:ExternalId:
-                  - Ref: 'AWS::AccountId'
 
     DeliveryStreamPolicy:
       Type: AWS::IAM::Policy
@@ -149,7 +144,4 @@ resources:
             Resource: 'arn:aws:es:${self:provider.region}:*:domain/*'
           - Effect: Allow
             Action: 's3:*'
-            Resource: '*'
-          - Effect: Allow
-            Action: 'kinesis:*'
             Resource: '*'

@@ -24,7 +24,7 @@ export default class SaveStream extends stream.Writable {
     const params = {
       DeliveryStreamName: this.deliveryStreamName,
       Record: {
-        Data: new Buffer(record),
+        Data: JSON.stringify(record),
       },
     };
 
