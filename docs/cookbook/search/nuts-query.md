@@ -1,4 +1,4 @@
-# NUTS Query
+# NUTS code query
 
 This query will return all the documents that have NUTS code details stored in the **nuts** key. For the document to match the query, nuts need to be a non-null value.
 
