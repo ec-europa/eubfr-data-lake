@@ -9,6 +9,7 @@ General information on the topic could be found in the [reference documentation]
 Examples:
 
 * [Geo Query - Bounding box](./search/geo-query-bounding-box.md)
+* [NUTS Query](./search/nuts-query.md)
 
 ## Aggregations
 

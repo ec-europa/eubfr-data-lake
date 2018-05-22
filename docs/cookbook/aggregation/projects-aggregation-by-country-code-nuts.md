@@ -1,6 +1,6 @@
 # Aggregate projects by location (Geo Centroid computing with NUTS code)
 
-Similar to the regular [Geo Centroid Aggregation](./projects-aggregation-by-country-code.md), this example request will just add a query that checks if the field nuts exists for the record. Since we don't store NUTS0, results will include NUTS1 and above.
+Similar to the regular [Geo Centroid Aggregation](./projects-aggregation-by-country-code.md), this example request will add a query that checks if the filed **nuts** exists in the document. The Exists Query will match all non-null values.
 
 * Endpoint: `https://PROJECTS_INDEX/project/_search`
 * Method: `POST`
@@ -117,10 +117,8 @@ Similar to the regular [Geo Centroid Aggregation](./projects-aggregation-by-coun
                         "_id": "48bab4c5bba54ae7cd785c5f6b9030dd",
                         "_score": null,
                         "_source": {
-                          "description":
-                            "<p>Poland’s railway line 354 between the stations of Poznań Główny, Chodzież and Piła Główna in the northern Wielkopolskie region is undergoing modernisation. Financed by the EU, the upgrades to the line will make it faster and easier for the 250 000 people living in the north of the Wielkopolskie region to reach Poznań by train.</p>",
-                          "title":
-                            "Faster railway connections in Poland’s Wielkopolskie region"
+                          "description": "<p>description</p>",
+                          "title": "Title"
                         },
                         "sort": [1526477161103]
                       }
