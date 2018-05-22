@@ -2,8 +2,9 @@ import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependenc
 
 import elasticsearch from 'elasticsearch';
 import connectionClass from 'http-aws-es';
-import through2 from 'through2';
+import through2Batch from 'through2-batch';
 import split2 from 'split2';
+import crypto from 'crypto';
 
 import MessengerFactory from '@eubfr/logger-messenger/src/lib/MessengerFactory';
 import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
@@ -124,18 +125,32 @@ export const handler = async (event, context, callback) => {
         .pipe(split2(JSON.parse))
         .on('error', async e => handleError(e, reject))
         .pipe(
-          through2.obj((chunk, enc, cb) => {
-            // Enhance item to save
-            const item = Object.assign(
-              {
-                computed_key: s3record.s3.object.key,
-                created_by: s3record.userIdentity.principalId, // which service created the harmonized file
-                last_modified: data.LastModified.toISOString(), // ISO-8601 date
-              },
-              chunk
-            );
+          through2Batch.obj({ batchSize: 50 }, (batch, _, cb) => {
+            const improvedBatch = batch.map(item => {
+              const computedKey = s3record.s3.object.key;
+              const projectId = item.project_id;
 
-            return cb(null, item);
+              const id = crypto
+                .createHash('md5')
+                .update(`${computedKey}/${projectId}`)
+                .digest('hex');
+
+              // Enhance item to save
+              const itemEnhanced = Object.assign(
+                {
+                  id,
+                  computed_key: computedKey,
+                  created_by: s3record.userIdentity.principalId, // which service created the harmonized file
+                  last_modified: data.LastModified.toISOString(), // ISO-8601 date
+                  type: 'project',
+                },
+                item
+              );
+
+              return itemEnhanced;
+            });
+
+            return cb(null, improvedBatch);
           })
         )
         .on('error', async e => handleError(e, reject))

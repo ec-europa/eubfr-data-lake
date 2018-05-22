@@ -1,33 +1,23 @@
 import stream from 'stream';
-import crypto from 'crypto';
-
-const type = `project`;
 
 export default class SaveStream extends stream.Writable {
   constructor(options) {
     super(options);
     this.client = options.client;
-    this.index = options.index;
     this.deliveryStreamName = options.streamName;
   }
 
-  _write(chunk, enc, next) {
-    const { computed_key: computedKey, project_id: projectId } = chunk;
-
-    const id = crypto
-      .createHash('md5')
-      .update(`${computedKey}/${projectId}`)
-      .digest('hex');
-
-    const record = { index: this.index, type, id, body: chunk };
+  _write(batch, _, next) {
+    // Formatting structure to match expectation of firehose client.
+    const records = batch.map(record => ({
+      Data: JSON.stringify(record),
+    }));
 
     const params = {
       DeliveryStreamName: this.deliveryStreamName,
-      Record: {
-        Data: JSON.stringify(record),
-      },
+      Records: records,
     };
 
-    return this.client.putRecord(params, next);
+    return this.client.putRecordBatch(params, next);
   }
 }
