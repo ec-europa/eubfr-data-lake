@@ -1,8 +1,8 @@
-# NUTS code query
+# NUTS code Exists Query
 
 This query will return all the documents that have NUTS code details stored in the **nuts** key. For the document to match the query, nuts need to be a non-null value.
 
-Read more about the [exists query](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-exists-query.html)
+Read more about the [Exists Query](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-exists-query.html)
 
 ## Request
 

@@ -1,4 +1,4 @@
-# Query for documents with no NUTS code
+# NUTS code Missing Query
 
 This query will return all the documents that have null values for the **nuts** keys
 
