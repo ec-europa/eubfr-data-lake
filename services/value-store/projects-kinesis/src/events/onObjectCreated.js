@@ -1,7 +1,5 @@
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 
-import elasticsearch from 'elasticsearch';
-import connectionClass from 'http-aws-es';
 import through2Batch from 'through2-batch';
 import split2 from 'split2';
 import crypto from 'crypto';
@@ -9,7 +7,6 @@ import crypto from 'crypto';
 import MessengerFactory from '@eubfr/logger-messenger/src/lib/MessengerFactory';
 import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 
-import deleteProjects from '../lib/deleteProjects';
 import SaveStream from '../lib/SaveStream';
 
 export const handler = async (event, context, callback) => {
@@ -37,14 +34,6 @@ export const handler = async (event, context, callback) => {
   // Get Account ID from lambda function arn in the context
   const accountId = context.invokedFunctionArn.split(':')[4];
   const sns = new AWS.SNS();
-
-  // Insantiate clients
-  const client = elasticsearch.Client({
-    host: `https://${API}`,
-    apiVersion: '6.0',
-    connectionClass,
-    index: INDEX,
-  });
 
   const firehose = new AWS.Firehose();
   const messenger = MessengerFactory.Create({ context });
@@ -76,12 +65,6 @@ export const handler = async (event, context, callback) => {
         Key: s3record.s3.object.key,
       })
       .promise();
-
-    await deleteProjects({
-      client,
-      index: INDEX,
-      key: s3record.s3.object.key,
-    });
 
     await messenger.send({
       message: {
@@ -125,7 +108,7 @@ export const handler = async (event, context, callback) => {
         .pipe(split2(JSON.parse))
         .on('error', async e => handleError(e, reject))
         .pipe(
-          through2Batch.obj({ batchSize: 50 }, (batch, _, cb) => {
+          through2Batch.obj({ batchSize: 10 }, (batch, _, cb) => {
             const improvedBatch = batch.map(item => {
               const computedKey = s3record.s3.object.key;
               const projectId = item.project_id;
@@ -178,7 +161,7 @@ export const handler = async (event, context, callback) => {
             })
             .promise();
 
-          return resolve('Results uploaded successfully, all went well.');
+          return resolve('Results queued for ingestion successfully.');
         });
     });
   } catch (err) {

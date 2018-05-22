@@ -9,6 +9,7 @@
     "@eubfr/logger-messenger": "0.0.1",
     "elasticsearch": "14.0.0",
     "http-aws-es": "4.0.0",
+    "serverless-s3-remover": "0.4.1",
     "split2": "2.2.0",
     "through2-batch": "1.1.0"
   },

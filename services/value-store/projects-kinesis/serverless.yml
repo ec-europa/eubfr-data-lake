@@ -1,6 +1,7 @@
 service: value-store-projects-kinesis
 
 plugins:
+  - serverless-s3-remover
   - serverless-webpack
 
 custom:
@@ -9,6 +10,9 @@ custom:
   kinesisDeliveryStreamName: eubfr-${self:provider.stage}-projects-delivery-stream
   webpackIncludeModules: true
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
+  remover:
+     buckets:
+       - ${self:custom.kinesisBackupBucket}
 
 package:
   individually: true
@@ -97,8 +101,8 @@ resources:
         DeliveryStreamType: DirectPut
         ElasticsearchDestinationConfiguration:
           BufferingHints:
-            IntervalInSeconds: 300
-            SizeInMBs: 5
+            IntervalInSeconds: 60
+            SizeInMBs: 1
           CloudWatchLoggingOptions:
             Enabled: true
             LogGroupName:
@@ -113,13 +117,13 @@ resources:
             DurationInSeconds: 300
           RoleARN:
             Fn::GetAtt: [ DeliveryStreamRole, Arn ]
-          S3BackupMode: AllDocuments
+          S3BackupMode: FailedDocumentsOnly
           S3Configuration:
             BucketARN:
               Fn::GetAtt: [ DeliveryBucket, Arn ]
             BufferingHints:
-              IntervalInSeconds: 300
-              SizeInMBs: 5
+              IntervalInSeconds: 60
+              SizeInMBs: 1
             CompressionFormat: UNCOMPRESSED
             Prefix: 'firehose/'
             RoleARN:
