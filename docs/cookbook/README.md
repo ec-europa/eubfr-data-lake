@@ -20,3 +20,4 @@ Examples:
 * [Aggregate projects per field with second aggregation](./aggregation/projects-by-field-with-second-aggregation-on-buckets.md)
 * [Aggregate projects by location (Geohash Grid Aggregation)](./aggregation/projects-aggregation-by-location-geohash.md)
 * [Aggregate projects by location (Geo Centroid computing)](./aggregation/projects-aggregation-by-country-code.md)
+* [Aggregate projects by location (Geo Centroid computing with NUTS code)](./aggregation/projects-aggregation-by-country-code-nuts.md)
