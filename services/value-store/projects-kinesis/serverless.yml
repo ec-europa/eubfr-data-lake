@@ -43,6 +43,7 @@ functions:
     handler: src/events/onObjectCreated.handler
     name: ${self:provider.stage}-${self:service}-onObjectCreated
     timeout: 300
+    memorySize: 3000
     environment:
       API:
         Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
