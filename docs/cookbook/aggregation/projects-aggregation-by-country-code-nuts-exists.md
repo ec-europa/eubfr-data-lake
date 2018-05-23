@@ -1,6 +1,6 @@
 # Aggregate projects by location (Geo Centroid computing with NUTS code)
 
-Similar to the regular [Geo Centroid Aggregation](./projects-aggregation-by-country-code.md), this example request will add a query that checks if the filed **nuts** exists in the document. The Exists Query will match all non-null values.
+Similar to the regular [Geo Centroid Aggregation](./projects-aggregation-by-country-code.md), this example request will add a query that checks if the field **nuts** exists in the document. The Exists Query will match all non-null values.
 
 * Endpoint: `https://PROJECTS_INDEX/project/_search`
 * Method: `POST`
