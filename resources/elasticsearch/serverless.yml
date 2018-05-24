@@ -81,12 +81,6 @@ resources:
               - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*_field_caps"
               - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*_mtermvectors"
               - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*_search"
-          # Lambda can take actions on the ES domain
-          - Effect: Allow
-            Principal:
-              Service: lambda.amazonaws.com
-            Action:
-              - "es:*"
     PrivateElasticSearchDomain:
       Type: AWS::Elasticsearch::Domain
       # Don't delete the elastic search instance when the CF stack is deleted
