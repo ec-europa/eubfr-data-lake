@@ -71,3 +71,26 @@ functions:
                 - Ref: "AWS::AccountId"
                 - ":${self:provider.stage}-harmonized-object-removed"
           topicName: ${self:provider.stage}-harmonized-object-removed
+  onKinesisData:
+    handler: src/events/onKinesisData.handler
+    name: ${self:provider.stage}-${self:service}-onKinesisData
+    environment:
+      API:
+        Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
+      INDEX: ${self:custom.esIndex}
+      REGION: ${self:provider.region}
+      STAGE: ${self:provider.stage}
+    events:
+      - stream:
+          type: kinesis
+          arn:
+            Fn::GetAtt: [ KinesisDataStream, Arn ]
+
+resources:
+  Resources:
+
+    KinesisDataStream:
+      Type: AWS::Kinesis::Stream
+      Properties:
+        Name: ${self:provider.stage}-${self:service}-stream
+        ShardCount: 5
