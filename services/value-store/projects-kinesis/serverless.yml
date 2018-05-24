@@ -134,7 +134,7 @@ resources:
     DeliveryStreamRole:
       Type: AWS::IAM::Role
       Properties:
-        RoleName: DeliveryStreamRole
+        RoleName: DeliveryStreamRole-${self:provider.stage}
         AssumeRolePolicyDocument:
           Version: '2012-10-17'
           Statement:
@@ -163,11 +163,11 @@ resources:
     ElasticSearchLogs:
       Type: AWS::Logs::LogGroup
       Properties:
-        LogGroupName: '${self:service}-eslogs'
+        LogGroupName: '${self:service}-${self:provider.stage}-eslogs'
 
     ElasticSearchLogsStream:
       Type: "AWS::Logs::LogStream"
       Properties:
         LogGroupName:
           Ref: ElasticSearchLogs
-        LogStreamName: '${self:service}-eslogs-stream'
+        LogStreamName: '${self:service}-${self:provider.stage}-eslogs-stream'
