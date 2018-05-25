@@ -22,8 +22,5 @@
   },
   "dependencies": {
     "uuid": "3.2.1"
-  },
-  "resolutions": {
-    "webpack": "4.8.3"
   }
 }
