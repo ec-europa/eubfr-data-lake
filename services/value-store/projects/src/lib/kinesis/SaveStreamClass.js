@@ -15,26 +15,32 @@ export default class SaveStream extends stream.Writable {
     this.stream = options.kinesisStream;
   }
 
-  _write(chunk, enc, next) {
-    // Manually calculate the ID
-    // md5 hash of computed_key + project_id
-    const { computed_key: computedKey, project_id: projectId } = chunk;
+  _write(batch, _, next) {
+    const records = batch.map(chunk => {
+      // Manually calculate the ID
+      // md5 hash of computed_key + project_id
+      const { computed_key: computedKey, project_id: projectId } = chunk;
 
-    const id = crypto
-      .createHash('md5')
-      .update(`${computedKey}/${projectId}`)
-      .digest('hex');
+      const id = crypto
+        .createHash('md5')
+        .update(`${computedKey}/${projectId}`)
+        .digest('hex');
 
-    const record = Object.assign({}, chunk, { id, type, index: this.index });
+      const record = Object.assign({}, chunk, { id, type, index: this.index });
+
+      return {
+        Data: JSON.stringify(record),
+        PartitionKey: this.partitionKey,
+      };
+    });
 
     const params = {
-      Data: JSON.stringify(record),
-      PartitionKey: this.partitionKey,
+      Records: records,
       StreamName: this.stream,
     };
 
     // Kinesis client
     // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Kinesis.html
-    return this.client.putRecord(params, next);
+    return this.client.putRecords(params, next);
   }
 }

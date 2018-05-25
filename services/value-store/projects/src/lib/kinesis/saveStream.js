@@ -1,6 +1,6 @@
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 
-import through2 from 'through2';
+import through2Batch from 'through2-batch';
 import split2 from 'split2';
 
 import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
@@ -34,18 +34,19 @@ const saveToElasticSearch = async ({ clients, usefulData, handleError }) => {
       .pipe(split2(JSON.parse))
       .on('error', async e => handleError(e, reject))
       .pipe(
-        through2.obj((chunk, enc, cb) => {
-          // Enhance item to save
-          const item = Object.assign(
-            {
-              computed_key: s3record.s3.object.key,
-              created_by: s3record.userIdentity.principalId, // which service created the harmonized file
-              last_modified: fileData.LastModified.toISOString(), // ISO-8601 date
-            },
-            chunk
+        through2Batch.obj({ batchSize: 400 }, (batch, _, cb) => {
+          const improvedBatch = batch.map(item =>
+            Object.assign(
+              {
+                computed_key: s3record.s3.object.key,
+                created_by: s3record.userIdentity.principalId, // which service created the harmonized file
+                last_modified: fileData.LastModified.toISOString(), // ISO-8601 date
+              },
+              item
+            )
           );
 
-          return cb(null, item);
+          return cb(null, improvedBatch);
         })
       )
       .on('error', async e => handleError(e, reject))
