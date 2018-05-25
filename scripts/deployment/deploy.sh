@@ -29,19 +29,19 @@ npx serverless deploy -v
 
 # Deploy ETL
 cd ../etl/agri/csv
-# npx serverless deploy -v
+npx serverless deploy -v
 cd ../../budg/xls
-# npx serverless deploy -v
+npx serverless deploy -v
 cd ../../inforegio/json
-# npx serverless deploy -v
+npx serverless deploy -v
 cd ../../inforegio/xml
-# npx serverless deploy -v
+npx serverless deploy -v
 cd ../../iati/csv
 npx serverless deploy -v
 cd ../../valor/xls
-# npx serverless deploy -v
+npx serverless deploy -v
 cd ../../wifi4eu/xls
-# npx serverless deploy -v
+npx serverless deploy -v
 
 # Deploy value store - projects' functions
 cd ../../../../value-store/projects
