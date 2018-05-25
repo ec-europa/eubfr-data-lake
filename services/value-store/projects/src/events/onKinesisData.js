@@ -27,13 +27,11 @@ export const handler = async (event, context, callback) => {
     index: INDEX,
   });
 
-  return event.Records.forEach(record => {
+  return event.Records.map(record => {
     // Kinesis data is base64 encoded so decode here
     const payload = Buffer.from(record.kinesis.data, 'base64').toString();
 
-    console.log('Decoded payload:', payload);
-
-    // Now index this payload
+    return client.index({ index: INDEX, type: 'project', body: payload });
   });
 };
 
