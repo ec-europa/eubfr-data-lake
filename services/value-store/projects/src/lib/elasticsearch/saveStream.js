@@ -3,7 +3,7 @@ import split2 from 'split2';
 
 import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 
-import SaveStream from '../lib/SaveStream';
+import SaveStreamInstance from './SaveStreamClass';
 
 const saveToElasticSearch = async ({ clients, usefulData, handleError }) => {
   const {
@@ -17,7 +17,7 @@ const saveToElasticSearch = async ({ clients, usefulData, handleError }) => {
   const { INDEX, REGION, STAGE } = env;
 
   // Prepare save stream
-  const saveStream = new SaveStream({
+  const saveStream = new SaveStreamInstance({
     objectMode: true,
     client: clients.clientElasticSearch,
     index: INDEX,

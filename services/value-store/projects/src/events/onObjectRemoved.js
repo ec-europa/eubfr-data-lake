@@ -1,7 +1,7 @@
 import elasticsearch from 'elasticsearch';
 import connectionClass from 'http-aws-es';
 
-import deleteProjects from '../lib/deleteProjects';
+import deleteProjects from '../lib/elasticsearch/deleteProjects';
 
 export const handler = (event, context, callback) => {
   const { API, INDEX } = process.env;

@@ -26,6 +26,9 @@ provider:
     - Effect: "Allow"
       Action: "es:*"
       Resource: "arn:aws:es:${self:provider.region}:*:domain/*"
+    - Effect: "Allow"
+      Action: "kinesis:*"
+      Resource: "*"
 
 functions:
   onObjectCreated:
@@ -38,6 +41,7 @@ functions:
       INDEX: ${self:custom.esIndex}
       REGION: ${self:provider.region}
       STAGE: ${self:provider.stage}
+      KINESIS_STREAM: ${self:provider.stage}-${self:service}-stream
     events:
       - sns:
           arn:

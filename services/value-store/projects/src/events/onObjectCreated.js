@@ -7,18 +7,18 @@ import MessengerFactory from '@eubfr/logger-messenger/src/lib/MessengerFactory';
 import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 
 // Helpers
-import deleteProjects from '../lib/deleteProjects';
-import saveToElasticSearch from '../lib/saveToElasticSearch';
-// import saveToKinesis from '../lib/saveToKinesis';
+import deleteProjects from '../lib/elasticsearch/deleteProjects';
+import saveToElasticSearch from '../lib/elasticsearch/saveStream';
+import saveToKinesis from '../lib/kinesis/saveStream';
 
 export const handler = async (event, context, callback) => {
-  const { API, INDEX, REGION, STAGE } = process.env;
+  const { API, INDEX, REGION, STAGE, KINESIS_STREAM } = process.env;
 
   // Checks ensuring proper functioning of the function
-  if (!API || !INDEX || !REGION || !STAGE) {
+  if (!API || !INDEX || !REGION || !STAGE || !KINESIS_STREAM) {
     return callback(
       new Error(
-        'API, INDEX, REGION and STAGE environment variables are required!'
+        'API, INDEX, REGION, KINESIS_STREAM and STAGE environment variables are required!'
       )
     );
   }
@@ -94,10 +94,11 @@ export const handler = async (event, context, callback) => {
 
     // If the file is less than 15MB, handle it directly
     if (fileData.ContentLength <= 15000000) {
+      // if (parseInt(fileData.ContentLength, parseInt) <= 15000000) {
       await messenger.send({
         message: {
           computed_key: originalComputedKey,
-          status_message: 'Start uploading to ElasticSearch',
+          status_message: 'Start uploading to ElasticSearch ...',
           status_code: STATUS.PROGRESS,
         },
         to: ['logs'],
@@ -109,14 +110,13 @@ export const handler = async (event, context, callback) => {
     await messenger.send({
       message: {
         computed_key: originalComputedKey,
-        status_message: 'Data is bigger than 15MB and will be streamed.',
+        status_message: 'Data is bigger than 15MB and will be streamed ...',
         status_code: STATUS.PROGRESS,
       },
       to: ['logs'],
     });
 
-    // return await saveToKinesis({ clients, usefulData, handleError });
-    return callback(`Still to be implemented`);
+    return await saveToKinesis({ clients, usefulData, handleError });
   } catch (err) {
     await messenger.send({
       message: {
