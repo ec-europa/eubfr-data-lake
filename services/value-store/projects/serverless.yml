@@ -87,6 +87,9 @@ functions:
     events:
       - stream:
           type: kinesis
+          enabled: true
+          batchSize: 400
+          startingPosition: LATEST
           arn:
             Fn::GetAtt: [ KinesisDataStream, Arn ]
 

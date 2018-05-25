@@ -1,7 +1,7 @@
 import elasticsearch from 'elasticsearch';
 import connectionClass from 'http-aws-es';
 
-export const handler = async (event, context, callback) => {
+export const handler = (event, context, callback) => {
   const { API, INDEX, REGION, STAGE } = process.env;
 
   if (!API || !INDEX || !REGION || !STAGE) {
@@ -27,12 +27,14 @@ export const handler = async (event, context, callback) => {
     index: INDEX,
   });
 
-  return event.Records.map(record => {
+  const indexRecord = async record => {
     // Kinesis data is base64 encoded so decode here
     const payload = Buffer.from(record.kinesis.data, 'base64').toString();
 
-    return client.index({ index: INDEX, type: 'project', body: payload });
-  });
+    await client.index({ index: INDEX, type: 'project', body: payload });
+  };
+
+  return event.Records.map(indexRecord);
 };
 
 export default handler;
