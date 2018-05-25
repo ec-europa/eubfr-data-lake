@@ -27,20 +27,13 @@ export const handler = async (event, context, callback) => {
     index: INDEX,
   });
 
-  console.log('Received event:', JSON.stringify(event, null, 2));
-
   return event.Records.forEach(record => {
     // Kinesis data is base64 encoded so decode here
     const payload = Buffer.from(record.kinesis.data, 'base64').toString();
 
     console.log('Decoded payload:', payload);
 
-    // const id = crypto
-    //   .createHash('md5')
-    //   .update(`${computedKey}/${projectId}`)
-    //   .digest('hex');
-    //
-    // client.index({ index: INDEX, type: 'project', id, body: payload });
+    // Now index this payload
   });
 };
 
