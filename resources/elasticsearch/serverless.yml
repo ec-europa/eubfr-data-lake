@@ -121,12 +121,6 @@ resources:
               - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.privateDomain}/*_field_caps"
               - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.privateDomain}/*_mtermvectors"
               - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.privateDomain}/*_search"
-          # Lambda can take actions on the ES domain
-          - Effect: Allow
-            Principal:
-              Service: lambda.amazonaws.com
-            Action:
-              - "es:*"
   Outputs:
     PublicEndpoint:
       Description: The public elasticsearch domain.
