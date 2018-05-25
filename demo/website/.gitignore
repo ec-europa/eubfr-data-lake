@@ -8,6 +8,3 @@
 
 # production
 /build
-
-# vendors
-public/ecl/

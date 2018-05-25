@@ -8,13 +8,13 @@
     "start": "sls offline start"
   },
   "devDependencies": {
-    "aws-sdk": "2.224.1",
-    "babel-core": "6.26.0",
+    "aws-sdk": "2.246.1",
+    "babel-core": "6.26.3",
     "babel-loader": "7.1.4",
-    "babel-preset-env": "1.6.1",
-    "serverless": "1.26.1",
-    "serverless-offline": "3.20.2",
-    "serverless-webpack": "5.1.1",
+    "babel-preset-env": "1.7.0",
+    "serverless": "1.27.3",
+    "serverless-offline": "3.23.1",
+    "serverless-webpack": "5.1.5",
     "webpack": "4.8.3"
   },
   "dependencies": {
