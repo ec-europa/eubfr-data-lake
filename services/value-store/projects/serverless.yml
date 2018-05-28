@@ -14,7 +14,6 @@ package:
 provider:
   name: aws
   runtime: nodejs8.10
-  timeout: 300
   stage: ${opt:stage, file(../../../config.json):stage, 'dev'}
   region: ${opt:region, file(../../../config.json):region, 'eu-central-1'}
   deploymentBucket:
@@ -34,7 +33,9 @@ functions:
   onObjectCreated:
     handler: src/events/onObjectCreated.handler
     name: ${self:provider.stage}-${self:service}-onObjectCreated
-    memorySize: 256
+  # Max out memory and timeout because this function is vital for queueing data to Kinesis data streams.
+    timeout: 300
+    memorySize: 3000
     environment:
       API:
         Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint

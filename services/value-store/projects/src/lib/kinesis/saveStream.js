@@ -34,7 +34,7 @@ const saveToElasticSearch = async ({ clients, usefulData, handleError }) => {
       .pipe(split2(JSON.parse))
       .on('error', async e => handleError(e, reject))
       .pipe(
-        through2Batch.obj({ batchSize: 400 }, (batch, _, cb) => {
+        through2Batch.obj({ batchSize: 10 }, (batch, _, cb) => {
           const improvedBatch = batch.map(item =>
             Object.assign(
               {
@@ -56,13 +56,13 @@ const saveToElasticSearch = async ({ clients, usefulData, handleError }) => {
         await clients.messenger.send({
           message: {
             computed_key: originalComputedKey,
-            status_message: 'Results queued to Kinesis for ingestion.',
-            status_code: STATUS.PROGRESS,
+            status_message: 'Results queued to Kinesis for ingestion!',
+            status_code: STATUS.INGESTED,
           },
           to: ['logs'],
         });
 
-        return resolve('Results queued to Kinesis for ingestion.');
+        return resolve('Results queued to Kinesis for ingestion!');
       });
   });
 };
