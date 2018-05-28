@@ -2,13 +2,13 @@ import elasticsearch from 'elasticsearch';
 import connectionClass from 'http-aws-es';
 
 export const handler = (event, context, callback) => {
-  const { API, INDEX, REGION, STAGE } = process.env;
+  // body is to match bulk API https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-2-4.html
+  const body = [];
+  const { API, INDEX } = process.env;
 
-  if (!API || !INDEX || !REGION || !STAGE) {
+  if (!API || !INDEX) {
     return callback(
-      new Error(
-        'API, INDEX, REGION and STAGE environment variables are required!'
-      )
+      new Error('API and INDEX environment variables are required!')
     );
   }
 
@@ -27,14 +27,19 @@ export const handler = (event, context, callback) => {
     index: INDEX,
   });
 
-  const indexRecord = async record => {
-    // Kinesis data is base64 encoded so decode here
-    const payload = Buffer.from(record.kinesis.data, 'base64').toString();
+  // Kinesis data is base64 encoded so decode here
+  const normalize = record =>
+    Buffer.from(record.kinesis.data, 'base64').toString();
 
-    await client.index({ index: INDEX, type: 'project', body: payload });
-  };
+  event.Records.map(normalize).forEach(r => {
+    const record = JSON.parse(r);
+    // action description
+    body.push({ index: { _index: INDEX, _type: 'project', _id: record.id } });
+    // the document to index
+    body.push(record);
+  });
 
-  return event.Records.map(indexRecord);
+  return client.bulk({ body });
 };
 
 export default handler;

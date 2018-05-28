@@ -30,7 +30,7 @@ describe('Using through2-batch', () => {
               records += 1;
 
               // Emulate some sort of transformation in batch
-              return Object.assign({ foo: 'bar' }, item);
+              return Object.assign({ transformed: true }, item);
             });
 
             return cb(null, improvedBatch);

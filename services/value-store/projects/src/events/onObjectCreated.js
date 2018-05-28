@@ -12,15 +12,11 @@ import saveToElasticSearch from '../lib/elasticsearch/saveStream';
 import saveToKinesis from '../lib/kinesis/saveStream';
 
 export const handler = async (event, context, callback) => {
-  const { API, INDEX, REGION, STAGE, KINESIS_STREAM } = process.env;
+  const { API, INDEX, REGION, STAGE, KINESIS_STREAM, BATCH_SIZE } = process.env;
 
   // Checks ensuring proper functioning of the function
-  if (!API || !INDEX || !REGION || !STAGE || !KINESIS_STREAM) {
-    return callback(
-      new Error(
-        'API, INDEX, REGION, KINESIS_STREAM and STAGE environment variables are required!'
-      )
-    );
+  if (!API || !INDEX || !REGION || !STAGE || !KINESIS_STREAM || !BATCH_SIZE) {
+    return callback(new Error('Missing environment variables!'));
   }
   if (!event.Records) {
     return callback(new Error('No record'));
