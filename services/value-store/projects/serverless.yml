@@ -33,7 +33,7 @@ functions:
   onObjectCreated:
     handler: src/events/onObjectCreated.handler
     name: ${self:provider.stage}-${self:service}-onObjectCreated
-  # Max out memory and timeout because this function is vital for queueing data to Kinesis data streams.
+    # Max out memory and timeout because this function is vital for queueing data to Kinesis data streams.
     timeout: 300
     memorySize: 3000
     environment:
