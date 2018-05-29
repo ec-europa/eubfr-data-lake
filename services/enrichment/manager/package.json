@@ -7,18 +7,18 @@
     "test:unit": "jest --testPathPattern=unit"
   },
   "devDependencies": {
-    "aws-sdk": "2.246.1",
+    "aws-sdk": "2.247.1",
     "babel-core": "6.26.3",
     "babel-loader": "7.1.4",
     "babel-preset-env": "1.7.0",
+    "jest": "22.4.3",
     "serverless": "1.27.3",
     "serverless-webpack": "5.1.5",
-    "webpack": "4.8.3"
+    "webpack": "4.10.0"
   },
   "dependencies": {
-    "elasticsearch": "14.2.2",
-    "http-aws-es": "4.0.0",
-    "jest": "22.4.3",
+    "elasticsearch": "15.0.0",
+    "http-aws-es": "6.0.0",
     "lawos": "1.1.5",
     "request-promise-native": "1.0.5",
     "split2": "2.2.0",

@@ -25,7 +25,10 @@
     "test-write": "jest --watch"
   },
   "lint-staged": {
-    "*.{js,json}": ["prettier --write", "git add"]
+    "*.{js,json}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "devDependencies": {
     "babel-core": "6.26.3",
@@ -37,10 +40,10 @@
     "eslint-config-prettier": "2.9.0",
     "eslint-plugin-flowtype": "2.47.1",
     "eslint-plugin-import": "2.12.0",
-    "eslint-plugin-jest": "21.15.2",
+    "eslint-plugin-jest": "21.17.0",
     "eslint-plugin-prettier": "2.6.0",
     "eslint-plugin-react": "7.8.2",
-    "flow-bin": "0.72.0",
+    "flow-bin": "0.73.0",
     "flow-geojson": "2.0.6",
     "flow-watch": "1.1.3",
     "gh-pages": "1.1.0",
@@ -48,11 +51,16 @@
     "lerna": "2.11.0",
     "lint-staged": "7.1.2",
     "npm-run-all": "4.1.3",
-    "prettier": "1.12.1",
+    "prettier": "1.13.2",
     "stream-array": "1.1.2",
     "vinyl-fs": "3.0.3"
   },
   "workspaces": {
-    "packages": ["demo/**", "plugins/**", "resources/**", "services/**"]
+    "packages": [
+      "demo/**",
+      "plugins/**",
+      "resources/**",
+      "services/**"
+    ]
   }
 }
