@@ -4,6 +4,7 @@ plugins:
   - serverless-webpack
 
 custom:
+  # Kinesis putRecords value, max is 400
   batchSize: 200
   esIndex: ${self:provider.stage}-projects
   webpackIncludeModules: true
@@ -88,6 +89,7 @@ functions:
     events:
       - stream:
           type: kinesis
+          batchSize: ${self:custom.batchSize}
           arn:
             Fn::GetAtt: [ KinesisDataStream, Arn ]
 
@@ -97,4 +99,5 @@ resources:
       Type: AWS::Kinesis::Stream
       Properties:
         Name: ${self:provider.stage}-${self:service}-stream
+        # That's the max
         ShardCount: 200
