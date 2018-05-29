@@ -50,7 +50,7 @@ const saveToElasticSearch = async ({ clients, usefulData, handleError }) => {
             )
           );
 
-          return cb(null, improvedBatch);
+          saveStream.write(improvedBatch, cb);
         })
       )
       .on('error', async e => handleError(e, reject))
