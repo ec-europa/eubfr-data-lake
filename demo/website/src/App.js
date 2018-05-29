@@ -1,10 +1,9 @@
 import React from 'react';
+import '@ecl/ec-preset-website/dist/styles/ecl-ec-preset-website.css';
 import ProjectsList from './components/ProjectsList';
-
 import Header from './components/Header';
 import Footer from './components/Footer';
 
-import '@ecl/ec-preset-website/dist/styles/ecl-ec-preset-website.css';
 import './App.css';
 
 const App = () => (

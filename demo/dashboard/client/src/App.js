@@ -1,5 +1,7 @@
 import React, { Fragment } from 'react';
 import { HashRouter, Route, Redirect } from 'react-router-dom';
+import '@ecl/ec-preset-website/dist/styles/ecl-ec-preset-website.css';
+
 import Files from './pages/Files';
 import Upload from './pages/Upload';
 
@@ -8,7 +10,6 @@ import PageHeader from './components/PageHeader';
 import SideNav from './components/SideNav';
 import Footer from './components/Footer';
 
-import '@ecl/ec-preset-website/dist/styles/ecl-ec-preset-website.css';
 import './App.css';
 
 const App = () => (

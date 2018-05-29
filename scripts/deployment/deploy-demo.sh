@@ -20,7 +20,7 @@ rm -rf build
 
 echo 'Deploying dashboard client...'
 EUBFR_USERNAME=agri yarn run build
-yarn run sls client deploy --username agri
+yarn run sls client deploy --username agri --no-confirm
 
 ## BUDG demo
 
@@ -35,7 +35,7 @@ rm -rf build
 
 echo 'Deploying dashboard client...'
 EUBFR_USERNAME=budg yarn run build
-yarn run sls client deploy --username budg
+yarn run sls client deploy --username budg --no-confirm
 
 ## INFOREGIO demo
 
@@ -50,7 +50,7 @@ rm -rf build
 
 echo 'Deploying dashboard client...'
 EUBFR_USERNAME=inforegio yarn run build
-yarn run sls client deploy --username inforegio
+yarn run sls client deploy --username inforegio --no-confirm
 
 ## IATI demo
 
@@ -65,7 +65,7 @@ rm -rf build
 
 echo 'Deploying dashboard client...'
 EUBFR_USERNAME=iati yarn run build
-yarn run sls client deploy --username iati
+yarn run sls client deploy --username iati --no-confirm
 
 ## VALOR demo
 
@@ -80,7 +80,7 @@ rm -rf build
 
 echo 'Deploying dashboard client...'
 EUBFR_USERNAME=valor yarn run build
-yarn run sls client deploy --username valor
+yarn run sls client deploy --username valor --no-confirm
 
 ## WIFI4EU demo
 
@@ -95,7 +95,7 @@ rm -rf build
 
 echo 'Deploying dashboard client...'
 EUBFR_USERNAME=wifi4eu yarn run build
-yarn run sls client deploy --username wifi4eu
+yarn run sls client deploy --username wifi4eu --no-confirm
 
 # Website demo
 
