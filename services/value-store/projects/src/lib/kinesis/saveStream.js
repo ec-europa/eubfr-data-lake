@@ -30,6 +30,7 @@ const saveToElasticSearch = async ({ clients, usefulData, handleError }) => {
     .createReadStream();
 
   return new Promise((resolve, reject) => {
+    const successMessage = 'Results uploaded successfully, all went well.';
     readStream
       .pipe(split2(JSON.parse))
       .on('error', async e => handleError(e, reject))
@@ -56,13 +57,13 @@ const saveToElasticSearch = async ({ clients, usefulData, handleError }) => {
         await clients.messenger.send({
           message: {
             computed_key: originalComputedKey,
-            status_message: 'Results queued to Kinesis for ingestion!',
+            status_message: successMessage,
             status_code: STATUS.INGESTED,
           },
           to: ['logs'],
         });
 
-        return resolve('Results queued to Kinesis for ingestion!');
+        return resolve(successMessage);
       });
   });
 };

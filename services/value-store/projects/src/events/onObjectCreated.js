@@ -8,7 +8,6 @@ import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 
 // Helpers
 import deleteProjects from '../lib/elasticsearch/deleteProjects';
-import saveToElasticSearch from '../lib/elasticsearch/saveStream';
 import saveToKinesis from '../lib/kinesis/saveStream';
 
 export const handler = async (event, context, callback) => {
@@ -88,25 +87,10 @@ export const handler = async (event, context, callback) => {
     // Add it to the box of useful data.
     usefulData.fileData = fileData;
 
-    // If the file is less than 15MB, handle it directly
-    if (fileData.ContentLength <= 15000000) {
-      // if (parseInt(fileData.ContentLength, parseInt) <= 15000000) {
-      await messenger.send({
-        message: {
-          computed_key: originalComputedKey,
-          status_message: 'Start uploading to ElasticSearch ...',
-          status_code: STATUS.PROGRESS,
-        },
-        to: ['logs'],
-      });
-
-      return await saveToElasticSearch({ clients, usefulData, handleError });
-    }
-
     await messenger.send({
       message: {
         computed_key: originalComputedKey,
-        status_message: 'Data is bigger than 15MB and will be streamed ...',
+        status_message: 'Starting ingestion of data ...',
         status_code: STATUS.PROGRESS,
       },
       to: ['logs'],

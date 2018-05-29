@@ -4,7 +4,7 @@ plugins:
   - serverless-webpack
 
 custom:
-  batchSize: 100
+  batchSize: 5
   esIndex: ${self:provider.stage}-projects
   webpackIncludeModules: true
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
@@ -88,9 +88,6 @@ functions:
     events:
       - stream:
           type: kinesis
-          enabled: true
-          batchSize: ${self:custom.batchSize}
-          startingPosition: LATEST
           arn:
             Fn::GetAtt: [ KinesisDataStream, Arn ]
 
@@ -100,4 +97,4 @@ resources:
       Type: AWS::Kinesis::Stream
       Properties:
         Name: ${self:provider.stage}-${self:service}-stream
-        ShardCount: 1
+        ShardCount: ${self:custom.batchSize}

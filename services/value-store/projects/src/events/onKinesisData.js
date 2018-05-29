@@ -3,7 +3,7 @@ import connectionClass from 'http-aws-es';
 
 export const handler = (event, context, callback) => {
   // body is to match bulk API https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-2-4.html
-  const body = [];
+  let body = '';
   const { API, INDEX } = process.env;
 
   if (!API || !INDEX) {
@@ -31,12 +31,15 @@ export const handler = (event, context, callback) => {
   const normalize = record =>
     Buffer.from(record.kinesis.data, 'base64').toString();
 
-  event.Records.map(normalize).forEach(r => {
-    const record = JSON.parse(r);
+  event.Records.map(normalize).forEach(record => {
+    const doc = JSON.parse(record);
     // action description
-    body.push({ index: { _index: INDEX, _type: 'project', _id: record.id } });
+    const action = {
+      index: { _index: INDEX, _type: 'project', _id: record.id },
+    };
+    body += `${JSON.stringify(action)}\n`;
     // the document to index
-    body.push(record);
+    body += `${JSON.stringify(doc)}\n`;
   });
 
   return client.bulk({ body });
