@@ -39,5 +39,8 @@ export default class SaveStream extends stream.Writable {
     // Kinesis client
     // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Kinesis.html
     return this.client.putRecords(params, next);
+
+    // Promise in order to access feedback messages from the service
+    // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Request.html
   }
 }

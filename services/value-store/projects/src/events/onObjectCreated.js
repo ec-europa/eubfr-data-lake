@@ -7,7 +7,6 @@ import MessengerFactory from '@eubfr/logger-messenger/src/lib/MessengerFactory';
 import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 
 // Helpers
-import deleteProjects from '../lib/elasticsearch/deleteProjects';
 import saveToKinesis from '../lib/kinesis/saveStream';
 
 export const handler = async (event, context, callback) => {
@@ -53,13 +52,6 @@ export const handler = async (event, context, callback) => {
 
   // Organize at a single place for helper functions
   const clients = { clientElasticSearch, messenger, s3, sns };
-
-  // Clear existing records
-  await deleteProjects({
-    client: clientElasticSearch,
-    index: INDEX,
-    key: s3record.s3.object.key,
-  });
 
   // Define error handler
   const handleError = async (e, cb) => {
