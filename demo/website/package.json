@@ -5,7 +5,7 @@
   "scripts": {
     "start": "npm run prepare && react-scripts start",
     "build": "npm run prepare && react-scripts build",
-    "deploy": "sls client deploy",
+    "deploy": "sls client deploy --no-confirm",
     "prepare": "serverless deploy && serverless export-env",
     "release": "npm run build && npm run deploy",
     "test": "react-scripts test --env=jsdom",
