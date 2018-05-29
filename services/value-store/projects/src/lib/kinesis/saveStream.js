@@ -8,11 +8,14 @@ import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 import SaveStreamInstance from './SaveStreamClass';
 
 const saveToElasticSearch = async ({ clients, usefulData, handleError }) => {
-  const { env, s3record, fileData, originalComputedKey } = usefulData;
+  const { s3, messenger } = clients;
+  const { env, s3record, originalComputedKey } = usefulData;
 
   const { INDEX, KINESIS_STREAM, BATCH_SIZE } = env;
 
   const kinesis = new AWS.Kinesis();
+  const { key } = s3record.s3.object;
+  const bucket = s3record.s3.bucket.name;
 
   // Prepare save stream
   const saveStream = new SaveStreamInstance({
@@ -22,15 +25,15 @@ const saveToElasticSearch = async ({ clients, usefulData, handleError }) => {
     kinesisStream: KINESIS_STREAM,
   });
 
-  const readStream = clients.s3
-    .getObject({
-      Bucket: s3record.s3.bucket.name,
-      Key: s3record.s3.object.key,
-    })
+  const fileData = await s3.headObject({ Bucket: bucket, Key: key }).promise();
+
+  const readStream = s3
+    .getObject({ Bucket: bucket, Key: key })
     .createReadStream();
 
   return new Promise((resolve, reject) => {
     const successMessage = 'Results uploaded successfully, all went well.';
+
     readStream
       .pipe(split2(JSON.parse))
       .on('error', async e => handleError(e, reject))
@@ -39,7 +42,7 @@ const saveToElasticSearch = async ({ clients, usefulData, handleError }) => {
           const improvedBatch = batch.map(item =>
             Object.assign(
               {
-                computed_key: s3record.s3.object.key,
+                computed_key: key,
                 created_by: s3record.userIdentity.principalId, // which service created the harmonized file
                 last_modified: fileData.LastModified.toISOString(), // ISO-8601 date
               },
@@ -54,7 +57,7 @@ const saveToElasticSearch = async ({ clients, usefulData, handleError }) => {
       .pipe(saveStream)
       .on('error', async e => handleError(e, reject))
       .on('finish', async () => {
-        await clients.messenger.send({
+        await messenger.send({
           message: {
             computed_key: originalComputedKey,
             status_message: successMessage,

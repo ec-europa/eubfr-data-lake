@@ -1,8 +1,5 @@
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 
-import elasticsearch from 'elasticsearch';
-import connectionClass from 'http-aws-es';
-
 import MessengerFactory from '@eubfr/logger-messenger/src/lib/MessengerFactory';
 import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 
@@ -40,18 +37,11 @@ export const handler = async (event, context, callback) => {
   };
 
   // Clients
-  const sns = new AWS.SNS();
   const s3 = new AWS.S3();
   const messenger = MessengerFactory.Create({ context });
-  const clientElasticSearch = elasticsearch.Client({
-    host: `https://${API}`,
-    apiVersion: '6.0',
-    connectionClass,
-    index: INDEX,
-  });
 
   // Organize at a single place for helper functions
-  const clients = { clientElasticSearch, messenger, s3, sns };
+  const clients = { messenger, s3 };
 
   // Define error handler
   const handleError = async (e, cb) => {
@@ -68,17 +58,6 @@ export const handler = async (event, context, callback) => {
   };
 
   try {
-    // Get information about the harmonized file
-    const fileData = await s3
-      .headObject({
-        Bucket: s3record.s3.bucket.name,
-        Key: s3record.s3.object.key,
-      })
-      .promise();
-
-    // Add it to the box of useful data.
-    usefulData.fileData = fileData;
-
     await messenger.send({
       message: {
         computed_key: originalComputedKey,
