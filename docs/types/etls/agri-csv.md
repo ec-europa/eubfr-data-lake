@@ -4,13 +4,13 @@
 
 Map fields for AGRI producer, CSV file types
 
-Example input data: [stub](https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/agri/csv/test/stubs/record.json)
+Example input data: [stub][1]
 
-Transform function: [implementation details](https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/agri/csv/src/lib/transform.js)
+Transform function: [implementation details][2]
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Piece of data to transform before going to harmonized storage.
+-   `record` **[Object][3]** Piece of data to transform before going to harmonized storage.
 
 Returns **Project** JSON matching the type fields.
 
@@ -20,7 +20,7 @@ Converts a single string to an array
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from parsed file
+-   `record` **[Object][3]** The row received from parsed file
 
 **Examples**
 
@@ -29,7 +29,7 @@ input => "Research & innovation; Investment for growth; Transport"
 output => ["Research & innovation", "Investment for growth", "Transport"]
 ```
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of string values for `funding_area` field
+Returns **[Array][4]** List of string values for `funding_area` field
 
 ### getCoordinators
 
@@ -37,7 +37,7 @@ Preprocess coordinators
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from parsed file
+-   `record` **[Object][3]** The row received from parsed file
 
 **Examples**
 
@@ -46,7 +46,7 @@ input => "Eva Maria Plunger (VERBUND AG); foo; bar"
 output => ["Eva Maria Plunger (VERBUND AG)", "foo", "bar"]
 ```
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of {Coordinator} objects for `coordinators` field
+Returns **[Array][4]** List of {Coordinator} objects for `coordinators` field
 
 ### getPartners
 
@@ -54,7 +54,7 @@ Preprocess partners
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from parsed file
+-   `record` **[Object][3]** The row received from parsed file
 
 **Examples**
 
@@ -63,7 +63,7 @@ input => "foo, bar, baz"
 output => ["foo", "bar", "baz"]
 ```
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of {Partner} objects for `partners` field
+Returns **[Array][4]** List of {Partner} objects for `partners` field
 
 ### getLocations
 
@@ -80,9 +80,9 @@ Input fields taken from the `record` are:
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from parsed file
+-   `record` **[Object][3]** The row received from parsed file
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of {Location} objects for `project_locations` field
+Returns **[Array][4]** List of {Location} objects for `project_locations` field
 
 ### getRelatedLinks
 
@@ -92,7 +92,7 @@ Depends on record['Related links'] field
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from parsed file
+-   `record` **[Object][3]** The row received from parsed file
 
 **Examples**
 
@@ -104,7 +104,7 @@ output => [
  ]
 ```
 
-Returns **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array) \| [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object))** List of {RelatedLink}
+Returns **([Array][4] \| [Object][3])** List of {RelatedLink}
 
 ### formatDate
 
@@ -112,7 +112,7 @@ Format date
 
 **Parameters**
 
--   `date` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** Date in timestamp
+-   `date` **[Date][5]** Date in timestamp
 
 **Examples**
 
@@ -121,7 +121,7 @@ input => "1388530800"
 output => "2013-12-31T23:00:00.000Z"
 ```
 
-Returns **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** The date formatted into an ISO 8601 date format
+Returns **[Date][5]** The date formatted into an ISO 8601 date format
 
 ### getMedia
 
@@ -129,6 +129,16 @@ Prepare media information
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from parsed file
+-   `record` **[Object][3]** The row received from parsed file
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;Media>** 
+Returns **[Array][4]&lt;Media>** 
+
+[1]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/agri/csv/test/stubs/record.json
+
+[2]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/agri/csv/src/lib/transform.js
+
+[3]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date

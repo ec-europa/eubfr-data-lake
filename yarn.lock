@@ -3135,7 +3135,21 @@ aws-sdk-mock@2.0.0:
     sinon "^4.5.0"
     traverse "^0.6.6"
 
-aws-sdk@2.247.1, aws-sdk@2.x, aws-sdk@^2.228.0, aws-sdk@^2.3.0:
+aws-sdk@2.248.1:
+  version "2.248.1"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.248.1.tgz#a6b65d3a1ef9cdc774b0cf9c552af997d2342c03"
+  dependencies:
+    buffer "4.9.1"
+    events "1.1.1"
+    ieee754 "1.1.8"
+    jmespath "0.15.0"
+    querystring "0.2.0"
+    sax "1.2.1"
+    url "0.10.3"
+    uuid "3.1.0"
+    xml2js "0.4.17"
+
+aws-sdk@2.x, aws-sdk@^2.228.0, aws-sdk@^2.3.0:
   version "2.247.1"
   resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.247.1.tgz#be5f220d40665ac91d3a84a51f029fa05560c4ee"
   dependencies:
@@ -5892,9 +5906,9 @@ documentation@5.3.5:
     vinyl-fs "^3.0.0"
     yargs "^9.0.1"
 
-documentation@6.3.3:
-  version "6.3.3"
-  resolved "https://registry.yarnpkg.com/documentation/-/documentation-6.3.3.tgz#4cbd17c80d2a3ed041f9155d17139b43b8d7a886"
+documentation@7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/documentation/-/documentation-7.1.0.tgz#c7c51b12c65f1fdff5cd1c94c2df2036a5f48b4f"
   dependencies:
     ansi-html "^0.0.7"
     babel-core "^6.26.0"
@@ -12756,9 +12770,9 @@ serverless-finch@2.1.2:
     mime "^1.2.11"
     prompt-confirm "^1.2.0"
 
-serverless-offline@3.24.3:
-  version "3.24.3"
-  resolved "https://registry.yarnpkg.com/serverless-offline/-/serverless-offline-3.24.3.tgz#230ea1b7ca94a13560795ac569490170f545c84d"
+serverless-offline@3.24.5:
+  version "3.24.5"
+  resolved "https://registry.yarnpkg.com/serverless-offline/-/serverless-offline-3.24.5.tgz#64a72be62c0c3705e76fa029372e551d5215406a"
   dependencies:
     babel-register "^6.18.0"
     boom "^4.2.0"

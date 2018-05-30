@@ -7,7 +7,9 @@ plugins:
 custom:
   webpack:
     webpackConfig: ./webpack.config.js
-    includeModules: true
+    includeModules:
+      forceExclude:
+        - aws-sdk
     packager: yarn
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
   # EUBFR_USERNAME comes from cli parameter, but for spawn() and similar, it's from env var.
