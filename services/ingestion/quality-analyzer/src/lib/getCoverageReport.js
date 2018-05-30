@@ -46,7 +46,7 @@ const getCoverageReport = (
 
   return Object.keys(results).map(field => {
     // Divide the number of occurences by the overall number of records
-    const fieldCoverage = (results[field] / numRecords * 100).toFixed(2);
+    const fieldCoverage = ((results[field] / numRecords) * 100).toFixed(2);
 
     return {
       [field]: results[field],

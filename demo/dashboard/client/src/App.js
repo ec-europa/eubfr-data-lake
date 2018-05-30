@@ -1,5 +1,7 @@
 import React, { Fragment } from 'react';
 import { HashRouter, Route, Redirect } from 'react-router-dom';
+import '@ecl/ec-preset-website/dist/styles/ecl-ec-preset-website.css';
+
 import Files from './pages/Files';
 import Upload from './pages/Upload';
 
