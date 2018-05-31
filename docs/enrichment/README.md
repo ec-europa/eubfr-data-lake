@@ -6,6 +6,6 @@ This page gives an overview of the existing workflows enriching information in t
 
 This document is useful when you need to know the following:
 
-* which producers provide which type of data
-* which are the geolocation fields taken into account
-* take a look at example data before ETLs transformations
+- which producers provide which type of data
+- which are the geolocation fields taken into account
+- take a look at example data before ETLs transformations

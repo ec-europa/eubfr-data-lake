@@ -4,8 +4,8 @@ In the following example, the aggregation is on the `computed_key` field and res
 
 ## Request
 
-* Endpoint: `https://PROJECTS_INDEX/project/_search`
-* Method: `POST`
+- Endpoint: `https://PROJECTS_INDEX/project/_search`
+- Method: `POST`
 
 ```json
 {

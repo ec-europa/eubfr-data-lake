@@ -8,7 +8,7 @@ General information on the topic could be found in the [reference documentation]
 
 Examples:
 
-* [Geo Query - Bounding box](./search/geo-query-bounding-box.md)
+- [Geo Query - Bounding box](./search/geo-query-bounding-box.md)
 
 ## Aggregations
 
@@ -16,7 +16,7 @@ General information on the topic could be found in the [reference documentation]
 
 Examples:
 
-* [Aggregate projects per field and limit results](./aggregation/projects-by-field-with-limit.md)
-* [Aggregate projects per field with second aggregation](./aggregation/projects-by-field-with-second-aggregation-on-buckets.md)
-* [Aggregate projects by location (Geohash Grid Aggregation)](./aggregation/projects-aggregation-by-location-geohash.md)
-* [Aggregate projects by location (Geo Centroid computing)](./aggregation/projects-aggregation-by-country-code.md)
+- [Aggregate projects per field and limit results](./aggregation/projects-by-field-with-limit.md)
+- [Aggregate projects per field with second aggregation](./aggregation/projects-by-field-with-second-aggregation-on-buckets.md)
+- [Aggregate projects by location (Geohash Grid Aggregation)](./aggregation/projects-aggregation-by-location-geohash.md)
+- [Aggregate projects by location (Geo Centroid computing)](./aggregation/projects-aggregation-by-country-code.md)

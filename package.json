@@ -28,6 +28,10 @@
     "*.{js,json}": [
       "prettier --write",
       "git add"
+    ],
+    "*.md": [
+      "prettier --parser markdown --write",
+      "git add"
     ]
   },
   "devDependencies": {
