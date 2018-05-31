@@ -1,0 +1,22 @@
+# Development tips and tricks
+
+EUBFR makes heavy use of AWS cloud services and technologies. This is great for
+reducing costs and utilizing modern tools and approaches for solving problems.
+
+However, being able to develop with these services locally is not always the
+most straightforward task.
+
+In this section you will find hints on how to improve your development workflows
+in a way that will make you work faster and easier with the codebase locally.
+
+## Developing an ETL service
+
+EUBFR is a data lake project. ETLs are the plugins being used for transforming
+producers' data from one format and structure to a [desired project model target][1].
+
+Normally, when new producers are introduced in the system, they provide raw files
+which serve as the base for building ETLs.
+
+## Use TDD for faster iterations on custom features
+
+[1]: ./types/README.md
