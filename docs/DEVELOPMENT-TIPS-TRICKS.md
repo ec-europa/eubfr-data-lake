@@ -138,7 +138,7 @@ REPL with core debugger as well.
 As a result, you will be able step in and debug your cloud function locally with a decently
 close emulation to the real environment.
 
-![Serverless debugging][./assets/serverless-debugging.jpg]
+![Serverless debugging](./assets/serverless-debugging.jpg)
 
 **Note**
 
