@@ -14,36 +14,36 @@ clone:
 
 pipeline:
   install:
-    image: node:8.5
+    image: node:8.10
     commands:
       - yarn install --frozen-lockfile
 
   test-lint:
-    image: node:8.5
+    image: node:8.10
     group: test
     commands:
       - yarn test:lint
 
   test-flow:
-    image: node:8.5
+    image: node:8.10
     group: test
     commands:
       - yarn test:flow
 
   test-integration:
-    image: node:8.5
+    image: node:8.10
     group: test
     commands:
       - yarn test:integration
 
   test-unit:
-    image: node:8.5
+    image: node:8.10
     group: test
     commands:
       - yarn test:unit
 
   build-documentation:
-    image: node:8.5
+    image: node:8.10
     commands:
       - yarn docs:html
     when:
@@ -51,7 +51,7 @@ pipeline:
       branch: master
 
   deploy-pages:
-    image: node:8.5
+    image: node:8.10
     secrets: [ GH_TOKEN ]
     commands:
       - ./scripts/deployment/deploy-documentation.sh
