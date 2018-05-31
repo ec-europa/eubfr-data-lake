@@ -85,20 +85,20 @@ It includes:
 
 - Deploy the service with `npx serverless deploy` ran inside the root of the service
 - Trigger the function and `console.log` the incoming `event` parameter in order
-  to generate a `record.json` stub which is later useful for local development. You
-  might want to `JSON.strigify` the object for better readability in CloudWatch logs.
+  to generate stubs for event and record. These are later useful for local development.
+  You might want to `JSON.strigify` objects for better readability in CloudWatch logs.
 
 3.  Write a small transform function
 
 - It's usually placed at `src/lib/transform.js`
-- It should include the [flow][5] type for [project][6]
+- It should include the [flow][5] type for [Project][6]
 - Include [JSDoc][7] comments to all helper functions in the transform in order
   to expose the smaller transformation steps in a user friendly [API pages][8]
 
 4.  Write a test for the transform function
 
 - It's usually placed at `test/unit/lib/transform.spec.js`
-- Include an assertions for matching snapshot
+- Include assertions for matching snapshot
 
 ```js
 test('Produces correct JSON output structure', () => {
@@ -138,15 +138,20 @@ REPL with core debugger as well.
 As a result, you will be able step in and debug your cloud function locally with a decently
 close emulation to the real environment.
 
-[Serverless debugging][../assets/serverless-debugging.jpg]
+![Serverless debugging][./assets/serverless-debugging.jpg]
 
 **Note**
 
 Because the lambda function of a given ETL depends on a file being present on S3 and
-the transform function is meant to this file and output another file with normalized
+the transform function is meant to input this file and output another file with normalized
 structure, do not remove the given S3 file during the debugging phase. This way, the
 resource you want to test will be an actual file existing in the cloud and the lambda
 function will operate quite closer to real life.
+
+Another close resemblance to S3 read stream of files is to use the Node.js's core
+[fs.createReadStream(path[, options])][13]. If you use this swapping approach you win
+independence of AWS services, but you lose possible system-specific behaviors of
+AWS SDK.
 
 ## Use TDD for faster iterations on custom features
 
@@ -176,3 +181,4 @@ various helper functions.
 [10]: https://nodejs.org/en/docs/guides/debugging-getting-started/
 [11]: https://serverless.com/framework/docs/providers/aws/cli-reference/invoke-local/
 [12]: https://medium.com/@paul_irish/debugging-node-js-nightlies-with-chrome-devtools-7c4a1b95ae27
+[13]: https://nodejs.org/api/fs.html#fs_fs_createreadstream_path_options
