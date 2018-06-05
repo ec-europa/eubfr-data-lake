@@ -104,5 +104,6 @@ resources:
       Type: AWS::Kinesis::Stream
       Properties:
         Name: ${self:provider.stage}-${self:service}-stream
-        # That's the max
-        ShardCount: 200
+        # Shards are expensive, keep to minimum possible
+        # @read: https://aws.amazon.com/kinesis/data-streams/pricing/
+        ShardCount: 1
