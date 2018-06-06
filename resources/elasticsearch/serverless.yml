@@ -47,7 +47,7 @@ resources:
       DeletionPolicy: Retain
       Properties:
         DomainName: ${self:custom.publicDomain}
-        ElasticsearchVersion: '6.0'
+        ElasticsearchVersion: '6.2'
         EBSOptions:
           EBSEnabled: true
           VolumeType: gp2
@@ -87,7 +87,7 @@ resources:
       DeletionPolicy: Retain
       Properties:
         DomainName: ${self:custom.privateDomain}
-        ElasticsearchVersion: '6.0'
+        ElasticsearchVersion: '6.2'
         EBSOptions:
           EBSEnabled: true
           VolumeType: gp2

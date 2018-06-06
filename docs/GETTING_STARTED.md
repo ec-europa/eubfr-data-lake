@@ -2,8 +2,8 @@
 
 ## Requirements
 
-* Node.js current (8.x)
-* yarn >= 1.0.1
+- Node.js (8.10.x recommended)
+- yarn >= 1.x
 
 We recommend you to use [Node Version Manager](https://github.com/creationix/nvm) with our local `.nvmrc`:
 
@@ -134,5 +134,5 @@ EUBFR_USERNAME=budg yarn run delete:demo
 
 ## Notes
 
-* Deploy `resources/` first.
-* Keep the same stage name for every services so they can work together.
+- Deploy `resources/` first.
+- Keep the same stage name for every services so they can work together.

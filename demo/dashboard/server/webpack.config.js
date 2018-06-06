@@ -4,19 +4,27 @@ const path = require('path');
 module.exports = {
   entry: slsw.lib.entries,
   target: 'node',
+  mode: slsw.lib.webpack.isLocal ? 'development' : 'production',
+  optimization: {
+    minimize: process.env.EUBFR_ENV && process.env.EUBFR_ENV === 'prod',
+  },
   externals: [{ 'aws-sdk': true }],
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
-        loaders: ['babel-loader'],
+        use: [
+          {
+            loader: 'babel-loader',
+          },
+        ],
         include: __dirname,
         exclude: /node_modules/,
       },
     ],
   },
   output: {
-    libraryTarget: 'commonjs',
+    libraryTarget: 'commonjs2',
     path: path.join(__dirname, '.webpack'),
     filename: '[name].js',
   },

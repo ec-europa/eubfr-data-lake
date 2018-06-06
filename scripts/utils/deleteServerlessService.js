@@ -28,10 +28,14 @@ module.exports = (service, { isClient = false, username = '' }) =>
     }
 
     if (isClient) {
-      operation = spawn('./node_modules/.bin/sls', ['client', 'remove'], {
-        cwd: resolveSymbolicLink(`node_modules/@eubfr/${service}`),
-        env: process.env,
-      });
+      operation = spawn(
+        './node_modules/.bin/sls',
+        ['client', 'remove', '--no-confirm'],
+        {
+          cwd: resolveSymbolicLink(`node_modules/@eubfr/${service}`),
+          env: process.env,
+        }
+      );
     } else {
       operation = spawn(
         './node_modules/.bin/sls',
