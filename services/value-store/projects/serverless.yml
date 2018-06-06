@@ -106,4 +106,4 @@ resources:
         Name: ${self:provider.stage}-${self:service}-stream
         # Shards are expensive, keep to minimum possible
         # @read: https://aws.amazon.com/kinesis/data-streams/pricing/
-        ShardCount: 1
+        ShardCount: 3
