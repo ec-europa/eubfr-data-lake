@@ -42,7 +42,7 @@ functions:
     name: ${self:provider.stage}-${self:service}-onObjectCreated
     # Max out memory and timeout because this function is vital for queueing data to Kinesis data streams.
     timeout: 300
-    memorySize: 3000
+    memorySize: 3008
     environment:
       API:
         Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
