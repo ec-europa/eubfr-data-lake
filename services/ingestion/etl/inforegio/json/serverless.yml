@@ -76,7 +76,17 @@ resources:
               Action:
                 - sns:Publish
               Effect: Allow
-              Resource: "*"
-              Principal: "*"
+              Resource:
+                - Fn::Join:
+                  - ""
+                  -
+                    - "arn:aws:lambda:"
+                    - Ref: "AWS::Region"
+                    - ":"
+                    - Ref: "AWS::AccountId"
+                    - ":function:${self:provider.stage}-ingestion-manager-onCreate"
+              Principal:
+                AWS:
+                  Ref: "AWS::AccountId"
         Topics:
           - Ref: SNSTopicINFOREGIOJSON
