@@ -72,7 +72,7 @@ resources:
           Version: '2012-10-17'
           Statement:
             -
-              Sid: AllowIngestionManagerToPushNotificationEffect
+              Sid: AllowIngestionManagerToPublishNotificationEffect
               Action:
                 - sns:Publish
               Effect: Allow
