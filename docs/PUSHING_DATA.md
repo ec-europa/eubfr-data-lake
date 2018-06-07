@@ -10,8 +10,8 @@ To receive AWS access key id and secret, please contact EUBFR PM. These credenti
 
 The information necessary for managing the ingestion process for a producer is currently divided into 2 APIs:
 
-* **Storage API**: managing the physical files used for the ingestion
-* **Meta Index API**: managing the meta data for the physical files
+- **Storage API**: managing the physical files used for the ingestion
+- **Meta Index API**: managing the meta data for the physical files
 
 Note that root endpoints change in time. Please request this information about a given stage and endpoint you need for your implementation. You will be notified each time there is a change in address.
 

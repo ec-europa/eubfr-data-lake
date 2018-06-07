@@ -4,8 +4,8 @@ This example shows how to aggregate projects per `project_id` field and then agg
 
 ## Request
 
-* Endpoint: `https://PROJECTS_INDEX/project/_search`
-* Method: `POST`
+- Endpoint: `https://PROJECTS_INDEX/project/_search`
+- Method: `POST`
 
 ```json
 {
