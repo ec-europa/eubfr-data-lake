@@ -10,7 +10,7 @@ Transform function: [implementation details][2]
 
 **Parameters**
 
--   `record` **[Object][3]** Piece of data to transform before going to harmonized storage.
+- `record` **[Object][3]** Piece of data to transform before going to harmonized storage.
 
 Returns **Project** JSON matching the type fields.
 
@@ -20,13 +20,13 @@ Makes use of both `total-Disbursement` and `total-Expenditure` fields when prese
 
 Fields taken into account from raw data:
 
--   currency
--   total-Disbursement
--   total-Expenditure
+- currency
+- total-Disbursement
+- total-Expenditure
 
 **Parameters**
 
--   `record` **[Object][3]** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
 Returns **Budget** Field containing {BudgetItem}
 
@@ -37,26 +37,26 @@ It's needed for having separate projects in the Elasticsearch database.
 
 **Parameters**
 
--   `record` **[Object][3]** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
-Returns **[String][4]** 
+Returns **[String][4]**
 
 ### getLocations
 
 Preprocess `project_locations` field.
 Depends on:
 
--   `getCountryCode`
+- `getCountryCode`
 
 Data comes from the following source fields:
 
--   `recipient-country-code`
+- `recipient-country-code`
 
 **Parameters**
 
--   `record` **[Object][3]** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
-Returns **[Array][5]&lt;[Location][6]>** 
+Returns **[Array][5]&lt;[Location][6]>**
 
 ### formatDate
 
@@ -64,27 +64,21 @@ Format date
 
 **Parameters**
 
--   `date` **[Date][7]** Date in `YYYY-MM-DD` (ISO) format
+- `date` **[Date][7]** Date in `YYYY-MM-DD` (ISO) format
 
 **Examples**
 
 ```javascript
-input => "2018-12-31"
-output => "2018-12-31T00:00:00.000Z"
+input => '2018-12-31';
+output => '2018-12-31T00:00:00.000Z';
 ```
 
 Returns **[Date][7]** The date formatted into an ISO 8601 date format
 
 [1]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/iati/csv/test/stubs/record.json
-
 [2]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/iati/csv/src/lib/transform.js
-
 [3]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
-
 [4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
-
 [5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
-
 [6]: https://developer.mozilla.org/docs/Web/API/Location
-
 [7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date

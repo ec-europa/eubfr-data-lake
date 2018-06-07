@@ -10,7 +10,7 @@ Transform function: [implementation details](https://github.com/ec-europa/eubfr-
 
 **Parameters**
 
-* `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Piece of data to transform before going to harmonized storage.
+- `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Piece of data to transform before going to harmonized storage.
 
 Returns **Project** JSON matching the type fields.
 
@@ -20,7 +20,7 @@ Format date
 
 **Parameters**
 
-* `date` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** Date in timestamp
+- `date` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** Date in timestamp
 
 **Examples**
 

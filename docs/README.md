@@ -2,10 +2,11 @@
 
 ## General
 
-* [Getting Started](./GETTING_STARTED.md)
-* [Architecture](./ARCHITECTURE.md)
-* [How to test](./HOW_TO_TEST.md)
-* [Pushing data](./PUSHING_DATA.md)
+- [Getting Started](./GETTING_STARTED.md)
+- [Architecture](./ARCHITECTURE.md)
+- [How to test](./HOW_TO_TEST.md)
+- [Pushing data](./PUSHING_DATA.md)
+- [Development tips and tricks](./DEVELOPMENT-TIPS-TRICKS.md)
 
 ## Cookbook
 
@@ -17,7 +18,7 @@ The `Project` model is central for the data lake. All ETLs should comply with th
 
 To generate documentation:
 
-* `yarn docs:md` for markdown version in `docs/types/etl`
+- `yarn docs:md` for markdown version in `docs/types/etl`
 
 ## Data enrichment
 
