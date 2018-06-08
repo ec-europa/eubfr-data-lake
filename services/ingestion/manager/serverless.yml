@@ -36,20 +36,6 @@ provider:
     - Effect: "Allow"
       Action: "es:*"
       Resource: "arn:aws:es:${self:provider.region}:*:domain/*"
-    - Effect: "Allow"
-      Action:
-        - "sns:Publish"
-        - "sns:Subscribe"
-      Resource:
-        # `arn:aws:sns:${REGION}:${accountId}:${STAGE}-etl-${producer}-${extension}`
-        - Fn::Join:
-          - ""
-          -
-            - "arn:aws:sns:"
-            - Ref: "AWS::Region"
-            - ":"
-            - Ref: "AWS::AccountId"
-            - ":${self:provider.stage}-etl-*"
 
 functions:
   onCreate:
