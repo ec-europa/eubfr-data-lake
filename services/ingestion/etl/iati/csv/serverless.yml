@@ -64,28 +64,3 @@ resources:
       Properties:
         TopicName: ${self:provider.stage}-etl-iati-csv
         DisplayName: IATI CSV ETL
-    SNSTopicIATICSVPolicy:
-      Type: AWS::SNS::TopicPolicy
-      Properties:
-        PolicyDocument:
-          Version: '2012-10-17'
-          Statement:
-            -
-              Sid: AllowIngestionManagerToPublishNotificationEffect
-              Action:
-                - sns:Publish
-              Effect: Allow
-              Resource:
-                - Fn::Join:
-                  - ""
-                  -
-                    - "arn:aws:lambda:"
-                    - Ref: "AWS::Region"
-                    - ":"
-                    - Ref: "AWS::AccountId"
-                    - ":function:${self:provider.stage}-ingestion-manager-onCreate"
-              Principal:
-                AWS:
-                  Ref: "AWS::AccountId"
-        Topics:
-          - Ref: SNSTopicIATICSV
