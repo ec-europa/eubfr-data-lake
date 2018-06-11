@@ -137,7 +137,7 @@ export const handler = async (event, context, callback) => {
               message: {
                 computed_key: originalComputedKey,
                 status_message: 'Data quality analysis is ready!',
-                status_code: STATUS.SUCCESS_GENERAL,
+                status_code: STATUS.PROGRESS,
               },
               to: ['logs'],
             });

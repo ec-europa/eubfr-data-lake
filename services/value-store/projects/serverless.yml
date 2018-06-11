@@ -4,6 +4,8 @@ plugins:
   - serverless-webpack
 
 custom:
+  # Kinesis putRecords value, max is 400
+  batchSize: 200
   esIndex: ${self:provider.stage}-projects
   webpack:
     webpackConfig: ./webpack.config.js
@@ -19,7 +21,6 @@ package:
 provider:
   name: aws
   runtime: nodejs8.10
-  timeout: 300
   stage: ${opt:stage, file(../../../config.json):stage, 'dev'}
   region: ${opt:region, file(../../../config.json):region, 'eu-central-1'}
   deploymentBucket:
@@ -31,18 +32,25 @@ provider:
     - Effect: "Allow"
       Action: "es:*"
       Resource: "arn:aws:es:${self:provider.region}:*:domain/*"
+    - Effect: "Allow"
+      Action: "kinesis:*"
+      Resource: "*"
 
 functions:
   onObjectCreated:
     handler: src/events/onObjectCreated.handler
     name: ${self:provider.stage}-${self:service}-onObjectCreated
-    memorySize: 256
+    # Max out memory and timeout because this function is vital for queueing data to Kinesis data streams.
+    timeout: 300
+    memorySize: 3008
     environment:
       API:
         Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
       INDEX: ${self:custom.esIndex}
       REGION: ${self:provider.region}
       STAGE: ${self:provider.stage}
+      KINESIS_STREAM: ${self:provider.stage}-${self:service}-stream
+      BATCH_SIZE: ${self:custom.batchSize}
     events:
       - sns:
           arn:
@@ -76,3 +84,26 @@ functions:
                 - Ref: "AWS::AccountId"
                 - ":${self:provider.stage}-harmonized-object-removed"
           topicName: ${self:provider.stage}-harmonized-object-removed
+  onKinesisData:
+    handler: src/events/onKinesisData.handler
+    name: ${self:provider.stage}-${self:service}-onKinesisData
+    environment:
+      API:
+        Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
+      INDEX: ${self:custom.esIndex}
+    events:
+      - stream:
+          type: kinesis
+          batchSize: ${self:custom.batchSize}
+          arn:
+            Fn::GetAtt: [ KinesisDataStream, Arn ]
+
+resources:
+  Resources:
+    KinesisDataStream:
+      Type: AWS::Kinesis::Stream
+      Properties:
+        Name: ${self:provider.stage}-${self:service}-stream
+        # Shards are expensive, keep to minimum possible
+        # @read: https://aws.amazon.com/kinesis/data-streams/pricing/
+        ShardCount: 3
