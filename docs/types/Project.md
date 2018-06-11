@@ -8,9 +8,9 @@ Type: [BudgetItem][1]
 
 **Properties**
 
--   `currency` **[string][2]** 
--   `raw` **[string][2]** 
--   `value` **[number][3]** 
+- `currency` **[string][2]**
+- `raw` **[string][2]**
+- `value` **[number][3]**
 
 ## BudgetItem
 
@@ -20,9 +20,9 @@ Type: [BudgetItem][1]
 
 **Properties**
 
--   `currency` **[string][2]** 
--   `raw` **[string][2]** 
--   `value` **[number][3]** 
+- `currency` **[string][2]**
+- `raw` **[string][2]**
+- `value` **[number][3]**
 
 ## Budget
 
@@ -32,7 +32,7 @@ Type: [Budget][4]
 
 **Properties**
 
--   `eu_contrib` **[BudgetItem][1]** 
+- `eu_contrib` **[BudgetItem][1]**
 
 ## Budget
 
@@ -42,13 +42,13 @@ Type: [Budget][4]
 
 **Properties**
 
--   `eu_contrib` **[BudgetItem][1]** 
--   `funding_area` **[Array][5]&lt;[string][2]>** 
--   `mmf_heading` **[string][2]** 
--   `other_contrib` **[BudgetItem][1]** 
--   `private_fund` **[BudgetItem][1]** 
--   `public_fund` **[BudgetItem][1]** 
--   `total_cost` **[BudgetItem][1]** 
+- `eu_contrib` **[BudgetItem][1]**
+- `funding_area` **[Array][5]&lt;[string][2]>**
+- `mmf_heading` **[string][2]**
+- `other_contrib` **[BudgetItem][1]**
+- `private_fund` **[BudgetItem][1]**
+- `public_fund` **[BudgetItem][1]**
+- `total_cost` **[BudgetItem][1]**
 
 ## Project
 
@@ -58,8 +58,8 @@ Type: [Project][6]
 
 **Properties**
 
--   `budget` **[Budget][4]** 
--   `funding` **[Array][5]&lt;[string][2]>** 
+- `budget` **[Budget][4]**
+- `funding` **[Array][5]&lt;[string][2]>**
 
 ## Project
 
@@ -69,27 +69,27 @@ Type: [Project][6]
 
 **Properties**
 
--   `action` **[string][2]** 
--   `budget` **[Budget][4]** 
--   `call_year` **[string][2]** 
--   `description` **[string][2]** 
--   `ec_priorities` **[Array][5]&lt;[string][2]>** 
--   `media` **[Array][5]&lt;[Media][7]>** 
--   `programme_name` **[string][2]** 
--   `project_id` **[string][2]** 
--   `project_locations` **[Array][5]&lt;[Location][8]>** 
--   `project_website` **[string][2]** 
--   `related_links` **[Array][5]&lt;[RelatedLink][9]>** 
--   `reporting_organisation` **[string][2]** 
--   `results` **[Result][10]** 
--   `status` **[string][2]** 
--   `sub_programme_name` **[string][2]** 
--   `success_story` **[string][2]** 
--   `themes` **[Array][5]&lt;[string][2]>** 
--   `third_parties` **[Array][5]&lt;[ThirdParty][11]>** 
--   `timeframe` **[Timeframe][12]** 
--   `title` **[string][2]** 
--   `type` **[Array][5]&lt;[string][2]>** 
+- `action` **[string][2]**
+- `budget` **[Budget][4]**
+- `call_year` **[string][2]**
+- `description` **[string][2]**
+- `ec_priorities` **[Array][5]&lt;[string][2]>**
+- `media` **[Array][5]&lt;[Media][7]>**
+- `programme_name` **[string][2]**
+- `project_id` **[string][2]**
+- `project_locations` **[Array][5]&lt;[Location][8]>**
+- `project_website` **[string][2]**
+- `related_links` **[Array][5]&lt;[RelatedLink][9]>**
+- `reporting_organisation` **[string][2]**
+- `results` **[Result][10]**
+- `status` **[string][2]**
+- `sub_programme_name` **[string][2]**
+- `success_story` **[string][2]**
+- `themes` **[Array][5]&lt;[string][2]>**
+- `third_parties` **[Array][5]&lt;[ThirdParty][11]>**
+- `timeframe` **[Timeframe][12]**
+- `title` **[string][2]**
+- `type` **[Array][5]&lt;[string][2]>**
 
 ## ThirdParty
 
@@ -99,15 +99,15 @@ Type: [ThirdParty][11]
 
 **Properties**
 
--   `address` **[string][2]** 
--   `country` **[string][2]** 
--   `email` **[string][2]** 
--   `name` **[string][2]** 
--   `phone` **[string][2]** 
--   `region` **[string][2]** 
--   `role` **[string][2]** 
--   `type` **[string][2]** 
--   `website` **[string][2]** 
+- `address` **[string][2]**
+- `country` **[string][2]**
+- `email` **[string][2]**
+- `name` **[string][2]**
+- `phone` **[string][2]**
+- `region` **[string][2]**
+- `role` **[string][2]**
+- `type` **[string][2]**
+- `website` **[string][2]**
 
 ## Coordinates
 
@@ -117,8 +117,8 @@ Type: [Coordinates][13]
 
 **Properties**
 
--   `lat` **[number][3]** 
--   `lon` **[number][3]** 
+- `lat` **[number][3]**
+- `lon` **[number][3]**
 
 ## Nuts
 
@@ -128,10 +128,10 @@ Type: [Nuts][14]
 
 **Properties**
 
--   `code` **[string][2]** 
--   `name` **[string][2]** 
--   `level` **([number][3] | null)** 
--   `year` **([number][3] | null)** 
+- `code` **[string][2]**
+- `name` **[string][2]**
+- `level` **([number][3] | null)**
+- `year` **([number][3] | null)**
 
 ## Location
 
@@ -141,18 +141,18 @@ Type: [Location][8]
 
 **Properties**
 
--   `address` **[string][2]** 
--   `centroid` **([Coordinates][13] | null)** 
--   `country_code` **[string][2]** 
--   `location` **(GeoJSON | null)** 
--   `nuts` **([Array][5]&lt;[Nuts][14]> | null)** 
--   `postal_code` **[string][2]** 
--   `region` **[string][2]** 
--   `town` **[string][2]** 
+- `address` **[string][2]**
+- `centroid` **([Coordinates][13] | null)**
+- `country_code` **[string][2]**
+- `location` **(GeoJSON | null)**
+- `nuts` **([Array][5]&lt;[Nuts][14]> | null)**
+- `postal_code` **[string][2]**
+- `region` **[string][2]**
+- `town` **[string][2]**
 
 ## MediaFileMeta
 
--   **See: [MediaObject][15]**
+- **See: [MediaObject][15]**
 
 Describes meta data of a media file
 
@@ -160,9 +160,9 @@ Type: [MediaFileMeta][16]
 
 **Properties**
 
--   `description` **[string][2]** 
--   `mime_type` **[string][2]** 
--   `type` **[string][2]** 
+- `description` **[string][2]**
+- `mime_type` **[string][2]**
+- `type` **[string][2]**
 
 ## Media
 
@@ -173,9 +173,9 @@ Type: [Media][7]
 
 **Properties**
 
--   `meta` **[MediaFileMeta][16]** 
--   `name` **[string][2]** 
--   `url` **[string][2]** 
+- `meta` **[MediaFileMeta][16]**
+- `name` **[string][2]**
+- `url` **[string][2]**
 
 ## RelatedLink
 
@@ -185,8 +185,8 @@ Type: [RelatedLink][9]
 
 **Properties**
 
--   `label` **[string][2]** 
--   `url` **[string][2]** 
+- `label` **[string][2]**
+- `url` **[string][2]**
 
 ## Result
 
@@ -196,8 +196,8 @@ Type: [Result][10]
 
 **Properties**
 
--   `available` **[string][2]** 
--   `result` **[string][2]** 
+- `available` **[string][2]**
+- `result` **[string][2]**
 
 ## Timeframe
 
@@ -207,37 +207,22 @@ Type: [Timeframe][12]
 
 **Properties**
 
--   `from` **([string][2] | null)** 
--   `to` **([string][2] | null)** 
+- `from` **([string][2] | null)**
+- `to` **([string][2] | null)**
 
 [1]: #budgetitem
-
 [2]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
-
 [3]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
-
 [4]: #budget
-
 [5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
-
 [6]: #project
-
 [7]: #media
-
 [8]: #location
-
 [9]: #relatedlink
-
 [10]: #result
-
 [11]: #thirdparty
-
 [12]: #timeframe
-
 [13]: #coordinates
-
 [14]: #nuts
-
 [15]: http://schema.org/MediaObject
-
 [16]: #mediafilemeta

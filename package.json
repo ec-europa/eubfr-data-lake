@@ -25,7 +25,7 @@
     "test-write": "jest --watch"
   },
   "lint-staged": {
-    "*.{js,json}": [
+    "*.{js,json, md}": [
       "prettier --write",
       "git add"
     ]

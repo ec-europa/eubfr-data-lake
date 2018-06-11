@@ -4,8 +4,8 @@ This example shows how to aggregate projects by the `centroid` field in an attem
 
 Read more about the dimensions of the precisions in the official documentation: [https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-geohashgrid-aggregation.html#\_cell_dimensions_at_the_equator](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-geohashgrid-aggregation.html#_cell_dimensions_at_the_equator)
 
-* Endpoint: `https://PROJECTS_INDEX/project/_search`
-* Method: `POST`
+- Endpoint: `https://PROJECTS_INDEX/project/_search`
+- Method: `POST`
 
 ## Request
 
