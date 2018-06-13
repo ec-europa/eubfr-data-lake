@@ -3,20 +3,22 @@ import stream from 'stream';
 export default class QueueStream extends stream.Writable {
   constructor(options) {
     super(options);
-    this.sqs = options.sqs;
-    this.queueUrl = options.queueUrl;
+    this.sns = options.sns;
+    this.snsEndpoint = options.snsEndpoint;
   }
 
   _write(chunk, enc, next) {
-    return this.sqs.sendMessage(
+    return this.sns.publish(
       {
-        MessageAttributes: {},
-        MessageBody: JSON.stringify(chunk),
-        QueueUrl: this.queueUrl,
+        Message: JSON.stringify({
+          default: JSON.stringify(chunk),
+        }),
+        MessageStructure: 'json',
+        TargetArn: this.snsEndpoint,
       },
       err => {
         if (err) {
-          console.log('Error', err);
+          console.log('Error', err, chunk);
         }
 
         next();

@@ -6,7 +6,7 @@ import split2 from 'split2';
 import QueueStream from '../lib/QueueStream';
 
 export const handler = async (event, context, callback) => {
-  const { REGION, STAGE } = process.env;
+  const { REGION, QUEUE_NAME } = process.env;
 
   /*
    * Some checks here before going any further
@@ -25,9 +25,6 @@ export const handler = async (event, context, callback) => {
 
   // Get Account ID from lambda function arn in the context
   const accountId = context.invokedFunctionArn.split(':')[4];
-
-  const sns = new AWS.SNS();
-  const snsEndpoint = `arn:aws:sns:${REGION}:${accountId}:${STAGE}-onEnrichRecordRequested`;
 
   /*
    * Extract information from the event
@@ -48,11 +45,13 @@ export const handler = async (event, context, callback) => {
       })
       .promise();
 
+    const queueUrl = `https://sqs.${REGION}.amazonaws.com/${accountId}/${QUEUE_NAME}`;
+
     // Prepare push to SQS
     const queueStream = new QueueStream({
       objectMode: true,
-      sns,
-      snsEndpoint,
+      sqs: new AWS.SQS({ apiVersion: '2012-11-05' }),
+      queueUrl,
     });
 
     const readStream = s3

@@ -54,3 +54,7 @@ npx serverless deploy -v
 # Deploy enrichment - manager
 cd ../../enrichment/manager
 npx serverless deploy -v
+
+# Deploy enrichment - location
+cd ../location
+npx serverless deploy -v

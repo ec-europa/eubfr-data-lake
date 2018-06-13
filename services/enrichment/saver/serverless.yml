@@ -1,4 +1,4 @@
-service: enrichment-manager
+service: enrichment-saver
 
 plugins:
   - serverless-webpack
@@ -12,6 +12,7 @@ custom:
         - aws-sdk
     packager: yarn
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
+  queueName: ${self:provider.stage}-enrichment-backlog
 
 package:
   individually: true
@@ -25,6 +26,16 @@ provider:
     name: eubfr-${self:custom.eubfrEnvironment}-deploy
   stackTags:
     ENV: ${self:custom.eubfrEnvironment}
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action: "sqs:*"
+      Resource: "arn:aws:sqs:${self:provider.region}:*:*"
+    - Effect: "Allow"
+      Action: "lambda:InvokeFunction"
+      Resource: "arn:aws:lambda:${self:provider.region}:*:${self:provider.stage}-${self:service}-onTaskCalled"
+    - Effect: "Allow"
+      Action: "es:*"
+      Resource: "arn:aws:es:${self:provider.region}:*:domain/*"
 
 functions:
   onFileIngested:
@@ -35,6 +46,7 @@ functions:
     environment:
       REGION: ${self:provider.region}
       STAGE: ${self:provider.stage}
+      QUEUE_NAME: ${self:custom.queueName}
     events:
       - sns:
           arn:
@@ -47,6 +59,26 @@ functions:
                 - Ref: "AWS::AccountId"
                 - ":${self:provider.stage}-onEnrichmentRequested"
           topicName: ${self:provider.stage}-onEnrichmentRequested
+  onWorkerScheduled:
+    handler: src/events/onWorkerScheduled.handler
+    name: ${self:provider.stage}-${self:service}-onWorkerScheduled
+    memorySize: 256
+    timeout: 120
+    environment:
+      REGION: ${self:provider.region}
+      QUEUE_NAME: ${self:custom.queueName}
+      lambda: ${self:provider.stage}-${self:service}-onTaskCalled
+    events:
+      - schedule: rate(2 minutes)
+  onTaskCalled:
+    handler: src/events/onTaskCalled.handler
+    name: ${self:provider.stage}-${self:service}-onTaskCalled
+    timeout: 30
+    memorySize: 256
+    environment:
+      API:
+        Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
+      INDEX: ${self:custom.esIndex}
 
 resources:
   Resources:
@@ -69,22 +101,20 @@ resources:
               Principal: "*"
         Topics:
         - Ref: EnrichmentTopic
-    EnrichRecordTopic:
-      Type: AWS::SNS::Topic
+    BacklogQueue:
+      Type: AWS::SQS::Queue
       Properties:
-        TopicName: ${self:provider.stage}-onEnrichRecordRequested
-    EnrichRecordTopicPolicy:
-      Type: AWS::SNS::TopicPolicy
+        QueueName: ${self:custom.queueName}
+        MessageRetentionPeriod: '1209600'
+        VisibilityTimeout: '60'
+        RedrivePolicy:
+          deadLetterTargetArn:
+            Fn::GetAtt:
+            - DeadLetterQueue
+            - Arn
+          maxReceiveCount: '10'
+    DeadLetterQueue:
+      Type: AWS::SQS::Queue
       Properties:
-        PolicyDocument:
-          Version: '2012-10-17'
-          Statement:
-            -
-              Sid: AllowAllToRequestRecordEnrichment
-              Action:
-                - sns:Publish
-              Effect: Allow
-              Resource: "*"
-              Principal: "*"
-        Topics:
-        - Ref: EnrichRecordTopic
+        QueueName: ${self:custom.queueName}-dead-letter-queue
+        MessageRetentionPeriod: '1209600'

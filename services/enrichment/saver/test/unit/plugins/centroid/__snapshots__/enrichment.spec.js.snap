@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Centroid enrichment plugin: depending on the following input Empty object: returns same object, untouched, no errors 1`] = `Object {}`;
+
+exports[`Centroid enrichment plugin: depending on the following input Object with a centroid property containing latidude and logitude: returns a new object with NUTS data 1`] = `
+Object {
+  "address": "",
+  "centroid": Object {
+    "lat": 54.6380366,
+    "lon": 25.2865583,
+  },
+  "country_code": "LT",
+  "enriched": true,
+  "location": Object {
+    "coordinates": Array [
+      25.2865583,
+      54.6380366,
+    ],
+    "type": "Point",
+  },
+  "nuts": Array [
+    Object {
+      "code": "LT011",
+      "level": 3,
+      "name": "Vilniaus apskritis",
+      "year": "NUTS_2016",
+    },
+    Object {
+      "code": "LT01",
+      "level": 2,
+      "name": "Sostinės regionas",
+      "year": "NUTS_2016",
+    },
+    Object {
+      "code": "LT0",
+      "level": 1,
+      "name": "LIETUVA",
+      "year": "NUTS_2016",
+    },
+    Object {
+      "code": "LT",
+      "level": 0,
+      "name": "LIETUVA",
+      "year": "NUTS_2016",
+    },
+  ],
+  "postal_code": "03500",
+  "region": "",
+  "town": "Vilnius",
+}
+`;
+
+exports[`Centroid enrichment plugin: depending on the following input Object with centroid property containing latidude and logitude, but no country_code, take country_code from NUTS 1`] = `
+Object {
+  "address": "",
+  "centroid": Object {
+    "lat": 54.6380366,
+    "lon": 25.2865583,
+  },
+  "country_code": "LT",
+  "enriched": true,
+  "location": Object {
+    "coordinates": Array [
+      25.2865583,
+      54.6380366,
+    ],
+    "type": "Point",
+  },
+  "nuts": Array [
+    Object {
+      "code": "LT011",
+      "level": 3,
+      "name": "Vilniaus apskritis",
+      "year": "NUTS_2016",
+    },
+    Object {
+      "code": "LT01",
+      "level": 2,
+      "name": "Sostinės regionas",
+      "year": "NUTS_2016",
+    },
+    Object {
+      "code": "LT0",
+      "level": 1,
+      "name": "LIETUVA",
+      "year": "NUTS_2016",
+    },
+    Object {
+      "code": "LT",
+      "level": 0,
+      "name": "LIETUVA",
+      "year": "NUTS_2016",
+    },
+  ],
+  "postal_code": "03500",
+  "region": "",
+  "town": "Vilnius",
+}
+`;

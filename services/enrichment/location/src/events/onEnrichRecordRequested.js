@@ -1,10 +1,37 @@
+// import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
+
 import elasticsearch from 'elasticsearch';
 import connectionClass from 'http-aws-es';
 import { computeId } from '../lib/computeId';
 import { enrich } from '../lib/enrich';
 
 export const handler = async (event, context, callback) => {
-  const record = JSON.parse(event.Body);
+  // const { REGION, QUEUE_NAME } = process.env;
+
+  /*
+   * Some checks here before going any further
+   */
+  if (!event.Records) {
+    return callback('No record');
+  }
+
+  // Only work on the first record
+  const snsRecord = event.Records[0];
+
+  // Was the lambda triggered correctly? Is the file extension supported? etc.
+  if (!snsRecord || snsRecord.EventSource !== 'aws:sns') {
+    return callback('Bad record');
+  }
+
+  // Get Account ID from lambda function arn in the context
+  // const accountId = context.invokedFunctionArn.split(':')[4];
+
+  /*
+   * Extract information from the event
+   */
+
+  // Extract record
+  const record = JSON.parse(snsRecord.Sns.Message);
 
   /**
    * 1. Pre-check if the document needs to be enriched
@@ -68,6 +95,12 @@ export const handler = async (event, context, callback) => {
    */
   const enrichedRecord = await enrich(record, existingRecord);
 
+  console.log('enriched', enrichedRecord);
+
+  // SEND TO SQS QUEUE
+
+  /*
+
   try {
     await client.index({
       index: INDEX,
@@ -80,6 +113,8 @@ export const handler = async (event, context, callback) => {
   } catch (e) {
     return callback(e);
   }
+
+  */
 
   return callback(null, 'record enriched successfully');
 };
