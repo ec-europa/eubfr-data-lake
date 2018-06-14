@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "elasticsearch": "15.0.0",
-    "http-aws-es": "6.0.0"
+    "http-aws-es": "6.0.0",
+    "request-promise-native": "1.0.5"
   }
 }
