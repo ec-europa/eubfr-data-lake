@@ -12,7 +12,7 @@ custom:
         - aws-sdk
     packager: yarn
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
-  queueName: ${self:provider.stage}-enrichment-backlog
+  queueName: ${self:provider.stage}-enrichment-saver-backlog
 
 package:
   individually: true
@@ -38,27 +38,6 @@ provider:
       Resource: "arn:aws:es:${self:provider.region}:*:domain/*"
 
 functions:
-  onFileIngested:
-    handler: src/events/onFileIngested.handler
-    name: ${self:provider.stage}-${self:service}-onFileIngested
-    memorySize: 256
-    timeout: 300
-    environment:
-      REGION: ${self:provider.region}
-      STAGE: ${self:provider.stage}
-      QUEUE_NAME: ${self:custom.queueName}
-    events:
-      - sns:
-          arn:
-            Fn::Join:
-              - ""
-              -
-                - "arn:aws:sns:"
-                - Ref: "AWS::Region"
-                - ":"
-                - Ref: "AWS::AccountId"
-                - ":${self:provider.stage}-onEnrichmentRequested"
-          topicName: ${self:provider.stage}-onEnrichmentRequested
   onWorkerScheduled:
     handler: src/events/onWorkerScheduled.handler
     name: ${self:provider.stage}-${self:service}-onWorkerScheduled
@@ -82,25 +61,6 @@ functions:
 
 resources:
   Resources:
-    EnrichmentTopic:
-      Type: AWS::SNS::Topic
-      Properties:
-        TopicName: ${self:provider.stage}-onEnrichmentRequested
-    EnrichmentTopicPolicy:
-      Type: AWS::SNS::TopicPolicy
-      Properties:
-        PolicyDocument:
-          Version: '2012-10-17'
-          Statement:
-            -
-              Sid: AllowAllToRequestEnrichment
-              Action:
-                - sns:Publish
-              Effect: Allow
-              Resource: "*"
-              Principal: "*"
-        Topics:
-        - Ref: EnrichmentTopic
     BacklogQueue:
       Type: AWS::SQS::Queue
       Properties:

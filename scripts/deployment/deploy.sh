@@ -55,6 +55,10 @@ npx serverless deploy -v
 cd ../../enrichment/manager
 npx serverless deploy -v
 
-# Deploy enrichment - location
+# Deploy enrichment - saver
+cd ../saver
+npx serverless deploy -v
+
+# Deploy enrichment plugins
 cd ../location
 npx serverless deploy -v

@@ -12,7 +12,7 @@ custom:
         - aws-sdk
     packager: yarn
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
-  queueName: ${self:provider.stage}-enrichment-backlog
+  queueName: ${self:provider.stage}-enrichment-saver-backlog
 
 package:
   individually: true

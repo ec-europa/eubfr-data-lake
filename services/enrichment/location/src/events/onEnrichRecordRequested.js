@@ -1,4 +1,4 @@
-// import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
+import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 
 import elasticsearch from 'elasticsearch';
 import connectionClass from 'http-aws-es';
@@ -6,7 +6,7 @@ import { computeId } from '../lib/computeId';
 import { enrich } from '../lib/enrich';
 
 export const handler = async (event, context, callback) => {
-  // const { REGION, QUEUE_NAME } = process.env;
+  const { REGION, QUEUE_NAME, API, INDEX } = process.env;
 
   /*
    * Some checks here before going any further
@@ -22,9 +22,6 @@ export const handler = async (event, context, callback) => {
   if (!snsRecord || snsRecord.EventSource !== 'aws:sns') {
     return callback('Bad record');
   }
-
-  // Get Account ID from lambda function arn in the context
-  // const accountId = context.invokedFunctionArn.split(':')[4];
 
   /*
    * Extract information from the event
@@ -56,7 +53,6 @@ export const handler = async (event, context, callback) => {
   /**
    * 2. If the pre-check passes, retrieve the existing record
    */
-  const { API, INDEX } = process.env;
 
   // Elasticsearch client instantiation
   const client = elasticsearch.Client({
@@ -95,28 +91,24 @@ export const handler = async (event, context, callback) => {
    */
   const enrichedRecord = await enrich(record, existingRecord);
 
-  console.log('enriched', enrichedRecord);
-
   // SEND TO SQS QUEUE
-
-  /*
-
   try {
-    await client.index({
-      index: INDEX,
-      type: 'project',
-      id,
-      body: Object.assign({}, enrichedRecord, {
-        last_modified: new Date().toISOString(), // ISO-8601 date
-      }),
-    });
+    // Get Account ID from lambda function arn in the context
+    const accountId = context.invokedFunctionArn.split(':')[4];
+
+    const SQS = new AWS.SQS({ apiVersion: '2012-11-05' });
+    const queueUrl = `https://sqs.${REGION}.amazonaws.com/${accountId}/${QUEUE_NAME}`;
+
+    await SQS.sendMessage({
+      MessageAttributes: {},
+      MessageBody: JSON.stringify(enrichedRecord),
+      QueueUrl: queueUrl,
+    }).promise();
   } catch (e) {
     return callback(e);
   }
 
-  */
-
-  return callback(null, 'record enriched successfully');
+  return callback(null, 'record enriched successfully and sent to queue');
 };
 
 export default handler;

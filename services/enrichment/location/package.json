@@ -18,10 +18,6 @@
   },
   "dependencies": {
     "elasticsearch": "15.0.0",
-    "http-aws-es": "6.0.0",
-    "lawos": "1.1.5",
-    "request-promise-native": "1.0.5",
-    "split2": "2.2.0",
-    "through2": "2.0.3"
+    "http-aws-es": "6.0.0"
   }
 }
