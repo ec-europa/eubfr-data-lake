@@ -81,25 +81,40 @@ const getAddress = record => {
 };
 
 /**
- * Formats information for the `value` of {BudgetItem}
+ * Formats information for the {BudgetItem}
  *
  * @memberof inforegioXmlTransform
  * @param {string} budget Prefixed currency value
- * @returns {number} The value for `value` of {BudgetItem}
+ * @returns {BudgetItem} The formatted budget
  *
  * @example
  * input => "EUR 329 000 000"
  * output => "329000000"
  */
 const formatBudget = budget => {
-  if (!budget || typeof budget !== 'string') return 0;
+  if (!budget || typeof budget !== 'string')
+    return { value: 0, currency: '', raw: '' };
+
+  let formattedCurrency = budget.split(' ')[0];
+
+  // Convert 'ECU' to 'EUR'
+  if (formattedCurrency === 'ECU') {
+    formattedCurrency = 'EUR';
+  }
 
   const formattedBudget = budget
     .split(' ')
     .slice(1)
     .join('');
 
-  return Number(formattedBudget) || 0;
+  return {
+    value: Number(formattedBudget) || 0,
+    currency:
+      formattedCurrency && formattedCurrency.length === 3
+        ? formattedCurrency
+        : '',
+    raw: budget || '',
+  };
 };
 
 /**
@@ -264,16 +279,8 @@ const getBeneficiaries = record =>
 export default (record: Object): Project => {
   // Preprocess budget
   const budgetObject = {
-    total_cost: {
-      value: formatBudget(checkData(record.Total_project_budget)),
-      currency: '',
-      raw: checkData(record.Total_project_budget) || '',
-    },
-    eu_contrib: {
-      value: formatBudget(checkData(record.EU_Budget_contribution)),
-      currency: '',
-      raw: checkData(record.EU_Budget_contribution) || '',
-    },
+    total_cost: formatBudget(checkData(record.Total_project_budget)),
+    eu_contrib: formatBudget(checkData(record.EU_Budget_contribution)),
     private_fund: { value: 0, currency: '', raw: '' },
     public_fund: { value: 0, currency: '', raw: '' },
     other_contrib: { value: 0, currency: '', raw: '' },

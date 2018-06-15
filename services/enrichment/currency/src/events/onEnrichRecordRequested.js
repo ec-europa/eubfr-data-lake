@@ -96,6 +96,10 @@ export const handler = async (event, context, callback) => {
    */
   const enrichedRecord = await enrich(record, existingRecord);
 
+  if (!enrichedRecord) {
+    return callback(null, 'record not enriched');
+  }
+
   // SEND TO SQS QUEUE
   try {
     // Get Account ID from lambda function arn in the context
