@@ -47,9 +47,8 @@ const availableCurrencies = [
   'USD',
   'ZAR',
 ];
-// https://sdw-wsrest.ecb.europa.eu/service/data/EXR/M.USD.EUR.SP00.A?startPeriod=2014-12&endPeriod=2014-12&detail=dataonly
 
-const processBudgetItem = budgetItem => {
+const processBudgetItem = (budgetItem, projectEnd) => {
   if (!budgetItem) return null;
 
   if (
@@ -57,7 +56,13 @@ const processBudgetItem = budgetItem => {
     budgetItem.currency !== 'EUR' &&
     availableCurrencies.indexOf(budgetItem.currency) >= 0
   ) {
-    console.log('will enrich', budgetItem);
+    const projectEndDate = new Date(projectEnd);
+    const year = projectEndDate.getFullYear();
+    const url = `https://sdw-wsrest.ecb.europa.eu/service/data/EXR/A.${
+      budgetItem.currency
+    }.EUR.SP00.A?startPeriod=${year}&endPeriod=${year}&detail=dataonly`;
+    // header 'Accept: application/vnd.sdmx.data+json;version=1.0.0-wd'
+    console.log('will enrich', budgetItem, url);
     return true;
   }
 
@@ -73,6 +78,7 @@ export const enrich = async (record, existingRecord) => {
     !enrichedRecord.timeframe ||
     !enrichedRecord.timeframe.to
   ) {
+    console.log('no timeframe, skipping', enrichedRecord);
     return null;
   }
 
@@ -95,9 +101,11 @@ export const enrich = async (record, existingRecord) => {
 
       if (Array.isArray(data)) {
         // do something
-        data.forEach(processBudgetItem);
+        data.forEach(budgetItem =>
+          processBudgetItem(budgetItem, enrichedRecord.timeframe.to)
+        );
       } else {
-        processBudgetItem(data);
+        processBudgetItem(data, enrichedRecord.timeframe.to);
       }
     });
   }
