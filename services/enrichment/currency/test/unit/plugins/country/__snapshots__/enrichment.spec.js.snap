@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Country enrichment plugin: depending on the following input Empty object: returns same object, untouched, no errors 1`] = `Object {}`;
+
+exports[`Country enrichment plugin: depending on the following input Object with a country_code property: returns a new object centroid data 1`] = `
+Object {
+  "address": "",
+  "centroid": Object {
+    "lat": 50.6407351,
+    "lon": 4.66696,
+  },
+  "country_code": "BE",
+  "enriched": true,
+  "location": Object {
+    "coordinates": Array [
+      4.66696,
+      50.6407351,
+    ],
+    "type": "Point",
+  },
+  "nuts": Array [],
+  "postal_code": "",
+  "region": "",
+  "town": "",
+}
+`;

@@ -2,6 +2,7 @@
 // https://serverless.com/framework/docs/providers/aws/guide/variables/#reference-variables-in-javascript-files
 
 const budgetItem = {
+  type: 'nested',
   properties: {
     currency: { type: 'keyword' },
     raw: { type: 'text' },

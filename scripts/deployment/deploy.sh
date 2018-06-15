@@ -60,5 +60,7 @@ cd ../saver
 npx serverless deploy -v
 
 # Deploy enrichment plugins
+cd ../currency
+npx serverless deploy -v
 cd ../location
 npx serverless deploy -v
