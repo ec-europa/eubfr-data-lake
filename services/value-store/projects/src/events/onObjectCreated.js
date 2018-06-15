@@ -133,6 +133,7 @@ export const handler = async (event, context, callback) => {
                 computed_key: s3record.s3.object.key,
                 created_by: s3record.userIdentity.principalId, // which service created the harmonized file
                 last_modified: data.LastModified.toISOString(), // ISO-8601 date
+                producer_id: s3record.s3.object.key.split('/')[0],
               },
               chunk
             );
