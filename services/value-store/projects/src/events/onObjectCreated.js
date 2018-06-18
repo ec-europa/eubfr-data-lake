@@ -59,8 +59,11 @@ export const handler = async (event, context, callback) => {
   // Extract S3 record
   const s3record = JSON.parse(snsRecord.Sns.Message).Records[0];
 
+  // File name
+  const { key } = s3record.s3.object;
+
   // Get original computed key (without '.ndjson')
-  const originalComputedKey = s3record.s3.object.key.replace('.ndjson', '');
+  const originalComputedKey = key.replace('.ndjson', '');
 
   try {
     await messenger.send({
@@ -75,15 +78,11 @@ export const handler = async (event, context, callback) => {
     const data = await s3
       .headObject({
         Bucket: s3record.s3.bucket.name,
-        Key: s3record.s3.object.key,
+        Key: key,
       })
       .promise();
 
-    await deleteProjects({
-      client,
-      index: INDEX,
-      key: s3record.s3.object.key,
-    });
+    await deleteProjects({ client, index: INDEX, key });
 
     await messenger.send({
       message: {
@@ -117,7 +116,7 @@ export const handler = async (event, context, callback) => {
     const readStream = s3
       .getObject({
         Bucket: s3record.s3.bucket.name,
-        Key: s3record.s3.object.key,
+        Key: key,
       })
       .createReadStream();
 
@@ -130,10 +129,10 @@ export const handler = async (event, context, callback) => {
             // Enhance item to save
             const item = Object.assign(
               {
-                computed_key: s3record.s3.object.key,
+                computed_key: key,
                 created_by: s3record.userIdentity.principalId, // which service created the harmonized file
                 last_modified: data.LastModified.toISOString(), // ISO-8601 date
-                producer_id: s3record.s3.object.key.split('/')[0],
+                producer_id: key.split('/')[0],
               },
               chunk
             );
