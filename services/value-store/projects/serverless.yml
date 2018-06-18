@@ -4,6 +4,7 @@ plugins:
   - serverless-webpack
 
 custom:
+  batchSize: 200
   esIndex: ${self:provider.stage}-projects
   webpack:
     webpackConfig: ./webpack.config.js
@@ -19,7 +20,6 @@ package:
 provider:
   name: aws
   runtime: nodejs8.10
-  timeout: 300
   stage: ${opt:stage, file(../../../config.json):stage, 'dev'}
   region: ${opt:region, file(../../../config.json):region, 'eu-central-1'}
   deploymentBucket:
@@ -36,13 +36,16 @@ functions:
   onObjectCreated:
     handler: src/events/onObjectCreated.handler
     name: ${self:provider.stage}-${self:service}-onObjectCreated
-    memorySize: 256
+    # Max out memory and timeout because this function is vital for queueing data to Kinesis data streams.
+    memorySize: 3008
+    timeout: 300
     environment:
       API:
         Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
       INDEX: ${self:custom.esIndex}
       REGION: ${self:provider.region}
       STAGE: ${self:provider.stage}
+      BATCH_SIZE: ${self:custom.batchSize}
     events:
       - sns:
           arn:

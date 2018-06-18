@@ -2,7 +2,7 @@ import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependenc
 
 import elasticsearch from 'elasticsearch';
 import connectionClass from 'http-aws-es';
-import through2 from 'through2';
+import through2Batch from 'through2-batch';
 import split2 from 'split2';
 
 import MessengerFactory from '@eubfr/logger-messenger/src/lib/MessengerFactory';
@@ -12,14 +12,10 @@ import deleteProjects from '../lib/deleteProjects';
 import SaveStream from '../lib/SaveStream';
 
 export const handler = async (event, context, callback) => {
-  const { API, INDEX, REGION, STAGE } = process.env;
+  const { API, INDEX, REGION, STAGE, BATCH_SIZE } = process.env;
 
-  if (!API || !INDEX || !REGION || !STAGE) {
-    return callback(
-      new Error(
-        'API, INDEX, REGION and STAGE environment variables are required!'
-      )
-    );
+  if (!API || !INDEX || !REGION || !STAGE || !BATCH_SIZE) {
+    return callback(new Error('Missing environment variable!'));
   }
 
   /*
@@ -59,8 +55,12 @@ export const handler = async (event, context, callback) => {
   // Extract S3 record
   const s3record = JSON.parse(snsRecord.Sns.Message).Records[0];
 
+  // Extract file name and bucket from s3record.
+  const { key } = s3record.s3.object;
+  const bucket = s3record.s3.bucket.name;
+
   // Get original computed key (without '.ndjson')
-  const originalComputedKey = s3record.s3.object.key.replace('.ndjson', '');
+  const originalComputedKey = key.replace('.ndjson', '');
 
   try {
     await messenger.send({
@@ -72,18 +72,9 @@ export const handler = async (event, context, callback) => {
       to: ['logs'],
     });
 
-    const data = await s3
-      .headObject({
-        Bucket: s3record.s3.bucket.name,
-        Key: s3record.s3.object.key,
-      })
-      .promise();
+    const data = await s3.headObject({ Bucket: bucket, Key: key }).promise();
 
-    await deleteProjects({
-      client,
-      index: INDEX,
-      key: s3record.s3.object.key,
-    });
+    await deleteProjects({ client, index: INDEX, key });
 
     await messenger.send({
       message: {
@@ -115,10 +106,7 @@ export const handler = async (event, context, callback) => {
     };
 
     const readStream = s3
-      .getObject({
-        Bucket: s3record.s3.bucket.name,
-        Key: s3record.s3.object.key,
-      })
+      .getObject({ Bucket: bucket, Key: key })
       .createReadStream();
 
     return new Promise((resolve, reject) => {
@@ -126,18 +114,19 @@ export const handler = async (event, context, callback) => {
         .pipe(split2(JSON.parse))
         .on('error', async e => handleError(e, reject))
         .pipe(
-          through2.obj((chunk, enc, cb) => {
-            // Enhance item to save
-            const item = Object.assign(
-              {
-                computed_key: s3record.s3.object.key,
-                created_by: s3record.userIdentity.principalId, // which service created the harmonized file
-                last_modified: data.LastModified.toISOString(), // ISO-8601 date
-              },
-              chunk
+          through2Batch.obj({ batchSize: BATCH_SIZE }, (batch, _, cb) => {
+            const improvedBatch = batch.map(item =>
+              Object.assign(
+                {
+                  computed_key: key,
+                  created_by: s3record.userIdentity.principalId, // which service created the harmonized file
+                  last_modified: data.LastModified.toISOString(), // ISO-8601 date
+                },
+                item
+              )
             );
 
-            return cb(null, item);
+            saveStream.write(improvedBatch, cb);
           })
         )
         .on('error', async e => handleError(e, reject))
