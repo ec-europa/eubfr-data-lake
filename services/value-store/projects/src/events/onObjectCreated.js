@@ -120,7 +120,8 @@ export const handler = async (event, context, callback) => {
                 {
                   computed_key: key,
                   created_by: s3record.userIdentity.principalId, // which service created the harmonized file
-                  last_modified: data.LastModified.toISOString(), // ISO-8601 date
+                  last_modified: data.LastModified.toISOString(), // ISO-8601 date,
+                  producer_id: key.split('/')[0],
                 },
                 item
               )
