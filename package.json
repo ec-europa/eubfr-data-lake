@@ -9,6 +9,7 @@
     "deploy:resources": "./scripts/deployment/deploy-resources.sh",
     "delete": "run-p delete:*",
     "delete:demo": "./scripts/cleaning/delete-demo.js",
+    "delete:dotfiles": "./scripts/cleaning/deleteDotFiles.sh",
     "delete:resources": "./scripts/cleaning/delete-resources.js",
     "delete:services": "./scripts/cleaning/delete.js",
     "docs:html": "./scripts/documentation/docs-html.js",

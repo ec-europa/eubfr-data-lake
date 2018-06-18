@@ -1,0 +1,173 @@
+service: value-store-projects-kinesis
+
+plugins:
+  - serverless-s3-remover
+  - serverless-webpack
+
+custom:
+  esIndex: ${self:provider.stage}-projects
+  kinesisBackupBucket: eubfr-${self:provider.stage}-kinesis-backup
+  kinesisDeliveryStreamName: eubfr-${self:provider.stage}-projects-delivery-stream
+  webpackIncludeModules: true
+  eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
+  remover:
+     buckets:
+       - ${self:custom.kinesisBackupBucket}
+
+package:
+  individually: true
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  timeout: 300
+  stage: ${opt:stage, file(../../../config.json):stage, 'dev'}
+  region: ${opt:region, file(../../../config.json):region, 'eu-central-1'}
+  deploymentBucket:
+    name: eubfr-${self:custom.eubfrEnvironment}-deploy
+  stackTags:
+    ENV: ${self:custom.eubfrEnvironment}
+  iamRoleStatements:
+    - Effect: Allow
+      Action: 'es:*'
+      Resource: 'arn:aws:es:${self:provider.region}:*:domain/*'
+    - Effect: Allow
+      Action: 'firehose:*'
+      Resource: '*'
+    - Effect: Allow
+      Action: 'logs:*'
+      Resource: 'arn:aws:logs:::*'
+
+functions:
+  onObjectCreated:
+    handler: src/events/onObjectCreated.handler
+    name: ${self:provider.stage}-${self:service}-onObjectCreated
+    timeout: 300
+    memorySize: 3000
+    environment:
+      API:
+        Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
+      INDEX: ${self:custom.esIndex}
+      REGION: ${self:provider.region}
+      STAGE: ${self:provider.stage}
+      DELIVERY_STREAM_NAME: ${self:custom.kinesisDeliveryStreamName}
+    events:
+      - sns:
+          arn:
+            Fn::Join:
+              - ''
+              -
+                - 'arn:aws:sns:'
+                - Ref: 'AWS::Region'
+                - ':'
+                - Ref: 'AWS::AccountId'
+                - ':${self:provider.stage}-harmonized-object-created'
+          topicName: ${self:provider.stage}-harmonized-object-created
+  onObjectRemoved:
+    handler: src/events/onObjectRemoved.handler
+    name: ${self:provider.stage}-${self:service}-onObjectRemoved
+    environment:
+      API:
+        Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
+      INDEX: ${self:custom.esIndex}
+      REGION: ${self:provider.region}
+      STAGE: ${self:provider.stage}
+    events:
+      - sns:
+          arn:
+            Fn::Join:
+              - ''
+              -
+                - 'arn:aws:sns:'
+                - Ref: 'AWS::Region'
+                - ':'
+                - Ref: 'AWS::AccountId'
+                - ':${self:provider.stage}-harmonized-object-removed'
+          topicName: ${self:provider.stage}-harmonized-object-removed
+
+resources:
+  Resources:
+
+    DeliveryBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.kinesisBackupBucket}
+
+    DeliveryStream:
+      Type: AWS::KinesisFirehose::DeliveryStream
+      DependsOn:
+        - DeliveryStreamPolicy
+      Properties:
+        DeliveryStreamName: ${self:custom.kinesisDeliveryStreamName}
+        DeliveryStreamType: DirectPut
+        ElasticsearchDestinationConfiguration:
+          BufferingHints:
+            IntervalInSeconds: 60
+            SizeInMBs: 1
+          CloudWatchLoggingOptions:
+            Enabled: true
+            LogGroupName:
+              Ref: ElasticSearchLogs
+            LogStreamName:
+              Ref: ElasticSearchLogsStream
+          DomainARN:
+            Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpointArn
+          IndexName: ${self:custom.esIndex}
+          IndexRotationPeriod: NoRotation
+          RetryOptions:
+            DurationInSeconds: 300
+          RoleARN:
+            Fn::GetAtt: [ DeliveryStreamRole, Arn ]
+          S3BackupMode: FailedDocumentsOnly
+          S3Configuration:
+            BucketARN:
+              Fn::GetAtt: [ DeliveryBucket, Arn ]
+            BufferingHints:
+              IntervalInSeconds: 60
+              SizeInMBs: 1
+            CompressionFormat: UNCOMPRESSED
+            Prefix: 'firehose/'
+            RoleARN:
+              Fn::GetAtt: [ DeliveryStreamRole, Arn ]
+          TypeName: 'project'
+
+    DeliveryStreamRole:
+      Type: AWS::IAM::Role
+      Properties:
+        RoleName: DeliveryStreamRole-${self:provider.stage}
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Sid: ''
+            Effect: Allow
+            Principal:
+              Service: firehose.amazonaws.com
+            Action: sts:AssumeRole
+
+    DeliveryStreamPolicy:
+      Type: AWS::IAM::Policy
+      Properties:
+        Roles:
+          - Ref: DeliveryStreamRole
+        PolicyName: DeliveryStreamRolePolicy
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action: 'es:*'
+            Resource: 'arn:aws:es:${self:provider.region}:*:domain/*'
+          - Effect: Allow
+            Action: 's3:*'
+            Resource: '*'
+
+    ElasticSearchLogs:
+      Type: AWS::Logs::LogGroup
+      Properties:
+        LogGroupName: '${self:service}-${self:provider.stage}-eslogs'
+
+    ElasticSearchLogsStream:
+      Type: "AWS::Logs::LogStream"
+      Properties:
+        LogGroupName:
+          Ref: ElasticSearchLogs
+        LogStreamName: '${self:service}-${self:provider.stage}-eslogs-stream'

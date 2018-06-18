@@ -22,6 +22,7 @@ deleteServices([
   'ingestion-etl-wifi4eu-xls',
   'ingestion-quality-analyzer',
   'value-store-projects',
+  'value-store-projects-kinesis',
   'logger-listener',
   'storage-signed-uploads',
   'storage-deleter',

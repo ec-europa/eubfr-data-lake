@@ -45,6 +45,10 @@ npx serverless deploy -v
 
 # Deploy value store - projects' functions
 cd ../../../../value-store/projects
+# npx serverless deploy -v
+
+# Deploy value store - projects for kinesis' functions
+cd ../projects-kinesis
 npx serverless deploy -v
 
 # Deploy logger - listener
