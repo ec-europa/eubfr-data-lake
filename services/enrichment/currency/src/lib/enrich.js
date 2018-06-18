@@ -49,20 +49,33 @@ const availableCurrencies = [
   'ZAR',
 ];
 
-const processBudgetItem = async (budgetItem, projectEnd) => {
-  if (!budgetItem) return null;
+const processBudgetItem = async (inputBudgetItem, projectEnd) => {
+  if (!inputBudgetItem) return null;
+
+  let budgetItem = inputBudgetItem;
+
+  // Budget items should always be arrays
+  if (!Array.isArray(budgetItem)) {
+    budgetItem = [budgetItem];
+  }
+
+  // check if it at least one is in EUR
+  if (budgetItem.some(item => item.currency === 'EUR')) return budgetItem;
+
+  // Enrich from first element
+  const budgetItemToEnrich = budgetItem[0];
 
   if (
-    budgetItem.currency &&
-    budgetItem.currency !== 'EUR' &&
-    availableCurrencies.indexOf(budgetItem.currency) >= 0
+    budgetItemToEnrich.currency &&
+    budgetItemToEnrich.currency !== 'EUR' &&
+    availableCurrencies.indexOf(budgetItemToEnrich.currency) >= 0
   ) {
     const projectEndDate = new Date(projectEnd);
     const year = projectEndDate.getFullYear();
     const url = `https://sdw-wsrest.ecb.europa.eu/service/data/EXR/A.${
-      budgetItem.currency
+      budgetItemToEnrich.currency
     }.EUR.SP00.A`;
-    console.log('will enrich', budgetItem, url);
+    console.log('will enrich', budgetItemToEnrich, url);
 
     let results;
     const qs = {
@@ -82,7 +95,7 @@ const processBudgetItem = async (budgetItem, projectEnd) => {
       });
     } catch (e) {
       console.error(url, qs, e);
-      return budgetItem; // location not enriched
+      return budgetItem; // budget not enriched
     }
 
     if (
@@ -95,19 +108,18 @@ const processBudgetItem = async (budgetItem, projectEnd) => {
       results.dataSets[0].series['0:0:0:0:0'].observations[0]
     ) {
       const exr = results.dataSets[0].series['0:0:0:0:0'].observations['0'][0];
-      console.log('exchange rate', exr);
-      console.log(
-        'conversion (',
-        year,
-        '):',
-        budgetItem.value,
-        ' USD = ',
-        Math.ceil(budgetItem.value / exr / precision) * precision,
-        'EUR'
-      );
-    }
+      const euroValue =
+        Math.ceil(budgetItemToEnrich.value / exr / precision) * precision;
 
-    return budgetItem; // return enriched record
+      const formattedEuroBudget = {
+        value: euroValue,
+        currency: 'EUR',
+        raw: `EUR ${euroValue}`,
+      };
+
+      // Return enriched record
+      return budgetItem.concat(formattedEuroBudget);
+    }
   }
 
   return budgetItem;
@@ -136,25 +148,24 @@ export const enrich = async (record, existingRecord) => {
 
   if (enrichedRecord.budget) {
     // DO THE WORK
-    budgetFields.forEach(async field => {
-      // data is either an object or an array
-      const data = enrichedRecord.budget[field];
-      let budgetItemToEnrich = data;
+    // TRY CATCH
+    const enrichedBudgetFields = await Promise.all(
+      budgetFields.map(async field =>
+        processBudgetItem(
+          enrichedRecord.budget[field],
+          enrichedRecord.timeframe.to
+        )
+      )
+    );
 
-      if (Array.isArray(data)) {
-        // check if it at least one is in EUR
-        if (!data.some(budgetItem => budgetItem.currency === 'EUR')) {
-          // Enrich from first element
-          [budgetItemToEnrich] = data;
-        }
-      }
+    console.log('Before', enrichedRecord.budget);
 
-      // Enrich
-      enrichedRecord.budget[field] = await processBudgetItem(
-        budgetItemToEnrich,
-        enrichedRecord.timeframe.to
-      );
+    // Enrich here
+    enrichedBudgetFields.forEach((field, index) => {
+      enrichedRecord.budget[budgetFields[index]] = field;
     });
+
+    console.log('After', enrichedRecord.budget);
   }
 
   return enrichedRecord;
