@@ -1,9 +1,12 @@
 import elasticsearch from 'elasticsearch';
 import connectionClass from 'http-aws-es';
-import { computeId } from '../lib/computeId';
 
 export const handler = async (event, context, callback) => {
   const record = JSON.parse(event.Body);
+
+  if (!record.id || !record.data) {
+    return callback(null, 'no ID provided');
+  }
 
   const { API, INDEX } = process.env;
 
@@ -16,25 +19,32 @@ export const handler = async (event, context, callback) => {
   });
 
   // Compute ID
-  const id = computeId({
-    computedKey: record.computed_key,
-    projectId: record.project_id,
+  const { id } = record;
+
+  const body = Object.assign({}, record.data, {
+    last_modified: new Date().toISOString(), // ISO-8601 date
   });
 
+  console.log('will save enriched record', id);
+  console.log('body', body);
+
   try {
-    await client.index({
+    const response = await client.update({
       index: INDEX,
       type: 'project',
       id,
-      body: Object.assign({}, record, {
-        last_modified: new Date().toISOString(), // ISO-8601 date
-      }),
+      body: {
+        doc: body,
+      },
     });
+
+    console.log(response);
+
+    // Check response code before saying it's ok
+    return callback(null, 'record updated successfully');
   } catch (e) {
     return callback(e);
   }
-
-  return callback(null, 'record saved successfully');
 };
 
 export default handler;

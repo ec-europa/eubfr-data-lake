@@ -30,35 +30,6 @@ export const handler = async (event, context, callback) => {
   // Extract record
   const record = JSON.parse(snsRecord.Sns.Message);
 
-  /**
-   * 1. Pre-check if the document needs to be enriched
-   */
-
-  /*
-
-  if (!record.project_locations || record.project_locations.length === 0) {
-    return callback(null, 'no locations to enrich');
-  }
-
-  const numLocations = record.project_locations.length;
-  const numLocationsEnriched = record.project_locations.filter(
-    loc => loc.enriched
-  ).length;
-
-  if (
-    numLocations &&
-    numLocationsEnriched &&
-    numLocations === numLocationsEnriched
-  ) {
-    return callback(null, 'nothing to do');
-  }
-
-  */
-
-  /**
-   * 2. If the pre-check passes, retrieve the existing record
-   */
-
   // Elasticsearch client instantiation
   const client = elasticsearch.Client({
     host: `https://${API}`,
@@ -110,7 +81,12 @@ export const handler = async (event, context, callback) => {
 
     await SQS.sendMessage({
       MessageAttributes: {},
-      MessageBody: JSON.stringify(enrichedRecord),
+      MessageBody: JSON.stringify({
+        id,
+        data: {
+          budget: enrichedRecord.budget, // only update budget
+        },
+      }),
       QueueUrl: queueUrl,
     }).promise();
   } catch (e) {

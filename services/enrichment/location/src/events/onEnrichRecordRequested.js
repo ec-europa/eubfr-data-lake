@@ -101,7 +101,12 @@ export const handler = async (event, context, callback) => {
 
     await SQS.sendMessage({
       MessageAttributes: {},
-      MessageBody: JSON.stringify(enrichedRecord),
+      MessageBody: JSON.stringify({
+        id,
+        data: {
+          project_locations: enrichedRecord.project_locations, // only update project_locations
+        },
+      }),
       QueueUrl: queueUrl,
     }).promise();
   } catch (e) {
