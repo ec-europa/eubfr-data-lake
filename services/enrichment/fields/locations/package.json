@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@eubfr/enrichment-currency",
+  "name": "@eubfr/enrichment-fields-locations",
   "version": "0.0.1",
   "scripts": {
     "deploy": "sls deploy -v",

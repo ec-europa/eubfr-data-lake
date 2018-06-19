@@ -10,8 +10,8 @@ const deleteServices = async services =>
 
 // Start the deletion
 deleteServices([
-  'enrichment-currency',
-  'enrichment-location',
+  'enrichment-fields-budget',
+  'enrichment-fields-locations',
   'enrichment-manager',
   'enrichment-saver',
   'ingestion-manager',

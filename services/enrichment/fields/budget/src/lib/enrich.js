@@ -1,7 +1,8 @@
 import request from 'request-promise-native';
 import { mergeRecords } from './merge';
 
-const precision = 100; // round convert value to the nearest 100
+const precision = 100; // round converted value to the nearest 100
+
 const availableCurrencies = [
   'AUD',
   'BGN',
@@ -75,7 +76,6 @@ const processBudgetItem = async (inputBudgetItem, projectEnd) => {
     const url = `https://sdw-wsrest.ecb.europa.eu/service/data/EXR/A.${
       budgetItemToEnrich.currency
     }.EUR.SP00.A`;
-    console.log('will enrich', budgetItemToEnrich, url);
 
     let results;
     const qs = {
@@ -158,14 +158,10 @@ export const enrich = async (record, existingRecord) => {
       )
     );
 
-    console.log('Before', enrichedRecord.budget);
-
     // Enrich here
     enrichedBudgetFields.forEach((field, index) => {
       enrichedRecord.budget[budgetFields[index]] = field;
     });
-
-    console.log('After', enrichedRecord.budget);
   }
 
   return enrichedRecord;

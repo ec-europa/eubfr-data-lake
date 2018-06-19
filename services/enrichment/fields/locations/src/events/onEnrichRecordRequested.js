@@ -109,11 +109,11 @@ export const handler = async (event, context, callback) => {
       }),
       QueueUrl: queueUrl,
     }).promise();
+
+    return callback(null, 'record enriched successfully and sent to queue');
   } catch (e) {
     return callback(e);
   }
-
-  return callback(null, 'record enriched successfully and sent to queue');
 };
 
 export default handler;

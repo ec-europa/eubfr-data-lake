@@ -1,3 +1,0 @@
-# Enrich currency
-
-Enrich `budget`.

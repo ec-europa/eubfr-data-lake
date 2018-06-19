@@ -1,4 +1,4 @@
-service: enrichment-location
+service: enrichment-fields-locations
 
 plugins:
   - serverless-webpack
@@ -11,7 +11,7 @@ custom:
       forceExclude:
         - aws-sdk
     packager: yarn
-  eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
+  eubfrEnvironment: ${opt:eubfr_env, file(../../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
   queueName: ${self:provider.stage}-enrichment-saver-backlog
 
 package:
@@ -20,8 +20,8 @@ package:
 provider:
   name: aws
   runtime: nodejs8.10
-  stage: ${opt:stage, file(../../../config.json):stage, 'dev'}
-  region: ${opt:region, file(../../../config.json):region, 'eu-central-1'}
+  stage: ${opt:stage, file(../../../../config.json):stage, 'dev'}
+  region: ${opt:region, file(../../../../config.json):region, 'eu-central-1'}
   deploymentBucket:
     name: eubfr-${self:custom.eubfrEnvironment}-deploy
   stackTags:
