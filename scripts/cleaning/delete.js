@@ -10,6 +10,7 @@ const deleteServices = async services =>
 
 // Start the deletion
 deleteServices([
+  'compute-stopper',
   'enrichment-manager',
   'ingestion-manager',
   'ingestion-cleaner',

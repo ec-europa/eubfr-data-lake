@@ -1,0 +1,42 @@
+service: compute-stopper
+
+plugins:
+  - serverless-webpack
+
+custom:
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules:
+      forceExclude:
+        - aws-sdk
+    packager: yarn
+  eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: ${opt:stage, file(../../../config.json):stage, 'dev'}
+  region: ${opt:region, file(../../../config.json):region, 'eu-central-1'}
+  environment:
+    REGION: ${self:provider.region}
+    BUCKET: eubfr-${self:provider.stage}
+  deploymentBucket:
+    name: eubfr-${self:custom.eubfrEnvironment}-deploy
+  stackTags:
+    ENV: ${self:custom.eubfrEnvironment}
+  iamRoleStatements:
+    -  Effect: "Allow"
+       Action:
+         - "ec2:DescribeInstanceStatus"
+         - "ec2:DescribeInstances"
+         - "ec2:StartInstances"
+         - "ec2:StopInstances"
+       Resource: "*"
+
+functions:
+  compute-stop:
+    handler: src/compute-stop.handler
+    name: ${self:provider.stage}-${self:service}-compute-stop
+    memorySize: 128
+    events:
+      - schedule: cron(0 17 * * ? *)

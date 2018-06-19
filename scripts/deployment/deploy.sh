@@ -54,3 +54,7 @@ npx serverless deploy -v
 # Deploy enrichment - manager
 cd ../../enrichment/manager
 npx serverless deploy -v
+
+# Deploy compute stopper service
+cd ../../compute/stopper
+npx serverless deploy -v
