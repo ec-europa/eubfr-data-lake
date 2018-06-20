@@ -26,6 +26,11 @@ type BudgetItem = {
   currency: string,
   raw: string,
   value: number,
+  _original: {
+    currency: string,
+    raw: string,
+    value: number,
+  },
 };
 
 /**

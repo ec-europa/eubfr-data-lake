@@ -53,28 +53,18 @@ const availableCurrencies = [
 const processBudgetItem = async (inputBudgetItem, projectEnd) => {
   if (!inputBudgetItem) return null;
 
-  let budgetItem = inputBudgetItem;
-
-  // Budget items should always be arrays
-  if (!Array.isArray(budgetItem)) {
-    budgetItem = [budgetItem];
-  }
-
   // check if it at least one is in EUR
-  if (budgetItem.some(item => item.currency === 'EUR')) return budgetItem;
-
-  // Enrich from first element
-  const budgetItemToEnrich = budgetItem[0];
+  if (inputBudgetItem.currency === 'EUR') return inputBudgetItem;
 
   if (
-    budgetItemToEnrich.currency &&
-    budgetItemToEnrich.currency !== 'EUR' &&
-    availableCurrencies.indexOf(budgetItemToEnrich.currency) >= 0
+    inputBudgetItem.currency &&
+    inputBudgetItem.currency !== 'EUR' &&
+    availableCurrencies.indexOf(inputBudgetItem.currency) >= 0
   ) {
     const projectEndDate = new Date(projectEnd);
     const year = projectEndDate.getFullYear();
     const url = `https://sdw-wsrest.ecb.europa.eu/service/data/EXR/A.${
-      budgetItemToEnrich.currency
+      inputBudgetItem.currency
     }.EUR.SP00.A`;
 
     let results;
@@ -95,7 +85,7 @@ const processBudgetItem = async (inputBudgetItem, projectEnd) => {
       });
     } catch (e) {
       console.error(url, qs, e);
-      return budgetItem; // budget not enriched
+      return inputBudgetItem; // budget not enriched
     }
 
     if (
@@ -109,20 +99,25 @@ const processBudgetItem = async (inputBudgetItem, projectEnd) => {
     ) {
       const exr = results.dataSets[0].series['0:0:0:0:0'].observations['0'][0];
       const euroValue =
-        Math.ceil(budgetItemToEnrich.value / exr / precision) * precision;
+        Math.ceil(inputBudgetItem.value / exr / precision) * precision;
 
       const formattedEuroBudget = {
         value: euroValue,
         currency: 'EUR',
         raw: `EUR ${euroValue}`,
+        _original: {
+          value: inputBudgetItem.value,
+          currency: inputBudgetItem.currency,
+          raw: inputBudgetItem.raw,
+        },
       };
 
       // Return enriched record
-      return budgetItem.concat(formattedEuroBudget);
+      return formattedEuroBudget;
     }
   }
 
-  return budgetItem;
+  return inputBudgetItem;
 };
 
 export const enrich = async (record, existingRecord) => {
