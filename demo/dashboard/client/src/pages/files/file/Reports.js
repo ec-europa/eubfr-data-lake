@@ -2,6 +2,8 @@
 
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import Collapsible from 'react-collapsible';
+
 import Spinner from '../../../components/Spinner';
 
 import clients from '../../../clientFactory';
@@ -106,31 +108,34 @@ class Reports extends React.Component {
           Please double-check the file for duplicate entries and try to update
           it via the Actions tab.
         </p>
-        <table className="ecl-table">
-          <thead>
-            <tr>
-              <th scope="col">Field</th>
-              <th scope="col">Records</th>
-              <th scope="col">Coverage</th>
-            </tr>
-          </thead>
-          <tbody>
-            {formattedReport.map(reportItem => {
-              const r = Object.keys(reportItem);
-              const property = r[0];
 
-              return (
-                <Fragment>
-                  <tr>
-                    <td>{property}</td>
-                    <td>{reportItem[property]}</td>
-                    <td>{reportItem.coverage}%</td>
-                  </tr>
-                </Fragment>
-              );
-            })}
-          </tbody>
-        </table>
+        <Collapsible trigger="COVERAGE DETAILS BY FIELD">
+          <table className="ecl-table">
+            <thead>
+              <tr>
+                <th scope="col">Field</th>
+                <th scope="col">Records</th>
+                <th scope="col">Coverage</th>
+              </tr>
+            </thead>
+            <tbody>
+              {formattedReport.map(reportItem => {
+                const r = Object.keys(reportItem);
+                const property = r[0];
+
+                return (
+                  <Fragment>
+                    <tr>
+                      <td>{property}</td>
+                      <td>{reportItem[property]}</td>
+                      <td>{reportItem.coverage}%</td>
+                    </tr>
+                  </Fragment>
+                );
+              })}
+            </tbody>
+          </table>
+        </Collapsible>
       </Fragment>
     );
   }
