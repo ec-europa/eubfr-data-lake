@@ -3,6 +3,14 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Collapsible from 'react-collapsible';
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+} from 'recharts';
 
 import Spinner from '../../../components/Spinner';
 
@@ -96,6 +104,13 @@ class Reports extends React.Component {
       );
     }
 
+    const data = formattedReport.map(reportRow => {
+      return {
+        name: Object.keys(reportRow)[0],
+        coverage: Number(reportRow.coverage),
+      };
+    });
+
     return (
       <Fragment>
         <p>
@@ -108,6 +123,25 @@ class Reports extends React.Component {
           Please double-check the file for duplicate entries and try to update
           it via the Actions tab.
         </p>
+
+        <AreaChart
+          width={800}
+          height={400}
+          data={data}
+          margin={{ top: 30, right: 0, left: 200, bottom: 30 }}
+          layout="vertical"
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <YAxis type="category" dataKey="name" />
+          <XAxis type="number" dataKey="coverage" label="Field coverage (%)" />
+          <Tooltip />
+          <Area
+            type="monotone"
+            dataKey="coverage"
+            stroke="#8884d8"
+            fill="#8884d8"
+          />
+        </AreaChart>
 
         <Collapsible trigger="COVERAGE DETAILS BY FIELD">
           <table className="ecl-table">
