@@ -105,10 +105,12 @@ class Reports extends React.Component {
     }
 
     const data = formattedReport.map(reportRow => {
-      return {
+      const formatted = {
         name: Object.keys(reportRow)[0],
         coverage: Number(reportRow.coverage),
       };
+
+      return formatted;
     });
 
     return (
