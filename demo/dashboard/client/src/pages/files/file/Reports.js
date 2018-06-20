@@ -7,6 +7,8 @@ import Spinner from '../../../components/Spinner';
 import clients from '../../../clientFactory';
 import indices from '../../../clientFactory/esIndices';
 
+import formatReport from '../../../lib/formatQualityReport';
+
 class Reports extends React.Component {
   constructor() {
     super();
@@ -78,12 +80,13 @@ class Reports extends React.Component {
 
   render() {
     const { report, reportsLoading } = this.state;
+    const formattedReport = formatReport(report);
 
     if (reportsLoading) {
       return <Spinner />;
     }
 
-    if (report.length === 0) {
+    if (formattedReport.length === 0) {
       return (
         <h1 className="ecl-heading ecl-heading--h1 ecl-u-mt-none">
           No reports yet.
@@ -112,7 +115,7 @@ class Reports extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {report.map(reportItem => {
+            {formattedReport.map(reportItem => {
               const r = Object.keys(reportItem);
               const property = r[0];
 
