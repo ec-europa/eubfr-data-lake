@@ -4,13 +4,13 @@
 
 Map fields for WIFI4EU producer, XLS and XLSX file types
 
-Example input data: [stub](https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/wifi4eu/xls/test/stubs/record.json)
+Example input data: [stub][1]
 
-Transform function: [implementation details](https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/wifi4eu/xls/src/lib/transform.js)
+Transform function: [implementation details][2]
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Piece of data to transform before going to harmonized storage.
+- `record` **[Object][3]** Piece of data to transform before going to harmonized storage.
 
 Returns **Project** JSON matching the type fields.
 
@@ -20,9 +20,9 @@ Preprocess budget field. For the moment, we don't have this data.
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
-Returns **Budget** 
+Returns **Budget**
 
 ### getCallYear
 
@@ -30,9 +30,9 @@ Preprocess `call_year` field. Data comes from `record['Call year']`.
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
-Returns **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+Returns **[String][4]**
 
 ### getProjectDescription
 
@@ -40,9 +40,9 @@ Preprocess `description` field. Data comes from `record['Project Description']`.
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
-Returns **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+Returns **[String][4]**
 
 ### getBeneficieries
 
@@ -50,13 +50,13 @@ Preprocess `partners` field.
 
 Data comes from the following source fields:
 
--   `municipality name`
+- `municipality name`
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
-Returns **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+Returns **[String][4]**
 
 ### getProjectId
 
@@ -65,29 +65,29 @@ It's needed for having separate projects in the Elasticsearch database.
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
-Returns **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+Returns **[String][4]**
 
 ### getLocations
 
 Preprocess `project_locations` field.
 Depends on:
 
--   `getCountryCode`
+- `getCountryCode`
 
 Data comes from the following source fields:
 
--   `address`
--   `country`
--   `postal code`
--   `municipality name`
+- `address`
+- `country`
+- `postal code`
+- `municipality name`
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Location](https://developer.mozilla.org/docs/Web/API/Location)>** 
+Returns **[Array][5]&lt;[Location][6]>**
 
 ### getProjectWebsite
 
@@ -95,9 +95,9 @@ Preprocess `project_website` field. Data comes from `record.link`.
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
-Returns **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+Returns **[String][4]**
 
 ### formatDate
 
@@ -105,16 +105,16 @@ Format date
 
 **Parameters**
 
--   `date` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** Date in "10/9/14" (MM/DD/YY) or "10/9/2014" (MM/DD/YYYY) format
+- `date` **[Date][7]** Date in "10/9/14" (MM/DD/YY) or "10/9/2014" (MM/DD/YYYY) format
 
 **Examples**
 
 ```javascript
-input => "10/9/2014"
-output => "2014-10-09T00:00:00.000Z"
+input => '10/9/2014';
+output => '2014-10-09T00:00:00.000Z';
 ```
 
-Returns **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** The date formatted into an ISO 8601 date format
+Returns **[Date][7]** The date formatted into an ISO 8601 date format
 
 ### getProjectTimeframe
 
@@ -122,9 +122,9 @@ Preprocess `timeframe` field. Data comes from `record['Date from']`.
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
-Returns **Timeframe** 
+Returns **Timeframe**
 
 ### getProjectTitle
 
@@ -132,9 +132,9 @@ Preprocess `title` field. Data comes from `record['Project Title']`.
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
-Returns **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+Returns **[String][4]**
 
 ### getCountryCode
 
@@ -142,9 +142,9 @@ Retrieve a country code based on non-standartized input values.
 
 **Parameters**
 
--   `country` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Country in the form of 'БЪЛГАРИЯ (BULGARIA)', 'ΕΛΛΑΔΑ (ELLADA)' and similar.
+- `country` **[Object][3]** Country in the form of 'БЪЛГАРИЯ (BULGARIA)', 'ΕΛΛΑΔΑ (ELLADA)' and similar.
 
-Returns **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** ISO ALPHA-2 code  used by i18n-iso-countries in the enrichment manager.
+Returns **[String][4]** ISO ALPHA-2 code used by i18n-iso-countries in the enrichment manager.
 
 ### getAddress
 
@@ -152,12 +152,20 @@ Returns an address of the form of street + street number
 
 For address/street number, ignores the following:
 
--   trashStrings: na, snc, S/n, dots, dashes, and other custom means to say data is not available
--   phone numbers,: items with more than 8 digits, in any syntax
--   string-only values: Pi, NR, etc.
+- trashStrings: na, snc, S/n, dots, dashes, and other custom means to say data is not available
+- phone numbers,: items with more than 8 digits, in any syntax
+- string-only values: Pi, NR, etc.
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
-Returns **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The address
+Returns **[String][4]** The address
+
+[1]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/wifi4eu/xls/test/stubs/record.json
+[2]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/wifi4eu/xls/src/lib/transform.js
+[3]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[6]: https://developer.mozilla.org/docs/Web/API/Location
+[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date

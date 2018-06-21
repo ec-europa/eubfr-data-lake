@@ -7,8 +7,6 @@ set -ex
 cd "$(dirname "$0")"
 cd ../../
 
-# Deploy demos
-
 ## AGRI demo
 
 cd ./demo/dashboard/server
@@ -17,16 +15,12 @@ yarn deploy --username agri
 
 cd ../client
 echo 'Start demo dashboard client deploy ...'
-
 echo 'Cleaning previous builds ...'
-rm -rf build client
-
-echo 'serverless-finch needs a /client folder'
-mkdir client
+rm -rf build
 
 echo 'Deploying dashboard client...'
 EUBFR_USERNAME=agri yarn run build
-yarn run sls client deploy --username agri
+yarn run sls client deploy --username agri --no-confirm
 
 ## BUDG demo
 
@@ -36,16 +30,12 @@ yarn deploy --username budg
 
 cd ../client
 echo 'Start demo dashboard client deploy ...'
-
 echo 'Cleaning previous builds ...'
-rm -rf build client
-
-echo 'serverless-finch needs a /client folder'
-mkdir client
+rm -rf build
 
 echo 'Deploying dashboard client...'
 EUBFR_USERNAME=budg yarn run build
-yarn run sls client deploy --username budg
+yarn run sls client deploy --username budg --no-confirm
 
 ## INFOREGIO demo
 
@@ -55,16 +45,12 @@ yarn deploy --username inforegio
 
 cd ../client
 echo 'Start demo dashboard client deploy ...'
-
 echo 'Cleaning previous builds ...'
-rm -rf build client
-
-echo 'serverless-finch needs a /client folder'
-mkdir client
+rm -rf build
 
 echo 'Deploying dashboard client...'
 EUBFR_USERNAME=inforegio yarn run build
-yarn run sls client deploy --username inforegio
+yarn run sls client deploy --username inforegio --no-confirm
 
 ## IATI demo
 
@@ -74,16 +60,12 @@ yarn deploy --username iati
 
 cd ../client
 echo 'Start demo dashboard client deploy ...'
-
 echo 'Cleaning previous builds ...'
-rm -rf build client
-
-echo 'serverless-finch needs a /client folder'
-mkdir client
+rm -rf build
 
 echo 'Deploying dashboard client...'
 EUBFR_USERNAME=iati yarn run build
-yarn run sls client deploy --username iati
+yarn run sls client deploy --username iati --no-confirm
 
 ## VALOR demo
 
@@ -93,16 +75,12 @@ yarn deploy --username valor
 
 cd ../client
 echo 'Start demo dashboard client deploy ...'
-
 echo 'Cleaning previous builds ...'
-rm -rf build client
-
-echo 'serverless-finch needs a /client folder'
-mkdir client
+rm -rf build
 
 echo 'Deploying dashboard client...'
 EUBFR_USERNAME=valor yarn run build
-yarn run sls client deploy --username valor
+yarn run sls client deploy --username valor --no-confirm
 
 ## WIFI4EU demo
 
@@ -112,27 +90,19 @@ yarn deploy --username wifi4eu
 
 cd ../client
 echo 'Start demo dashboard client deploy ...'
-
 echo 'Cleaning previous builds ...'
-rm -rf build client
-
-echo 'serverless-finch needs a /client folder'
-mkdir client
+rm -rf build
 
 echo 'Deploying dashboard client...'
 EUBFR_USERNAME=wifi4eu yarn run build
-yarn run sls client deploy --username wifi4eu
+yarn run sls client deploy --username wifi4eu --no-confirm
 
 # Website demo
 
 cd ../../website
 echo 'Start demo website deploy ...'
-
 echo 'Cleaning previous builds ...'
-rm -rf build client
-
-echo 'serverless-finch needs a /client folder'
-mkdir client
+rm -rf build
 
 echo 'Deploying website...'
 yarn run release

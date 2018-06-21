@@ -47,7 +47,7 @@ resources:
       DeletionPolicy: Retain
       Properties:
         DomainName: ${self:custom.publicDomain}
-        ElasticsearchVersion: '6.0'
+        ElasticsearchVersion: '6.2'
         EBSOptions:
           EBSEnabled: true
           VolumeType: gp2
@@ -81,19 +81,13 @@ resources:
               - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*_field_caps"
               - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*_mtermvectors"
               - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*_search"
-          # Lambda can take actions on the ES domain
-          - Effect: Allow
-            Principal:
-              Service: lambda.amazonaws.com
-            Action:
-              - "es:*"
     PrivateElasticSearchDomain:
       Type: AWS::Elasticsearch::Domain
       # Don't delete the elastic search instance when the CF stack is deleted
       DeletionPolicy: Retain
       Properties:
         DomainName: ${self:custom.privateDomain}
-        ElasticsearchVersion: '6.0'
+        ElasticsearchVersion: '6.2'
         EBSOptions:
           EBSEnabled: true
           VolumeType: gp2
@@ -127,12 +121,6 @@ resources:
               - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.privateDomain}/*_field_caps"
               - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.privateDomain}/*_mtermvectors"
               - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.privateDomain}/*_search"
-          # Lambda can take actions on the ES domain
-          - Effect: Allow
-            Principal:
-              Service: lambda.amazonaws.com
-            Action:
-              - "es:*"
   Outputs:
     PublicEndpoint:
       Description: The public elasticsearch domain.

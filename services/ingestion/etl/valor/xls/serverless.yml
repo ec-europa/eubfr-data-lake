@@ -4,7 +4,12 @@ plugins:
   - serverless-webpack
 
 custom:
-  webpackIncludeModules: true
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules:
+      forceExclude:
+        - aws-sdk
+    packager: yarn
   eubfrEnvironment: ${opt:eubfr_env, file(../../../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
   bucketName: ${file(../../../../../resources/harmonized-storage/serverless.yml):custom.bucketName}
 
@@ -82,14 +87,29 @@ resources:
           Version: '2012-10-17'
           Statement:
             -
-              Sid: AllowIngestionManagerToPushNotificationEffect
+              Sid: Allow-IngestionManager-Publish
               Action:
                 - sns:Publish
               Effect: Allow
-              Resource: "*"
-              Principal: "*"
+              Resource:
+                Fn::Join:
+                  - ""
+                  -
+                    - "arn:aws:sns:"
+                    - Ref: "AWS::Region"
+                    - ":"
+                    - Ref: "AWS::AccountId"
+                    - ":${self:provider.stage}-etl-just-valor-*"
+              Principal:
+                AWS:
+                  Fn::Join:
+                    - ""
+                    -
+                      - "arn:aws:sts::"
+                      - Ref: "AWS::AccountId"
+                      - ":assumed-role/ingestion-manager-${self:provider.stage}-"
+                      - Ref: "AWS::Region"
+                      - "-lambdaRole/${self:provider.stage}-ingestion-manager-onCreate"
         Topics:
-          -
-            Ref: SNSTopicvalorXLS
-          -
-            Ref: SNSTopicvalorXLSX
+          - Ref: SNSTopicvalorXLS
+          - Ref: SNSTopicvalorXLSX

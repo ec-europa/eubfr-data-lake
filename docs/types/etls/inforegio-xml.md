@@ -4,12 +4,12 @@
 
 Map fields for INFOREGIO producer, XML file types
 
-Mapping document: [markdown version](https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/mapping.md)
-Transform function: [implementation details](https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/xml/src/lib/transform.js)
+Mapping document: [markdown version][1]
+Transform function: [implementation details][2]
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
 Returns **Project** JSON matching the type fields
 
@@ -19,16 +19,16 @@ Check if field is an array or a sting
 
 **Parameters**
 
--   `data` **([Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String))** The input piece of data
+- `data` **([Object][3] \| [string][4])** The input piece of data
 
 **Examples**
 
 ```javascript
-input => ['foo']
-output => 'foo'
+input => ['foo'];
+output => 'foo';
 ```
 
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The string value of the input data
+Returns **[string][4]** The string value of the input data
 
 ### formatDate
 
@@ -36,16 +36,16 @@ Format date
 
 **Parameters**
 
--   `date` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** Date in `DD/MM/YYYY` format
+- `date` **[Date][5]** Date in `DD/MM/YYYY` format
 
 **Examples**
 
 ```javascript
-input => "02/02/2018"
-output => '2018-02-02T00:00:00.000Z'
+input => '02/02/2018';
+output => '2018-02-02T00:00:00.000Z';
 ```
 
-Returns **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** The date formatted into an ISO 8601 date format
+Returns **[Date][5]** The date formatted into an ISO 8601 date format
 
 ### getAddress
 
@@ -53,15 +53,15 @@ Get adress from different fields
 
 Input fields taken from the `record` are:
 
--   `Beneficiary_address`
--   `Beneficiary_Post_Code`
--   `Beneficiary_City`
+- `Beneficiary_address`
+- `Beneficiary_Post_Code`
+- `Beneficiary_City`
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The address as consumed by {Partner}
+Returns **[string][4]** The address as consumed by {Partner}
 
 ### formatBudget
 
@@ -69,16 +69,16 @@ Formats information for the `value` of {BudgetItem}
 
 **Parameters**
 
--   `budget` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Prefixed currency value
+- `budget` **[string][4]** Prefixed currency value
 
 **Examples**
 
 ```javascript
-input => "EUR 329 000 000"
-output => "329000000"
+input => 'EUR 329 000 000';
+output => '329000000';
 ```
 
-Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The value for `value` of {BudgetItem}
+Returns **[number][6]** The value for `value` of {BudgetItem}
 
 ### getFundingArea
 
@@ -86,20 +86,20 @@ Get funding areas from a string
 
 Input fields taken from the `record` are:
 
--   `Funds`
+- `Funds`
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
 **Examples**
 
 ```javascript
-input => 'foo;bar;baz'
-output => ['foo', 'bar', 'baz']
+input => 'foo;bar;baz';
+output => ['foo', 'bar', 'baz'];
 ```
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of values for funding area
+Returns **[Array][7]** List of values for funding area
 
 ### getNutsCodeLevel
 
@@ -107,9 +107,9 @@ Gets NUTS code level from a string
 
 **Parameters**
 
--   `code` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The NUTS code
+- `code` **[String][4]** The NUTS code
 
-Returns **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The level of NUTS or null if one can't be extracted
+Returns **[Number][6]** The level of NUTS or null if one can't be extracted
 
 ### getLocations
 
@@ -117,15 +117,15 @@ Get a list of {Location}
 
 Input fields taken from the `record` are:
 
--   `Project_country`
--   `Project_region`
--   `Project_NUTS2_code`
+- `Project_country`
+- `Project_region`
+- `Project_NUTS2_code`
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of {Location}
+Returns **[Array][7]** List of {Location}
 
 ### getThemes
 
@@ -133,20 +133,20 @@ Get themes from a string
 
 Input fields taken from the `record` are:
 
--   `Themes`
+- `Themes`
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
 **Examples**
 
 ```javascript
-input => 'foo; bar; baz'
-output => ['foo', 'bar', 'baz']
+input => 'foo; bar; baz';
+output => ['foo', 'bar', 'baz'];
 ```
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of values for themes
+Returns **[Array][7]** List of values for themes
 
 ### getBeneficiaries
 
@@ -155,11 +155,19 @@ Depends on getAddress()
 
 Input fields taken from the `record` are:
 
--   `Beneficiary`
--   `Beneficiary_Country`
+- `Beneficiary`
+- `Beneficiary_Country`
 
 **Parameters**
 
--   `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The row received from harmonized storage
+- `record` **[Object][3]** The row received from harmonized storage
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of a single {Beneficiary}
+Returns **[Array][7]** List of a single {Beneficiary}
+
+[1]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/mapping.md
+[2]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/xml/src/lib/transform.js
+[3]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date
+[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array

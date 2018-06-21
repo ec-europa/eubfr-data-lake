@@ -4,8 +4,14 @@ plugins:
   - serverless-webpack
 
 custom:
+  batchSize: 500
   esIndex: ${self:provider.stage}-projects
-  webpackIncludeModules: true
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules:
+      forceExclude:
+        - aws-sdk
+    packager: yarn
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
 
 package:
@@ -14,7 +20,6 @@ package:
 provider:
   name: aws
   runtime: nodejs8.10
-  timeout: 300
   stage: ${opt:stage, file(../../../config.json):stage, 'dev'}
   region: ${opt:region, file(../../../config.json):region, 'eu-central-1'}
   deploymentBucket:
@@ -31,13 +36,15 @@ functions:
   onObjectCreated:
     handler: src/events/onObjectCreated.handler
     name: ${self:provider.stage}-${self:service}-onObjectCreated
-    memorySize: 256
+    memorySize: 1024
+    timeout: 300
     environment:
       API:
         Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
       INDEX: ${self:custom.esIndex}
       REGION: ${self:provider.region}
       STAGE: ${self:provider.stage}
+      BATCH_SIZE: ${self:custom.batchSize}
     events:
       - sns:
           arn:

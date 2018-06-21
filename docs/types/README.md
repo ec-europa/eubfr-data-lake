@@ -4,15 +4,15 @@ The EUBFR project uses several types which aim to make the results of ETLs data 
 
 ## Types
 
-* [Project model](./Project.md)
+- [Project model](./Project.md)
 
 ### Transforms
 
 Here's a list of the transformations made in ETLs around the `Project` model.
 
-* [AGRI - CSV](./etls/agri-csv.md)
-* [BUDG - XLS](./etls/budg-xls.md)
-* [INFOREGIO - JSON](./etls/inforegio-json.md)
-* [INFOREGIO - XML](./etls/inforegio-xml.md)
-* [VALOR - XLS](./etls/valor-xls.md)
-* [WIFI4EU - XLS](./etls/wifi4eu-xls.md)
+- [AGRI - CSV](./etls/agri-csv.md)
+- [BUDG - XLS](./etls/budg-xls.md)
+- [INFOREGIO - JSON](./etls/inforegio-json.md)
+- [INFOREGIO - XML](./etls/inforegio-xml.md)
+- [VALOR - XLS](./etls/valor-xls.md)
+- [WIFI4EU - XLS](./etls/wifi4eu-xls.md)
