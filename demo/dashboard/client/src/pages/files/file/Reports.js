@@ -2,10 +2,22 @@
 
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import Collapsible from 'react-collapsible';
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+} from 'recharts';
+
 import Spinner from '../../../components/Spinner';
 
 import clients from '../../../clientFactory';
 import indices from '../../../clientFactory/esIndices';
+
+import formatReport from '../../../lib/formatQualityReport';
 
 class Reports extends React.Component {
   constructor() {
@@ -78,18 +90,28 @@ class Reports extends React.Component {
 
   render() {
     const { report, reportsLoading } = this.state;
+    const formattedReport = formatReport(report);
 
     if (reportsLoading) {
       return <Spinner />;
     }
 
-    if (report.length === 0) {
+    if (formattedReport.length === 0) {
       return (
         <h1 className="ecl-heading ecl-heading--h1 ecl-u-mt-none">
           No reports yet.
         </h1>
       );
     }
+
+    const data = formattedReport.map(reportRow => {
+      const formatted = {
+        name: Object.keys(reportRow)[0],
+        coverage: Number(reportRow.coverage),
+      };
+
+      return formatted;
+    });
 
     return (
       <Fragment>
@@ -103,31 +125,53 @@ class Reports extends React.Component {
           Please double-check the file for duplicate entries and try to update
           it via the Actions tab.
         </p>
-        <table className="ecl-table">
-          <thead>
-            <tr>
-              <th scope="col">Field</th>
-              <th scope="col">Records</th>
-              <th scope="col">Coverage</th>
-            </tr>
-          </thead>
-          <tbody>
-            {report.map(reportItem => {
-              const r = Object.keys(reportItem);
-              const property = r[0];
 
-              return (
-                <Fragment>
-                  <tr>
-                    <td>{property}</td>
-                    <td>{reportItem[property]}</td>
-                    <td>{reportItem.coverage}%</td>
-                  </tr>
-                </Fragment>
-              );
-            })}
-          </tbody>
-        </table>
+        <AreaChart
+          width={800}
+          height={400}
+          data={data}
+          margin={{ top: 30, right: 0, left: 200, bottom: 30 }}
+          layout="vertical"
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <YAxis type="category" dataKey="name" />
+          <XAxis type="number" dataKey="coverage" />
+          <Tooltip />
+          <Area
+            type="monotone"
+            dataKey="coverage"
+            stroke="#8884d8"
+            fill="#8884d8"
+          />
+        </AreaChart>
+
+        <Collapsible trigger="COVERAGE DETAILS BY FIELD">
+          <table className="ecl-table">
+            <thead>
+              <tr>
+                <th scope="col">Field</th>
+                <th scope="col">Records</th>
+                <th scope="col">Coverage</th>
+              </tr>
+            </thead>
+            <tbody>
+              {formattedReport.map(reportItem => {
+                const r = Object.keys(reportItem);
+                const property = r[0];
+
+                return (
+                  <Fragment>
+                    <tr>
+                      <td>{property}</td>
+                      <td>{reportItem[property]}</td>
+                      <td>{reportItem.coverage}%</td>
+                    </tr>
+                  </Fragment>
+                );
+              })}
+            </tbody>
+          </table>
+        </Collapsible>
       </Fragment>
     );
   }
