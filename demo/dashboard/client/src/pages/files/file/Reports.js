@@ -135,7 +135,7 @@ class Reports extends React.Component {
         >
           <CartesianGrid strokeDasharray="3 3" />
           <YAxis type="category" dataKey="name" />
-          <XAxis type="number" dataKey="coverage" label="Field coverage (%)" />
+          <XAxis type="number" dataKey="coverage" />
           <Tooltip />
           <Area
             type="monotone"
