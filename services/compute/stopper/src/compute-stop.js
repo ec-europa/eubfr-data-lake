@@ -48,12 +48,7 @@ export const handler = async (event, context, callback) => {
       Force: false,
     };
 
-    try {
-      await ec2.stopInstances(params).promise();
-      return callback();
-    } catch (stopError) {
-      return callback(stopError);
-    }
+    return ec2.stopInstances(params, callback);
   } catch (e) {
     return callback(e);
   }
