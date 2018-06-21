@@ -3,6 +3,7 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "deploy": "run-s deploy:resources deploy:services deploy:demo",
+    "deploy:compute": "./scripts/deployment/deploy-compute.sh",
     "deploy:demo": "./scripts/deployment/deploy-demo.sh",
     "deploy:documentation": "./scripts/deployment/deploy-documentation.sh",
     "deploy:services": "./scripts/deployment/deploy.sh",
