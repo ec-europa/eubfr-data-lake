@@ -17,11 +17,13 @@
     "elasticsearch": "15.0.0",
     "prop-types": "15.6.1",
     "react": "16.4.0",
+    "react-collapsible": "2.2.0",
     "react-dom": "16.4.0",
     "react-router": "4.2.0",
     "react-router-dom": "4.2.2",
     "react-s3-uploader": "4.8.0",
-    "react-scripts": "1.1.4"
+    "react-scripts": "1.1.4",
+    "recharts": "1.0.0-beta.10"
   },
   "devDependencies": {
     "serverless": "1.27.3",
