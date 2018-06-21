@@ -44,7 +44,7 @@ functions:
     # This producer could push files of hundreds of megabytes.
     # Interruptions in parsing and upload should be avoided.
     timeout: 300
-    memorySize: 3008
+    memorySize: 2048
     environment:
       BUCKET: ${self:custom.bucketName}
       REGION: ${self:provider.region}

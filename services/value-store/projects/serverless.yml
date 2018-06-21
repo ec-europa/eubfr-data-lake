@@ -4,7 +4,7 @@ plugins:
   - serverless-webpack
 
 custom:
-  batchSize: 200
+  batchSize: 500
   esIndex: ${self:provider.stage}-projects
   webpack:
     webpackConfig: ./webpack.config.js
@@ -36,8 +36,7 @@ functions:
   onObjectCreated:
     handler: src/events/onObjectCreated.handler
     name: ${self:provider.stage}-${self:service}-onObjectCreated
-    # Max out memory and timeout because this function is vital for queueing data to Kinesis data streams.
-    memorySize: 3008
+    memorySize: 1024
     timeout: 300
     environment:
       API:
