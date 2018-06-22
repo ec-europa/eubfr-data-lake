@@ -2,6 +2,7 @@ import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependenc
 
 import elasticsearch from 'elasticsearch';
 import connectionClass from 'http-aws-es';
+import isEqual from 'lodash.isequal';
 import { computeId } from '../../../../../../lib/computeId';
 import { enrich } from '../lib/enrich';
 
@@ -88,6 +89,10 @@ export const handler = async (event, context, callback) => {
    * 3. Finally, enrich the record
    */
   const enrichedRecord = await enrich(elasticHit._source);
+
+  if (!enrichedRecord || isEqual(elasticHit._source, enrichedRecord)) {
+    return callback(null, 'record not enriched');
+  }
 
   // SEND TO SQS QUEUE
   try {
