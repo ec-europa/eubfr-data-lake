@@ -22,7 +22,7 @@ type GeoJSON =
  * Describes field `project.budget.eu_contrib`.
  * @type {BudgetItem}
  */
-type BudgetItem = {
+export type BudgetItem = {
   currency: string,
   raw: string,
   value: number,

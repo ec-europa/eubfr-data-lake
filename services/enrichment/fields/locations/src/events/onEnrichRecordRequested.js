@@ -84,12 +84,10 @@ export const handler = async (event, context, callback) => {
     return callback(null, 'record does not exist, stop enrichment');
   }
 
-  const existingRecord = elasticHit._source;
-
   /*
    * 3. Finally, enrich the record
    */
-  const enrichedRecord = await enrich(record, existingRecord);
+  const enrichedRecord = await enrich(elasticHit._source);
 
   // SEND TO SQS QUEUE
   try {
