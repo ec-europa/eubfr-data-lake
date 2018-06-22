@@ -80,7 +80,6 @@ export const handler = async (event, context, callback) => {
           })
         )
         .on('error', reject)
-        // TODO: batch queue (SendMessageBatch)
         .pipe(publishStream)
         .on('error', reject)
         .on('finish', async () =>
