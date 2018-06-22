@@ -82,4 +82,4 @@ Object {
 }
 `;
 
-exports[`Enrichment module When empty objects: does not do anything 1`] = `null`;
+exports[`Enrichment module When empty objects: does not do anything 1`] = `Object {}`;
