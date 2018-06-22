@@ -1,6 +1,6 @@
 import stream from 'stream';
 
-export default class QueueStream extends stream.Writable {
+export default class PublishToSNSTopic extends stream.Writable {
   constructor(options) {
     super(options);
     this.sns = options.sns;

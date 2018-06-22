@@ -1,8 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Enrichment module When empty objects: does not do anything 1`] = `null`;
-
-exports[`Enrichment module When two records contain project_locations field and are to be merged 1`] = `
+exports[`Enrichment module When a record contains a foreign currency, try to convert it 1`] = `
 Object {
   "action": "",
   "budget": Object {
@@ -83,3 +81,5 @@ Object {
   "type": Array [],
 }
 `;
+
+exports[`Enrichment module When empty objects: does not do anything 1`] = `null`;

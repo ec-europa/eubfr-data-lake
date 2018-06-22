@@ -1,3 +1,8 @@
+/**
+ * Convert foreign currencies into EUR usign the exchange rate at project end
+ * https://webgate.ec.europa.eu/CITnet/jira/browse/EUBFR-184
+ */
+
 import request from 'request-promise-native';
 import { mergeRecords } from './merge';
 
@@ -63,6 +68,10 @@ export const processBudgetItem = async (inputBudgetItem, projectEnd) => {
   ) {
     const projectEndDate = new Date(projectEnd);
     const year = projectEndDate.getFullYear();
+
+    // "EXR/A.[currency].EUR.SP00.A" corresponds to the key of a dataset
+    // The keys can be found here: http://sdw.ecb.europa.eu/browseTable.do?node=1495
+    // API info: https://sdw-wsrest.ecb.europa.eu/web/generator/index.html
     const url = `https://sdw-wsrest.ecb.europa.eu/service/data/EXR/A.${
       inputBudgetItem.currency
     }.EUR.SP00.A`;
@@ -129,7 +138,6 @@ export const enrich = async (record, existingRecord) => {
     !enrichedRecord.timeframe ||
     !enrichedRecord.timeframe.to
   ) {
-    console.log('no timeframe, skipping', enrichedRecord);
     return null;
   }
 
@@ -142,8 +150,6 @@ export const enrich = async (record, existingRecord) => {
   ];
 
   if (enrichedRecord.budget) {
-    // DO THE WORK
-    // TRY CATCH
     const enrichedBudgetFields = await Promise.all(
       budgetFields.map(async field =>
         processBudgetItem(

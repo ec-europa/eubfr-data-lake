@@ -14,7 +14,7 @@ describe('Enrichment module', () => {
     expect(result).toMatchSnapshot();
   });
 
-  test('When two records contain project_locations field and are to be merged', async () => {
+  test('When a record contains a foreign currency, try to convert it', async () => {
     const newRecord = JSON.parse(JSON.stringify(r1));
     const existingRecord = JSON.parse(JSON.stringify(r2));
 
