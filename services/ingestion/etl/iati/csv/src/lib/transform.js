@@ -7,7 +7,7 @@ import getCountryCode from '../../../../../helpers/getCountryCode';
  * Transform message (IATI CSV)
  */
 
-import type { Project } from '../../../../_types/Project';
+import type { Project } from '../../../../../../../types/Project';
 
 /**
  * Makes use of both `total-Disbursement` and `total-Expenditure` fields when present.

@@ -4,7 +4,7 @@ import crypto from 'crypto';
 import getCountryCode from './getCountryCode';
 import getAddress from './getAddress';
 
-import type { Project } from '../../../../_types/Project';
+import type { Project } from '../../../../../../../types/Project';
 
 /**
  * Preprocess budget field. For the moment, we don't have this data.

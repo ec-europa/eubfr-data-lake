@@ -4,7 +4,7 @@
  * Transform message (INFOREGIO XML)
  */
 
-import type { Project } from '../../../../_types/Project';
+import type { Project } from '../../../../../../../types/Project';
 import getCountryCode from '../../../../../helpers/getCountryCode';
 
 /**
