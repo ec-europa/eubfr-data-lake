@@ -93,7 +93,7 @@ export const processBudgetItem = async (inputBudgetItem, projectEnd) => {
         },
       });
     } catch (e) {
-      console.error(url, qs, e);
+      console.error('error', url, qs, e);
       return inputBudgetItem; // budget not enriched
     }
 

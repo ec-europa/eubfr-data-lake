@@ -25,11 +25,8 @@ export const handler = async (event, context, callback) => {
     last_modified: new Date().toISOString(), // ISO-8601 date
   });
 
-  console.log('will save enriched record', id);
-  console.log('body', body);
-
   try {
-    const response = await client.update({
+    await client.update({
       index: INDEX,
       type: 'project',
       id,
@@ -38,9 +35,6 @@ export const handler = async (event, context, callback) => {
       },
     });
 
-    console.log(response);
-
-    // Check response code before saying it's ok
     return callback(null, 'record updated successfully');
   } catch (e) {
     return callback(e);
