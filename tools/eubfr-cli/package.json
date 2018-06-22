@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "eubfr-cli",
+  "name": "@eubfr/cli",
   "version": "0.0.1",
   "bin": {
     "eubfr-cli": "./bin/cli.js"
