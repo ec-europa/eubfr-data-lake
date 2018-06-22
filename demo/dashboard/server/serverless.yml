@@ -2,6 +2,7 @@ service: demo-dash-server-${self:custom.EUBFR_USERNAME}
 
 plugins:
   - serverless-webpack
+  - serverless-export-env
   - serverless-offline #serverless-offline needs to be last in the list
 
 custom:
@@ -16,10 +17,6 @@ custom:
   EUBFR_USERNAME: ${opt:username, env:EUBFR_USERNAME, file(../../../config.json):username, ''}
   PRODUCER_KEY_ID: ${opt:PRODUCER_KEY_ID, file(../../../config.json):demo.${self:custom.EUBFR_USERNAME}.AWS_ACCESS_KEY_ID, env:PRODUCER_KEY_ID, ''}
   PRODUCER_SECRET_ACCESS_KEY: ${opt:PRODUCER_SECRET_ACCESS_KEY, file(../../../config.json):demo.${self:custom.EUBFR_USERNAME}.AWS_SECRET_ACCESS_KEY, env:PRODUCER_SECRET_ACCESS_KEY, ''}
-  SIGNED_UPLOADS_API:
-    Fn::ImportValue: ${self:provider.stage}:storage-signed-uploads:ServiceEndpoint
-  DELETER_API:
-    Fn::ImportValue: ${self:provider.stage}:storage-deleter:ServiceEndpoint
   serverless-offline:
     port: 4000
 
@@ -32,6 +29,11 @@ provider:
     name: eubfr-${self:custom.eubfrEnvironment}-deploy
   stackTags:
     ENV: ${self:custom.eubfrEnvironment}
+  environment:
+    SIGNED_UPLOADS_API:
+      Fn::ImportValue: ${self:provider.stage}:storage-signed-uploads:ServiceEndpoint
+    DELETER_API:
+      Fn::ImportValue: ${self:provider.stage}:storage-deleter:ServiceEndpoint
 
 functions:
   docroot:
@@ -51,7 +53,7 @@ functions:
     environment:
       PRODUCER_KEY_ID: ${self:custom.PRODUCER_KEY_ID}
       PRODUCER_SECRET_ACCESS_KEY: ${self:custom.PRODUCER_SECRET_ACCESS_KEY}
-      SIGNED_UPLOADS_API: ${self:custom.SIGNED_UPLOADS_API}
+      SIGNED_UPLOADS_API: ${self:provider.environment.SIGNED_UPLOADS_API}
     events:
       - http:
           path: demo/download
@@ -65,7 +67,7 @@ functions:
     environment:
       PRODUCER_KEY_ID: ${self:custom.PRODUCER_KEY_ID}
       PRODUCER_SECRET_ACCESS_KEY: ${self:custom.PRODUCER_SECRET_ACCESS_KEY}
-      DELETER_API: ${self:custom.DELETER_API}
+      DELETER_API: ${self:provider.environment.DELETER_API}
     events:
       - http:
           path: demo/delete
@@ -79,7 +81,7 @@ functions:
     environment:
       PRODUCER_KEY_ID: ${self:custom.PRODUCER_KEY_ID}
       PRODUCER_SECRET_ACCESS_KEY: ${self:custom.PRODUCER_SECRET_ACCESS_KEY}
-      SIGNED_UPLOADS_API: ${self:custom.SIGNED_UPLOADS_API}
+      SIGNED_UPLOADS_API: ${self:provider.environment.SIGNED_UPLOADS_API}
     events:
       - http:
           path: demo/signed_url
@@ -93,7 +95,7 @@ functions:
     environment:
       PRODUCER_KEY_ID: ${self:custom.PRODUCER_KEY_ID}
       PRODUCER_SECRET_ACCESS_KEY: ${self:custom.PRODUCER_SECRET_ACCESS_KEY}
-      SIGNED_UPLOADS_API: ${self:custom.SIGNED_UPLOADS_API}
+      SIGNED_UPLOADS_API: ${self:provider.environment.SIGNED_UPLOADS_API}
     events:
       - http:
           path: demo/update

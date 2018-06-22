@@ -1,10 +1,22 @@
 const fs = require('fs');
 const url = require('url');
 const path = require('path');
+
 const aws4 = require('aws4');
+const dotenv = require('dotenv');
 const request = require('request-promise-native');
 
 const getCredentials = require('../lib/getProducerCredentials');
+
+// Get environment variables from .env file exported by
+// demo/dashboard/server service after deployment
+dotenv.config();
+
+if (!process.env.SIGNED_UPLOADS_API) {
+  return console.error(
+    'SIGNED_UPLOADS_API environment variable is missing. Please run yarn deploy:demo.'
+  );
+}
 
 /**
  * Upload a file to a specific S3 bucket.
@@ -18,9 +30,6 @@ const getCredentials = require('../lib/getProducerCredentials');
  */
 const uploadFile = async (producer = 'agri', file = 'agri_history.csv') => {
   const credentials = getCredentials(producer);
-
-  process.env.SIGNED_UPLOADS_API =
-    '5p86kr6l77.execute-api.eu-central-1.amazonaws.com/kc176a';
 
   // Get producer's credentials.
   const accessKeyId =
