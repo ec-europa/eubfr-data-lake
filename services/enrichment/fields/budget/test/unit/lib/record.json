@@ -2,7 +2,7 @@
   "computed_key": "iati/45da84c2-a349-4610-a03a-85ad86d092fd.csv.ndjson",
   "action": "",
   "budget": {
-    "eu_contrib": { "value": 0, "currency": "EUR", "raw": "0" },
+    "eu_contrib": { "value": 457000, "currency": "USD", "raw": "USD 457000" },
     "total_cost": { "value": 0, "currency": "", "raw": "" },
     "private_fund": { "value": 0, "currency": "", "raw": "" },
     "public_fund": { "value": 0, "currency": "", "raw": "" },

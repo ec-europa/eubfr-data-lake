@@ -1,15 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Enrichment module When empty objects: does not do anything 1`] = `Object {}`;
+exports[`Enrichment module When empty objects: does not do anything 1`] = `null`;
 
 exports[`Enrichment module When two records contain project_locations field and are to be merged 1`] = `
 Object {
   "action": "",
   "budget": Object {
     "eu_contrib": Object {
+      "_original": Object {
+        "currency": "USD",
+        "raw": "USD 457000",
+        "value": 457000,
+      },
       "currency": "EUR",
-      "raw": "0",
-      "value": 0,
+      "raw": "EUR 367400",
+      "value": 367400,
     },
     "funding_area": Array [],
     "mmf_heading": "",
@@ -49,19 +54,9 @@ Object {
   "project_locations": Array [
     Object {
       "address": "",
-      "centroid": Object {
-        "lat": 50.6407351,
-        "lon": 4.66696,
-      },
+      "centroid": null,
       "country_code": "BE",
-      "enriched": true,
-      "location": Object {
-        "coordinates": Array [
-          4.66696,
-          50.6407351,
-        ],
-        "type": "Point",
-      },
+      "location": null,
       "nuts": Array [],
       "postal_code": "",
       "region": "235",

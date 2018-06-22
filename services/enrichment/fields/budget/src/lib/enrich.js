@@ -50,7 +50,7 @@ const availableCurrencies = [
   'ZAR',
 ];
 
-const processBudgetItem = async (inputBudgetItem, projectEnd) => {
+export const processBudgetItem = async (inputBudgetItem, projectEnd) => {
   if (!inputBudgetItem) return null;
 
   // check if it at least one is in EUR
