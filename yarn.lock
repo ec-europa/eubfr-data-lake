@@ -3171,6 +3171,10 @@ aws4@1.7.0, aws4@^1.6.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.7.0.tgz#d4d0e9b9dbfca77bf08eeb0a8a471550fe39e289"
 
+awscred@1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/awscred/-/awscred-1.4.1.tgz#e57cb049c917562ac6ab9629d5575e4cecd255f0"
+
 axobject-query@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/axobject-query/-/axobject-query-0.1.0.tgz#62f59dbc59c9f9242759ca349960e7a2fe3c36c0"
@@ -4903,7 +4907,7 @@ commander@2.11.0:
   version "2.11.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.11.0.tgz#157152fd1e7a6c8d98a5b715cf376df928004563"
 
-commander@2.15.x, commander@^2.11.0, commander@^2.14.1, commander@^2.9.0, commander@~2.15.0, commander@~2.15.1:
+commander@2.15.1, commander@2.15.x, commander@^2.11.0, commander@^2.14.1, commander@^2.9.0, commander@~2.15.0, commander@~2.15.1:
   version "2.15.1"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.15.1.tgz#df46e867d0fc2aec66a34662b406a9ccafff5b0f"
 
@@ -6101,6 +6105,10 @@ dotenv-expand@4.2.0:
 dotenv@4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-4.0.0.tgz#864ef1379aced55ce6f95debecdce179f7a0cd1d"
+
+dotenv@6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-6.0.0.tgz#24e37c041741c5f4b25324958ebbc34bca965935"
 
 download@^5.0.2:
   version "5.0.3"

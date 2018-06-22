@@ -62,7 +62,8 @@
       "demo/**",
       "plugins/**",
       "resources/**",
-      "services/**"
+      "services/**",
+      "tools/**"
     ]
   }
 }
