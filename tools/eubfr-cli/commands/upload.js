@@ -39,7 +39,7 @@ const upload = async ({ file, credentials }) => {
       host: api.host,
       path: resourcePath,
       headers: {
-        'x-amz-meta-producer-key': file,
+        'x-amz-meta-producer-key': path.parse(file).base,
       },
     };
 
