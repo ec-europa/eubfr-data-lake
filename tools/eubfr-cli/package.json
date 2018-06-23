@@ -10,7 +10,8 @@
     "aws4": "1.7.0",
     "awscred": "1.4.1",
     "commander": "2.15.1",
-    "dotenv": "6.0.0"
+    "dotenv": "6.0.0",
+    "request-promise-native": "1.0.5"
   },
   "engines": {
     "node": ">=8.0"
