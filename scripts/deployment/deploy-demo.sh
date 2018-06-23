@@ -16,8 +16,6 @@ yarn deploy --username agri
 # Export environment variables
 # Only once, because we need only SIGNED_UPLOADS_API and DELETER_API for CLI
 EUBFR_USERNAME=agri yarn export
-# And move the file
-mv .env ../../../tools/eubfr-cli/
 
 cd ../client
 echo 'Start demo dashboard client deploy ...'

@@ -11,6 +11,8 @@
     "awscred": "1.4.1",
     "commander": "2.15.1",
     "dotenv": "6.0.0",
+    "elasticsearch": "15.0.0",
+    "prettyjson": "1.2.1",
     "request-promise-native": "1.0.5"
   },
   "engines": {

@@ -5,7 +5,7 @@
   "version": "0.0.1",
   "scripts": {
     "deploy": "sls deploy -v",
-    "export": "EUBFR_USERNAME=agri sls export-env",
+    "export": "sls export-env",
     "start": "sls offline start"
   },
   "devDependencies": {

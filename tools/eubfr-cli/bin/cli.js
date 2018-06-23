@@ -8,6 +8,7 @@ const getCredentials = require('../lib/getProducerCredentials');
 
 // Commands
 const upload = require('../commands/upload');
+const list = require('../commands/list');
 
 // General tweaks for CLI
 process.on('unhandledRejection', console.error);
@@ -24,6 +25,16 @@ program
     const credentials = getCredentials(producer);
 
     upload({ file, credentials });
+  });
+
+program
+  .command('list [file]')
+  .description('Lists files of a given producer. Single file if provided.')
+  .option('-p, --producer [producer]', "Producer's name. Defaults to 'agri'.")
+  .action((file, options) => {
+    const producer = options.producer || 'agri';
+
+    list({ file, producer });
   });
 
 // If no arguments provided, display help menu.

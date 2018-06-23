@@ -6,10 +6,10 @@ const aws4 = require('aws4');
 const dotenv = require('dotenv');
 const request = require('request-promise-native');
 
-// Get environment variables from .env file exported by
-// demo/dashboard/server service after deployment
-// SIGNED_UPLOADS_API especially for this module.
-dotenv.config({ path: path.resolve(`${__dirname}/../`, '.env') });
+const resolveSymbolicLink = require('../lib/resolveSymbolicLink');
+
+const loc = resolveSymbolicLink('node_modules/@eubfr/demo-dashboard-server');
+dotenv.config({ path: path.resolve(loc, '.env') });
 
 /**
  * Upload a file to a specific S3 bucket.
