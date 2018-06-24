@@ -10,6 +10,14 @@ const loc = resolveSymbolicLink('node_modules/@eubfr/demo-dashboard-client');
 // Get environment variables from @eubfr/demo-dashboard-client
 dotenv.config({ path: path.resolve(loc, '.env') });
 
+/**
+ * List file(s) of a given producer.
+ *
+ * @param {String} file
+ *   The specific file to view. Optional, all items are shown by default.
+ * @param {String} producer
+ *   The producer's name. For example: 'agri', 'budg', etc.
+ */
 const list = async ({ file, producer }) => {
   const index = `${process.env.REACT_APP_STAGE}-meta`;
   const host = `https://${process.env.REACT_APP_ES_PRIVATE_ENDPOINT}`;

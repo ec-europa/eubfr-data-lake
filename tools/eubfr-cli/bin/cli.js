@@ -9,6 +9,7 @@ const getCredentials = require('../lib/getProducerCredentials');
 // Commands
 const upload = require('../commands/upload');
 const list = require('../commands/list');
+const deleteFile = require('../commands/delete');
 
 // General tweaks for CLI
 process.on('unhandledRejection', console.error);
@@ -35,6 +36,17 @@ program
     const producer = options.producer || 'agri';
 
     list({ file, producer });
+  });
+
+program
+  .command('delete [computedKey]')
+  .description('Deletes a file of a given producer.')
+  .option('-p, --producer [producer]', "Producer's name. Defaults to 'agri'.")
+  .action((computedKey, options) => {
+    const producer = options.producer || 'agri';
+    const credentials = getCredentials(producer);
+
+    deleteFile({ computedKey, credentials });
   });
 
 // If no arguments provided, display help menu.

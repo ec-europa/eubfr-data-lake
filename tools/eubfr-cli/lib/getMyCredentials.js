@@ -1,6 +1,6 @@
-// Tiny wrapper around the topic of getting AWS credentials.
-// Could be done in many other ways, that's why it's separate.
-//
+// Useful when the user of the CLI is the actual producer
+// and credentials don't come from config.json
+
 const awscred = require('awscred');
 const { promisify } = require('util');
 
