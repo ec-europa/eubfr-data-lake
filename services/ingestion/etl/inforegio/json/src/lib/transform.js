@@ -2,6 +2,7 @@
 
 import type { Project } from '../../../../../../../types/Project';
 import getCountryCode from '../../../../../helpers/getCountryCode';
+import { sanitizeCurrency } from '../../../../../../../lib/sanitizeCurrency';
 
 /**
  * Preprocess `funding_area`
@@ -198,16 +199,21 @@ const getProjectWebsite = record => {
  * @returns {number}
  */
 const formatBudget = budget => {
-  if (!budget) return 0;
-  const b = budget.split(' ');
+  if (!budget || typeof budget !== 'string')
+    return { value: 0, currency: '', raw: '' };
 
-  if (b === null || b.length < 2) return 0;
+  const currency = sanitizeCurrency(budget.split(' ')[0]);
 
-  let s = '';
-  for (let i = 1; i < b.length; i += 1) {
-    s += b[i];
-  }
-  return Number(s);
+  const formattedBudget = budget
+    .split(' ')
+    .slice(1)
+    .join('');
+
+  return {
+    value: Number(formattedBudget) || 0,
+    currency,
+    raw: budget || '',
+  };
 };
 
 /**
@@ -222,16 +228,8 @@ const formatBudget = budget => {
 export default (record: Object): Project => {
   // Preprocess budget
   const budgetObject = {
-    total_cost: {
-      value: formatBudget(record.Total_project_budget),
-      currency: '',
-      raw: record.Total_project_budget || '',
-    },
-    eu_contrib: {
-      value: formatBudget(record.EU_Budget_contribution),
-      currency: '',
-      raw: record.EU_Budget_contribution || '',
-    },
+    total_cost: formatBudget(record.Total_project_budget),
+    eu_contrib: formatBudget(record.EU_Budget_contribution),
     private_fund: { value: 0, currency: '', raw: '' },
     public_fund: { value: 0, currency: '', raw: '' },
     other_contrib: { value: 0, currency: '', raw: '' },

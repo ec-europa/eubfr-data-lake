@@ -6,6 +6,7 @@
 
 import type { Project } from '../../../../../../../types/Project';
 import getCountryCode from '../../../../../helpers/getCountryCode';
+import { sanitizeCurrency } from '../../../../../../../lib/sanitizeCurrency';
 
 /**
  * Check if field is an array or a sting
@@ -95,12 +96,7 @@ const formatBudget = budget => {
   if (!budget || typeof budget !== 'string')
     return { value: 0, currency: '', raw: '' };
 
-  let formattedCurrency = budget.split(' ')[0];
-
-  // Convert 'ECU' to 'EUR'
-  if (formattedCurrency === 'ECU') {
-    formattedCurrency = 'EUR';
-  }
+  const currency = sanitizeCurrency(budget.split(' ')[0]);
 
   const formattedBudget = budget
     .split(' ')
@@ -109,10 +105,7 @@ const formatBudget = budget => {
 
   return {
     value: Number(formattedBudget) || 0,
-    currency:
-      formattedCurrency && formattedCurrency.length === 3
-        ? formattedCurrency
-        : '',
+    currency,
     raw: budget || '',
   };
 };
