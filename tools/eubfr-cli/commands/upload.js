@@ -6,10 +6,11 @@ const aws4 = require('aws4');
 const dotenv = require('dotenv');
 const request = require('request-promise-native');
 
-const resolveSymbolicLink = require('../lib/resolveSymbolicLink');
+const getServiceLocation = require('../lib/getServiceLocation');
 
-const loc = resolveSymbolicLink('node_modules/@eubfr/demo-dashboard-server');
-dotenv.config({ path: path.resolve(loc, '.env') });
+dotenv.config({
+  path: path.resolve(getServiceLocation('storage-signed-uploads'), '.env'),
+});
 
 /**
  * Upload a file to a specific S3 bucket.
@@ -22,15 +23,15 @@ dotenv.config({ path: path.resolve(loc, '.env') });
 const upload = async ({ file, credentials }) => {
   if (!process.env.SIGNED_UPLOADS_API) {
     return console.error(
-      'SIGNED_UPLOADS_API environment variable is missing. Please run yarn deploy:demo.'
+      "SIGNED_UPLOADS_API environment variable is missing. Please redeploy by running 'yarn deploy' from project root"
     );
   }
 
   // Prepare signed upload request
-  const resource = '/storage/signed_url';
+  const resource = 'storage/signed_url';
   const api = url.parse(`https://${process.env.SIGNED_UPLOADS_API}`);
   const uri = `https://${process.env.SIGNED_UPLOADS_API}/${resource}`;
-  const resourcePath = api.path + resource;
+  const resourcePath = `${api.path}/${resource}`;
 
   try {
     // Get the signed URL
@@ -44,6 +45,7 @@ const upload = async ({ file, credentials }) => {
     };
 
     const signedUrl = await request.get(aws4.sign(params, credentials));
+    console.log(signedUrl);
 
     // Upload the file based on the signed URL
     return request.put({

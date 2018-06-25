@@ -5,10 +5,11 @@ const aws4 = require('aws4');
 const dotenv = require('dotenv');
 const request = require('request-promise-native');
 
-const resolveSymbolicLink = require('../lib/resolveSymbolicLink');
+const getServiceLocation = require('../lib/getServiceLocation');
 
-const loc = resolveSymbolicLink('node_modules/@eubfr/demo-dashboard-server');
-dotenv.config({ path: path.resolve(loc, '.env') });
+dotenv.config({
+  path: path.resolve(getServiceLocation('storage-deleter'), '.env'),
+});
 
 /**
  * Deletes files from S3 for a given producer.

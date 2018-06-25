@@ -13,10 +13,6 @@ cd ./demo/dashboard/server
 echo 'Start demo dashboard server deploy ...'
 yarn deploy --username agri
 
-# Export environment variables
-# Only once, because we need only SIGNED_UPLOADS_API and DELETER_API for CLI
-EUBFR_USERNAME=agri yarn export
-
 cd ../client
 echo 'Start demo dashboard client deploy ...'
 echo 'Cleaning previous builds ...'

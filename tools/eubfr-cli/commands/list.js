@@ -3,12 +3,11 @@ const dotenv = require('dotenv');
 const prettyjson = require('prettyjson');
 const elasticsearch = require('elasticsearch');
 
-const resolveSymbolicLink = require('../lib/resolveSymbolicLink');
+const getServiceLocation = require('../lib/getServiceLocation');
 
-const loc = resolveSymbolicLink('node_modules/@eubfr/demo-dashboard-client');
-
-// Get environment variables from @eubfr/demo-dashboard-client
-dotenv.config({ path: path.resolve(loc, '.env') });
+dotenv.config({
+  path: path.resolve(getServiceLocation('demo-dashboard-client'), '.env'),
+});
 
 /**
  * List file(s) of a given producer.

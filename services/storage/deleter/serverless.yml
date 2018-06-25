@@ -2,6 +2,7 @@ service: storage-deleter
 
 plugins:
   - serverless-webpack
+  - serverless-export-env
   - serverless-offline #serverless-offline needs to be last in the list
 
 custom:
@@ -23,6 +24,8 @@ provider:
   environment:
     REGION: ${self:provider.region}
     BUCKET: eubfr-${self:provider.stage}
+    # export this with serverless-export-env for other services
+    DELETER_API: "${self:resources.Outputs.ServiceEndpoint.Value}"
   deploymentBucket:
     name: eubfr-${self:custom.eubfrEnvironment}-deploy
   stackTags:
