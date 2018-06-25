@@ -2,6 +2,7 @@
 
 import crypto from 'crypto';
 import getCountryCode from '../../../../../helpers/getCountryCode';
+import sanitizeCurrency from '../../../../../../../lib/sanitizeCurrency';
 
 /*
  * Transform message (IATI CSV)
@@ -23,7 +24,7 @@ import type { Project } from '../../../../../../../types/Project';
  *
  */
 const getBudget = record => {
-  const currency = record.currency || '';
+  const currency = sanitizeCurrency(record.currency);
   const totalDisbursement = record['total-Disbursement'];
   const totalExpenditure = record['total-Expenditure'];
 

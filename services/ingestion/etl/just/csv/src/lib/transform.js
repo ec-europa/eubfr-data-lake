@@ -65,7 +65,7 @@ const getLocations = record => {
 const getBudget = record => ({
   total_cost: {
     value: Number(record.field_prj_total_budget) || 0,
-    currency: '',
+    currency: 'EUR',
     raw: record.field_prj_total_budget || '',
   },
   eu_contrib: {

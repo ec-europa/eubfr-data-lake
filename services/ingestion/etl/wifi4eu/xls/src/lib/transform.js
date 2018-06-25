@@ -15,11 +15,7 @@ import type { Project } from '../../../../../../../types/Project';
  */
 const getBudget = () => ({
   total_cost: { value: 0, currency: '', raw: '' },
-  eu_contrib: {
-    value: 0,
-    currency: 'EUR',
-    raw: '',
-  },
+  eu_contrib: { value: 0, currency: '', raw: '' },
   private_fund: { value: 0, currency: '', raw: '' },
   public_fund: { value: 0, currency: '', raw: '' },
   other_contrib: { value: 0, currency: '', raw: '' },
