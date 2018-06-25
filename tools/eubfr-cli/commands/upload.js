@@ -20,7 +20,7 @@ dotenv.config({
  * @param {Object} credentials
  *   The producer's credentials which define where the file will go.
  */
-const upload = ({ files, credentials }) => {
+const uploadCommand = ({ files, credentials }) => {
   if (!process.env.SIGNED_UPLOADS_API) {
     return console.error(
       "SIGNED_UPLOADS_API environment variable is missing. Please redeploy by running 'yarn deploy' from project root"
@@ -33,7 +33,7 @@ const upload = ({ files, credentials }) => {
   const uri = `https://${process.env.SIGNED_UPLOADS_API}/${resource}`;
   const resourcePath = `${api.path}/${resource}`;
 
-  files.forEach(async file => {
+  return files.forEach(async file => {
     const fileName = path.parse(file).base;
     try {
       // Get the signed URL
@@ -61,4 +61,4 @@ const upload = ({ files, credentials }) => {
   });
 };
 
-module.exports = upload;
+module.exports = uploadCommand;

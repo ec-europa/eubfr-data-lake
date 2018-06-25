@@ -67,7 +67,7 @@ const deleteCommand = async ({ files, deleteAll, producer, credentials }) => {
       apiVersion: '6.2',
     });
 
-    // Get all the files uploaded by the fi
+    // Get all the files uploaded by the given producer
     const response = await client.search({
       index,
       type: 'file',
@@ -79,6 +79,7 @@ const deleteCommand = async ({ files, deleteAll, producer, credentials }) => {
         },
       },
     });
+
     // And delete the files
     const allFiles = response.hits.hits.map(file => file._source.computed_key);
     return allFiles.map(deleteFile);

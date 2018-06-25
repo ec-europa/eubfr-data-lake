@@ -36,7 +36,7 @@ program
 
 program
   .command('show [file]')
-  .description('Displays files of a given producer. Single file if provided.')
+  .description('Displays files of a given producer.')
   .option('-p, --producer [producer]', "Producer's name. Defaults to 'agri'.")
   .action((file, options) => {
     const producer = options.producer || 'agri';

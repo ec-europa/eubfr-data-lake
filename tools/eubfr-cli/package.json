@@ -6,9 +6,7 @@
     "eubfr-cli": "./bin/cli.js"
   },
   "dependencies": {
-    "aws-sdk": "2.248.1",
     "aws4": "1.7.0",
-    "awscred": "1.4.1",
     "commander": "2.15.1",
     "dotenv": "6.0.0",
     "elasticsearch": "15.0.0",

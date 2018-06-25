@@ -17,7 +17,8 @@ dotenv.config({
  * @param {String} producer
  *   The producer's name. For example: 'agri', 'budg', etc.
  */
-const list = async ({ file, producer }) => {
+const showCommand = async ({ file, producer }) => {
+  let query = '';
   const index = `${process.env.REACT_APP_STAGE}-meta`;
   const host = `https://${process.env.REACT_APP_ES_PRIVATE_ENDPOINT}`;
 
@@ -27,8 +28,16 @@ const list = async ({ file, producer }) => {
     apiVersion: '6.2',
   });
 
-  try {
-    const results = await client.search({
+  if (file) {
+    // Show single file
+    query = {
+      index,
+      type: 'file',
+      q: `computed_key:"${file}"`,
+    };
+  } else {
+    // Show all files
+    query = {
       index,
       type: 'file',
       body: {
@@ -39,7 +48,11 @@ const list = async ({ file, producer }) => {
         },
         sort: [{ last_modified: { order: 'desc' } }],
       },
-    });
+    };
+  }
+
+  try {
+    const results = await client.search(query);
 
     console.log(`Results for producer: ${producer}`);
     return console.log(prettyjson.render(results));
@@ -48,4 +61,4 @@ const list = async ({ file, producer }) => {
   }
 };
 
-module.exports = list;
+module.exports = showCommand;

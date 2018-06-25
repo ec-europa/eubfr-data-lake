@@ -1,6 +1,4 @@
 const { spawn } = require('child_process');
-const fs = require('fs');
-const path = require('path');
 
 // Get config
 const config = require(`../../config.json`); // eslint-disable-line import/no-unresolved
