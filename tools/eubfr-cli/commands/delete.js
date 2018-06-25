@@ -27,10 +27,10 @@ const upload = async ({ computedKey, credentials }) => {
   }
 
   // Prepare signed upload request
-  const resource = '/storage/delete';
+  const resource = 'storage/delete';
   const api = url.parse(`https://${process.env.DELETER_API}`);
   const uri = `https://${process.env.DELETER_API}/${resource}`;
-  const resourcePath = api.path + resource;
+  const resourcePath = `${api.path}/${resource}`;
 
   try {
     const params = {

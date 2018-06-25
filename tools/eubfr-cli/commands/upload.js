@@ -20,7 +20,7 @@ dotenv.config({
  * @param {Object} credentials
  *   The producer's credentials which define where the file will go.
  */
-const upload = async ({ file, credentials }) => {
+const upload = ({ files, credentials }) => {
   if (!process.env.SIGNED_UPLOADS_API) {
     return console.error(
       "SIGNED_UPLOADS_API environment variable is missing. Please redeploy by running 'yarn deploy' from project root"
@@ -33,29 +33,32 @@ const upload = async ({ file, credentials }) => {
   const uri = `https://${process.env.SIGNED_UPLOADS_API}/${resource}`;
   const resourcePath = `${api.path}/${resource}`;
 
-  try {
-    // Get the signed URL
-    const params = {
-      uri,
-      host: api.host,
-      path: resourcePath,
-      headers: {
-        'x-amz-meta-producer-key': path.parse(file).base,
-      },
-    };
+  files.forEach(async file => {
+    const fileName = path.parse(file).base;
+    try {
+      // Get the signed URL
+      const params = {
+        uri,
+        host: api.host,
+        path: resourcePath,
+        headers: {
+          'x-amz-meta-producer-key': fileName,
+        },
+      };
 
-    const signedUrl = await request.get(aws4.sign(params, credentials));
-    console.log(signedUrl);
+      const signedUrl = await request.get(aws4.sign(params, credentials));
 
-    // Upload the file based on the signed URL
-    return request.put({
-      // Removing double quotes to build a correct path.
-      uri: signedUrl.replace(/["]+/g, ''),
-      body: fs.readFileSync(path.resolve(file)),
-    });
-  } catch (e) {
-    return console.error(e);
-  }
+      // Upload the file based on the signed URL
+      console.log(`Uploading ${fileName} ...`);
+      return await request.put({
+        // Removing double quotes to build a correct path.
+        uri: signedUrl.replace(/["]+/g, ''),
+        body: fs.readFileSync(path.resolve(file)),
+      });
+    } catch (e) {
+      return console.error(e);
+    }
+  });
 };
 
 module.exports = upload;

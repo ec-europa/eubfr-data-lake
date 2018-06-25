@@ -8,7 +8,7 @@ const getCredentials = require('../lib/getProducerCredentials');
 
 // Commands
 const upload = require('../commands/upload');
-const list = require('../commands/list');
+const show = require('../commands/show');
 const deleteFile = require('../commands/delete');
 
 // General tweaks for CLI
@@ -22,20 +22,26 @@ program
   .description('Uploads a new file to the data lake')
   .option('-p, --producer [producer]', "Producer's name. Defaults to 'agri'.")
   .action((file, moreFiles, options) => {
+    // The `file` is required.
+    const files = [file];
     const producer = options.producer || 'agri';
     const credentials = getCredentials(producer);
 
-    upload({ file, credentials });
+    if (moreFiles.length) {
+      files.push(...moreFiles);
+    }
+
+    upload({ files, credentials });
   });
 
 program
-  .command('list [file]')
-  .description('Lists files of a given producer. Single file if provided.')
+  .command('show [file]')
+  .description('Displays files of a given producer. Single file if provided.')
   .option('-p, --producer [producer]', "Producer's name. Defaults to 'agri'.")
   .action((file, options) => {
     const producer = options.producer || 'agri';
 
-    list({ file, producer });
+    show({ file, producer });
   });
 
 program
