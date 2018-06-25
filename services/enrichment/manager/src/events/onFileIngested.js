@@ -3,10 +3,10 @@ import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependenc
 import through2 from 'through2';
 import split2 from 'split2';
 
-import QueueStream from '../lib/QueueStream';
+import PublishToSNSTopic from '../lib/PublishToSNSTopic';
 
 export const handler = async (event, context, callback) => {
-  const { REGION, QUEUE_NAME } = process.env;
+  const { REGION, STAGE } = process.env;
 
   /*
    * Some checks here before going any further
@@ -22,9 +22,6 @@ export const handler = async (event, context, callback) => {
   if (!snsRecord || snsRecord.EventSource !== 'aws:sns') {
     return callback('Bad record');
   }
-
-  // Get Account ID from lambda function arn in the context
-  const accountId = context.invokedFunctionArn.split(':')[4];
 
   /*
    * Extract information from the event
@@ -45,13 +42,17 @@ export const handler = async (event, context, callback) => {
       })
       .promise();
 
-    const queueUrl = `https://sqs.${REGION}.amazonaws.com/${accountId}/${QUEUE_NAME}`;
+    // Get Account ID from lambda function arn in the context
+    const accountId = context.invokedFunctionArn.split(':')[4];
 
-    // Prepare push to SQS
-    const queueStream = new QueueStream({
+    const sns = new AWS.SNS();
+    const snsEndpoint = `arn:aws:sns:${REGION}:${accountId}:${STAGE}-onEnrichRecordRequested`;
+
+    // Prepare publish to SNS topic
+    const publishStream = new PublishToSNSTopic({
       objectMode: true,
-      sqs: new AWS.SQS({ apiVersion: '2012-11-05' }),
-      queueUrl,
+      sns,
+      snsEndpoint,
     });
 
     const readStream = s3
@@ -79,8 +80,7 @@ export const handler = async (event, context, callback) => {
           })
         )
         .on('error', reject)
-        // TODO: batch queue (SendMessageBatch)
-        .pipe(queueStream)
+        .pipe(publishStream)
         .on('error', reject)
         .on('finish', async () =>
           resolve('All projects have been sent to enrichment')

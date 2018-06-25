@@ -1,21 +1,25 @@
 {
   "private": true,
-  "name": "@eubfr/enrichment-manager",
+  "name": "@eubfr/enrichment-fields-locations",
   "version": "0.0.1",
   "scripts": {
-    "deploy": "sls deploy -v"
+    "deploy": "sls deploy -v",
+    "test:unit": "jest --testPathPattern=unit"
   },
   "devDependencies": {
     "aws-sdk": "2.248.1",
     "babel-core": "6.26.3",
     "babel-loader": "7.1.4",
     "babel-preset-env": "1.7.0",
+    "jest": "23.0.1",
     "serverless": "1.27.3",
     "serverless-webpack": "5.1.5",
     "webpack": "4.10.0"
   },
   "dependencies": {
-    "split2": "2.2.0",
-    "through2": "2.0.3"
+    "elasticsearch": "15.0.0",
+    "http-aws-es": "6.0.0",
+    "lodash.isequal": "4.5.0",
+    "request-promise-native": "1.0.5"
   }
 }

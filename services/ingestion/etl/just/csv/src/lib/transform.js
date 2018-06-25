@@ -6,7 +6,7 @@ import getCountryCode from '../../../../../helpers/getCountryCode';
  * Transform message (JUST CSV)
  */
 
-import type { Project } from '../../../../_types/Project';
+import type { Project } from '../../../../../../../types/Project';
 
 /**
  * Preprocess locations
