@@ -45,14 +45,20 @@ program
   });
 
 program
-  .command('delete [computedKey]')
-  .description('Deletes a file of a given producer.')
+  .command('delete [files...]')
+  .description('Deletes files by computedKey. All if nothing passed.')
   .option('-p, --producer [producer]', "Producer's name. Defaults to 'agri'.")
-  .action((computedKey, options) => {
+  .option('-a, --all [all]', 'Mark all files for deletion')
+  .action((files, options) => {
+    let deleteAll = true;
+    // Respect flags for specific deletions
+    if (files.length || options.all === false) {
+      deleteAll = false;
+    }
     const producer = options.producer || 'agri';
     const credentials = getCredentials(producer);
 
-    deleteFile({ computedKey, credentials });
+    deleteFile({ files, deleteAll, producer, credentials });
   });
 
 // If no arguments provided, display help menu.
