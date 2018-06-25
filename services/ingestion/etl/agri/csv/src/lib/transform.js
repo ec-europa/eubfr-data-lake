@@ -6,7 +6,7 @@ import getCountryCode from '../../../../../helpers/getCountryCode';
  * Transform message (AGRI CSV)
  */
 
-import type { Project } from '../../../../_types/Project';
+import type { Project } from '../../../../../../../types/Project';
 
 /**
  * Converts a single string to an array

@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@eubfr/enrichment-manager",
+  "name": "@eubfr/enrichment-saver",
   "version": "0.0.1",
   "scripts": {
     "deploy": "sls deploy -v"
@@ -15,7 +15,8 @@
     "webpack": "4.10.0"
   },
   "dependencies": {
-    "split2": "2.2.0",
-    "through2": "2.0.3"
+    "elasticsearch": "15.0.0",
+    "http-aws-es": "6.0.0",
+    "lawos": "1.1.5"
   }
 }

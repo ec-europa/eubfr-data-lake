@@ -1,0 +1,80 @@
+service: enrichment-saver
+
+plugins:
+  - serverless-webpack
+
+custom:
+  esIndex: ${self:provider.stage}-projects
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules:
+      forceExclude:
+        - aws-sdk
+    packager: yarn
+  eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
+  queueName: ${self:provider.stage}-enrichment-saver-backlog
+
+package:
+  individually: true
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: ${opt:stage, file(../../../config.json):stage, 'dev'}
+  region: ${opt:region, file(../../../config.json):region, 'eu-central-1'}
+  deploymentBucket:
+    name: eubfr-${self:custom.eubfrEnvironment}-deploy
+  stackTags:
+    ENV: ${self:custom.eubfrEnvironment}
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action: "sqs:*"
+      Resource: "arn:aws:sqs:${self:provider.region}:*:*"
+    - Effect: "Allow"
+      Action: "lambda:InvokeFunction"
+      Resource: "arn:aws:lambda:${self:provider.region}:*:${self:provider.stage}-${self:service}-onTaskCalled"
+    - Effect: "Allow"
+      Action: "es:*"
+      Resource: "arn:aws:es:${self:provider.region}:*:domain/*"
+
+functions:
+  onWorkerScheduled:
+    handler: src/events/onWorkerScheduled.handler
+    name: ${self:provider.stage}-${self:service}-onWorkerScheduled
+    memorySize: 256
+    timeout: 120
+    environment:
+      REGION: ${self:provider.region}
+      QUEUE_NAME: ${self:custom.queueName}
+      lambda: ${self:provider.stage}-${self:service}-onTaskCalled
+    events:
+      - schedule: rate(2 minutes)
+  onTaskCalled:
+    handler: src/events/onTaskCalled.handler
+    name: ${self:provider.stage}-${self:service}-onTaskCalled
+    timeout: 30
+    memorySize: 256
+    environment:
+      API:
+        Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
+      INDEX: ${self:custom.esIndex}
+
+resources:
+  Resources:
+    BacklogQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: ${self:custom.queueName}
+        MessageRetentionPeriod: '1209600'
+        VisibilityTimeout: '60'
+        RedrivePolicy:
+          deadLetterTargetArn:
+            Fn::GetAtt:
+            - DeadLetterQueue
+            - Arn
+          maxReceiveCount: '10'
+    DeadLetterQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: ${self:custom.queueName}-dead-letter-queue
+        MessageRetentionPeriod: '1209600'

@@ -6,6 +6,13 @@ const budgetItem = {
     currency: { type: 'keyword' },
     raw: { type: 'text' },
     value: { type: 'long' },
+    _original: {
+      properties: {
+        currency: { type: 'keyword' },
+        raw: { type: 'text' },
+        value: { type: 'long' },
+      },
+    },
   },
 };
 
