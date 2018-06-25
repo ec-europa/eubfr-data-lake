@@ -6,7 +6,7 @@
 
 import type { Project } from '../../../../../../../types/Project';
 import getCountryCode from '../../../../../helpers/getCountryCode';
-import { sanitizeCurrency } from '../../../../../../../lib/sanitizeCurrency';
+import sanitizeCurrency from '../../../../../../../lib/sanitizeCurrency';
 
 /**
  * Check if field is an array or a sting
