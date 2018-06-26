@@ -1,5 +1,5 @@
 const fs = require('fs');
-const shell = require('shelljs');
+const shell = require('shelljs'); // eslint-disable-line import/no-extraneous-dependencies
 
 module.exports = producer => {
   const cwd = `.content/${producer}/`;
