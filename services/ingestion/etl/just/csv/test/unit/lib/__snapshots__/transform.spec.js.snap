@@ -27,7 +27,7 @@ Object {
       "value": 0,
     },
     "total_cost": Object {
-      "currency": "",
+      "currency": "EUR",
       "raw": "",
       "value": 0,
     },
