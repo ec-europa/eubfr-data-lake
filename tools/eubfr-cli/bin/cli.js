@@ -50,7 +50,7 @@ program
   .option('-p, --producer [producer]', "Producer's name. Defaults to 'agri'.")
   .option('-c, --confirm [confirm]', 'Confirm deletion of all files.')
   .action((files, options) => {
-    const deleteAll = files.length === 0 && options.confirm ? true : false;
+    const deleteAll = files.length === 0 && options.confirm;
     const producer = options.producer || 'agri';
     const credentials = getCredentials(producer);
 
