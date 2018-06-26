@@ -2,6 +2,8 @@
   "private": true,
   "scripts": {
     "bootstrap": "lerna bootstrap",
+    "content:upload": "./scripts/content/upload.js",
+    "content:delete": "./scripts/content/delete.js",
     "deploy": "run-s deploy:resources deploy:services deploy:demo",
     "deploy:compute": "./scripts/deployment/deploy-compute.sh",
     "deploy:demo": "./scripts/deployment/deploy-demo.sh",
@@ -54,6 +56,7 @@
     "lint-staged": "7.1.2",
     "npm-run-all": "4.1.3",
     "prettier": "1.13.2",
+    "shelljs": "0.8.2",
     "stream-array": "1.1.2",
     "vinyl-fs": "3.0.3"
   },

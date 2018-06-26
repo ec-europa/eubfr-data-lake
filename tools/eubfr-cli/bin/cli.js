@@ -11,10 +11,6 @@ const upload = require('../commands/upload');
 const show = require('../commands/show');
 const deleteFile = require('../commands/delete');
 
-// General tweaks for CLI
-process.on('unhandledRejection', console.error);
-process.noDeprecation = true;
-
 program.version(pkg.version).usage('[command] [option]');
 
 program
