@@ -46,15 +46,11 @@ program
 
 program
   .command('delete [files...]')
-  .description('Deletes files by computedKey. All if nothing passed.')
+  .description('Deletes files by computedKey. Pass --confirm to delete all.')
   .option('-p, --producer [producer]', "Producer's name. Defaults to 'agri'.")
-  .option('-a, --all [all]', 'Mark all files for deletion')
+  .option('-c, --confirm [confirm]', 'Confirm deletion of all files.')
   .action((files, options) => {
-    let deleteAll = true;
-    // Respect flags for specific deletions
-    if (files.length || options.all === false) {
-      deleteAll = false;
-    }
+    const deleteAll = files.length === 0 && options.confirm ? true : false;
     const producer = options.producer || 'agri';
     const credentials = getCredentials(producer);
 
