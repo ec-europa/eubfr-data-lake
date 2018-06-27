@@ -47,42 +47,49 @@ const uploadCommand = ({ files, credentials }) => {
   const uri = `https://${process.env.SIGNED_UPLOADS_API}/${resource}`;
   const resourcePath = `${api.path}/${resource}`;
 
+  const uploadFile = async ({ file, creds }) => {
+    const fileName = path.parse(file).base;
+
+    try {
+      // Get the signed URL
+      const params = {
+        uri,
+        host: api.host,
+        path: resourcePath,
+        headers: {
+          'x-amz-meta-producer-key': fileName,
+        },
+      };
+      const signedUrl = await request.get(aws4.sign(params, creds));
+
+      console.log(`Uploading ${fileName} ...`);
+      return await request.put({
+        // Removing double quotes to build a correct path.
+        uri: signedUrl.replace(/["]+/g, ''),
+        body: fs.readFileSync(path.resolve(file)),
+      });
+    } catch (e) {
+      return console.error(e);
+    }
+  };
+
+  // Producer-oriented upload
   if (files.length > 0) {
     const creds = extractCredentials(credentials);
-
-    files.forEach(async file => {
-      const fileName = path.parse(file).base;
-      try {
-        // Get the signed URL
-        const params = {
-          uri,
-          host: api.host,
-          path: resourcePath,
-          headers: {
-            'x-amz-meta-producer-key': fileName,
-          },
-        };
-
-        const signedUrl = await request.get(aws4.sign(params, creds));
-
-        // Upload the file based on the signed URL
-        console.log(`Uploading ${fileName} ...`);
-
-        return await request.put({
-          // Removing double quotes to build a correct path.
-          uri: signedUrl.replace(/["]+/g, ''),
-          body: fs.readFileSync(path.resolve(file)),
-        });
-        process.exit(1);
-      } catch (e) {
-        return console.error(e);
-      }
-    });
+    files.forEach(file => uploadFile({ file, creds }));
+    process.exit(1);
   }
 
-  credentials.forEach(producer => {
-    const producerFiles = getProducerFiles(producer);
-    console.log(producerFiles);
+  // Mass upload
+  credentials.forEach(async producer => {
+    const producerName = Object.keys(producer)[0];
+    const creds = producer[producerName];
+    const producerFiles = await getProducerFiles(producerName);
+
+    console.log(`Uploading for producer: ${producerName}.`);
+    producerFiles.forEach(file =>
+      uploadFile({ file: `.content/${producerName}/${file}`, creds })
+    );
   });
 };
 
