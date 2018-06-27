@@ -2,8 +2,8 @@
   "private": true,
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "content:upload": "./scripts/content/upload.js",
-    "content:delete": "./scripts/content/delete.js",
+    "content:upload": "eubfr-cli upload --all",
+    "content:delete": "eubfr-cli delete --all",
     "deploy": "run-s deploy:resources deploy:services deploy:demo",
     "deploy:compute": "./scripts/deployment/deploy-compute.sh",
     "deploy:demo": "./scripts/deployment/deploy-demo.sh",

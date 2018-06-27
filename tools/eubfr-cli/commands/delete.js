@@ -19,9 +19,9 @@ dotenv.config({
  *   List of files to delete.
  * @param {Boolean} deleteAll
  *   Flag whether to delete all files.
- * @param {String} producer
+ * @param {Array} producer
  *   The name of the producer, as in producer_id field. Example: 'agri'
- * @param {Object} credentials
+ * @param {Array} credentials
  *   The producer's credentials which define where the file will go.
  */
 const deleteCommand = async ({ files, deleteAll, producer, credentials }) => {
@@ -41,7 +41,7 @@ const deleteCommand = async ({ files, deleteAll, producer, credentials }) => {
   const host = `https://${process.env.REACT_APP_ES_PRIVATE_ENDPOINT}`;
 
   // Reuse throughout the two delete approaches.
-  const deleteFile = async computedKey => {
+  const deleteFile = async (computedKey, creds) => {
     try {
       const params = {
         uri,
@@ -53,7 +53,7 @@ const deleteCommand = async ({ files, deleteAll, producer, credentials }) => {
       };
 
       console.log(`Deleting ${computedKey} ...`);
-      await request.get(aws4.sign(params, credentials));
+      await request.get(aws4.sign(params, creds));
       return console.log(`${computedKey} has been deleted`);
     } catch (e) {
       return console.error(e);
@@ -67,25 +67,33 @@ const deleteCommand = async ({ files, deleteAll, producer, credentials }) => {
       apiVersion: '6.2',
     });
 
-    // Get all the files uploaded by the given producer
-    const response = await client.search({
-      index,
-      type: 'file',
-      body: {
-        query: {
-          term: {
-            producer_id: producer,
+    producer.forEach(async id => {
+      const creds = credentials[id];
+
+      // Get all the files uploaded by the given producer
+      const response = await client.search({
+        index,
+        type: 'file',
+        body: {
+          query: {
+            term: {
+              producer_id: id,
+            },
           },
         },
-      },
-    });
+      });
 
-    // And delete the files
-    const allFiles = response.hits.hits.map(file => file._source.computed_key);
-    return allFiles.map(deleteFile);
+      // And delete the files
+      const allFiles = response.hits.hits.map(
+        file => file._source.computed_key
+      );
+      return allFiles.map(computedKey => deleteFile(computedKey, creds));
+    });
   }
 
-  return files.map(deleteFile);
+  return credentials.forEach(cred =>
+    files.map(computedKey => deleteFile(computedKey, cred))
+  );
 };
 
 // The `delete` keyword is reserved, so keep the name of the method in another way
