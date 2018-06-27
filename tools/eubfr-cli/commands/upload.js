@@ -9,19 +9,6 @@ const request = require('request-promise-native');
 const getServiceLocation = require('../lib/getServiceLocation');
 const getProducerFiles = require('../lib/getProducerFiles');
 
-// Gets the credentials of the first item in the credentials array item
-// Useful when the producer name is passed.
-const extractCredentials = credentials => {
-  let creds = '';
-
-  credentials.forEach(producer => {
-    const key = Object.keys(producer)[0];
-    creds = producer[key];
-  });
-
-  return creds;
-};
-
 dotenv.config({
   path: path.resolve(getServiceLocation('storage-signed-uploads'), '.env'),
 });
@@ -73,23 +60,24 @@ const uploadCommand = ({ files, credentials }) => {
     }
   };
 
-  // Producer-oriented upload
-  if (files.length > 0) {
-    const creds = extractCredentials(credentials);
-    files.forEach(file => uploadFile({ file, creds }));
-    process.exit(1);
-  }
-
-  // Mass upload
   return credentials.forEach(async producer => {
     const producerName = Object.keys(producer)[0];
     const creds = producer[producerName];
-    const producerFiles = await getProducerFiles(producerName);
+    const userSpecifiedFiles = files.length > 0;
+    // If files are provided by the user - use them
+    // Otherwise take all local files
+    const filesToUpload = userSpecifiedFiles
+      ? files
+      : await getProducerFiles(producerName);
 
     console.log(`Uploading for producer: ${producerName}.`);
-    producerFiles.forEach(file =>
-      uploadFile({ file: `.content/${producerName}/${file}`, creds })
-    );
+
+    filesToUpload.forEach(file => {
+      // If user has specified files, we know the path
+      // But if not user specified, we need to tweak for local setup
+      const filePath = userSpecifiedFiles ? '' : `.content/${producerName}/`;
+      uploadFile({ file: filePath + file, creds });
+    });
   });
 };
 

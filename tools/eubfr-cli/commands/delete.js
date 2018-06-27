@@ -7,17 +7,7 @@ const elasticsearch = require('elasticsearch');
 const request = require('request-promise-native');
 
 const getServiceLocation = require('../lib/getServiceLocation');
-
-const extractCredentials = (producerNeedle, credentials) => {
-  let creds = {};
-  credentials.forEach(producerCredentials => {
-    if (producerNeedle in producerCredentials) {
-      creds = producerCredentials[producerNeedle];
-    }
-  });
-
-  return creds;
-};
+const extractCredentials = require('../lib/extractCredentials');
 
 dotenv.config({
   path: path.resolve(getServiceLocation('storage-deleter'), '.env'),
@@ -75,7 +65,7 @@ const deleteCommand = async ({ files, credentials }) => {
 
   // Marker to delete all files for all producers
   if (files.length === 0) {
-    credentials.forEach(async producerCredentials => {
+    return credentials.forEach(async producerCredentials => {
       const producerName = Object.keys(producerCredentials)[0];
       const creds = producerCredentials[producerName];
 
@@ -103,11 +93,10 @@ const deleteCommand = async ({ files, credentials }) => {
   // In case files are specified, delete them.
   return files.forEach(async file => {
     const producerKey = file.split('/')[0];
-    const creds = extractCredentials(producerKey, credentials);
+    const creds = extractCredentials({ producerKey, credentials });
 
     return deleteFile(file, creds);
   });
 };
 
-// The `delete` keyword is reserved, so keep the name of the method in another way
 module.exports = deleteCommand;

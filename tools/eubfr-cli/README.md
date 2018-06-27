@@ -11,21 +11,14 @@ If you want to make use of the CLI to automatically upload or delete all content
 ```
 .
 ├── agri
-│   ├── agri_history2.csv
-│   ├── agri_history3.csv
-│   ├── agri_history4.csv
 │   └── agri_history.csv
 ├── budg
 │   └── CreativeEurope_Projects_Overview_2017-08-21.xls
 ├── iati
-│   ├── activity.csv
-│   ├── activity_large.csv
-│   └── activity_sample.csv
+│   └── activity.csv
 ├── inforegio
 │   ├── EUBFR_VIEW_16052018.xml
-│   ├── regio_projects-enr.xml
-│   ├── regio_projects.json
-│   └── regio_projects.xml
+│   └── regio_projects.json
 ├── valor
 │   └── valor_sample.xls
 └── wifi4eu
