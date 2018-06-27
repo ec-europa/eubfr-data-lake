@@ -8,6 +8,17 @@ const request = require('request-promise-native');
 
 const getServiceLocation = require('../lib/getServiceLocation');
 
+const extractCredentials = (producerNeedle, credentials) => {
+  let creds = {};
+  credentials.forEach(producerCredentials => {
+    if (producerNeedle in producerCredentials) {
+      creds = producerCredentials[producerNeedle];
+    }
+  });
+
+  return creds;
+};
+
 dotenv.config({
   path: path.resolve(getServiceLocation('storage-deleter'), '.env'),
 });
@@ -17,14 +28,10 @@ dotenv.config({
  *
  * @param {Array} files
  *   List of files to delete.
- * @param {Boolean} deleteAll
- *   Flag whether to delete all files.
- * @param {Array} producer
- *   The name of the producer, as in producer_id field. Example: 'agri'
  * @param {Array} credentials
- *   The producer's credentials which define where the file will go.
+ *   List of credentials for the producers.
  */
-const deleteCommand = async ({ files, deleteAll, producer, credentials }) => {
+const deleteCommand = async ({ files, credentials }) => {
   if (!process.env.DELETER_API) {
     return console.error(
       "DELETER_API environment variable is missing. Please redeploy by running 'yarn deploy' from project root"
@@ -39,6 +46,12 @@ const deleteCommand = async ({ files, deleteAll, producer, credentials }) => {
 
   const index = `${process.env.REACT_APP_STAGE}-meta`;
   const host = `https://${process.env.REACT_APP_ES_PRIVATE_ENDPOINT}`;
+
+  const client = elasticsearch.Client({
+    host,
+    log: 'warning',
+    apiVersion: '6.2',
+  });
 
   // Reuse throughout the two delete approaches.
   const deleteFile = async (computedKey, creds) => {
@@ -60,15 +73,11 @@ const deleteCommand = async ({ files, deleteAll, producer, credentials }) => {
     }
   };
 
-  if (deleteAll) {
-    const client = elasticsearch.Client({
-      host,
-      log: 'warning',
-      apiVersion: '6.2',
-    });
-
-    producer.forEach(async id => {
-      const creds = credentials[id];
+  // Marker to delete all files for all producers
+  if (files.length === 0) {
+    credentials.forEach(async producerCredentials => {
+      const producerName = Object.keys(producerCredentials)[0];
+      const creds = producerCredentials[producerName];
 
       // Get all the files uploaded by the given producer
       const response = await client.search({
@@ -77,23 +86,27 @@ const deleteCommand = async ({ files, deleteAll, producer, credentials }) => {
         body: {
           query: {
             term: {
-              producer_id: id,
+              producer_id: producerName,
             },
           },
         },
       });
 
-      // And delete the files
       const allFiles = response.hits.hits.map(
         file => file._source.computed_key
       );
+
       return allFiles.map(computedKey => deleteFile(computedKey, creds));
     });
   }
 
-  return credentials.forEach(cred =>
-    files.map(computedKey => deleteFile(computedKey, cred))
-  );
+  // In case files are specified, delete them.
+  return files.forEach(async file => {
+    const producerKey = file.split('/')[0];
+    const creds = extractCredentials(producerKey, credentials);
+
+    return deleteFile(file, creds);
+  });
 };
 
 // The `delete` keyword is reserved, so keep the name of the method in another way

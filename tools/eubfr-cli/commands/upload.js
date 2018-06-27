@@ -30,9 +30,9 @@ dotenv.config({
  * Upload files.
  *
  * @param {Array} files
- *   The file a producer wants to upload to his S3 bucket to start the ingestion.
+ *   The files to upload.
  * @param {Array} credentials
- *   Collection of credentials for the producers.
+ *   List of credentials for the producers.
  */
 const uploadCommand = ({ files, credentials }) => {
   if (!process.env.SIGNED_UPLOADS_API) {

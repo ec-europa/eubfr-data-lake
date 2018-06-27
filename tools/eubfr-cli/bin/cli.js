@@ -61,34 +61,14 @@ program
 
 program
   .command('delete [files...]')
-  .description('Deletes files by computedKey.')
-  .option(
-    '-p, --producer [producer]',
-    "Producer's name.If not set, all producers."
-  )
-  .option('-a, --all [all]', 'Delete all files. By producer if provided.')
-  .action((files, options) => {
-    const deleteAll = options.all;
-    const credentials = [];
+  .description('Deletes files by computed_key field.')
+  .action(files => {
+    const producers = getAllProducers();
+    const credentials = producers.map(producer => ({
+      [producer]: getCredentials(producer),
+    }));
 
-    if (files.length === 0 && !deleteAll && !options.producer) {
-      return console.log('Files or an option flag required.');
-    }
-
-    if (deleteAll && files.length !== 0) {
-      return console.log(
-        '\n Flag for deleting all files is set, but still files are passed along.\n Please correct by either only leaving the set of selected files or remove them and delete all.'
-      );
-    }
-
-    const producer = options.producer ? [options.producer] : getProducers();
-
-    producer.forEach(name => {
-      const creds = getCredentials(name);
-      credentials.push(creds);
-    });
-
-    deleteFiles({ files, deleteAll, producer, credentials });
+    deleteFiles({ files, credentials });
   });
 
 // If no arguments provided, display help menu.
