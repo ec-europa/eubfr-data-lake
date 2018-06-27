@@ -81,7 +81,7 @@ const uploadCommand = ({ files, credentials }) => {
   }
 
   // Mass upload
-  credentials.forEach(async producer => {
+  return credentials.forEach(async producer => {
     const producerName = Object.keys(producer)[0];
     const creds = producer[producerName];
     const producerFiles = await getProducerFiles(producerName);
