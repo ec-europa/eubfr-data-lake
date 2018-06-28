@@ -12,6 +12,8 @@ const uploadFiles = require('../commands/upload');
 const showFile = require('../commands/show');
 const deleteFiles = require('../commands/delete');
 
+const requireProducer = `\n error: missing required option 'producer'`;
+
 program.version(pkg.version).usage('[command] [option]');
 
 program
@@ -29,7 +31,7 @@ program
     const filesAreSet = files.length !== 0;
 
     if (!producerIsSet && filesAreSet) {
-      console.log('Please provide a producer with -p flag and value after it.');
+      console.log(requireProducer);
       process.exit(1);
     }
 
@@ -52,11 +54,13 @@ program
 program
   .command('show [file]')
   .description('Displays files of a given producer.')
-  .option('-p, --producer [producer]', "Producer's name. Defaults to 'agri'.")
+  .option('-p, --producer <producer>', "Producer's name.")
   .action((file, options) => {
-    const producer = options.producer || 'agri';
-
-    showFile({ file, producer });
+    const { producer } = options;
+    if (producer) {
+      return showFile({ file, producer });
+    }
+    return console.log(requireProducer);
   });
 
 program
