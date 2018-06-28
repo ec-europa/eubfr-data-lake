@@ -30,12 +30,6 @@ pipeline:
     commands:
       - yarn test:flow
 
-  test-integration:
-    image: node:8.10
-    group: test
-    commands:
-      - yarn test:integration
-
   test-unit:
     image: node:8.10
     group: test

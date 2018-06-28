@@ -1,7 +1,7 @@
 // @flow
 
 import crypto from 'crypto';
-import sanitizeBudgetItem from '@eubfr/lib-budgetFormatter';
+import sanitizeBudgetItem from '@eubfr/lib/budgetFormatter';
 import type { Project } from '../../../../../../../types/Project';
 import getCountryCode from './getCountryCode';
 import getAddress from './getAddress';

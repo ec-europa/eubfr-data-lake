@@ -1,8 +1,8 @@
 {
   "private": true,
-  "name": "@eubfr/lib-budgetFormatter",
+  "name": "@eubfr/lib",
   "version": "0.0.1",
-  "main": "budgetFormatter.js",
+  "main": "n/a",
   "dependencies": {
     "numeral": "2.0.6"
   }

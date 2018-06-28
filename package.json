@@ -19,7 +19,6 @@
     "flow-watch": "flow-watch",
     "lint": "eslint .",
     "precommit": "lint-staged",
-    "test:integration": "lerna run --parallel test:integration",
     "test:unit": "lerna run --parallel test:unit",
     "test:lint": "npm run lint",
     "test:flow": "npm run flow",
@@ -60,7 +59,7 @@
   "workspaces": {
     "packages": [
       "demo/**",
-      "lib/*",
+      "lib",
       "plugins/**",
       "resources/**",
       "services/**"
