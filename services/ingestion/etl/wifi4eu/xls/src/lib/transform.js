@@ -1,11 +1,10 @@
 // @flow
 
 import crypto from 'crypto';
+import sanitizeBudgetItem from '@eubfr/lib-budgetFormatter';
+import type { Project } from '../../../../../../../types/Project';
 import getCountryCode from './getCountryCode';
 import getAddress from './getAddress';
-import sanitizeBudgetItem from '../../../../../../../lib/sanitizeBudget';
-
-import type { Project } from '../../../../../../../types/Project';
 
 /**
  * Preprocess budget field. For the moment, we don't have this data.

@@ -1,14 +1,13 @@
 // @flow
 
 import crypto from 'crypto';
+import sanitizeBudgetItem from '@eubfr/lib-budgetFormatter';
+import type { Project } from '../../../../../../../types/Project';
 import getCountryCode from '../../../../../helpers/getCountryCode';
-import sanitizeBudgetItem from '../../../../../../../lib/sanitizeBudget';
 
 /*
  * Transform message (IATI CSV)
  */
-
-import type { Project } from '../../../../../../../types/Project';
 
 /**
  * Makes use of both `total-Disbursement` and `total-Expenditure` fields when present.

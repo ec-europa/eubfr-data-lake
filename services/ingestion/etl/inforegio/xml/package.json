@@ -7,6 +7,7 @@
     "test:unit": "jest --testPathPattern=unit"
   },
   "dependencies": {
+    "@eubfr/lib-budgetFormatter": "0.0.1",
     "@eubfr/logger-messenger": "0.0.1",
     "xml2js": "0.4.19"
   },

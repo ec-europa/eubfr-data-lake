@@ -1,8 +1,8 @@
 // @flow
 
+import sanitizeBudgetItem from '@eubfr/lib-budgetFormatter';
 import type { Project } from '../../../../../../../types/Project';
 import getCountryCode from '../../../../../helpers/getCountryCode';
-import sanitizeBudgetItem from '../../../../../../../lib/sanitizeBudget';
 
 /**
  * Preprocess `funding_area`

@@ -1,12 +1,12 @@
 // @flow
 
+import sanitizeBudgetItem from '@eubfr/lib-budgetFormatter';
+import type { Project } from '../../../../../../../types/Project';
+import getCountryCode from '../../../../../helpers/getCountryCode';
+
 /*
  * Transform message (INFOREGIO XML)
  */
-
-import type { Project } from '../../../../../../../types/Project';
-import getCountryCode from '../../../../../helpers/getCountryCode';
-import sanitizeBudgetItem from '../../../../../../../lib/sanitizeBudget';
 
 /**
  * Check if field is an array or a sting

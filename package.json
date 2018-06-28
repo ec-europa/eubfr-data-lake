@@ -60,6 +60,7 @@
   "workspaces": {
     "packages": [
       "demo/**",
+      "lib/*",
       "plugins/**",
       "resources/**",
       "services/**"
