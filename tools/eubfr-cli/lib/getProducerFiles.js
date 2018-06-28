@@ -6,7 +6,6 @@ const readDir = promisify(fs.readdir);
 
 module.exports = async producer => {
   let files = [];
-  // const dir = path.resolve(`.content/${producer}`);
   const dir = path.resolve(`.content/${producer}`);
   try {
     if (fs.existsSync(dir)) {
