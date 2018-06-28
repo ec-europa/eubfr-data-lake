@@ -1,6 +1,7 @@
 // @flow
 
 import getCountryCode from '../../../../../helpers/getCountryCode';
+import sanitizeBudgetItem from '../../../../../../../lib/sanitizeBudget';
 
 /*
  * Transform message (AGRI CSV)
@@ -230,19 +231,19 @@ const getMedia = record => {
 export default (record: Object): Project => {
   // Preprocess budget
   const budgetObject = {
-    total_cost: {
-      value: Number(record['Total project budget']) || 0,
-      currency: '',
-      raw: record['Total project budget'] || '',
-    },
-    eu_contrib: {
-      value: Number(record['EU Budget contribution']) || 0,
+    total_cost: sanitizeBudgetItem({
+      value: record['Total project budget'],
       currency: 'EUR',
-      raw: record['EU Budget contribution'] || '',
-    },
-    private_fund: { value: 0, currency: '', raw: '' },
-    public_fund: { value: 0, currency: '', raw: '' },
-    other_contrib: { value: 0, currency: '', raw: '' },
+      raw: record['Total project budget'],
+    }),
+    eu_contrib: sanitizeBudgetItem({
+      value: record['EU Budget contribution'],
+      currency: 'EUR',
+      raw: record['EU Budget contribution'],
+    }),
+    private_fund: sanitizeBudgetItem(),
+    public_fund: sanitizeBudgetItem(),
+    other_contrib: sanitizeBudgetItem(),
     funding_area: getFundingArea(record),
     mmf_heading: record['EU Budget MFF heading'] || '',
   };

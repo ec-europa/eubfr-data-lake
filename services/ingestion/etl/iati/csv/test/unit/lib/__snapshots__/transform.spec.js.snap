@@ -6,7 +6,7 @@ Object {
   "budget": Object {
     "eu_contrib": Object {
       "currency": "EUR",
-      "raw": "319800.89 + 395640",
+      "raw": "EUR 715440.89",
       "value": 715440.89,
     },
     "funding_area": Array [],

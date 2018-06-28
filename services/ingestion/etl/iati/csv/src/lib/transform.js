@@ -2,7 +2,7 @@
 
 import crypto from 'crypto';
 import getCountryCode from '../../../../../helpers/getCountryCode';
-import sanitizeCurrency from '../../../../../../../lib/sanitizeCurrency';
+import sanitizeBudgetItem from '../../../../../../../lib/sanitizeBudget';
 
 /*
  * Transform message (IATI CSV)
@@ -24,41 +24,30 @@ import type { Project } from '../../../../../../../types/Project';
  *
  */
 const getBudget = record => {
-  const currency = sanitizeCurrency(record.currency);
-  const totalDisbursement = record['total-Disbursement'];
-  const totalExpenditure = record['total-Expenditure'];
+  let euContrib = {};
 
-  const totalDisbursementValue = Number(record['total-Disbursement']);
-  const totalExpenditureValue = Number(record['total-Expenditure']);
+  if (record) {
+    const { currency } = record;
+    const totalDisbursementValue = Number(record['total-Disbursement']) || 0;
+    const totalExpenditureValue = Number(record['total-Expenditure']) || 0;
 
-  let raw = '';
-  if (totalDisbursement && totalExpenditure) {
-    raw = `${totalDisbursement} + ${totalExpenditure}`;
-  } else if (totalDisbursement) {
-    raw = totalDisbursement;
-  } else if (totalExpenditure) {
-    raw = totalExpenditure;
-  }
+    const value = totalDisbursementValue + totalExpenditureValue;
+    const raw = currency && value ? `${currency} ${value}` : '';
 
-  let value = 0;
-  if (totalDisbursementValue && totalExpenditureValue) {
-    value = totalDisbursementValue + totalExpenditureValue;
-  } else if (totalDisbursementValue) {
-    value = totalDisbursementValue;
-  } else if (totalExpenditureValue) {
-    value = totalExpenditureValue;
-  }
-
-  return {
-    eu_contrib: {
+    // Assign values
+    euContrib = {
       value,
       currency,
       raw,
-    },
-    total_cost: { value: 0, currency: '', raw: '' },
-    private_fund: { value: 0, currency: '', raw: '' },
-    public_fund: { value: 0, currency: '', raw: '' },
-    other_contrib: { value: 0, currency: '', raw: '' },
+    };
+  }
+
+  return {
+    eu_contrib: sanitizeBudgetItem(euContrib),
+    total_cost: sanitizeBudgetItem(),
+    private_fund: sanitizeBudgetItem(),
+    public_fund: sanitizeBudgetItem(),
+    other_contrib: sanitizeBudgetItem(),
     funding_area: [],
     mmf_heading: '',
   };
