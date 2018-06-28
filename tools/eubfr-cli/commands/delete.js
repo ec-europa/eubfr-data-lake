@@ -65,9 +65,9 @@ const deleteCommand = async ({ files, credentials }) => {
 
   // Marker to delete all files for all producers
   if (files.length === 0) {
-    return credentials.forEach(async producerCredentials => {
-      const producerName = Object.keys(producerCredentials)[0];
-      const creds = producerCredentials[producerName];
+    return credentials.forEach(async producer => {
+      const producerName = Object.keys(producer)[0];
+      const creds = producer[producerName];
 
       // Get all the files uploaded by the given producer
       const response = await client.search({

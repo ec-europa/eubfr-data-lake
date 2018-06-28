@@ -8,15 +8,15 @@ const getCredentials = require('../lib/getProducerCredentials');
 const getAllProducers = require('../lib/getAllProducers');
 
 // Commands
-const upload = require('../commands/upload');
-const show = require('../commands/show');
+const uploadFiles = require('../commands/upload');
+const showFile = require('../commands/show');
 const deleteFiles = require('../commands/delete');
 
 program.version(pkg.version).usage('[command] [option]');
 
 program
   .command('upload [files...]')
-  .description('Uploads content to the data lake')
+  .description('Uploads content to the data lake.')
   .option('-p, --producer [producer]', "Producer's name.")
   .action((files, options) => {
     let credentials = [];
@@ -46,7 +46,7 @@ program
       }));
     }
 
-    upload({ files, credentials });
+    uploadFiles({ files, credentials });
   });
 
 program
@@ -56,7 +56,7 @@ program
   .action((file, options) => {
     const producer = options.producer || 'agri';
 
-    show({ file, producer });
+    showFile({ file, producer });
   });
 
 program

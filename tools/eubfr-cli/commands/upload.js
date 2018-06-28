@@ -47,6 +47,7 @@ const uploadCommand = ({ files, credentials }) => {
           'x-amz-meta-producer-key': fileName,
         },
       };
+
       const signedUrl = await request.get(aws4.sign(params, creds));
 
       console.log(`Uploading ${fileName} ...`);
