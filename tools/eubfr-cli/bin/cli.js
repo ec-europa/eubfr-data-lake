@@ -12,7 +12,14 @@ const uploadFiles = require('../commands/upload');
 const showFile = require('../commands/show');
 const deleteFiles = require('../commands/delete');
 
-const requireProducer = `\n error: missing required option 'producer'`;
+const missingRequiredInput = '\n error: Missing required input parameters';
+
+// If -p is passed without actual value, it will be boolean true
+// Which is useless information in our case
+const hasValidProducer = options =>
+  options.producer &&
+  options.producer !== '' &&
+  typeof options.producer !== 'boolean';
 
 program.version(pkg.version).usage('[command] [option]');
 
@@ -22,16 +29,11 @@ program
   .option('-p, --producer [producer]', "Producer's name.")
   .action((files, options) => {
     let credentials = [];
-    // If -p is passed without actual value, it will be boolean true
-    // Which is useless information in our case
-    const producerIsSet =
-      options.producer &&
-      options.producer !== '' &&
-      typeof options.producer !== 'boolean';
+    const producerIsSet = hasValidProducer(options);
     const filesAreSet = files.length !== 0;
 
     if (!producerIsSet && filesAreSet) {
-      console.log(requireProducer);
+      console.error(missingRequiredInput);
       process.exit(1);
     }
 
@@ -54,13 +56,22 @@ program
 program
   .command('show [file]')
   .description('Displays files of a given producer.')
-  .option('-p, --producer <producer>', "Producer's name.")
+  .option('-p, --producer [producer]', "Producer's name.")
   .action((file, options) => {
     const { producer } = options;
-    if (producer) {
-      return showFile({ file, producer });
+
+    // Ensure useful input
+    if ((!producer && !file) || !hasValidProducer(options)) {
+      console.error(missingRequiredInput);
+      process.exit(1);
     }
-    return console.log(requireProducer);
+
+    if (producer && file && hasValidProducer(options)) {
+      console.error('\n error: Pass file or producer only, not both.');
+      process.exit(1);
+    }
+
+    showFile({ file, producer });
   });
 
 program
