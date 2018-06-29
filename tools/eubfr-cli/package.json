@@ -6,6 +6,7 @@
     "eubfr-cli": "./bin/cli.js"
   },
   "dependencies": {
+    "@eubfr/lib": "0.0.1",
     "aws4": "1.7.0",
     "commander": "2.15.1",
     "dotenv": "6.0.0",
