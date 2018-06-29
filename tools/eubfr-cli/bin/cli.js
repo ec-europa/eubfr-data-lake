@@ -61,8 +61,13 @@ program
     const { producer } = options;
 
     // Ensure useful input
-    if ((!producer && !file) || !hasValidProducer(options)) {
+    if (!producer && !file) {
       console.error(missingRequiredInput);
+      process.exit(1);
+    }
+
+    if (producer && !hasValidProducer(options)) {
+      console.error('\n error: Please specificy producer with a name.');
       process.exit(1);
     }
 
