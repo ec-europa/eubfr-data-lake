@@ -1,10 +1,13 @@
 // @flow
 import request from 'request-promise-native';
-
-import type { BudgetItem } from '../../../../../../types/Project';
+import sanitizeBudgetItem from '@eubfr/lib/budgetFormatter';
+import type { BudgetItem } from '@eubfr/types';
 
 const precision = 100; // round converted value to the nearest 100
 
+// List of currencies that can be translated into EUR
+// Manually extracted form ECB's API
+// http://sdw.ecb.europa.eu/browseTable.do?node=1495 ("Currency" field)
 const availableCurrencies = [
   'AUD',
   'BGN',
@@ -110,7 +113,7 @@ export const processBudgetItem = async (
       const euroValue =
         Math.ceil(inputBudgetItem.value / exr / precision) * precision;
 
-      const formattedEuroBudget = {
+      const formattedEuroBudget = sanitizeBudgetItem({
         value: euroValue,
         currency: 'EUR',
         raw: `EUR ${euroValue}`,
@@ -119,7 +122,7 @@ export const processBudgetItem = async (
           currency: inputBudgetItem.currency,
           raw: inputBudgetItem.raw,
         },
-      };
+      });
 
       // Return enriched record
       return formattedEuroBudget;

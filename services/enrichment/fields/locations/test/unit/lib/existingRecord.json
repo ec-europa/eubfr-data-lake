@@ -5,7 +5,7 @@
   "last_modified": "2018-04-13T07:09:16.000Z",
   "action": "",
   "budget": {
-    "eu_contrib": { "value": 0, "currency": "EUR", "raw": "0" },
+    "eu_contrib": { "value": 0, "currency": "", "raw": "" },
     "total_cost": { "value": 0, "currency": "", "raw": "" },
     "private_fund": { "value": 0, "currency": "", "raw": "" },
     "public_fund": { "value": 0, "currency": "", "raw": "" },

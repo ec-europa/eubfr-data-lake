@@ -1,10 +1,10 @@
 // @flow
 
 import crypto from 'crypto';
+import sanitizeBudgetItem from '@eubfr/lib/budgetFormatter';
+import type { Project } from '@eubfr/types';
 import getCountryCode from './getCountryCode';
 import getAddress from './getAddress';
-
-import type { Project } from '../../../../../../../types/Project';
 
 /**
  * Preprocess budget field. For the moment, we don't have this data.
@@ -14,15 +14,11 @@ import type { Project } from '../../../../../../../types/Project';
  * @returns {Budget}
  */
 const getBudget = () => ({
-  total_cost: { value: 0, currency: '', raw: '' },
-  eu_contrib: {
-    value: 0,
-    currency: 'EUR',
-    raw: '',
-  },
-  private_fund: { value: 0, currency: '', raw: '' },
-  public_fund: { value: 0, currency: '', raw: '' },
-  other_contrib: { value: 0, currency: '', raw: '' },
+  total_cost: sanitizeBudgetItem(),
+  eu_contrib: sanitizeBudgetItem(),
+  private_fund: sanitizeBudgetItem(),
+  public_fund: sanitizeBudgetItem(),
+  other_contrib: sanitizeBudgetItem(),
   funding_area: [],
   mmf_heading: '',
 });

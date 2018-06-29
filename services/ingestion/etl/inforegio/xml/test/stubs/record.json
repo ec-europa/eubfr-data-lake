@@ -10,7 +10,9 @@
   "Project_country": ["EL"],
   "Themes": ["Transport"],
   "EU_Budget_contribution": ["EUR 157 000 000"],
-  "Total_project_budget": ["EUR 329 000 000"],
+  "Total_project_budget": [
+    "FEDER (Objectif 5b 1994-1996) 60 979 euros (400 000 FRF)"
+  ],
   "quote": [
     "The colour of the sky never had much effect on the irksome rail trip between Greece's two principal cities of Athens and Thessaloniki: passengers had to wait for hours since there was only one set of tracks for trains travelling in both directions. Now all this has changed thanks to a huge programme carried out with the help of the European Union."
   ],

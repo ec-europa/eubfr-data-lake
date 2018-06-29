@@ -1,12 +1,12 @@
 // @flow
 
-import getCountryCode from '../../../../../helpers/getCountryCode';
+import sanitizeBudgetItem from '@eubfr/lib/budgetFormatter';
+import getCountryCode from '@eubfr/lib/getCountryCode';
+import type { Project } from '@eubfr/types';
 
 /*
  * Transform message (JUST CSV)
  */
-
-import type { Project } from '../../../../../../../types/Project';
 
 /**
  * Preprocess locations
@@ -60,22 +60,22 @@ const getLocations = record => {
  *
  * @memberof JustCsvTransform
  * @param {Object} record The row received from parsed file
- * @returns {Object}
+ * @returns {Budget}
  */
 const getBudget = record => ({
-  total_cost: {
-    value: Number(record.field_prj_total_budget) || 0,
-    currency: '',
-    raw: record.field_prj_total_budget || '',
-  },
-  eu_contrib: {
-    value: Number(record.field_prj_eu_budget) || 0,
+  total_cost: sanitizeBudgetItem({
+    value: record.field_prj_total_budget,
     currency: 'EUR',
-    raw: record.field_prj_eu_budget || '',
-  },
-  private_fund: { value: 0, currency: '', raw: '' },
-  public_fund: { value: 0, currency: '', raw: '' },
-  other_contrib: { value: 0, currency: '', raw: '' },
+    raw: record.field_prj_total_budget,
+  }),
+  eu_contrib: sanitizeBudgetItem({
+    value: record.field_prj_eu_budget,
+    currency: 'EUR',
+    raw: record.field_prj_eu_budget,
+  }),
+  private_fund: sanitizeBudgetItem(),
+  public_fund: sanitizeBudgetItem(),
+  other_contrib: sanitizeBudgetItem(),
   funding_area: [],
   mmf_heading: '',
 });

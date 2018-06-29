@@ -7,10 +7,12 @@
     "test:unit": "jest --testPathPattern=unit"
   },
   "dependencies": {
+    "@eubfr/lib": "0.0.1",
     "@eubfr/logger-messenger": "0.0.1",
     "xlsx": "0.12.13"
   },
   "devDependencies": {
+    "@eubfr/types": "0.0.1",
     "aws-sdk": "2.248.1",
     "babel-core": "6.26.3",
     "babel-loader": "7.1.4",

@@ -7,8 +7,8 @@ Object {
   "action": "",
   "budget": Object {
     "eu_contrib": Object {
-      "currency": "EUR",
-      "raw": "0",
+      "currency": "",
+      "raw": "",
       "value": 0,
     },
     "funding_area": Array [],
