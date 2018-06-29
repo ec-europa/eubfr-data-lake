@@ -27,9 +27,9 @@ Object {
       "value": 0,
     },
     "total_cost": Object {
-      "currency": "EUR",
-      "raw": "EUR 329 000 000",
-      "value": 329000000,
+      "currency": "",
+      "raw": "FEDER (Objectif 5b 1994-1996) 60 979 euros (400 000 FRF)",
+      "value": 0,
     },
   },
   "call_year": "",
