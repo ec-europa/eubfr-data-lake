@@ -2,7 +2,7 @@
 
 import crypto from 'crypto';
 import sanitizeBudgetItem from '@eubfr/lib/budgetFormatter';
-import type { Project } from '../../../../../../../types/Project';
+import type { Project } from '@eubfr/types';
 import getCountryCode from './getCountryCode';
 import getAddress from './getAddress';
 

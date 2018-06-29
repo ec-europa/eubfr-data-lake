@@ -13,6 +13,7 @@
     "stream-transform": "1.0.2"
   },
   "devDependencies": {
+    "@eubfr/types": "0.0.1",
     "aws-sdk": "2.248.1",
     "babel-core": "6.26.3",
     "babel-loader": "7.1.4",

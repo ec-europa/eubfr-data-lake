@@ -2,7 +2,7 @@
 
 import sanitizeBudgetItem from '@eubfr/lib/budgetFormatter';
 import getCountryCode from '@eubfr/lib/getCountryCode';
-import type { Project } from '../../../../../../../types/Project';
+import type { Project } from '@eubfr/types';
 
 /*
  * Transform message (INFOREGIO XML)

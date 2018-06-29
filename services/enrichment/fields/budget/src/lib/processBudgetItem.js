@@ -1,7 +1,7 @@
 // @flow
 import request from 'request-promise-native';
 import sanitizeBudgetItem from '@eubfr/lib/budgetFormatter';
-import type { BudgetItem } from '../../../../../../types/Project';
+import type { BudgetItem } from '@eubfr/types';
 
 const precision = 100; // round converted value to the nearest 100
 
