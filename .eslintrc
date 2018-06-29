@@ -15,14 +15,16 @@
     - flowtype
   rules:
     no-underscore-dangle:
-    - error
-    - allow:
-      - _source
+      - error
+      - allow:
+        - _source
+        - _original
     prettier/prettier:
       - error
       -
         trailingComma: es5
         singleQuote: true
+    no-console: off
   env:
     browser: true
     node: true

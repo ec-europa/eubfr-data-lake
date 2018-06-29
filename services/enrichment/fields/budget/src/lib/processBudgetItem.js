@@ -1,6 +1,6 @@
 // @flow
 import request from 'request-promise-native';
-
+import sanitizeBudgetItem from '@eubfr/lib/budgetFormatter';
 import type { BudgetItem } from '../../../../../../types/Project';
 
 const precision = 100; // round converted value to the nearest 100
@@ -110,7 +110,7 @@ export const processBudgetItem = async (
       const euroValue =
         Math.ceil(inputBudgetItem.value / exr / precision) * precision;
 
-      const formattedEuroBudget = {
+      const formattedEuroBudget = sanitizeBudgetItem({
         value: euroValue,
         currency: 'EUR',
         raw: `EUR ${euroValue}`,
@@ -119,7 +119,7 @@ export const processBudgetItem = async (
           currency: inputBudgetItem.currency,
           raw: inputBudgetItem.raw,
         },
-      };
+      });
 
       // Return enriched record
       return formattedEuroBudget;

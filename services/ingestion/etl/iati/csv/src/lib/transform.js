@@ -1,7 +1,7 @@
 // @flow
 
 import crypto from 'crypto';
-import sanitizeBudgetItem from '@eubfr/lib/budgetFormatter';
+import { sanitizeBudgetItem, sanitizeValue } from '@eubfr/lib/budgetFormatter';
 import getCountryCode from '@eubfr/lib/getCountryCode';
 import type { Project } from '../../../../../../../types/Project';
 
@@ -27,8 +27,8 @@ const getBudget = record => {
 
   if (record) {
     const { currency } = record;
-    const totalDisbursementValue = Number(record['total-Disbursement']) || 0;
-    const totalExpenditureValue = Number(record['total-Expenditure']) || 0;
+    const totalDisbursementValue = sanitizeValue(record['total-Disbursement']);
+    const totalExpenditureValue = sanitizeValue(record['total-Expenditure']);
 
     const value = totalDisbursementValue + totalExpenditureValue;
     const raw = currency && value ? `${currency} ${value}` : '';
