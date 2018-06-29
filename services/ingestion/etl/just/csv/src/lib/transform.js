@@ -60,7 +60,7 @@ const getLocations = record => {
  *
  * @memberof JustCsvTransform
  * @param {Object} record The row received from parsed file
- * @returns {Object}
+ * @returns {Budget}
  */
 const getBudget = record => ({
   total_cost: sanitizeBudgetItem({

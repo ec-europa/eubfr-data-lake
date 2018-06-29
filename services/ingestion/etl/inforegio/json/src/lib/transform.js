@@ -196,7 +196,7 @@ const getProjectWebsite = record => {
  *
  * @memberof InforegioJsonTransform
  * @param {string} budget String containing numeric data
- * @returns {number}
+ * @returns {BudgetItem}
  */
 const formatBudget = budget => {
   if (!budget || typeof budget !== 'string') return sanitizeBudgetItem();
