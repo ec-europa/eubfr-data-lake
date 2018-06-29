@@ -5,6 +5,9 @@ import type { BudgetItem } from '@eubfr/types';
 
 const precision = 100; // round converted value to the nearest 100
 
+// List of currencies that can be translated into EUR
+// Manually extracted form ECB's API
+// http://sdw.ecb.europa.eu/browseTable.do?node=1495 ("Currency" field)
 const availableCurrencies = [
   'AUD',
   'BGN',
