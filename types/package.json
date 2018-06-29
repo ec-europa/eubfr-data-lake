@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "name": "@eubfr/types",
+  "version": "0.0.1",
+  "main": "Project.js",
+  "dependencies": {
+    "flow-geojson": "2.0.6"
+  }
+}

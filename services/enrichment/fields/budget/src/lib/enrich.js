@@ -10,8 +10,15 @@ export const enrich = async record => {
 
   const enrichedRecord = JSON.parse(JSON.stringify(record));
 
-  // If project end date is not provided, skip enrichment
-  if (!enrichedRecord.timeframe || !enrichedRecord.timeframe.to) {
+  // If project end date or the budget is not provided
+  // or if '_original' is already present,
+  // then skip enrichment
+  if (
+    !enrichedRecord.timeframe ||
+    !enrichedRecord.timeframe.to ||
+    !enrichedRecord.budget ||
+    enrichedRecord.budget._original
+  ) {
     return enrichedRecord;
   }
 
@@ -23,21 +30,19 @@ export const enrich = async record => {
     'total_cost',
   ];
 
-  if (enrichedRecord.budget) {
-    const enrichedBudgetFields = await Promise.all(
-      budgetFields.map(async field =>
-        processBudgetItem(
-          enrichedRecord.budget[field],
-          enrichedRecord.timeframe.to
-        )
+  const enrichedBudgetFields = await Promise.all(
+    budgetFields.map(async field =>
+      processBudgetItem(
+        enrichedRecord.budget[field],
+        enrichedRecord.timeframe.to
       )
-    );
+    )
+  );
 
-    // Enrich here
-    enrichedBudgetFields.forEach((field, index) => {
-      enrichedRecord.budget[budgetFields[index]] = field;
-    });
-  }
+  // Enrich here
+  enrichedBudgetFields.forEach((field, index) => {
+    enrichedRecord.budget[budgetFields[index]] = field;
+  });
 
   return enrichedRecord;
 };

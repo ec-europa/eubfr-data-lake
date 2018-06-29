@@ -1,11 +1,12 @@
 // @flow
 
+import sanitizeBudgetItem from '@eubfr/lib/budgetFormatter';
+import getCountryCode from '@eubfr/lib/getCountryCode';
+import type { Project } from '@eubfr/types';
+
 /*
  * Transform message (INFOREGIO XML)
  */
-
-import type { Project } from '../../../../../../../types/Project';
-import getCountryCode from '../../../../../helpers/getCountryCode';
 
 /**
  * Check if field is an array or a sting
@@ -92,29 +93,20 @@ const getAddress = record => {
  * output => "329000000"
  */
 const formatBudget = budget => {
-  if (!budget || typeof budget !== 'string')
-    return { value: 0, currency: '', raw: '' };
+  if (!budget || typeof budget !== 'string') return sanitizeBudgetItem();
 
-  let formattedCurrency = budget.split(' ')[0];
-
-  // Convert 'ECU' to 'EUR'
-  if (formattedCurrency === 'ECU') {
-    formattedCurrency = 'EUR';
-  }
+  const currency = budget.split(' ')[0];
 
   const formattedBudget = budget
     .split(' ')
     .slice(1)
     .join('');
 
-  return {
-    value: Number(formattedBudget) || 0,
-    currency:
-      formattedCurrency && formattedCurrency.length === 3
-        ? formattedCurrency
-        : '',
-    raw: budget || '',
-  };
+  return sanitizeBudgetItem({
+    value: formattedBudget,
+    currency,
+    raw: budget,
+  });
 };
 
 /**
@@ -281,9 +273,9 @@ export default (record: Object): Project => {
   const budgetObject = {
     total_cost: formatBudget(checkData(record.Total_project_budget)),
     eu_contrib: formatBudget(checkData(record.EU_Budget_contribution)),
-    private_fund: { value: 0, currency: '', raw: '' },
-    public_fund: { value: 0, currency: '', raw: '' },
-    other_contrib: { value: 0, currency: '', raw: '' },
+    private_fund: formatBudget(),
+    public_fund: formatBudget(),
+    other_contrib: formatBudget(),
     // Check data and return an array or a string.
     funding_area: getFundingArea(record),
     mmf_heading: '',

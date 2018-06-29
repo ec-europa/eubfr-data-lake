@@ -136,6 +136,7 @@ class File extends React.Component {
     const { match } = this.props;
     const computedKey = decodeURIComponent(match.params.id);
 
+    // eslint-disable-next-line no-alert
     const confirmDelete = window.confirm(
       'Are you sure you want to delete this file?'
     );

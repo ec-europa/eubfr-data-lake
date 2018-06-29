@@ -5,8 +5,8 @@ Object {
   "action": "",
   "budget": Object {
     "eu_contrib": Object {
-      "currency": "",
-      "raw": "EUR 909 553",
+      "currency": "EUR",
+      "raw": "ECU 909 553",
       "value": 909553,
     },
     "funding_area": Array [
@@ -29,8 +29,8 @@ Object {
       "value": 0,
     },
     "total_cost": Object {
-      "currency": "",
-      "raw": "EUR 1 259 101",
+      "currency": "EUR",
+      "raw": "ECU 1 259 101",
       "value": 1259101,
     },
   },

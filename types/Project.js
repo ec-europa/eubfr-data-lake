@@ -10,7 +10,7 @@ import type {
   MultiPolygon2D,
 } from 'flow-geojson';
 
-type GeoJSON =
+export type GeoJSON =
   | Point2D
   | MultiPoint2D
   | LineString2D
@@ -37,7 +37,7 @@ export type BudgetItem = {
  * Describes field `project.budget`.
  * @type {Budget}
  */
-type Budget = {
+export type Budget = {
   eu_contrib: BudgetItem,
   funding_area: Array<string>,
   mmf_heading: string,
@@ -51,7 +51,7 @@ type Budget = {
  * Describes field `project.third_parties`.
  * @type {ThirdParty}
  */
-type ThirdParty = {
+export type ThirdParty = {
   address: string,
   country: string,
   email: string,
@@ -67,7 +67,7 @@ type ThirdParty = {
  * Describes field `project.project_locations.centroid`.
  * @type {Coordinates}
  */
-type Coordinates = {
+export type Coordinates = {
   lat: number,
   lon: number,
 };
@@ -76,7 +76,7 @@ type Coordinates = {
  * Describes field `project.project_locations.nuts`.
  * @type {Nuts}
  */
-type Nuts = {
+export type Nuts = {
   code: string,
   name: string,
   level: number | null,
@@ -87,7 +87,7 @@ type Nuts = {
  * Describes field `project.project_locations`.
  * @type {Location}
  */
-type Location = {
+export type Location = {
   address: string,
   centroid: Coordinates | null,
   country_code: string,
@@ -105,7 +105,7 @@ type Location = {
  * @see {@link http://schema.org/MediaObject|MediaObject}
  * @type {MediaFileMeta}
  */
-type MediaFileMeta = {
+export type MediaFileMeta = {
   description: string,
   mime_type: string,
   type: string,
@@ -116,7 +116,7 @@ type MediaFileMeta = {
  * Answers for what is where
  * @type {Media}
  */
-type Media = {
+export type Media = {
   meta: MediaFileMeta,
   name: string,
   url: string,
@@ -126,7 +126,7 @@ type Media = {
  * Describes field `project.related_links`.
  * @type {RelatedLink}
  */
-type RelatedLink = {
+export type RelatedLink = {
   label: string,
   url: string,
 };
@@ -135,7 +135,7 @@ type RelatedLink = {
  * Describes field `project.results`.
  * @type {Result}
  */
-type Result = {
+export type Result = {
   available: string,
   result: string,
 };
@@ -144,7 +144,7 @@ type Result = {
  * Describes field `project.timeframe`.
  * @type {Timeframe}
  */
-type Timeframe = {
+export type Timeframe = {
   from: string | null,
   to: string | null,
 };

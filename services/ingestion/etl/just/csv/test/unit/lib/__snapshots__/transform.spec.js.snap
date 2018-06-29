@@ -5,7 +5,7 @@ Object {
   "action": "",
   "budget": Object {
     "eu_contrib": Object {
-      "currency": "EUR",
+      "currency": "",
       "raw": "",
       "value": 0,
     },
