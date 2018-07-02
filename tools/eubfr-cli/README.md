@@ -46,7 +46,7 @@ Please note that although input paths are relative, only file names will be kept
 
 #### Show existing content
 
-- specific file by `computed_key`: `npx eubfr-cli show agri/16598a36-db86-42a0-8041-c0d85021ad97.csv -p agri`
+- specific file by `computed_key`: `npx eubfr-cli show agri/16598a36-db86-42a0-8041-c0d85021ad97.csv`
 - all files of a given producer: `npx eubfr-cli show -p agri`
 
 #### Delete content
