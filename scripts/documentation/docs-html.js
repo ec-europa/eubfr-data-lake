@@ -6,10 +6,7 @@ const vfs = require('vinyl-fs'); // eslint-disable-line import/no-extraneous-dep
 const path = require('path');
 
 documentation
-  .build(
-    ['services/**/*/_types/Project.js', 'services/**/*/lib/transform.js'],
-    {}
-  )
+  .build(['types/Project.js', 'services/**/*/lib/transform.js'], {})
   .then(comments =>
     documentation.formats.html(comments, {
       'project-name': 'EUBFR API docs',

@@ -2,7 +2,7 @@
 
 ## BudgetItem
 
-Describes a field with monetary information.
+Describes field `project.budget.eu_contrib`.
 
 Type: [BudgetItem][1]
 
@@ -11,6 +11,10 @@ Type: [BudgetItem][1]
 -   `currency` **[string][2]** 
 -   `raw` **[string][2]** 
 -   `value` **[number][3]** 
+-   `_original` **{currency: [string][2], raw: [string][2], value: [number][3]}?** 
+-   `_original.currency` **[string][2]** 
+-   `_original.raw` **[string][2]** 
+-   `_original.value` **[number][3]** 
 
 ## Budget
 
@@ -21,17 +25,161 @@ Type: [Budget][4]
 **Properties**
 
 -   `eu_contrib` **[BudgetItem][1]** 
+-   `funding_area` **[Array][5]&lt;[string][2]>** 
+-   `mmf_heading` **[string][2]** 
+-   `other_contrib` **[BudgetItem][1]** 
+-   `private_fund` **[BudgetItem][1]** 
+-   `public_fund` **[BudgetItem][1]** 
+-   `total_cost` **[BudgetItem][1]** 
 
-## Project
+## ThirdParty
 
-Describes a simple project.
+Describes field `project.third_parties`.
 
-Type: [Project][5]
+Type: [ThirdParty][6]
 
 **Properties**
 
+-   `address` **[string][2]** 
+-   `country` **[string][2]** 
+-   `email` **[string][2]** 
+-   `name` **[string][2]** 
+-   `phone` **[string][2]** 
+-   `region` **[string][2]** 
+-   `role` **[string][2]** 
+-   `type` **[string][2]** 
+-   `website` **[string][2]** 
+
+## Coordinates
+
+Describes field `project.project_locations.centroid`.
+
+Type: [Coordinates][7]
+
+**Properties**
+
+-   `lat` **[number][3]** 
+-   `lon` **[number][3]** 
+
+## Nuts
+
+Describes field `project.project_locations.nuts`.
+
+Type: [Nuts][8]
+
+**Properties**
+
+-   `code` **[string][2]** 
+-   `name` **[string][2]** 
+-   `level` **([number][3] | null)** 
+-   `year` **([number][3] | null)** 
+
+## Location
+
+Describes field `project.project_locations`.
+
+Type: [Location][9]
+
+**Properties**
+
+-   `address` **[string][2]** 
+-   `centroid` **([Coordinates][7] | null)** 
+-   `country_code` **[string][2]** 
+-   `location` **(GeoJSON | null)** 
+-   `nuts` **([Array][5]&lt;[Nuts][8]> | null)** 
+-   `postal_code` **[string][2]** 
+-   `region` **[string][2]** 
+-   `town` **[string][2]** 
+
+## MediaFileMeta
+
+-   **See: [MediaObject][10]**
+
+Describes meta data of a media file
+
+Type: [MediaFileMeta][11]
+
+**Properties**
+
+-   `description` **[string][2]** 
+-   `mime_type` **[string][2]** 
+-   `type` **[string][2]** 
+
+## Media
+
+Describes field `project.media`.
+Answers for what is where
+
+Type: [Media][12]
+
+**Properties**
+
+-   `meta` **[MediaFileMeta][11]** 
+-   `name` **[string][2]** 
+-   `url` **[string][2]** 
+
+## RelatedLink
+
+Describes field `project.related_links`.
+
+Type: [RelatedLink][13]
+
+**Properties**
+
+-   `label` **[string][2]** 
+-   `url` **[string][2]** 
+
+## Result
+
+Describes field `project.results`.
+
+Type: [Result][14]
+
+**Properties**
+
+-   `available` **[string][2]** 
+-   `result` **[string][2]** 
+
+## Timeframe
+
+Describes field `project.timeframe`.
+
+Type: [Timeframe][15]
+
+**Properties**
+
+-   `from` **([string][2] | null)** 
+-   `to` **([string][2] | null)** 
+
+## Project
+
+Describes `project`.
+
+Type: [Project][16]
+
+**Properties**
+
+-   `action` **[string][2]** 
 -   `budget` **[Budget][4]** 
--   `funding` **[Array][6]&lt;[string][2]>** 
+-   `call_year` **[string][2]** 
+-   `description` **[string][2]** 
+-   `ec_priorities` **[Array][5]&lt;[string][2]>** 
+-   `media` **[Array][5]&lt;[Media][12]>** 
+-   `programme_name` **[string][2]** 
+-   `project_id` **[string][2]** 
+-   `project_locations` **[Array][5]&lt;[Location][9]>** 
+-   `project_website` **[string][2]** 
+-   `related_links` **[Array][5]&lt;[RelatedLink][13]>** 
+-   `reporting_organisation` **[string][2]** 
+-   `results` **[Result][14]** 
+-   `status` **[string][2]** 
+-   `sub_programme_name` **[string][2]** 
+-   `success_story` **[string][2]** 
+-   `themes` **[Array][5]&lt;[string][2]>** 
+-   `third_parties` **[Array][5]&lt;[ThirdParty][6]>** 
+-   `timeframe` **[Timeframe][15]** 
+-   `title` **[string][2]** 
+-   `type` **[Array][5]&lt;[string][2]>** 
 
 [1]: #budgetitem
 
@@ -41,6 +189,26 @@ Type: [Project][5]
 
 [4]: #budget
 
-[5]: #project
+[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
-[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[6]: #thirdparty
+
+[7]: #coordinates
+
+[8]: #nuts
+
+[9]: #location
+
+[10]: http://schema.org/MediaObject
+
+[11]: #mediafilemeta
+
+[12]: #media
+
+[13]: #relatedlink
+
+[14]: #result
+
+[15]: #timeframe
+
+[16]: #project
