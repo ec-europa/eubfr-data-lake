@@ -140,6 +140,11 @@ export type Result = {
   result: string,
 };
 
+/**
+ * Describes possible string values of a timeframe precision.
+ * Can be one of 'year', 'month' or 'day'
+ * @type {TimePrecision}
+ */
 type TimePrecision = 'year' | 'month' | 'day';
 
 /**

@@ -140,24 +140,31 @@ Type: [Result][14]
 -   `available` **[string][2]** 
 -   `result` **[string][2]** 
 
+## TimePrecision
+
+Describes possible string values of a timeframe precision.
+Can be one of 'year', 'month' or 'day'
+
+Type: [TimePrecision][15]
+
 ## Timeframe
 
 Describes field `project.timeframe`.
 
-Type: [Timeframe][15]
+Type: [Timeframe][16]
 
 **Properties**
 
 -   `from` **([string][2] | null)** 
--   `from_precision` **TimePrecision** 
+-   `from_precision` **[TimePrecision][15]** 
 -   `to` **([string][2] | null)** 
--   `to_precision` **TimePrecision** 
+-   `to_precision` **[TimePrecision][15]** 
 
 ## Project
 
 Describes `project`.
 
-Type: [Project][16]
+Type: [Project][17]
 
 **Properties**
 
@@ -179,7 +186,7 @@ Type: [Project][16]
 -   `success_story` **[string][2]** 
 -   `themes` **[Array][5]&lt;[string][2]>** 
 -   `third_parties` **[Array][5]&lt;[ThirdParty][6]>** 
--   `timeframe` **[Timeframe][15]** 
+-   `timeframe` **[Timeframe][16]** 
 -   `title` **[string][2]** 
 -   `type` **[Array][5]&lt;[string][2]>** 
 
@@ -211,6 +218,8 @@ Type: [Project][16]
 
 [14]: #result
 
-[15]: #timeframe
+[15]: #timeprecision
 
-[16]: #project
+[16]: #timeframe
+
+[17]: #project
