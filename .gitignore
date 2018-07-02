@@ -1,8 +1,12 @@
+.content
+.env
 .serverless
 .webpack
+
+config.json
+
+coverage
+build
+dist
 node_modules
 *.log
-config.json
-coverage
-dist
-.content
