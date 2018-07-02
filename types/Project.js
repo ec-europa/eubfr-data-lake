@@ -140,13 +140,17 @@ export type Result = {
   result: string,
 };
 
+type TimePrecision = 'year' | 'month' | 'day';
+
 /**
  * Describes field `project.timeframe`.
  * @type {Timeframe}
  */
 export type Timeframe = {
   from: string | null,
+  from_precision: TimePrecision,
   to: string | null,
+  to_precision: TimePrecision,
 };
 
 /**

@@ -69,7 +69,9 @@ Object {
   "third_parties": Array [],
   "timeframe": Object {
     "from": null,
+    "from_precision": "year",
     "to": null,
+    "to_precision": "year",
   },
   "title": "Gender Equality Awareness Raising against Intimate Partner Violence - II (GEAR against IPV - II)",
   "type": Array [],

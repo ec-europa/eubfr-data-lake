@@ -156,7 +156,7 @@ const formatDate = date => {
  */
 const getProjectTimeframe = record => {
   const from = formatDate(record['Date from']);
-  return { from, to: null };
+  return { from, from_precision: 'day', to: null, to_precision: 'day' };
 };
 
 /**

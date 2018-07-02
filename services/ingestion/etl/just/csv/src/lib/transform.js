@@ -162,7 +162,9 @@ export default (record: Object): Project => {
     third_parties: [],
     timeframe: {
       from: null,
+      from_precision: 'year',
       to: null,
+      to_precision: 'year',
     },
     title: record.title || '',
     type: [],

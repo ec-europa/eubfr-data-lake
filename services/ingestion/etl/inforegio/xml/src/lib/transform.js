@@ -319,7 +319,9 @@ export default (record: Object): Project => {
     third_parties: thirdPartiesArray,
     timeframe: {
       from: formatDate(checkData(record.Project_Timeframe_start_date)),
+      from_precision: 'day',
       to: formatDate(checkData(record.Project_Timeframe_end_date)),
+      to_precision: 'day',
     },
     title: checkData(record.Project_name),
     type: typeArray,
