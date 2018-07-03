@@ -23,9 +23,10 @@ dotenv.config({
  */
 const uploadCommand = ({ files, credentials }) => {
   if (!process.env.SIGNED_UPLOADS_API) {
-    return console.error(
+    console.error(
       "SIGNED_UPLOADS_API environment variable is missing. Please redeploy by running 'yarn deploy' from project root"
     );
+    process.exit(1);
   }
 
   // Prepare signed upload request

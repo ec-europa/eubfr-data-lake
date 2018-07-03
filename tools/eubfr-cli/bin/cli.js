@@ -17,9 +17,7 @@ const missingRequiredInput = '\n error: Missing required input parameters';
 // If -p is passed without actual value, it will be boolean true
 // Which is useless information in our case
 const hasValidProducer = options =>
-  options.producer &&
-  options.producer !== '' &&
-  typeof options.producer !== 'boolean';
+  options.producer && typeof options.producer !== 'boolean';
 
 program.version(pkg.version).usage('[command] [option]');
 
