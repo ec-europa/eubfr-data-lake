@@ -51,14 +51,19 @@ const uploadCommand = ({ files, credentials }) => {
 
       const signedUrl = await request.get(aws4.sign(params, creds));
 
-      console.log(`Uploading ${fileName} ...`);
-      return await request.put({
+      console.time(`${fileName} has been uploaded`);
+
+      await request.put({
         // Removing double quotes to build a correct path.
         uri: signedUrl.replace(/["]+/g, ''),
         body: fs.readFileSync(path.resolve(file)),
       });
+
+      return console.timeEnd(`${fileName} has been uploaded`);
     } catch (e) {
-      return console.error(e);
+      return console.error(
+        `Upload of ${fileName} failed with ${e.statusCode} code.`
+      );
     }
   };
 
@@ -73,8 +78,6 @@ const uploadCommand = ({ files, credentials }) => {
         ? files
         : await getProducerFiles(producerName);
 
-      console.log(`Uploading for producer: ${producerName}.`);
-
       Promise.all(
         filesToUpload.map(file => {
           // If user has specified files, we know the path
@@ -82,6 +85,7 @@ const uploadCommand = ({ files, credentials }) => {
           const filePath = userSpecifiedFiles
             ? ''
             : `.content/${producerName}/`;
+
           return uploadFile({ file: filePath + file, creds });
         })
       );

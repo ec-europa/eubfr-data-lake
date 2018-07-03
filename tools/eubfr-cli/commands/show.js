@@ -47,9 +47,12 @@ const showCommand = async ({ file, producer }) => {
   }
 
   try {
-    const results = await client.search(query);
-    const fileInfo = results.hits.hits[0]._source;
-    return console.log(prettyjson.render(fileInfo));
+    const response = await client.search(query);
+    const results =
+      response.hits && response.hits.hits
+        ? response.hits.hits.map(result => result._source)
+        : [];
+    return console.log(prettyjson.render(results));
   } catch (e) {
     return console.error(e);
   }
