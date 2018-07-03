@@ -11,7 +11,7 @@ module.exports = async producer => {
     if (fs.existsSync(dir)) {
       const results = await readDir(dir);
       // Filter hidden/dot files
-      files = results.filter(file => !/(^|\/)\.[^\/\.]/g.test(file)); // eslint-disable-line no-useless-escape
+      files = results.filter(file => !/^\..*/.test(file));
     }
   } catch (e) {
     return console.error(e);
