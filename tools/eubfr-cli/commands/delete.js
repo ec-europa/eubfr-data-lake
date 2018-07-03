@@ -23,9 +23,10 @@ dotenv.config({
  */
 const deleteCommand = async ({ files, credentials }) => {
   if (!process.env.DELETER_API) {
-    return console.error(
+    console.error(
       "DELETER_API environment variable is missing. Please redeploy by running 'yarn deploy' from project root"
     );
+    process.exit(1);
   }
 
   // Prepare variables for further requests.
@@ -65,38 +66,46 @@ const deleteCommand = async ({ files, credentials }) => {
 
   // Marker to delete all files for all producers
   if (files.length === 0) {
-    return credentials.forEach(async producer => {
-      const producerName = Object.keys(producer)[0];
-      const creds = producer[producerName];
+    Promise.all(
+      credentials.map(async producer => {
+        const producerName = Object.keys(producer)[0];
+        const creds = producer[producerName];
 
-      // Get all the files uploaded by the given producer
-      const response = await client.search({
-        index,
-        type: 'file',
-        body: {
-          query: {
-            term: {
-              producer_id: producerName,
+        // Get all the files uploaded by the given producer
+        try {
+          const response = await client.search({
+            index,
+            type: 'file',
+            body: {
+              query: {
+                term: {
+                  producer_id: producerName,
+                },
+              },
             },
-          },
-        },
-      });
+          });
 
-      const allFiles = response.hits.hits.map(
-        file => file._source.computed_key
-      );
+          const allFiles = response.hits.hits.map(
+            file => file._source.computed_key
+          );
 
-      return allFiles.map(computedKey => deleteFile(computedKey, creds));
-    });
+          return allFiles.map(computedKey => deleteFile(computedKey, creds));
+        } catch (e) {
+          return console.error(e);
+        }
+      })
+    );
   }
 
   // In case files are specified, delete them.
-  return files.forEach(async file => {
-    const producerKey = file.split('/')[0];
-    const creds = extractCredentials({ producerKey, credentials });
+  Promise.all(
+    files.map(async file => {
+      const producerKey = file.split('/')[0];
+      const creds = extractCredentials({ producerKey, credentials });
 
-    return deleteFile(file, creds);
-  });
+      return deleteFile(file, creds);
+    })
+  );
 };
 
 module.exports = deleteCommand;
