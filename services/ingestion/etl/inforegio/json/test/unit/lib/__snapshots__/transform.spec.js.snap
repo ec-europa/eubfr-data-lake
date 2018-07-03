@@ -90,7 +90,9 @@ Object {
   ],
   "timeframe": Object {
     "from": "2009-01-01T00:00:00.000Z",
+    "from_precision": "day",
     "to": "2010-11-30T00:00:00.000Z",
+    "to_precision": "day",
   },
   "title": "Renovated ship: a unique venue on the Danube",
   "type": Array [

@@ -113,7 +113,9 @@ module.exports = () => ({
         timeframe: {
           properties: {
             from: { type: 'date' },
+            from_precision: { type: 'text' },
             to: { type: 'date' },
+            to_precision: { type: 'text' },
           },
         },
         title: textWithKeyword,

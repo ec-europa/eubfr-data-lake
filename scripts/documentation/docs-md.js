@@ -5,7 +5,7 @@ const path = require('path');
 const documentation = require('documentation'); // eslint-disable-line import/no-extraneous-dependencies
 
 documentation
-  .build('**/_types/Project.js', {})
+  .build('types/Project.js', {})
   .then(documentation.formats.md)
   .then(output => {
     fs.writeFileSync(path.resolve('./docs/types/Project.md'), output);

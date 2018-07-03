@@ -74,7 +74,9 @@ Object {
   "third_parties": Array [],
   "timeframe": Object {
     "from": null,
+    "from_precision": "day",
     "to": null,
+    "to_precision": "day",
   },
   "title": "On the tracks of Hercules",
   "type": Array [
