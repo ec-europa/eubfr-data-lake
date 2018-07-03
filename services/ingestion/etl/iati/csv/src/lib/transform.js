@@ -153,7 +153,9 @@ export default (record: Object): Project =>
     third_parties: [],
     timeframe: {
       from: formatDate(record['start-actual']),
+      from_precision: 'day',
       to: formatDate(record['end-actual']),
+      to_precision: 'day',
     },
     title: record.title || '',
     type: [],

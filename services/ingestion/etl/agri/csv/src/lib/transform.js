@@ -300,7 +300,9 @@ export default (record: Object): Project => {
     third_parties: thirdPartiesArray || [],
     timeframe: {
       from: formatDate(timeframeFrom),
+      from_precision: 'day',
       to: formatDate(timeframeTo),
+      to_precision: 'day',
     },
     title: record.Name || '',
     type: [],

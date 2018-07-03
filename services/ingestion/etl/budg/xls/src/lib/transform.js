@@ -215,7 +215,9 @@ export default (record: Object): Project => {
     third_parties: thirdPartiesArray || [],
     timeframe: {
       from: formatDate(record['Start date']),
+      from_precision: 'day',
       to: formatDate(record['End date']),
+      to_precision: 'day',
     },
     title: record['Project Title'],
     type: typeArray,

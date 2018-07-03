@@ -8,6 +8,17 @@ import type { Project } from '@eubfr/types';
  * Transform message (VALOR XLS)
  */
 
+/**
+ * Format date
+ *
+ * @memberof valorXlsTransform
+ * @param {Date} date Date in "10/9/14" (MM/DD/YY) or "10/9/2014" (MM/DD/YYYY) format
+ * @returns {Date} The date formatted into an ISO 8601 date format
+ *
+ * @example
+ * input => "10/9/2014"
+ * output => "2014-10-09T00:00:00.000Z"
+ */
 const formatDate = date => {
   if (!date || typeof date !== 'string') return null;
   const d = date.split(/\//);
@@ -143,7 +154,9 @@ export default (record: Object): Project => {
     third_parties: thirdPartiesArray || [],
     timeframe: {
       from: formatDate(record['Start date']),
+      from_precision: 'day',
       to: formatDate(record['End date']),
+      to_precision: 'day',
     },
     title: record['Project Title'] || '',
     type: typeArray,

@@ -76,7 +76,9 @@ Object {
   ],
   "timeframe": Object {
     "from": "2018-03-22T00:00:00.000Z",
+    "from_precision": "day",
     "to": null,
+    "to_precision": "day",
   },
   "title": "Wifi4EU - Registrations",
   "type": Array [],

@@ -307,7 +307,9 @@ Object {
   ],
   "timeframe": Object {
     "from": "2013-12-31T23:00:00.000Z",
+    "from_precision": "day",
     "to": "2014-12-31T23:00:00.000Z",
+    "to_precision": "day",
   },
   "title": "Central European Green Corridors",
   "type": Array [],
@@ -409,7 +411,9 @@ Object {
   "third_parties": Array [],
   "timeframe": Object {
     "from": "2013-12-31T23:00:00.000Z",
+    "from_precision": "day",
     "to": "2014-12-31T23:00:00.000Z",
+    "to_precision": "day",
   },
   "title": "Bulgaria’s capital expands metro network",
   "type": Array [],
