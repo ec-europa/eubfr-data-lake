@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const program = require('commander');
+const readline = require('readline');
 const pkg = require('../package.json');
 
 // Utilities
@@ -80,13 +81,30 @@ program
 program
   .command('delete [files...]')
   .description('Deletes files by computed_key field.')
-  .action(files => {
+  .option('-c, --confirm [confirm]', 'Flag certainty of an operation.')
+  .action((files, options) => {
     const producers = getAllProducers();
     const credentials = producers.map(producer => ({
       [producer]: getCredentials(producer),
     }));
 
-    deleteFiles({ files, credentials });
+    if (options.confirm) {
+      deleteFiles({ files, credentials });
+    } else {
+      // Initiate the prompt interface.
+      const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout,
+      });
+
+      rl.question('Are you sure? <yes|y> ', answer => {
+        if (answer === 'y' || answer === 'yes') {
+          deleteFiles({ files, credentials });
+        }
+
+        rl.close();
+      });
+    }
   });
 
 // If no arguments provided, display help menu.

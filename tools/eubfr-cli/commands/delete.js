@@ -24,7 +24,7 @@ dotenv.config({
 const deleteCommand = async ({ files, credentials }) => {
   if (!process.env.DELETER_API) {
     console.error(
-      "DELETER_API environment variable is missing. Please redeploy by running 'yarn deploy' from project root"
+      "DELETER_API environment variable is missing. Please redeploy by running 'yarn deploy' from project root or run 'npx serverless export-env' in @eubfr/storage-deleter service if you have already deployed your infrastructure, but don't have the necessary .env files."
     );
     process.exit(1);
   }
@@ -56,9 +56,11 @@ const deleteCommand = async ({ files, credentials }) => {
         },
       };
 
-      console.log(`Deleting ${computedKey} ...`);
+      console.time(`${computedKey} has been deleted`);
+
       await request.get(aws4.sign(params, creds));
-      return console.log(`${computedKey} has been deleted`);
+
+      return console.timeEnd(`${computedKey} has been deleted`);
     } catch (e) {
       return console.error(e);
     }
@@ -85,9 +87,10 @@ const deleteCommand = async ({ files, credentials }) => {
             },
           });
 
-          const allFiles = response.hits.hits.map(
-            file => file._source.computed_key
-          );
+          const allFiles =
+            response.hits && response.hits.hits
+              ? response.hits.hits.map(file => file._source.computed_key)
+              : [];
 
           return allFiles.map(computedKey => deleteFile(computedKey, creds));
         } catch (e) {
@@ -99,7 +102,7 @@ const deleteCommand = async ({ files, credentials }) => {
 
   // In case files are specified, delete them.
   Promise.all(
-    files.map(async file => {
+    files.map(file => {
       const producerKey = file.split('/')[0];
       const creds = extractCredentials({ producerKey, credentials });
 

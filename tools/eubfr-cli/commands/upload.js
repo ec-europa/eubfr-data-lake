@@ -24,7 +24,7 @@ dotenv.config({
 const uploadCommand = ({ files, credentials }) => {
   if (!process.env.SIGNED_UPLOADS_API) {
     console.error(
-      "SIGNED_UPLOADS_API environment variable is missing. Please redeploy by running 'yarn deploy' from project root"
+      "SIGNED_UPLOADS_API environment variable is missing. Please redeploy by running 'yarn deploy' from project root or run 'npx serverless export-env' in @eubfr/storage-signed-uploads service if you have already deployed your infrastructure, but don't have the necessary .env files."
     );
     process.exit(1);
   }
