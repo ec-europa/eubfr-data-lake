@@ -62,25 +62,31 @@ const uploadCommand = ({ files, credentials }) => {
     }
   };
 
-  return credentials.forEach(async producer => {
-    const producerName = Object.keys(producer)[0];
-    const creds = producer[producerName];
-    const userSpecifiedFiles = files.length > 0;
-    // If files are provided by the user - use them
-    // Otherwise take all local files
-    const filesToUpload = userSpecifiedFiles
-      ? files
-      : await getProducerFiles(producerName);
+  Promise.all(
+    credentials.map(async producer => {
+      const producerName = Object.keys(producer)[0];
+      const creds = producer[producerName];
+      const userSpecifiedFiles = files.length > 0;
+      // If files are provided by the user - use them
+      // Otherwise take all local files
+      const filesToUpload = userSpecifiedFiles
+        ? files
+        : await getProducerFiles(producerName);
 
-    console.log(`Uploading for producer: ${producerName}.`);
+      console.log(`Uploading for producer: ${producerName}.`);
 
-    filesToUpload.forEach(file => {
-      // If user has specified files, we know the path
-      // But if not user specified, we need to tweak for local setup
-      const filePath = userSpecifiedFiles ? '' : `.content/${producerName}/`;
-      uploadFile({ file: filePath + file, creds });
-    });
-  });
+      Promise.all(
+        filesToUpload.map(file => {
+          // If user has specified files, we know the path
+          // But if not user specified, we need to tweak for local setup
+          const filePath = userSpecifiedFiles
+            ? ''
+            : `.content/${producerName}/`;
+          return uploadFile({ file: filePath + file, creds });
+        })
+      );
+    })
+  );
 };
 
 module.exports = uploadCommand;
