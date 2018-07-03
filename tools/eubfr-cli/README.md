@@ -54,5 +54,4 @@ Please note that although input paths are relative, only file names will be kept
 - delete one or multiple files: `npx eubfr-cli delete agri/foo budg/bar inforegio/baz`
 - delete all files of all producers `npx eubfr-cli delete`
 
-Please be careful with this operation, there is no confirmation because having CLI assumes you know what you're doing with it.
-There's no need to pass `--producer` flag here because it's deducted by the `computed_key` passed.
+By default, you will be prompted to confirm your intention. You can skip the this prompt by adding `--confirm` flag.
