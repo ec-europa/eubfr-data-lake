@@ -56,7 +56,7 @@ program
   .command('show [file]')
   .description('Displays files of a given producer.')
   .option('-p, --producer [producer]', "Producer's name.")
-  .action((file, options) => {
+  .action(async (file, options) => {
     const { producer } = options;
 
     // Ensure useful input
@@ -75,21 +75,21 @@ program
       process.exit(1);
     }
 
-    showFile({ file, producer });
+    await showFile({ file, producer });
   });
 
 program
   .command('delete [files...]')
   .description('Deletes files by computed_key field.')
   .option('-c, --confirm [confirm]', 'Flag certainty of an operation.')
-  .action((files, options) => {
+  .action(async (files, options) => {
     const producers = getAllProducers();
     const credentials = producers.map(producer => ({
       [producer]: getCredentials(producer),
     }));
 
     if (options.confirm) {
-      deleteFiles({ files, credentials });
+      await deleteFiles({ files, credentials });
     } else {
       // Initiate the prompt interface.
       const rl = readline.createInterface({
@@ -97,9 +97,9 @@ program
         output: process.stdout,
       });
 
-      rl.question('Are you sure? <yes|y> ', answer => {
+      rl.question('Are you sure? <yes|y> ', async answer => {
         if (answer === 'y' || answer === 'yes') {
-          deleteFiles({ files, credentials });
+          await deleteFiles({ files, credentials });
         }
 
         rl.close();

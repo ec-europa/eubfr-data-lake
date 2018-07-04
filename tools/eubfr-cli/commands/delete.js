@@ -7,7 +7,6 @@ const elasticsearch = require('elasticsearch');
 const request = require('request-promise-native');
 
 const getServiceLocation = require('../lib/getServiceLocation');
-const extractCredentials = require('../lib/extractCredentials');
 
 dotenv.config({
   path: path.resolve(getServiceLocation('storage-deleter'), '.env'),
@@ -92,7 +91,9 @@ const deleteCommand = async ({ files, credentials }) => {
               ? response.hits.hits.map(file => file._source.computed_key)
               : [];
 
-          return allFiles.map(computedKey => deleteFile(computedKey, creds));
+          return Promise.all(
+            allFiles.map(async computedKey => deleteFile(computedKey, creds))
+          );
         } catch (e) {
           return console.error(e);
         }
@@ -102,11 +103,10 @@ const deleteCommand = async ({ files, credentials }) => {
 
   // In case files are specified, delete them.
   Promise.all(
-    files.map(file => {
+    files.map(async file => {
       const producerKey = file.split('/')[0];
-      const creds = extractCredentials({ producerKey, credentials });
-
-      return deleteFile(file, creds);
+      const match = credentials.find(secret => secret[producerKey]);
+      return deleteFile(file, match[producerKey]);
     })
   );
 };
