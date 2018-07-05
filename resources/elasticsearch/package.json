@@ -6,7 +6,7 @@
     "deploy": "sls deploy -v"
   },
   "devDependencies": {
-    "serverless": "1.27.3",
+    "serverless": "1.28.0",
     "serverless-plugin-elasticsearch-index": "0.0.1"
   }
 }

@@ -2,6 +2,9 @@ import elasticsearch from 'elasticsearch';
 import connectionClass from 'http-aws-es';
 
 export const handler = async (event, context, callback) => {
+  console.log(JSON.stringify(event));
+  callback();
+
   const record = JSON.parse(event.Body);
 
   if (!record.id || !record.data) {
