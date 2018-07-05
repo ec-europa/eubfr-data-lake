@@ -162,7 +162,9 @@ Object {
       "url": "https://europa.eu/investeu/projects/central-european-green-corridors_en",
     },
   ],
-  "reporting_organisation": "",
+  "reporting_organisation": Array [
+    "AGRI",
+  ],
   "results": Object {
     "available": "",
     "result": "Installation and operation of 115 fast-charging stations in 5 European countries,Development and implementation of electromobility and cross-border services for e-car users,Strategic planning for a European fast-charging network.Since the implementation of the Central European Green Corridors project, the European fast-charging network for electric vehicles has continued to grow. An additional 200 fast-charging stations – 180 in Italy and 20 in Austria – are developed. The charging networks in the various countries are compatible with each other. This gives even more citizens the chance to take advantage of cross-border electromobility.",
@@ -399,7 +401,9 @@ Object {
   ],
   "project_website": "",
   "related_links": Array [],
-  "reporting_organisation": "",
+  "reporting_organisation": Array [
+    "AGRI",
+  ],
   "results": Object {
     "available": "",
     "result": "",

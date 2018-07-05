@@ -174,7 +174,7 @@ export type Project = {
   project_locations: Array<Location>,
   project_website: string,
   related_links: Array<RelatedLink>,
-  reporting_organisation: string,
+  reporting_organisation: Array<string>,
   results: Result,
   status: string,
   sub_programme_name: string,
