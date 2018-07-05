@@ -67,7 +67,7 @@ const deleteCommand = async ({ files, credentials }) => {
 
   // Marker to delete all files for all producers
   if (files.length === 0) {
-    Promise.all(
+    return Promise.all(
       credentials.map(async producer => {
         const producerName = Object.keys(producer)[0];
         const creds = producer[producerName];
@@ -102,7 +102,7 @@ const deleteCommand = async ({ files, credentials }) => {
   }
 
   // In case files are specified, delete them.
-  Promise.all(
+  return Promise.all(
     files.map(async file => {
       const producerKey = file.split('/')[0];
       const match = credentials.find(secret => secret[producerKey]);
