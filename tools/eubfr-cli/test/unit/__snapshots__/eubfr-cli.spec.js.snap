@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`The EUBFR CLI: help menu is displayed if no arguments or options are passed 1`] = `
+"
+  Usage:  [command] [option]
+
+  Options:
+
+    -V, --version                output the version number
+    -h, --help                   output usage information
+
+  Commands:
+
+    upload [options] [files...]  Uploads content to the data lake.
+    show [options] [file]        Displays files of a given producer.
+    delete [options] [files...]  Deletes files by computed_key field.
+"
+`;
+
+exports[`The EUBFR CLI: help menu is displayed on -h or --help flags 1`] = `
+"
+  Usage:  [command] [option]
+
+  Options:
+
+    -V, --version                output the version number
+    -h, --help                   output usage information
+
+  Commands:
+
+    upload [options] [files...]  Uploads content to the data lake.
+    show [options] [file]        Displays files of a given producer.
+    delete [options] [files...]  Deletes files by computed_key field.
+"
+`;
+
+exports[`The EUBFR CLI: upload command has a help menu on -h or --help 1`] = `
+"
+  Usage: upload [options] [files...]
+
+  Uploads content to the data lake.
+
+  Options:
+
+    -p, --producer [producer]  Producer's name.
+    -h, --help                 output usage information
+"
+`;
