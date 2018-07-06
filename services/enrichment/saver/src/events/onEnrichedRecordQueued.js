@@ -2,10 +2,26 @@ import elasticsearch from 'elasticsearch';
 import connectionClass from 'http-aws-es';
 
 export const handler = async (event, context, callback) => {
-  console.log(JSON.stringify(event));
-  callback();
+  /*
+   * Some checks here before going any further
+   */
+  if (!event.Records) {
+    return callback('No record');
+  }
 
-  const record = JSON.parse(event.Body);
+  // Only work on the first record
+  const sqsRecord = event.Records[0];
+
+  if (!sqsRecord) {
+    return callback('Bad record');
+  }
+
+  /*
+   * Extract information from the event
+   */
+
+  // Extract record
+  const record = JSON.parse(sqsRecord.body);
 
   if (!record.id || !record.data) {
     return callback(null, 'no ID provided');
