@@ -32,7 +32,7 @@ export const handler = async (event, context, callback) => {
     const { id } = record;
 
     const action = {
-      update: { _index: API, _type: 'project', _id: id, refresh: true },
+      update: { _index: INDEX, _type: 'project', _id: id },
     };
 
     const doc = {
