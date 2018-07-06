@@ -113,7 +113,6 @@ export const handler = async (event, context, callback) => {
       readStream
         .pipe(split2(JSON.parse))
         .on('error', async e => handleError(e, reject))
-        .on('error', async e => handleError(e, reject))
         .on('data', record => {
           // increment counter for the final reporting
           numRecords += 1;
