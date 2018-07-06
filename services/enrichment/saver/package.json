@@ -10,13 +10,12 @@
     "babel-core": "6.26.3",
     "babel-loader": "7.1.4",
     "babel-preset-env": "1.7.0",
-    "serverless": "1.27.3",
+    "serverless": "1.28.0",
     "serverless-webpack": "5.1.5",
     "webpack": "4.10.0"
   },
   "dependencies": {
     "elasticsearch": "15.0.0",
-    "http-aws-es": "6.0.0",
-    "lawos": "1.1.5"
+    "http-aws-es": "6.0.0"
   }
 }

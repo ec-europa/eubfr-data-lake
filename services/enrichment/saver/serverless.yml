@@ -28,30 +28,19 @@ provider:
     ENV: ${self:custom.eubfrEnvironment}
   iamRoleStatements:
     - Effect: "Allow"
-      Action: "sqs:*"
-      Resource: "arn:aws:sqs:${self:provider.region}:*:*"
-    - Effect: "Allow"
-      Action: "lambda:InvokeFunction"
-      Resource: "arn:aws:lambda:${self:provider.region}:*:${self:provider.stage}-${self:service}-onTaskCalled"
-    - Effect: "Allow"
       Action: "es:*"
       Resource: "arn:aws:es:${self:provider.region}:*:domain/*"
 
 functions:
-  onWorkerScheduled:
-    handler: src/events/onWorkerScheduled.handler
-    name: ${self:provider.stage}-${self:service}-onWorkerScheduled
-    memorySize: 256
-    timeout: 120
-    environment:
-      REGION: ${self:provider.region}
-      QUEUE_NAME: ${self:custom.queueName}
-      lambda: ${self:provider.stage}-${self:service}-onTaskCalled
+  onEnrichedRecordQueued:
+    handler: src/events/onEnrichedRecordQueued.handler
     events:
-      - schedule: rate(2 minutes)
-  onTaskCalled:
-    handler: src/events/onTaskCalled.handler
-    name: ${self:provider.stage}-${self:service}-onTaskCalled
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - BacklogQueue
+              - Arn
+    name: ${self:provider.stage}-${self:service}-onEnrichedRecordQueued
     timeout: 30
     memorySize: 256
     environment:
