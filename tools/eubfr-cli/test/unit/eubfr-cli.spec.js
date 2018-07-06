@@ -2,6 +2,7 @@
  * @jest-environment node
  */
 
+const fs = require('fs');
 const path = require('path');
 const { promisify } = require('util');
 const { exec } = require('child_process');
@@ -11,7 +12,29 @@ const execute = promisify(exec);
 // Execute from project root to make use of workspace's symlinking
 const cwd = path.resolve(`${__dirname}../../../../../`);
 
+// Create a sample config.json for tests, if the file doesn't exist yet.
+const createSampleConfigFile = () => {
+  const configFilePath = '../../config.json';
+  const configSample = {
+    eubfr_env: 't-dev',
+    region: 'eu-central-1',
+    stage: 't-stage',
+    demo: {
+      agri: {
+        AWS_ACCESS_KEY_ID: 'foo',
+        AWS_SECRET_ACCESS_KEY: 'bar',
+      },
+    },
+  };
+
+  if (!fs.existsSync(configFilePath)) {
+    fs.writeFileSync(configFilePath, JSON.stringify(configSample));
+  }
+};
+
 describe('The EUBFR CLI: help menu', () => {
+  beforeAll(() => createSampleConfigFile());
+
   test('is displayed if no arguments or options are passed', async () => {
     const command = `npx eubfr-cli`;
     const result = await execute(command, { cwd });
@@ -26,7 +49,9 @@ describe('The EUBFR CLI: help menu', () => {
 });
 
 describe('The EUBFR CLI: upload command', () => {
-  test('has a help menu on -h or --help', async () => {
+  beforeAll(() => createSampleConfigFile());
+
+  test('has its own help menu', async () => {
     const command = `npx eubfr-cli upload -h`;
     const result = await execute(command, { cwd });
     expect(result.stdout).toMatchSnapshot();

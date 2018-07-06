@@ -34,7 +34,7 @@ exports[`The EUBFR CLI: help menu is displayed on -h or --help flags 1`] = `
 "
 `;
 
-exports[`The EUBFR CLI: upload command has a help menu on -h or --help 1`] = `
+exports[`The EUBFR CLI: upload command has its own help menu 1`] = `
 "
   Usage: upload [options] [files...]
 
