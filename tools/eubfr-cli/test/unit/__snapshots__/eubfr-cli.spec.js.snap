@@ -1,5 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`The EUBFR CLI: delete command has its own help menu 1`] = `
+"
+  Usage: delete [options] [files...]
+
+  Deletes files by computed_key field.
+
+  Options:
+
+    -c, --confirm [confirm]  Flag certainty of an operation.
+    -h, --help               output usage information
+"
+`;
+
 exports[`The EUBFR CLI: help menu is displayed if no arguments or options are passed 1`] = `
 "
   Usage:  [command] [option]

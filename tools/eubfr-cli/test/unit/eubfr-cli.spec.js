@@ -104,10 +104,20 @@ describe('The EUBFR CLI: show command', () => {
       'error: Please specificy producer with a name.'
     );
   });
+});
 
-  test('requires REACT_APP_STAGE and REACT_APP_ES_PRIVATE_ENDPOINT from `demo-dashboard-client`', async () => {
-    const command = `npx eubfr-cli show -p foo`;
+describe('The EUBFR CLI: delete command', () => {
+  test('has its own help menu', async () => {
+    const command = `npx eubfr-cli delete -h`;
+    const result = await execute(command, { cwd });
+    expect(result.stdout).toMatchSnapshot();
+  });
+
+  test('requires DELETER_API environment variable', () => {
+    const command = `npx eubfr-cli delete -c`;
     const result = execute(command, { cwd });
-    expect(result).rejects.toThrowErrorMatchingSnapshot();
+    expect(result).rejects.toThrow(
+      'DELETER_API environment variable is missing.'
+    );
   });
 });

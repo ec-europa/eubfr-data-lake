@@ -65,10 +65,7 @@ const showCommand = async ({ file, producer }) => {
         : [];
     return console.log(prettyjson.render(results));
   } catch (e) {
-    return new Error(e);
-    // return new Error(
-    //   'Show operation failed, please ensure correct parameters.'
-    // );
+    return console.error(e);
   }
 };
 
