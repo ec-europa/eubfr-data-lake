@@ -18,8 +18,19 @@ dotenv.config({
  *   The producer's name. For example: 'agri', 'budg', etc.
  */
 const showCommand = async ({ file, producer }) => {
+  if (
+    !process.env.REACT_APP_STAGE ||
+    !process.env.REACT_APP_ES_PRIVATE_ENDPOINT
+  ) {
+    console.error(
+      "REACT_APP_STAGE and REACT_APP_ES_PRIVATE_ENDPOINT environment variables are required. Please redeploy by running 'yarn deploy:demo' from project root or run 'npx serverless export-env' in @eubfr/demo-dashboard-client service if you have already deployed your infrastructure, but don't have the necessary .env files."
+    );
+    process.exit(1);
+  }
+
   const index = `${process.env.REACT_APP_STAGE}-meta`;
   const host = `https://${process.env.REACT_APP_ES_PRIVATE_ENDPOINT}`;
+
   const query = {
     index,
     type: 'file',
@@ -54,7 +65,10 @@ const showCommand = async ({ file, producer }) => {
         : [];
     return console.log(prettyjson.render(results));
   } catch (e) {
-    return console.error(e);
+    return new Error(e);
+    // return new Error(
+    //   'Show operation failed, please ensure correct parameters.'
+    // );
   }
 };
 

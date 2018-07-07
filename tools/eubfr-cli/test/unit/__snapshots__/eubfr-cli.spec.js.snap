@@ -34,6 +34,19 @@ exports[`The EUBFR CLI: help menu is displayed on -h or --help flags 1`] = `
 "
 `;
 
+exports[`The EUBFR CLI: show command has its own help menu 1`] = `
+"
+  Usage: show [options] [file]
+
+  Displays files of a given producer.
+
+  Options:
+
+    -p, --producer [producer]  Producer's name.
+    -h, --help                 output usage information
+"
+`;
+
 exports[`The EUBFR CLI: upload command has its own help menu 1`] = `
 "
   Usage: upload [options] [files...]

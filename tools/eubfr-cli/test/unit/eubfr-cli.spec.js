@@ -76,10 +76,38 @@ describe('The EUBFR CLI: upload command', () => {
   });
 
   test('requires a valid producer', async () => {
-    const command = `npx eubfr-cli upload foo -p bar`;
+    const command = `SIGNED_UPLOADS_API=http://example.com npx eubfr-cli upload foo -p bar`;
     const result = await execute(command, { cwd });
     expect(result.stderr).toEqual(
       expect.stringMatching("Couldn't find credentials for producer")
     );
+  });
+});
+
+describe('The EUBFR CLI: show command', () => {
+  test('has its own help menu', async () => {
+    const command = `npx eubfr-cli show -h`;
+    const result = await execute(command, { cwd });
+    expect(result.stdout).toMatchSnapshot();
+  });
+
+  test('requires either a file or a producer parameter', async () => {
+    const command = `npx eubfr-cli show`;
+    const result = execute(command, { cwd });
+    expect(result).rejects.toThrow('error: Missing required input parameters');
+  });
+
+  test('requires actual value when producer flag is used', async () => {
+    const command = `npx eubfr-cli show -p`;
+    const result = execute(command, { cwd });
+    expect(result).rejects.toThrow(
+      'error: Please specificy producer with a name.'
+    );
+  });
+
+  test('requires REACT_APP_STAGE and REACT_APP_ES_PRIVATE_ENDPOINT from `demo-dashboard-client`', async () => {
+    const command = `npx eubfr-cli show -p foo`;
+    const result = execute(command, { cwd });
+    expect(result).rejects.toThrowErrorMatchingSnapshot();
   });
 });
