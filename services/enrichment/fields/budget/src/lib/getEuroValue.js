@@ -1,11 +1,12 @@
 // @flow
 import request from 'request-promise-native';
+import type { BudgetItem } from '@eubfr/types';
 
 const padDate = (date: number): number | string =>
   date < 10 ? `0${date}` : date;
 
 export const getEuroValue = async (
-  inputBudgetItem: Object,
+  inputBudgetItem: BudgetItem,
   projectEndDate: Date,
   projectEndPrecision: string
 ) => {
@@ -56,7 +57,7 @@ export const getEuroValue = async (
     });
   } catch (e) {
     console.error('error', url, qs, e);
-    return inputBudgetItem; // budget not enriched
+    return euroValue;
   }
 
   if (

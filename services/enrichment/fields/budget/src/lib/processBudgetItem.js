@@ -80,8 +80,7 @@ export const processBudgetItem = async (
       projectEndPrecision
     );
 
-    // If useful value and if changed, i.e. non-original value
-    if (euroValue && euroValue.value !== inputBudgetItem.value) {
+    if (euroValue) {
       const formattedEuroBudget = sanitizeBudgetItem({
         value: euroValue,
         currency: 'EUR',
