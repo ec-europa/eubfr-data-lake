@@ -33,7 +33,7 @@ describe('processBudgetItem helper function', () => {
     expect(result).toMatchObject(budgetItem);
   });
 
-  test('Enriches non-EUR currency budget items when date is provided', async () => {
+  test('Enriches non-EUR currency budget items when date is provided, but no precision, defaults to year precision', async () => {
     const budgetItem = {
       value: 63115,
       currency: 'BGN',
@@ -51,7 +51,7 @@ describe('processBudgetItem helper function', () => {
     expect(result).toMatchSnapshot();
   });
 
-  test("Enrichment scenario with precision: 'day'", async () => {
+  test('Enrichment scenario, daily precision, exchange rate available', async () => {
     const budgetItem = {
       value: 63115,
       currency: 'BGN',
@@ -65,7 +65,21 @@ describe('processBudgetItem helper function', () => {
     expect(result).toMatchSnapshot();
   });
 
-  test("Enrichment scenario with precision: 'month'", async () => {
+  test('Enrichment scenario, daily precision, exchange rate not available, fallback to monthly', async () => {
+    const budgetItem = {
+      value: 63115,
+      currency: 'USD',
+      raw: '63,115.00',
+    };
+    const result = await processBudgetItem(
+      budgetItem,
+      '2014-12-25T00:00:00.000Z',
+      'day'
+    );
+    expect(result).toMatchSnapshot();
+  });
+
+  test('Enrichment scenario, monthly precision', async () => {
     const budgetItem = {
       value: 63115,
       currency: 'BGN',
@@ -73,7 +87,7 @@ describe('processBudgetItem helper function', () => {
     };
     const result = await processBudgetItem(
       budgetItem,
-      '2010-11-02T00:00:00.000Z',
+      '2014-11-02T00:00:00.000Z',
       'month'
     );
     expect(result).toMatchSnapshot();

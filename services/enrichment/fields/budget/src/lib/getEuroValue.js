@@ -71,6 +71,12 @@ export const getEuroValue = async (
     const exr = results.dataSets[0].series['0:0:0:0:0'].observations['0'][0];
     euroValue = Math.ceil(inputBudgetItem.value / exr / precision) * precision;
   }
+
+  // Fallback request decreasing precision from daily to monthly
+  if (results === undefined && projectEndPrecision === 'day') {
+    euroValue = await getEuroValue(inputBudgetItem, projectEndDate, 'month');
+  }
+
   return euroValue;
 };
 
