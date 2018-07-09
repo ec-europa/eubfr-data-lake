@@ -3,8 +3,6 @@ const aws4 = require('aws4');
 const elasticsearch = require('elasticsearch');
 const request = require('request-promise-native');
 
-const ensureVariables = require('../lib/ensureVariables');
-
 const deleteFile = async ({ computedKey, creds, requestParams }) => {
   try {
     const params = {
@@ -35,11 +33,6 @@ const deleteFile = async ({ computedKey, creds, requestParams }) => {
  *   List of credentials for the producers.
  */
 const deleteCommand = ({ files, credentials, endpoints }) => {
-  ensureVariables(
-    ['DELETER_API', 'REACT_APP_STAGE', 'REACT_APP_ES_PRIVATE_ENDPOINT'],
-    endpoints
-  );
-
   // Prepare variables for further requests.
   const resource = 'storage/delete';
   const api = url.parse(`https://${endpoints.DELETER_API}`);

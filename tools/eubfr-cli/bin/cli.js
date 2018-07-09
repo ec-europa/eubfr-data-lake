@@ -5,6 +5,7 @@ const readline = require('readline');
 const pkg = require('../package.json');
 
 // Utilities
+const ensureVariables = require('../lib/ensureVariables');
 const getCredentials = require('../lib/getProducerCredentials');
 const getEndpoints = require('../lib/getEndpoints');
 const getAllProducers = require('../lib/getAllProducers');
@@ -29,6 +30,8 @@ program
   .description('Uploads content to the data lake.')
   .option('-p, --producer [producer]', "Producer's name.")
   .action((files, options) => {
+    ensureVariables(['SIGNED_UPLOADS_API'], endpoints);
+
     let credentials = [];
     const producerIsSet = hasValidProducer(options);
     const filesAreSet = files.length !== 0;
@@ -59,6 +62,11 @@ program
   .description('Displays files of a given producer.')
   .option('-p, --producer [producer]', "Producer's name.")
   .action(async (file, options) => {
+    ensureVariables(
+      ['REACT_APP_STAGE', 'REACT_APP_ES_PRIVATE_ENDPOINT'],
+      endpoints
+    );
+
     const { producer } = options;
 
     // Ensure useful input
@@ -85,6 +93,11 @@ program
   .description('Deletes files by computed_key field.')
   .option('-c, --confirm [confirm]', 'Flag certainty of an operation.')
   .action(async (files, options) => {
+    ensureVariables(
+      ['DELETER_API', 'REACT_APP_STAGE', 'REACT_APP_ES_PRIVATE_ENDPOINT'],
+      endpoints
+    );
+
     const producers = getAllProducers();
     const credentials = producers.map(producer => ({
       [producer]: getCredentials(producer),

@@ -5,7 +5,6 @@ const aws4 = require('aws4');
 const request = require('request-promise-native');
 
 const getProducerFiles = require('../lib/getProducerFiles');
-const ensureVariables = require('../lib/ensureVariables');
 
 const uploadFile = async ({ file, creds, requestParams }) => {
   const fileName = path.parse(file).base;
@@ -48,8 +47,6 @@ const uploadFile = async ({ file, creds, requestParams }) => {
  *   List of credentials for the producers.
  */
 const uploadCommand = ({ files, credentials, endpoints }) => {
-  ensureVariables(['SIGNED_UPLOADS_API'], endpoints);
-
   // Prepare signed upload request
   const resource = 'storage/signed_url';
   const api = url.parse(`https://${endpoints.SIGNED_UPLOADS_API}`);

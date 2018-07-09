@@ -1,8 +1,6 @@
 const prettyjson = require('prettyjson');
 const elasticsearch = require('elasticsearch');
 
-const ensureVariables = require('../lib/ensureVariables');
-
 /**
  * List file(s) of a given producer.
  *
@@ -12,11 +10,6 @@ const ensureVariables = require('../lib/ensureVariables');
  *   The producer's name. For example: 'agri', 'budg', etc.
  */
 const showCommand = async ({ file, producer, endpoints }) => {
-  ensureVariables(
-    ['REACT_APP_STAGE', 'REACT_APP_ES_PRIVATE_ENDPOINT'],
-    endpoints
-  );
-
   const index = `${endpoints.REACT_APP_STAGE}-meta`;
   const host = `https://${endpoints.REACT_APP_ES_PRIVATE_ENDPOINT}`;
 
