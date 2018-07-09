@@ -55,14 +55,21 @@ const availableCurrencies = [
   'ZAR',
 ];
 
+const padDate = (date: number): number | string =>
+  date < 10 ? `0${date}` : date;
+
 export const processBudgetItem = async (
   inputBudgetItem: BudgetItem,
-  projectEnd: string
+  projectEnd: string,
+  projectEndPrecision: string
 ) => {
   if (!inputBudgetItem) return null;
 
   // check if it at least one is in EUR
   if (inputBudgetItem.currency === 'EUR') return inputBudgetItem;
+
+  // ensure date is provided, as it's required
+  if (!projectEnd) return inputBudgetItem;
 
   if (
     inputBudgetItem.currency &&
@@ -70,19 +77,37 @@ export const processBudgetItem = async (
     availableCurrencies.indexOf(inputBudgetItem.currency) >= 0
   ) {
     const projectEndDate = new Date(projectEnd);
-    const year = projectEndDate.getFullYear();
+
+    // Least precision: year
+    let period = projectEndDate.getFullYear();
+    let apiPeriod = 'A';
+
+    // Best precision: day
+    if (projectEndPrecision === 'day') {
+      const month = projectEndDate.getMonth() + 1;
+      const day = projectEndDate.getDate();
+      period = `${period}-${padDate(month)}-${padDate(day)}`;
+      apiPeriod = 'D';
+    }
+
+    // If not a day, try at least: month
+    if (projectEndPrecision === 'month') {
+      const month = projectEndDate.getMonth() + 1;
+      period = `${period}-${padDate(month)}`;
+      apiPeriod = 'M';
+    }
 
     // "EXR/A.[currency].EUR.SP00.A" corresponds to the key of a dataset
     // The keys can be found here: http://sdw.ecb.europa.eu/browseTable.do?node=1495
     // API info: https://sdw-wsrest.ecb.europa.eu/web/generator/index.html
-    const url = `https://sdw-wsrest.ecb.europa.eu/service/data/EXR/A.${
+    const url = `https://sdw-wsrest.ecb.europa.eu/service/data/EXR/${apiPeriod}.${
       inputBudgetItem.currency
     }.EUR.SP00.A`;
 
     let results;
     const qs = {
-      startPeriod: year,
-      endPeriod: year,
+      startPeriod: period,
+      endPeriod: period,
       detail: 'dataonly',
     };
 

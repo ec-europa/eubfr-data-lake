@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`processBudgetItem helper function Enriches non-EUR currency budget items when date is provided 1`] = `
+Object {
+  "_original": Object {
+    "currency": "BGN",
+    "raw": "63,115.00",
+    "value": 63115,
+  },
+  "currency": "EUR",
+  "raw": "EUR 32300",
+  "value": 32300,
+}
+`;
+
+exports[`processBudgetItem helper function Enrichment scenario with precision: 'day' 1`] = `
+Object {
+  "_original": Object {
+    "currency": "BGN",
+    "raw": "63,115.00",
+    "value": 63115,
+  },
+  "currency": "EUR",
+  "raw": "EUR 32300",
+  "value": 32300,
+}
+`;
+
+exports[`processBudgetItem helper function Enrichment scenario with precision: 'month' 1`] = `
+Object {
+  "_original": Object {
+    "currency": "BGN",
+    "raw": "63,115.00",
+    "value": 63115,
+  },
+  "currency": "EUR",
+  "raw": "EUR 32300",
+  "value": 32300,
+}
+`;
