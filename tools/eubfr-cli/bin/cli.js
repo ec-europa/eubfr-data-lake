@@ -6,6 +6,7 @@ const pkg = require('../package.json');
 
 // Utilities
 const getCredentials = require('../lib/getProducerCredentials');
+const getEndpoints = require('../lib/getEndpoints');
 const getAllProducers = require('../lib/getAllProducers');
 
 // Commands
@@ -13,12 +14,13 @@ const uploadFiles = require('../commands/upload');
 const showFile = require('../commands/show');
 const deleteFiles = require('../commands/delete');
 
-const missingRequiredInput = '\n error: Missing required input parameters';
-
 // If -p is passed without actual value, it will be boolean true
 // Which is useless information in our case
 const hasValidProducer = options =>
   options.producer && typeof options.producer !== 'boolean';
+
+const endpoints = getEndpoints();
+const missingRequiredInput = '\n error: Missing required input parameters';
 
 program.version(pkg.version).usage('[command] [option]');
 
@@ -49,7 +51,7 @@ program
       }));
     }
 
-    uploadFiles({ files, credentials });
+    uploadFiles({ files, credentials, endpoints });
   });
 
 program
@@ -75,7 +77,7 @@ program
       process.exit(1);
     }
 
-    await showFile({ file, producer });
+    await showFile({ file, producer, endpoints });
   });
 
 program
@@ -89,7 +91,7 @@ program
     }));
 
     if (options.confirm) {
-      await deleteFiles({ files, credentials });
+      await deleteFiles({ files, credentials, endpoints });
     } else {
       // Initiate the prompt interface.
       const rl = readline.createInterface({
@@ -99,7 +101,7 @@ program
 
       rl.question('Are you sure? <yes|y> ', async answer => {
         if (answer === 'y' || answer === 'yes') {
-          await deleteFiles({ files, credentials });
+          await deleteFiles({ files, credentials, endpoints });
         }
 
         rl.close();

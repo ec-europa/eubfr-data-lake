@@ -1,13 +1,7 @@
-const path = require('path');
-const dotenv = require('dotenv');
 const prettyjson = require('prettyjson');
 const elasticsearch = require('elasticsearch');
 
-const getServiceLocation = require('../lib/getServiceLocation');
-
-dotenv.config({
-  path: path.resolve(getServiceLocation('demo-dashboard-client'), '.env'),
-});
+const ensureVariables = require('../lib/ensureVariables');
 
 /**
  * List file(s) of a given producer.
@@ -17,19 +11,14 @@ dotenv.config({
  * @param {String} producer
  *   The producer's name. For example: 'agri', 'budg', etc.
  */
-const showCommand = async ({ file, producer }) => {
-  if (
-    !process.env.REACT_APP_STAGE ||
-    !process.env.REACT_APP_ES_PRIVATE_ENDPOINT
-  ) {
-    console.error(
-      "REACT_APP_STAGE and REACT_APP_ES_PRIVATE_ENDPOINT environment variables are required. Please redeploy by running 'yarn deploy:demo' from project root or run 'npx serverless export-env' in @eubfr/demo-dashboard-client service if you have already deployed your infrastructure, but don't have the necessary .env files."
-    );
-    process.exit(1);
-  }
+const showCommand = async ({ file, producer, endpoints }) => {
+  ensureVariables(
+    ['REACT_APP_STAGE', 'REACT_APP_ES_PRIVATE_ENDPOINT'],
+    endpoints
+  );
 
-  const index = `${process.env.REACT_APP_STAGE}-meta`;
-  const host = `https://${process.env.REACT_APP_ES_PRIVATE_ENDPOINT}`;
+  const index = `${endpoints.REACT_APP_STAGE}-meta`;
+  const host = `https://${endpoints.REACT_APP_ES_PRIVATE_ENDPOINT}`;
 
   const query = {
     index,
