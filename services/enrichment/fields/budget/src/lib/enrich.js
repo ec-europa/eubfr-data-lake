@@ -34,7 +34,8 @@ export const enrich = async record => {
     budgetFields.map(async field =>
       processBudgetItem(
         enrichedRecord.budget[field],
-        enrichedRecord.timeframe.to
+        enrichedRecord.timeframe.to,
+        enrichedRecord.timeframe.to_precision
       )
     )
   );

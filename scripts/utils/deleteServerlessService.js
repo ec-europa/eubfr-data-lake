@@ -1,17 +1,10 @@
 const { spawn } = require('child_process');
-const fs = require('fs');
-const path = require('path');
 
 // Get config
 const config = require(`../../config.json`); // eslint-disable-line import/no-unresolved
 
 // Helpers
-const resolveSymbolicLink = filePath => {
-  const lstat = fs.lstatSync(filePath);
-  return lstat.isSymbolicLink()
-    ? path.resolve(path.dirname(filePath), fs.readlinkSync(filePath))
-    : false;
-};
+const resolveSymbolicLink = require('../../lib/resolveSymbolicLink');
 
 module.exports = (service, { isClient = false, username = '' }) =>
   new Promise((resolve, reject) => {
