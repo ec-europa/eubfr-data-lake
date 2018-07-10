@@ -145,7 +145,7 @@ export type Result = {
  * Can be one of 'year', 'month' or 'day'
  * @type {TimePrecision}
  */
-type TimePrecision = 'year' | 'month' | 'day';
+export type TimePrecision = 'year' | 'month' | 'day';
 
 /**
  * Describes field `project.timeframe`.
