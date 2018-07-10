@@ -13,23 +13,28 @@ export const getEuroValue = async (
   let euroValue = null;
   const precision = 100; // round converted value to the nearest 100
 
-  // Least precision: year
+  let day = '';
+  let month = '';
+  // By default, worst case - year-based precision.
   let period = projectEndDate.getFullYear();
   let apiPeriod = 'A';
 
-  // Best precision: day
-  if (projectEndPrecision === 'day') {
-    const month = projectEndDate.getMonth() + 1;
-    const day = projectEndDate.getDate();
-    period = `${period}-${padDate(month)}-${padDate(day)}`;
-    apiPeriod = 'D';
-  }
-
-  // If not a day, try at least: month
-  else if (projectEndPrecision === 'month') {
-    const month = projectEndDate.getMonth() + 1;
-    period = `${period}-${padDate(month)}`;
-    apiPeriod = 'M';
+  // Override precision markers based on best to worst case scenarios.
+  switch (projectEndPrecision) {
+    case 'day':
+      month = projectEndDate.getMonth() + 1;
+      day = projectEndDate.getDate();
+      period = `${period}-${padDate(month)}-${padDate(day)}`;
+      apiPeriod = 'D';
+      break;
+    case 'month':
+      month = projectEndDate.getMonth() + 1;
+      period = `${period}-${padDate(month)}`;
+      apiPeriod = 'M';
+      break;
+    default:
+    case 'year':
+      break;
   }
 
   // "EXR/A.[currency].EUR.SP00.A" corresponds to the key of a dataset
