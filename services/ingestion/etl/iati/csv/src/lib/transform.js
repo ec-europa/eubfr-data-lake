@@ -106,13 +106,13 @@ const getLocations = record =>
  * @returns {String} Abbreviation a given reporting DG.
  */
 const getReportingOrganizations = record => {
-  if (!record['reporting-org-ref']) return '';
+  if (!record['reporting-org-ref']) return 'DEVCO';
   const match = /XI-IATI-EC_(.*)/.exec(record['reporting-org-ref']);
   if (match && match.length) {
     // The abbreviation:
     return match[1];
   }
-  return '';
+  return 'DEVCO';
 };
 
 /**
