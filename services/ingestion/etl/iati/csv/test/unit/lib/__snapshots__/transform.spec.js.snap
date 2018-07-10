@@ -52,9 +52,7 @@ Object {
   ],
   "project_website": "",
   "related_links": Array [],
-  "reporting_organisation": Array [
-    "DEVCO",
-  ],
+  "reporting_organisation": "DEVCO",
   "results": Object {
     "available": "",
     "result": "",
@@ -129,7 +127,7 @@ Object {
   "project_locations": Array [],
   "project_website": "",
   "related_links": Array [],
-  "reporting_organisation": Array [],
+  "reporting_organisation": "",
   "results": Object {
     "available": "",
     "result": "",

@@ -103,16 +103,16 @@ const getLocations = record =>
  *
  * @memberof IatiCsvTransform
  * @param {Object} record The row received from parsed file
- * @returns {Array} List of directorates' abbreviations.
+ * @returns {String} Abbreviation a given reporting DG.
  */
 const getReportingOrganizations = record => {
-  if (!record['reporting-org-ref']) return [];
+  if (!record['reporting-org-ref']) return '';
   const match = /XI-IATI-EC_(.*)/.exec(record['reporting-org-ref']);
   if (match && match.length) {
     // The abbreviation:
-    return [match[1]];
+    return match[1];
   }
-  return [];
+  return '';
 };
 
 /**
