@@ -10,10 +10,14 @@ cd ../../
 # Deploy signed uploads service
 cd ./services/storage/signed-uploads
 npx serverless deploy -v
+# Generate .env with SIGNED_UPLOADS_API
+npx serverless export-env
 
 # Deploy deleter service
 cd ../deleter
 npx serverless deploy -v
+# Generate .env with DELETER_API
+npx serverless export-env
 
 # Deploy manager
 cd ../../ingestion/manager

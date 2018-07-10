@@ -1,4 +1,6 @@
 .serverless
 node_modules
-build
+
+# React assets for demo/
 dist
+build

@@ -1,5 +1,5 @@
 import stream from 'stream';
-import crypto from 'crypto';
+import computeId from '@eubfr/lib/computeId';
 
 export default class SaveStream extends stream.Writable {
   constructor(options) {
@@ -16,10 +16,8 @@ export default class SaveStream extends stream.Writable {
       // md5 hash of computed_key + project_id
       const { computed_key: computedKey, project_id: projectId } = chunk;
 
-      const id = crypto
-        .createHash('md5')
-        .update(`${computedKey}/${projectId}`)
-        .digest('hex');
+      // Compute ID
+      const id = computeId({ computedKey, projectId });
 
       const action = {
         index: { _index: this.index, _type: 'project', _id: id },
