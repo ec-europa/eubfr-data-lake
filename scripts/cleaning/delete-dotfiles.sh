@@ -1,9 +1,9 @@
 #!/bin/sh
 
 # Remove old deployment states
-rm -rf **/.serverless
+find . -name "*.serverless" -type d -exec rm -rf {} +
 
 # Remove old exports of variables, that's good when you change stage
-rm -rf **/.env
+find . -name "*.env" -type f -delete
 
-echo 'All dot files removed!'
+echo 'All previous serverless exports removed!'

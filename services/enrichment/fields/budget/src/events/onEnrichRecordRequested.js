@@ -4,7 +4,7 @@ import elasticsearch from 'elasticsearch';
 import connectionClass from 'http-aws-es';
 import isEqual from 'lodash.isequal';
 
-import { computeId } from '../../../../../../lib/computeId';
+import computeId from '@eubfr/lib/computeId';
 import { enrich } from '../lib/enrich';
 
 export const handler = async (event, context, callback) => {
