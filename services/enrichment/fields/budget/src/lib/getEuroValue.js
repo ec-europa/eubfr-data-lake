@@ -61,7 +61,14 @@ export const getEuroValue = async (
       },
     });
   } catch (e) {
-    console.error('error', url, qs, e);
+    if (e.statusCode === 500) {
+      // Frequent scenario, error is short and simple, almost expected
+      console.error('http://sdw.ecb.europa.eu service is down');
+    } else {
+      // Some less frequent scenario, give all the details.
+      console.error('error', url, qs, e);
+    }
+
     return euroValue;
   }
 
