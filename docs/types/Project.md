@@ -179,7 +179,7 @@ Type: [Project][17]
 -   `project_locations` **[Array][5]&lt;[Location][9]>** 
 -   `project_website` **[string][2]** 
 -   `related_links` **[Array][5]&lt;[RelatedLink][13]>** 
--   `reporting_organisation` **[string][2]** 
+-   `reporting_organisation` **DirectorateAbbreviation** 
 -   `results` **[Result][14]** 
 -   `status` **[string][2]** 
 -   `sub_programme_name` **[string][2]** 
