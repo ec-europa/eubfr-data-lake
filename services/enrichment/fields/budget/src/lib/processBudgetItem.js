@@ -1,6 +1,6 @@
 // @flow
 import sanitizeBudgetItem from '@eubfr/lib/budgetFormatter';
-import type { BudgetItem } from '@eubfr/types';
+import type { BudgetItem, TimePrecision } from '@eubfr/types';
 
 import { getEuroValue } from './getEuroValue';
 
@@ -57,7 +57,7 @@ const availableCurrencies = [
 export const processBudgetItem = async (
   inputBudgetItem: BudgetItem,
   projectEnd: string,
-  projectEndPrecision: string
+  projectEndPrecision: TimePrecision
 ) => {
   if (!inputBudgetItem) return null;
 

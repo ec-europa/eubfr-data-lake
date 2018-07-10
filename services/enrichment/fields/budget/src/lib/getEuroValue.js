@@ -1,6 +1,6 @@
 // @flow
 import request from 'request-promise-native';
-import type { BudgetItem } from '@eubfr/types';
+import type { BudgetItem, TimePrecision } from '@eubfr/types';
 
 const padDate = (date: number): number | string =>
   date < 10 ? `0${date}` : date;
@@ -8,7 +8,7 @@ const padDate = (date: number): number | string =>
 export const getEuroValue = async (
   inputBudgetItem: BudgetItem,
   projectEndDate: Date,
-  projectEndPrecision: string
+  projectEndPrecision: TimePrecision
 ) => {
   let euroValue = null;
   const precision = 100; // round converted value to the nearest 100
@@ -26,7 +26,7 @@ export const getEuroValue = async (
   }
 
   // If not a day, try at least: month
-  if (projectEndPrecision === 'month') {
+  else if (projectEndPrecision === 'month') {
     const month = projectEndDate.getMonth() + 1;
     period = `${period}-${padDate(month)}`;
     apiPeriod = 'M';
