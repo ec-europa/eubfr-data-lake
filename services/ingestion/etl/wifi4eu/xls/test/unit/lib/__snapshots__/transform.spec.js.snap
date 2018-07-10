@@ -52,7 +52,7 @@ Object {
   ],
   "project_website": "https://www.wifi4eu.eu",
   "related_links": Array [],
-  "reporting_organisation": Array [],
+  "reporting_organisation": "CNECT",
   "results": Object {
     "available": "",
     "result": "",

@@ -57,9 +57,7 @@ Object {
       "url": "",
     },
   ],
-  "reporting_organisation": Array [
-    "JUST",
-  ],
+  "reporting_organisation": "JUST",
   "results": Object {
     "available": "",
     "result": "",

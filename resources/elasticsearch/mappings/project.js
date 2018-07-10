@@ -87,6 +87,7 @@ module.exports = () => ({
             url: { type: 'text' },
           },
         },
+        reporting_organisation: { type: 'keyword' },
         results: {
           properties: {
             available: { type: 'keyword' },
