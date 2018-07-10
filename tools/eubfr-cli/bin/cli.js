@@ -29,7 +29,7 @@ program
   .command('upload [files...]')
   .description('Uploads content to the data lake.')
   .option('-p, --producer [producer]', "Producer's name.")
-  .action((files, options) => {
+  .action(async (files, options) => {
     ensureVariables(['SIGNED_UPLOADS_API'], endpoints);
 
     let credentials = [];
@@ -54,7 +54,7 @@ program
       }));
     }
 
-    uploadFiles({ files, credentials, endpoints });
+    await uploadFiles({ files, credentials, endpoints });
   });
 
 program
