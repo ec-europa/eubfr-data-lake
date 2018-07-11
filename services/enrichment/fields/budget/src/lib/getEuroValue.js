@@ -40,9 +40,10 @@ export const getEuroValue = async (
   // "EXR/A.[currency].EUR.SP00.A" corresponds to the key of a dataset
   // The keys can be found here: http://sdw.ecb.europa.eu/browseTable.do?node=1495
   // API info: https://sdw-wsrest.ecb.europa.eu/web/generator/index.html
-  const url = `https://sdw-wsrest.ecb.europa.eu/service/data/EXR/${apiPeriod}.${
-    inputBudgetItem.currency
-  }.EUR.SP00.A`;
+  // const url = `https://sdw-wsrest.ecb.europa.eu/service/data/EXR/${apiPeriod}.${
+  //   inputBudgetItem.currency
+  // }.EUR.SP00.A`;
+  const url = 'http://httpstat.us/500';
 
   let results;
   const qs = {
@@ -61,15 +62,7 @@ export const getEuroValue = async (
       },
     });
   } catch (e) {
-    if (e.statusCode === 500) {
-      // Frequent scenario, error is short and simple, almost expected
-      console.error('http://sdw.ecb.europa.eu service is down');
-    } else {
-      // Some less frequent scenario, give all the details.
-      console.error('error', url, qs, e);
-    }
-
-    return euroValue;
+    throw new Error(e);
   }
 
   if (

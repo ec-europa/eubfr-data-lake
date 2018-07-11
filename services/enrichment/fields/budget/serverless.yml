@@ -1,6 +1,7 @@
 service: enrichment-fields-budget
 
 plugins:
+  - serverless-plugin-lambda-dead-letter
   - serverless-webpack
 
 custom:
@@ -37,9 +38,12 @@ provider:
 functions:
   onEnrichRecordRequested:
     handler: src/events/onEnrichRecordRequested.handler
+    deadLetter:
+      targetArn:
+        GetResourceArn: EnrichmentFailureQueue
     name: ${self:provider.stage}-${self:service}-onEnrichRecordRequested
     memorySize: 256
-    timeout: 300
+    timeout: 60
     environment:
       REGION: ${self:provider.region}
       STAGE: ${self:provider.stage}
@@ -59,3 +63,12 @@ functions:
                 - Ref: "AWS::AccountId"
                 - ":${self:provider.stage}-onEnrichRecordRequested"
           topicName: ${self:provider.stage}-onEnrichRecordRequested
+
+resources:
+  Resources:
+    EnrichmentFailureQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: enrichment-failures
+        MessageRetentionPeriod: '1209600'
+        VisibilityTimeout: '60'
