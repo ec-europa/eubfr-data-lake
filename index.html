@@ -204,6 +204,12 @@
                       </a></li>
                     
                       <li><a
+                        href="#iaticsvtransformgetreportingorganizations"
+                        class="ecl-link pre-open">
+                        getReportingOrganizations
+                      </a></li>
+                    
+                      <li><a
                         href="#iaticsvtransformformatdate"
                         class="ecl-link pre-open">
                         formatDate
@@ -484,6 +490,15 @@
                     
                     </ul>
                   
+                
+                </li>
+              
+                
+                <li class="ecl-link-block__item">
+                  <a href="#directorateabbreviation"
+                     class="ecl-link ecl-link--standalone ecl-link-block__link">
+                    DirectorateAbbreviation
+                  </a>
                 
                 </li>
               
@@ -1810,6 +1825,70 @@ Depends on:</p>
       <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#location">Location</a>>
       :
         
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='iaticsvtransformgetreportingorganizations' class="ecl-link ecl-link--standalone" aria-controls='iaticsvtransformgetreportingorganizations-panel' aria-expanded="true" href="#">
+      getReportingOrganizations
+    </a>
+    <div id='iaticsvtransformgetreportingorganizations-panel' aria-labelledby='iaticsvtransformgetreportingorganizations' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Prepares information for <code>reporting_organisation</code> field.
+Depends on:</p>
+<ul>
+<li><code>reporting-org-ref</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>
+      :
+        Abbreviation a given reporting DG.
 
       
     
@@ -4410,6 +4489,47 @@ output =&gt; <span class="hljs-string">"2014-10-09T00:00:00.000Z"</span></pre>
               <li class='ecl-list-item ecl-u-pv-m'>
   
     
+    <h3 class='ecl-heading ecl-heading--h3' id='directorateabbreviation'>
+      DirectorateAbbreviation
+    </h3>
+    
+    
+  
+
+  <p>Describes a valid EC directorate.</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+                  
+            
+              <li class='ecl-list-item ecl-u-pv-m'>
+  
+    
     <h3 class='ecl-heading ecl-heading--h3' id='budgetitem'>
       BudgetItem
     </h3>
@@ -5419,7 +5539,7 @@ Can be one of 'year', 'month' or 'day'</p>
         </li>
       
           <li>
-            reporting_organisation (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+            reporting_organisation (<a href="#directorateabbreviation">DirectorateAbbreviation</a>)
             
             
             
