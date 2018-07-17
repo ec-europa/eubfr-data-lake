@@ -194,7 +194,7 @@ export default (record: Object): Project =>
     project_locations: getLocations(record),
     project_website: getProjectWebsite(record),
     related_links: [],
-    reporting_organisation: '',
+    reporting_organisation: 'CNECT',
     results: {
       available: '',
       result: '',

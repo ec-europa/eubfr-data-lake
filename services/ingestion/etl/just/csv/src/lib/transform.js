@@ -153,7 +153,7 @@ export default (record: Object): Project => {
     project_locations: locationArray,
     project_website: record.field_prj_website || '',
     related_links: links,
-    reporting_organisation: '',
+    reporting_organisation: 'JUST',
     results: resultObject,
     status: '',
     sub_programme_name: '',

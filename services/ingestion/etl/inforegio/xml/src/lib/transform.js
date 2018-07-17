@@ -307,7 +307,7 @@ export default (record: Object): Project => {
     project_locations: locationArray,
     project_website: checkData(record.URL),
     related_links: [],
-    reporting_organisation: '',
+    reporting_organisation: 'REGIO',
     results: {
       available: '',
       result: '',

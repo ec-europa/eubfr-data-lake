@@ -97,6 +97,25 @@ const getLocations = record =>
     : [];
 
 /**
+ * Prepares information for `reporting_organisation` field.
+ * Depends on:
+ * - `reporting-org-ref`
+ *
+ * @memberof IatiCsvTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {String} Abbreviation a given reporting DG.
+ */
+const getReportingOrganizations = record => {
+  if (!record['reporting-org-ref']) return 'DEVCO';
+  const match = /XI-IATI-EC_(.*)/.exec(record['reporting-org-ref']);
+  if (match && match.length) {
+    // The abbreviation:
+    return match[1];
+  }
+  return 'DEVCO';
+};
+
+/**
  * Format date
  *
  * @memberof IatiCsvTransform
@@ -141,7 +160,7 @@ export default (record: Object): Project =>
     project_locations: getLocations(record),
     project_website: '',
     related_links: [],
-    reporting_organisation: record['reporting-org'] || '',
+    reporting_organisation: getReportingOrganizations(record),
     results: {
       available: '',
       result: '',
