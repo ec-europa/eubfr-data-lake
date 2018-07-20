@@ -19,14 +19,12 @@ Please fill in the description following the template.
 
 3.  Merge the changelog update.
 
-4.  Make sure you are logged in. `npm whoami` will show your npm username if you are logged in. Otherwise, please run `npm login`.
+4.  Pull the latest `master` branch.
 
-5.  Pull the latest `master` branch.
+5.  **Do not run `npm publish`. Instead, run `npm run publish`.**
 
-6.  Run `lerna publish`
+6.  The CLI will ask for a confirmation about the new package versions. Please verify them carefully before accepting.
 
-7.  The CLI will ask for a confirmation about the new package versions. Please verify them carefully before accepting.
+7.  Once you have accepted, the script will start publishing the packages to npm and creating the git tags.
 
-8.  Once you have accepted, the script will start publishing the packages to npm and creating the git tags.
-
-9.  Finally, create a GitHub Release with the same text as the changelog generated at step 2.
+8.  Finally, create a GitHub Release with the same text as the changelog generated at step 2.
