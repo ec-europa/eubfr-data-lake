@@ -21,6 +21,7 @@
     "flow-watch": "flow-watch",
     "lint": "eslint .",
     "precommit": "lint-staged",
+    "publish": "./scripts/deployment/release.sh",
     "test:unit": "lerna run --parallel test:unit",
     "test:lint": "npm run lint",
     "test:flow": "npm run flow",

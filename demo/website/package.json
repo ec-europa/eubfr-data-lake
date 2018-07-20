@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@eubfr/demo-website",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "scripts": {
     "start": "npm run prepare && react-scripts start",
     "build": "npm run prepare && react-scripts build",
