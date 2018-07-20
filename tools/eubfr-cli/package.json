@@ -1,12 +1,12 @@
 {
   "private": true,
   "name": "@eubfr/cli",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "bin": {
     "eubfr-cli": "./bin/cli.js"
   },
   "dependencies": {
-    "@eubfr/lib": "0.0.1",
+    "@eubfr/lib": "^0.1.0",
     "aws4": "1.7.0",
     "commander": "2.15.1",
     "elasticsearch": "15.0.0",
