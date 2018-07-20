@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "serverless-plugin-elasticsearch-index",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "dependencies": {
     "aws-sdk": "2.248.1",
     "elasticsearch": "15.0.0",
