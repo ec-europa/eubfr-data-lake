@@ -16,10 +16,10 @@ Model to compare with is available at: https://ec-europa.github.io/eubfr-data-la
 | endDate              | timeframe.to          |
 | projectUrl           | project_website       |
 | objective            | description           |
-| totalCost            | budget.totalCost      |
+| totalCost            | budget.total_cost     |
 | ecMaxContribution    | budget.eu_contrib     |
 | call                 |                       |
-| fundingScheme        |                       |
+| fundingScheme        | action                |
 | coordinator          | third_parties.name    |
 | coordinatorCountry   | third_parties.country |
 | participants         |                       |
