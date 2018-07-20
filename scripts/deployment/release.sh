@@ -19,4 +19,4 @@ if [ -n "$(git status --porcelain)" ]; then
 fi
 
 # Publish
-./node_modules/.bin/lerna publish --conventional-commits --skip-git --skip-npm "$@"
+npx lerna publish --conventional-commits --skip-git --skip-npm "$@"
