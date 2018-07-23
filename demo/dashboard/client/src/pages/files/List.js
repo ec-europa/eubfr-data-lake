@@ -47,6 +47,7 @@ class List extends Component {
             index: metaIndex,
             type: 'file',
             body: {
+              size: 1,
               query: {
                 term: {
                   producer_id: process.env.REACT_APP_PRODUCER,

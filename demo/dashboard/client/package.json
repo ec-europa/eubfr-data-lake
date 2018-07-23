@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@ecl/ec-preset-website": "1.1.0",
-    "@eubfr/logger-messenger": "0.0.1",
+    "@eubfr/logger-messenger": "^0.1.0",
     "elasticsearch": "15.0.0",
     "prop-types": "15.6.1",
     "react": "16.4.0",
