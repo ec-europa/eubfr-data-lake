@@ -72,14 +72,15 @@ class File extends React.Component {
   loadFile() {
     const { match } = this.props;
     const computedKey = decodeURIComponent(match.params.id);
-    const producerId = computedKey.split('/')[0];
 
     this.setState({ fileLoading: true }, () =>
       this.clients.private
         .search({
           index: indices.meta,
           type: 'file',
-          q: `computed_key:"${computedKey}"&producer_id:"${producerId}"`,
+          q: `computed_key:"${computedKey}"+producer_id:"${
+            process.env.REACT_APP_PRODUCER
+          }"`,
         })
         .then(data =>
           this.setState({
