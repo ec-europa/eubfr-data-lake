@@ -37,10 +37,9 @@ const getCoordinators = record => ({
  * No input fields, location is not provided
  *
  * @memberof CordisCsvTransform
- * @param {Object} record The row received from parsed file
  * @returns {Array} List of {Location} objects for `project_locations` field
  */
-const getLocations = record => {
+const getLocations = () => {
   const projectLongitude = '';
   const projectLatitude = '';
 
@@ -111,7 +110,7 @@ const getBudget = record => ({
  */
 export default (record: Object): Project => {
   // Preprocess locations
-  const locationArray = getLocations(record);
+  const locationArray = getLocations();
 
   // Preprocess results
   const resultObject = {
