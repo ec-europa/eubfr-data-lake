@@ -36,7 +36,7 @@ cd ../etl/agri/csv
 npx serverless deploy -v
 cd ../../budg/xls
 npx serverless deploy -v
-cd ../../cordis/xls
+cd ../../cordis/csv
 npx serverless deploy -v
 cd ../../iati/csv
 npx serverless deploy -v

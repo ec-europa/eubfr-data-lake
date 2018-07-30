@@ -85,7 +85,7 @@ const getDescription = record => {
  * @param {Object} record The row received from parsed file
  * @returns {Array} List of {ThirdParty} objects
  */
-const getTrirdParties = record => {
+const getThirdParties = record => {
   const thirdParties = [];
 
   if (record.coordinator) {
@@ -164,7 +164,7 @@ const formatDate = date => {
  */
 export default (record: Object): Project => {
   // Preprocess third parties
-  const thirdPartiesArray = getTrirdParties(record);
+  const thirdPartiesArray = getThirdParties(record);
 
   // Map the fields
   return {
