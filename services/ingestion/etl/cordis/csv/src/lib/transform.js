@@ -4,8 +4,82 @@ import sanitizeBudgetItem from '@eubfr/lib/budgetFormatter';
 import getCountryCode from '@eubfr/lib/getCountryCode';
 import type { Project } from '@eubfr/types';
 
+/*
+ * Transform message (CORDIS CSV)
+ */
+
+/**
+ * Preprocess `funding_area`
+ * Input fields taken from the `record` are:
+ * - `fundingScheme`
+ *
+ * @memberof CordisCsvTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {Array}
+ */
+
+const getFundingArea = record => [record.fundingScheme] || [];
+
+/**
+ * Preprocess budget
+ *
+ * @memberof CordisCsvTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {Budget}
+ */
+const getBudget = record => ({
+  total_cost: sanitizeBudgetItem({
+    value: record.totalCost,
+    currency: 'EUR',
+    raw: record.totalCost,
+  }),
+  eu_contrib: sanitizeBudgetItem({
+    value: record.ecMaxContribution,
+    currency: 'EUR',
+    raw: record.ecMaxContribution,
+  }),
+  private_fund: sanitizeBudgetItem(),
+  public_fund: sanitizeBudgetItem(),
+  other_contrib: sanitizeBudgetItem(),
+  funding_area: getFundingArea(record),
+  mmf_heading: record.call || '',
+});
+
+/**
+ * Preprocess description
+ * Concatenation of several fields as requested in https://webgate.ec.europa.eu/CITnet/jira/browse/EUBFR-200?focusedCommentId=2808845&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-2808845
+ * Input fields taken from the `record` are:
+ * - `acronym`
+ * - `objective`
+ * - `rcn`
+ * - `topic`
+ *
+ * @memberof CordisCsvTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {String}
+ */
+const getDescription = record => {
+  const description = {};
+  const fields = ['rcn', 'acronym', 'topics', 'objective'];
+
+  fields.forEach(field => {
+    if (record[field]) {
+      description[field] = record[field];
+    }
+  });
+
+  return Object.keys(description)
+    .map(key => `${key}: ${description[key]}`)
+    .join('\n');
+};
+
 /**
  * Preprocess third parties
+ * Input fields taken from the `record` are:
+ * - `coordinator`
+ * - `coordinatorCountry`
+ * - `participants`
+ * - `participantCountries`
  *
  * @memberof CordisCsvTransform
  * @param {Object} record The row received from parsed file
@@ -59,76 +133,26 @@ const getTrirdParties = record => {
   return thirdParties;
 };
 
-/*
- * Transform message (CORDIS CSV)
- */
-
 /**
- * Preprocess locations
- *
- * No input fields, location is not provided
+ * Format date
  *
  * @memberof CordisCsvTransform
- * @returns {Array} List of {Location} objects for `project_locations` field
+ * @param {Date} date Date in `YYYY-MM-DD` (ISO) format
+ * @returns {Date} The date formatted into an ISO 8601 date format
+ *
+ * @example
+ * input => "2018-12-31"
+ * output => "2018-12-31T00:00:00.000Z"
  */
-const getLocations = () => {
-  const projectLongitude = '';
-  const projectLatitude = '';
+const formatDate = date => {
+  if (!date || typeof date !== 'string') return null;
 
-  const country = '';
-  const hasCoordinates = projectLongitude && projectLatitude;
-
-  return [
-    {
-      country_code: (country && getCountryCode(country)) || '',
-      region: '',
-      nuts: [],
-      address: '',
-      postal_code: '',
-      town: '',
-      centroid: hasCoordinates
-        ? {
-            lon: parseFloat(projectLongitude) || 0,
-            lat: parseFloat(projectLatitude) || 0,
-          }
-        : null,
-      location: hasCoordinates
-        ? {
-            type: 'Point',
-            coordinates: [
-              parseFloat(projectLongitude) || 0,
-              parseFloat(projectLatitude) || 0,
-            ],
-          }
-        : null,
-    },
-  ];
+  try {
+    return new Date(date).toISOString();
+  } catch (e) {
+    return null;
+  }
 };
-
-/**
- * Preprocess budget
- *
- * @memberof CordisCsvTransform
- * @param {Object} record The row received from parsed file
- * @returns {Budget}
- */
-const getBudget = record => ({
-  total_cost: sanitizeBudgetItem({
-    value: record.totalCost,
-    currency: 'EUR',
-    raw: record.totalCost,
-  }),
-  eu_contrib: sanitizeBudgetItem({
-    value: record.ecMaxContribution,
-    currency: 'EUR',
-    raw: record.ecMaxContribution,
-  }),
-  private_fund: sanitizeBudgetItem(),
-  public_fund: sanitizeBudgetItem(),
-  other_contrib: sanitizeBudgetItem(),
-  funding_area: [],
-  mmf_heading: '',
-});
 
 /**
  * Map fields for CORDIS producer, CSV file types
@@ -141,48 +165,37 @@ const getBudget = record => ({
  * @returns {Project} JSON matching the type fields.
  */
 export default (record: Object): Project => {
-  // Preprocess locations
-  const locationArray = getLocations();
-
-  // Preprocess results
-  const resultObject = {
-    available: '',
-    result: '',
-  };
-
   // Preprocess third parties
   const thirdPartiesArray = getTrirdParties(record);
 
   // Map the fields
   return {
-    action: record.fundingScheme || '',
+    action: '',
     budget: getBudget(record),
     call_year: '',
-    description: record.objective || '',
+    description: getDescription(record),
     ec_priorities: [],
     media: [],
     programme_name: record.frameworkProgramme || '',
     project_id: record.id || '',
-    project_locations: locationArray,
+    project_locations: [],
     project_website: record.projectUrl || '',
-    related_links: [
-      {
-        url: '',
-        label: '',
-      },
-    ],
+    related_links: [],
     reporting_organisation: 'DEVCO',
-    results: resultObject,
+    results: {
+      available: '',
+      result: '',
+    },
     status: record.status || '',
     sub_programme_name: record.programme || '',
     success_story: '',
     themes: [],
     third_parties: thirdPartiesArray,
     timeframe: {
-      from: record.startDate || '',
-      from_precision: 'year',
-      to: record.endDate || '',
-      to_precision: 'year',
+      from: formatDate(record.startDate),
+      from_precision: 'day',
+      to: formatDate(record.endDate),
+      to_precision: 'day',
     },
     title: record.title || '',
     type: [],
