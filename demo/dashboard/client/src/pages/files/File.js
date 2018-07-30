@@ -78,7 +78,9 @@ class File extends React.Component {
         .search({
           index: indices.meta,
           type: 'file',
-          q: `computed_key:"${computedKey}"`,
+          q: `computed_key:"${computedKey}"+producer_id:"${
+            process.env.REACT_APP_PRODUCER
+          }"`,
         })
         .then(data =>
           this.setState({

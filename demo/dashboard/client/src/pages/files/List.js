@@ -47,25 +47,42 @@ class List extends Component {
             index: metaIndex,
             type: 'file',
             body: {
-              size: 1,
               query: {
                 term: {
                   producer_id: process.env.REACT_APP_PRODUCER,
                 },
               },
+              aggs: {
+                group_by_name: {
+                  terms: { field: 'computed_key' },
+                  aggs: {
+                    remove_dups: {
+                      top_hits: {
+                        sort: [{ last_modified: { order: 'desc' } }],
+                        size: 1,
+                      },
+                    },
+                  },
+                },
+              },
               sort: [{ last_modified: { order: 'desc' } }],
             },
           })
-          .then(data =>
+          .then(data => {
+            const files = [].concat(
+              ...data.aggregations.group_by_name.buckets.map(
+                bucket => bucket.remove_dups.hits.hits
+              )
+            );
             this.setState(
               {
                 loading: false,
-                files: data.hits.hits,
-                filesCount: data.hits.total,
+                files,
+                filesCount: files.length,
               },
               this.loadStatuses
-            )
-          )
+            );
+          })
           .catch(error => {
             throw Error(`An error occured: ${error.message}`);
           })
