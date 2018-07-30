@@ -5,27 +5,59 @@ import getCountryCode from '@eubfr/lib/getCountryCode';
 import type { Project } from '@eubfr/types';
 
 /**
- * Preprocess coordinators
+ * Preprocess third parties
  *
  * @memberof CordisCsvTransform
  * @param {Object} record The row received from parsed file
- * @returns {Array} List of {Coordinator} objects for `coordinators` field
- *
- * @example
- * input => "Eva Maria Plunger (VERBUND AG); foo; bar"
- * output => ["Eva Maria Plunger (VERBUND AG)", "foo", "bar"]
+ * @returns {Array} List of {ThirdParty} objects
  */
-const getCoordinators = record => ({
-  name: record.coordinator || '',
-  type: '',
-  address: '',
-  region: '',
-  role: 'coordinator',
-  country: record.coordinatorCountry || '',
-  website: '',
-  phone: '',
-  email: '',
-});
+const getTrirdParties = record => {
+  const thirdParties = [];
+
+  if (record.coordinator) {
+    thirdParties.push({
+      name: record.coordinator,
+      type: '',
+      address: '',
+      region: '',
+      role: 'coordinator',
+      country: record.coordinatorCountry || '',
+      website: '',
+      phone: '',
+      email: '',
+    });
+  }
+
+  if (record.participants) {
+    const participants = record.participants
+      .split(';')
+      .filter(participant => participant)
+      .trim()
+      .map(participant => ({
+        name: participant,
+        type: '',
+        address: '',
+        region: '',
+        role: 'coordinator',
+        website: '',
+        phone: '',
+        email: '',
+      }));
+
+    record.participantCountries
+      .split(';')
+      .filter(participantCountry => participantCountry)
+      .trim()
+      .toUpperCase()
+      .forEach((country, participantKey) => {
+        participants[participantKey].country = getCountryCode(country);
+      });
+
+    thirdParties.push(...participants);
+  }
+
+  return thirdParties;
+};
 
 /*
  * Transform message (CORDIS CSV)
@@ -119,7 +151,7 @@ export default (record: Object): Project => {
   };
 
   // Preprocess third parties
-  const thirdPartiesArray = [getCoordinators(record)];
+  const thirdPartiesArray = getTrirdParties(record);
 
   // Map the fields
   return {
