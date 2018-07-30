@@ -106,13 +106,12 @@ const getTrirdParties = record => {
     const participants = record.participants
       .split(';')
       .filter(participant => participant)
-      .trim()
       .map(participant => ({
-        name: participant,
+        name: participant.trim(),
         type: '',
         address: '',
         region: '',
-        role: 'coordinator',
+        role: 'participant',
         website: '',
         phone: '',
         email: '',
@@ -121,10 +120,9 @@ const getTrirdParties = record => {
     record.participantCountries
       .split(';')
       .filter(participantCountry => participantCountry)
-      .trim()
-      .toUpperCase()
       .forEach((country, participantKey) => {
-        participants[participantKey].country = getCountryCode(country);
+        const countryCode = country.trim().toUpperCase();
+        participants[participantKey].country = getCountryCode(countryCode);
       });
 
     thirdParties.push(...participants);

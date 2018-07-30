@@ -19,9 +19,4 @@ describe(`DG CORDIS CSV transformer`, () => {
   test(`Produces correct JSON output structure`, () => {
     expect(result).toMatchSnapshot();
   });
-
-  test(`Project location information is correctly mapped`, () => {
-    const firstLocation = result.project_locations[0];
-    expect(firstLocation).toMatchSnapshot();
-  });
 });
