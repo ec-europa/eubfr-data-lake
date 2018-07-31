@@ -27,23 +27,37 @@ const getFundingArea = record => [record.fundingScheme] || [];
  * @param {Object} record The row received from parsed file
  * @returns {Budget}
  */
-const getBudget = record => ({
-  total_cost: sanitizeBudgetItem({
-    value: record.totalCost,
-    currency: 'EUR',
-    raw: record.totalCost,
-  }),
-  eu_contrib: sanitizeBudgetItem({
-    value: record.ecMaxContribution,
-    currency: 'EUR',
-    raw: record.ecMaxContribution,
-  }),
-  private_fund: sanitizeBudgetItem(),
-  public_fund: sanitizeBudgetItem(),
-  other_contrib: sanitizeBudgetItem(),
-  funding_area: getFundingArea(record),
-  mmf_heading: record.call || '',
-});
+const getBudget = record => {
+  let euContrib = {
+    eu_contrib: sanitizeBudgetItem(),
+  };
+
+  const budget = {
+    total_cost: sanitizeBudgetItem({
+      value: record.totalCost,
+      currency: 'EUR',
+      raw: record.totalCost,
+    }),
+    private_fund: sanitizeBudgetItem(),
+    public_fund: sanitizeBudgetItem(),
+    other_contrib: sanitizeBudgetItem(),
+    funding_area: getFundingArea(record),
+    mmf_heading: record.call || '',
+  };
+
+  // If ecMaxContribution is given and it's not a percentage, use it
+  if (record.ecMaxContribution && record.ecMaxContribution > 100) {
+    euContrib = {
+      eu_contrib: sanitizeBudgetItem({
+        value: record.ecMaxContribution,
+        currency: 'EUR',
+        raw: record.ecMaxContribution,
+      }),
+    };
+  }
+
+  return Object.assign({}, budget, euContrib);
+};
 
 /**
  * Preprocess description
@@ -71,6 +85,54 @@ const getDescription = record => {
   return Object.keys(description)
     .map(key => `${key}: ${description[key]}`)
     .join('\n');
+};
+
+const getCode = code => (code ? getCountryCode(code.trim().toUpperCase()) : '');
+
+/**
+ * Preprocess project_locations
+ * Input fields taken from the `record` are:
+ * - `participants`
+ * - `participantCountries`
+ *
+ * @memberof CordisCsvTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {Array} List of {Location} objects for `project_locations` field
+ */
+const getLocations = record => {
+  const locations = [];
+
+  if (record.participantCountries) {
+    const loc = record.participantCountries
+      .split(';')
+      // Remove empty
+      .filter(country => country)
+      .map(country => {
+        const code = getCode(country);
+
+        if (code) {
+          return {
+            country_code: code,
+            region: '',
+            nuts: [],
+            address: '',
+            postal_code: '',
+            town: '',
+            centroid: null,
+            location: null,
+          };
+        }
+
+        // empty string of nothing else
+        return code;
+      })
+      // Remove empty
+      .filter(country => country);
+
+    locations.push(...loc);
+  }
+
+  return locations;
 };
 
 /**
@@ -178,10 +240,10 @@ export default (record: Object): Project => {
     media: [],
     programme_name: record.frameworkProgramme || '',
     project_id: record.id || '',
-    project_locations: [],
+    project_locations: getLocations(record),
     project_website: record.projectUrl || '',
     related_links: [],
-    reporting_organisation: 'DEVCO',
+    reporting_organisation: 'RTD',
     results: {
       available: '',
       result: '',
