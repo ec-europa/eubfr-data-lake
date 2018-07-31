@@ -121,8 +121,10 @@ const getThirdParties = record => {
       .split(';')
       .filter(participantCountry => participantCountry)
       .forEach((country, participantKey) => {
-        const countryCode = country.trim().toUpperCase();
-        participants[participantKey].country = getCountryCode(countryCode);
+        if (participants[participantKey]) {
+          const countryCode = country.trim().toUpperCase();
+          participants[participantKey].country = getCountryCode(countryCode);
+        }
       });
 
     thirdParties.push(...participants);
