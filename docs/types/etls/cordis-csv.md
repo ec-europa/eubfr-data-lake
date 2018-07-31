@@ -54,6 +54,20 @@ Input fields taken from the `record` are:
 
 Returns **[String][6]** 
 
+### getLocations
+
+Preprocess project_locations
+Input fields taken from the `record` are:
+
+-   `participants`
+-   `participantCountries`
+
+**Parameters**
+
+-   `record` **[Object][3]** The row received from parsed file
+
+Returns **[Array][4]** List of {Location} objects for `project_locations` field
+
 ### getThirdParties
 
 Preprocess third parties
