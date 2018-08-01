@@ -123,8 +123,7 @@ const getLocations = record => {
           };
         }
 
-        // empty string of nothing else
-        return code;
+        return '';
       })
       // Remove empty
       .filter(country => country);
@@ -226,7 +225,9 @@ const formatDate = date => {
  * @param {Object} record Piece of data to transform before going to harmonized storage.
  * @returns {Project} JSON matching the type fields.
  */
-export default (record: Object): Project => {
+export default (record: Object): Project | null => {
+  if (!record) return null;
+
   // Preprocess third parties
   const thirdPartiesArray = getThirdParties(record);
 

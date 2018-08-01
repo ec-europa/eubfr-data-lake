@@ -127,7 +127,9 @@ const getRelatedLinks = record =>
  * @param {Object} record Piece of data to transform before going to harmonized storage.
  * @returns {Project} JSON matching the type fields.
  */
-export default (record: Object): Project => {
+export default (record: Object): Project | null => {
+  if (!record) return null;
+
   // Preprocess locations
   const locationArray = getLocations(record);
 
