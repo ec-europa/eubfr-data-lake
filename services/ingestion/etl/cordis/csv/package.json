@@ -1,0 +1,27 @@
+{
+  "private": true,
+  "name": "@eubfr/ingestion-etl-cordis-csv",
+  "version": "0.1.0",
+  "scripts": {
+    "deploy": "sls deploy -v",
+    "test:unit": "jest --testPathPattern=unit"
+  },
+  "dependencies": {
+    "@eubfr/lib": "^0.1.0",
+    "@eubfr/logger-messenger": "^0.1.0",
+    "csv-parse": "2.4.0",
+    "stream-transform": "1.0.2"
+  },
+  "devDependencies": {
+    "@eubfr/types": "^0.1.0",
+    "aws-sdk": "2.248.1",
+    "babel-core": "6.26.3",
+    "babel-loader": "7.1.4",
+    "babel-preset-env": "1.7.0",
+    "babel-preset-flow": "6.23.0",
+    "jest": "23.0.1",
+    "serverless": "1.28.0",
+    "serverless-webpack": "5.1.5",
+    "webpack": "4.10.0"
+  }
+}

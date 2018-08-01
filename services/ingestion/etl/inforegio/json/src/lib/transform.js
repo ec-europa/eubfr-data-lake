@@ -224,7 +224,9 @@ const formatBudget = budget => {
  * @param {Object} record Piece of data to transform before going to harmonized storage.
  * @returns {Project} JSON matching the type fields.
  */
-export default (record: Object): Project => {
+export default (record: Object): Project | null => {
+  if (!record) return null;
+
   // Preprocess budget
   const budgetObject = {
     total_cost: formatBudget(record.Total_project_budget),

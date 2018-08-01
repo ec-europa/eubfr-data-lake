@@ -37,11 +37,11 @@ echo 'Deploying dashboard client...'
 EUBFR_USERNAME=budg yarn run build
 yarn run sls client deploy --username budg --no-confirm
 
-## INFOREGIO demo
+## CORDIS demo
 
 cd ../server
 echo 'Start demo dashboard server deploy ...'
-yarn deploy --username inforegio
+yarn deploy --username cordis
 
 cd ../client
 echo 'Start demo dashboard client deploy ...'
@@ -49,8 +49,8 @@ echo 'Cleaning previous builds ...'
 rm -rf build
 
 echo 'Deploying dashboard client...'
-EUBFR_USERNAME=inforegio yarn run build
-yarn run sls client deploy --username inforegio --no-confirm
+EUBFR_USERNAME=cordis yarn run build
+yarn run sls client deploy --username cordis --no-confirm
 
 ## IATI demo
 
@@ -66,6 +66,22 @@ rm -rf build
 echo 'Deploying dashboard client...'
 EUBFR_USERNAME=iati yarn run build
 yarn run sls client deploy --username iati --no-confirm
+
+## INFOREGIO demo
+
+cd ../server
+echo 'Start demo dashboard server deploy ...'
+yarn deploy --username inforegio
+
+cd ../client
+echo 'Start demo dashboard client deploy ...'
+echo 'Cleaning previous builds ...'
+rm -rf build
+
+echo 'Deploying dashboard client...'
+EUBFR_USERNAME=inforegio yarn run build
+yarn run sls client deploy --username inforegio --no-confirm
+
 
 ## VALOR demo
 

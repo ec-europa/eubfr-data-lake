@@ -146,9 +146,10 @@ const formatDate = date => {
  * @param {Object} record Piece of data to transform before going to harmonized storage.
  * @returns {Project} JSON matching the type fields.
  */
-export default (record: Object): Project =>
-  // Map the fields
-  ({
+export default (record: Object): Project | null => {
+  if (!record) return null;
+
+  return {
     action: '',
     budget: getBudget(record),
     call_year: '',
@@ -178,4 +179,5 @@ export default (record: Object): Project =>
     },
     title: record.title || '',
     type: [],
-  });
+  };
+};

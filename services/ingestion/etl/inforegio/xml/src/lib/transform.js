@@ -268,7 +268,9 @@ const getBeneficiaries = record =>
  * @param {Object} record The row received from parsed file
  * @returns {Project} JSON matching the type fields
  */
-export default (record: Object): Project => {
+export default (record: Object): Project | null => {
+  if (!record) return null;
+
   // Preprocess budget
   const budgetObject = {
     total_cost: formatBudget(checkData(record.Total_project_budget)),
