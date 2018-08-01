@@ -5,18 +5,18 @@
 import mapper from '../../../src/lib/transform';
 import testRecord from '../../stubs/record.json';
 
-describe(`DG INFOREGIO XLS transformer`, () => {
+describe('DG INFOREGIO XLS transformer', () => {
   let result = {};
 
   beforeAll(() => {
     result = mapper(testRecord);
   });
 
-  test(`Throws an error on empty input`, () => {
-    expect(mapper).toThrow();
+  test('Returns null when record is not provided', () => {
+    expect(mapper()).toBe(null);
   });
 
-  test(`Produces correct JSON output structure`, () => {
+  test('Produces correct JSON output structure', () => {
     expect(result).toMatchSnapshot();
   });
 });
