@@ -292,7 +292,7 @@ export default (record: Object): Project | null => {
     project_id: record.Nid || '',
     project_locations: locationArray,
     project_website: record['Project webpage'] || '',
-    public: true,
+    complete: true,
     related_links: links,
     reporting_organisation: 'AGRI',
     results: resultObject,

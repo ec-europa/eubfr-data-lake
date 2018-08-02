@@ -184,7 +184,7 @@ Type: [Project][18]
 -   `project_id` **[string][3]** 
 -   `project_locations` **[Array][6]&lt;[Location][10]>** 
 -   `project_website` **[string][3]** 
--   `public` **[boolean][19]** 
+-   `complete` **[boolean][19]** 
 -   `related_links` **[Array][6]&lt;[RelatedLink][14]>** 
 -   `reporting_organisation` **[DirectorateAbbreviation][1]** 
 -   `results` **[Result][15]** 

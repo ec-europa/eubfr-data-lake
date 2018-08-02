@@ -146,7 +146,7 @@ export default (record: Object): Project | null => {
     project_id: record['Project Identifier'] || '',
     project_locations: locationArray,
     project_website: record['Project Website'] || '',
-    public: true,
+    complete: true,
     related_links: [],
     reporting_organisation: 'EAC',
     results: resultObject,

@@ -35,6 +35,7 @@ Object {
     },
   },
   "call_year": "",
+  "complete": true,
   "description": "rcn: 215949
 acronym: UNISECO
 topics: SFS-29-2017
@@ -196,7 +197,6 @@ objective: The overarching objective of UNISECO is to strengthen the sustainabil
     },
   ],
   "project_website": "",
-  "public": true,
   "related_links": Array [],
   "reporting_organisation": "RTD",
   "results": Object {
@@ -451,6 +451,7 @@ Object {
     },
   },
   "call_year": "",
+  "complete": true,
   "description": "rcn: 215954
 acronym: SMARTER
 topics: SFS-15-2016-2017
@@ -472,7 +473,6 @@ objective: SMARTER will develop and deploy innovative strategies to improve Resi
     },
   ],
   "project_website": "",
-  "public": true,
   "related_links": Array [],
   "reporting_organisation": "RTD",
   "results": Object {

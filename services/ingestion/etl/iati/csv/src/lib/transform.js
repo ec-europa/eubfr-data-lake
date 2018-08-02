@@ -160,7 +160,7 @@ export default (record: Object): Project | null => {
     project_id: getProjectId(record),
     project_locations: getLocations(record),
     project_website: '',
-    public: true,
+    complete: true,
     related_links: [],
     reporting_organisation: getReportingOrganizations(record),
     results: {
