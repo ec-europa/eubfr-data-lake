@@ -18,7 +18,7 @@ Model to compare with is available at: https://ec-europa.github.io/eubfr-data-la
 | objective            | description           |
 | totalCost            | budget.total_cost     |
 | ecMaxContribution    | budget.eu_contrib     |
-| call                 | mmf_heading           |
+| call                 | budget.mmf_heading    |
 | fundingScheme        | funding_area          |
 | coordinator          | third_parties.name    |
 | coordinatorCountry   | third_parties.country |
