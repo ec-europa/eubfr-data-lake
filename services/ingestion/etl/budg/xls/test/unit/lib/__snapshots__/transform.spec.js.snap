@@ -293,7 +293,7 @@ Object {
       "town": "",
     },
   ],
-  "project_website": undefined,
+  "project_website": "",
   "public": true,
   "related_links": Array [],
   "reporting_organisation": "BUDG",
@@ -348,7 +348,7 @@ Object {
       "region": "Bosnia And Herzegovina",
       "role": "partner",
       "type": "Festival (non Audiovisual)",
-      "website": undefined,
+      "website": "",
     },
     Object {
       "address": "UL MIODOWA 22/24, 00 246, WARSZAWA",
