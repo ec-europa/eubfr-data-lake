@@ -92,7 +92,7 @@ const getPartners = record => {
         region: record[`Partner ${i} region`],
         role: 'partner',
         country: record[`Partner ${i} country`],
-        website: record[`Partner ${i} website`],
+        website: record[`Partner ${i} website`] || '',
         phone: '',
         email: '',
       });
@@ -206,7 +206,8 @@ export default (record: Object): Project | null => {
     programme_name: record.Programme,
     project_id: record['Project Number'],
     project_locations: locationArray,
-    project_website: record['Project Website'],
+    project_website: record['Project Website'] || '',
+    complete: true,
     related_links: [],
     reporting_organisation: 'BUDG',
     results: resultObject,

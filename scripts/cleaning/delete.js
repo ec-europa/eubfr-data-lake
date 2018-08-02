@@ -19,6 +19,7 @@ deleteServices([
   'ingestion-cleaner',
   'ingestion-etl-agri-csv',
   'ingestion-etl-budg-xls',
+  'ingestion-etl-cordis-csv',
   'ingestion-etl-inforegio-json',
   'ingestion-etl-inforegio-xml',
   'ingestion-etl-iati-csv',
