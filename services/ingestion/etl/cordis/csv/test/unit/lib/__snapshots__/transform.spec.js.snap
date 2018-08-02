@@ -196,6 +196,7 @@ objective: The overarching objective of UNISECO is to strengthen the sustainabil
     },
   ],
   "project_website": "",
+  "public": true,
   "related_links": Array [],
   "reporting_organisation": "RTD",
   "results": Object {
@@ -471,6 +472,7 @@ objective: SMARTER will develop and deploy innovative strategies to improve Resi
     },
   ],
   "project_website": "",
+  "public": true,
   "related_links": Array [],
   "reporting_organisation": "RTD",
   "results": Object {

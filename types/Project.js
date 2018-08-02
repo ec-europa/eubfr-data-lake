@@ -175,6 +175,7 @@ export type Project = {
   project_id: string,
   project_locations: Array<Location>,
   project_website: string,
+  public: boolean,
   related_links: Array<RelatedLink>,
   reporting_organisation: DirectorateAbbreviation,
   results: Result,

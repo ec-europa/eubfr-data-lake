@@ -308,6 +308,7 @@ export default (record: Object): Project | null => {
     project_id: checkData(record.PROJECTID).toString(),
     project_locations: locationArray,
     project_website: checkData(record.URL),
+    public: true,
     related_links: [],
     reporting_organisation: 'REGIO',
     results: {

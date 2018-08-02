@@ -51,6 +51,7 @@ Object {
     },
   ],
   "project_website": "https://www.wifi4eu.eu",
+  "public": true,
   "related_links": Array [],
   "reporting_organisation": "CNECT",
   "results": Object {

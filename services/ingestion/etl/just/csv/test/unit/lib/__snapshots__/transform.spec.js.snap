@@ -51,6 +51,7 @@ Object {
     },
   ],
   "project_website": "http://www.gear-ipv.eu",
+  "public": true,
   "related_links": Array [
     Object {
       "label": "",

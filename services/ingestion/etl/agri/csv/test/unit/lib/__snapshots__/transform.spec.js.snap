@@ -152,6 +152,7 @@ Object {
     },
   ],
   "project_website": "http://www.cegc-project.eu/",
+  "public": true,
   "related_links": Array [
     Object {
       "label": "INEA",
@@ -398,6 +399,7 @@ Object {
     },
   ],
   "project_website": "",
+  "public": true,
   "related_links": Array [],
   "reporting_organisation": "AGRI",
   "results": Object {

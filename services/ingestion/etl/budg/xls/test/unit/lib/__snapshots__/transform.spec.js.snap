@@ -101,6 +101,7 @@ Object {
     },
   ],
   "project_website": "",
+  "public": true,
   "related_links": Array [],
   "reporting_organisation": "BUDG",
   "results": Object {
@@ -293,6 +294,7 @@ Object {
     },
   ],
   "project_website": undefined,
+  "public": true,
   "related_links": Array [],
   "reporting_organisation": "BUDG",
   "results": Object {
