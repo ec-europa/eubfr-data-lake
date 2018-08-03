@@ -85,6 +85,8 @@ export const handler = async (event, context, callback) => {
 
     // Manage data
     readStream.on('end', () => {
+      let dataString = '';
+
       try {
         // Parse file
         const buffer = Buffer.concat(buffers);
@@ -115,13 +117,47 @@ export const handler = async (event, context, callback) => {
         parsedSheet.shift();
 
         // Normalize the list by replacing properties
-        // @TODO prepare the data for the transform to work as usual.
+        const mappedRecords = parsedSheet.map(record => {
+          const mapped = {};
+          Object.keys(record).forEach(prop => {
+            mapped[headerRow[prop]] = record[prop];
+          });
+          return mapped;
+        });
 
-        // for (let i = 0; i < parser.length; i += 1) {
-        //   // Transform data
-        //   const data = transformRecord(parser[i]);
-        //   dataString += `${JSON.stringify(data)}\n`;
-        // }
+        const combinedRecords = [];
+        const matchField = 'Project Number';
+
+        const accumulators = [
+          'Participant Legal Name',
+          'Participant Role',
+          'Participant LE Country Code',
+        ];
+
+        mappedRecords.forEach(rawRecord => {
+          const existingRecordIndex = combinedRecords.findIndex(
+            combinedRecord =>
+              combinedRecord[matchField] === rawRecord[matchField]
+          );
+
+          if (existingRecordIndex >= 0) {
+            const recordTarget = combinedRecords[existingRecordIndex];
+
+            accumulators.forEach(accumulatorField => {
+              recordTarget[accumulatorField] = `${
+                recordTarget[accumulatorField]
+              };${rawRecord[accumulatorField]}`;
+            });
+          } else {
+            combinedRecords.push(rawRecord);
+          }
+        });
+
+        for (let i = 0; i < combinedRecords.length; i += 1) {
+          // Transform data
+          const data = transformRecord(combinedRecords[i]);
+          dataString += `${JSON.stringify(data)}\n`;
+        }
       } catch (e) {
         return handleError(e, reject);
       }
@@ -130,8 +166,7 @@ export const handler = async (event, context, callback) => {
       const params = {
         Bucket: BUCKET,
         Key: `${message.object.key}.ndjson`,
-        Body: '',
-        // Body: dataString,
+        Body: dataString,
         ContentType: 'application/x-ndjson',
       };
 
