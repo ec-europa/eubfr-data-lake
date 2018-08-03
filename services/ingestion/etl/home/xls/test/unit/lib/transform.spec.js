@@ -16,7 +16,7 @@ describe('DG HOME XLS transformer', () => {
     expect(mapper()).toBe(null);
   });
 
-  test('Produces correct JSON output structure, year in 2 digits', () => {
+  test('Produces correct JSON output structure', () => {
     expect(result).toMatchSnapshot();
   });
 });
