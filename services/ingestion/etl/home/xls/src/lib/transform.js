@@ -111,12 +111,55 @@ const getProgrammeName = record => {
 /**
  * Formats the third_parties
  *
+ * Input fields taken from the `record` are:
+ *
+ * - `Participant Legal Name`
+ * - `Participant Role`
+ * - `Participant LE Country Code`
+ * - `Project PCOCO First Name`
+ * - `Project PCOCO Last Name`
+ * - `Project PCOCO Email`
+ *
  * @memberof HomeXlsTransform
  * @param {Object} record Piece of data to transform before going to harmonized storage.
  * @returns {ThirdParty}
  */
 const getThirdParties = record => {
   const actors = [];
+
+  const roles = record['Participant Role'].split(';').filter(p => p);
+  const countries = record['Participant LE Country Code']
+    .split(';')
+    .filter(c => c);
+
+  if (roles) {
+    roles.forEach((role, actorKey) => {
+      // prepare the common structure for the third party object
+      const actor = {
+        address: '',
+        country: countries[actorKey] ? getCountryCode(countries[actorKey]) : '',
+        email: '',
+        name: '',
+        phone: '',
+        region: '',
+        role: '',
+        type: '',
+        website: '',
+      };
+
+      if (role === 'COORDINATOR') {
+        actor.role = 'coordinator';
+        actor.email = record['Project PCOCO Email'] || '';
+        actor.name = `${record['Project PCOCO First Name']} ${
+          record['Project PCOCO Last Name']
+        }`;
+      } else {
+        actor.role = 'participant';
+      }
+
+      actors.push(actor);
+    });
+  }
 
   return actors;
 };
