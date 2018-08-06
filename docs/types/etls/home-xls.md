@@ -14,13 +14,26 @@ Transform function: [implementation details][2]
 
 Returns **Project** JSON matching the type fields.
 
+### getFundingArea
+
+Preprocess budget funding_area field
+
+Input fields taken from the `record` are:
+
+-   `Project Call Id`
+
+**Parameters**
+
+-   `record` **[Object][3]** The row received from harmonized storage
+
+Returns **[Array][4]** List of string values for `funding_area` field
+
 ### getBudget
 
 Preprocess budget field.
 
 Input fields taken from the `record` are:
 
--   `Project Call Id`
 -   `Project Requested EU Contrib`
 
 **Parameters**
@@ -60,6 +73,20 @@ Input fields taken from the `record` are:
 
 Returns **ThirdParty** 
 
+### getProjectLocations
+
+Formats the project_locations
+
+Input fields taken from the `record` are:
+
+-   `Participant LE Country Code`
+
+**Parameters**
+
+-   `record` **[Object][3]** Piece of data to transform before going to harmonized storage.
+
+Returns **ThirdParty** 
+
 ### getThirdParties
 
 Formats the third_parties
@@ -69,9 +96,6 @@ Input fields taken from the `record` are:
 -   `Participant Legal Name`
 -   `Participant Role`
 -   `Participant LE Country Code`
--   `Project PCOCO First Name`
--   `Project PCOCO Last Name`
--   `Project PCOCO Email`
 
 **Parameters**
 
@@ -85,7 +109,7 @@ Format date
 
 **Parameters**
 
--   `date` **[Date][4]** Date in "10/9/14" (MM/DD/YY) or "10/9/2014" (MM/DD/YYYY) format
+-   `date` **[Date][5]** Date in "10/9/14" (MM/DD/YY) or "10/9/2014" (MM/DD/YYYY) format
 
 **Examples**
 
@@ -94,7 +118,7 @@ input => "10/9/2014"
 output => "2014-10-09T00:00:00.000Z"
 ```
 
-Returns **[Date][4]** The date formatted into an ISO 8601 date format
+Returns **[Date][5]** The date formatted into an ISO 8601 date format
 
 [1]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/home/xls/test/stubs/record.json
 
@@ -102,4 +126,6 @@ Returns **[Date][4]** The date formatted into an ISO 8601 date format
 
 [3]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-[4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date
+[4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date

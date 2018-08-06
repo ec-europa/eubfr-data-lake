@@ -97,7 +97,11 @@ const getDescription = record => {
 
   fields.forEach(field => {
     if (record[field]) {
-      description[field] = record[field];
+      if (field === 'Project Duration') {
+        description[field] = `${record[field]} months`;
+      } else {
+        description[field] = record[field];
+      }
     }
   });
 
