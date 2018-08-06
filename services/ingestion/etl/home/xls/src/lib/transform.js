@@ -178,9 +178,6 @@ const getProjectLocations = record => {
  * - `Participant Legal Name`
  * - `Participant Role`
  * - `Participant LE Country Code`
- * - `Project PCOCO First Name`
- * - `Project PCOCO Last Name`
- * - `Project PCOCO Email`
  *
  * @memberof HomeXlsTransform
  * @param {Object} record Piece of data to transform before going to harmonized storage.
@@ -189,6 +186,7 @@ const getProjectLocations = record => {
 const getThirdParties = record => {
   const actors = [];
 
+  const names = record['Participant Legal Name'].split(';').filter(n => n);
   const roles = record['Participant Role'].split(';').filter(p => p);
   const countries = record['Participant LE Country Code']
     .split(';')
@@ -201,7 +199,7 @@ const getThirdParties = record => {
         address: '',
         country: countries[actorKey] ? getCountryCode(countries[actorKey]) : '',
         email: '',
-        name: '',
+        name: names[actorKey] ? names[actorKey] : '',
         phone: '',
         region: '',
         role: '',
@@ -211,12 +209,9 @@ const getThirdParties = record => {
 
       if (role === 'COORDINATOR') {
         actor.role = 'coordinator';
-        actor.email = record['Project PCOCO Email'] || '';
-        actor.name = `${record['Project PCOCO First Name']} ${
-          record['Project PCOCO Last Name']
-        }`;
       } else {
         actor.role = 'participant';
+        actor.type = 'beneficiary';
       }
 
       actors.push(actor);
