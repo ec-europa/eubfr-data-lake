@@ -38,20 +38,20 @@ Note that you will need to have the `config.json` file correctly setup in the ro
 
 #### Upload content
 
-- Single file: `npx eubfr-cli upload .content/agri/agri_history.csv -p agri`
-- Multiple files: `npx eubfr-cli upload .content/inforegio/EUBFR_VIEW_16052018.xml .content/inforegio/regio_projects.json -p inforegio`
-- All files: `npx eubfr-cli upload`
+- Single file: `npx eubfr-cli content-upload .content/agri/agri_history.csv -p agri`
+- Multiple files: `npx eubfr-cli content-upload .content/inforegio/EUBFR_VIEW_16052018.xml .content/inforegio/regio_projects.json -p inforegio`
+- All files: `npx eubfr-cli content-upload`
 
 Please note that although input paths are relative, only file names will be kept in the cloud. This means that, although you pass `.content/agri/agri_history.csv`, file name in the S3 bucket of AGRI will receive `agri_history.csv`.
 
 #### Show existing content
 
 - specific file by `computed_key`: `npx eubfr-cli show agri/16598a36-db86-42a0-8041-c0d85021ad97.csv`
-- all files of a given producer: `npx eubfr-cli show -p agri`
+- all files of a given producer: `npx eubfr-cli content-show -p agri`
 
 #### Delete content
 
-- delete one or multiple files: `npx eubfr-cli delete agri/foo budg/bar inforegio/baz`
-- delete all files of all producers `npx eubfr-cli delete`
+- delete one or multiple files: `npx eubfr-cli content-delete agri/foo budg/bar inforegio/baz`
+- delete all files of all producers `npx eubfr-cli content-delete`
 
 By default, you will be prompted to confirm your intention. You can skip the this prompt by adding `--confirm` flag.

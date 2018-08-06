@@ -10,10 +10,10 @@ const getCredentials = require('../lib/getProducerCredentials');
 const getEndpoints = require('../lib/getEndpoints');
 const getAllProducers = require('../lib/getAllProducers');
 
-// Commands
-const uploadFiles = require('../commands/upload');
-const showFile = require('../commands/show');
-const deleteFiles = require('../commands/delete');
+// Content-related commands
+const uploadFiles = require('../commands/content/upload');
+const showFile = require('../commands/content/show');
+const deleteFiles = require('../commands/content/delete');
 
 // If -p is passed without actual value, it will be boolean true
 // Which is useless information in our case
@@ -26,7 +26,7 @@ const missingRequiredInput = '\n error: Missing required input parameters';
 program.version(pkg.version).usage('[command] [option]');
 
 program
-  .command('upload [files...]')
+  .command('content-upload [files...]')
   .description('Uploads content to the data lake.')
   .option('-p, --producer [producer]', "Producer's name.")
   .action(async (files, options) => {
@@ -58,7 +58,7 @@ program
   });
 
 program
-  .command('show [file]')
+  .command('content-show [file]')
   .description('Displays files of a given producer.')
   .option('-p, --producer [producer]', "Producer's name.")
   .action(async (file, options) => {
@@ -89,7 +89,7 @@ program
   });
 
 program
-  .command('delete [files...]')
+  .command('content-delete [files...]')
   .description('Deletes files by computed_key field.')
   .option('-c, --confirm [confirm]', 'Flag certainty of an operation.')
   .action(async (files, options) => {
