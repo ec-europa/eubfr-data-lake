@@ -161,7 +161,7 @@ const getProjectLocations = record => {
         centroid: null,
         country_code: getCountryCode(countryCode),
         location: null,
-        nults: [],
+        nuts: [],
         postal_code: '',
         region: '',
         town: '',
