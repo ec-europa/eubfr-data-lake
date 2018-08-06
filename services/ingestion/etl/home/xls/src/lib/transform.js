@@ -5,11 +5,48 @@ import getCountryCode from '@eubfr/lib/getCountryCode';
 import type { Project } from '@eubfr/types';
 
 /**
- * Preprocess budget field.
+ * Preprocess budget funding_area field
  *
  * Input fields taken from the `record` are:
  *
  * - `Project Call Id`
+ *
+ * @memberof HomeXlsTransform
+ * @param {Object} record The row received from harmonized storage
+ * @returns {Array} List of string values for `funding_area` field
+ */
+const getFundingArea = record => {
+  const fundingArea = [];
+
+  const callParts = record['Project Call Id']
+    ? record['Project Call Id'].split('-')
+    : [];
+
+  if (callParts.length > 0) {
+    const abbreviation = callParts[0];
+
+    switch (abbreviation) {
+      case 'AMIF':
+        fundingArea.push('Asylum, Migration and Integration Fund');
+        break;
+
+      case 'ISF':
+        fundingArea.push('Internal Security Fund');
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  return fundingArea;
+};
+
+/**
+ * Preprocess budget field.
+ *
+ * Input fields taken from the `record` are:
+ *
  * - `Project Requested EU Contrib`
  *
  * @memberof HomeXlsTransform
@@ -27,8 +64,8 @@ const getBudget = record => {
     private_fund: sanitizeBudgetItem(),
     public_fund: sanitizeBudgetItem(),
     other_contrib: sanitizeBudgetItem(),
-    funding_area: [],
-    mmf_heading: record['Project Call Id'] || '',
+    funding_area: getFundingArea(record),
+    mmf_heading: '',
   };
 
   return budgetObject;
@@ -81,31 +118,17 @@ const getDescription = record => {
  * @returns {ThirdParty}
  */
 const getProgrammeName = record => {
-  let name = '';
+  let abbreviation = '';
 
   const callParts = record['Project Call Id']
     ? record['Project Call Id'].split('-')
     : [];
 
   if (callParts.length > 0) {
-    const abbreviation = callParts[0];
-
-    switch (abbreviation) {
-      case 'AMIF':
-        name = 'Asylum, Migration and Integration Fund';
-        break;
-
-      case 'ISF':
-        name = 'Internal Security Fund';
-        break;
-
-      default:
-        name = '';
-        break;
-    }
+    abbreviation = callParts[0]; // eslint-disable-line prefer-destructuring
   }
 
-  return name;
+  return abbreviation;
 };
 
 /**
@@ -222,8 +245,8 @@ export default (record: Object): Project | null => {
       available: '',
       result: '',
     },
-    status: record['Project Status'],
-    sub_programme_name: '',
+    status: record['Project Status'] || '',
+    sub_programme_name: record['Project Call Id'] || '',
     success_story: '',
     themes: [],
     third_parties: getThirdParties(record),
