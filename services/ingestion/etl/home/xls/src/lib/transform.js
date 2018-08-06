@@ -132,6 +132,45 @@ const getProgrammeName = record => {
 };
 
 /**
+ * Formats the project_locations
+ *
+ * Input fields taken from the `record` are:
+ *
+ * - `Participant LE Country Code`
+ *
+ * @memberof HomeXlsTransform
+ * @param {Object} record Piece of data to transform before going to harmonized storage.
+ * @returns {ThirdParty}
+ */
+const getProjectLocations = record => {
+  const locations = [];
+
+  const countries = record['Participant LE Country Code']
+    .split(';')
+    .filter(c => c);
+
+  if (countries) {
+    countries.forEach(countryCode => {
+      // prepare the common structure for the third party object
+      const location = {
+        address: '',
+        centroid: null,
+        country_code: getCountryCode(countryCode),
+        location: null,
+        nults: [],
+        postal_code: '',
+        region: '',
+        town: '',
+      };
+
+      locations.push(location);
+    });
+  }
+
+  return locations;
+};
+
+/**
  * Formats the third_parties
  *
  * Input fields taken from the `record` are:
@@ -236,7 +275,7 @@ export default (record: Object): Project | null => {
     media: [],
     programme_name: getProgrammeName(record),
     project_id: record['Project Number'],
-    project_locations: [],
+    project_locations: getProjectLocations(record),
     project_website: '',
     complete: true,
     related_links: [],
