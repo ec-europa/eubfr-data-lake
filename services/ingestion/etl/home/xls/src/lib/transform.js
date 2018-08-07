@@ -83,7 +83,7 @@ const getBudget = record => {
  *
  * @memberof HomeXlsTransform
  * @param {Object} record Piece of data to transform before going to harmonized storage.
- * @returns {ThirdParty}
+ * @returns {String} The project description
  */
 const getDescription = record => {
   const fields = [
@@ -119,7 +119,7 @@ const getDescription = record => {
  *
  * @memberof HomeXlsTransform
  * @param {Object} record Piece of data to transform before going to harmonized storage.
- * @returns {ThirdParty}
+ * @returns {Array} List of abbreviations
  */
 const getProgrammeName = record => {
   let abbreviation = '';
@@ -144,7 +144,7 @@ const getProgrammeName = record => {
  *
  * @memberof HomeXlsTransform
  * @param {Object} record Piece of data to transform before going to harmonized storage.
- * @returns {ThirdParty}
+ * @returns {Array} List of {Location}
  */
 const getProjectLocations = record => {
   const locations = [];
@@ -185,7 +185,7 @@ const getProjectLocations = record => {
  *
  * @memberof HomeXlsTransform
  * @param {Object} record Piece of data to transform before going to harmonized storage.
- * @returns {ThirdParty}
+ * @returns {Array} List of {ThirdParty}
  */
 const getThirdParties = record => {
   const actors = [];
