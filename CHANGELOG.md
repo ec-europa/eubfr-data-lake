@@ -1,5 +1,21 @@
 # Change Log
 
+## 0.2.0 (2018-08-07)
+
+#### :rocket: New Feature
+
+- [#153](https://github.com/ec-europa/eubfr-data-lake/pull/153) feat(etl): add data from DG HOME - EUBFR-201 ([@kalinchernev](https://github.com/kalinchernev))
+- [#145](https://github.com/ec-europa/eubfr-data-lake/pull/145) feat(etl): add cordis and H2020 - EUBFR-200 ([@raduchiriac](https://github.com/raduchiriac))
+
+#### :boom: Breaking Change
+
+- [#152](https://github.com/ec-europa/eubfr-data-lake/pull/152) feat(etl): add field for marking public information - EUBFR-154 ([@kalinchernev](https://github.com/kalinchernev))
+
+#### Committers: 2
+
+- Kalin Chernev ([@kalinchernev](https://github.com/kalinchernev))
+- Radu Chiriac ([@raduchiriac](https://github.com/raduchiriac))
+
 ## 0.1.1 (2018-07-31)
 
 #### :bug: Bug Fix
