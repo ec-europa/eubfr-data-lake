@@ -1,0 +1,133 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DG HOME XLS transformer Produces correct JSON output structure 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "EUR",
+      "raw": "2,500,000.00",
+      "value": 2500000,
+    },
+    "funding_area": Array [
+      "Asylum, Migration and Integration Fund",
+    ],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+  },
+  "call_year": "",
+  "complete": true,
+  "description": "Project Acronym: AP2016
+Project Duration: 24 months
+Proposal Free Keywords Uppercase: ERIN NETWORK - ACTION PLAN 2016 (AP2016)",
+  "ec_priorities": Array [],
+  "media": Array [],
+  "programme_name": "AMIF",
+  "project_id": "779925",
+  "project_locations": Array [
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "DE",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "",
+      "town": "",
+    },
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "NL",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "",
+      "town": "",
+    },
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "GR",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "",
+      "town": "",
+    },
+  ],
+  "project_website": "",
+  "related_links": Array [],
+  "reporting_organisation": "HOME",
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
+  "status": "SIGNED",
+  "sub_programme_name": "AMIF-2016-AG-IBA-ERIN",
+  "success_story": "",
+  "themes": Array [],
+  "third_parties": Array [
+    Object {
+      "address": "",
+      "country": "DE",
+      "email": "",
+      "name": "BUNDESAMT FUR MIGRATION UND FLUCHTLINGE",
+      "phone": "",
+      "region": "",
+      "role": "participant",
+      "type": "beneficiary",
+      "website": "",
+    },
+    Object {
+      "address": "",
+      "country": "NL",
+      "email": "",
+      "name": "MINISTERIE VAN JUSTITIE EN VEILIGHEID",
+      "phone": "",
+      "region": "",
+      "role": "coordinator",
+      "type": "",
+      "website": "",
+    },
+    Object {
+      "address": "",
+      "country": "GR",
+      "email": "",
+      "name": "Ministry of Interior / European & Development Programmes Agency",
+      "phone": "",
+      "region": "",
+      "role": "participant",
+      "type": "beneficiary",
+      "website": "",
+    },
+  ],
+  "timeframe": Object {
+    "from": "2018-01-01T00:00:00.000Z",
+    "from_precision": "day",
+    "to": "2019-12-31T00:00:00.000Z",
+    "to_precision": "day",
+  },
+  "title": "ERIN Network - Action Plan 2016 (AP2016)",
+  "type": Array [],
+}
+`;
