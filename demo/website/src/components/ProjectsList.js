@@ -3,7 +3,7 @@ import elasticsearch from 'elasticsearch';
 import Project from './Project';
 import Spinner from './Spinner';
 
-const apiEndpoint = `https://${process.env.REACT_APP_ES_PUBLIC_ENDPOINT}`;
+const apiEndpoint = `https://${process.env.ES_PUBLIC_ENDPOINT}`;
 const projectsIndex = `${process.env.REACT_APP_STAGE}-projects`;
 
 class ProjectsList extends Component {

@@ -17,11 +17,13 @@ const deleteFiles = require('../commands/content/delete');
 
 // Elasticsearch-related commands
 const showDomains = require('../commands/elasticsearch/showDomains');
+const showIndices = require('../commands/elasticsearch/showIndices');
 
-// If -p is passed without actual value, it will be boolean true
-// Which is useless information in our case
-const hasValidProducer = options =>
-  options.producer && typeof options.producer !== 'boolean';
+// If -p or -d, or any other `needle` option is passed
+// without an actual value, it will be boolean true
+// This helper ensures that `needle` option is something useful.
+const hasValidOption = (needle, haystack) =>
+  haystack[needle] && typeof haystack[needle] !== 'boolean';
 
 const endpoints = getEndpoints();
 const missingRequiredInput = '\n error: Missing required input parameters';
@@ -36,7 +38,7 @@ program
     ensureVariables(['SIGNED_UPLOADS_API'], endpoints);
 
     let credentials = [];
-    const producerIsSet = hasValidProducer(options);
+    const producerIsSet = hasValidOption('producer', options);
     const filesAreSet = files.length !== 0;
 
     if (!producerIsSet && filesAreSet) {
@@ -65,10 +67,7 @@ program
   .description('Displays files of a given producer.')
   .option('-p, --producer [producer]', "Producer's name.")
   .action(async (file, options) => {
-    ensureVariables(
-      ['REACT_APP_STAGE', 'REACT_APP_ES_PRIVATE_ENDPOINT'],
-      endpoints
-    );
+    ensureVariables(['REACT_APP_STAGE', 'ES_PRIVATE_ENDPOINT'], endpoints);
 
     const { producer } = options;
 
@@ -78,12 +77,12 @@ program
       process.exit(1);
     }
 
-    if (producer && !hasValidProducer(options)) {
+    if (producer && !hasValidOption('producer', options)) {
       console.error('\n error: Please specificy producer with a name.');
       process.exit(1);
     }
 
-    if (producer && file && hasValidProducer(options)) {
+    if (producer && file && hasValidOption('producer', options)) {
       console.error('\n error: Pass file or producer only, not both.');
       process.exit(1);
     }
@@ -97,7 +96,7 @@ program
   .option('-c, --confirm [confirm]', 'Flag certainty of an operation.')
   .action(async (files, options) => {
     ensureVariables(
-      ['DELETER_API', 'REACT_APP_STAGE', 'REACT_APP_ES_PRIVATE_ENDPOINT'],
+      ['DELETER_API', 'REACT_APP_STAGE', 'ES_PRIVATE_ENDPOINT'],
       endpoints
     );
 
@@ -128,15 +127,19 @@ program
 program
   .command('es-domains')
   .description('Shows a list of manageable domains.')
-  .action(() => {
-    showDomains();
-  });
+  .action(() => showDomains(endpoints));
 
 program
   .command('es-indices')
   .description('Shows a list of indices under a given domain.')
   .option('-d, --domain [domain]', 'Show a list of indices for which domain?')
-  .action(() => {});
+  .action(options => {
+    if (hasValidOption('domain', options)) {
+      showIndices(endpoints, options.domain);
+    } else {
+      showIndices(endpoints);
+    }
+  });
 
 program
   .command('es-index-create [index]')

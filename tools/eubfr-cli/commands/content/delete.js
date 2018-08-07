@@ -40,7 +40,7 @@ const deleteCommand = ({ files, credentials, endpoints }) => {
   const resourcePath = `${api.path}/${resource}`;
 
   const index = `${endpoints.REACT_APP_STAGE}-meta`;
-  const host = `https://${endpoints.REACT_APP_ES_PRIVATE_ENDPOINT}`;
+  const host = `https://${endpoints.ES_PRIVATE_ENDPOINT}`;
 
   const requestParams = { uri, api, resourcePath };
 

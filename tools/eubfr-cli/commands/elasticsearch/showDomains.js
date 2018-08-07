@@ -3,19 +3,13 @@ const prettyjson = require('prettyjson');
 /**
  * Shows a list of available domains
  */
-const showDomains = () => {
-  const domains = [
-    {
-      'dev-public':
-        'https://search-dev-public-g7cnsnvyupyfaccjhtcdr23jai.eu-central-1.es.amazonaws.com',
-    },
-    {
-      'dev-private':
-        'https://search-dev-private-qbomdhbnodbkxk2233gh3lvruu.eu-central-1.es.amazonaws.com',
-    },
-  ];
+const showDomains = endpoints => {
+  // We want to share information only about these domains
+  const domains = ['ES_PUBLIC_ENDPOINT', 'ES_PRIVATE_ENDPOINT'];
 
-  return console.log(prettyjson.render(domains));
+  const info = domains.map(key => ({ [key]: endpoints[key] }));
+
+  return console.log(prettyjson.render(info));
 };
 
 module.exports = showDomains;

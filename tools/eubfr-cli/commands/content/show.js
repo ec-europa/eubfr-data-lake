@@ -11,7 +11,7 @@ const elasticsearch = require('elasticsearch');
  */
 const showCommand = async ({ file, producer, endpoints }) => {
   const index = `${endpoints.REACT_APP_STAGE}-meta`;
-  const host = `https://${endpoints.REACT_APP_ES_PRIVATE_ENDPOINT}`;
+  const host = `https://${endpoints.ES_PRIVATE_ENDPOINT}`;
 
   const query = {
     index,
