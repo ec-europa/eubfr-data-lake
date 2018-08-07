@@ -15,6 +15,9 @@ const uploadFiles = require('../commands/content/upload');
 const showFile = require('../commands/content/show');
 const deleteFiles = require('../commands/content/delete');
 
+// Elasticsearch-related commands
+const showDomains = require('../commands/elasticsearch/showDomains');
+
 // If -p is passed without actual value, it will be boolean true
 // Which is useless information in our case
 const hasValidProducer = options =>
@@ -121,6 +124,33 @@ program
       });
     }
   });
+
+program
+  .command('es-domains')
+  .description('Shows a list of manageable domains.')
+  .action(() => {
+    showDomains();
+  });
+
+program
+  .command('es-indices')
+  .description('Shows a list of indices under a given domain.')
+  .option('-d, --domain [domain]', 'Show a list of indices for which domain?')
+  .action(() => {});
+
+program
+  .command('es-index-create [index]')
+  .description('Creates an index in a given domain with an optional mapping.')
+  .option('-d, --domain [domain]')
+  .option('-m, --mapping [mapping]')
+  .action((index, options) => {});
+
+program
+  .command('es-index-delete [indices...]')
+  .description('Deletes indices from a given Elasticsearch domain.')
+  .option('-d, --domain [domain]', 'Domain from which to delete an index.')
+  .option('-c, --confirm [confirm]', 'Flag certainty of an operation.')
+  .action((indices, options) => {});
 
 // If no arguments provided, display help menu.
 if (!process.argv.slice(2).length) {
