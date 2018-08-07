@@ -30,7 +30,7 @@ const getFundingArea = record => {
         fundingArea.push('Asylum, Migration and Integration Fund');
         break;
 
-      case 'ISF':
+      case 'ISFP':
         fundingArea.push('Internal Security Fund');
         break;
 
@@ -76,10 +76,10 @@ const getBudget = record => {
  *
  * Input fields taken from the `record` are:
  *
- * - `Project Abstract`
  * - `Project Acronym`
  * - `Project Duration`
  * - `Proposal Free Keywords Uppercase`
+ * - `Project Abstract`
  *
  * @memberof HomeXlsTransform
  * @param {Object} record Piece of data to transform before going to harmonized storage.
@@ -90,7 +90,7 @@ const getDescription = record => {
     'Project Acronym',
     'Project Duration',
     'Proposal Free Keywords Uppercase',
-    'Project Acronym',
+    'Project Abstract',
   ];
 
   const description = {};
