@@ -96,13 +96,10 @@ export const handler = async (event, context, callback) => {
           workbook.Sheets[sheetNameList[0]]
         );
 
-        for (let i = 0; i < 2; i += 1) {
-          // for (let i = 0; i < parsedRows.length; i += 1) {
+        for (let i = 0; i < parsedRows.length; i += 1) {
           // Transform data
-          console.log(JSON.stringify(parsedRows[i]));
-          // const data = transformRecord(parsedRows[i]);
-          // dataString += `${JSON.stringify(data)}\n`;
-          dataString += `\n`;
+          const data = transformRecord(parsedRows[i]);
+          dataString += `${JSON.stringify(data)}\n`;
         }
       } catch (e) {
         return handleError(e, reject);

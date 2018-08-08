@@ -52,6 +52,21 @@ Input fields taken from the `record` are:
 
 Returns **[Array][6]** List of {Location} objects for `project_locations` field
 
+### getThirdParties
+
+Preprocess third_parties
+
+Input fields taken from the `record` are:
+
+-   `Name of beneficiary`
+-   `Coordinator`
+
+**Parameters**
+
+-   `record` **[Object][3]** The row received from parsed file
+
+Returns **[Array][6]** List of {ThirdParty} objects for `third_parties` field
+
 ## budget
 
 Still to process:

@@ -1,9 +1,9 @@
 // @flow
 
-import sanitizeBudgetItem from '@eubfr/lib/budgetFormatter';
 import countries from 'i18n-iso-countries';
-import getCountryCode from '@eubfr/lib/getCountryCode';
 import type { Project } from '@eubfr/types';
+import getCountryCode from '@eubfr/lib/getCountryCode';
+import sanitizeBudgetItem from '@eubfr/lib/budgetFormatter';
 
 const getCodeByCountry = countryName => {
   // There are a few exceptions which should be normalized, regardless of the library
@@ -115,6 +115,44 @@ const getLocations = record => {
 };
 
 /**
+ * Preprocess third_parties
+ *
+ * Input fields taken from the `record` are:
+ * - `Name of beneficiary`
+ * - `Coordinator`
+ *
+ * @memberof FtsXlsTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {Array} List of {ThirdParty} objects for `third_parties` field
+ */
+const getThirdParties = record => {
+  const actors = [];
+
+  let role = 'participant';
+
+  if (record.Coordinator === 'yes') {
+    role = 'coordinator';
+  }
+
+  // If there is no name, there's no value in adding a record with role only
+  if (record['Name of beneficiary']) {
+    actors.push({
+      address: '',
+      country: '',
+      email: '',
+      name: record['Name of beneficiary'],
+      phone: '',
+      region: '',
+      role,
+      type: '',
+      website: '',
+    });
+  }
+
+  return actors;
+};
+
+/**
  * Map fields for FTS producer, XLS file types
  *
  * Example input data: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/fts/xls/test/stubs/record.json|stub}
@@ -147,15 +185,15 @@ export default (record: Object): Project | null => {
       result: '',
     },
     status: '',
-    sub_programme_name: '',
+    sub_programme_name: record['Commitment position key'] || '',
     success_story: '',
     themes: [],
-    third_parties: [],
+    third_parties: getThirdParties(record),
     timeframe: {
-      from: '',
-      from_precision: 'day',
-      to: '',
-      to_precision: 'day',
+      from: null,
+      from_precision: 'year',
+      to: null,
+      to_precision: 'year',
     },
     title: '',
     type: [],
