@@ -228,6 +228,63 @@
               
                 
                 <li class="ecl-link-block__item">
+                  <a href="#homexlstransform"
+                     class="ecl-link ecl-link--standalone ecl-link-block__link">
+                    HomeXlsTransform
+                  </a>
+                
+                  
+                  <ul class="ecl-list">
+                    
+                      <li><a
+                        href="#homexlstransformgetfundingarea"
+                        class="ecl-link pre-open">
+                        getFundingArea
+                      </a></li>
+                    
+                      <li><a
+                        href="#homexlstransformgetbudget"
+                        class="ecl-link pre-open">
+                        getBudget
+                      </a></li>
+                    
+                      <li><a
+                        href="#homexlstransformgetdescription"
+                        class="ecl-link pre-open">
+                        getDescription
+                      </a></li>
+                    
+                      <li><a
+                        href="#homexlstransformgetprogrammename"
+                        class="ecl-link pre-open">
+                        getProgrammeName
+                      </a></li>
+                    
+                      <li><a
+                        href="#homexlstransformgetprojectlocations"
+                        class="ecl-link pre-open">
+                        getProjectLocations
+                      </a></li>
+                    
+                      <li><a
+                        href="#homexlstransformgetthirdparties"
+                        class="ecl-link pre-open">
+                        getThirdParties
+                      </a></li>
+                    
+                      <li><a
+                        href="#homexlstransformformatdate"
+                        class="ecl-link pre-open">
+                        formatDate
+                      </a></li>
+                    
+                    </ul>
+                  
+                
+                </li>
+              
+                
+                <li class="ecl-link-block__item">
                   <a href="#iaticsvtransform"
                      class="ecl-link ecl-link--standalone ecl-link-block__link">
                     IatiCsvTransform
@@ -2082,6 +2139,536 @@ Input fields taken from the <code>record</code> are:</p>
       
       <pre style="background-color: #f5f5f5;" class="ecl-u-pa-xs">input =&gt; <span class="hljs-string">"2018-12-31"</span>
 output =&gt; <span class="hljs-string">"2018-12-31T00:00:00.000Z"</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+</section>
+
+    </ul>
+  
+
+  
+
+  
+</li>
+
+                  
+            
+              <li class='ecl-list-item ecl-u-pv-m'>
+  
+    
+    <h3 class='ecl-heading ecl-heading--h3' id='homexlstransform'>
+      HomeXlsTransform
+    </h3>
+    
+    
+  
+
+  <p>Map fields for HOME producer, XLS file types</p>
+<p>Example input data: <a href="https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/home/xls/test/stubs/record.json">stub</a></p>
+<p>Transform function: <a href="https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/home/xls/src/lib/transform.js">implementation details</a></p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        Piece of data to transform before going to harmonized storage.
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="#project">Project</a>
+      :
+        JSON matching the type fields.
+
+      
+    
+  
+
+  
+
+  
+
+  
+    <ul class="ecl-list">
+    <section class='ecl-u-clearfix ecl-u-pt-xs'>
+  
+    <a id='homexlstransformgetfundingarea' class="ecl-link ecl-link--standalone" aria-controls='homexlstransformgetfundingarea-panel' aria-expanded="true" href="#">
+      getFundingArea
+    </a>
+    <div id='homexlstransformgetfundingarea-panel' aria-labelledby='homexlstransformgetfundingarea' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess budget funding_area field</p>
+<p>Input fields taken from the <code>record</code> are:</p>
+<ul>
+<li><code>Project Call Id</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from harmonized storage
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>
+      :
+        List of string values for 
+<code>funding_area</code>
+ field
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='homexlstransformgetbudget' class="ecl-link ecl-link--standalone" aria-controls='homexlstransformgetbudget-panel' aria-expanded="true" href="#">
+      getBudget
+    </a>
+    <div id='homexlstransformgetbudget-panel' aria-labelledby='homexlstransformgetbudget' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess budget field.</p>
+<p>Input fields taken from the <code>record</code> are:</p>
+<ul>
+<li><code>Project Requested EU Contrib</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from harmonized storage
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="#budget">Budget</a>
+      :
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='homexlstransformgetdescription' class="ecl-link ecl-link--standalone" aria-controls='homexlstransformgetdescription-panel' aria-expanded="true" href="#">
+      getDescription
+    </a>
+    <div id='homexlstransformgetdescription-panel' aria-labelledby='homexlstransformgetdescription' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess description</p>
+<p>Input fields taken from the <code>record</code> are:</p>
+<ul>
+<li><code>Project Acronym</code></li>
+<li><code>Project Duration</code></li>
+<li><code>Proposal Free Keywords Uppercase</code></li>
+<li><code>Project Abstract</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        Piece of data to transform before going to harmonized storage.
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>
+      :
+        The project description
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='homexlstransformgetprogrammename' class="ecl-link ecl-link--standalone" aria-controls='homexlstransformgetprogrammename-panel' aria-expanded="true" href="#">
+      getProgrammeName
+    </a>
+    <div id='homexlstransformgetprogrammename-panel' aria-labelledby='homexlstransformgetprogrammename' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess programme_name field</p>
+<p>Input fields taken from the <code>record</code> are:</p>
+<ul>
+<li><code>Project Call Id</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        Piece of data to transform before going to harmonized storage.
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>
+      :
+        List of abbreviations
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='homexlstransformgetprojectlocations' class="ecl-link ecl-link--standalone" aria-controls='homexlstransformgetprojectlocations-panel' aria-expanded="true" href="#">
+      getProjectLocations
+    </a>
+    <div id='homexlstransformgetprojectlocations-panel' aria-labelledby='homexlstransformgetprojectlocations' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Formats the project_locations</p>
+<p>Input fields taken from the <code>record</code> are:</p>
+<ul>
+<li><code>Participant LE Country Code</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        Piece of data to transform before going to harmonized storage.
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>
+      :
+        List of {Location}
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='homexlstransformgetthirdparties' class="ecl-link ecl-link--standalone" aria-controls='homexlstransformgetthirdparties-panel' aria-expanded="true" href="#">
+      getThirdParties
+    </a>
+    <div id='homexlstransformgetthirdparties-panel' aria-labelledby='homexlstransformgetthirdparties' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Formats the third_parties</p>
+<p>Input fields taken from the <code>record</code> are:</p>
+<ul>
+<li><code>Participant Legal Name</code></li>
+<li><code>Participant Role</code></li>
+<li><code>Participant LE Country Code</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        Piece of data to transform before going to harmonized storage.
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>
+      :
+        List of {ThirdParty}
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='homexlstransformformatdate' class="ecl-link ecl-link--standalone" aria-controls='homexlstransformformatdate-panel' aria-expanded="true" href="#">
+      formatDate
+    </a>
+    <div id='homexlstransformformatdate-panel' aria-labelledby='homexlstransformformatdate' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Format date</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>date (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date">Date</a>)
+	        Date in "10/9/14" (MM/DD/YY) or "10/9/2014" (MM/DD/YYYY) format
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date">Date</a>
+      :
+        The date formatted into an ISO 8601 date format
+
+      
+    
+  
+
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Example</h4>
+    
+      
+      <pre style="background-color: #f5f5f5;" class="ecl-u-pa-xs">input =&gt; <span class="hljs-string">"10/9/2014"</span>
+output =&gt; <span class="hljs-string">"2014-10-09T00:00:00.000Z"</span></pre>
     
   
 
