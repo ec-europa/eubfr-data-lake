@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DG FTS XLS transformer Produces correct JSON output structure 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "EUR",
+      "raw": "200,000,000.00€",
+      "value": 200000000,
+    },
+    "funding_area": Array [],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "EUR",
+      "raw": "200,000,000.00€",
+      "value": 200000000,
+    },
+  },
+  "call_year": "2017",
+  "complete": true,
+  "description": "A Envelope - programmable aid (02.10.10.01)",
+  "ec_priorities": Array [],
+  "media": Array [],
+  "programme_name": "11th European Development Fund (EDF)",
+  "project_id": "AID.LCM.385583.01",
+  "project_locations": Array [
+    Object {
+      "address": "-",
+      "centroid": null,
+      "country_code": "TZ",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "",
+      "town": "-",
+    },
+  ],
+  "project_website": "",
+  "related_links": Array [],
+  "reporting_organisation": "BUDG",
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
+  "status": "",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [],
+  "third_parties": Array [],
+  "timeframe": Object {
+    "from": "",
+    "from_precision": "day",
+    "to": "",
+    "to_precision": "day",
+  },
+  "title": "",
+  "type": Array [],
+}
+`;
