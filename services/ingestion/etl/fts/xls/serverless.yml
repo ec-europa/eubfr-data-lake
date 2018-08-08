@@ -19,7 +19,7 @@ package:
 provider:
   name: aws
   runtime: nodejs8.10
-  timeout: 60
+  timeout: 300
   stage: ${opt:stage, file(../../../../../config.json):stage, 'dev'}
   region: ${opt:region, file(../../../../../config.json):region, 'eu-central-1'}
   deploymentBucket:
@@ -41,7 +41,7 @@ functions:
   parseXls:
     handler: src/events/onParseXLS.handler
     name: ${self:provider.stage}-${self:service}-parseXls
-    memorySize: 1024
+    memorySize: 3008
     environment:
       BUCKET: ${self:custom.bucketName}
       REGION: ${self:provider.region}
