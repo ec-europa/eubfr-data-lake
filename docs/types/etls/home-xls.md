@@ -48,16 +48,16 @@ Preprocess description
 
 Input fields taken from the `record` are:
 
--   `Project Abstract`
 -   `Project Acronym`
 -   `Project Duration`
 -   `Proposal Free Keywords Uppercase`
+-   `Project Abstract`
 
 **Parameters**
 
 -   `record` **[Object][3]** Piece of data to transform before going to harmonized storage.
 
-Returns **ThirdParty** 
+Returns **[String][5]** The project description
 
 ### getProgrammeName
 
@@ -71,7 +71,7 @@ Input fields taken from the `record` are:
 
 -   `record` **[Object][3]** Piece of data to transform before going to harmonized storage.
 
-Returns **ThirdParty** 
+Returns **[Array][4]** List of abbreviations
 
 ### getProjectLocations
 
@@ -85,7 +85,7 @@ Input fields taken from the `record` are:
 
 -   `record` **[Object][3]** Piece of data to transform before going to harmonized storage.
 
-Returns **ThirdParty** 
+Returns **[Array][4]** List of {Location}
 
 ### getThirdParties
 
@@ -101,7 +101,7 @@ Input fields taken from the `record` are:
 
 -   `record` **[Object][3]** Piece of data to transform before going to harmonized storage.
 
-Returns **ThirdParty** 
+Returns **[Array][4]** List of {ThirdParty}
 
 ### formatDate
 
@@ -109,7 +109,7 @@ Format date
 
 **Parameters**
 
--   `date` **[Date][5]** Date in "10/9/14" (MM/DD/YY) or "10/9/2014" (MM/DD/YYYY) format
+-   `date` **[Date][6]** Date in "10/9/14" (MM/DD/YY) or "10/9/2014" (MM/DD/YYYY) format
 
 **Examples**
 
@@ -118,7 +118,7 @@ input => "10/9/2014"
 output => "2014-10-09T00:00:00.000Z"
 ```
 
-Returns **[Date][5]** The date formatted into an ISO 8601 date format
+Returns **[Date][6]** The date formatted into an ISO 8601 date format
 
 [1]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/home/xls/test/stubs/record.json
 
@@ -128,4 +128,6 @@ Returns **[Date][5]** The date formatted into an ISO 8601 date format
 
 [4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
-[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date
+[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date
