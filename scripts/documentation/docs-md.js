@@ -15,6 +15,7 @@ const transforms = [
   'agri-csv',
   'budg-xls',
   'cordis-csv',
+  'home-xls',
   'iati-csv',
   'inforegio-json',
   'inforegio-xml',
