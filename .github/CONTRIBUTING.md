@@ -16,12 +16,12 @@ Please fill in the description following the template.
 
 2.  Pull the latest `master` and branch out to a release branch `chore/release-x`
 
-3.  Create a change log entry for the release by running `npm run changelog`. The command will find all the labeled pull requests merged since the last release and create a change log entry with all the changes and links to PRs and their authors. Copy and paste it to the top of `CHANGELOG.md`.
+3.  **Run `npm run publish` (NOT `npm publish`)**
 
-4.  **Run `npm run publish` (NOT `npm publish`)**
+4.  The CLI will ask for a confirmation about the new package versions. Please verify them carefully before accepting.
 
-5.  The CLI will ask for a confirmation about the new package versions. Please verify them carefully before accepting.
+5.  Once you have accepted, the script will increment lerna (project) version and the version of the packages changed.
 
-6.  Once you have accepted, the script will increment lerna (project) version and the version of the packages changed.
+6.  Create a change log entry for the release by running `npm run changelog`. The command will find all the labeled pull requests merged since the last release and create a change log entry with all the changes and links to PRs and their authors. Copy and paste it to the top of `CHANGELOG.md`.
 
 7.  Commit changes in the release branch and open a pull request. When it's merged, create a new release on GitHub.
