@@ -8,6 +8,30 @@ Low-level utilities for managing assets of EUBFR data lake.
 $ npx eubfr-cli
 ```
 
+## Generate environment variables
+
+That's probably the first operation you'd like to execute:
+
+```sh
+$ npx eubfr-cli environment-generate-variables
+```
+
+This will generate `.env` files for all services which contain variable exports which are necessary for the proper functioning of the CLI.
+
+For instance, you may try to get information about available Elasticsearch domains which are manageable by the CLI running `npx eubfr-cli es-domains`.
+
+If you haven't deployed `@eubfr/demo-dashboard-client` or you have switched between staging environments working on different branches at the same code base, then you'll get an error like this:
+
+```
+ENOENT: no such file or directory, open '.../eubfr-data-lake/demo/dashboard/client/.env'
+```
+
+Or it could be also any other message that hints for a requirement of a given named environment variable, such as `SIGNED_UPLOADS_API`.
+
+These are signs that you need to re-generate all necessary `.env` files which contain information for the API endpoints.
+
+## Content management
+
 If you want to make use of the CLI to automatically upload or delete all content of a given stage, you can optionally create a `.content` folder in the root of your project, with the following example structure:
 
 ```
