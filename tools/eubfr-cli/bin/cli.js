@@ -10,6 +10,9 @@ const getCredentials = require('../lib/getProducerCredentials');
 const getEndpoints = require('../lib/getEndpoints');
 const getAllProducers = require('../lib/getAllProducers');
 
+// Environment-related
+const generateEnvironmentVariables = require('../commands/environment/generateVariables');
+
 // Content-related commands
 const uploadFiles = require('../commands/content/upload');
 const showFile = require('../commands/content/show');
@@ -25,16 +28,22 @@ const showIndices = require('../commands/elasticsearch/showIndices');
 const hasValidOption = (needle, haystack) =>
   haystack[needle] && typeof haystack[needle] !== 'boolean';
 
-const endpoints = getEndpoints();
 const missingRequiredInput = '\n error: Missing required input parameters';
 
 program.version(pkg.version).usage('[command] [option]');
+
+program
+  .command('environment-generate-variables')
+  .description('Generates all necessary .env files.')
+  .action(() => generateEnvironmentVariables());
 
 program
   .command('content-upload [files...]')
   .description('Uploads content to the data lake.')
   .option('-p, --producer [producer]', "Producer's name.")
   .action(async (files, options) => {
+    const endpoints = getEndpoints();
+
     ensureVariables(['SIGNED_UPLOADS_API'], endpoints);
 
     let credentials = [];
@@ -67,6 +76,7 @@ program
   .description('Displays files of a given producer.')
   .option('-p, --producer [producer]', "Producer's name.")
   .action(async (file, options) => {
+    const endpoints = getEndpoints();
     ensureVariables(['REACT_APP_STAGE', 'ES_PRIVATE_ENDPOINT'], endpoints);
 
     const { producer } = options;
@@ -95,6 +105,7 @@ program
   .description('Deletes files by computed_key field.')
   .option('-c, --confirm [confirm]', 'Flag certainty of an operation.')
   .action(async (files, options) => {
+    const endpoints = getEndpoints();
     ensureVariables(
       ['DELETER_API', 'REACT_APP_STAGE', 'ES_PRIVATE_ENDPOINT'],
       endpoints
@@ -127,13 +138,15 @@ program
 program
   .command('es-domains')
   .description('Shows a list of manageable domains.')
-  .action(() => showDomains(endpoints));
+  .action(() => showDomains(getEndpoints()));
 
 program
   .command('es-indices')
   .description('Shows a list of indices under a given domain.')
   .option('-d, --domain [domain]', 'Show a list of indices for which domain?')
   .action(options => {
+    const endpoints = getEndpoints();
+
     if (hasValidOption('domain', options)) {
       showIndices(endpoints, options.domain);
     } else {
