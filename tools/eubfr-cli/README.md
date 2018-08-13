@@ -2,14 +2,13 @@
   - [Usage](#usage)
   - [Generate environment variables](#generate-environment-variables)
   - [Content management](#content-management)
-    - [Examples](#examples)
-      - [Upload content](#upload-content)
-      - [Show existing content](#show-existing-content)
-      - [Delete content](#delete-content)
+    - [Upload content](#upload-content)
+    - [Show existing content](#show-existing-content)
+    - [Delete content](#delete-content)
   - [Elasticsearch](#elasticsearch)
     - [Show domains](#show-domains)
     - [Show cluster information](#show-cluster-information)
-    - [Show list of indices under a given domain](#show-list-of-indices-under-a-given-domain)%
+    - [Show list of indices under a given domain](#show-list-of-indices-under-a-given-domain)
 
 # EUBFR CLI
 
@@ -71,9 +70,7 @@ There are 2 abstracted operations on a project level:
 
 Note that you will need to have the `config.json` file correctly setup in the root folder of the project, as producers' credentials are currently stored only there in the existing workflows.
 
-### Examples
-
-#### Upload content
+### Upload content
 
 - Single file: `npx eubfr-cli content-upload .content/agri/agri_history.csv -p agri`
 - Multiple files: `npx eubfr-cli content-upload .content/inforegio/EUBFR_VIEW_16052018.xml .content/inforegio/regio_projects.json -p inforegio`
@@ -81,12 +78,12 @@ Note that you will need to have the `config.json` file correctly setup in the ro
 
 Please note that although input paths are relative, only file names will be kept in the cloud. This means that, although you pass `.content/agri/agri_history.csv`, file name in the S3 bucket of AGRI will receive `agri_history.csv`.
 
-#### Show existing content
+### Show existing content
 
 - specific file by `computed_key`: `npx eubfr-cli show agri/16598a36-db86-42a0-8041-c0d85021ad97.csv`
 - all files of a given producer: `npx eubfr-cli content-show -p agri`
 
-#### Delete content
+### Delete content
 
 - delete one or multiple files: `npx eubfr-cli content-delete agri/foo budg/bar inforegio/baz`
 - delete all files of all producers `npx eubfr-cli content-delete`
