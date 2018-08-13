@@ -19,6 +19,7 @@ const showFile = require('../commands/content/show');
 const deleteFiles = require('../commands/content/delete');
 
 // Elasticsearch-related commands
+const showCluster = require('../commands/elasticsearch/showCluster');
 const showDomains = require('../commands/elasticsearch/showDomains');
 const showIndices = require('../commands/elasticsearch/showIndices');
 
@@ -139,6 +140,20 @@ program
   .command('es-domains')
   .description('Shows a list of manageable domains.')
   .action(() => showDomains(getEndpoints()));
+
+program
+  .command('es-show-cluster')
+  .description('Shows cluster information about a given domain.')
+  .option('-d, --domain [domain]', 'Domain selection')
+  .action(async options => {
+    if (!hasValidOption('domain', options)) {
+      console.error(missingRequiredInput);
+      process.exit(1);
+    }
+
+    const endpoints = getEndpoints();
+    await showCluster(endpoints, options.domain);
+  });
 
 program
   .command('es-indices')
