@@ -1,3 +1,16 @@
+- [EUBFR CLI](#eubfr-cli)
+  - [Usage](#usage)
+  - [Generate environment variables](#generate-environment-variables)
+  - [Content management](#content-management)
+    - [Examples](#examples)
+      - [Upload content](#upload-content)
+      - [Show existing content](#show-existing-content)
+      - [Delete content](#delete-content)
+  - [Elasticsearch](#elasticsearch)
+    - [Show domains](#show-domains)
+    - [Show cluster information](#show-cluster-information)
+    - [Show list of indices under a given domain](#show-list-of-indices-under-a-given-domain)%
+
 # EUBFR CLI
 
 Low-level utilities for managing assets of EUBFR data lake.
@@ -79,3 +92,43 @@ Please note that although input paths are relative, only file names will be kept
 - delete all files of all producers `npx eubfr-cli content-delete`
 
 By default, you will be prompted to confirm your intention. You can skip the this prompt by adding `--confirm` flag.
+
+## Elasticsearch
+
+You can also manage several resources of the Elasticsearch domains being used by the project.
+
+### Show domains
+
+Useful when you want to see the names of the Elasticsearch domains available for management throught the EUBFR CLI
+
+```sh
+npx eubfr-cli es-domains
+```
+
+This will give you information about the named environment variables holding information about their corresponding hosts. (API endpoints)
+
+### Show cluster information
+
+Once you have the basic information about the domains you can manage through the CLI, you can execute the following:
+
+```sh
+npx eubfr-cli es-show-cluster -d ES_PUBLIC_ENDPOINT
+```
+
+Where `ES_PUBLIC_ENDPOINT` is something you can get from the domains' information command.
+
+### Show list of indices under a given domain
+
+This could be useful when you want to query for existing indices so that you either re-use or re-create:
+
+```sh
+npx eubfr-cli es-indices -d ES_PUBLIC_ENDPOINT
+```
+
+Since output might be too long to read (and most probably it will be in `dev` stage which is shared between developers), it could help to pipe a `grep` in order to focus on more narrow list, for example:
+
+```sh
+npx eubfr-cli es-indices -d ES_PUBLIC_ENDPOINT | grep chernka
+```
+
+This will give you a list of existing indices created by the given user.

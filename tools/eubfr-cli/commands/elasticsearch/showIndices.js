@@ -1,19 +1,45 @@
+const { promisify } = require('util');
+const AWS = require('aws-sdk');
+const awscred = require('awscred');
+const connectionClass = require('http-aws-es');
+const elasticsearch = require('elasticsearch');
 const prettyjson = require('prettyjson');
+const getUserCredentials = promisify(awscred.load);
 
 /**
- * Shows a list of available indices
+ * Shows information indices in a given domain.
+ * @see https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-indices-stats-6-2
  */
-const showIndices = (endpoints, domain) => {
-  // We want to share information only about these domains
-  const domains = ['ES_PUBLIC_ENDPOINT', 'ES_PRIVATE_ENDPOINT'];
+const showIndices = async (endpoints, domain) => {
+  // Get user's AWS credentials and region
+  const credentials = await getUserCredentials();
 
-  if (domain) {
-    console.log(endpoints[domain]);
-  } else {
-    console.log(`Show information about all domains and indices`);
+  const { region } = credentials;
+  const { accessKeyId, secretAccessKey } = credentials.credentials;
+
+  // elasticsearch client configuration
+  const esOptions = {
+    host: `https://${endpoints[domain]}`,
+    connectionClass,
+    apiVersion: '6.2',
+    awsConfig: new AWS.Config({
+      accessKeyId,
+      secretAccessKey,
+      region,
+    }),
+  };
+
+  try {
+    const client = elasticsearch.Client(esOptions);
+    const info = await client.indices.stats({
+      index: '_all',
+      level: 'indices',
+    });
+
+    return console.log(prettyjson.render(info));
+  } catch (e) {
+    return console.error(e);
   }
-
-  return console.log(prettyjson.render({}));
 };
 
 module.exports = showIndices;

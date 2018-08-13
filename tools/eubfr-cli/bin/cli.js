@@ -159,14 +159,15 @@ program
   .command('es-indices')
   .description('Shows a list of indices under a given domain.')
   .option('-d, --domain [domain]', 'Show a list of indices for which domain?')
-  .action(options => {
+  .action(async options => {
+    if (!hasValidOption('domain', options)) {
+      console.error(missingRequiredInput);
+      process.exit(1);
+    }
+
     const endpoints = getEndpoints();
 
-    if (hasValidOption('domain', options)) {
-      showIndices(endpoints, options.domain);
-    } else {
-      showIndices(endpoints);
-    }
+    await showIndices(endpoints, options.domain);
   });
 
 program
