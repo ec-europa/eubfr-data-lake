@@ -22,6 +22,7 @@ const deleteFiles = require('../commands/content/delete');
 const showCluster = require('../commands/elasticsearch/showCluster');
 const showDomains = require('../commands/elasticsearch/showDomains');
 const showIndices = require('../commands/elasticsearch/showIndices');
+const deleteIndices = require('../commands/elasticsearch/deleteIndices');
 
 // If -p or -d, or any other `needle` option is passed
 // without an actual value, it will be boolean true
@@ -142,7 +143,7 @@ program
   .action(() => showDomains(getEndpoints()));
 
 program
-  .command('es-show-cluster')
+  .command('es-clusters-show')
   .description('Shows cluster information about a given domain.')
   .option('-d, --domain [domain]', 'Select a domain')
   .action(async options => {
@@ -156,7 +157,7 @@ program
   });
 
 program
-  .command('es-show-indices [indices...]')
+  .command('es-indices-show [indices...]')
   .description('Shows index information')
   .option('-d, --domain [domain]', 'Select a domain')
   .action(async (indices, options) => {
@@ -172,18 +173,45 @@ program
   });
 
 program
-  .command('es-index-create [index]')
+  .command('es-indices-create [index]')
   .description('Creates an index in a given domain with an optional mapping.')
   .option('-d, --domain [domain]')
   .option('-m, --mapping [mapping]')
   .action((index, options) => {});
 
 program
-  .command('es-index-delete [indices...]')
+  .command('es-indices-delete [indices...]')
   .description('Deletes indices from a given Elasticsearch domain.')
-  .option('-d, --domain [domain]', 'Domain from which to delete an index.')
+  .option('-d, --domain [domain]', 'Select a domain.')
   .option('-c, --confirm [confirm]', 'Flag certainty of an operation.')
-  .action((indices, options) => {});
+  // .action(async (indices, options) => {
+  .action(async (indices, options) => {
+    if (!hasValidOption('domain', options)) {
+      console.error(missingRequiredInput);
+      process.exit(1);
+    }
+
+    const endpoints = getEndpoints();
+    const { domain } = options;
+
+    if (options.confirm) {
+      await deleteIndices({ indices, endpoints, domain });
+    } else {
+      // Initiate the prompt interface.
+      const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout,
+      });
+
+      rl.question('Are you sure? <yes|y> ', async answer => {
+        if (answer === 'y' || answer === 'yes') {
+          await deleteIndices({ indices, endpoints, domain });
+        }
+
+        rl.close();
+      });
+    }
+  });
 
 // If no arguments provided, display help menu.
 if (!process.argv.slice(2).length) {

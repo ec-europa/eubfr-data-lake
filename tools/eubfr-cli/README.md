@@ -108,7 +108,7 @@ This will give you information about the named environment variables holding inf
 Once you have the basic information about the domains you can manage through the CLI, you can execute the following:
 
 ```sh
-npx eubfr-cli es-show-cluster -d ES_PUBLIC_ENDPOINT
+npx eubfr-cli es-clusters-show -d ES_PUBLIC_ENDPOINT
 ```
 
 Where `ES_PUBLIC_ENDPOINT` is something you can get from the domains' information command.
@@ -118,17 +118,33 @@ Where `ES_PUBLIC_ENDPOINT` is something you can get from the domains' informatio
 This could be useful when you want to query for existing indices so that you either re-use or re-create:
 
 ```sh
-npx eubfr-cli es-show-indices -d ES_PUBLIC_ENDPOINT
+npx eubfr-cli es-indices-show -d ES_PUBLIC_ENDPOINT
 ```
 
 Since output might be too long to read (and most probably it will be in `dev` stage which is shared between developers), it could help to pipe a `grep` in order to focus on more narrow list, for example:
 
 ```sh
-npx eubfr-cli es-indices -d ES_PUBLIC_ENDPOINT | grep chernka
+npx eubfr-cli es-indices-show -d ES_PUBLIC_ENDPOINT | grep chernka
 ```
 
 This will give you a list of existing indices created by the given user. Then, you can make a more narrow query by specifying an index as following:
 
 ```sh
-npx eubfr-cli es-show-indices user-index1 user-index2 etc -d ES_PUBLIC_ENDPOINT
+npx eubfr-cli es-indices-show user-index1 user-index2 etc -d ES_PUBLIC_ENDPOINT
 ```
+
+### Delete indices
+
+This could be useful when you want to change mapping of an index without re-creating the whole domain.
+
+```sh
+npx eubfr-cli es-indices-delete user-index1 -d ES_PUBLIC_ENDPOINT
+```
+
+If you would like to skip the confirmation, you can use the `--confirm` flag or it's shorthand like following:
+
+```
+npx eubfr-cli es-indices-delete user-index1 -c -d ES_PUBLIC_ENDPOINT
+```
+
+Skipping the `user-index1` will delete all indices in the given domain, so be extra careful with this command.
