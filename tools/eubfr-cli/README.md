@@ -8,6 +8,8 @@
   - [Show domains](#show-domains)
   - [Show cluster information](#show-cluster-information)
   - [Show indices information](#show-indices-information)
+  - [Delete indices](#delete-indices)
+  - [Create indices](#create-indices)
 
 # EUBFR CLI
 
@@ -141,10 +143,28 @@ This could be useful when you want to change mapping of an index without re-crea
 npx eubfr-cli es-indices-delete user-index1 -d ES_PUBLIC_ENDPOINT
 ```
 
-If you would like to skip the confirmation, you can use the `--confirm` flag or it's shorthand like following:
+If you would like to skip the confirmation, you can use the `--confirm` flag:
 
 ```
-npx eubfr-cli es-indices-delete user-index1 -c -d ES_PUBLIC_ENDPOINT
+npx eubfr-cli es-indices-delete user-index1 --confirm -d ES_PUBLIC_ENDPOINT
 ```
 
 Skipping the `user-index1` will delete all indices in the given domain, so be extra careful with this command.
+
+### Create indices
+
+Used either when creating a new index with a free structure (no mapping rules) or when creating a new index with specific rules about the document structure.
+
+Simply create a new index:
+
+```sh
+npx eubfr-cli es-indices-create user-index-1 -d ES_PUBLIC_ENDPOINT
+```
+
+Create a new index with mapping:
+
+```sh
+npx eubfr-cli es-indices-create user-index-1 -t project -m ./resources/elasticsearch/mappings/project.js -d ES_PUBLIC_ENDPOINT
+```
+
+This is especially useful when you want to update mapping for a given index without re-creating the whole domain.

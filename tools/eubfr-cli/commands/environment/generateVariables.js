@@ -28,13 +28,13 @@ const generateEnvironmentVariables = () => {
       await shell('npx sls export-env', { cwd });
       console.timeEnd(service);
 
-      delete process.env.EUBFR_USERNAME;
+      return delete process.env.EUBFR_USERNAME;
     } catch (e) {
       return console.error(e);
     }
   });
 
-  Promise.all(operations);
+  return Promise.all(operations);
 };
 
 module.exports = generateEnvironmentVariables;
