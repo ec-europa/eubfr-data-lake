@@ -1,14 +1,13 @@
-- [EUBFR CLI](#eubfr-cli)
-  - [Usage](#usage)
-  - [Generate environment variables](#generate-environment-variables)
-  - [Content management](#content-management)
-    - [Upload content](#upload-content)
-    - [Show existing content](#show-existing-content)
-    - [Delete content](#delete-content)
-  - [Elasticsearch](#elasticsearch)
-    - [Show domains](#show-domains)
-    - [Show cluster information](#show-cluster-information)
-    - [Show list of indices under a given domain](#show-list-of-indices-under-a-given-domain)
+- [Usage](#usage)
+- [Generate environment variables](#generate-environment-variables)
+- [Content management](#content-management)
+  - [Upload content](#upload-content)
+  - [Show existing content](#show-existing-content)
+  - [Delete content](#delete-content)
+- [Elasticsearch](#elasticsearch)
+  - [Show domains](#show-domains)
+  - [Show cluster information](#show-cluster-information)
+  - [Show indices information](#show-indices-information)
 
 # EUBFR CLI
 
@@ -114,12 +113,12 @@ npx eubfr-cli es-show-cluster -d ES_PUBLIC_ENDPOINT
 
 Where `ES_PUBLIC_ENDPOINT` is something you can get from the domains' information command.
 
-### Show list of indices under a given domain
+### Show indices information
 
 This could be useful when you want to query for existing indices so that you either re-use or re-create:
 
 ```sh
-npx eubfr-cli es-indices -d ES_PUBLIC_ENDPOINT
+npx eubfr-cli es-show-indices -d ES_PUBLIC_ENDPOINT
 ```
 
 Since output might be too long to read (and most probably it will be in `dev` stage which is shared between developers), it could help to pipe a `grep` in order to focus on more narrow list, for example:
@@ -128,4 +127,8 @@ Since output might be too long to read (and most probably it will be in `dev` st
 npx eubfr-cli es-indices -d ES_PUBLIC_ENDPOINT | grep chernka
 ```
 
-This will give you a list of existing indices created by the given user.
+This will give you a list of existing indices created by the given user. Then, you can make a more narrow query by specifying an index as following:
+
+```sh
+npx eubfr-cli es-show-indices user-index1 user-index2 etc -d ES_PUBLIC_ENDPOINT
+```

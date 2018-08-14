@@ -8,6 +8,7 @@ const getUserCredentials = promisify(awscred.load);
 
 /**
  * Shows information about a given cluster behind a domain.
+ * @see https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-info-6-2
  */
 const showCluster = async (endpoints, domain) => {
   // Get user's AWS credentials and region

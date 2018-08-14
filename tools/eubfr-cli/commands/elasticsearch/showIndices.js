@@ -10,7 +10,7 @@ const getUserCredentials = promisify(awscred.load);
  * Shows information indices in a given domain.
  * @see https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-indices-stats-6-2
  */
-const showIndices = async (endpoints, domain) => {
+const showIndices = async ({ indices, endpoints, domain }) => {
   // Get user's AWS credentials and region
   const credentials = await getUserCredentials();
 
@@ -29,16 +29,31 @@ const showIndices = async (endpoints, domain) => {
     }),
   };
 
-  try {
-    const client = elasticsearch.Client(esOptions);
-    const info = await client.indices.stats({
-      index: '_all',
-      level: 'indices',
+  const client = elasticsearch.Client(esOptions);
+
+  // No indices are specified => show all.
+  if (indices.length === 0) {
+    try {
+      const info = await client.indices.stats({
+        index: '_all',
+        level: 'indices',
+      });
+
+      return console.log(prettyjson.render(info));
+    } catch (e) {
+      return console.error(e);
+    }
+  } else {
+    const getIndices = indices.map(index => {
+      return client.indices.stats({
+        index,
+        level: 'indices',
+      });
     });
 
-    return console.log(prettyjson.render(info));
-  } catch (e) {
-    return console.error(e);
+    Promise.all(getIndices)
+      .then(results => console.log(prettyjson.render(indices)))
+      .catch(e => console.error(e));
   }
 };
 

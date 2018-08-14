@@ -144,7 +144,7 @@ program
 program
   .command('es-show-cluster')
   .description('Shows cluster information about a given domain.')
-  .option('-d, --domain [domain]', 'Domain selection')
+  .option('-d, --domain [domain]', 'Select a domain')
   .action(async options => {
     if (!hasValidOption('domain', options)) {
       console.error(missingRequiredInput);
@@ -156,18 +156,19 @@ program
   });
 
 program
-  .command('es-indices')
-  .description('Shows a list of indices under a given domain.')
-  .option('-d, --domain [domain]', 'Show a list of indices for which domain?')
-  .action(async options => {
+  .command('es-show-indices [indices...]')
+  .description('Shows index information')
+  .option('-d, --domain [domain]', 'Select a domain')
+  .action(async (indices, options) => {
     if (!hasValidOption('domain', options)) {
       console.error(missingRequiredInput);
       process.exit(1);
     }
 
     const endpoints = getEndpoints();
+    const { domain } = options;
 
-    await showIndices(endpoints, options.domain);
+    await showIndices({ indices, endpoints, domain });
   });
 
 program
