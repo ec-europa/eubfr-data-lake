@@ -50,7 +50,7 @@ const showIndices = async ({ indices, host }) => {
       })
     );
 
-    const results = Promise.all(getIndices);
+    const results = await Promise.all(getIndices);
     return console.log(prettyjson.render(results));
   } catch (e) {
     return console.error(e);
