@@ -6,6 +6,7 @@ const readline = require('readline');
 
 // Utilities
 const getEndpoints = require('../lib/getEndpoints');
+const hasValidOption = require('../lib/hasValidOption');
 
 // Commands
 const showCluster = require('../commands/es/showCluster');
@@ -14,19 +15,37 @@ const showIndices = require('../commands/es/showIndices');
 const createIndex = require('../commands/es/createIndex');
 const deleteIndices = require('../commands/es/deleteIndices');
 
-// If -p or -d, or any other `needle` option is passed
-// without an actual value, it will be boolean true
-// This helper ensures that `needle` option is something useful.
-const hasValidOption = (needle, haystack) =>
-  haystack[needle] && typeof haystack[needle] !== 'boolean';
-
 const missingRequiredInput = '\n error: Missing required input parameters';
 
+/**
+ * Display a list of manageable domains.
+ *
+ * Usage:
+ *
+ * ```sh
+ * $ npx eubfr-cli es show-domains
+ * ```
+ * @memberof Elasticsearch
+ * @name showDomains
+ * @public
+ */
 program
   .command('show-domains')
   .description('Display a list of manageable domains.')
   .action(() => showDomains(getEndpoints()));
 
+/**
+ * Display cluster information about a given domain.
+ *
+ * Usage:
+ *
+ * ```sh
+ * $ npx eubfr-cli es show-cluster
+ * ```
+ * @memberof Elasticsearch
+ * @name showCluster
+ * @public
+ */
 program
   .command('show-cluster')
   .description('Display cluster information about a given domain.')
@@ -43,6 +62,18 @@ program
     await showCluster(host);
   });
 
+/**
+ * Display index information.
+ *
+ * Usage:
+ *
+ * ```sh
+ * $ npx eubfr-cli es show-indices -h
+ * ```
+ * @memberof Elasticsearch
+ * @name showIndices
+ * @public
+ */
 program
   .command('show-indices [indices...]')
   .description('Display index information.')
@@ -59,6 +90,18 @@ program
     await showIndices({ indices, host });
   });
 
+/**
+ * Create an index in a given domain with an optional mapping.
+ *
+ * Usage:
+ *
+ * ```sh
+ * $ npx eubfr-cli es create-index -h
+ * ```
+ * @memberof Elasticsearch
+ * @name createIndex
+ * @public
+ */
 program
   .command('create-index <index>')
   .description('Create an index in a given domain with an optional mapping.')
@@ -115,6 +158,18 @@ program
     await createIndex({ index, mapping, type, host });
   });
 
+/**
+ * Delete indices from a given Elasticsearch domain.
+ *
+ * Usage:
+ *
+ * ```sh
+ * $ npx eubfr-cli es delete-indices -h
+ * ```
+ * @memberof Elasticsearch
+ * @name deleteIndices
+ * @public
+ */
 program
   .command('delete-indices [indices...]')
   .description('Delete indices from a given Elasticsearch domain.')

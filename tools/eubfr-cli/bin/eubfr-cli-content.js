@@ -8,20 +8,27 @@ const ensureVariables = require('../lib/ensureVariables');
 const getCredentials = require('../lib/getProducerCredentials');
 const getEndpoints = require('../lib/getEndpoints');
 const getAllProducers = require('../lib/getAllProducers');
+const hasValidOption = require('../lib/hasValidOption');
 
 // Commands
 const uploadFiles = require('../commands/content/upload');
 const showFile = require('../commands/content/show');
 const deleteFiles = require('../commands/content/delete');
 
-// If -p or -d, or any other `needle` option is passed
-// without an actual value, it will be boolean true
-// This helper ensures that `needle` option is something useful.
-const hasValidOption = (needle, haystack) =>
-  haystack[needle] && typeof haystack[needle] !== 'boolean';
-
 const missingRequiredInput = '\n error: Missing required input parameters';
 
+/**
+ * Upload content to the data lake.
+ *
+ * Usage:
+ *
+ * ```sh
+ * $ npx eubfr-cli content upload -h
+ * ```
+ * @memberof Content
+ * @name Upload
+ * @public
+ */
 program
   .command('upload [files...]')
   .description('Upload content to the data lake.')
@@ -56,6 +63,18 @@ program
     await uploadFiles({ files, credentials, endpoints });
   });
 
+/**
+ * Display files of a given producer.
+ *
+ * Usage:
+ *
+ * ```sh
+ * $ npx eubfr-cli content show -h
+ * ```
+ * @memberof Content
+ * @name Show
+ * @public
+ */
 program
   .command('show [file]')
   .description('Display files of a given producer.')
@@ -85,6 +104,18 @@ program
     await showFile({ file, producer, endpoints });
   });
 
+/**
+ * Delete files by `computed_key` field.
+ *
+ * Usage:
+ *
+ * ```sh
+ * $ npx eubfr-cli content delete -h
+ * ```
+ * @memberof Content
+ * @name Delete
+ * @public
+ */
 program
   .command('delete [files...]')
   .description('Delete files by computed_key field.')
