@@ -96,6 +96,8 @@ program
  * - specific file by `computed_key`: `npx eubfr-cli content show agri/16598a36-db86-42a0-8041-c0d85021ad97.csv`
  * - all files of a given producer: `npx eubfr-cli content show -p agri`
  *
+ * Please note that if you are sure there's an existing content, but you can't see it with this command, you'll need to double-check `eubfr-data-lake/demo/dashboard/client/.env` file to contain the correct value for `REACT_APP_STAGE`. If it's not the same as config.json's `stage`, run `npx eubfr-cli env generate-variables` to refresh the value of `REACT_APP_STAGE`.
+ *
  * @memberof Content
  * @name Show
  * @public

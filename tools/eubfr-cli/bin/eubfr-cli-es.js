@@ -100,7 +100,7 @@ program
  * This will give you a list of existing indices created by the given user. Then, you can make a more narrow query by specifying an index as following:
  *
  * ```sh
- * $ npx eubfr-cli es show-indices user-index1 user-index2 etc -d ES_PUBLIC_ENDPOINT
+ * $ npx eubfr-cli es show-indices user-index-1 user-index-2 etc -d ES_PUBLIC_ENDPOINT
  * ```
  *
  * @memberof Elasticsearch
@@ -220,16 +220,16 @@ program
  * This could be useful when you want to change mapping of an index without re-creating the whole domain.
  *
  * ```sh
- * $ npx eubfr-cli es delete-indices user-index1 -d ES_PUBLIC_ENDPOINT
+ * $ npx eubfr-cli es delete-indices user-index-1 -d ES_PUBLIC_ENDPOINT
  * ```
  *
  * If you would like to skip the confirmation, you can use the `--confirm` flag:
  *
  * ```sh
- * $ npx eubfr-cli es delete-indices user-index1 --confirm -d ES_PUBLIC_ENDPOINT
+ * $ npx eubfr-cli es delete-indices user-index-1 --confirm -d ES_PUBLIC_ENDPOINT
  * ```
  *
- * Skipping the `user-index1` will delete all indices in the given domain, so be extra careful with this command.
+ * Skipping the `user-index-1` will delete all indices in the given domain, so be extra careful with this command.
  *
  * @memberof Elasticsearch
  * @name deleteIndices
