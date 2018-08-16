@@ -25,6 +25,10 @@ const missingRequiredInput = '\n error: Missing required input parameters';
  * ```sh
  * $ npx eubfr-cli es show-domains
  * ```
+ *
+ * Useful when you want to see the names of the Elasticsearch domains available for management throught the EUBFR CLI.
+ * This will give you information about the named environment variables holding information about their corresponding hosts. (API endpoints)
+ *
  * @memberof Elasticsearch
  * @name showDomains
  * @public
@@ -42,6 +46,15 @@ program
  * ```sh
  * $ npx eubfr-cli es show-cluster
  * ```
+ *
+ * Once you have the basic information about the domains you can manage through the CLI.
+ *
+ * Examples:
+ *
+ * ```sh
+ * $ npx eubfr-cli es show-cluster -d ES_PUBLIC_ENDPOINT
+ * ```
+ *
  * @memberof Elasticsearch
  * @name showCluster
  * @public
@@ -70,6 +83,26 @@ program
  * ```sh
  * $ npx eubfr-cli es show-indices -h
  * ```
+ *
+ * This could be useful when you want to query for existing indices so that you either re-use or re-create.
+ *
+ * Examples:
+ *
+ * ```sh
+ * $ npx eubfr-cli es show-indices -d ES_PUBLIC_ENDPOINT
+ * ```
+ * Since output might be too long to read (and most probably it will be in `dev` stage which is shared between developers), it could help to pipe a `grep` in order to focus on more narrow list.
+ *
+ * ```sh
+ *  $ npx eubfr-cli es show-indices -d ES_PUBLIC_ENDPOINT | grep chernka
+ * ```
+ *
+ * This will give you a list of existing indices created by the given user. Then, you can make a more narrow query by specifying an index as following:
+ *
+ * ```sh
+ * $ npx eubfr-cli es show-indices user-index1 user-index2 etc -d ES_PUBLIC_ENDPOINT
+ * ```
+ *
  * @memberof Elasticsearch
  * @name showIndices
  * @public
@@ -98,6 +131,23 @@ program
  * ```sh
  * $ npx eubfr-cli es create-index -h
  * ```
+ *
+ * Used either when creating a new index with a free structure (no mapping rules) or when creating a new index with specific rules about the document structure.
+ *
+ * Simply create a new index:
+ *
+ * ```sh
+ * $ npx eubfr-cli es create-index user-index-1 -d ES_PUBLIC_ENDPOINT
+ * ```
+ *
+ * Create a new index with mapping:
+ *
+ * ```sh
+ * $ npx eubfr-cli es create-index user-index-1 -t project -m ./resources/elasticsearch/mappings/project.js -d ES_PUBLIC_ENDPOINT
+ * ```
+ *
+ * This is especially useful when you want to update mapping for a given index without re-creating the whole domain.
+ *
  * @memberof Elasticsearch
  * @name createIndex
  * @public
@@ -166,6 +216,21 @@ program
  * ```sh
  * $ npx eubfr-cli es delete-indices -h
  * ```
+ *
+ * This could be useful when you want to change mapping of an index without re-creating the whole domain.
+ *
+ * ```sh
+ * $ npx eubfr-cli es delete-indices user-index1 -d ES_PUBLIC_ENDPOINT
+ * ```
+ *
+ * If you would like to skip the confirmation, you can use the `--confirm` flag:
+ *
+ * ```sh
+ * $ npx eubfr-cli es delete-indices user-index1 --confirm -d ES_PUBLIC_ENDPOINT
+ * ```
+ *
+ * Skipping the `user-index1` will delete all indices in the given domain, so be extra careful with this command.
+ *
  * @memberof Elasticsearch
  * @name deleteIndices
  * @public

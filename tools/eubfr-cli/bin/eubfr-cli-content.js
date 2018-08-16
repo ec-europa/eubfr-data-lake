@@ -25,6 +25,26 @@ const missingRequiredInput = '\n error: Missing required input parameters';
  * ```sh
  * $ npx eubfr-cli content upload -h
  * ```
+ *
+ * Examples:
+ * 
+ * Single file
+ *
+ * ```sh
+ * $ npx eubfr-cli content upload .content/agri/agri_history.csv -p agri
+ * ```
+ *
+ * Multiple files
+ *
+ * ```sh
+ * $ npx eubfr-cli content upload .content/inforegio/EUBFR_VIEW_16052018.xml .content/inforegio/regio_projects.json -p inforegio
+ *```
+
+ * All files
+ *
+ * ```sh
+ * $ npx eubfr-cli content upload
+ * ```
  * @memberof Content
  * @name Upload
  * @public
@@ -71,6 +91,11 @@ program
  * ```sh
  * $ npx eubfr-cli content show -h
  * ```
+ *
+ * Examples:
+ * - specific file by `computed_key`: `npx eubfr-cli content show agri/16598a36-db86-42a0-8041-c0d85021ad97.csv`
+ * - all files of a given producer: `npx eubfr-cli content show -p agri`
+ *
  * @memberof Content
  * @name Show
  * @public
@@ -112,6 +137,14 @@ program
  * ```sh
  * $ npx eubfr-cli content delete -h
  * ```
+ *
+ * Examples:
+ *
+ * - delete one or multiple files: `npx eubfr-cli content delete agri/foo budg/bar inforegio/baz`
+ * - delete all files of all producers `npx eubfr-cli content delete`
+ *
+ * By default, you will be prompted to confirm your intention. You can skip the this prompt by adding `--confirm` flag.
+ *
  * @memberof Content
  * @name Delete
  * @public

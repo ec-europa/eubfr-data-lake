@@ -2,24 +2,42 @@
 
 ### Table of Contents
 
--   [Environment][1]
-    -   [GenerateVariables][2]
--   [Elasticsearch][3]
-    -   [showDomains][4]
-    -   [showCluster][5]
-    -   [showIndices][6]
-    -   [createIndex][7]
-    -   [deleteIndices][8]
--   [Content][9]
-    -   [Upload][10]
-    -   [Show][11]
-    -   [Delete][12]
+- [Introduction][1]
+  - [Usage][2]
+- [Environment][3]
+  - [Usage][4]
+  - [GenerateVariables][5]
+- [Elasticsearch][6]
+  - [Usage][7]
+  - [showDomains][8]
+  - [showCluster][9]
+  - [showIndices][10]
+  - [createIndex][11]
+  - [deleteIndices][12]
+- [Content][13]
+  - [Usage][14]
+  - [Notes][15]
+  - [Upload][16]
+  - [Show][17]
+  - [Delete][18]
+
+## Introduction
+
+EUBFR CLI
+
+Low-level utilities for managing assets of EUBFR data lake.
+
+### Usage
+
+```sh
+$ npx eubfr-cli -h
+```
 
 ## Environment
 
 Manage environment
 
-Usage:
+### Usage
 
 ```sh
 $ npx eubfr-cli env -h
@@ -27,7 +45,19 @@ $ npx eubfr-cli env -h
 
 ### GenerateVariables
 
-Generate all necessary `.env` files for using the CLI.
+That's probably the first operation you'd like to execute before using the EUBFR CLI.
+
+The command will generate `.env` files for all services which contain variable exports which are necessary for the proper functioning of the CLI.
+
+For instance, you may try to get information about available Elasticsearch domains which are manageable by the CLI running `npx eubfr-cli es`.
+
+If you haven't deployed `@eubfr/demo-dashboard-client` or you have switched between staging environments working on different branches at the same code base, then you'll get an error like this:
+
+    ENOENT: no such file or directory, open '.../eubfr-data-lake/demo/dashboard/client/.env'
+
+Or it could be also any other message that hints for a requirement of a given named environment variable, such as `SIGNED_UPLOADS_API`.
+
+These are signs that you need to re-generate all necessary `.env` files which contain information about the API endpoints.
 
 Usage:
 
@@ -39,7 +69,7 @@ $ npx eubfr-cli env generate-variables
 
 Manage Elasticsearch assets
 
-Usage:
+### Usage
 
 ```sh
 $ npx eubfr-cli es -h
@@ -55,6 +85,9 @@ Usage:
 $ npx eubfr-cli es show-domains
 ```
 
+Useful when you want to see the names of the Elasticsearch domains available for management throught the EUBFR CLI.
+This will give you information about the named environment variables holding information about their corresponding hosts. (API endpoints)
+
 ### showCluster
 
 Display cluster information about a given domain.
@@ -63,6 +96,14 @@ Usage:
 
 ```sh
 $ npx eubfr-cli es show-cluster
+```
+
+Once you have the basic information about the domains you can manage through the CLI.
+
+Examples:
+
+```sh
+$ npx eubfr-cli es show-cluster -d ES_PUBLIC_ENDPOINT
 ```
 
 ### showIndices
@@ -75,6 +116,26 @@ Usage:
 $ npx eubfr-cli es show-indices -h
 ```
 
+This could be useful when you want to query for existing indices so that you either re-use or re-create.
+
+Examples:
+
+```sh
+$ npx eubfr-cli es show-indices -d ES_PUBLIC_ENDPOINT
+```
+
+Since output might be too long to read (and most probably it will be in `dev` stage which is shared between developers), it could help to pipe a `grep` in order to focus on more narrow list.
+
+```sh
+ $ npx eubfr-cli es show-indices -d ES_PUBLIC_ENDPOINT | grep chernka
+```
+
+This will give you a list of existing indices created by the given user. Then, you can make a more narrow query by specifying an index as following:
+
+```sh
+$ npx eubfr-cli es show-indices user-index1 user-index2 etc -d ES_PUBLIC_ENDPOINT
+```
+
 ### createIndex
 
 Create an index in a given domain with an optional mapping.
@@ -84,6 +145,22 @@ Usage:
 ```sh
 $ npx eubfr-cli es create-index -h
 ```
+
+Used either when creating a new index with a free structure (no mapping rules) or when creating a new index with specific rules about the document structure.
+
+Simply create a new index:
+
+```sh
+$ npx eubfr-cli es create-index user-index-1 -d ES_PUBLIC_ENDPOINT
+```
+
+Create a new index with mapping:
+
+```sh
+$ npx eubfr-cli es create-index user-index-1 -t project -m ./resources/elasticsearch/mappings/project.js -d ES_PUBLIC_ENDPOINT
+```
+
+This is especially useful when you want to update mapping for a given index without re-creating the whole domain.
 
 ### deleteIndices
 
@@ -95,15 +172,55 @@ Usage:
 $ npx eubfr-cli es delete-indices -h
 ```
 
+This could be useful when you want to change mapping of an index without re-creating the whole domain.
+
+```sh
+$ npx eubfr-cli es delete-indices user-index1 -d ES_PUBLIC_ENDPOINT
+```
+
+If you would like to skip the confirmation, you can use the `--confirm` flag:
+
+```sh
+$ npx eubfr-cli es delete-indices user-index1 --confirm -d ES_PUBLIC_ENDPOINT
+```
+
+Skipping the `user-index1` will delete all indices in the given domain, so be extra careful with this command.
+
 ## Content
 
 Manage content
 
-Usage:
+### Usage
 
 ```sh
 $ npx eubfr-cli content -h
 ```
+
+### Notes
+
+If you want to make use of the CLI to automatically upload or delete all content of a given stage, you can optionally create a `.content` folder in the root of your project, with the following example structure:
+
+    .
+    ├── agri
+    │   └── agri_history.csv
+    ├── budg
+    │   └── CreativeEurope_Projects_Overview_2017-08-21.xls
+    ├── iati
+    │   └── activity.csv
+    ├── inforegio
+    │   ├── EUBFR_VIEW_16052018.xml
+    │   └── regio_projects.json
+    ├── valor
+    │   └── valor_sample.xls
+    └── wifi4eu
+        └── wifi4euRegistrations.xlsx
+
+There are 2 abstracted operations on a project level:
+
+- `yarn content:upload` uploads files from `.content` producers' folders to their respective S3 buckets in the cloud. This triggers the ingestion process.
+- `yarn content:delete` deletes all the currently uploaded content of all producers, for a given stage.
+
+You will need to have the `config.json` file correctly setup in the root folder of the project, as producers' credentials are currently stored only there in the existing workflows.
 
 ### Upload
 
@@ -113,6 +230,26 @@ Usage:
 
 ```sh
 $ npx eubfr-cli content upload -h
+```
+
+Examples:
+
+Single file
+
+```sh
+$ npx eubfr-cli content upload .content/agri/agri_history.csv -p agri
+```
+
+Multiple files
+
+```sh
+$ npx eubfr-cli content upload .content/inforegio/EUBFR_VIEW_16052018.xml .content/inforegio/regio_projects.json -p inforegio
+```
+
+All files
+
+```sh
+$ npx eubfr-cli content upload
 ```
 
 ### Show
@@ -125,6 +262,11 @@ Usage:
 $ npx eubfr-cli content show -h
 ```
 
+Examples:
+
+- specific file by `computed_key`: `npx eubfr-cli content show agri/16598a36-db86-42a0-8041-c0d85021ad97.csv`
+- all files of a given producer: `npx eubfr-cli content show -p agri`
+
 ### Delete
 
 Delete files by `computed_key` field.
@@ -135,26 +277,28 @@ Usage:
 $ npx eubfr-cli content delete -h
 ```
 
-[1]: #environment
+Examples:
 
-[2]: #generatevariables
+- delete one or multiple files: `npx eubfr-cli content delete agri/foo budg/bar inforegio/baz`
+- delete all files of all producers `npx eubfr-cli content delete`
 
-[3]: #elasticsearch
+By default, you will be prompted to confirm your intention. You can skip the this prompt by adding `--confirm` flag.
 
-[4]: #showdomains
-
-[5]: #showcluster
-
-[6]: #showindices
-
-[7]: #createindex
-
-[8]: #deleteindices
-
-[9]: #content
-
-[10]: #upload
-
-[11]: #show
-
-[12]: #delete
+[1]: #introduction
+[2]: #usage
+[3]: #environment
+[4]: #usage-1
+[5]: #generatevariables
+[6]: #elasticsearch
+[7]: #usage-2
+[8]: #showdomains
+[9]: #showcluster
+[10]: #showindices
+[11]: #createindex
+[12]: #deleteindices
+[13]: #content
+[14]: #usage-3
+[15]: #notes
+[16]: #upload
+[17]: #show
+[18]: #delete

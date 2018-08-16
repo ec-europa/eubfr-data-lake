@@ -3,8 +3,8 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "changelog": "lerna-changelog",
-    "content:upload": "eubfr-cli upload",
-    "content:delete": "eubfr-cli delete",
+    "content:upload": "npx eubfr-cli content upload",
+    "content:delete": "npx eubfr-cli content delete",
     "deploy": "run-s deploy:resources deploy:services deploy:demo",
     "deploy:compute": "./scripts/deployment/deploy-compute.sh",
     "deploy:demo": "./scripts/deployment/deploy-demo.sh",
