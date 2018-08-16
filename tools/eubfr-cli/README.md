@@ -133,7 +133,7 @@ Since output might be too long to read (and most probably it will be in `dev` st
 This will give you a list of existing indices created by the given user. Then, you can make a more narrow query by specifying an index as following:
 
 ```sh
-$ npx eubfr-cli es show-indices user-index1 user-index2 etc -d ES_PUBLIC_ENDPOINT
+$ npx eubfr-cli es show-indices user-index-1 user-index-2 etc -d ES_PUBLIC_ENDPOINT
 ```
 
 ### createIndex
@@ -175,16 +175,16 @@ $ npx eubfr-cli es delete-indices -h
 This could be useful when you want to change mapping of an index without re-creating the whole domain.
 
 ```sh
-$ npx eubfr-cli es delete-indices user-index1 -d ES_PUBLIC_ENDPOINT
+$ npx eubfr-cli es delete-indices user-index-1 -d ES_PUBLIC_ENDPOINT
 ```
 
 If you would like to skip the confirmation, you can use the `--confirm` flag:
 
 ```sh
-$ npx eubfr-cli es delete-indices user-index1 --confirm -d ES_PUBLIC_ENDPOINT
+$ npx eubfr-cli es delete-indices user-index-1 --confirm -d ES_PUBLIC_ENDPOINT
 ```
 
-Skipping the `user-index1` will delete all indices in the given domain, so be extra careful with this command.
+Skipping the `user-index-1` will delete all indices in the given domain, so be extra careful with this command.
 
 ## Content
 
@@ -266,6 +266,8 @@ Examples:
 
 - specific file by `computed_key`: `npx eubfr-cli content show agri/16598a36-db86-42a0-8041-c0d85021ad97.csv`
 - all files of a given producer: `npx eubfr-cli content show -p agri`
+
+Please note that if you are sure there's an existing content, but you can't see it with this command, you'll need to double-check `eubfr-data-lake/demo/dashboard/client/.env` file to contain the correct value for `REACT_APP_STAGE`. If it's not the same as config.json's `stage`, run `npx eubfr-cli env generate-variables` to refresh the value of `REACT_APP_STAGE`.
 
 ### Delete
 
