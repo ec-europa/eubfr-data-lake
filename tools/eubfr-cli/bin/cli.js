@@ -48,6 +48,8 @@ program.command('env', 'Environment management');
 
 program.command('es', 'Elasticsearch management');
 
+// The following comment contains `tree` results which cause lintint issues.
+/* eslint-disable no-irregular-whitespace */
 /**
  *
  * Manage content
@@ -89,6 +91,7 @@ program.command('es', 'Elasticsearch management');
  * @name Content
  * @public
  */
+/* eslint-enable no-irregular-whitespace */
 program.command('content', 'Content management');
 
 // If no arguments provided, display help menu.
