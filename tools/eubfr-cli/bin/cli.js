@@ -20,6 +20,20 @@ const pkg = require('../package.json');
 program.version(pkg.version).usage('[resource] [action]');
 
 /**
+ * Manage services
+ *
+ * ### Usage
+ *
+ * ```sh
+ * $ npx eubfr-cli services -h
+ * ```
+ *
+ * @name Services
+ * @public
+ */
+program.command('services', 'Services management');
+
+/**
  * Manage environment
  *
  * ### Usage

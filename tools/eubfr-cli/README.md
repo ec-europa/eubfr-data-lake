@@ -4,22 +4,25 @@
 
 - [Introduction][1]
   - [Usage][2]
-- [Environment][3]
+- [Services][3]
   - [Usage][4]
-  - [GenerateVariables][5]
-- [Elasticsearch][6]
+  - [Deploy][5]
+- [Environment][6]
   - [Usage][7]
-  - [showDomains][8]
-  - [showCluster][9]
-  - [showIndices][10]
-  - [createIndex][11]
-  - [deleteIndices][12]
-- [Content][13]
-  - [Usage][14]
-  - [Notes][15]
-  - [Upload][16]
-  - [Show][17]
-  - [Delete][18]
+  - [GenerateVariables][8]
+- [Elasticsearch][9]
+  - [Usage][10]
+  - [showDomains][11]
+  - [showCluster][12]
+  - [showIndices][13]
+  - [createIndex][14]
+  - [deleteIndices][15]
+- [Content][16]
+  - [Usage][17]
+  - [Notes][18]
+  - [Upload][19]
+  - [Show][20]
+  - [Delete][21]
 
 ## Introduction
 
@@ -31,6 +34,44 @@ Low-level utilities for managing assets of EUBFR data lake.
 
 ```sh
 $ npx eubfr-cli -h
+```
+
+## Services
+
+Manage services
+
+### Usage
+
+```sh
+$ npx eubfr-cli services -h
+```
+
+### Deploy
+
+Usage:
+
+```sh
+$ npx eubfr-cli services deploy -h
+```
+
+Examples:
+
+Deploy all services for all producers.
+
+```sh
+$ npx eubfr-cli services deploy
+```
+
+Deploy all services, only for working with the AGRI producer
+
+```sh
+$ npx eubfr-cli services deploy -p agri
+```
+
+(Re-)Deploy only a set of services for working a given producer
+
+```sh
+$ npx eubfr-cli services deploy foo bar -p agri
 ```
 
 ## Environment
@@ -288,19 +329,22 @@ By default, you will be prompted to confirm your intention. You can skip the thi
 
 [1]: #introduction
 [2]: #usage
-[3]: #environment
+[3]: #services
 [4]: #usage-1
-[5]: #generatevariables
-[6]: #elasticsearch
+[5]: #deploy
+[6]: #environment
 [7]: #usage-2
-[8]: #showdomains
-[9]: #showcluster
-[10]: #showindices
-[11]: #createindex
-[12]: #deleteindices
-[13]: #content
-[14]: #usage-3
-[15]: #notes
-[16]: #upload
-[17]: #show
-[18]: #delete
+[8]: #generatevariables
+[9]: #elasticsearch
+[10]: #usage-3
+[11]: #showdomains
+[12]: #showcluster
+[13]: #showindices
+[14]: #createindex
+[15]: #deleteindices
+[16]: #content
+[17]: #usage-4
+[18]: #notes
+[19]: #upload
+[20]: #show
+[21]: #delete
