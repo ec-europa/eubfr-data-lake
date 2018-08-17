@@ -8,7 +8,7 @@ const shell = promisify(exec);
 const getAvailableServices = require('../../lib/getAvailableServices');
 const getServiceLocation = require('../../lib/getServiceLocation');
 
-const deployServices = ({ services, producer }) => {
+const deployServices = async ({ services, producer }) => {
   const list = getAvailableServices(services);
   const servicesToDeploy = [];
 
@@ -30,7 +30,9 @@ const deployServices = ({ services, producer }) => {
     servicesToDeploy.push(...list);
   }
 
-  const operations = servicesToDeploy.map(async service => {
+  // Using for-of on purpose for a sequential resolution of promises.
+  // eslint-disable-next-line
+  for (const service of servicesToDeploy) {
     const serviceName = service.service;
     const cwd = path.resolve(`${getServiceLocation(serviceName)}`);
 
@@ -38,19 +40,20 @@ const deployServices = ({ services, producer }) => {
       console.log(`Deploying ${serviceName}`);
       console.time(serviceName);
       // Deploy the service.
+      // eslint-disable-next-line
       await shell('npx sls deploy', { cwd });
       if (service.exportEnv) {
         // Export environment variables.
+        // eslint-disable-next-line
         await shell('npx sls export-env', { cwd });
+        console.log(`.env exported for ${serviceName}`);
       }
       console.log(`${serviceName} has been deployed`);
-      return console.timeEnd(serviceName);
+      console.timeEnd(serviceName);
     } catch (e) {
-      return console.error(e);
+      console.error(e);
     }
-  });
-
-  return Promise.all(operations);
+  }
 };
 
 module.exports = deployServices;

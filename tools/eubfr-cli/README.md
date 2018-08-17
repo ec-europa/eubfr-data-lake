@@ -4,25 +4,30 @@
 
 - [Introduction][1]
   - [Usage][2]
-- [Services][3]
+- [Resources][3]
   - [Usage][4]
   - [Deploy][5]
-- [Environment][6]
-  - [Usage][7]
-  - [GenerateVariables][8]
-- [Elasticsearch][9]
-  - [Usage][10]
-  - [showDomains][11]
-  - [showCluster][12]
-  - [showIndices][13]
-  - [createIndex][14]
-  - [deleteIndices][15]
-- [Content][16]
-  - [Usage][17]
-  - [Notes][18]
-  - [Upload][19]
-  - [Show][20]
-  - [Delete][21]
+  - [Delete][6]
+- [Services][7]
+  - [Usage][8]
+  - [Deploy][9]
+  - [Delete][10]
+- [Environment][11]
+  - [Usage][12]
+  - [GenerateVariables][13]
+- [Elasticsearch][14]
+  - [Usage][15]
+  - [showDomains][16]
+  - [showCluster][17]
+  - [showIndices][18]
+  - [createIndex][19]
+  - [deleteIndices][20]
+- [Content][21]
+  - [Usage][22]
+  - [Notes][23]
+  - [Upload][24]
+  - [Show][25]
+  - [Delete][26]
 
 ## Introduction
 
@@ -34,6 +39,40 @@ Low-level utilities for managing assets of EUBFR data lake.
 
 ```sh
 $ npx eubfr-cli -h
+```
+
+## Resources
+
+Manage resources
+
+### Usage
+
+```sh
+$ npx eubfr-cli resources -h
+```
+
+### Deploy
+
+Create all necessary AWS resources, such as S3 buckets for raw and harmonized storages.
+
+Usage:
+
+```sh
+$ npx eubfr-cli resources deploy
+```
+
+### Delete
+
+Delete resource services.
+
+List: resources-raw-storage, resources-harmonized-storage.
+
+Especially useful when usually resources-harmonized-storage will fail on deployment.
+
+Usage:
+
+```sh
+$ npx eubfr-cli resources delete
 ```
 
 ## Services
@@ -62,16 +101,40 @@ Deploy all services for all producers.
 $ npx eubfr-cli services deploy
 ```
 
-Deploy all services, only for working with the AGRI producer
+Deploy all services, only for working with the AGRI producer.
 
 ```sh
 $ npx eubfr-cli services deploy -p agri
 ```
 
-(Re-)Deploy only a set of services for working a given producer
+(Re-)Deploy only a set of services for working a given producer.
 
 ```sh
 $ npx eubfr-cli services deploy foo bar -p agri
+```
+
+### Delete
+
+Remove a serverless service from AWS cloud.
+
+Usage:
+
+```sh
+$ npx eubfr-cli services remove -h
+```
+
+Examples:
+
+Delete all services.
+
+```sh
+$ npx eubfr-cli services delete
+```
+
+Delete only a given set of services.
+
+```sh
+$ npx eubfr-cli services delete storage-signed-uploads
 ```
 
 ## Environment
@@ -275,19 +338,19 @@ $ npx eubfr-cli content upload -h
 
 Examples:
 
-Single file
+Single file:
 
 ```sh
 $ npx eubfr-cli content upload .content/agri/agri_history.csv -p agri
 ```
 
-Multiple files
+Multiple files:
 
 ```sh
 $ npx eubfr-cli content upload .content/inforegio/EUBFR_VIEW_16052018.xml .content/inforegio/regio_projects.json -p inforegio
 ```
 
-All files
+All files:
 
 ```sh
 $ npx eubfr-cli content upload
@@ -305,10 +368,24 @@ $ npx eubfr-cli content show -h
 
 Examples:
 
-- specific file by `computed_key`: `npx eubfr-cli content show agri/16598a36-db86-42a0-8041-c0d85021ad97.csv`
-- all files of a given producer: `npx eubfr-cli content show -p agri`
+Specific file by `computed_key`:
 
-Please note that if you are sure there's an existing content, but you can't see it with this command, you'll need to double-check `eubfr-data-lake/demo/dashboard/client/.env` file to contain the correct value for `REACT_APP_STAGE`. If it's not the same as config.json's `stage`, run `npx eubfr-cli env generate-variables` to refresh the value of `REACT_APP_STAGE`.
+```sh
+$ npx eubfr-cli content show agri/16598a36-db86-42a0-8041-c0d85021ad97.csv
+```
+
+All files of a given producer:
+
+```sh
+$ npx eubfr-cli content show -p agri
+```
+
+Please note that if you are sure there's an existing content,
+but you can't see it with this command, you'll need to double-check
+`eubfr-data-lake/demo/dashboard/client/.env` file to contain
+the correct value for `REACT_APP_STAGE`.
+If it's not the same as config.json's `stage`, run
+`npx eubfr-cli env generate-variables` to refresh the value of `REACT_APP_STAGE`.
 
 ### Delete
 
@@ -322,29 +399,44 @@ $ npx eubfr-cli content delete -h
 
 Examples:
 
-- delete one or multiple files: `npx eubfr-cli content delete agri/foo budg/bar inforegio/baz`
-- delete all files of all producers `npx eubfr-cli content delete`
+Delete one or multiple files:
 
-By default, you will be prompted to confirm your intention. You can skip the this prompt by adding `--confirm` flag.
+```sh
+$ npx eubfr-cli content delete agri/foo budg/bar inforegio/baz
+```
+
+Delete all files of all producers:
+
+```sh
+$ npx eubfr-cli content delete
+```
+
+By default, you will be prompted to confirm your intention.
+You can skip the this prompt by adding `--confirm` flag.
 
 [1]: #introduction
 [2]: #usage
-[3]: #services
+[3]: #resources
 [4]: #usage-1
 [5]: #deploy
-[6]: #environment
-[7]: #usage-2
-[8]: #generatevariables
-[9]: #elasticsearch
-[10]: #usage-3
-[11]: #showdomains
-[12]: #showcluster
-[13]: #showindices
-[14]: #createindex
-[15]: #deleteindices
-[16]: #content
-[17]: #usage-4
-[18]: #notes
-[19]: #upload
-[20]: #show
-[21]: #delete
+[6]: #delete
+[7]: #services
+[8]: #usage-2
+[9]: #deploy-1
+[10]: #delete-1
+[11]: #environment
+[12]: #usage-3
+[13]: #generatevariables
+[14]: #elasticsearch
+[15]: #usage-4
+[16]: #showdomains
+[17]: #showcluster
+[18]: #showindices
+[19]: #createindex
+[20]: #deleteindices
+[21]: #content
+[22]: #usage-5
+[23]: #notes
+[24]: #upload
+[25]: #show
+[26]: #delete-2

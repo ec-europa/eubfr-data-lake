@@ -28,19 +28,19 @@ const missingRequiredInput = '\n error: Missing required input parameters';
  *
  * Examples:
  * 
- * Single file
+ * Single file:
  *
  * ```sh
  * $ npx eubfr-cli content upload .content/agri/agri_history.csv -p agri
  * ```
  *
- * Multiple files
+ * Multiple files:
  *
  * ```sh
  * $ npx eubfr-cli content upload .content/inforegio/EUBFR_VIEW_16052018.xml .content/inforegio/regio_projects.json -p inforegio
  *```
 
- * All files
+ * All files:
  *
  * ```sh
  * $ npx eubfr-cli content upload
@@ -93,10 +93,25 @@ program
  * ```
  *
  * Examples:
- * - specific file by `computed_key`: `npx eubfr-cli content show agri/16598a36-db86-42a0-8041-c0d85021ad97.csv`
- * - all files of a given producer: `npx eubfr-cli content show -p agri`
  *
- * Please note that if you are sure there's an existing content, but you can't see it with this command, you'll need to double-check `eubfr-data-lake/demo/dashboard/client/.env` file to contain the correct value for `REACT_APP_STAGE`. If it's not the same as config.json's `stage`, run `npx eubfr-cli env generate-variables` to refresh the value of `REACT_APP_STAGE`.
+ * Specific file by `computed_key`:
+ *
+ * ```sh
+ * $ npx eubfr-cli content show agri/16598a36-db86-42a0-8041-c0d85021ad97.csv
+ * ```
+ *
+ * All files of a given producer:
+ *
+ * ```sh
+ * $ npx eubfr-cli content show -p agri
+ * ```
+ *
+ * Please note that if you are sure there's an existing content,
+ * but you can't see it with this command, you'll need to double-check
+ * `eubfr-data-lake/demo/dashboard/client/.env` file to contain
+ * the correct value for `REACT_APP_STAGE`.
+ * If it's not the same as config.json's `stage`, run
+ * `npx eubfr-cli env generate-variables` to refresh the value of `REACT_APP_STAGE`.
  *
  * @memberof Content
  * @name Show
@@ -132,6 +147,7 @@ program
   });
 
 /**
+ *
  * Delete files by `computed_key` field.
  *
  * Usage:
@@ -142,10 +158,20 @@ program
  *
  * Examples:
  *
- * - delete one or multiple files: `npx eubfr-cli content delete agri/foo budg/bar inforegio/baz`
- * - delete all files of all producers `npx eubfr-cli content delete`
+ * Delete one or multiple files:
  *
- * By default, you will be prompted to confirm your intention. You can skip the this prompt by adding `--confirm` flag.
+ * ```sh
+ * $ npx eubfr-cli content delete agri/foo budg/bar inforegio/baz
+ * ```
+ *
+ * Delete all files of all producers:
+ *
+ * ```sh
+ * $ npx eubfr-cli content delete
+ * ```
+ *
+ * By default, you will be prompted to confirm your intention.
+ * You can skip the this prompt by adding `--confirm` flag.
  *
  * @memberof Content
  * @name Delete

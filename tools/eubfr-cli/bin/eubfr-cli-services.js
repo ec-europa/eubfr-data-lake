@@ -7,6 +7,7 @@ const hasValidOption = require('../lib/hasValidOption');
 
 // Commands
 const deployServices = require('../commands/services/deployServices');
+const deleteServices = require('../commands/services/deleteServices');
 
 /**
  *
@@ -15,6 +16,7 @@ const deployServices = require('../commands/services/deployServices');
  * ```sh
  * $ npx eubfr-cli services deploy -h
  * ```
+ *
  * Examples:
  *
  * Deploy all services for all producers.
@@ -23,13 +25,13 @@ const deployServices = require('../commands/services/deployServices');
  * $ npx eubfr-cli services deploy
  * ```
  *
- * Deploy all services, only for working with the AGRI producer
+ * Deploy all services, only for working with the AGRI producer.
  *
  * ```sh
  * $ npx eubfr-cli services deploy -p agri
  * ```
  *
- * (Re-)Deploy only a set of services for working a given producer
+ * (Re-)Deploy only a set of services for working a given producer.
  *
  * ```sh
  * $ npx eubfr-cli services deploy foo bar -p agri
@@ -49,6 +51,41 @@ program
       : '*';
 
     await deployServices({ services, producer });
+  });
+
+/**
+ *
+ * Remove a serverless service from AWS cloud.
+ *
+ * Usage:
+ *
+ * ```sh
+ * $ npx eubfr-cli services remove -h
+ * ```
+ *
+ * Examples:
+ *
+ * Delete all services.
+ *
+ * ```sh
+ * $ npx eubfr-cli services delete
+ * ```
+ *
+ * Delete only a given set of services.
+ *
+ * ```sh
+ * $ npx eubfr-cli services delete storage-signed-uploads
+ * ```
+ *
+ * @memberof Services
+ * @name Delete
+ * @public
+ */
+program
+  .command('delete [services...]')
+  .description('Delete services.')
+  .action(async services => {
+    await deleteServices({ services });
   });
 
 // If no arguments provided, display help menu.
