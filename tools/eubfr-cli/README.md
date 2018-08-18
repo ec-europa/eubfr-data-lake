@@ -17,17 +17,18 @@
   - [GenerateVariables][13]
 - [Elasticsearch][14]
   - [Usage][15]
-  - [showDomains][16]
-  - [showCluster][17]
-  - [showIndices][18]
-  - [createIndex][19]
-  - [deleteIndices][20]
-- [Content][21]
-  - [Usage][22]
-  - [Notes][23]
-  - [Upload][24]
-  - [Show][25]
-  - [Delete][26]
+  - [backupKibana][16]
+  - [showDomains][17]
+  - [showCluster][18]
+  - [showIndices][19]
+  - [createIndex][20]
+  - [deleteIndices][21]
+- [Content][22]
+  - [Usage][23]
+  - [Notes][24]
+  - [Upload][25]
+  - [Show][26]
+  - [Delete][27]
 
 ## Introduction
 
@@ -120,7 +121,7 @@ Remove a serverless service from AWS cloud.
 Usage:
 
 ```sh
-$ npx eubfr-cli services remove -h
+$ npx eubfr-cli services delete -h
 ```
 
 Examples:
@@ -177,6 +178,22 @@ Manage Elasticsearch assets
 
 ```sh
 $ npx eubfr-cli es -h
+```
+
+### backupKibana
+
+Backup .kibana index for a given host.
+
+Usage:
+
+```sh
+$ npx eubfr-cli es backup-kibana -h
+```
+
+Example:
+
+```sh
+$ npx eubfr-cli es backup-kibana --host https://search-test-public-ip4o6f4o6ziykrbjm4kdpyosfu.eu-central-1.es.amazonaws.com/
 ```
 
 ### showDomains
@@ -429,14 +446,15 @@ You can skip the this prompt by adding `--confirm` flag.
 [13]: #generatevariables
 [14]: #elasticsearch
 [15]: #usage-4
-[16]: #showdomains
-[17]: #showcluster
-[18]: #showindices
-[19]: #createindex
-[20]: #deleteindices
-[21]: #content
-[22]: #usage-5
-[23]: #notes
-[24]: #upload
-[25]: #show
-[26]: #delete-2
+[16]: #backupkibana
+[17]: #showdomains
+[18]: #showcluster
+[19]: #showindices
+[20]: #createindex
+[21]: #deleteindices
+[22]: #content
+[23]: #usage-5
+[24]: #notes
+[25]: #upload
+[26]: #show
+[27]: #delete-2

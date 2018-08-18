@@ -60,7 +60,7 @@ program
  * Usage:
  *
  * ```sh
- * $ npx eubfr-cli services remove -h
+ * $ npx eubfr-cli services delete -h
  * ```
  *
  * Examples:

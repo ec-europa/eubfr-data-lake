@@ -10,12 +10,46 @@ const hasValidOption = require('../lib/hasValidOption');
 
 // Commands
 const showCluster = require('../commands/es/showCluster');
+const backupKibana = require('../commands/es/backupKibana');
 const showDomains = require('../commands/es/showDomains');
 const showIndices = require('../commands/es/showIndices');
 const createIndex = require('../commands/es/createIndex');
 const deleteIndices = require('../commands/es/deleteIndices');
 
 const missingRequiredInput = '\n error: Missing required input parameters';
+
+/**
+ *
+ * Backup .kibana index for a given host.
+ *
+ * Usage:
+ *
+ * ```sh
+ * $ npx eubfr-cli es backup-kibana -h
+ * ```
+ *
+ * Example:
+ *
+ * ```sh
+ * $ npx eubfr-cli es backup-kibana --host https://search-test-public-ip4o6f4o6ziykrbjm4kdpyosfu.eu-central-1.es.amazonaws.com/
+ * ```
+ *
+ * @memberof Elasticsearch
+ * @name backupKibana
+ * @public
+ */
+program
+  .command('backup-kibana')
+  .description('Backup .kibana index for a given host.')
+  .option('--host [host]', 'Select a host (endpoint) of an ES domain.')
+  .action(async options => {
+    if (!hasValidOption('host', options)) {
+      console.error(missingRequiredInput);
+      process.exit(1);
+    }
+
+    await backupKibana({ host: options.host });
+  });
 
 /**
  * Display a list of manageable domains.
@@ -39,6 +73,7 @@ program
   .action(() => showDomains(getEndpoints()));
 
 /**
+ *
  * Display cluster information about a given domain.
  *
  * Usage:

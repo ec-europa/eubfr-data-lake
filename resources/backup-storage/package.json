@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "name": "@eubfr/resources-backup-storage",
+  "version": "0.1.0",
+  "scripts": {
+    "deploy": "sls deploy -v"
+  },
+  "devDependencies": {
+    "serverless": "1.28.0"
+  }
+}
