@@ -17,7 +17,7 @@ resources:
     BackupBucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: eubfr-backup
+        BucketName: eubfr-es-repository
         CorsConfiguration:
           CorsRules:
             - AllowedHeaders:
