@@ -7,6 +7,7 @@ const prettyjson = require('prettyjson');
 const merge = require('deepmerge');
 
 const getUserCredentials = promisify(awscred.load);
+const objectIsEmpty = obj => !Object.keys(obj).length;
 
 /**
  * Provides a set of abstracted methods of ES client's snapshot operation.
@@ -22,6 +23,9 @@ const snapshotExec = async ({ host, method, params }) => {
   const bucket = 'eubfr-es-repository';
   // Created already once in the AWS console
   const role = 'eubfr-es-repository';
+  // Keep empty object or parse if something is provided.
+  // `inputParams` will take precedence in merge below.
+  const inputParams = objectIsEmpty(params) ? {} : JSON.parse(params);
 
   try {
     // Get user's AWS credentials and region
@@ -50,14 +54,50 @@ const snapshotExec = async ({ host, method, params }) => {
     // Narrow down list of methods in order to avoid eval().
     // And still have control (where necessary) over the default params passed to methods.
     switch (method) {
-      case 'get':
-        break;
-      case 'create':
-        break;
-      case 'delete':
-        break;
-      case 'getRepository':
-        break;
+      case 'create': {
+        const defaults = {};
+        const mergedParams = merge(defaults, inputParams);
+        const reply = await client.snapshot.create(mergedParams);
+        return console.log(prettyjson.render(reply));
+      }
+
+      case 'get': {
+        const defaults = {};
+        const mergedParams = merge(defaults, inputParams);
+        const reply = await client.snapshot.get(mergedParams);
+        return console.log(prettyjson.render(reply));
+      }
+
+      case 'delete': {
+        const defaults = {};
+        const mergedParams = merge(defaults, inputParams);
+        const reply = await client.snapshot.delete(mergedParams);
+        return console.log(prettyjson.render(reply));
+      }
+
+      case 'status': {
+        const defaults = {};
+        const mergedParams = merge(defaults, inputParams);
+        const reply = await client.snapshot.status(mergedParams);
+        return console.log(prettyjson.render(reply));
+      }
+
+      case 'restore': {
+        const defaults = {};
+        const mergedParams = merge(defaults, inputParams);
+        const reply = await client.snapshot.restore(mergedParams);
+        return console.log(prettyjson.render(reply));
+      }
+
+      case 'getRepository': {
+        const defaults = {
+          repository: [],
+        };
+        const mergedParams = merge(defaults, inputParams);
+        const reply = await client.snapshot.getRepository(mergedParams);
+        return console.log(prettyjson.render(reply));
+      }
+
       case 'createRepository': {
         const defaults = {
           body: {
@@ -69,29 +109,34 @@ const snapshotExec = async ({ host, method, params }) => {
             },
           },
         };
-        // `params` will take precedence.
-        const mergedParams = merge(defaults, JSON.parse(params));
+
+        const mergedParams = merge(defaults, inputParams);
         const reply = await client.snapshot.createRepository(mergedParams);
         return console.log(prettyjson.render(reply));
       }
 
-      case 'deleteRepository':
-        break;
-      case 'restore':
-        break;
-      case 'status':
-        break;
-      case 'verifyRepository':
-        break;
+      case 'deleteRepository': {
+        const defaults = {
+          repository: [],
+        };
+        const mergedParams = merge(defaults, inputParams);
+        const reply = await client.snapshot.deleteRepository(mergedParams);
+        return console.log(prettyjson.render(reply));
+      }
+
+      case 'verifyRepository': {
+        const defaults = {};
+        const mergedParams = merge(defaults, inputParams);
+        const reply = await client.snapshot.verifyRepository(mergedParams);
+        return console.log(prettyjson.render(reply));
+      }
+
       default:
         console.error('Method provided does not exist in snapshot operations.');
         return console.error(
           'Please see https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-snapshot-createrepository-6-2'
         );
     }
-
-    // Return something from an async arrow function.
-    return console.log('Done.');
   } catch (e) {
     return console.error(e);
   }

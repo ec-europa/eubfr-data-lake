@@ -17,7 +17,7 @@
   - [GenerateVariables][13]
 - [Elasticsearch][14]
   - [Usage][15]
-  - [snapshot][16]
+  - [snapshotExec][16]
   - [showDomains][17]
   - [showCluster][18]
   - [showIndices][19]
@@ -180,7 +180,7 @@ Manage Elasticsearch assets
 $ npx eubfr-cli es -h
 ```
 
-### snapshot
+### snapshotExec
 
 - **See: [https://www.elastic.co/guide/en/elasticsearch/reference/6.2/modules-snapshots.html][28]**
 - **See: [https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-snapshot-create-6-2][29]**
@@ -208,11 +208,47 @@ Examples:
 
 Create a repository:
 
+Note that the integration with S3 has been setup, `body` of request is prepared for you.
+
 ```sh
 $ npx eubfr-cli es snapshot-exec createRepository --host https://es.domain/ --params '{ "repository": "repo_name", "verify": true }'
 ```
 
-Note that the integration with S3 has been setup, `body` of request is prepared for you.
+Get information about specific repositories:
+
+```sh
+$ npx eubfr-cli es snapshot-exec getRepository --host https://es.domain/ --params '{ "repository": "repo_name" }'
+```
+
+Delete a given repository:
+
+```sh
+$ npx eubfr-cli es snapshot-exec deleteRepository --host https://es.domain/ --params '{ "repository": "repo_name" }'
+```
+
+Verify a given repository:
+
+```sh
+$ npx eubfr-cli es snapshot-exec verifyRepository --host https://es.domain/ --params '{ "repository": "repo_name" }'
+```
+
+Create a snapshot:
+
+```sh
+$ npx eubfr-cli es snapshot-exec create --host https://es.domain/ --params '{ "repository": "repo_name", "snapshot": "snap1" }'
+```
+
+Get a snapshot:
+
+```sh
+$ npx eubfr-cli es snapshot-exec get --host https://es.domain/ --params '{ "repository": "repo_name", "snapshot": "snap1" }'
+```
+
+Get status of a given snapshot:
+
+```sh
+$ npx eubfr-cli es snapshot-exec status --host https://es.domain/ --params '{ "repository": "repo_name", "snapshot": "snap1" }'
+```
 
 ### showDomains
 
@@ -464,7 +500,7 @@ You can skip the this prompt by adding `--confirm` flag.
 [13]: #generatevariables
 [14]: #elasticsearch
 [15]: #usage-4
-[16]: #snapshot
+[16]: #snapshotexec
 [17]: #showdomains
 [18]: #showcluster
 [19]: #showindices
