@@ -10,7 +10,7 @@ const hasValidOption = require('../lib/hasValidOption');
 
 // Commands
 const showCluster = require('../commands/es/showCluster');
-const backupKibana = require('../commands/es/backupKibana');
+const snapshotExec = require('../commands/es/snapshotExec');
 const showDomains = require('../commands/es/showDomains');
 const showIndices = require('../commands/es/showIndices');
 const createIndex = require('../commands/es/createIndex');
@@ -20,35 +20,57 @@ const missingRequiredInput = '\n error: Missing required input parameters';
 
 /**
  *
- * Backup .kibana index for a given host.
+ * Abstracted utility for making use of `snapshot` methods of ES JS SDK
+ *
+ * Useful for making backups of indices, such as `.kibana`.
+ *
+ * There are a few good reasons why you would want to use EUBFR CLI:
+ *
+ *  - it knows how to find and use your AWS credentials automatically.
+ *  - it provides useful defaults where necessary: such as working with S3 for storage.
+ *  - it knows about specific AWS resources which you shouldn't bother to know: S3 backup bucket name, assumed service role arn, etc.
+ *  - it also makes a setup of connecting Amazon ES with AWS JS SDK with `http-aws-es`, so all authentication is handled for you.
+ *
+ * You could, of course, setup clients and authentication yourself, this command is meant to help you be more productive.
  *
  * Usage:
  *
  * ```sh
- * $ npx eubfr-cli es backup-kibana -h
+ * $ npx eubfr-cli es snapshot-exec -h
  * ```
  *
- * Example:
+ * Examples:
+ *
+ * Create a repository:
  *
  * ```sh
- * $ npx eubfr-cli es backup-kibana --host https://search-test-public-ip4o6f4o6ziykrbjm4kdpyosfu.eu-central-1.es.amazonaws.com/
+ * $ npx eubfr-cli es snapshot-exec createRepository --host https://es.domain/ --params '{ "repository": "repo_name", "verify": true }'
  * ```
  *
+ * Note that the integration with S3 has been setup, `body` of request is prepared for you.
+ *
+ * @see https://www.elastic.co/guide/en/elasticsearch/reference/6.2/modules-snapshots.html
+ * @see https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-snapshot-create-6-2
+ *
  * @memberof Elasticsearch
- * @name backupKibana
+ * @name snapshot
  * @public
  */
 program
-  .command('backup-kibana')
-  .description('Backup .kibana index for a given host.')
+  .command('snapshot-exec <method>')
+  .description('Abstracted helper for using snapshot methods of ES client.')
   .option('--host [host]', 'Select a host (endpoint) of an ES domain.')
-  .action(async options => {
+  .option('--params [params]', 'The parameters to pass to the method.')
+  .action(async (method, options) => {
     if (!hasValidOption('host', options)) {
-      console.error(missingRequiredInput);
+      console.error('Please provide useful value for the host option.');
       process.exit(1);
     }
 
-    await backupKibana({ host: options.host });
+    const { host } = options;
+    const params = options.params !== undefined ? options.params : {};
+
+    await snapshotExec({ host, method, params });
   });
 
 /**

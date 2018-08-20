@@ -17,7 +17,7 @@
   - [GenerateVariables][13]
 - [Elasticsearch][14]
   - [Usage][15]
-  - [backupKibana][16]
+  - [snapshot][16]
   - [showDomains][17]
   - [showCluster][18]
   - [showIndices][19]
@@ -180,21 +180,39 @@ Manage Elasticsearch assets
 $ npx eubfr-cli es -h
 ```
 
-### backupKibana
+### snapshot
 
-Backup .kibana index for a given host.
+- **See: [https://www.elastic.co/guide/en/elasticsearch/reference/6.2/modules-snapshots.html][28]**
+- **See: [https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-snapshot-create-6-2][29]**
+
+Abstracted utility for making use of `snapshot` methods of ES JS SDK
+
+Useful for making backups of indices, such as `.kibana`.
+
+There are a few good reasons why you would want to use EUBFR CLI:
+
+- it knows how to find and use your AWS credentials automatically.
+- it provides useful defaults where necessary: such as working with S3 for storage.
+- it knows about specific AWS resources which you shouldn't bother to know: S3 backup bucket name, assumed service role arn, etc.
+- it also makes a setup of connecting Amazon ES with AWS JS SDK with `http-aws-es`, so all authentication is handled for you.
+
+You could, of course, setup clients and authentication yourself, this command is meant to help you be more productive.
 
 Usage:
 
 ```sh
-$ npx eubfr-cli es backup-kibana -h
+$ npx eubfr-cli es snapshot-exec -h
 ```
 
-Example:
+Examples:
+
+Create a repository:
 
 ```sh
-$ npx eubfr-cli es backup-kibana --host https://search-test-public-ip4o6f4o6ziykrbjm4kdpyosfu.eu-central-1.es.amazonaws.com/
+$ npx eubfr-cli es snapshot-exec createRepository --host https://es.domain/ --params '{ "repository": "repo_name", "verify": true }'
 ```
+
+Note that the integration with S3 has been setup, `body` of request is prepared for you.
 
 ### showDomains
 
@@ -446,7 +464,7 @@ You can skip the this prompt by adding `--confirm` flag.
 [13]: #generatevariables
 [14]: #elasticsearch
 [15]: #usage-4
-[16]: #backupkibana
+[16]: #snapshot
 [17]: #showdomains
 [18]: #showcluster
 [19]: #showindices
@@ -458,3 +476,5 @@ You can skip the this prompt by adding `--confirm` flag.
 [25]: #upload
 [26]: #show
 [27]: #delete-2
+[28]: https://www.elastic.co/guide/en/elasticsearch/reference/6.2/modules-snapshots.html
+[29]: https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-snapshot-create-6-2

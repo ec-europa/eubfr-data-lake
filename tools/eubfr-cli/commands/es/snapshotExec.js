@@ -4,17 +4,19 @@ const awscred = require('awscred');
 const connectionClass = require('http-aws-es');
 const elasticsearch = require('elasticsearch');
 const prettyjson = require('prettyjson');
+const merge = require('deepmerge');
 
 const getUserCredentials = promisify(awscred.load);
 
 /**
- * Backs up the `.kibana` index of a given ES domain host path.
+ * Provides a set of abstracted methods of ES client's snapshot operation.
+ * General plan for this method is to be used to manage repositories, snapshots and backups of ES indices.
  * @see https://aws.amazon.com/blogs/database/use-amazon-s3-to-store-a-single-amazon-elasticsearch-service-index/
  * Policy and role with name `eubfr-es-repository` have already been created in the EUBFR AWS account, no need to do that through sls and CF.
  * And the connection between `eubfr-es-repository` policy doc and `eubfr-es-repository` role has been already made.
  * You now use the role that sets up a trust relationship between Amazon ES and Amazon S3, allowing Amazon ES to write to S3 bucket.
  */
-const backupKibana = async ({ host }) => {
+const snapshotExec = async ({ host, method, params }) => {
   // For the moment, same name, but keeping it flexible.
   // Created by resources/backup-storage
   const bucket = 'eubfr-es-repository';
@@ -45,18 +47,19 @@ const backupKibana = async ({ host }) => {
     const iam = new AWS.IAM();
     const roleDetalis = await iam.getRole({ RoleName: role }).promise();
 
-    // Try to get information about an existing repository
-    try {
-      console.log('Check for existing repository for Kibana ...');
-      const check = await client.snapshot.getRepository({
-        repository: 'kibana',
-      });
-      console.log(check);
-    } catch (error) {
-      if (error.displayName === 'NotFound') {
-        console.log('Kibana repository not found, creting one ...');
-        const repo = await client.snapshot.createRepository({
-          repository: 'kibana',
+    // Narrow down list of methods in order to avoid eval().
+    // And still have control (where necessary) over the default params passed to methods.
+    switch (method) {
+      case 'get':
+        break;
+      case 'create':
+        break;
+      case 'delete':
+        break;
+      case 'getRepository':
+        break;
+      case 'createRepository': {
+        const defaults = {
           body: {
             type: 's3',
             settings: {
@@ -65,33 +68,33 @@ const backupKibana = async ({ host }) => {
               role_arn: roleDetalis.Role.Arn,
             },
           },
-        });
-        console.log(repo);
+        };
+        // `params` will take precedence.
+        const mergedParams = merge(defaults, JSON.parse(params));
+        const reply = await client.snapshot.createRepository(mergedParams);
+        return console.log(prettyjson.render(reply));
       }
+
+      case 'deleteRepository':
+        break;
+      case 'restore':
+        break;
+      case 'status':
+        break;
+      case 'verifyRepository':
+        break;
+      default:
+        console.error('Method provided does not exist in snapshot operations.');
+        return console.error(
+          'Please see https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-snapshot-createrepository-6-2'
+        );
     }
 
-    console.log('Creating a snapshot for Kibana index ...');
-
-    const info = await client.snapshot.create({
-      repository: 'kibana',
-      snapshot: 'dev',
-      body: {
-        type: 's3',
-        settings: {
-          bucket,
-          compress: true,
-          region,
-          role_arn: roleDetalis.Role.Arn,
-        },
-      },
-    });
-
-    console.log(info);
-
-    return console.log(prettyjson.render(info));
+    // Return something from an async arrow function.
+    return console.log('Done.');
   } catch (e) {
     return console.error(e);
   }
 };
 
-module.exports = backupKibana;
+module.exports = snapshotExec;
