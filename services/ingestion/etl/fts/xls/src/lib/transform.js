@@ -200,7 +200,7 @@ export default (record: Object): Project | null => {
       result: '',
     },
     status: '',
-    sub_programme_name: record['Commitment position key'] || '',
+    sub_programme_name: '',
     success_story: '',
     themes: [],
     third_parties: getThirdParties(record),

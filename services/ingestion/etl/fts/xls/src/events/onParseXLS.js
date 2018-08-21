@@ -98,13 +98,6 @@ export const handler = async (event, context, callback) => {
 
         for (let i = 0; i < parsedRows.length; i += 1) {
           const record = parsedRows[i];
-          // Example of several third parties!
-          if (
-            record['Reference of the Legal Commitment (LC)'] ===
-            'D45.B1717.002927'
-          ) {
-            console.log(JSON.stringify(record));
-          }
           // Transform data
           const data = transformRecord(record);
           dataString += `${JSON.stringify(data)}\n`;
