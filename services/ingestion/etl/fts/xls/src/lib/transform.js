@@ -5,6 +5,14 @@ import type { Project } from '@eubfr/types';
 import getCountryCode from '@eubfr/lib/getCountryCode';
 import sanitizeBudgetItem from '@eubfr/lib/budgetFormatter';
 
+/**
+ * Gets country code from a country name.
+ * Contains a map of exceptions.
+ *
+ * @memberof FtsXlsTransform
+ * @param {String} countryName The name of the country
+ * @returns {String} The ISO 3166-1 country code
+ */
 const getCodeByCountry = countryName => {
   // There are a few exceptions which should be normalized, regardless of the library
   const corrections = new Map([
@@ -40,32 +48,39 @@ const getNutsCodeLevel = code => {
 /**
  * Preprocess budget
  *
+ * Input fields taken from the `record` are:
+ * - `Total amount`
+ * - `Funding Type`
+ * - `Type`
+ *
  * @memberof FtsXlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {Budget}
  */
 const getBudget = record => {
-  /**
-   * Still to process:
-   * - Expense Type
-   * - Subject of grant or contract
-   */
+  const fundingArea = [];
+  // Use `Type` field if provided.
+  if (record.Type) {
+    fundingArea.push(record.Type);
+  }
+
+  // Use `Funding Type` field if provided.
+  if (record['Funding Type']) {
+    fundingArea.push(record['Funding Type']);
+  }
+
   const budget = {
     eu_contrib: sanitizeBudgetItem({
-      value: record.Amount,
-      currency: 'EUR',
-      raw: record.Amount,
-    }),
-    funding_area: [],
-    mmf_heading: '',
-    other_contrib: sanitizeBudgetItem(),
-    private_fund: sanitizeBudgetItem(),
-    public_fund: sanitizeBudgetItem(),
-    total_cost: sanitizeBudgetItem({
       value: record['Total amount'],
       currency: 'EUR',
       raw: record['Total amount'],
     }),
+    funding_area: fundingArea,
+    mmf_heading: '',
+    other_contrib: sanitizeBudgetItem(),
+    private_fund: sanitizeBudgetItem(),
+    public_fund: sanitizeBudgetItem(),
+    total_cost: sanitizeBudgetItem(),
   };
 
   return budget;
@@ -174,7 +189,7 @@ export default (record: Object): Project | null => {
     ec_priorities: [],
     media: [],
     programme_name: record['Action Type'] || '',
-    project_id: record['Reference of the Legal Commitment (LC)'],
+    project_id: record['Commitment position key'],
     project_locations: getLocations(record),
     project_website: '',
     complete: true,

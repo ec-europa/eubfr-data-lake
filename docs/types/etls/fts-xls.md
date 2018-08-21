@@ -14,6 +14,17 @@ Transform function: [implementation details][2]
 
 Returns **Project** JSON matching the type fields.
 
+### getCodeByCountry
+
+Gets country code from a country name.
+Contains a map of exceptions.
+
+**Parameters**
+
+-   `countryName` **[String][4]** The name of the country
+
+Returns **[String][4]** The ISO 3166-1 country code
+
 ### getNutsCodeLevel
 
 Gets NUTS code level from a string
@@ -27,6 +38,12 @@ Returns **[Number][5]** The level of NUTS or null if one can't be extracted
 ### getBudget
 
 Preprocess budget
+
+Input fields taken from the `record` are:
+
+-   `Total amount`
+-   `Funding Type`
+-   `Type`
 
 **Parameters**
 
@@ -66,13 +83,6 @@ Input fields taken from the `record` are:
 -   `record` **[Object][3]** The row received from parsed file
 
 Returns **[Array][6]** List of {ThirdParty} objects for `third_parties` field
-
-## budget
-
-Still to process:
-
--   Expense Type
--   Subject of grant or contract
 
 [1]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/fts/xls/test/stubs/record.json
 
