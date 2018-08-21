@@ -96,8 +96,41 @@ export const handler = async (event, context, callback) => {
           workbook.Sheets[sheetNameList[0]]
         );
 
-        for (let i = 0; i < parsedRows.length; i += 1) {
-          const record = parsedRows[i];
+        const aggregated = [];
+
+        const fieldsToAggregate = [
+          'Name of beneficiary',
+          'Coordinator',
+          'Address',
+          'City',
+          'Postal code',
+          'Country / Territory',
+          'NUTS2',
+          'Geographical Zone',
+        ];
+
+        parsedRows.forEach(record => {
+          // "Commitment position key" is the `project_id`.
+          // If it's present, we can make use of the data
+          if (record['Commitment position key'] !== '') {
+            return aggregated.push(record);
+          }
+          // Otherwise, the record at hand is a "sub-record"
+          const lastRecord = aggregated.pop();
+          // Current record does not have its own ID => previous one is the "main" one
+          if (record['Commitment position key'] === '') {
+            // Use `;` as a delimiter to merge previous value with current value.
+            // For each field which worths merging.
+            fieldsToAggregate.forEach(field => {
+              lastRecord[field] = `${lastRecord[field]};${record[field]}`;
+            });
+
+            return aggregated.push(lastRecord);
+          }
+        });
+
+        for (let i = 0; i < aggregated.length; i += 1) {
+          const record = aggregated[i];
           // Transform data
           const data = transformRecord(record);
           dataString += `${JSON.stringify(data)}\n`;

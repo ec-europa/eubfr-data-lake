@@ -101,32 +101,42 @@ const getBudget = record => {
  * @returns {Array} List of {Location} objects for `project_locations` field
  */
 const getLocations = record => {
-  // Get country code from country name
-  const countryCode = getCodeByCountry(record['Country / Territory']);
+  const locations = [];
+  const addressItems = record.Address.split(';');
+  const postalCodes = record['Postal code'].split(';');
+  const cities = record.City.split(';');
+  const items = record['Country / Territory'].split(';');
 
-  const location = {
-    address: record.Address || '',
-    centroid: null,
-    country_code: getCountryCode(countryCode),
-    location: null,
-    nuts: [],
-    postal_code: record['Postal code'] || '',
-    region: '',
-    town: record.City || '',
-  };
+  items.forEach((item, key) => {
+    // Get country code from country name
+    const countryCode = getCodeByCountry(item);
 
-  // It's possible that some records have this.
-  // If present, use it.
-  if (record.NUTS2) {
-    location.nuts.push({
-      code: record.NUTS2,
-      name: '',
-      level: getNutsCodeLevel(record.NUTS2),
-      year: null,
-    });
-  }
+    const location = {
+      address: addressItems[key],
+      centroid: null,
+      country_code: getCountryCode(countryCode),
+      location: null,
+      nuts: [],
+      postal_code: postalCodes[key],
+      region: '',
+      town: cities[key],
+    };
 
-  return [location];
+    // It's possible that some items have this.
+    // If present, use it.
+    if (item.NUTS2) {
+      location.nuts.push({
+        code: item.NUTS2,
+        name: '',
+        level: getNutsCodeLevel(item.NUTS2),
+        year: null,
+      });
+    }
+
+    locations.push(location);
+  });
+
+  return locations;
 };
 
 /**
@@ -142,27 +152,28 @@ const getLocations = record => {
  */
 const getThirdParties = record => {
   const actors = [];
+  const coordinators = record.Coordinator.split(';');
+  const items = record['Name of beneficiary'].split(';');
 
-  let role = 'participant';
+  items.forEach((item, key) => {
+    let role = 'participant';
 
-  if (record.Coordinator === 'yes') {
-    role = 'coordinator';
-  }
+    if (coordinators[key] === 'yes') {
+      role = 'coordinator';
+    }
 
-  // If there is no name, there's no value in adding a record with role only
-  if (record['Name of beneficiary']) {
     actors.push({
       address: '',
       country: '',
       email: '',
-      name: record['Name of beneficiary'],
+      name: item['Name of beneficiary'],
       phone: '',
       region: '',
       role,
       type: '',
       website: '',
     });
-  }
+  });
 
   return actors;
 };
