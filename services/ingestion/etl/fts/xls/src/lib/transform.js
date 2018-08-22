@@ -154,6 +154,8 @@ const getThirdParties = record => {
   const actors = [];
   const coordinators = record.Coordinator.split(';');
   const items = record['Name of beneficiary'].split(';');
+  const addressItems = record.Address.split(';');
+  const countryItems = record['Country / Territory'].split(';');
 
   items.forEach((item, key) => {
     let role = 'participant';
@@ -162,11 +164,14 @@ const getThirdParties = record => {
       role = 'coordinator';
     }
 
+    // Get country code from country name
+    const countryCode = getCodeByCountry(countryItems[key]);
+
     actors.push({
-      address: '',
-      country: '',
+      address: addressItems[key],
+      country: getCountryCode(countryCode),
       email: '',
-      name: item['Name of beneficiary'],
+      name: items[key],
       phone: '',
       region: '',
       role,

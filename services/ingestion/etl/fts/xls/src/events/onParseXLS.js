@@ -98,6 +98,8 @@ export const handler = async (event, context, callback) => {
 
         const aggregated = [];
 
+        // Fields which contain multiple values.
+        // To be aggregated throughout sub-records.
         const fieldsToAggregate = [
           'Name of beneficiary',
           'Coordinator',
@@ -115,18 +117,18 @@ export const handler = async (event, context, callback) => {
           if (record['Commitment position key'] !== '') {
             return aggregated.push(record);
           }
-          // Otherwise, the record at hand is a "sub-record"
-          const lastRecord = aggregated.pop();
-          // Current record does not have its own ID => previous one is the "main" one
-          if (record['Commitment position key'] === '') {
-            // Use `;` as a delimiter to merge previous value with current value.
-            // For each field which worths merging.
-            fieldsToAggregate.forEach(field => {
-              lastRecord[field] = `${lastRecord[field]};${record[field]}`;
-            });
 
-            return aggregated.push(lastRecord);
-          }
+          // Otherwise, the record at hand is a "sub-record"
+          // It needs to be merged with the last record.
+          const lastRecord = aggregated.pop();
+
+          // Use `;` as a delimiter to merge previous value with current (last) item.
+          // For each field which worths merging.
+          fieldsToAggregate.forEach(field => {
+            lastRecord[field] = `${lastRecord[field]};${record[field]}`;
+          });
+
+          return aggregated.push(lastRecord);
         });
 
         for (let i = 0; i < aggregated.length; i += 1) {
