@@ -8,6 +8,10 @@ const pkg = require('../package.json');
  *
  * Low-level utilities for managing assets of EUBFR data lake.
  *
+ * Please refer to [Getting Started guide](./docs/GETTING_STARTED.md) before jumping into using the utility.
+ *
+ * Each command and sub-command has a help menu, which you can open by passing `-h` or `--help` flags without any arguments.
+ *
  * ### Usage
  *
  * ```sh

@@ -36,6 +36,10 @@ EUBFR CLI
 
 Low-level utilities for managing assets of EUBFR data lake.
 
+Please refer to [Getting Started guide][28] before jumping into using the utility.
+
+Each command and sub-command has a help menu, which you can open by passing `-h` or `--help` flags without any arguments.
+
 ### Usage
 
 ```sh
@@ -182,8 +186,8 @@ $ npx eubfr-cli es -h
 
 ### snapshotExec
 
-- **See: [https://www.elastic.co/guide/en/elasticsearch/reference/6.2/modules-snapshots.html][28]**
-- **See: [https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-snapshot-create-6-2][29]**
+- **See: [https://www.elastic.co/guide/en/elasticsearch/reference/6.2/modules-snapshots.html][29]**
+- **See: [https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-snapshot-create-6-2][30]**
 
 Abstracted utility for making use of `snapshot` methods of ES JS SDK
 
@@ -512,5 +516,6 @@ You can skip the this prompt by adding `--confirm` flag.
 [25]: #upload
 [26]: #show
 [27]: #delete-2
-[28]: https://www.elastic.co/guide/en/elasticsearch/reference/6.2/modules-snapshots.html
-[29]: https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-snapshot-create-6-2
+[28]: ./docs/GETTING_STARTED.md
+[29]: https://www.elastic.co/guide/en/elasticsearch/reference/6.2/modules-snapshots.html
+[30]: https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-snapshot-create-6-2
