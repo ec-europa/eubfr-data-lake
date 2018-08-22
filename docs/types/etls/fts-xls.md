@@ -77,6 +77,8 @@ Input fields taken from the `record` are:
 
 -   `Name of beneficiary`
 -   `Coordinator`
+-   `Address`
+-   `Country / Territory`
 
 **Parameters**
 

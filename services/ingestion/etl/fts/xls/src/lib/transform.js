@@ -145,6 +145,8 @@ const getLocations = record => {
  * Input fields taken from the `record` are:
  * - `Name of beneficiary`
  * - `Coordinator`
+ * - `Address`
+ * - `Country / Territory`
  *
  * @memberof FtsXlsTransform
  * @param {Object} record The row received from parsed file
