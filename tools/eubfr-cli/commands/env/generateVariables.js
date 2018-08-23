@@ -18,7 +18,8 @@ const generateEnvironmentVariables = () => {
 
     try {
       // Temporarily set a username for services which require it.
-      // For the moment, this doesn't matter.
+      // For the moment, the username doesn't matter, but the endpoint of the service.
+      // However, some services are named with variables, so we need to pass a name for the deployment to pass.
       process.env.EUBFR_USERNAME = 'agri';
 
       console.time(service);
