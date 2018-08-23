@@ -1,0 +1,34 @@
+service: resources-backup-storage
+
+custom:
+  eubfrEnvironment: ${opt:eubfr_env, file(../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
+
+provider:
+  name: aws
+  stage: ${opt:stage, file(../../config.json):stage, 'dev'}
+  region: ${opt:region, file(../../config.json):region, 'eu-central-1'}
+  deploymentBucket:
+    name: eubfr-${self:custom.eubfrEnvironment}-deploy
+  stackTags:
+    ENV: ${self:custom.eubfrEnvironment}
+
+resources:
+  Resources:
+    BackupBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: eubfr-es-repository
+        CorsConfiguration:
+          CorsRules:
+            - AllowedHeaders:
+                - 'Authorization'
+              AllowedMethods:
+                - GET
+              AllowedOrigins:
+                - '*'
+            - AllowedHeaders:
+                - '*'
+              AllowedMethods:
+                - PUT
+              AllowedOrigins:
+                - '*'
