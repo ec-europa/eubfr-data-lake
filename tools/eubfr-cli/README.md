@@ -287,7 +287,7 @@ Once you have the basic information about the domains you can manage through the
 Examples:
 
 ```sh
-$ npx eubfr-cli es show-cluster -d ES_PUBLIC_ENDPOINT
+$ npx eubfr-cli es show-cluster -d REACT_APP_ES_PUBLIC_ENDPOINT
 ```
 
 ### showIndices
@@ -305,19 +305,19 @@ This could be useful when you want to query for existing indices so that you eit
 Examples:
 
 ```sh
-$ npx eubfr-cli es show-indices -d ES_PUBLIC_ENDPOINT
+$ npx eubfr-cli es show-indices -d REACT_APP_ES_PUBLIC_ENDPOINT
 ```
 
 Since output might be too long to read (and most probably it will be in `dev` stage which is shared between developers), it could help to pipe a `grep` in order to focus on more narrow list.
 
 ```sh
- $ npx eubfr-cli es show-indices -d ES_PUBLIC_ENDPOINT | grep chernka
+ $ npx eubfr-cli es show-indices -d REACT_APP_ES_PUBLIC_ENDPOINT | grep chernka
 ```
 
 This will give you a list of existing indices created by the given user. Then, you can make a more narrow query by specifying an index as following:
 
 ```sh
-$ npx eubfr-cli es show-indices user-index-1 user-index-2 etc -d ES_PUBLIC_ENDPOINT
+$ npx eubfr-cli es show-indices user-index-1 user-index-2 etc -d REACT_APP_ES_PUBLIC_ENDPOINT
 ```
 
 ### createIndex
@@ -335,13 +335,13 @@ Used either when creating a new index with a free structure (no mapping rules) o
 Simply create a new index:
 
 ```sh
-$ npx eubfr-cli es create-index user-index-1 -d ES_PUBLIC_ENDPOINT
+$ npx eubfr-cli es create-index user-index-1 -d REACT_APP_ES_PUBLIC_ENDPOINT
 ```
 
 Create a new index with mapping:
 
 ```sh
-$ npx eubfr-cli es create-index user-index-1 -t project -m ./resources/elasticsearch/mappings/project.js -d ES_PUBLIC_ENDPOINT
+$ npx eubfr-cli es create-index user-index-1 -t project -m ./resources/elasticsearch/mappings/project.js -d REACT_APP_ES_PUBLIC_ENDPOINT
 ```
 
 This is especially useful when you want to update mapping for a given index without re-creating the whole domain.
@@ -359,13 +359,13 @@ $ npx eubfr-cli es delete-indices -h
 This could be useful when you want to change mapping of an index without re-creating the whole domain.
 
 ```sh
-$ npx eubfr-cli es delete-indices user-index-1 -d ES_PUBLIC_ENDPOINT
+$ npx eubfr-cli es delete-indices user-index-1 -d REACT_APP_ES_PUBLIC_ENDPOINT
 ```
 
 If you would like to skip the confirmation, you can use the `--confirm` flag:
 
 ```sh
-$ npx eubfr-cli es delete-indices user-index-1 --confirm -d ES_PUBLIC_ENDPOINT
+$ npx eubfr-cli es delete-indices user-index-1 --confirm -d REACT_APP_ES_PUBLIC_ENDPOINT
 ```
 
 Skipping the `user-index-1` will delete all indices in the given domain, so be extra careful with this command.
