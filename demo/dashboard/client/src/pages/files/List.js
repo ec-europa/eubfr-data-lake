@@ -4,7 +4,9 @@ import FilesList from '../../components/FilesList';
 
 import Spinner from '../../components/Spinner';
 
-const privateApiEndpoint = `https://${process.env.ES_PRIVATE_ENDPOINT}`;
+const privateApiEndpoint = `https://${
+  process.env.REACT_APP_ES_PRIVATE_ENDPOINT
+}`;
 const metaIndex = `${process.env.REACT_APP_STAGE}-meta`;
 const logsIndex = `${process.env.REACT_APP_STAGE}-logs`;
 

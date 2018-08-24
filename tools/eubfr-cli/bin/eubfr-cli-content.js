@@ -123,7 +123,10 @@ program
   .option('-p, --producer [producer]', "Producer's name.")
   .action(async (file, options) => {
     const endpoints = getEndpoints();
-    ensureVariables(['REACT_APP_STAGE', 'ES_PRIVATE_ENDPOINT'], endpoints);
+    ensureVariables(
+      ['REACT_APP_STAGE', 'REACT_APP_ES_PRIVATE_ENDPOINT'],
+      endpoints
+    );
 
     const { producer } = options;
 
@@ -184,7 +187,7 @@ program
   .action(async (files, options) => {
     const endpoints = getEndpoints();
     ensureVariables(
-      ['DELETER_API', 'REACT_APP_STAGE', 'ES_PRIVATE_ENDPOINT'],
+      ['DELETER_API', 'REACT_APP_STAGE', 'REACT_APP_ES_PRIVATE_ENDPOINT'],
       endpoints
     );
 
