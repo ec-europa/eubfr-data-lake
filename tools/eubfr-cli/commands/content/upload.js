@@ -4,7 +4,7 @@ const path = require('path');
 const aws4 = require('aws4');
 const request = require('request-promise-native');
 
-const getProducerFiles = require('../lib/getProducerFiles');
+const getProducerFiles = require('../../lib/getProducerFiles');
 
 const uploadFile = async ({ file, creds, requestParams }) => {
   const fileName = path.parse(file).base;

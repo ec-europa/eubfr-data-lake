@@ -37,3 +37,11 @@ transforms.forEach(transform => {
       );
     });
 });
+
+// CLI documentation is inside the commands, which are basically placeholders.
+documentation
+  .build('tools/eubfr-cli/bin/*.js', { access: ['public'] })
+  .then(comments => documentation.formats.md(comments, { markdownToc: true }))
+  .then(output => {
+    fs.writeFileSync(path.resolve('./tools/eubfr-cli/README.md'), output);
+  });
