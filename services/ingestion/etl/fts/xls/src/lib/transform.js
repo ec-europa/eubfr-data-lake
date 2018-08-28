@@ -15,18 +15,18 @@ import sanitizeBudgetItem from '@eubfr/lib/budgetFormatter';
  */
 const getCodeByCountry = countryName => {
   // There are a few exceptions which should be normalized, regardless of the library
-  const corrections = new Map([
-    ['Tanzania', 'Tanzania, United Republic of'],
-    ['Congo (Democratic Republic of)', 'Congo, the Democratic Republic of the'],
-    ['Serbia (Republic of)', 'Serbia'],
-    ['Occupied Territories - Palestine', 'Palestinian Territory, Occupied'],
-    [
-      'Macedonia (the former Yugoslav Republic of)',
+  const corrections = {
+    Tanzania: 'Tanzania, United Republic of',
+    'Congo (Democratic Republic of)': 'Congo, the Democratic Republic of the',
+    'Serbia (Republic of)': 'Serbia',
+    'Occupied Territories - Palestine': 'Palestinian Territory, Occupied',
+    'Macedonia (the former Yugoslav Republic of)':
       'Macedonia, the Former Yugoslav Republic of',
-    ],
-  ]);
+  };
 
-  const countryNameCorrected = corrections.get(countryName) || countryName;
+  const countryNameCorrected = corrections[countryName]
+    ? corrections[countryName]
+    : countryName;
 
   return countries.getAlpha2Code(countryNameCorrected, 'en');
 };
