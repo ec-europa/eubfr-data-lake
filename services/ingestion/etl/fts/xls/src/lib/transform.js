@@ -102,24 +102,29 @@ const getBudget = record => {
  */
 const getLocations = record => {
   const locations = [];
-  const addressItems = record.Address.split(';');
-  const postalCodes = record['Postal code'].split(';');
-  const cities = record.City.split(';');
-  const items = record['Country / Territory'].split(';');
+  // 'Country / Territory' is the "driver" field for locations.
+  const items = record['Country / Territory']
+    ? record['Country / Territory'].split(';')
+    : [];
 
-  items.forEach((item, key) => {
+  if (items.length === 0) {
+    return locations;
+  }
+
+  // Other fields which could possibly contain location information.
+  const locationFields = ['Address', 'City', 'Postal code'];
+
+  // Populate the information known with certainty.
+  items.forEach(item => {
     // Get country code from country name
     const countryCode = getCodeByCountry(item);
 
     const location = {
-      address: addressItems[key],
       centroid: null,
       country_code: getCountryCode(countryCode),
       location: null,
       nuts: [],
-      postal_code: postalCodes[key],
       region: '',
-      town: cities[key],
     };
 
     // It's possible that some items have this.
@@ -134,6 +139,39 @@ const getLocations = record => {
     }
 
     locations.push(location);
+  });
+
+  // Include information for all fields which have additional information.
+  locationFields.forEach(field => {
+    // If field is present.
+    if (record[field]) {
+      // Get values for this available field.
+      const fieldValues = record[field].split(';');
+
+      // And populate values mapping to target field names.
+      switch (field) {
+        case 'Address':
+          fieldValues.forEach((value, key) => {
+            locations[key].address = value;
+          });
+          break;
+
+        case 'City':
+          fieldValues.forEach((value, key) => {
+            locations[key].town = value;
+          });
+          break;
+
+        case 'Postal code':
+          fieldValues.forEach((value, key) => {
+            locations[key].postal_code = value;
+          });
+          break;
+
+        default:
+          break;
+      }
+    }
   });
 
   return locations;
@@ -161,9 +199,11 @@ const getThirdParties = record => {
 
   items.forEach((item, key) => {
     let role = 'participant';
+    let type = 'beneficiary';
 
     if (coordinators[key] === 'yes') {
       role = 'coordinator';
+      type = '';
     }
 
     // Get country code from country name
@@ -177,7 +217,7 @@ const getThirdParties = record => {
       phone: '',
       region: '',
       role,
-      type: '',
+      type,
       website: '',
     });
   });
