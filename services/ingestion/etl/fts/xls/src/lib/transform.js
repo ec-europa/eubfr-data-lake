@@ -121,10 +121,13 @@ const getLocations = record => {
 
     const location = {
       centroid: null,
+      address: '',
       country_code: getCountryCode(countryCode),
       location: null,
       nuts: [],
+      postal_code: '',
       region: '',
+      town: '',
     };
 
     // It's possible that some items have this.
