@@ -1,0 +1,12 @@
+{
+  "callbackWaitsForEmptyEventLoop": true,
+  "logGroupName": "/aws/lambda/chernka202-ingestion-etl-iati-csv-parseCsv",
+  "logStreamName": "2018/08/28/[$LATEST]db6f09301d3e16929",
+  "functionName": "chernka202-ingestion-etl-iati-csv-parseCsv",
+  "memoryLimitInMB": "128",
+  "functionVersion": "$LATEST",
+  "invokeid": "c1fc5291-7b8435dc4173",
+  "awsRequestId": "c1fc5291-8ea5-7b8435dc4173",
+  "invokedFunctionArn":
+    "arn:aws:lambda:eu-central-1:491621799026:function:chernka202-ingestion-etl-iati-csv-parseCsv"
+}

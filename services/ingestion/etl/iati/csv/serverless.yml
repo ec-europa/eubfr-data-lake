@@ -27,15 +27,24 @@ provider:
   stackTags:
     ENV: ${self:custom.eubfrEnvironment}
   iamRoleStatements:
-    -  Effect: "Allow"
-       Action:
-         - "s3:PutObject"
-       Resource:
-         Fn::Join:
-           - ""
-           - - "arn:aws:s3:::"
-             - ${self:custom.bucketName}
-             - "/*"
+    - Effect: 'Allow'
+      Action:
+        - 's3:PutObject'
+      Resource:
+        Fn::Join:
+          - ''
+          - - 'arn:aws:s3:::'
+            - ${self:custom.bucketName}
+            - '/*'
+    # Allow handlers to run AWS Fargate containers when AWS Lambda timeout cannot be bypassed.
+    - Effect: 'Allow'
+      Action:
+        - ecs:RunTask
+      Resource: '*'
+    - Effect: Allow
+      Action:
+        - iam:PassRole
+      Resource: 'arn:aws:iam::491621799026:role/ecsTaskExecutionRole'
 
 functions:
   parseCsv:
@@ -43,8 +52,8 @@ functions:
     name: ${self:provider.stage}-${self:service}-parseCsv
     # This producer could push files of hundreds of megabytes.
     # Interruptions in parsing and upload should be avoided.
-    timeout: 300
-    memorySize: 2048
+    timeout: 60
+    memorySize: 128
     environment:
       BUCKET: ${self:custom.bucketName}
       REGION: ${self:provider.region}
@@ -53,12 +62,12 @@ functions:
       - sns:
           arn:
             Fn::Join:
-              - ""
-              - - "arn:aws:sns:"
-                - Ref: "AWS::Region"
-                - ":"
-                - Ref: "AWS::AccountId"
-                - ":${self:provider.stage}-etl-iati-csv"
+              - ''
+              - - 'arn:aws:sns:'
+                - Ref: 'AWS::Region'
+                - ':'
+                - Ref: 'AWS::AccountId'
+                - ':${self:provider.stage}-etl-iati-csv'
           topicName: ${self:provider.stage}-etl-iati-csv
 
 resources:
@@ -74,29 +83,26 @@ resources:
         PolicyDocument:
           Version: '2012-10-17'
           Statement:
-            -
-              Sid: Allow-IngestionManager-Publish
+            - Sid: Allow-IngestionManager-Publish
               Action:
                 - sns:Publish
               Effect: Allow
               Resource:
                 Fn::Join:
-                  - ""
-                  -
-                    - "arn:aws:sns:"
-                    - Ref: "AWS::Region"
-                    - ":"
-                    - Ref: "AWS::AccountId"
-                    - ":${self:provider.stage}-etl-iati-csv"
+                  - ''
+                  - - 'arn:aws:sns:'
+                    - Ref: 'AWS::Region'
+                    - ':'
+                    - Ref: 'AWS::AccountId'
+                    - ':${self:provider.stage}-etl-iati-csv'
               Principal:
                 AWS:
                   Fn::Join:
-                    - ""
-                    -
-                      - "arn:aws:sts::"
-                      - Ref: "AWS::AccountId"
-                      - ":assumed-role/ingestion-manager-${self:provider.stage}-"
-                      - Ref: "AWS::Region"
-                      - "-lambdaRole/${self:provider.stage}-ingestion-manager-onCreate"
+                    - ''
+                    - - 'arn:aws:sts::'
+                      - Ref: 'AWS::AccountId'
+                      - ':assumed-role/ingestion-manager-${self:provider.stage}-'
+                      - Ref: 'AWS::Region'
+                      - '-lambdaRole/${self:provider.stage}-ingestion-manager-onCreate'
         Topics:
           - Ref: SNSTopicIATICSV
