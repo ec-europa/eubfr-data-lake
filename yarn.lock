@@ -13159,6 +13159,12 @@ serverless-offline@3.24.5:
     uuid "^3.2.1"
     velocityjs "^0.9.3"
 
+serverless-plugin-lambda-dead-letter@1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/serverless-plugin-lambda-dead-letter/-/serverless-plugin-lambda-dead-letter-1.2.1.tgz#cdd7bcbb6632636832b012a89f9d6aa1ef571e27"
+  dependencies:
+    bluebird "^3.4.7"
+
 serverless-s3-remover@0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/serverless-s3-remover/-/serverless-s3-remover-0.4.1.tgz#bbd75e9188a643defd0a90325d0b172dcd08a677"

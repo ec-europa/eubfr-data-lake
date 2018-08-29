@@ -44,16 +44,22 @@ provider:
     - Effect: Allow
       Action:
         - iam:PassRole
-      Resource: 'arn:aws:iam::491621799026:role/ecsTaskExecutionRole'
+      Resource:
+        Fn::Join:
+          - ''
+          - - 'arn:aws:iam::'
+            - Ref: 'AWS::AccountId'
+            - ':role/ecsTaskExecutionRole'
 
 functions:
   parseCsv:
     handler: src/events/onParseCSV.handler
     name: ${self:provider.stage}-${self:service}-parseCsv
-    # This producer could push files of hundreds of megabytes.
-    # Interruptions in parsing and upload should be avoided.
     timeout: 60
     memorySize: 128
+    deadLetter:
+      targetArn:
+        GetResourceArn: ETLFailureQueue
     environment:
       BUCKET: ${self:custom.bucketName}
       REGION: ${self:provider.region}
@@ -106,3 +112,9 @@ resources:
                       - '-lambdaRole/${self:provider.stage}-ingestion-manager-onCreate'
         Topics:
           - Ref: SNSTopicIATICSV
+    ETLFailureQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: ${self:service}-failures
+        MessageRetentionPeriod: '1209600'
+        VisibilityTimeout: '60'
