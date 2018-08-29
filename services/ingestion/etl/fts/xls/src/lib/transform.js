@@ -24,9 +24,7 @@ const getCodeByCountry = countryName => {
       'Macedonia, the Former Yugoslav Republic of',
   };
 
-  const countryNameCorrected = corrections[countryName]
-    ? corrections[countryName]
-    : countryName;
+  const countryNameCorrected = corrections[countryName] || countryName;
 
   return countries.getAlpha2Code(countryNameCorrected, 'en');
 };
