@@ -15,17 +15,6 @@ export const handler = async (event, context, callback) => {
   const message = extractMessage(initialMessage);
   const { key } = message.object;
 
-  const handleError = async e => {
-    await messenger.send({
-      message: {
-        computed_key: key,
-        status_message: e.message,
-        status_code: STATUS.ERROR,
-      },
-      to: ['logs'],
-    });
-  };
-
   try {
     await messenger.send({
       message: {
@@ -64,7 +53,14 @@ export const handler = async (event, context, callback) => {
     const result = await ecs.runTask(runParams).promise();
     return callback(null, result);
   } catch (e) {
-    await handleError(e);
+    await messenger.send({
+      message: {
+        computed_key: key,
+        status_message: e.message,
+        status_code: STATUS.ERROR,
+      },
+      to: ['logs'],
+    });
     return callback(e);
   }
 };
