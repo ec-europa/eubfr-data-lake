@@ -1,6 +1,7 @@
 service: ingestion-etl-iati-csv
 
 plugins:
+  - serverless-plugin-lambda-dead-letter
   - serverless-webpack
 
 custom:
@@ -36,7 +37,7 @@ provider:
           - - 'arn:aws:s3:::'
             - ${self:custom.bucketName}
             - '/*'
-    # Allow handlers to run AWS Fargate containers when AWS Lambda timeout cannot be bypassed.
+    # Allow running AWS Fargate containers when AWS Lambda timeout cannot be bypassed.
     - Effect: 'Allow'
       Action:
         - ecs:RunTask
@@ -50,6 +51,11 @@ provider:
           - - 'arn:aws:iam::'
             - Ref: 'AWS::AccountId'
             - ':role/ecsTaskExecutionRole'
+    # Allow queueing messages to the DLQ https://docs.aws.amazon.com/lambda/latest/dg/dlq.html
+    - Effect: 'Allow'
+      Action:
+        - sqs:SendMessage
+      Resource: '*'
 
 functions:
   parseCsv:
@@ -75,6 +81,20 @@ functions:
                 - Ref: 'AWS::AccountId'
                 - ':${self:provider.stage}-etl-iati-csv'
           topicName: ${self:provider.stage}-etl-iati-csv
+  parseCsvDlq:
+    handler: src/events/onParseCSVDlq.handler
+    name: ${self:provider.stage}-${self:service}-parseCsvDlq
+    # still useful for making use of the messenger
+    environment:
+      BUCKET: ${self:custom.bucketName}
+      REGION: ${self:provider.region}
+      STAGE: ${self:provider.stage}
+    events:
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - ETLFailureQueue
+              - Arn
 
 resources:
   Resources:
@@ -115,6 +135,6 @@ resources:
     ETLFailureQueue:
       Type: AWS::SQS::Queue
       Properties:
-        QueueName: ${self:service}-failures
+        QueueName: ${self:provider.stage}-${self:service}-failures
         MessageRetentionPeriod: '1209600'
         VisibilityTimeout: '60'
