@@ -5,7 +5,10 @@ const prettyjson = require('prettyjson');
  */
 const showDomains = endpoints => {
   // We want to share information only about these domains
-  const domains = ['ES_PUBLIC_ENDPOINT', 'ES_PRIVATE_ENDPOINT'];
+  const domains = [
+    'REACT_APP_ES_PUBLIC_ENDPOINT',
+    'REACT_APP_ES_PRIVATE_ENDPOINT',
+  ];
 
   const info = domains.map(key => ({ [key]: endpoints[key] }));
 
