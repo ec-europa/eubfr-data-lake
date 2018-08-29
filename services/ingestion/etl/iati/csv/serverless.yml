@@ -89,6 +89,8 @@ functions:
       BUCKET: ${self:custom.bucketName}
       REGION: ${self:provider.region}
       STAGE: ${self:provider.stage}
+      # ECS task to execute handler without timeout limitations
+      RUNNER: runner1
     events:
       - sqs:
           arn:

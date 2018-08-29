@@ -6,6 +6,7 @@ import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 import { extractMessage } from '../lib/sns';
 
 export const handler = async (event, context, callback) => {
+  const { RUNNER } = process.env;
   const ecs = new AWS.ECS();
   const messenger = MessengerFactory.Create({ context });
 
@@ -27,7 +28,7 @@ export const handler = async (event, context, callback) => {
     });
 
     const runParams = {
-      taskDefinition: 'runner1:1',
+      taskDefinition: RUNNER,
       launchType: 'FARGATE',
       networkConfiguration: {
         awsvpcConfiguration: {
@@ -43,8 +44,12 @@ export const handler = async (event, context, callback) => {
                 name: 'AWS_LAMBDA_FUNCTION_EVENT',
                 value: JSON.stringify(initialMessage),
               },
+              {
+                name: 'AWS_LAMBDA_FUNCTION_CONTEXT',
+                value: JSON.stringify(context),
+              },
             ],
-            name: 'runner1',
+            name: RUNNER,
           },
         ],
       },
