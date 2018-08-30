@@ -269,7 +269,7 @@ export default (record: Object): Project | null => {
       to: null,
       to_precision: 'year',
     },
-    title: '',
+    title: record['Subject of grant or contract'] || '',
     type: [],
   };
 };
