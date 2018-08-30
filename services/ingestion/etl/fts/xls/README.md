@@ -19,7 +19,7 @@
 | Geographical Zone                      | project_locations      |
 | Expense Type                           | -                      |
 | Total amount                           | budget.eu_contrib      |
-| Subject of grant or contract           | -                      |
+| Subject of grant or contract           | title                  |
 | Responsible Department                 | reporting_organisation |
 | Budget line name and number            | description            |
 | Action Type                            | programme_name         |
