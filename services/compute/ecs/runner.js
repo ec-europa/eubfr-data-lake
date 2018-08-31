@@ -5,57 +5,54 @@ const path = require('path');
 const https = require('https');
 
 const AWS = require('aws-sdk');
-const { argv } = require('yargs');
+const promisePipe = require('promisepipe');
 const unzip = require('unzip');
-
-// const awscred = require('awscred');
-// const getUserCredentials = promisify(awscred.load);
+const { argv } = require('yargs');
 
 // Runner definition
 const runner = async () => {
-  // Get original event and context.
-  console.log(JSON.stringify(argv));
-  const { event, context: c } = argv;
+  const { event: e, context: c } = argv;
   const context = JSON.parse(c);
+  const event = JSON.parse(e);
 
   if (!context.functionName) {
     return console.error('Required function name not found in context.');
   }
+
   const invoking = context.functionName;
   const originalInvoking = invoking.substring(0, invoking.indexOf('Dlq'));
 
   try {
     const lambda = new AWS.Lambda({ region: 'eu-central-1' });
 
-    const response = await lambda
+    const lambdaInfo = await lambda
       .getFunction({ FunctionName: originalInvoking })
       .promise();
 
-    const sourceCodeSignedUrl = response.Code.Location;
+    const sourceCodeSignedUrl = lambdaInfo.Code.Location;
+    // Target archive containing the original handler's code.
+    const source = path.resolve(`${__dirname}/handler.zip`);
 
-    return new Promise((resolve, reject) => {
-      https
-        .get(sourceCodeSignedUrl, res => {
-          res.pipe(fs.createWriteStream('./handler.zip'));
-          res.on('end', () => {
-            const source = path.resolve(`${__dirname}/handler.zip`);
-            const sourceZip = fs.createReadStream(source);
-            sourceZip.pipe(unzip.Extract({ path: __dirname }));
-            sourceZip.on('end', async () => {
-              const pathToHandler = path.resolve(
-                `${__dirname}/src/events/onParseCSV.js`
-              );
-              const handler = require(pathToHandler);
-              const result = await handler.handler(event, context);
-              console.log(result);
-              resolve();
-            });
-          });
-        })
-        .on('error', reject);
+    return https.get(sourceCodeSignedUrl, async res => {
+      // Get the zip and write to the FS.
+      await promisePipe(res, fs.createWriteStream('./handler.zip'));
+
+      // Extract the zip in the current directory.
+      await promisePipe(
+        fs.createReadStream(source),
+        unzip.Extract({ path: __dirname })
+      );
+
+      const pathToHandler = path.resolve(
+        `${__dirname}/src/events/onParseCSV.js`
+      );
+      // eslint-disable-next-line
+      const handler = require(pathToHandler);
+      const result = await handler.handler(event, context);
+      return console.log(result);
     });
-  } catch (e) {
-    return console.error(e.message);
+  } catch (err) {
+    return console.error(err.message);
   }
 };
 
