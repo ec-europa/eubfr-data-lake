@@ -6,7 +6,7 @@ import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 import { extractMessage } from '../lib/sns';
 
 export const handler = async (event, context, callback) => {
-  const { RUNNER } = process.env;
+  const { RUNNER, BUCKET, REGION, STAGE, SUBNET } = process.env;
   const ecs = new AWS.ECS();
   const messenger = MessengerFactory.Create({ context });
 
@@ -33,7 +33,7 @@ export const handler = async (event, context, callback) => {
       networkConfiguration: {
         awsvpcConfiguration: {
           assignPublicIp: 'ENABLED',
-          subnets: ['subnet-ea11e581'],
+          subnets: [SUBNET],
         },
       },
       overrides: {
@@ -44,9 +44,26 @@ export const handler = async (event, context, callback) => {
                 name: 'AWS_LAMBDA_FUNCTION_EVENT',
                 value: JSON.stringify(initialMessage),
               },
+              // Help the runner locate the handler to run inside a container.
+              {
+                name: 'AWS_LAMBDA_HANDLER_PATH',
+                value: 'src/events/onParseCSV.js',
+              },
               {
                 name: 'AWS_LAMBDA_FUNCTION_CONTEXT',
                 value: JSON.stringify(context),
+              },
+              {
+                name: 'BUCKET',
+                value: BUCKET,
+              },
+              {
+                name: 'REGION',
+                value: REGION,
+              },
+              {
+                name: 'STAGE',
+                value: STAGE,
               },
             ],
             name: RUNNER,

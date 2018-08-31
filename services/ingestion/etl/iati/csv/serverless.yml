@@ -20,7 +20,7 @@ package:
 provider:
   name: aws
   runtime: nodejs8.10
-  timeout: 60
+  timeout: 30
   stage: ${opt:stage, file(../../../../../config.json):stage, 'dev'}
   region: ${opt:region, file(../../../../../config.json):region, 'eu-central-1'}
   deploymentBucket:
@@ -61,7 +61,7 @@ functions:
   parseCsv:
     handler: src/events/onParseCSV.handler
     name: ${self:provider.stage}-${self:service}-parseCsv
-    timeout: 60
+    timeout: 30
     memorySize: 128
     deadLetter:
       targetArn:
@@ -91,6 +91,8 @@ functions:
       STAGE: ${self:provider.stage}
       # ECS task to execute handler without timeout limitations
       RUNNER: runner
+      # Required for runTask API call, preliminary created on AWS.
+      SUBNET: subnet-ea11e581
     events:
       - sqs:
           arn:

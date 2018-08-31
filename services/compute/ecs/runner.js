@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-const fs = require('fs');
 const path = require('path');
 const https = require('https');
 
@@ -9,8 +8,8 @@ const promisePipe = require('promisepipe');
 const unzip = require('unzip');
 const { argv } = require('yargs');
 
-// Runner definition
 const runner = async () => {
+  const { REGION, AWS_LAMBDA_HANDLER_PATH } = process.env;
   const { event: e, context: c } = argv;
   const context = JSON.parse(c);
   const event = JSON.parse(e);
@@ -20,34 +19,29 @@ const runner = async () => {
   }
 
   const invoking = context.functionName;
+  // Assumes dead letter queue lambda functions are suffixed with Dlq
   const originalInvoking = invoking.substring(0, invoking.indexOf('Dlq'));
 
   try {
-    const lambda = new AWS.Lambda({ region: 'eu-central-1' });
+    const lambda = new AWS.Lambda({ region: REGION });
 
     const lambdaInfo = await lambda
       .getFunction({ FunctionName: originalInvoking })
       .promise();
 
     const sourceCodeSignedUrl = lambdaInfo.Code.Location;
-    // Target archive containing the original handler's code.
-    const source = path.resolve(`${__dirname}/handler.zip`);
 
     return https.get(sourceCodeSignedUrl, async res => {
-      // Get the zip and write to the FS.
-      await promisePipe(res, fs.createWriteStream('./handler.zip'));
-
-      // Extract the zip in the current directory.
-      await promisePipe(
-        fs.createReadStream(source),
-        unzip.Extract({ path: __dirname })
-      );
+      // Download source from cloud and extract it at the current directory at the same time.
+      await promisePipe(res, unzip.Extract({ path: __dirname }));
 
       const pathToHandler = path.resolve(
-        `${__dirname}/src/events/onParseCSV.js`
+        `${__dirname}/${AWS_LAMBDA_HANDLER_PATH}`
       );
+
       // eslint-disable-next-line
       const handler = require(pathToHandler);
+
       const result = await handler.handler(event, context);
       return console.log(result);
     });
@@ -56,5 +50,4 @@ const runner = async () => {
   }
 };
 
-// Execute the runner.
 runner();

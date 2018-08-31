@@ -4,11 +4,11 @@ const path = require('path');
 module.exports = {
   entry: slsw.lib.entries,
   target: 'node',
-  mode: slsw.lib.webpack.isLocal ? 'development' : 'production',
+  mode: 'development',
   optimization: {
-    minimize: process.env.EUBFR_ENV && process.env.EUBFR_ENV === 'prod',
+    minimize: false,
   },
-  devtool: 'nosources-source-map',
+  devtool: 'source-map',
   externals: [{ 'aws-sdk': true }],
   module: {
     rules: [
