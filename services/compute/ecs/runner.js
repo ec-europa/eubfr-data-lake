@@ -39,11 +39,12 @@ const runner = async () => {
         `${__dirname}/${AWS_LAMBDA_HANDLER_PATH}`
       );
 
-      // eslint-disable-next-line
-      const handler = require(pathToHandler);
-
-      const result = await handler.handler(event, context);
-      return console.log(result);
+      setTimeout(async () => {
+        // eslint-disable-next-line
+        const handler = require(pathToHandler);
+        const result = await handler.handler(event, context);
+        return console.log(result);
+      }, 1500);
     });
   } catch (err) {
     return console.error(err.message);
