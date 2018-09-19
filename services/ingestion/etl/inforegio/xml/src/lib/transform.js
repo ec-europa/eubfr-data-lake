@@ -97,13 +97,15 @@ const formatBudget = budget => {
 
   const currency = budget.split(' ')[0];
 
-  const formattedBudget = budget
-    .split(' ')
-    .slice(1)
-    .join('');
+  const formattedBudget = amount => {
+    if (amount.indexOf('(') >= 0) {
+      amount = amount.split('(').shift();
+    }
+    return amount.replace(/\beur[a-zA-Z]*\b/gi, '').replace(/\s+/g, '');
+  };
 
   return sanitizeBudgetItem({
-    value: formattedBudget,
+    value: formattedBudget(budget),
     currency,
     raw: budget,
   });
