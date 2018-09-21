@@ -102,7 +102,12 @@ const formatBudget = budget => {
     /*eslint spaced-comment: 0*/
     const regex = /(?:\beur\w*|€)\s*([0-9][0-9\., ]*)\s*(million)?|([0-9][0-9\., ]*)\s*(million)?\s*(?:\beur\w*|€)/gi;
     const matches = amount.match(regex);
-    return matches ? matches[0].replace(/\beur[a-zA-Z]*\b/gi, '').trim() : 0;
+    return matches
+      ? matches[0]
+          .replace(/\beur[a-z]*\b/gi, '')
+          .replace(/\bmillion[a-z]*\b/gi, 'm')
+          .trim()
+      : 0;
   };
 
   return sanitizeBudgetItem({
