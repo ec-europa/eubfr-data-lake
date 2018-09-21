@@ -98,10 +98,11 @@ const formatBudget = budget => {
   const currency = budget.split(' ')[0];
 
   const formattedBudget = amount => {
-    if (amount.indexOf('(') >= 0) {
-      amount = amount.split('(').shift();
-    }
-    return amount.replace(/\beur[a-zA-Z]*\b/gi, '').replace(/\s+/g, '');
+    /*eslint no-useless-escape: 0*/
+    /*eslint spaced-comment: 0*/
+    const regex = /(?:\beur\w*|€)\s*([0-9][0-9\., ]*)\s*(million)?|([0-9][0-9\., ]*)\s*(million)?\s*(?:\beur\w*|€)/gi;
+    const matches = amount.match(regex);
+    return matches ? matches[0].replace(/\beur[a-zA-Z]*\b/gi, '').trim() : 0;
   };
 
   return sanitizeBudgetItem({
