@@ -5,9 +5,9 @@ Object {
   "action": "",
   "budget": Object {
     "eu_contrib": Object {
-      "currency": "EUR",
+      "currency": "",
       "raw": "ECU 909 553",
-      "value": 909553,
+      "value": 0,
     },
     "funding_area": Array [
       "European Regional Development Fund",
@@ -29,9 +29,9 @@ Object {
       "value": 0,
     },
     "total_cost": Object {
-      "currency": "EUR",
+      "currency": "",
       "raw": "ECU 1 259 101",
-      "value": 1259101,
+      "value": 0,
     },
   },
   "call_year": "",
