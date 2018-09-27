@@ -213,6 +213,7 @@ const formatBudget = budget => {
           .replace(/\beur[a-z]*\b/gi, '')
           .replace(/\bmillion[a-z]*\b/gi, 'm')
           .replace(/\.(?=[0-9]{3})/g, ',')
+          .replace(/^([^,]*),(?=\d{1,2}(?!\d))(?!.*,)/g, '$1.')
           .trim()
       : 0;
   };
