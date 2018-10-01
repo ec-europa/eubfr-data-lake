@@ -203,13 +203,8 @@ const formatBudget = budget => {
 
   const currency = budget.split(' ')[0];
 
-  const formattedBudget = budget
-    .split(' ')
-    .slice(1)
-    .join('');
-
   return sanitizeBudgetItem({
-    value: formattedBudget,
+    value: budget,
     currency,
     raw: budget,
   });
