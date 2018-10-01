@@ -3,7 +3,13 @@
   "name": "@eubfr/lib",
   "version": "0.1.0",
   "main": "n/a",
+  "scripts": {
+    "test:unit": "jest --testPathPattern=unit"
+  },
   "dependencies": {
     "numeral": "2.0.6"
+  },
+  "devDependencies": {
+    "jest": "23.0.1"
   }
 }

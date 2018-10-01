@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`budgetFormatter module: sanitizeBudgetItem helper Currency ECU should be treated equal to EUR 1`] = `
+Object {
+  "currency": "EUR",
+  "raw": "ECU 1 259 101",
+  "value": 1259101,
+}
+`;
+
+exports[`budgetFormatter module: sanitizeBudgetItem helper Should return default BudgetItem type when no arguments 1`] = `
+Object {
+  "currency": "",
+  "raw": "",
+  "value": 0,
+}
+`;
