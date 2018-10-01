@@ -203,23 +203,13 @@ const formatBudget = budget => {
 
   const currency = budget.split(' ')[0];
 
-  const formattedBudget = amount => {
-    /*eslint no-useless-escape: 0*/
-    /*eslint spaced-comment: 0*/
-    const regex = /(?:\beur\w*|€)\s*([0-9][0-9\., ]*)\s*(million)?|([0-9][0-9\., ]*)\s*(million)?\s*(?:\beur\w*|€)/gi;
-    const matches = amount.match(regex);
-    return matches
-      ? matches[0]
-          .replace(/\beur[a-z]*\b/gi, '')
-          .replace(/\bmillion[a-z]*\b/gi, 'm')
-          .replace(/\.(?=[0-9]{3})/g, ',')
-          .replace(/^([^,]*),(?=\d{1,2}(?!\d))(?!.*,)/g, '$1.')
-          .trim()
-      : 0;
-  };
+  const formattedBudget = budget
+    .split(' ')
+    .slice(1)
+    .join('');
 
   return sanitizeBudgetItem({
-    value: formattedBudget(budget),
+    value: formattedBudget,
     currency,
     raw: budget,
   });
