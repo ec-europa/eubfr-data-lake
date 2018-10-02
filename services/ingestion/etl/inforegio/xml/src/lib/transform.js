@@ -89,9 +89,11 @@ const getAddress = record => {
  * @returns {BudgetItem} The formatted budget
  */
 const formatBudget = budget => {
-  // Keywords that need to be changed to be actual currencies.
+  // Keywords that need to be changed.
   const knownExceptions = {
     FEDER: 'EUR',
+    ERDF: 'EUR',
+    '£': 'GBP',
   };
 
   if (!budget || typeof budget !== 'string') return sanitizeBudgetItem();
