@@ -1,6 +1,7 @@
 // @flow
 
 import sanitizeBudgetItem from '@eubfr/lib/budgetFormatter';
+import extractBudgetData from '@eubfr/lib/extractBudgetData';
 import getCountryCode from '@eubfr/lib/getCountryCode';
 import type { Project } from '@eubfr/types';
 
@@ -89,23 +90,19 @@ const getAddress = record => {
  * @returns {BudgetItem} The formatted budget
  */
 const formatBudget = budget => {
-  // Keywords that need to be changed.
-  const knownExceptions = {
-    FEDER: 'EUR',
-    ERDF: 'EUR',
-    '£': 'GBP',
-  };
-
   if (!budget || typeof budget !== 'string') return sanitizeBudgetItem();
 
-  const currencySign = budget.split(' ')[0];
-  const currency = knownExceptions[currencySign] || 'EUR';
+  const budgetData = extractBudgetData(budget);
 
-  return sanitizeBudgetItem({
-    value: budget,
-    currency,
-    raw: budget,
-  });
+  if (budgetData.currency && budgetData.value) {
+    return sanitizeBudgetItem({
+      value: budgetData.value,
+      currency: budgetData.currency,
+      raw: budget,
+    });
+  }
+
+  return sanitizeBudgetItem();
 };
 
 /**
