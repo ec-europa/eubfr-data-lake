@@ -9,7 +9,7 @@ Transform function: [implementation details][2]
 
 **Parameters**
 
--   `record` **[Object][3]** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
 Returns **Project** JSON matching the type fields
 
@@ -19,13 +19,13 @@ Check if field is an array or a sting
 
 **Parameters**
 
--   `data` **([Object][3] \| [string][4])** The input piece of data
+- `data` **([Object][3] \| [string][4])** The input piece of data
 
 **Examples**
 
 ```javascript
-input => ['foo']
-output => 'foo'
+input => ['foo'];
+output => 'foo';
 ```
 
 Returns **[string][4]** The string value of the input data
@@ -36,13 +36,13 @@ Format date
 
 **Parameters**
 
--   `date` **[Date][5]** Date in `DD/MM/YYYY` format
+- `date` **[Date][5]** Date in `DD/MM/YYYY` format
 
 **Examples**
 
 ```javascript
-input => "02/02/2018"
-output => '2018-02-02T00:00:00.000Z'
+input => '02/02/2018';
+output => '2018-02-02T00:00:00.000Z';
 ```
 
 Returns **[Date][5]** The date formatted into an ISO 8601 date format
@@ -53,13 +53,13 @@ Get adress from different fields
 
 Input fields taken from the `record` are:
 
--   `Beneficiary_address`
--   `Beneficiary_Post_Code`
--   `Beneficiary_City`
+- `Beneficiary_address`
+- `Beneficiary_Post_Code`
+- `Beneficiary_City`
 
 **Parameters**
 
--   `record` **[Object][3]** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
 Returns **[string][4]** The address as consumed by {Partner}
 
@@ -69,14 +69,7 @@ Formats information for the {BudgetItem}
 
 **Parameters**
 
--   `budget` **[string][4]** Prefixed currency value
-
-**Examples**
-
-```javascript
-input => "EUR 329 000 000"
-output => "329000000"
-```
+- `budget` **[string][4]** Prefixed currency value
 
 Returns **BudgetItem** The formatted budget
 
@@ -86,17 +79,17 @@ Get funding areas from a string
 
 Input fields taken from the `record` are:
 
--   `Funds`
+- `Funds`
 
 **Parameters**
 
--   `record` **[Object][3]** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
 **Examples**
 
 ```javascript
-input => 'foo;bar;baz'
-output => ['foo', 'bar', 'baz']
+input => 'foo;bar;baz';
+output => ['foo', 'bar', 'baz'];
 ```
 
 Returns **[Array][6]** List of values for funding area
@@ -107,7 +100,7 @@ Gets NUTS code level from a string
 
 **Parameters**
 
--   `code` **[String][4]** The NUTS code
+- `code` **[String][4]** The NUTS code
 
 Returns **[Number][7]** The level of NUTS or null if one can't be extracted
 
@@ -117,13 +110,13 @@ Get a list of {Location}
 
 Input fields taken from the `record` are:
 
--   `Project_country`
--   `Project_region`
--   `Project_NUTS2_code`
+- `Project_country`
+- `Project_region`
+- `Project_NUTS2_code`
 
 **Parameters**
 
--   `record` **[Object][3]** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
 Returns **[Array][6]** List of {Location}
 
@@ -133,17 +126,17 @@ Get themes from a string
 
 Input fields taken from the `record` are:
 
--   `Themes`
+- `Themes`
 
 **Parameters**
 
--   `record` **[Object][3]** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
 **Examples**
 
 ```javascript
-input => 'foo; bar; baz'
-output => ['foo', 'bar', 'baz']
+input => 'foo; bar; baz';
+output => ['foo', 'bar', 'baz'];
 ```
 
 Returns **[Array][6]** List of values for themes
@@ -155,25 +148,19 @@ Depends on getAddress()
 
 Input fields taken from the `record` are:
 
--   `Beneficiary`
--   `Beneficiary_Country`
+- `Beneficiary`
+- `Beneficiary_Country`
 
 **Parameters**
 
--   `record` **[Object][3]** The row received from harmonized storage
+- `record` **[Object][3]** The row received from harmonized storage
 
 Returns **[Array][6]** List of a single {Beneficiary}
 
 [1]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/mapping.md
-
 [2]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/xml/src/lib/transform.js
-
 [3]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
-
 [4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
-
 [5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date
-
 [6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
-
 [7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
