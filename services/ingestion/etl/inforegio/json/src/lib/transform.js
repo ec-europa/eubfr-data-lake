@@ -199,9 +199,15 @@ const getProjectWebsite = record => {
  * @returns {BudgetItem}
  */
 const formatBudget = budget => {
+  // Keywords that need to be changed to be actual currencies.
+  const knownExceptions = {
+    FEDER: 'EUR',
+  };
+
   if (!budget || typeof budget !== 'string') return sanitizeBudgetItem();
 
-  const currency = budget.split(' ')[0];
+  const currencySign = budget.split(' ')[0];
+  const currency = knownExceptions[currencySign] || 'EUR';
 
   return sanitizeBudgetItem({
     value: budget,
