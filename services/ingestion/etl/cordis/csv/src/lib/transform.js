@@ -87,6 +87,18 @@ const getDescription = record => {
     .join('\n');
 };
 
+/**
+ * Preprocess `project_id`
+ * Seeks for values in the following precedence:
+ * - `id`
+ * - `reference`
+ *
+ * @memberof CordisCsvTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {String}
+ */
+const getProjectId = record => record.id || record.reference || '';
+
 const getCode = code => (code ? getCountryCode(code.trim().toUpperCase()) : '');
 
 /**
@@ -198,20 +210,39 @@ const getThirdParties = record => {
  * Format date
  *
  * @memberof CordisCsvTransform
- * @param {Date} date Date in `YYYY-MM-DD` (ISO) format
+ * @param {Date} date Date in `YYYY-MM-DD` or `DD/MM/YYYY` formats.
  * @returns {Date} The date formatted into an ISO 8601 date format
  *
  * @example
  * input => "2018-12-31"
  * output => "2018-12-31T00:00:00.000Z"
+ *
+ * @example
+ * input => "31/03/1988"
+ * output => "2018-12-31T00:00:00.000Z"
  */
 const formatDate = date => {
   if (!date || typeof date !== 'string') return null;
 
-  try {
-    return new Date(date).toISOString();
-  } catch (e) {
-    return null;
+  // Case `DD/MM/YYYY`:
+  if (date.includes('/')) {
+    const d = date.split(/\//);
+    if (d.length !== 3) return null;
+    const [day, month, year] = d;
+    if (!day || !month || !year) return null;
+    try {
+      return new Date(Date.UTC(year, month - 1, day)).toISOString();
+    } catch (e) {
+      return null;
+    }
+  }
+  // Case `YYYY-MM-DD`:
+  else {
+    try {
+      return new Date(date).toISOString();
+    } catch (e) {
+      return null;
+    }
   }
 };
 
@@ -240,7 +271,7 @@ export default (record: Object): Project | null => {
     ec_priorities: [],
     media: [],
     programme_name: record.frameworkProgramme || '',
-    project_id: record.id || '',
+    project_id: getProjectId(record),
     project_locations: getLocations(record),
     project_website: record.projectUrl || '',
     complete: true,

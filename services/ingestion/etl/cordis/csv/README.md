@@ -5,7 +5,7 @@ Model to compare with is available at: https://ec-europa.github.io/eubfr-data-la
 | Field                | Target                |
 | -------------------- | --------------------- |
 | rcn                  | description           |
-| id                   | project_id            |
+| id, reference        | project_id            |
 | acronym              | description           |
 | status               | status                |
 | programme            | sub_programme_name    |

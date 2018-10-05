@@ -416,6 +416,116 @@ objective: The overarching objective of UNISECO is to strengthen the sustainabil
 }
 `;
 
+exports[`DG CORDIS CSV transformer Can handle records which contain project_id in field called reference instead of an id 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "funding_area": Array [
+      "CSC",
+    ],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+  },
+  "call_year": "",
+  "complete": true,
+  "description": "rcn: 14088
+objective: As a result of the rapid increase in forest damages in Mid-Europe, the need for the reduction of air pollutions from energy conversion and energy-end-use technologies became an important political objective.",
+  "ec_priorities": Array [],
+  "media": Array [],
+  "programme_name": "FP1",
+  "project_id": "EN3M0034",
+  "project_locations": Array [
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "DE",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "",
+      "town": "",
+    },
+  ],
+  "project_website": "",
+  "related_links": Array [],
+  "reporting_organisation": "RTD",
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
+  "status": "",
+  "sub_programme_name": "FP1-ENNONUC 3C",
+  "success_story": "",
+  "themes": Array [],
+  "third_parties": Array [
+    Object {
+      "address": "",
+      "country": "DE",
+      "email": "",
+      "name": "UNIVERSITAET KARLSRUHE (TECHNISCHE HOCHSCHULE)",
+      "phone": "",
+      "region": "",
+      "role": "coordinator",
+      "type": "",
+      "website": "",
+    },
+    Object {
+      "address": "",
+      "country": "DE",
+      "email": "",
+      "name": "FORSCHUNGSZENTRUM JUELICH GMBH",
+      "phone": "",
+      "region": "",
+      "role": "participant",
+      "type": "",
+      "website": "",
+    },
+    Object {
+      "address": "",
+      "email": "",
+      "name": "UNIVERSITAET STUTTGART",
+      "phone": "",
+      "region": "",
+      "role": "participant",
+      "type": "",
+      "website": "",
+    },
+  ],
+  "timeframe": Object {
+    "from": "1986-01-01T00:00:00.000Z",
+    "from_precision": "day",
+    "to": "1988-03-31T00:00:00.000Z",
+    "to_precision": "day",
+  },
+  "title": "Energy and environment - Optimal control strategies for reducing emissions from energy production and energy use",
+  "type": Array [],
+}
+`;
+
 exports[`DG CORDIS CSV transformer Produces correct JSON output structure 1`] = `
 Object {
   "action": "",
