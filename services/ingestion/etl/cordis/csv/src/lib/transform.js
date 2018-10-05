@@ -237,12 +237,10 @@ const formatDate = date => {
     }
   }
   // Case `YYYY-MM-DD`:
-  else {
-    try {
-      return new Date(date).toISOString();
-    } catch (e) {
-      return null;
-    }
+  try {
+    return new Date(date).toISOString();
+  } catch (e) {
+    return null;
   }
 };
 
