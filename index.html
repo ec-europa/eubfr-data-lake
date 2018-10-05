@@ -204,6 +204,12 @@
                       </a></li>
                     
                       <li><a
+                        href="#cordiscsvtransformgetprojectid"
+                        class="ecl-link pre-open">
+                        getProjectId
+                      </a></li>
+                    
+                      <li><a
                         href="#cordiscsvtransformgetlocations"
                         class="ecl-link pre-open">
                         getLocations
@@ -1993,6 +1999,71 @@ Input fields taken from the <code>record</code> are:</p>
 
     </div>
   
+    <a id='cordiscsvtransformgetprojectid' class="ecl-link ecl-link--standalone" aria-controls='cordiscsvtransformgetprojectid-panel' aria-expanded="true" href="#">
+      getProjectId
+    </a>
+    <div id='cordiscsvtransformgetprojectid-panel' aria-labelledby='cordiscsvtransformgetprojectid' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess <code>project_id</code>
+Seeks for values in the following precedence:</p>
+<ul>
+<li><code>id</code></li>
+<li><code>reference</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>
+      :
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
     <a id='cordiscsvtransformgetlocations' class="ecl-link ecl-link--standalone" aria-controls='cordiscsvtransformgetlocations-panel' aria-expanded="true" href="#">
       getLocations
     </a>
@@ -2154,7 +2225,9 @@ Input fields taken from the <code>record</code> are:</p>
         <li>date (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date">Date</a>)
 	        Date in 
 <code>YYYY-MM-DD</code>
- (ISO) format
+ or 
+<code>DD/MM/YYYY</code>
+ formats.
 
           
         </li>
@@ -2184,6 +2257,10 @@ Input fields taken from the <code>record</code> are:</p>
       
       <pre style="background-color: #f5f5f5;" class="ecl-u-pa-xs">input =&gt; <span class="hljs-string">"2018-12-31"</span>
 output =&gt; <span class="hljs-string">"2018-12-31T00:00:00.000Z"</span></pre>
+    
+      
+      <pre style="background-color: #f5f5f5;" class="ecl-u-pa-xs">input =&gt; <span class="hljs-string">"01/01/1986"</span>
+output =&gt; <span class="hljs-string">'1986-01-01T00:00:00.000Z'</span></pre>
     
   
 
