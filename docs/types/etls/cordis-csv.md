@@ -10,7 +10,7 @@ Transform function: [implementation details][2]
 
 **Parameters**
 
--   `record` **[Object][3]** Piece of data to transform before going to harmonized storage.
+- `record` **[Object][3]** Piece of data to transform before going to harmonized storage.
 
 Returns **Project** JSON matching the type fields.
 
@@ -19,13 +19,13 @@ Returns **Project** JSON matching the type fields.
 Preprocess `funding_area`
 Input fields taken from the `record` are:
 
--   `fundingScheme`
+- `fundingScheme`
 
 **Parameters**
 
--   `record` **[Object][3]** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
-Returns **[Array][4]** 
+Returns **[Array][4]**
 
 ### getBudget
 
@@ -33,9 +33,9 @@ Preprocess budget
 
 **Parameters**
 
--   `record` **[Object][3]** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
-Returns **Budget** 
+Returns **Budget**
 
 ### getDescription
 
@@ -43,28 +43,42 @@ Preprocess description
 Concatenation of several fields as requested in [https://webgate.ec.europa.eu/CITnet/jira/browse/EUBFR-200?focusedCommentId=2808845&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-2808845][5]
 Input fields taken from the `record` are:
 
--   `acronym`
--   `objective`
--   `rcn`
--   `topic`
+- `acronym`
+- `objective`
+- `rcn`
+- `topic`
 
 **Parameters**
 
--   `record` **[Object][3]** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
-Returns **[String][6]** 
+Returns **[String][6]**
+
+### getProjectId
+
+Preprocess `project_id`
+Seeks for values in the following precedence:
+
+- `id`
+- `reference`
+
+**Parameters**
+
+- `record` **[Object][3]** The row received from parsed file
+
+Returns **[String][6]**
 
 ### getLocations
 
 Preprocess project_locations
 Input fields taken from the `record` are:
 
--   `participants`
--   `participantCountries`
+- `participants`
+- `participantCountries`
 
 **Parameters**
 
--   `record` **[Object][3]** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
 Returns **[Array][4]** List of {Location} objects for `project_locations` field
 
@@ -73,14 +87,14 @@ Returns **[Array][4]** List of {Location} objects for `project_locations` field
 Preprocess third parties
 Input fields taken from the `record` are:
 
--   `coordinator`
--   `coordinatorCountry`
--   `participants`
--   `participantCountries`
+- `coordinator`
+- `coordinatorCountry`
+- `participants`
+- `participantCountries`
 
 **Parameters**
 
--   `record` **[Object][3]** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
 Returns **[Array][4]** List of {ThirdParty} objects
 
@@ -90,27 +104,26 @@ Format date
 
 **Parameters**
 
--   `date` **[Date][7]** Date in `YYYY-MM-DD` (ISO) format
+- `date` **[Date][7]** Date in `YYYY-MM-DD` or `DD/MM/YYYY` formats.
 
 **Examples**
 
 ```javascript
-input => "2018-12-31"
-output => "2018-12-31T00:00:00.000Z"
+input => '2018-12-31';
+output => '2018-12-31T00:00:00.000Z';
+```
+
+```javascript
+input => '31/03/1988';
+output => '2018-12-31T00:00:00.000Z';
 ```
 
 Returns **[Date][7]** The date formatted into an ISO 8601 date format
 
 [1]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/cordis/csv/test/stubs/record.json
-
 [2]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/cordis/csv/src/lib/transform.js
-
 [3]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
-
 [4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
-
 [5]: https://webgate.ec.europa.eu/CITnet/jira/browse/EUBFR-200?focusedCommentId=2808845&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-2808845
-
 [6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
-
 [7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date
