@@ -218,8 +218,8 @@ const getThirdParties = record => {
  * output => "2018-12-31T00:00:00.000Z"
  *
  * @example
- * input => "31/03/1988"
- * output => "2018-12-31T00:00:00.000Z"
+ * input => "01/01/1986"
+ * output => '1986-01-01T00:00:00.000Z'
  */
 const formatDate = date => {
   if (!date || typeof date !== 'string') return null;

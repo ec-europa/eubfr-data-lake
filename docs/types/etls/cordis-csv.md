@@ -114,8 +114,8 @@ output => '2018-12-31T00:00:00.000Z';
 ```
 
 ```javascript
-input => '31/03/1988';
-output => '2018-12-31T00:00:00.000Z';
+input => '01/01/1986';
+output => '1986-01-01T00:00:00.000Z';
 ```
 
 Returns **[Date][7]** The date formatted into an ISO 8601 date format
