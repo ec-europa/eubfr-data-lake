@@ -1,0 +1,81 @@
+service: ingestion-dead-letter-queue
+
+plugins:
+  - serverless-plugin-lambda-dead-letter
+  - serverless-webpack
+
+custom:
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules:
+      forceExclude:
+        - aws-sdk
+    packager: yarn
+  eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
+  bucketName: ${file(../../../resources/harmonized-storage/serverless.yml):custom.bucketName}
+
+package:
+  individually: true
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: ${opt:stage, file(../../../config.json):stage, 'dev'}
+  region: ${opt:region, file(../../../config.json):region, 'eu-central-1'}
+  deploymentBucket:
+    name: eubfr-${self:custom.eubfrEnvironment}-deploy
+  stackTags:
+    ENV: ${self:custom.eubfrEnvironment}
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - 's3:PutObject'
+      Resource:
+        Fn::Join:
+          - ''
+          - - 'arn:aws:s3:::'
+            - ${self:custom.bucketName}
+            - '/*'
+    # Allow running AWS Fargate containers when AWS Lambda timeout cannot be bypassed.
+    - Effect: 'Allow'
+      Action:
+        - ecs:RunTask
+      Resource: '*'
+    - Effect: Allow
+      Action:
+        - iam:PassRole
+      Resource:
+        Fn::Join:
+          - ''
+          - - 'arn:aws:iam::'
+            - Ref: 'AWS::AccountId'
+            - ':role/ecsTaskExecutionRole'
+
+functions:
+  processDeadLetters:
+    handler: src/events/processDeadLetters.handler
+    name: ${self:provider.stage}-${self:service}-dlq
+    # still useful for making use of the messenger
+    environment:
+      BUCKET: ${self:custom.bucketName}
+      REGION: ${self:provider.region}
+      STAGE: ${self:provider.stage}
+      # ECS task to execute handler without timeout limitations
+      RUNNER: runner
+      # Required for runTask API call, preliminary created on AWS.
+      SUBNET: subnet-ea11e581
+    events:
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - LambdaFailureQueue
+              - Arn
+
+resources:
+  Resources:
+    LambdaFailureQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: ${self:provider.stage}-${self:service}
+        MessageRetentionPeriod: '1209600'
+        VisibilityTimeout: '60'

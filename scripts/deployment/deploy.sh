@@ -27,6 +27,10 @@ npx serverless deploy -v
 cd ../cleaner
 npx serverless deploy -v
 
+# Deploy dead letter queue
+cd ../dead-letter-queue
+npx serverless deploy -v
+
 # Deploy quality analyzer
 cd ../quality-analyzer
 npx serverless deploy -v
