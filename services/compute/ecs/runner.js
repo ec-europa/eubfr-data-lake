@@ -5,7 +5,7 @@ const https = require('https');
 
 const AWS = require('aws-sdk');
 const promisePipe = require('promisepipe');
-const unzip = require('unzip');
+const unzip = require('unzipper');
 const { argv } = require('yargs');
 
 const runner = async () => {
@@ -39,12 +39,10 @@ const runner = async () => {
         `${__dirname}/${AWS_LAMBDA_HANDLER_PATH}`
       );
 
-      setTimeout(async () => {
-        // eslint-disable-next-line
-        const handler = require(pathToHandler);
-        const result = await handler.handler(event, context);
-        return console.log(result);
-      }, 1500);
+      // eslint-disable-next-line
+      const handler = require(pathToHandler);
+      const result = await handler.handler(event, context);
+      return console.log(result);
     });
   } catch (err) {
     return console.error(err.message);
