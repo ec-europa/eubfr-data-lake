@@ -1,7 +1,12 @@
-// List of topic suffixes mapping to their target handler executables.
+// Keys are topics without prefix stages.
+// Values are handler names (withot prefix stages) and path to handler code.
 const snsTopicsMap = {
-  'etl-iati-csv': {
+  'etl-cordis-csv': {
     name: 'ingestion-etl-iati-csv-parseCsv',
+    path: 'src/events/onParseCSV',
+  },
+  'etl-iati-csv': {
+    name: 'ingestion-etl-cordis-csv-parseCsv',
     path: 'src/events/onParseCSV',
   },
 };

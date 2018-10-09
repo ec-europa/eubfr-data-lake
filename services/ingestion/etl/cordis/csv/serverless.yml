@@ -1,6 +1,7 @@
 service: ingestion-etl-cordis-csv
 
 plugins:
+  - serverless-plugin-lambda-dead-letter
   - serverless-webpack
 
 custom:
@@ -36,12 +37,19 @@ provider:
            - - "arn:aws:s3:::"
              - ${self:custom.bucketName}
              - "/*"
+    # Allow queueing messages to the DLQ https://docs.aws.amazon.com/lambda/latest/dg/dlq.html
+    - Effect: 'Allow'
+      Action:
+        - sqs:SendMessage
+      Resource: '*'
 
 functions:
   parseCsv:
     handler: src/events/onParseCSV.handler
     name: ${self:provider.stage}-${self:service}-parseCsv
     memorySize: 512
+    deadLetter:
+      targetArn: 'arn:aws:sqs:${self:provider.region}:491621799026:${self:provider.stage}-ingestion-dead-letter-queue'
     environment:
       BUCKET: ${self:custom.bucketName}
       REGION: ${self:provider.region}

@@ -20,7 +20,7 @@ package:
 provider:
   name: aws
   runtime: nodejs8.10
-  timeout: 30
+  timeout: 60
   stage: ${opt:stage, file(../../../../../config.json):stage, 'dev'}
   region: ${opt:region, file(../../../../../config.json):region, 'eu-central-1'}
   deploymentBucket:
@@ -47,8 +47,8 @@ functions:
   parseCsv:
     handler: src/events/onParseCSV.handler
     name: ${self:provider.stage}-${self:service}-parseCsv
-    timeout: 30
-    memorySize: 128
+    timeout: 300
+    memorySize: 2048
     deadLetter:
       targetArn: 'arn:aws:sqs:${self:provider.region}:491621799026:${self:provider.stage}-ingestion-dead-letter-queue'
 
