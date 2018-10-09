@@ -3,14 +3,10 @@ import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependenc
 import MessengerFactory from '@eubfr/logger-messenger/src/lib/MessengerFactory';
 import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 
-import { extractMessage } from '../lib/sns';
+import { extractMessage, extractTopic } from '../lib/sns';
+import getHandlerData from '../lib/getHandlerData';
 
 export const handler = async (event, context, callback) => {
-  console.log(JSON.stringify('event >>>'));
-  console.log(JSON.stringify(event));
-  console.log(JSON.stringify('context >>>'));
-  console.log(JSON.stringify(context));
-
   const { RUNNER, BUCKET, REGION, STAGE, SUBNET } = process.env;
   const ecs = new AWS.ECS();
   const messenger = MessengerFactory.Create({ context });
@@ -18,8 +14,11 @@ export const handler = async (event, context, callback) => {
   // Extract message
   const sqsRecord = event.Records ? event.Records[0] : undefined;
   const initialMessage = JSON.parse(sqsRecord.body);
+
   const message = extractMessage(initialMessage);
+  const topicArn = extractTopic(initialMessage);
   const { key } = message.object;
+  const handlerData = getHandlerData(topicArn);
 
   try {
     await messenger.send({
@@ -45,13 +44,16 @@ export const handler = async (event, context, callback) => {
           {
             environment: [
               {
+                name: 'AWS_LAMBDA_HANDLER_NAME',
+                value: `${STAGE}-${handlerData.name}`,
+              },
+              {
                 name: 'AWS_LAMBDA_FUNCTION_EVENT',
                 value: JSON.stringify(initialMessage),
               },
-              // Help the runner locate the handler to run inside a container.
               {
                 name: 'AWS_LAMBDA_HANDLER_PATH',
-                value: 'src/events/onParseCSV.js',
+                value: handlerData.path,
               },
               {
                 name: 'AWS_LAMBDA_FUNCTION_CONTEXT',

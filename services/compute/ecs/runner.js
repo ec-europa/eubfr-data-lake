@@ -9,7 +9,11 @@ const unzip = require('unzipper');
 const { argv } = require('yargs');
 
 const runner = async () => {
-  const { REGION, AWS_LAMBDA_HANDLER_PATH } = process.env;
+  const {
+    REGION,
+    AWS_LAMBDA_HANDLER_NAME,
+    AWS_LAMBDA_HANDLER_PATH,
+  } = process.env;
   const { event: e, context: c } = argv;
   const context = JSON.parse(c);
   const event = JSON.parse(e);
@@ -18,15 +22,11 @@ const runner = async () => {
     return console.error('Required function name not found in context.');
   }
 
-  const invoking = context.functionName;
-  // Assumes dead letter queue lambda functions are suffixed with Dlq
-  const originalInvoking = invoking.substring(0, invoking.indexOf('Dlq'));
-
   try {
     const lambda = new AWS.Lambda({ region: REGION });
 
     const lambdaInfo = await lambda
-      .getFunction({ FunctionName: originalInvoking })
+      .getFunction({ FunctionName: AWS_LAMBDA_HANDLER_NAME })
       .promise();
 
     const sourceCodeSignedUrl = lambdaInfo.Code.Location;

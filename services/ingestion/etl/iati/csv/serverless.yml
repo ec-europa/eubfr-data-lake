@@ -51,6 +51,7 @@ functions:
     memorySize: 128
     deadLetter:
       targetArn: 'arn:aws:sqs:${self:provider.region}:491621799026:${self:provider.stage}-ingestion-dead-letter-queue'
+
     environment:
       BUCKET: ${self:custom.bucketName}
       REGION: ${self:provider.region}

@@ -1,6 +1,6 @@
 import path from 'path';
 
-export const extractMessage = event => {
+const extractMessage = event => {
   // Only work on the first record
   const snsRecord = event.Records ? event.Records[0] : undefined;
 
@@ -20,14 +20,4 @@ export const extractMessage = event => {
   return message;
 };
 
-export const prepareMessage = ({ key, status, message }, endpointArn) => ({
-  Message: JSON.stringify({
-    default: JSON.stringify({
-      key,
-      status,
-      message,
-    }),
-  }),
-  MessageStructure: 'json',
-  TargetArn: endpointArn,
-});
+export default extractMessage;

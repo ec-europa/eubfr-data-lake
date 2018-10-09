@@ -54,7 +54,7 @@ provider:
 functions:
   processDeadLetters:
     handler: src/events/processDeadLetters.handler
-    name: ${self:provider.stage}-${self:service}-dlq
+    name: ${self:provider.stage}-${self:service}
     # still useful for making use of the messenger
     environment:
       BUCKET: ${self:custom.bucketName}
