@@ -24,7 +24,7 @@ export const handler = async (event, context, callback) => {
     await messenger.send({
       message: {
         computed_key: key,
-        status_message: 'Restarting without time limitations.',
+        status_message: 'Restarting without time limitations ...',
         status_code: STATUS.ERROR,
       },
       to: ['logs'],

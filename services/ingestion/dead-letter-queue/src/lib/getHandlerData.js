@@ -2,11 +2,11 @@
 // Values are handler names (withot prefix stages) and path to handler code.
 const snsTopicsMap = {
   'etl-cordis-csv': {
-    name: 'ingestion-etl-iati-csv-parseCsv',
+    name: 'ingestion-etl-cordis-csv-parseCsv',
     path: 'src/events/onParseCSV',
   },
   'etl-iati-csv': {
-    name: 'ingestion-etl-cordis-csv-parseCsv',
+    name: 'ingestion-etl-iati-csv-parseCsv',
     path: 'src/events/onParseCSV',
   },
 };

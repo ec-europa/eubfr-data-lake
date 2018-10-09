@@ -52,8 +52,8 @@ provider:
             - ':role/ecsTaskExecutionRole'
 
 functions:
-  processDeadLetters:
-    handler: src/events/processDeadLetters.handler
+  onFailure:
+    handler: src/events/onFailure.handler
     name: ${self:provider.stage}-${self:service}
     # still useful for making use of the messenger
     environment:

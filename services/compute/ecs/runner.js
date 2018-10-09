@@ -18,10 +18,6 @@ const runner = async () => {
   const context = JSON.parse(c);
   const event = JSON.parse(e);
 
-  if (!context.functionName) {
-    return console.error('Required function name not found in context.');
-  }
-
   try {
     const lambda = new AWS.Lambda({ region: REGION });
 
