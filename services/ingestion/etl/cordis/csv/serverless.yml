@@ -49,6 +49,7 @@ functions:
     name: ${self:provider.stage}-${self:service}-parseCsv
     memorySize: 512
     deadLetter:
+      # Plugin syntax limitations: https://github.com/gmetzker/serverless-plugin-lambda-dead-letter/issues/37
       targetArn: 'arn:aws:sqs:${self:provider.region}:491621799026:${self:provider.stage}-ingestion-dead-letter-queue'
     environment:
       BUCKET: ${self:custom.bucketName}

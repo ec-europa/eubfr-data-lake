@@ -50,6 +50,7 @@ functions:
     timeout: 300
     memorySize: 2048
     deadLetter:
+      # Plugin syntax limitations: https://github.com/gmetzker/serverless-plugin-lambda-dead-letter/issues/37
       targetArn: 'arn:aws:sqs:${self:provider.region}:491621799026:${self:provider.stage}-ingestion-dead-letter-queue'
 
     environment:
