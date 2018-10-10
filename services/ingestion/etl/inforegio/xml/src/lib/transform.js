@@ -92,11 +92,11 @@ const getAddress = record => {
 const formatBudget = budget => {
   if (!budget || typeof budget !== 'string') return sanitizeBudgetItem();
 
-  const budgetData = extractBudgetData(budget);
+  const { value, currency } = extractBudgetData(budget);
 
   return sanitizeBudgetItem({
-    value: budgetData.value,
-    currency: budgetData.currency,
+    value,
+    currency,
     raw: budget,
   });
 };

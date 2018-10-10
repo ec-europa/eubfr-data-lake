@@ -68,10 +68,14 @@ const getBudget = record => {
     fundingArea.push(record['Funding Type']);
   }
 
-  const budgetData = extractBudgetData(record['Total amount']);
+  const { currency, value } = extractBudgetData(record['Total amount']);
 
   const budget = {
-    eu_contrib: sanitizeBudgetItem(),
+    eu_contrib: sanitizeBudgetItem({
+      value,
+      currency,
+      raw: record['Total amount'],
+    }),
     funding_area: fundingArea,
     mmf_heading: '',
     other_contrib: sanitizeBudgetItem(),
@@ -79,15 +83,6 @@ const getBudget = record => {
     public_fund: sanitizeBudgetItem(),
     total_cost: sanitizeBudgetItem(),
   };
-
-  // Store budgetary information only if both currency and value are present.
-  if (budgetData.value && budgetData.currency) {
-    budget.eu_contrib = sanitizeBudgetItem({
-      value: budgetData.value,
-      currency: budgetData.currency,
-      raw: record['Total amount'],
-    });
-  }
 
   return budget;
 };

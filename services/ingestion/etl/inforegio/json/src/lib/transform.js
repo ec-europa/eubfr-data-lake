@@ -202,17 +202,13 @@ const getProjectWebsite = record => {
 const formatBudget = budget => {
   if (!budget || typeof budget !== 'string') return sanitizeBudgetItem();
 
-  const budgetData = extractBudgetData(budget);
+  const { value, currency } = extractBudgetData(budget);
 
-  if (budgetData.currency && budgetData.value) {
-    return sanitizeBudgetItem({
-      value: budgetData.value,
-      currency: budgetData.currency,
-      raw: budget,
-    });
-  }
-
-  return sanitizeBudgetItem();
+  return sanitizeBudgetItem({
+    value,
+    currency,
+    raw: budget,
+  });
 };
 
 /**
