@@ -94,15 +94,11 @@ const formatBudget = budget => {
 
   const budgetData = extractBudgetData(budget);
 
-  if (budgetData.currency && budgetData.value) {
-    return sanitizeBudgetItem({
-      value: budgetData.value,
-      currency: budgetData.currency,
-      raw: budget,
-    });
-  }
-
-  return sanitizeBudgetItem();
+  return sanitizeBudgetItem({
+    value: budgetData.value,
+    currency: budgetData.currency,
+    raw: budget,
+  });
 };
 
 /**
