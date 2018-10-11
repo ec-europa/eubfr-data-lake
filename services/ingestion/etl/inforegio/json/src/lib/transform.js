@@ -1,6 +1,7 @@
 // @flow
 
 import sanitizeBudgetItem from '@eubfr/lib/budgetFormatter';
+import extractBudgetData from '@eubfr/lib/extractBudgetData';
 import getCountryCode from '@eubfr/lib/getCountryCode';
 import type { Project } from '@eubfr/types';
 
@@ -201,15 +202,10 @@ const getProjectWebsite = record => {
 const formatBudget = budget => {
   if (!budget || typeof budget !== 'string') return sanitizeBudgetItem();
 
-  const currency = budget.split(' ')[0];
-
-  const formattedBudget = budget
-    .split(' ')
-    .slice(1)
-    .join('');
+  const { value, currency } = extractBudgetData(budget);
 
   return sanitizeBudgetItem({
-    value: formattedBudget,
+    value,
     currency,
     raw: budget,
   });
