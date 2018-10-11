@@ -1,7 +1,6 @@
 service: ingestion-dead-letter-queue
 
 plugins:
-  - serverless-plugin-lambda-dead-letter
   - serverless-webpack
 
 custom:
@@ -79,3 +78,10 @@ resources:
         QueueName: ${self:provider.stage}-${self:service}
         MessageRetentionPeriod: '1209600'
         VisibilityTimeout: '60'
+  Outputs:
+    LambdaFailureQueue:
+      Description: The dead letter queue for AWS Lambda handlers.
+      Value:
+        Fn::GetAtt: ["LambdaFailureQueue", "Arn"]
+      Export:
+        Name: "${self:provider.stage}:${self:service}:LambdaFailureQueue"

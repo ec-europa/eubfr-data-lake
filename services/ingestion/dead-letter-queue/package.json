@@ -6,8 +6,7 @@
     "deploy": "sls deploy -v"
   },
   "dependencies": {
-    "@eubfr/logger-messenger": "^0.1.0",
-    "serverless-plugin-lambda-dead-letter": "1.2.1"
+    "@eubfr/logger-messenger": "^0.1.0"
   },
   "devDependencies": {
     "aws-sdk": "2.248.1",
