@@ -1,7 +1,6 @@
 service: ingestion-etl-iati-csv
 
 plugins:
-  - serverless-plugin-lambda-dead-letter
   - serverless-webpack
 
 custom:
@@ -49,9 +48,6 @@ functions:
     name: ${self:provider.stage}-${self:service}-parseCsv
     timeout: 300
     memorySize: 2048
-    deadLetter:
-      # Plugin syntax limitations: https://github.com/gmetzker/serverless-plugin-lambda-dead-letter/issues/37
-      targetArn: 'arn:aws:sqs:${self:provider.region}:491621799026:${self:provider.stage}-ingestion-dead-letter-queue'
 
     environment:
       BUCKET: ${self:custom.bucketName}
@@ -71,6 +67,12 @@ functions:
 
 resources:
   Resources:
+    ParseCsvLambdaFunction:
+      Type: "AWS::Lambda::Function"
+      Properties:
+        DeadLetterConfig:
+          TargetArn:
+            Fn::ImportValue: ${self:provider.stage}:ingestion-dead-letter-queue:LambdaFailureQueue
     SNSTopicIATICSV:
       Type: AWS::SNS::Topic
       Properties:
