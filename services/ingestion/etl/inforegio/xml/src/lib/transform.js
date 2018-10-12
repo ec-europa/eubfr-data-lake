@@ -1,6 +1,7 @@
 // @flow
 
 import sanitizeBudgetItem from '@eubfr/lib/budgetFormatter';
+import extractBudgetData from '@eubfr/lib/extractBudgetData';
 import getCountryCode from '@eubfr/lib/getCountryCode';
 import type { Project } from '@eubfr/types';
 
@@ -87,23 +88,14 @@ const getAddress = record => {
  * @memberof inforegioXmlTransform
  * @param {string} budget Prefixed currency value
  * @returns {BudgetItem} The formatted budget
- *
- * @example
- * input => "EUR 329 000 000"
- * output => "329000000"
  */
 const formatBudget = budget => {
   if (!budget || typeof budget !== 'string') return sanitizeBudgetItem();
 
-  const currency = budget.split(' ')[0];
-
-  const formattedBudget = budget
-    .split(' ')
-    .slice(1)
-    .join('');
+  const { value, currency } = extractBudgetData(budget);
 
   return sanitizeBudgetItem({
-    value: formattedBudget,
+    value,
     currency,
     raw: budget,
   });

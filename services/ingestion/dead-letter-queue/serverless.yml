@@ -26,15 +26,6 @@ provider:
   stackTags:
     ENV: ${self:custom.eubfrEnvironment}
   iamRoleStatements:
-    - Effect: 'Allow'
-      Action:
-        - 's3:PutObject'
-      Resource:
-        Fn::Join:
-          - ''
-          - - 'arn:aws:s3:::'
-            - ${self:custom.bucketName}
-            - '/*'
     # Allow running AWS Fargate containers when AWS Lambda timeout cannot be bypassed.
     - Effect: 'Allow'
       Action:

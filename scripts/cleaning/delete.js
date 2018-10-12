@@ -17,6 +17,7 @@ deleteServices([
   'enrichment-saver',
   'ingestion-manager',
   'ingestion-cleaner',
+  'ingestion-dead-letter-queue',
   'ingestion-etl-agri-csv',
   'ingestion-etl-budg-xls',
   'ingestion-etl-cordis-csv',
