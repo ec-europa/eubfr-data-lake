@@ -1,5 +1,25 @@
 # Change Log
 
+## 0.3.0 (2018-10-12)
+
+#### :rocket: New Feature
+
+- [#159](https://github.com/ec-europa/eubfr-data-lake/pull/159) feat(etl): add title FTS - EUBFR-207 ([@kalinchernev](https://github.com/kalinchernev))
+- [#158](https://github.com/ec-europa/eubfr-data-lake/pull/158) feat(etl): add FTS - EUBFR-202 ([@kalinchernev](https://github.com/kalinchernev))
+- [#157](https://github.com/ec-europa/eubfr-data-lake/pull/157) feat(eubfr-cli): add features - EUBFR-205 ([@kalinchernev](https://github.com/kalinchernev))
+
+#### :nail_care: Enhancement
+
+- [#163](https://github.com/ec-europa/eubfr-data-lake/pull/163) refactor(budgetFormatter): improve work with monetary information - EUBFR-208 ([@kalinchernev](https://github.com/kalinchernev))
+- [#164](https://github.com/ec-europa/eubfr-data-lake/pull/164) refactor(etl): update CORDIS producer to cover FP1 to FP7 on top of H2020 ([@kalinchernev](https://github.com/kalinchernev))
+- [#161](https://github.com/ec-europa/eubfr-data-lake/pull/161) fix(etl): update transform function inforegio - EUBFR-208 ([@raduchiriac](https://github.com/raduchiriac))
+
+#### Committers: 3
+
+- Kalin Chernev ([@kalinchernev](https://github.com/kalinchernev))
+- Radu Chiriac ([@raduchiriac](https://github.com/raduchiriac))
+- Yannick Huard ([@yhuard](https://github.com/yhuard))
+
 ## 0.2.0 (2018-08-08)
 
 #### :rocket: New Feature
