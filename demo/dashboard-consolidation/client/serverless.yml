@@ -1,0 +1,28 @@
+service: demo-dash-consolidation-client
+
+plugins:
+  - serverless-finch
+  - serverless-export-env
+
+custom:
+  client:
+    bucketName: eubfr-${self:provider.stage}-demo-dashboard-consolidation-client
+    distributionFolder: build
+  eubfrEnvironment: ${opt:eubfr_env, env:EUBFR_ENV, file(../../../config.json):eubfr_env, 'dev'}
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: ${opt:stage, file(../../../config.json):stage, 'dev'}
+  region: ${opt:region, file(../../../config.json):region, 'eu-central-1'}
+  deploymentBucket:
+    name: eubfr-${self:custom.eubfrEnvironment}-deploy
+  stackTags:
+    ENV: ${self:custom.eubfrEnvironment}
+
+resources:
+  Resources:
+    DeployBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.client.bucketName}

@@ -1,0 +1,30 @@
+{
+  "name": "@eubfr/demo-dashboard-consolidation-client",
+  "version": "0.1.1",
+  "scripts": {
+    "start": "react:start",
+    "build": "react-scripts build",
+    "deploy": "sls client deploy",
+    "eject": "react-scripts eject",
+    "react:start": "react-scripts start",
+    "react:build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom"
+  },
+  "dependencies": {
+    "@ecl/ec-preset-website": "1.1.0",
+    "elasticsearch": "15.0.0",
+    "prop-types": "15.6.1",
+    "react": "16.4.0",
+    "react-collapsible": "2.2.0",
+    "react-dom": "16.4.0",
+    "react-router": "4.2.0",
+    "react-router-dom": "4.2.2",
+    "react-scripts": "1.1.4"
+  },
+  "devDependencies": {
+    "serverless": "1.28.0",
+    "serverless-export-env": "1.2.0",
+    "serverless-finch": "2.1.2"
+  },
+  "private": true
+}
