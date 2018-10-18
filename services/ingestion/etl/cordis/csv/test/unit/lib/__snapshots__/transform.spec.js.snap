@@ -1,5 +1,77 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`DG CORDIS CSV transformer Can handle FP4 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "funding_area": Array [
+      "Tropospheric physics and chemistry",
+    ],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+  },
+  "call_year": "",
+  "complete": true,
+  "description": "RCN: 30802
+Objectives: %LTo understand the mechanisms leading to the formation of nitrous acid on the
+General Information: %L Nitrous acid is of particular importance in atmospheric chemistry, because the photolysis of HONO significantly %L enhances photooxidation processes early in the morning due to the rapid production of OH radicals. The %L proposed investigations will contribute to answer the following specific questions about the formation and %L occurrence of nitrous acid: %L -What are the formation mechanisms and sources of HONO in the atmosphere ? %L -In particular, which heterogeneous mechanisms are responsible for converting NOx (i.e. NO2 into %LHONO) ? %L -What are the parameters of heterogeneous HONO formation which are needed for later inclusion in %Ltropospheric models ? %L -What is the contribution of HONO photolysis to the urban and polar OH budget ? %L According to these questions a co-ordinated workplan comprised of field experiments as well as laboratory and %L modelling studies has been developed. The data which will be obtained will result in a better understanding of %L important chemical processes in the lower atmosphere. %L As a consequence the results from the present study can form the basis to assess the impact of those processes %L on a regional scale, in particular in relation to HONO as a chemical warning signal in urban areas.",
+  "ec_priorities": Array [],
+  "media": Array [],
+  "programme_name": "Fourth Framework Programme",
+  "project_id": "ENV4950055",
+  "project_locations": Array [],
+  "project_website": "",
+  "related_links": Array [],
+  "reporting_organisation": "RTD",
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
+  "status": "Completed",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [
+    "Environmental Protection",
+    " Forecasting",
+    " Measurement Methods",
+    " Meteorology",
+  ],
+  "third_parties": Array [],
+  "timeframe": Object {
+    "from": "1996-02-01T00:00:00.000Z",
+    "from_precision": "day",
+    "to": "1998-07-31T00:00:00.000Z",
+    "to_precision": "day",
+  },
+  "title": "Formation and occurrence of nitrous acd in the atmosphere",
+  "type": Array [],
+}
+`;
+
 exports[`DG CORDIS CSV transformer Can handle multi-value inputs for participants and coordinators 1`] = `
 Object {
   "action": "",
