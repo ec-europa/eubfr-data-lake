@@ -1,15 +1,4 @@
-// Keys are topics without prefix stages.
-// Values are handler names (withot prefix stages) and path to handler code.
-const snsTopicsMap = {
-  'etl-cordis-csv': {
-    name: 'ingestion-etl-cordis-csv-parseCsv',
-    path: 'src/events/onParseCSV',
-  },
-  'etl-iati-csv': {
-    name: 'ingestion-etl-iati-csv-parseCsv',
-    path: 'src/events/onParseCSV',
-  },
-};
+import snsTopicToHandlerMap from './snsTopicToHandlerMap';
 
 const getSuffix = topic => {
   const parts = topic.split(':');
@@ -21,11 +10,11 @@ const getSuffix = topic => {
     .join('-');
 };
 
-const handlerData = topic => {
+const getHandlerData = topic => {
   const data = {};
   const suffix = getSuffix(topic);
-  if (suffix in snsTopicsMap) return snsTopicsMap[suffix];
+  if (suffix in snsTopicToHandlerMap) return snsTopicToHandlerMap[suffix];
   return data;
 };
 
-export default handlerData;
+export default getHandlerData;

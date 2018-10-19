@@ -28,6 +28,7 @@ cd ../cleaner
 npx serverless deploy -v
 
 # Deploy dead letter queue
+# Has to be before any other service which will push to SQS of this service.
 cd ../dead-letter-queue
 npx serverless deploy -v
 
