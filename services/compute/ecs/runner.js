@@ -6,19 +6,20 @@ const https = require('https');
 const AWS = require('aws-sdk');
 const promisePipe = require('promisepipe');
 const unzip = require('unzipper');
-const { argv } = require('yargs');
 
 const runner = async () => {
   const {
     REGION,
+    AWS_LAMBDA_HANDLER_EVENT,
+    AWS_LAMBDA_HANDLER_CONTEXT,
     AWS_LAMBDA_HANDLER_NAME,
     AWS_LAMBDA_HANDLER_PATH,
   } = process.env;
-  const { event: e, context: c } = argv;
-  const context = JSON.parse(c);
-  const event = JSON.parse(e);
 
   try {
+    const event = JSON.parse(AWS_LAMBDA_HANDLER_EVENT);
+    const context = JSON.parse(AWS_LAMBDA_HANDLER_CONTEXT);
+
     const lambda = new AWS.Lambda({ region: REGION });
 
     const lambdaInfo = await lambda

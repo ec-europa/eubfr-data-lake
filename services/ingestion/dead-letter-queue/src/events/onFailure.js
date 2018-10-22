@@ -46,21 +46,22 @@ export const handler = async (event, context, callback) => {
           {
             environment: [
               {
-                name: 'AWS_LAMBDA_HANDLER_NAME',
-                value: `${STAGE}-${handlerData.name}`,
+                name: 'AWS_LAMBDA_HANDLER_EVENT',
+                value: JSON.stringify(initialMessage),
               },
               {
-                name: 'AWS_LAMBDA_FUNCTION_EVENT',
-                value: JSON.stringify(initialMessage),
+                name: 'AWS_LAMBDA_HANDLER_CONTEXT',
+                value: JSON.stringify(context),
+              },
+              {
+                name: 'AWS_LAMBDA_HANDLER_NAME',
+                value: `${STAGE}-${handlerData.name}`,
               },
               {
                 name: 'AWS_LAMBDA_HANDLER_PATH',
                 value: handlerData.path,
               },
-              {
-                name: 'AWS_LAMBDA_FUNCTION_CONTEXT',
-                value: JSON.stringify(context),
-              },
+
               {
                 name: 'BUCKET',
                 value: BUCKET,
