@@ -38,6 +38,14 @@ const runner = async () => {
 
       // eslint-disable-next-line
       const handler = require(pathToHandler);
+
+      // Merge environment variables.
+      process.env = Object.assign(
+        {},
+        process.env,
+        lambdaInfo.Configuration.Environment.Variables
+      );
+
       const result = await handler.handler(event, context);
       return console.log(result);
     });
