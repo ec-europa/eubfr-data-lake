@@ -69,7 +69,7 @@ resources:
       Properties:
         QueueName: ${self:provider.stage}-${self:service}
         MessageRetentionPeriod: '1209600'
-        VisibilityTimeout: '60'
+        VisibilityTimeout: '120'
   Outputs:
     LambdaFailureQueue:
       Description: The dead letter queue for AWS Lambda handlers.
