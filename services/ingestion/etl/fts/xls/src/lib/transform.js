@@ -3,8 +3,8 @@
 import countries from 'i18n-iso-countries';
 import type { Project } from '@eubfr/types';
 import getCountryCode from '@eubfr/lib/getCountryCode';
-import sanitizeBudgetItem from '@eubfr/lib/budgetFormatter';
-import extractBudgetData from '@eubfr/lib/extractBudgetData';
+import sanitizeBudgetItem from '@eubfr/lib/budget/budgetFormatter';
+import extractBudgetData from '@eubfr/lib/budget/extractBudgetData';
 
 /**
  * Gets country code from a country name.
