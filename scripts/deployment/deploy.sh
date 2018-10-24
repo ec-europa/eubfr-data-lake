@@ -38,6 +38,8 @@ cd ../../budg/xls
 npx serverless deploy -v
 cd ../../cordis/csv
 npx serverless deploy -v
+cd ../../devco/csv
+npx serverless deploy -v
 cd ../../fts/xls
 npx serverless deploy -v
 cd ../../home/xls
