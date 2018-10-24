@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DG DEVCO CSV transformer Produces correct JSON output structure 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "EUR",
+      "raw": "8",
+      "value": 8000000,
+    },
+    "funding_area": Array [],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "EUR",
+      "raw": "50.7",
+      "value": 50700000,
+    },
+  },
+  "call_year": "",
+  "complete": true,
+  "description": "The project aims to develop trainings curricula adapted to the market needs and  reinforce NAPTIN’s attractiveness by building new technical infrastructures and acquiring relevant technical equipment for the network of the 8 Regional Training centers and headquarters in Abuja.",
+  "ec_priorities": Array [],
+  "media": Array [],
+  "programme_name": "AfiF",
+  "project_id": "2",
+  "project_locations": Array [
+    Object {
+      "address": "",
+      "centroid": Object {
+        "lat": 9.044737,
+        "lon": 7.487787,
+      },
+      "country_code": "NG",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "West Africa",
+      "town": "",
+    },
+  ],
+  "project_website": "",
+  "related_links": Array [],
+  "reporting_organisation": "DEVCO",
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
+  "status": "In preparation",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [],
+  "third_parties": Array [],
+  "timeframe": Object {
+    "from": null,
+    "from_precision": "year",
+    "to": null,
+    "to_precision": "year",
+  },
+  "title": "Enhancing Vocational Training delivery for the power sector in Nigeria (NAPTIN)",
+  "type": Array [
+    "Technical Assistance and Capacity Building",
+  ],
+}
+`;

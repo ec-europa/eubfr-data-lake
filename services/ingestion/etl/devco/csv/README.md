@@ -1,4 +1,4 @@
-# DEVCO DEVCO ETL rules
+# DEVCO ETL rules
 
 Model to compare with is available at: https://ec-europa.github.io/eubfr-data-lake/
 
@@ -12,7 +12,7 @@ Model to compare with is available at: https://ec-europa.github.io/eubfr-data-la
 | Project Title                                                     | title                          |
 | CRIS No or ExCom Des                                              |                                |
 | Project Type                                                      | type                           |
-| Total Budget\n(Million Euro)                                      | total_cost                     |
+| Total Budget\n(Million Euro)                                      | budget.total_cost              |
 | Investment Grant (Million Euro)                                   |                                |
 | TA (Million Euro)                                                 |                                |
 | Interest Rate Subsidy \n(Million Euro)                            |                                |
