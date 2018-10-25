@@ -111,22 +111,22 @@ const getLocations = record => {
  *
  * Input fields taken from the `record` are:
  *
- * - "1.1 Access on grid electricity ('000 people)"
- * - "1.2 Access mini grid electricity ('000 people)"
- * - "1.3 Access off-grid electricity ('000 people)"
- * - "1.4 Inferred access (additional generation) ('000 people)"
- * - "1.5 Inferred access (cross-border transmission) ('000 people)"
- * - "1.6 Access to biomass/biogas clean cooking ('000 people)"
- * - "1.7 Access to LPG/ethanol cooking ('000 people)"
- * - '1.8 Electricity from renewables (GWh/year)'
- * - '1.9 Renewable generation capacity (MW)'
- * - '1.10 Electricity from energy efficiency (liberated capacity) (MW)'
- * - '1.11 Transmission lines (km)'
- * - '1.12 Distribution lines (km)'
- * - '1.13 Energy Savings (MWh/year)'
- * - '1.14 GHG emissions avoided per year (ktons CO2eq)'
- * - '1.15 No of direct jobs person/year (construction)'
- * - '1.16 No of permanent jobs \n(operation)'
+ * - `1.1 Access on grid electricity ('000 people)`
+ * - `1.2 Access mini grid electricity ('000 people)`
+ * - `1.3 Access off-grid electricity ('000 people)`
+ * - `1.4 Inferred access (additional generation) ('000 people)`
+ * - `1.5 Inferred access (cross-border transmission) ('000 people)`
+ * - `1.6 Access to biomass/biogas clean cooking ('000 people)`
+ * - `1.7 Access to LPG/ethanol cooking ('000 people)`
+ * - `1.8 Electricity from renewables (GWh/year)`
+ * - `1.9 Renewable generation capacity (MW)`
+ * - `1.10 Electricity from energy efficiency (liberated capacity) (MW)`
+ * - `1.11 Transmission lines (km)`
+ * - `1.12 Distribution lines (km)`
+ * - `1.13 Energy Savings (MWh/year)`
+ * - `1.14 GHG emissions avoided per year (ktons CO2eq)`
+ * - `1.15 No of direct jobs person/year (construction)`
+ * - `1.16 No of permanent jobs \n(operation)`
  *
  * @memberof DevcoCsvTransform
  * @param {Object} record The row received from parsed file
@@ -165,7 +165,7 @@ const getResults = record => {
           .trim();
         const fieldValue = `${fieldLabel}: ${record[field]} \n`;
         resultsContents += fieldValue;
-        resultIsAvailable = true;
+        resultIsAvailable = 'yes';
       }
     }
   });

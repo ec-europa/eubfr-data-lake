@@ -58,7 +58,7 @@ Object {
   "related_links": Array [],
   "reporting_organisation": "DEVCO",
   "results": Object {
-    "available": true,
+    "available": "yes",
     "result": "Distribution lines (km): 6 
 ",
   },
