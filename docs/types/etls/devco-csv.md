@@ -55,6 +55,21 @@ Input fields taken from the `record` are:
 
 Returns **[Array][5]**
 
+### getResults
+
+Preprocess `results`
+
+Input fields taken from the `record` are:
+
+- `Country`
+- `Region`
+
+**Parameters**
+
+- `record` **[Object][3]** The row received from parsed file
+
+Returns **[Array][5]**
+
 ### getType
 
 Preprocess `type`
