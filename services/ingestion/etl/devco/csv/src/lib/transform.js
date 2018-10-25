@@ -78,6 +78,7 @@ const getCodeByCountry = countryName =>
 
 const getLocations = record => {
   let centroid = null;
+  const locations = [];
 
   const code = getCountryCode(getCodeByCountry(record.Country));
 
@@ -89,8 +90,8 @@ const getLocations = record => {
     };
   }
 
-  return [
-    {
+  if (code) {
+    locations.push({
       country_code: code,
       region: record.Region || '',
       nuts: [],
@@ -99,8 +100,10 @@ const getLocations = record => {
       town: '',
       centroid,
       location: null,
-    },
-  ];
+    });
+  }
+
+  return locations;
 };
 
 /**

@@ -52,6 +52,22 @@ echo 'Deploying dashboard client...'
 EUBFR_USERNAME=cordis yarn run build
 yarn run sls client deploy --username cordis --no-confirm
 
+
+## DEVCO demo
+
+cd ../server
+echo 'Start demo dashboard server deploy ...'
+yarn deploy --username devco
+
+cd ../client
+echo 'Start demo dashboard client deploy ...'
+echo 'Cleaning previous builds ...'
+rm -rf build
+
+echo 'Deploying dashboard client...'
+EUBFR_USERNAME=devco yarn run build
+yarn run sls client deploy --username devco --no-confirm
+
 ## FTS demo
 
 cd ../server
