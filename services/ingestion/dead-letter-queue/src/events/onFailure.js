@@ -7,7 +7,7 @@ import { extractMessage, extractTopic, extractKey } from '../lib/extractors';
 import getHandlerData from '../lib/getHandlerData';
 
 export const handler = async (event, context, callback) => {
-  const { RUNNER, BUCKET, REGION, STAGE } = process.env;
+  const { RUNNER, BUCKET, REGION, STAGE, CONTAINER, CLUSTER } = process.env;
 
   const ec2 = new AWS.EC2();
   const ecs = new AWS.ECS();
@@ -50,6 +50,7 @@ export const handler = async (event, context, callback) => {
 
     const runParams = {
       taskDefinition: RUNNER,
+      cluster: CLUSTER,
       launchType: 'FARGATE',
       networkConfiguration: {
         awsvpcConfiguration: {
@@ -91,7 +92,7 @@ export const handler = async (event, context, callback) => {
                 value: STAGE,
               },
             ],
-            name: RUNNER,
+            name: CONTAINER,
           },
         ],
       },
