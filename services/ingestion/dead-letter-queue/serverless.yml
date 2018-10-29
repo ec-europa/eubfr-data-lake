@@ -30,6 +30,7 @@ provider:
     - Effect: 'Allow'
       Action:
         - ecs:RunTask
+        - ec2:DescribeSubnets
       Resource: '*'
     - Effect: Allow
       Action:
@@ -53,8 +54,6 @@ functions:
       STAGE: ${self:provider.stage}
       # ECS task to execute handler without timeout limitations
       RUNNER: runner
-      # Required for runTask API call, preliminary created on AWS.
-      SUBNET: subnet-ea11e581
     events:
       - sqs:
           arn:

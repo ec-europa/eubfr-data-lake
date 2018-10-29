@@ -7,8 +7,9 @@ import { extractMessage, extractTopic, extractKey } from '../lib/extractors';
 import getHandlerData from '../lib/getHandlerData';
 
 export const handler = async (event, context, callback) => {
-  const { RUNNER, BUCKET, REGION, STAGE, SUBNET } = process.env;
+  const { RUNNER, BUCKET, REGION, STAGE } = process.env;
 
+  const ec2 = new AWS.EC2();
   const ecs = new AWS.ECS();
   const messenger = MessengerFactory.Create({ context });
 
@@ -32,13 +33,28 @@ export const handler = async (event, context, callback) => {
       to: ['logs'],
     });
 
+    const allSubnets = await ec2
+      .describeSubnets({
+        Filters: [
+          {
+            Name: 'defaultForAz',
+            Values: ['true'],
+          },
+        ],
+      })
+      .promise();
+
+    const subnets = allSubnets.Subnets.filter(
+      subnet => subnet.State === 'available'
+    ).map(subnet => subnet.SubnetId);
+
     const runParams = {
       taskDefinition: RUNNER,
       launchType: 'FARGATE',
       networkConfiguration: {
         awsvpcConfiguration: {
           assignPublicIp: 'ENABLED',
-          subnets: [SUBNET],
+          subnets,
         },
       },
       overrides: {
