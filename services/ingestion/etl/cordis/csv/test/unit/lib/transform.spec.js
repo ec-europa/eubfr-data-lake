@@ -6,16 +6,20 @@ import mapper from '../../../src/lib/transform';
 import testRecord from '../../stubs/record.json';
 import testRecord2 from '../../stubs/record2.json';
 import testRecordReferenceId from '../../stubs/recordReference.json';
+// Lastly, FP4 has unique fields compared to the rest.
+import testRecordFP4 from '../../stubs/recordFP4.json';
 
 describe('DG CORDIS CSV transformer', () => {
   let result = {};
   let resultMultiple = {};
   let resultReferenceId = {};
+  let resultRecordFP4Transformed = {};
 
   beforeAll(() => {
     result = mapper(testRecord);
     resultMultiple = mapper(testRecord2);
     resultReferenceId = mapper(testRecordReferenceId);
+    resultRecordFP4Transformed = mapper(testRecordFP4);
   });
 
   test('Returns null when record is not provided', () => {
@@ -33,6 +37,10 @@ describe('DG CORDIS CSV transformer', () => {
   test('Can handle records which contain project_id in field called reference instead of an id', () => {
     // FP before 5 are with `reference`, whereas newer FPs are with `id`.
     expect(resultReferenceId).toMatchSnapshot();
+  });
+
+  test('Can handle FP4', () => {
+    expect(resultRecordFP4Transformed).toMatchSnapshot();
   });
 
   test('Can handle 2 types of dates: `YYYY-MM-DD` and `DD/MM/YYYY`', () => {
