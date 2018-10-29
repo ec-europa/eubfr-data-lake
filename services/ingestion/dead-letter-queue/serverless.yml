@@ -40,7 +40,7 @@ provider:
           - ''
           - - 'arn:aws:iam::'
             - Ref: 'AWS::AccountId'
-            - ':role/ecsTaskExecutionRole'
+            - ':role/runnerExecutionRole' # Ensure runnerExecutionRole existence beforehand deploying @eubfr/compute-ecs
 
 functions:
   onFailure:

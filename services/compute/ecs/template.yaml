@@ -4,6 +4,7 @@ Description: CloudFormation template for Fargate.
 Parameters:
   Image:
     Type: String
+    # See README.md file and follow the instructions to build and deploy the container to the ECS registry.
     Default: 491621799026.dkr.ecr.eu-central-1.amazonaws.com/runner:latest
   ServiceName:
     Type: String
@@ -100,7 +101,7 @@ Resources:
       # "There is an optional task execution IAM role that you can specify with Fargate to allow your Fargate tasks to make API calls to Amazon ECR."
       ExecutionRoleArn: !Ref ExecutionRole
       # "The Amazon Resource Name (ARN) of an AWS Identity and Access Management (IAM) role that grants containers in the task permission to call AWS APIs on your behalf."
-      TaskRoleArn: !Ref TaskRole
+      TaskRoleArn: !Ref ExecutionRole
       ContainerDefinitions:
         - Name: !Ref ServiceName
           Image: !Ref Image
@@ -140,18 +141,6 @@ Resources:
                   - lambda:*
                   - s3:*
                 Resource: "*"
-
-  # A role for the containers
-  TaskRole:
-    Type: AWS::IAM::Role
-    Properties:
-      RoleName: !Join ['', [!Ref ServiceName, TaskRole]]
-      AssumeRolePolicyDocument:
-        Statement:
-          - Effect: Allow
-            Principal:
-              Service: ecs-tasks.amazonaws.com
-            Action: 'sts:AssumeRole'
 
   ContainerSecurityGroup:
     Type: AWS::EC2::SecurityGroup
