@@ -6,6 +6,23 @@ Although the setup is based on Docker, the main target AWS service for making us
 
 This means that the main aim for this service to exist is to serve as a backup runner of an AWS Lambda handler in cases where the main AWS Lambda handler fails because of timeout.
 
+## Deployment
+
+The infrastructure is comprised of several resources which could be re-used through a given development stage.
+
+Use the `template.yaml` to deploy the necessary infrastructure, usually you'd do that once per environment. (dev, test, prod)
+
+```
+$ aws cloudformation deploy --template-file template.yaml --stack-name dev-compute-ecs --s3-bucket eubfr-dev-deploy --capabilities CAPABILITY_NAMED_IAM
+```
+
+Where the following could vary by the target environment stage:
+
+- `dev-compute-ecs`, change to `test-compute-ecs` or `prod-compute-ecs`
+- `eubfr-dev-deploy`, change to `eubfr-test-deploy` or `eubfr-prod-deploy`
+
+Deploy this service and infrastructure before deploying any other services which depend on the resources created by this service.
+
 ## Updating Docker image
 
 Run the following inside this folder:

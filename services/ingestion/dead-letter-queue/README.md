@@ -10,4 +10,4 @@ Then, the `onFailure` will process the failures by running the code of the origi
 
 The service exports an ARN of `LambdaFailureQueue` which other services [import](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-importvalue.html). Because of this, when you try to delete or update this service, CloudFormation will retain the service and prevent the deletion. This is because several services, such as ETLs, depend on this service.
 
-Thus, please use `yarn delete:services` (and then `yarn deploy:services`) or `yarn delete` delete all related dependencies. Otherwise, code updates in this service will not take into account.
+Thus, please use `yarn delete:services` (and then `yarn deploy:services`) or `yarn delete` delete all related dependencies. Otherwise, code updates in this service will not be taken into account.
