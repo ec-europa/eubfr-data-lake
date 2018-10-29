@@ -7,7 +7,7 @@ Parameters:
     Default: 491621799026.dkr.ecr.eu-central-1.amazonaws.com/runner:latest
   ServiceName:
     Type: String
-    Default: runner1
+    Default: runner
   ContainerPort:
     Type: Number
     Default: 80
@@ -113,8 +113,8 @@ Resources:
               awslogs-region: !Ref AWS::Region
               awslogs-group: !Ref LogGroup
               awslogs-stream-prefix: ecs
-  # A role needed by ECS
 
+  # A role needed by ECS
   ExecutionRole:
     Type: AWS::IAM::Role
     Properties:
@@ -127,8 +127,8 @@ Resources:
             Action: 'sts:AssumeRole'
       ManagedPolicyArns:
         - 'arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy'
-  # A role for the containers
 
+  # A role for the containers
   TaskRole:
     Type: AWS::IAM::Role
     Properties:
@@ -149,23 +149,6 @@ Resources:
         - IpProtocol: tcp
           FromPort: !Ref ContainerPort
           ToPort: !Ref ContainerPort
-
-  Service:
-    Type: AWS::ECS::Service
-    Properties:
-      ServiceName: !Ref ServiceName
-      Cluster: !Ref Cluster
-      TaskDefinition: !Ref TaskDefinition
-      LaunchType: FARGATE
-      DesiredCount: 1
-      NetworkConfiguration:
-        AwsvpcConfiguration:
-          AssignPublicIp: ENABLED
-          Subnets:
-            - !Ref PublicSubnetOne
-            - !Ref PublicSubnetTwo
-          SecurityGroups:
-            - !Ref ContainerSecurityGroup
 
   LogGroup:
     Type: AWS::Logs::LogGroup
