@@ -53,7 +53,8 @@ functions:
       REGION: ${self:provider.region}
       STAGE: ${self:provider.stage}
       # ECS task to execute handler without timeout limitations
-      RUNNER: runner
+      # Ensure task existence beforehand deploying @eubfr/compute-ecs
+      RUNNER: runnerTaskDefinition
     events:
       - sqs:
           arn:

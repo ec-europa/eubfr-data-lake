@@ -127,6 +127,19 @@ Resources:
             Action: 'sts:AssumeRole'
       ManagedPolicyArns:
         - 'arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy'
+      Policies:
+        -
+          PolicyName: "allowServicesOnEcsBehalf"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              -
+                Effect: "Allow"
+                Action:
+                  - es:*
+                  - lambda:*
+                  - s3:*
+                Resource: "*"
 
   # A role for the containers
   TaskRole:
