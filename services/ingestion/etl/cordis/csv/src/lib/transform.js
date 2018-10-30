@@ -12,13 +12,41 @@ import type { Project } from '@eubfr/types';
  * Preprocess `funding_area`
  * Input fields taken from the `record` are:
  * - `fundingScheme`
+ * - `Activity Area` (FP4)
  *
  * @memberof CordisCsvTransform
  * @param {Object} record The row received from parsed file
  * @returns {Array}
  */
 
-const getFundingArea = record => [record.fundingScheme] || [];
+const getFundingArea = record => {
+  const areas = [];
+  // Places where one can find information about the field.
+  const fields = ['fundingScheme', 'Activity Area'];
+
+  fields.forEach(field => {
+    if (record[field]) {
+      const fundingAreas = record[field].split(';').filter(a => a);
+      areas.push(...fundingAreas);
+    }
+  });
+
+  return areas;
+};
+
+/**
+ * Get total cost before formatting.
+ *
+ * Input fields taken from the `record` are:
+ * - `totalCost` (FR1-3 + FP5-7)
+ * - `Total Cost` (FP4)
+ *
+ * @memberof CordisCsvTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {String}
+ */
+
+const getTotalCost = record => record.totalCost || record['Total Cost'] || '';
 
 /**
  * Preprocess budget
@@ -27,16 +55,19 @@ const getFundingArea = record => [record.fundingScheme] || [];
  * @param {Object} record The row received from parsed file
  * @returns {Budget}
  */
+
 const getBudget = record => {
+  const totalCost = getTotalCost(record);
+
   let euContrib = {
     eu_contrib: sanitizeBudgetItem(),
   };
 
   const budget = {
     total_cost: sanitizeBudgetItem({
-      value: record.totalCost,
+      value: totalCost,
       currency: 'EUR',
-      raw: record.totalCost,
+      raw: totalCost,
     }),
     private_fund: sanitizeBudgetItem(),
     public_fund: sanitizeBudgetItem(),
@@ -63,18 +94,29 @@ const getBudget = record => {
  * Preprocess description
  * Concatenation of several fields as requested in https://webgate.ec.europa.eu/CITnet/jira/browse/EUBFR-200?focusedCommentId=2808845&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-2808845
  * Input fields taken from the `record` are:
- * - `acronym`
- * - `objective`
- * - `rcn`
+ * - `acronym` or `Project Acronym` (FP4)
+ * - `objective` or `Objectives` (FP4)
+ * - `General Information` (FP4)
+ * - `rcn` or `RCN` (FP4)
  * - `topic`
  *
  * @memberof CordisCsvTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
+
 const getDescription = record => {
   const description = {};
-  const fields = ['rcn', 'acronym', 'topics', 'objective'];
+  const fields = [
+    'rcn',
+    'RCN',
+    'acronym',
+    'Project Acronym',
+    'topics',
+    'objective',
+    'Objectives',
+    'General Information',
+  ];
 
   fields.forEach(field => {
     if (record[field]) {
@@ -92,12 +134,29 @@ const getDescription = record => {
  * Seeks for values in the following precedence:
  * - `id`
  * - `reference`
+ * - `Contract Number` (FP4)
  *
  * @memberof CordisCsvTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
-const getProjectId = record => record.id || record.reference || '';
+
+const getProjectId = record =>
+  record.id || record.reference || record['Contract Number'] || '';
+
+/**
+ * Preprocess `programme_name`
+ * Seeks for values in the following precedence:
+ * - `frameworkProgramme`
+ * - `Framework Programme` (FP4)
+ *
+ * @memberof CordisCsvTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {String}
+ */
+
+const getFrameworkProgramme = record =>
+  record.frameworkProgramme || record['Framework Programme'] || '';
 
 const getCode = code => (code ? getCountryCode(code.trim().toUpperCase()) : '');
 
@@ -111,6 +170,7 @@ const getCode = code => (code ? getCountryCode(code.trim().toUpperCase()) : '');
  * @param {Object} record The row received from parsed file
  * @returns {Array} List of {Location} objects for `project_locations` field
  */
+
 const getLocations = record => {
   const locations = [];
 
@@ -158,6 +218,7 @@ const getLocations = record => {
  * @param {Object} record The row received from parsed file
  * @returns {Array} List of {ThirdParty} objects
  */
+
 const getThirdParties = record => {
   const thirdParties = [];
 
@@ -221,6 +282,7 @@ const getThirdParties = record => {
  * input => "01/01/1986"
  * output => '1986-01-01T00:00:00.000Z'
  */
+
 const formatDate = date => {
   if (!date || typeof date !== 'string') return null;
 
@@ -245,6 +307,105 @@ const formatDate = date => {
 };
 
 /**
+ * Preprocess `project_website`
+ *
+ * Input fields taken from the `record` are:
+ * - `projectUrl` (FR1-3 + FP5-7)
+ * - `Project Website` (FP4)
+ *
+ * @memberof CordisCsvTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {String}
+ */
+
+const getProjectWebsite = record =>
+  record['Project Website'] || record.projectUrl || '';
+
+/**
+ * Preprocess `status`
+ *
+ * Input fields taken from the `record` are:
+ * - `status` (FR1-3 + FP5-7)
+ * - `Status` (FP4)
+ *
+ * @memberof CordisCsvTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {String}
+ */
+
+const getStatus = record => record.status || record.Status || '';
+
+/**
+ * Preprocess `themes`
+ *
+ * Input fields taken from the `record` are:
+ * - `Keywords` (FP4)
+ * - `Subject` (FP4)
+ *
+ * @memberof CordisCsvTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {String}
+ */
+
+const getThemes = record => {
+  const themes = [];
+
+  // Places where one can find information about the field.
+  const fields = ['Keywords', 'Subject'];
+
+  fields.forEach(field => {
+    if (record[field]) {
+      const topics = record[field].split(';').filter(t => t);
+      themes.push(...topics);
+    }
+  });
+
+  return themes;
+};
+
+/**
+ * Preprocess `title`
+ * Input fields taken from the `record` are:
+ * - `title` (FR1-3 + FP5-7)
+ * - `Project Title` (FP4)
+ *
+ * @memberof CordisCsvTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {String}
+ */
+
+const getProjectTitle = record => record.title || record['Project Title'] || '';
+
+/**
+ * Get starting date before formatting.
+ *
+ * Input fields taken from the `record` are:
+ * - `startDate` (FR1-3 + FP5-7)
+ * - `Start Date`(FP4)
+ *
+ * @memberof CordisCsvTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {String}
+ */
+
+const getStartDate = record =>
+  record.startDate || record['Start Date'] || record['End Date'] || null;
+
+/**
+ * Get end date before formatting.
+ *
+ * Input fields taken from the `record` are:
+ * - `endDate` (FR1-3 + FP5-7)
+ * - `End Date` (FP4)
+ *
+ * @memberof CordisCsvTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {String}
+ */
+
+const getEndDate = record => record.endDate || record['End Date'] || null;
+
+/**
  * Map fields for CORDIS producer, CSV file types
  *
  * Example input data: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/cordis/csv/test/stubs/record.json|stub}
@@ -254,11 +415,9 @@ const formatDate = date => {
  * @param {Object} record Piece of data to transform before going to harmonized storage.
  * @returns {Project} JSON matching the type fields.
  */
+
 export default (record: Object): Project | null => {
   if (!record) return null;
-
-  // Preprocess third parties
-  const thirdPartiesArray = getThirdParties(record);
 
   // Map the fields
   return {
@@ -268,10 +427,10 @@ export default (record: Object): Project | null => {
     description: getDescription(record),
     ec_priorities: [],
     media: [],
-    programme_name: record.frameworkProgramme || '',
+    programme_name: getFrameworkProgramme(record),
     project_id: getProjectId(record),
     project_locations: getLocations(record),
-    project_website: record.projectUrl || '',
+    project_website: getProjectWebsite(record),
     complete: true,
     related_links: [],
     reporting_organisation: 'RTD',
@@ -279,18 +438,18 @@ export default (record: Object): Project | null => {
       available: '',
       result: '',
     },
-    status: record.status || '',
+    status: getStatus(record),
     sub_programme_name: record.programme || '',
     success_story: '',
-    themes: [],
-    third_parties: thirdPartiesArray,
+    themes: getThemes(record),
+    third_parties: getThirdParties(record),
     timeframe: {
-      from: formatDate(record.startDate),
+      from: formatDate(getStartDate(record)),
       from_precision: 'day',
-      to: formatDate(record.endDate),
+      to: formatDate(getEndDate(record)),
       to_precision: 'day',
     },
-    title: record.title || '',
+    title: getProjectTitle(record),
     type: [],
   };
 };
