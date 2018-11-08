@@ -1,5 +1,15 @@
 # Change Log
 
+## 0.3.1 (2018-11-08)
+
+#### :bug: Bug Fix
+
+- [#167](https://github.com/ec-europa/eubfr-data-lake/pull/167) fix(cordis): support fields for exceptional FP4 - EUBFR-215 ([@kalinchernev](https://github.com/kalinchernev))
+
+#### Committers: 1
+
+- Kalin Chernev ([@kalinchernev](https://github.com/kalinchernev))
+
 ## 0.3.0 (2018-10-12)
 
 #### :rocket: New Feature
