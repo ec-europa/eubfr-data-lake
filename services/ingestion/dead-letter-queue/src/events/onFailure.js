@@ -78,7 +78,6 @@ export const handler = async (event, context, callback) => {
                 name: 'AWS_LAMBDA_HANDLER_PATH',
                 value: handlerData.path,
               },
-
               {
                 name: 'BUCKET',
                 value: BUCKET,
