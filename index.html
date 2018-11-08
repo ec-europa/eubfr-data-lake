@@ -192,6 +192,12 @@
                       </a></li>
                     
                       <li><a
+                        href="#cordiscsvtransformgettotalcost"
+                        class="ecl-link pre-open">
+                        getTotalCost
+                      </a></li>
+                    
+                      <li><a
                         href="#cordiscsvtransformgetbudget"
                         class="ecl-link pre-open">
                         getBudget
@@ -210,6 +216,12 @@
                       </a></li>
                     
                       <li><a
+                        href="#cordiscsvtransformgetframeworkprogramme"
+                        class="ecl-link pre-open">
+                        getFrameworkProgramme
+                      </a></li>
+                    
+                      <li><a
                         href="#cordiscsvtransformgetlocations"
                         class="ecl-link pre-open">
                         getLocations
@@ -225,6 +237,42 @@
                         href="#cordiscsvtransformformatdate"
                         class="ecl-link pre-open">
                         formatDate
+                      </a></li>
+                    
+                      <li><a
+                        href="#cordiscsvtransformgetprojectwebsite"
+                        class="ecl-link pre-open">
+                        getProjectWebsite
+                      </a></li>
+                    
+                      <li><a
+                        href="#cordiscsvtransformgetstatus"
+                        class="ecl-link pre-open">
+                        getStatus
+                      </a></li>
+                    
+                      <li><a
+                        href="#cordiscsvtransformgetthemes"
+                        class="ecl-link pre-open">
+                        getThemes
+                      </a></li>
+                    
+                      <li><a
+                        href="#cordiscsvtransformgetprojecttitle"
+                        class="ecl-link pre-open">
+                        getProjectTitle
+                      </a></li>
+                    
+                      <li><a
+                        href="#cordiscsvtransformgetstartdate"
+                        class="ecl-link pre-open">
+                        getStartDate
+                      </a></li>
+                    
+                      <li><a
+                        href="#cordiscsvtransformgetenddate"
+                        class="ecl-link pre-open">
+                        getEndDate
                       </a></li>
                     
                     </ul>
@@ -1818,6 +1866,7 @@ output =&gt; [<span class="hljs-string">"foo"</span>, <span class="hljs-string">
 Input fields taken from the <code>record</code> are:</p>
 <ul>
 <li><code>fundingScheme</code></li>
+<li><code>Activity Area</code> (FP4)</li>
 </ul>
 
 
@@ -1851,6 +1900,71 @@ Input fields taken from the <code>record</code> are:</p>
     
       <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
       <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>
+      :
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='cordiscsvtransformgettotalcost' class="ecl-link ecl-link--standalone" aria-controls='cordiscsvtransformgettotalcost-panel' aria-expanded="true" href="#">
+      getTotalCost
+    </a>
+    <div id='cordiscsvtransformgettotalcost-panel' aria-labelledby='cordiscsvtransformgettotalcost' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Get total cost before formatting.</p>
+<p>Input fields taken from the <code>record</code> are:</p>
+<ul>
+<li><code>totalCost</code> (FR1-3 + FP5-7)</li>
+<li><code>Total Cost</code> (FP4)</li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>
       :
         
 
@@ -1942,9 +2056,10 @@ Input fields taken from the <code>record</code> are:</p>
 Concatenation of several fields as requested in <a href="https://webgate.ec.europa.eu/CITnet/jira/browse/EUBFR-200?focusedCommentId=2808845&#x26;page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-2808845">https://webgate.ec.europa.eu/CITnet/jira/browse/EUBFR-200?focusedCommentId=2808845&#x26;page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-2808845</a>
 Input fields taken from the <code>record</code> are:</p>
 <ul>
-<li><code>acronym</code></li>
-<li><code>objective</code></li>
-<li><code>rcn</code></li>
+<li><code>acronym</code> or <code>Project Acronym</code> (FP4)</li>
+<li><code>objective</code> or <code>Objectives</code> (FP4)</li>
+<li><code>General Information</code> (FP4)</li>
+<li><code>rcn</code> or <code>RCN</code> (FP4)</li>
 <li><code>topic</code></li>
 </ul>
 
@@ -2011,6 +2126,72 @@ Seeks for values in the following precedence:</p>
 <ul>
 <li><code>id</code></li>
 <li><code>reference</code></li>
+<li><code>Contract Number</code> (FP4)</li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>
+      :
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='cordiscsvtransformgetframeworkprogramme' class="ecl-link ecl-link--standalone" aria-controls='cordiscsvtransformgetframeworkprogramme-panel' aria-expanded="true" href="#">
+      getFrameworkProgramme
+    </a>
+    <div id='cordiscsvtransformgetframeworkprogramme-panel' aria-labelledby='cordiscsvtransformgetframeworkprogramme' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess <code>programme_name</code>
+Seeks for values in the following precedence:</p>
+<ul>
+<li><code>frameworkProgramme</code></li>
+<li><code>Framework Programme</code> (FP4)</li>
 </ul>
 
 
@@ -2262,6 +2443,396 @@ output =&gt; <span class="hljs-string">"2018-12-31T00:00:00.000Z"</span></pre>
       <pre style="background-color: #f5f5f5;" class="ecl-u-pa-xs">input =&gt; <span class="hljs-string">"01/01/1986"</span>
 output =&gt; <span class="hljs-string">'1986-01-01T00:00:00.000Z'</span></pre>
     
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='cordiscsvtransformgetprojectwebsite' class="ecl-link ecl-link--standalone" aria-controls='cordiscsvtransformgetprojectwebsite-panel' aria-expanded="true" href="#">
+      getProjectWebsite
+    </a>
+    <div id='cordiscsvtransformgetprojectwebsite-panel' aria-labelledby='cordiscsvtransformgetprojectwebsite' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess <code>project_website</code></p>
+<p>Input fields taken from the <code>record</code> are:</p>
+<ul>
+<li><code>projectUrl</code> (FR1-3 + FP5-7)</li>
+<li><code>Project Website</code> (FP4)</li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>
+      :
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='cordiscsvtransformgetstatus' class="ecl-link ecl-link--standalone" aria-controls='cordiscsvtransformgetstatus-panel' aria-expanded="true" href="#">
+      getStatus
+    </a>
+    <div id='cordiscsvtransformgetstatus-panel' aria-labelledby='cordiscsvtransformgetstatus' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess <code>status</code></p>
+<p>Input fields taken from the <code>record</code> are:</p>
+<ul>
+<li><code>status</code> (FR1-3 + FP5-7)</li>
+<li><code>Status</code> (FP4)</li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>
+      :
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='cordiscsvtransformgetthemes' class="ecl-link ecl-link--standalone" aria-controls='cordiscsvtransformgetthemes-panel' aria-expanded="true" href="#">
+      getThemes
+    </a>
+    <div id='cordiscsvtransformgetthemes-panel' aria-labelledby='cordiscsvtransformgetthemes' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess <code>themes</code></p>
+<p>Input fields taken from the <code>record</code> are:</p>
+<ul>
+<li><code>Keywords</code> (FP4)</li>
+<li><code>Subject</code> (FP4)</li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>
+      :
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='cordiscsvtransformgetprojecttitle' class="ecl-link ecl-link--standalone" aria-controls='cordiscsvtransformgetprojecttitle-panel' aria-expanded="true" href="#">
+      getProjectTitle
+    </a>
+    <div id='cordiscsvtransformgetprojecttitle-panel' aria-labelledby='cordiscsvtransformgetprojecttitle' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess <code>title</code>
+Input fields taken from the <code>record</code> are:</p>
+<ul>
+<li><code>title</code> (FR1-3 + FP5-7)</li>
+<li><code>Project Title</code> (FP4)</li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>
+      :
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='cordiscsvtransformgetstartdate' class="ecl-link ecl-link--standalone" aria-controls='cordiscsvtransformgetstartdate-panel' aria-expanded="true" href="#">
+      getStartDate
+    </a>
+    <div id='cordiscsvtransformgetstartdate-panel' aria-labelledby='cordiscsvtransformgetstartdate' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Get starting date before formatting.</p>
+<p>Input fields taken from the <code>record</code> are:</p>
+<ul>
+<li><code>startDate</code> (FR1-3 + FP5-7)</li>
+<li><code>Start Date</code>(FP4)</li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>
+      :
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='cordiscsvtransformgetenddate' class="ecl-link ecl-link--standalone" aria-controls='cordiscsvtransformgetenddate-panel' aria-expanded="true" href="#">
+      getEndDate
+    </a>
+    <div id='cordiscsvtransformgetenddate-panel' aria-labelledby='cordiscsvtransformgetenddate' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Get end date before formatting.</p>
+<p>Input fields taken from the <code>record</code> are:</p>
+<ul>
+<li><code>endDate</code> (FR1-3 + FP5-7)</li>
+<li><code>End Date</code> (FP4)</li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>
+      :
+        
+
+      
+    
+  
+
+  
+
   
 
   
