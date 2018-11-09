@@ -187,9 +187,7 @@ Object {
     "to_precision": "day",
   },
   "title": "International Young Makers in Action",
-  "type": Array [
-    "",
-  ],
+  "type": Array [],
 }
 `;
 

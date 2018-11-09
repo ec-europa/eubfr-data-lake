@@ -1,6 +1,6 @@
 // @flow
 
-import sanitizeBudgetItem from '@eubfr/lib/budgetFormatter';
+import sanitizeBudgetItem from '@eubfr/lib/budget/budgetFormatter';
 import getCountryCode from '@eubfr/lib/getCountryCode';
 import type { Project } from '@eubfr/types';
 
@@ -145,7 +145,10 @@ const getLocations = record =>
  * output => ["foo", "bar", "baz"]
  */
 const getTypes = record =>
-  (record['Activity type'] != null && record['Activity type'].split(',')) || [];
+  (record['Activity type'] != null &&
+    record['Activity type'] != '' &&
+    record['Activity type'].split(',')) ||
+  [];
 
 /**
  * Map fields for BUDG producer, XLS file types
