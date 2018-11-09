@@ -61,6 +61,17 @@ const formatDate = date => {
 };
 
 /**
+ * Preprocess `title`
+ * Input fields taken from the `record` are:
+ * - `Project Title`
+ *
+ * @memberof BudgXlsTransform
+ * @param {Object} record The row received from harmonized storage
+ * @returns {String}
+ */
+const getProjectTitle = record => record['Project Title'] || '';
+
+/**
  * Preprocess partners
  *
  * Input fields taken from the `record` are:
@@ -129,6 +140,50 @@ const getLocations = record =>
     }));
 
 /**
+ * Preprocess `project_id`
+ * Seeks for values in the following precedence:
+ * - `Project Number`
+ *
+ * @memberof BudgXlsTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {String}
+ */
+const getProjectId = record => record['Project Number'] || '';
+
+/**
+ * Preprocess `call_year`
+ * Seeks for values in the following precedence:
+ * - `Call year`
+ *
+ * @memberof BudgXlsTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {String}
+ */
+const getCallYear = record => record['Call year'] || '';
+
+/**
+ * Preprocess `description`
+ * Seeks for values in the following precedence:
+ * - `Project Summary`
+ *
+ * @memberof BudgXlsTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {String}
+ */
+const getDescription = record => record['Project Summary'] || '';
+
+/**
+ * Preprocess `project_website`
+ * Seeks for values in the following precedence:
+ * - `Project Website`
+ *
+ * @memberof BudgXlsTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {String}
+ */
+const getProjectWebsite = record => record['Project Website'] || '';
+
+/**
  *
  * Converts a single string with commas to an array
  *
@@ -149,6 +204,63 @@ const getTypes = record =>
     record['Activity type'] != '' &&
     record['Activity type'].split(',')) ||
   [];
+
+/**
+ * Preprocess `status`
+ * Seeks for values in the following precedence:
+ * - `Project Status`
+ *
+ * @memberof BudgXlsTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {String}
+ */
+const getProjectStatus = record => record['Project Status'] || '';
+
+/**
+ * Preprocess `sub_programme_name`
+ * Seeks for values in the following precedence:
+ * - `Sub-programme`
+ *
+ * @memberof BudgXlsTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {String}
+ */
+const getSubProgramme = record => record['Sub-programme'] || '';
+
+/**
+ * Preprocess `success_story`
+ * Seeks for values in the following precedence:
+ * - `Is Success Story`
+ *
+ * @memberof BudgXlsTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {String}
+ */
+const getSuccessStory = record => record['Is Success Story'] || '';
+
+/**
+ * Get end date before formatting.
+ *
+ * Input fields taken from the `record` are:
+ * - `Start Date`
+ *
+ * @memberof BudgXlsTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {String}
+ */
+const getStartDate = record => record['Start date'] || null;
+
+/**
+ * Get end date before formatting.
+ *
+ * Input fields taken from the `record` are:
+ * - `End Date`
+ *
+ * @memberof BudgXlsTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {String}
+ */
+const getEndDate = record => record['End date'] || null;
 
 /**
  * Map fields for BUDG producer, XLS file types
@@ -202,30 +314,30 @@ export default (record: Object): Project | null => {
   return {
     action: record.Action,
     budget: budgetObject,
-    call_year: record['Call year'],
-    description: record['Project Summary'],
+    call_year: getCallYear(record),
+    description: getDescription(record),
     ec_priorities: [],
     media: [],
     programme_name: record.Programme,
-    project_id: record['Project Number'],
+    project_id: getProjectId(record),
     project_locations: locationArray,
-    project_website: record['Project Website'] || '',
+    project_website: getProjectWebsite(record),
     complete: true,
     related_links: [],
     reporting_organisation: 'BUDG',
     results: resultObject,
-    status: record['Project Status'],
-    sub_programme_name: record['Sub-programme'],
-    success_story: record['Is Success Story'],
+    status: getProjectStatus(record),
+    sub_programme_name: getSubProgramme(record),
+    success_story: getSuccessStory(record),
     themes: [],
     third_parties: thirdPartiesArray || [],
     timeframe: {
-      from: formatDate(record['Start date']),
+      from: formatDate(getStartDate(record)),
       from_precision: 'day',
-      to: formatDate(record['End date']),
+      to: formatDate(getEndDate(record)),
       to_precision: 'day',
     },
-    title: record['Project Title'],
+    title: getProjectTitle(record),
     type: typeArray,
   };
 };
