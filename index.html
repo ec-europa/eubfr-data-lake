@@ -153,6 +153,12 @@
                       </a></li>
                     
                       <li><a
+                        href="#budgxlstransformgetprojecttitle"
+                        class="ecl-link pre-open">
+                        getProjectTitle
+                      </a></li>
+                    
+                      <li><a
                         href="#budgxlstransformgetpartners"
                         class="ecl-link pre-open">
                         getPartners
@@ -165,9 +171,63 @@
                       </a></li>
                     
                       <li><a
+                        href="#budgxlstransformgetprojectid"
+                        class="ecl-link pre-open">
+                        getProjectId
+                      </a></li>
+                    
+                      <li><a
+                        href="#budgxlstransformgetcallyear"
+                        class="ecl-link pre-open">
+                        getCallYear
+                      </a></li>
+                    
+                      <li><a
+                        href="#budgxlstransformgetdescription"
+                        class="ecl-link pre-open">
+                        getDescription
+                      </a></li>
+                    
+                      <li><a
+                        href="#budgxlstransformgetprojectwebsite"
+                        class="ecl-link pre-open">
+                        getProjectWebsite
+                      </a></li>
+                    
+                      <li><a
                         href="#budgxlstransformgettypes"
                         class="ecl-link pre-open">
                         getTypes
+                      </a></li>
+                    
+                      <li><a
+                        href="#budgxlstransformgetprojectstatus"
+                        class="ecl-link pre-open">
+                        getProjectStatus
+                      </a></li>
+                    
+                      <li><a
+                        href="#budgxlstransformgetsubprogramme"
+                        class="ecl-link pre-open">
+                        getSubProgramme
+                      </a></li>
+                    
+                      <li><a
+                        href="#budgxlstransformgetsuccessstory"
+                        class="ecl-link pre-open">
+                        getSuccessStory
+                      </a></li>
+                    
+                      <li><a
+                        href="#budgxlstransformgetstartdate"
+                        class="ecl-link pre-open">
+                        getStartDate
+                      </a></li>
+                    
+                      <li><a
+                        href="#budgxlstransformgetenddate"
+                        class="ecl-link pre-open">
+                        getEndDate
                       </a></li>
                     
                     </ul>
@@ -1577,6 +1637,70 @@ output =&gt; <span class="hljs-string">"2014-10-09T00:00:00.000Z"</span></pre>
 
     </div>
   
+    <a id='budgxlstransformgetprojecttitle' class="ecl-link ecl-link--standalone" aria-controls='budgxlstransformgetprojecttitle-panel' aria-expanded="true" href="#">
+      getProjectTitle
+    </a>
+    <div id='budgxlstransformgetprojecttitle-panel' aria-labelledby='budgxlstransformgetprojecttitle' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess <code>title</code>
+Input fields taken from the <code>record</code> are:</p>
+<ul>
+<li><code>Project Title</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from harmonized storage
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>
+      :
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
     <a id='budgxlstransformgetpartners' class="ecl-link ecl-link--standalone" aria-controls='budgxlstransformgetpartners-panel' aria-expanded="true" href="#">
       getPartners
     </a>
@@ -1712,6 +1836,262 @@ output =&gt; <span class="hljs-string">"2014-10-09T00:00:00.000Z"</span></pre>
 
     </div>
   
+    <a id='budgxlstransformgetprojectid' class="ecl-link ecl-link--standalone" aria-controls='budgxlstransformgetprojectid-panel' aria-expanded="true" href="#">
+      getProjectId
+    </a>
+    <div id='budgxlstransformgetprojectid-panel' aria-labelledby='budgxlstransformgetprojectid' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess <code>project_id</code>
+Seeks for values in the following precedence:</p>
+<ul>
+<li><code>Project Number</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>
+      :
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='budgxlstransformgetcallyear' class="ecl-link ecl-link--standalone" aria-controls='budgxlstransformgetcallyear-panel' aria-expanded="true" href="#">
+      getCallYear
+    </a>
+    <div id='budgxlstransformgetcallyear-panel' aria-labelledby='budgxlstransformgetcallyear' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess <code>call_year</code>
+Seeks for values in the following precedence:</p>
+<ul>
+<li><code>Call year</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>
+      :
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='budgxlstransformgetdescription' class="ecl-link ecl-link--standalone" aria-controls='budgxlstransformgetdescription-panel' aria-expanded="true" href="#">
+      getDescription
+    </a>
+    <div id='budgxlstransformgetdescription-panel' aria-labelledby='budgxlstransformgetdescription' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess <code>description</code>
+Seeks for values in the following precedence:</p>
+<ul>
+<li><code>Project Summary</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>
+      :
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='budgxlstransformgetprojectwebsite' class="ecl-link ecl-link--standalone" aria-controls='budgxlstransformgetprojectwebsite-panel' aria-expanded="true" href="#">
+      getProjectWebsite
+    </a>
+    <div id='budgxlstransformgetprojectwebsite-panel' aria-labelledby='budgxlstransformgetprojectwebsite' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess <code>project_website</code>
+Seeks for values in the following precedence:</p>
+<ul>
+<li><code>Project Website</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>
+      :
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
     <a id='budgxlstransformgettypes' class="ecl-link ecl-link--standalone" aria-controls='budgxlstransformgettypes-panel' aria-expanded="true" href="#">
       getTypes
     </a>
@@ -1772,6 +2152,326 @@ output =&gt; <span class="hljs-string">"2014-10-09T00:00:00.000Z"</span></pre>
       <pre style="background-color: #f5f5f5;" class="ecl-u-pa-xs">input =&gt; <span class="hljs-string">"foo, bar, baz"</span>
 output =&gt; [<span class="hljs-string">"foo"</span>, <span class="hljs-string">"bar"</span>, <span class="hljs-string">"baz"</span>]</pre>
     
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='budgxlstransformgetprojectstatus' class="ecl-link ecl-link--standalone" aria-controls='budgxlstransformgetprojectstatus-panel' aria-expanded="true" href="#">
+      getProjectStatus
+    </a>
+    <div id='budgxlstransformgetprojectstatus-panel' aria-labelledby='budgxlstransformgetprojectstatus' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess <code>status</code>
+Seeks for values in the following precedence:</p>
+<ul>
+<li><code>Project Status</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>
+      :
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='budgxlstransformgetsubprogramme' class="ecl-link ecl-link--standalone" aria-controls='budgxlstransformgetsubprogramme-panel' aria-expanded="true" href="#">
+      getSubProgramme
+    </a>
+    <div id='budgxlstransformgetsubprogramme-panel' aria-labelledby='budgxlstransformgetsubprogramme' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess <code>sub_programme_name</code>
+Seeks for values in the following precedence:</p>
+<ul>
+<li><code>Sub-programme</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>
+      :
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='budgxlstransformgetsuccessstory' class="ecl-link ecl-link--standalone" aria-controls='budgxlstransformgetsuccessstory-panel' aria-expanded="true" href="#">
+      getSuccessStory
+    </a>
+    <div id='budgxlstransformgetsuccessstory-panel' aria-labelledby='budgxlstransformgetsuccessstory' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess <code>success_story</code>
+Seeks for values in the following precedence:</p>
+<ul>
+<li><code>Is Success Story</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>
+      :
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='budgxlstransformgetstartdate' class="ecl-link ecl-link--standalone" aria-controls='budgxlstransformgetstartdate-panel' aria-expanded="true" href="#">
+      getStartDate
+    </a>
+    <div id='budgxlstransformgetstartdate-panel' aria-labelledby='budgxlstransformgetstartdate' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Get end date before formatting.</p>
+<p>Input fields taken from the <code>record</code> are:</p>
+<ul>
+<li><code>Start Date</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>
+      :
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='budgxlstransformgetenddate' class="ecl-link ecl-link--standalone" aria-controls='budgxlstransformgetenddate-panel' aria-expanded="true" href="#">
+      getEndDate
+    </a>
+    <div id='budgxlstransformgetenddate-panel' aria-labelledby='budgxlstransformgetenddate' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Get end date before formatting.</p>
+<p>Input fields taken from the <code>record</code> are:</p>
+<ul>
+<li><code>End Date</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>
+      :
+        
+
+      
+    
+  
+
+  
+
   
 
   
