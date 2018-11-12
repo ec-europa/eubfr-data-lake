@@ -202,7 +202,10 @@ const getProjectWebsite = record => record['Project Website'] || '';
 const getTypes = record =>
   (record['Activity type'] != null &&
     record['Activity type'] !== '' &&
-    record['Activity type'].trim().split(/\s*,\s*/)) ||
+    record['Activity type']
+      .split(',')
+      .filter(a => a)
+      .map(a => a.trim())) ||
   [];
 
 /**
