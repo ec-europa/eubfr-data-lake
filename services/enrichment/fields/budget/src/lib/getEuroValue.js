@@ -40,10 +40,9 @@ export const getEuroValue = async (
   // "EXR/A.[currency].EUR.SP00.A" corresponds to the key of a dataset
   // The keys can be found here: http://sdw.ecb.europa.eu/browseTable.do?node=1495
   // API info: https://sdw-wsrest.ecb.europa.eu/web/generator/index.html
-  // const url = `https://sdw-wsrest.ecb.europa.eu/service/data/EXR/${apiPeriod}.${
-  //   inputBudgetItem.currency
-  // }.EUR.SP00.A`;
-  const url = 'http://httpstat.us/500';
+  const url = `https://sdw-wsrest.ecb.europa.eu/service/data/EXR/${apiPeriod}.${
+    inputBudgetItem.currency
+  }.EUR.SP00.A`;
 
   let results;
   const qs = {
