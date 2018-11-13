@@ -1,12 +1,12 @@
 {
   "private": true,
   "name": "@eubfr/resources-elasticsearch",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "scripts": {
     "deploy": "sls deploy -v"
   },
   "devDependencies": {
     "serverless": "1.28.0",
-    "serverless-plugin-elasticsearch-index": "0.0.1"
+    "serverless-plugin-elasticsearch-index": "^0.1.0"
   }
 }

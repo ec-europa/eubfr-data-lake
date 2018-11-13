@@ -1,19 +1,19 @@
 {
   "private": true,
   "name": "@eubfr/ingestion-etl-agri-csv",
-  "version": "0.0.1",
+  "version": "0.3.0",
   "scripts": {
     "deploy": "sls deploy -v",
     "test:unit": "jest --testPathPattern=unit"
   },
   "dependencies": {
-    "@eubfr/lib": "0.0.1",
-    "@eubfr/logger-messenger": "0.0.1",
+    "@eubfr/lib": "^0.3.0",
+    "@eubfr/logger-messenger": "^0.1.0",
     "csv-parse": "2.4.0",
     "stream-transform": "1.0.2"
   },
   "devDependencies": {
-    "@eubfr/types": "0.0.1",
+    "@eubfr/types": "^0.2.0",
     "aws-sdk": "2.248.1",
     "babel-core": "6.26.3",
     "babel-loader": "7.1.4",

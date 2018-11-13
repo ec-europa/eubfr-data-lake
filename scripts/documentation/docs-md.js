@@ -5,7 +5,7 @@ const path = require('path');
 const documentation = require('documentation'); // eslint-disable-line import/no-extraneous-dependencies
 
 documentation
-  .build('types/Project.js', {})
+  .build('types/*.js', {})
   .then(documentation.formats.md)
   .then(output => {
     fs.writeFileSync(path.resolve('./docs/types/Project.md'), output);
@@ -14,6 +14,9 @@ documentation
 const transforms = [
   'agri-csv',
   'budg-xls',
+  'cordis-csv',
+  'fts-xls',
+  'home-xls',
   'iati-csv',
   'inforegio-json',
   'inforegio-xml',
@@ -34,3 +37,11 @@ transforms.forEach(transform => {
       );
     });
 });
+
+// CLI documentation is inside the commands, which are basically placeholders.
+documentation
+  .build('tools/eubfr-cli/bin/*.js', { access: ['public'] })
+  .then(comments => documentation.formats.md(comments, { markdownToc: true }))
+  .then(output => {
+    fs.writeFileSync(path.resolve('./tools/eubfr-cli/README.md'), output);
+  });

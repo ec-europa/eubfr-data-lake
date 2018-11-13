@@ -50,15 +50,15 @@ Object {
     Object {
       "address": "",
       "centroid": Object {
-        "lat": 50.6407351,
-        "lon": 4.66696,
+        "lat": 50.6402809,
+        "lon": 4.6667145,
       },
       "country_code": "BE",
       "enriched": true,
       "location": Object {
         "coordinates": Array [
-          4.66696,
-          50.6407351,
+          4.6667145,
+          50.6402809,
         ],
         "type": "Point",
       },

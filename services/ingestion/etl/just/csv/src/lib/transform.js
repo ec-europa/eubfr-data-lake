@@ -127,7 +127,9 @@ const getRelatedLinks = record =>
  * @param {Object} record Piece of data to transform before going to harmonized storage.
  * @returns {Project} JSON matching the type fields.
  */
-export default (record: Object): Project => {
+export default (record: Object): Project | null => {
+  if (!record) return null;
+
   // Preprocess locations
   const locationArray = getLocations(record);
 
@@ -152,8 +154,9 @@ export default (record: Object): Project => {
     project_id: record.field_prj_ref_number || '',
     project_locations: locationArray,
     project_website: record.field_prj_website || '',
+    complete: true,
     related_links: links,
-    reporting_organisation: '',
+    reporting_organisation: 'JUST',
     results: resultObject,
     status: '',
     sub_programme_name: '',

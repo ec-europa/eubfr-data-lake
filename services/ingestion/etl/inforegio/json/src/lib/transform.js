@@ -1,6 +1,7 @@
 // @flow
 
 import sanitizeBudgetItem from '@eubfr/lib/budgetFormatter';
+import extractBudgetData from '@eubfr/lib/extractBudgetData';
 import getCountryCode from '@eubfr/lib/getCountryCode';
 import type { Project } from '@eubfr/types';
 
@@ -201,15 +202,10 @@ const getProjectWebsite = record => {
 const formatBudget = budget => {
   if (!budget || typeof budget !== 'string') return sanitizeBudgetItem();
 
-  const currency = budget.split(' ')[0];
-
-  const formattedBudget = budget
-    .split(' ')
-    .slice(1)
-    .join('');
+  const { value, currency } = extractBudgetData(budget);
 
   return sanitizeBudgetItem({
-    value: formattedBudget,
+    value,
     currency,
     raw: budget,
   });
@@ -224,7 +220,9 @@ const formatBudget = budget => {
  * @param {Object} record Piece of data to transform before going to harmonized storage.
  * @returns {Project} JSON matching the type fields.
  */
-export default (record: Object): Project => {
+export default (record: Object): Project | null => {
+  if (!record) return null;
+
   // Preprocess budget
   const budgetObject = {
     total_cost: formatBudget(record.Total_project_budget),
@@ -261,8 +259,9 @@ export default (record: Object): Project => {
     project_id: record.PROJECTID.toString(),
     project_locations: locationArray,
     project_website: getProjectWebsite(record),
+    complete: true,
     related_links: [],
-    reporting_organisation: '',
+    reporting_organisation: 'REGIO',
     results: {
       available: '',
       result: '',

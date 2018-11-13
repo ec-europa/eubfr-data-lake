@@ -1,6 +1,7 @@
 // @flow
 
 import sanitizeBudgetItem from '@eubfr/lib/budgetFormatter';
+import extractBudgetData from '@eubfr/lib/extractBudgetData';
 import getCountryCode from '@eubfr/lib/getCountryCode';
 import type { Project } from '@eubfr/types';
 
@@ -87,23 +88,14 @@ const getAddress = record => {
  * @memberof inforegioXmlTransform
  * @param {string} budget Prefixed currency value
  * @returns {BudgetItem} The formatted budget
- *
- * @example
- * input => "EUR 329 000 000"
- * output => "329000000"
  */
 const formatBudget = budget => {
   if (!budget || typeof budget !== 'string') return sanitizeBudgetItem();
 
-  const currency = budget.split(' ')[0];
-
-  const formattedBudget = budget
-    .split(' ')
-    .slice(1)
-    .join('');
+  const { value, currency } = extractBudgetData(budget);
 
   return sanitizeBudgetItem({
-    value: formattedBudget,
+    value,
     currency,
     raw: budget,
   });
@@ -268,7 +260,9 @@ const getBeneficiaries = record =>
  * @param {Object} record The row received from parsed file
  * @returns {Project} JSON matching the type fields
  */
-export default (record: Object): Project => {
+export default (record: Object): Project | null => {
+  if (!record) return null;
+
   // Preprocess budget
   const budgetObject = {
     total_cost: formatBudget(checkData(record.Total_project_budget)),
@@ -306,8 +300,9 @@ export default (record: Object): Project => {
     project_id: checkData(record.PROJECTID).toString(),
     project_locations: locationArray,
     project_website: checkData(record.URL),
+    complete: true,
     related_links: [],
-    reporting_organisation: '',
+    reporting_organisation: 'REGIO',
     results: {
       available: '',
       result: '',

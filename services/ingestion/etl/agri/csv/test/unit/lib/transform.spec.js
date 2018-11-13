@@ -5,28 +5,28 @@
 import mapper from '../../../src/lib/transform';
 import testRecord from '../../stubs/record.json';
 
-describe(`DG AGRI CSV transformer`, () => {
+describe('DG AGRI CSV transformer', () => {
   let result = {};
 
   beforeAll(() => {
     result = mapper(testRecord);
   });
 
-  test(`Throws an error on empty input`, () => {
-    expect(mapper).toThrow();
+  test('Returns null when record is not provided', () => {
+    expect(mapper()).toBe(null);
   });
 
-  test(`Produces correct JSON output structure`, () => {
+  test('Produces correct JSON output structure', () => {
     expect(result).toMatchSnapshot();
   });
 
-  test(`Project location information is correctly mapped`, () => {
+  test('Project location information is correctly mapped', () => {
     const firstLocation = result.project_locations[0];
     expect(firstLocation).toMatchSnapshot();
   });
 });
 
-describe(`DG AGRI transformer handling incomplete or inconsistent data`, () => {
+describe('DG AGRI transformer handling incomplete or inconsistent data', () => {
   const partialRecord = {
     Name: 'Bulgaria’s capital expands metro network',
     'Timeframe start': '1388530800',
@@ -40,7 +40,7 @@ describe(`DG AGRI transformer handling incomplete or inconsistent data`, () => {
     'Related links': '',
   };
 
-  test(`Certain fields should always be present after transformation`, () => {
+  test('Certain fields should always be present after transformation', () => {
     const partialResult = mapper(partialRecord);
     expect(partialResult).toMatchSnapshot();
   });

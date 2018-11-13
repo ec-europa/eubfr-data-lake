@@ -1,13 +1,13 @@
 {
   "private": true,
   "name": "@eubfr/ingestion-manager",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "scripts": {
     "deploy": "sls deploy -v",
     "test:unit": "jest --testPathPattern=unit"
   },
   "dependencies": {
-    "@eubfr/logger-messenger": "0.0.1",
+    "@eubfr/logger-messenger": "^0.1.0",
     "babel-plugin-transform-object-rest-spread": "6.26.0",
     "elasticsearch": "15.0.0",
     "http-aws-es": "6.0.0"

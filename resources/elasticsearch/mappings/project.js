@@ -81,12 +81,15 @@ module.exports = () => ({
           },
         },
         project_website: { type: 'text' },
+        // Client-side indicator whether a project full details should be reachable.
+        complete: { type: 'boolean' },
         related_links: {
           properties: {
             label: { type: 'text' },
             url: { type: 'text' },
           },
         },
+        reporting_organisation: { type: 'keyword' },
         results: {
           properties: {
             available: { type: 'keyword' },

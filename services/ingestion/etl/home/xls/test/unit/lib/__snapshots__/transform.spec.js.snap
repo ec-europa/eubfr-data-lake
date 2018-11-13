@@ -1,0 +1,144 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DG HOME XLS transformer Produces correct JSON output structure 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "EUR",
+      "raw": "2,500,000.00",
+      "value": 2500000,
+    },
+    "funding_area": Array [
+      "Asylum, Migration and Integration Fund",
+    ],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+  },
+  "call_year": "",
+  "complete": true,
+  "description": "Project Acronym: AP2016
+Project Duration: 24 months
+Proposal Free Keywords Uppercase: ERIN NETWORK - ACTION PLAN 2016 (AP2016)
+Project Abstract: The European Reintegration Network (ERIN) is a joint return and reintegration program involving several European partner states: The Netherlands (network leader), Austria, Belgium, Denmark, Germany, Greece, Finland, France, Italy, Luxembourg, Malta, Norway, Romania, Spain, Sweden, Switzerland and the United Kingdom. Australia has joined as an observer to the Network. Participation is open to all Member States and the Commission has actively encouraged them and all Schengen-associated states to join. Highlighted in bold text are EU MS considered under particular migratory pressures. 
+
+ERIN offers to all participating Member States the possibility of using a single harmonised contracting procedure for assisted voluntary return packages through independent partners in countries of origin (NGOs, international organisations such as the IOM). It is currently operational in 20 third-countries and negotiations are ongoing to renew 10 contracts and extend coverage to 7 more, which makes a total number of contracts into 27. Given the increasing magnitude of forced returns, ERIN can also assist in implementation of community development programs on top or instead of an individual package to returnees. 
+
+The objective of this action is to support the provision of reintegration assistance to third-country nationals returning from Member States under migratory pressure, in particular Germany and Greece, to their countries of origin or other third countries. In order to achieve this, the action consists of the following three components: 
+
+Component 1 (work package 0): Expanding the capacity of the PMU for the implementation of the ERIN AP2016 Project. Although there will be an increased work load with the proposed activities, it is foreseen that the current capacity of the ERIN PMU does not have to be increased with additional staff. All proposed activities can be carried out by the current ERIN PMU staff capacity delivered by the RD&S.
+
+Component 2 (work package 1): Increase of the estimated number of returning migrants from EUMS under migratory pressure (Germany and Greece). During two years (implementation period) Germany and Greece will have access to a maximum number of 2.000 reintegration slots (500 slots for Greece and the remaining for Germany). Reallocation of slots is possible if realisation falls behind expectations or demands change), on top of the number available slots within the ERIN program. Greece has requested the lead applicant organisation (Repatriation and Departure Service of the Netherlands (RD&S)) to finance staff connected to the implementation of this activity. Foreseen are costs for 1 full time financial manager and 2 full time administrative employees. Additional costs are foreseen regarding office-related costs and translator costs. Furthermore, 1 dedicated operational expert officer, seconded by and paid for by the Netherlands RD&S will be fully dedicated to Greece. The operational expert officer will serve as an intermediary and linchpin between the PMU/RD&S and the Greek Ministry of Interior on the operational level by supporting Greece with the implemenation of reintegration packages. Through its expertise, the operational expert officer will provide the proper tools and knowledge and network to guarantee the mitigation of any risks related to the provision of AVR counselling in Greece. Note: as the operational expert will be seconded and paid for by the RD&S, this will activity will fall outside of the ERIN budget. 
+
+Component 3 (work package 2): Deployment of Short Term Experts and Consultants to EU MS and third countries for support and consultations in the area of (non) voluntary return and reintegration. The ERIN Network wishes to increase its cooperation with third countries by supporting them with advice and support in the areas of ERIN’s competence. It is foreseen that ERIN can deploy experts to third countries to assist in the process of building capacity in the area of voluntary return (prefered)",
+  "ec_priorities": Array [],
+  "media": Array [],
+  "programme_name": "AMIF",
+  "project_id": "779925",
+  "project_locations": Array [
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "DE",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "",
+      "town": "",
+    },
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "NL",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "",
+      "town": "",
+    },
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "GR",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "",
+      "town": "",
+    },
+  ],
+  "project_website": "",
+  "related_links": Array [],
+  "reporting_organisation": "HOME",
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
+  "status": "SIGNED",
+  "sub_programme_name": "AMIF-2016-AG-IBA-ERIN",
+  "success_story": "",
+  "themes": Array [],
+  "third_parties": Array [
+    Object {
+      "address": "",
+      "country": "DE",
+      "email": "",
+      "name": "BUNDESAMT FUR MIGRATION UND FLUCHTLINGE",
+      "phone": "",
+      "region": "",
+      "role": "participant",
+      "type": "beneficiary",
+      "website": "",
+    },
+    Object {
+      "address": "",
+      "country": "NL",
+      "email": "",
+      "name": "MINISTERIE VAN JUSTITIE EN VEILIGHEID",
+      "phone": "",
+      "region": "",
+      "role": "coordinator",
+      "type": "",
+      "website": "",
+    },
+    Object {
+      "address": "",
+      "country": "GR",
+      "email": "",
+      "name": "Ministry of Interior / European & Development Programmes Agency",
+      "phone": "",
+      "region": "",
+      "role": "participant",
+      "type": "beneficiary",
+      "website": "",
+    },
+  ],
+  "timeframe": Object {
+    "from": "2018-01-01T00:00:00.000Z",
+    "from_precision": "day",
+    "to": "2019-12-31T00:00:00.000Z",
+    "to_precision": "day",
+  },
+  "title": "ERIN Network - Action Plan 2016 (AP2016)",
+  "type": Array [],
+}
+`;

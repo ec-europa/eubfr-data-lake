@@ -58,6 +58,19 @@ Data comes from the following source fields:
 
 Returns **[Array][5]&lt;[Location][6]>** 
 
+### getReportingOrganizations
+
+Prepares information for `reporting_organisation` field.
+Depends on:
+
+-   `reporting-org-ref`
+
+**Parameters**
+
+-   `record` **[Object][3]** The row received from parsed file
+
+Returns **[String][4]** Abbreviation a given reporting DG.
+
 ### formatDate
 
 Format date

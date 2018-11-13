@@ -43,7 +43,9 @@ const formatDate = date => {
  * @param {Object} record Piece of data to transform before going to harmonized storage.
  * @returns {Project} JSON matching the type fields.
  */
-export default (record: Object): Project => {
+export default (record: Object): Project | null => {
+  if (!record) return null;
+
   // Preprocess budget
   const budgetObject = {
     total_cost: sanitizeBudgetItem(),
@@ -144,8 +146,9 @@ export default (record: Object): Project => {
     project_id: record['Project Identifier'] || '',
     project_locations: locationArray,
     project_website: record['Project Website'] || '',
+    complete: true,
     related_links: [],
-    reporting_organisation: '',
+    reporting_organisation: 'EAC',
     results: resultObject,
     status: record['Project Status'] || '',
     sub_programme_name: record['Sub-programme'] || '',

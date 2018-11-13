@@ -179,9 +179,10 @@ const getProjectTitle = record =>
  * @param {Object} record Piece of data to transform before going to harmonized storage.
  * @returns {Project} JSON matching the type fields.
  */
-export default (record: Object): Project =>
-  // Map the fields
-  ({
+export default (record: Object): Project | null => {
+  if (!record) return null;
+
+  return {
     action: '',
     budget: getBudget(),
     call_year: getCallYear(record),
@@ -193,8 +194,9 @@ export default (record: Object): Project =>
     project_id: getProjectId(record),
     project_locations: getLocations(record),
     project_website: getProjectWebsite(record),
+    complete: true,
     related_links: [],
-    reporting_organisation: '',
+    reporting_organisation: 'CNECT',
     results: {
       available: '',
       result: '',
@@ -206,4 +208,5 @@ export default (record: Object): Project =>
     timeframe: getProjectTimeframe(record),
     title: getProjectTitle(record),
     type: [],
-  });
+  };
+};

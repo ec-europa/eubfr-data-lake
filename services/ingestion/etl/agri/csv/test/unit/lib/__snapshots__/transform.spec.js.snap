@@ -37,6 +37,7 @@ Object {
     },
   },
   "call_year": "",
+  "complete": true,
   "description": "<p>Under the EU-funded Central European Green Corridors project, 115 fast-charging stations for electric cars have opened in Germany, Austria, Slovenia, Slovakia and Croatia – allowing cross-border electromobility with your e-car between Munich and Zagreb. Further network expansion, offers and services for customers and energy supply solutions also drive the project’s roll-out of electric transport. Partners include public sector bodies and private companies.</p>",
   "ec_priorities": Array [
     "Jobs, Growth and Investment",
@@ -162,7 +163,7 @@ Object {
       "url": "https://europa.eu/investeu/projects/central-european-green-corridors_en",
     },
   ],
-  "reporting_organisation": "",
+  "reporting_organisation": "AGRI",
   "results": Object {
     "available": "",
     "result": "Installation and operation of 115 fast-charging stations in 5 European countries,Development and implementation of electromobility and cross-border services for e-car users,Strategic planning for a European fast-charging network.Since the implementation of the Central European Green Corridors project, the European fast-charging network for electric vehicles has continued to grow. An additional 200 fast-charging stations – 180 in Italy and 20 in Austria – are developed. The charging networks in the various countries are compatible with each other. This gives even more citizens the chance to take advantage of cross-border electromobility.",
@@ -371,6 +372,7 @@ Object {
     },
   },
   "call_year": "",
+  "complete": true,
   "description": "",
   "ec_priorities": Array [],
   "media": Array [],
@@ -399,7 +401,7 @@ Object {
   ],
   "project_website": "",
   "related_links": Array [],
-  "reporting_organisation": "",
+  "reporting_organisation": "AGRI",
   "results": Object {
     "available": "",
     "result": "",

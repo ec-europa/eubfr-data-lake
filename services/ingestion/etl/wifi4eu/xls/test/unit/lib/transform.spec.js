@@ -12,8 +12,8 @@ describe('XLS transformer for WIFI4EU', () => {
     results = mapper(testRecord);
   });
 
-  test('Throws an error on empty input', () => {
-    expect(mapper).toThrow();
+  test('Returns null when record is not provided', () => {
+    expect(mapper()).toBe(null);
   });
 
   test('Produces correct JSON output structure', () => {

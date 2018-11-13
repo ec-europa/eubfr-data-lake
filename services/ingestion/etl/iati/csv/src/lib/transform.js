@@ -97,6 +97,25 @@ const getLocations = record =>
     : [];
 
 /**
+ * Prepares information for `reporting_organisation` field.
+ * Depends on:
+ * - `reporting-org-ref`
+ *
+ * @memberof IatiCsvTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {String} Abbreviation a given reporting DG.
+ */
+const getReportingOrganizations = record => {
+  if (!record['reporting-org-ref']) return 'DEVCO';
+  const match = /XI-IATI-EC_(.*)/.exec(record['reporting-org-ref']);
+  if (match && match.length) {
+    // The abbreviation:
+    return match[1];
+  }
+  return 'DEVCO';
+};
+
+/**
  * Format date
  *
  * @memberof IatiCsvTransform
@@ -127,9 +146,10 @@ const formatDate = date => {
  * @param {Object} record Piece of data to transform before going to harmonized storage.
  * @returns {Project} JSON matching the type fields.
  */
-export default (record: Object): Project =>
-  // Map the fields
-  ({
+export default (record: Object): Project | null => {
+  if (!record) return null;
+
+  return {
     action: '',
     budget: getBudget(record),
     call_year: '',
@@ -140,8 +160,9 @@ export default (record: Object): Project =>
     project_id: getProjectId(record),
     project_locations: getLocations(record),
     project_website: '',
+    complete: true,
     related_links: [],
-    reporting_organisation: record['reporting-org'] || '',
+    reporting_organisation: getReportingOrganizations(record),
     results: {
       available: '',
       result: '',
@@ -159,4 +180,5 @@ export default (record: Object): Project =>
     },
     title: record.title || '',
     type: [],
-  });
+  };
+};
