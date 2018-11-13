@@ -1,7 +1,6 @@
 service: enrichment-fields-budget
 
 plugins:
-  - serverless-plugin-lambda-dead-letter
   - serverless-webpack
 
 custom:
@@ -38,9 +37,6 @@ provider:
 functions:
   onEnrichRecordRequested:
     handler: src/events/onEnrichRecordRequested.handler
-    deadLetter:
-      targetArn:
-        GetResourceArn: EnrichmentFailureQueue
     name: ${self:provider.stage}-${self:service}-onEnrichRecordRequested
     memorySize: 256
     timeout: 60
@@ -63,12 +59,36 @@ functions:
                 - Ref: "AWS::AccountId"
                 - ":${self:provider.stage}-onEnrichRecordRequested"
           topicName: ${self:provider.stage}-onEnrichRecordRequested
+  onFailure:
+    handler: src/events/onFailure.handler
+    name: ${self:provider.stage}-${self:service}-failures
+    environment:
+      REGION: ${self:provider.region}
+      STAGE: ${self:provider.stage}
+      QUEUE_NAME: ${self:custom.queueName}
+      API:
+        Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
+      INDEX: ${self:custom.esIndex}
+    events:
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - BudgetEnrichmentFailureQueue
+              - Arn
 
 resources:
   Resources:
-    EnrichmentFailureQueue:
+    BudgetEnrichmentFailureQueue:
       Type: AWS::SQS::Queue
       Properties:
-        QueueName: enrichment-failures
+        QueueName: ${self:provider.stage}-budget-enrichment-failures
         MessageRetentionPeriod: '1209600'
         VisibilityTimeout: '60'
+    OnEnrichRecordRequestedLambdaFunction:
+      Type: "AWS::Lambda::Function"
+      Properties:
+        DeadLetterConfig:
+          TargetArn:
+            Fn::GetAtt:
+              - BudgetEnrichmentFailureQueue
+              - Arn
