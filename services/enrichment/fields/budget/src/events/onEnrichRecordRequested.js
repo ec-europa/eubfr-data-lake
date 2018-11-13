@@ -1,14 +1,15 @@
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 
-import elasticsearch from 'elasticsearch';
 import connectionClass from 'http-aws-es';
+import elasticsearch from 'elasticsearch';
 import isEqual from 'lodash.isequal';
+import request from 'request-promise-native';
 
 import computeId from '@eubfr/lib/computeId';
 import { enrich } from '../lib/enrich';
 
 export const handler = async (event, context, callback) => {
-  const { REGION, QUEUE_NAME, API, INDEX } = process.env;
+  const { REGION, QUEUE_NAME, API, INDEX, SERVICE_ENDPOINT } = process.env;
 
   /*
    * Some checks here before going any further
@@ -60,6 +61,18 @@ export const handler = async (event, context, callback) => {
 
   if (!elasticHit || !elasticHit._source) {
     return callback(null, 'record does not exist, stop enrichment');
+  }
+
+  /**
+   * Verify whether enrichment service is available at the moment.
+   */
+  try {
+    await request.get({ url: SERVICE_ENDPOINT });
+  } catch (e) {
+    if (e.statusCode === 500) {
+      // This will queue the problem to the dead letter queue for the given enrichment plugin.
+      return callback(e);
+    }
   }
 
   /*

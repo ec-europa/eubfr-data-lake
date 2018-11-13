@@ -47,6 +47,7 @@ functions:
       API:
         Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
       INDEX: ${self:custom.esIndex}
+      SERVICE_ENDPOINT: https://sdw-wsrest.ecb.europa.eu
     events:
       - sns:
           arn:
@@ -69,6 +70,7 @@ functions:
       API:
         Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
       INDEX: ${self:custom.esIndex}
+      SERVICE_ENDPOINT: https://sdw-wsrest.ecb.europa.eu
     events:
       - sqs:
           arn:

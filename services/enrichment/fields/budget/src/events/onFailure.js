@@ -1,5 +1,5 @@
 export const handler = (event, context, callback) => {
-  JSON.stringify(event);
+  console.log(JSON.stringify(event));
   callback();
 };
 

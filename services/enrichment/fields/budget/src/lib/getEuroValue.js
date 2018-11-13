@@ -10,6 +10,8 @@ export const getEuroValue = async (
   projectEndDate: Date,
   projectEndPrecision: TimePrecision
 ) => {
+  const service =
+    process.env.SERVICE_ENDPOINT || 'https://sdw-wsrest.ecb.europa.eu';
   let euroValue = null;
   const precision = 100; // round converted value to the nearest 100
 
@@ -40,7 +42,7 @@ export const getEuroValue = async (
   // "EXR/A.[currency].EUR.SP00.A" corresponds to the key of a dataset
   // The keys can be found here: http://sdw.ecb.europa.eu/browseTable.do?node=1495
   // API info: https://sdw-wsrest.ecb.europa.eu/web/generator/index.html
-  const url = `https://sdw-wsrest.ecb.europa.eu/service/data/EXR/${apiPeriod}.${
+  const url = `${service}/service/data/EXR/${apiPeriod}.${
     inputBudgetItem.currency
   }.EUR.SP00.A`;
 
@@ -61,7 +63,14 @@ export const getEuroValue = async (
       },
     });
   } catch (e) {
-    throw new Error(e);
+    if (e.statusCode === 500) {
+      // Frequent scenario, error is short and simple, almost expected
+      console.error(`${service} is not available.`);
+    } else {
+      // Some less frequent scenario, give all the details.
+      console.error('error', url, qs, e);
+    }
+    return euroValue;
   }
 
   if (
