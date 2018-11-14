@@ -1,9 +1,8 @@
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
-import backoff from 'backoff';
 import request from 'request-promise-native';
 
-export const handler = (event, context, callback) => {
-  const { SERVICE_ENDPOINT } = process.env;
+export const handler = async (event, context, callback) => {
+  const { SERVICE_NAME, SERVICE_ENDPOINT } = process.env;
 
   const lambda = new AWS.Lambda({ apiVersion: '2015-03-31' });
 
@@ -13,50 +12,32 @@ export const handler = (event, context, callback) => {
 
   const eventParsed = JSON.parse(eventInitial);
   const eventArn = eventParsed.Records['0'].EventSubscriptionArn;
+
   // Topic is ${self:provider.stage}-onEnrichRecordRequested
   const topic = eventArn.split(':')[5];
-  // Handler is ${self:provider.stage}-${self:service}-onEnrichRecordRequested
-  const service = 'enrichment-fields-budget';
   const functionParts = topic.split('-');
   const handlerName = functionParts.pop();
-  functionParts.push(service);
+
+  // Handler is ${self:provider.stage}-${self:service}-onEnrichRecordRequested
+  functionParts.push(SERVICE_NAME);
   functionParts.push(handlerName);
   const functionName = functionParts.join('-');
 
   try {
-    const call = backoff.call(
-      request.get,
-      { url: SERVICE_ENDPOINT },
-      (err, res) => {
-        const project = JSON.parse(eventParsed.Records['0'].Sns.Message);
-        const retryCount = call.getNumRetries;
+    // If service is not available, the handler will fail.
+    // And since it is attached to an SQS queue, it will retry until it succeeds.
+    await request.get({ url: SERVICE_ENDPOINT });
 
-        console.log(`${SERVICE_ENDPOINT} was down with ${res.statusCode} code`);
-        console.log(`Retry project ID ${project.project_id}: ${retryCount}`);
+    // Execute original handler if the service has come back online.
+    const params = {
+      FunctionName: functionName,
+      InvocationType: 'Event',
+      LogType: 'Tail',
+      Payload: Buffer.from(eventInitial, 'utf8'),
+    };
 
-        if (err) return callback(err);
-
-        // Execute original handler if the service has come back online.
-        const params = {
-          FunctionName: functionName,
-          InvocationType: 'Event',
-          LogType: 'Tail',
-          Payload: Buffer.from(eventInitial, 'utf8'),
-        };
-
-        return lambda.invoke(params, (lambdaServiceError, data) => {
-          if (lambdaServiceError) callback(lambdaServiceError);
-          return callback(null, data);
-        });
-      }
-    );
-
-    call.retryIf(
-      err => err.status !== 200 || err.status === 500 || err.status === 502
-    );
-    call.setStrategy(new backoff.ExponentialStrategy({ initialDelay: 500 }));
-    call.failAfter(10);
-    return call.start();
+    const result = await lambda.invoke(params).promise();
+    return callback(null, result);
   } catch (e) {
     return callback(e);
   }
