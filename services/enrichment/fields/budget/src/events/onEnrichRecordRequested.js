@@ -69,10 +69,8 @@ export const handler = async (event, context, callback) => {
   try {
     await request.get({ url: SERVICE_ENDPOINT });
   } catch (e) {
-    if (e.statusCode === 500) {
-      // This will queue the problem to the dead letter queue for the given enrichment plugin.
-      return callback(e);
-    }
+    // This will queue the problem to EnrichmentFieldsBudgetFailuresQueue.
+    return callback(e);
   }
 
   /*
