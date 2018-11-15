@@ -47,6 +47,8 @@ functions:
       API:
         Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
       INDEX: ${self:custom.esIndex}
+      SERVICE_CENTROID_ENRICHMENT: https://europa.eu/webtools/rest/gisco/nominatim/reverse.php
+      SERVICE_COUNTRY_ENRICHMENT: http://europa.eu/webtools/rest/gisco/nominatim/search.php
     events:
       - sns:
           arn:
@@ -59,3 +61,20 @@ functions:
                 - Ref: "AWS::AccountId"
                 - ":${self:provider.stage}-onEnrichRecordRequested"
           topicName: ${self:provider.stage}-onEnrichRecordRequested
+
+resources:
+  Resources:
+    EnrichmentFieldsLocationFailuresQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: ${self:provider.stage}-${self:service}-failures
+        MessageRetentionPeriod: '1209600'
+        VisibilityTimeout: '60'
+    OnEnrichRecordRequestedLambdaFunction:
+      Type: "AWS::Lambda::Function"
+      Properties:
+        DeadLetterConfig:
+          TargetArn:
+            Fn::GetAtt:
+              - EnrichmentFieldsLocationFailuresQueue
+              - Arn

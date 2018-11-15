@@ -56,6 +56,7 @@ export const handler = async (event, context, callback) => {
       id,
     });
   } catch (e) {
+    // This will queue the problem to EnrichmentFieldsBudgetFailuresQueue.
     return callback(e);
   }
 
@@ -101,6 +102,7 @@ export const handler = async (event, context, callback) => {
       QueueUrl: queueUrl,
     }).promise();
   } catch (e) {
+    // This will queue the problem to EnrichmentFieldsBudgetFailuresQueue.
     return callback(e);
   }
 

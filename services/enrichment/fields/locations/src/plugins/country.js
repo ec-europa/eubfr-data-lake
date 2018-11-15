@@ -13,7 +13,9 @@ export const enrichFromCountry = async loc => {
     qs.city = loc.town;
   }
 
-  const url = 'http://europa.eu/webtools/rest/gisco/nominatim/search.php';
+  const url =
+    process.env.SERVICE_COUNTRY_ENRICHMENT ||
+    'http://europa.eu/webtools/rest/gisco/nominatim/search.php';
 
   let results;
 

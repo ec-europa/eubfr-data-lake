@@ -1,14 +1,22 @@
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 
-import elasticsearch from 'elasticsearch';
 import connectionClass from 'http-aws-es';
+import elasticsearch from 'elasticsearch';
 import isEqual from 'lodash.isequal';
+import request from 'request-promise-native';
 
 import computeId from '@eubfr/lib/computeId';
 import { enrich } from '../lib/enrich';
 
 export const handler = async (event, context, callback) => {
-  const { REGION, QUEUE_NAME, API, INDEX } = process.env;
+  const {
+    REGION,
+    QUEUE_NAME,
+    API,
+    INDEX,
+    SERVICE_CENTROID_ENRICHMENT,
+    SERVICE_COUNTRY_ENRICHMENT,
+  } = process.env;
 
   /*
    * Some checks here before going any further
@@ -79,11 +87,23 @@ export const handler = async (event, context, callback) => {
       id,
     });
   } catch (e) {
+    // This will queue the problem to EnrichmentFieldsLocationFailuresQueue.
     return callback(e);
   }
 
   if (!elasticHit || !elasticHit._source) {
     return callback(null, 'record does not exist, stop enrichment');
+  }
+
+  /**
+   * Verify whether enrichment services are available at the moment.
+   */
+  try {
+    await request.get({ url: SERVICE_CENTROID_ENRICHMENT });
+    await request.get({ url: SERVICE_COUNTRY_ENRICHMENT });
+  } catch (e) {
+    // This will queue the problem to EnrichmentFieldsLocationFailuresQueue.
+    return callback(e);
   }
 
   /*
@@ -116,6 +136,7 @@ export const handler = async (event, context, callback) => {
 
     return callback(null, 'record enriched successfully and sent to queue');
   } catch (e) {
+    // This will queue the problem to EnrichmentFieldsLocationFailuresQueue.
     return callback(e);
   }
 };

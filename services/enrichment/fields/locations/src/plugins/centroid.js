@@ -12,7 +12,9 @@ export const getCountryCode = async loc => {
     lon,
   };
 
-  const url = 'https://europa.eu/webtools/rest/gisco/nominatim/reverse.php';
+  const url =
+    process.env.SERVICE_CENTROID_ENRICHMENT ||
+    'https://europa.eu/webtools/rest/gisco/nominatim/reverse.php';
 
   let results;
 
