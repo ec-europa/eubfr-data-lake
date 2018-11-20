@@ -1,6 +1,6 @@
 import https from 'https';
 
-const getRequest = params =>
+const request = params =>
   new Promise((resolve, reject) => {
     const req = https.request(params, res => {
       let body = [];
@@ -29,4 +29,4 @@ const getRequest = params =>
     req.end();
   });
 
-export default getRequest;
+export default request;
