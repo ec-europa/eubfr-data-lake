@@ -1,16 +1,17 @@
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 import aws4 from 'aws4';
-import https from 'https';
 import url from 'url';
 
-export const handler = (event, context, callback) => {
+import request from '../lib/request';
+
+export const handler = async (event, context, callback) => {
   const { PRODUCER_SECRET_NAME, SIGNED_UPLOADS_API } = process.env;
 
   const apiEndpoint = url.parse(`https://${SIGNED_UPLOADS_API}`);
   const endpoint = '/storage/update';
 
   const secretsManager = new AWS.SecretsManager();
-  const secretsResponse = secretsManager
+  const secretsResponse = await secretsManager
     .getSecretValue({ SecretId: PRODUCER_SECRET_NAME })
     .promise();
 
@@ -46,36 +47,32 @@ export const handler = (event, context, callback) => {
     },
   };
 
-  // can specify any custom option or header as per usual
-  const req = https.request(
-    aws4.sign(params, {
-      accessKeyId,
-      secretAccessKey,
-    }),
-    res => {
-      res.setEncoding('utf8');
-      let body = '';
+  try {
+    const signedUrl = await request(
+      aws4.sign(params, {
+        accessKeyId,
+        secretAccessKey,
+      })
+    );
 
-      res.on('data', data => {
-        body += data;
-      });
+    return callback(null, {
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*', // Required for CORS support to work
+        'Access-Control-Allow-Credentials': true, // Required for cookies, authorization headers with HTTPS
+      },
+      body: JSON.stringify({ signedUrl }),
+    });
+  } catch (e) {
+    const response = {
+      statusCode: 400,
+      body: JSON.stringify({
+        message: e.message,
+      }),
+    };
 
-      res.on('end', () => {
-        callback(null, {
-          statusCode: 200,
-          headers: {
-            'Access-Control-Allow-Origin': '*', // Required for CORS support to work
-            'Access-Control-Allow-Credentials': true, // Required for cookies, authorization headers with HTTPS
-          },
-          body: JSON.stringify({ signedUrl: JSON.parse(body) }),
-        });
-      });
-    }
-  );
-
-  req.on('error', err => callback(err));
-
-  return req.end();
+    return callback(null, response);
+  }
 };
 
 export default handler;
