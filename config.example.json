@@ -2,5 +2,17 @@
   "eubfr_env": "dev",
   "region": "eu-central-1",
   "stage": "uuid",
-  "username": "agri"
+  "username": "agri",
+  "demo": [
+    "agri",
+    "budg",
+    "cordis",
+    "devco",
+    "fts",
+    "home",
+    "iati",
+    "inforegio",
+    "valor",
+    "wifi4eu"
+  ]
 }

@@ -7,7 +7,7 @@ const deleteServerlessService = require('../utils/deleteServerlessService');
 
 const config = require('../../config'); // eslint-disable-line import/no-unresolved
 
-let usernames = Object.keys(config.demo);
+let usernames = config.demo;
 
 if (process.env.EUBFR_USERNAME) {
   usernames = usernames.filter(
