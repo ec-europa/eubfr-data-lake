@@ -1,12 +1,25 @@
-const https = require('https');
-const aws4 = require('aws4');
-const url = require('url');
+import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
+import aws4 from 'aws4';
+import https from 'https';
+import url from 'url';
 
-export const handler = (event, context, callback) => {
-  const apiEndpoint = url.parse(`https://${process.env.SIGNED_UPLOADS_API}`);
+export const handler = async (event, context, callback) => {
+  const { PRODUCER_SECRET_NAME, SIGNED_UPLOADS_API } = process.env;
+
+  const apiEndpoint = url.parse(`https://${SIGNED_UPLOADS_API}`);
   const endpoint = '/storage/signed_url';
-  const accessKeyId = process.env.PRODUCER_KEY_ID;
-  const secretAccessKey = process.env.PRODUCER_SECRET_ACCESS_KEY;
+
+  const secretsManager = new AWS.SecretsManager();
+  const secretsResponse = secretsManager
+    .getSecretValue({ SecretId: PRODUCER_SECRET_NAME })
+    .promise();
+
+  const secrets = JSON.parse(secretsResponse.SecretString);
+
+  const {
+    AWS_ACCESS_KEY_ID: accessKeyId,
+    AWS_SECRET_ACCESS_KEY: secretAccessKey,
+  } = secrets;
 
   const producerKey =
     event.queryStringParameters && event.queryStringParameters.key

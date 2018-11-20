@@ -2,31 +2,5 @@
   "eubfr_env": "dev",
   "region": "eu-central-1",
   "stage": "uuid",
-  "username": "agri",
-  "demo": {
-    "agri": {
-      "AWS_ACCESS_KEY_ID": "",
-      "AWS_SECRET_ACCESS_KEY": ""
-    },
-    "budg": {
-      "AWS_ACCESS_KEY_ID": "",
-      "AWS_SECRET_ACCESS_KEY": ""
-    },
-    "iati": {
-      "AWS_ACCESS_KEY_ID": "",
-      "AWS_SECRET_ACCESS_KEY": ""
-    },
-    "inforegio": {
-      "AWS_ACCESS_KEY_ID": "",
-      "AWS_SECRET_ACCESS_KEY": ""
-    },
-    "valor": {
-      "AWS_ACCESS_KEY_ID": "",
-      "AWS_SECRET_ACCESS_KEY": ""
-    },
-    "wifi4eu": {
-      "AWS_ACCESS_KEY_ID": "",
-      "AWS_SECRET_ACCESS_KEY": ""
-    }
-  }
+  "username": "agri"
 }
