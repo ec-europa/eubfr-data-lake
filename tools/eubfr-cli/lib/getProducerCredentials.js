@@ -1,32 +1,32 @@
-const config = require('../../../config.json'); // eslint-disable-line import/no-unresolved
+const AWS = require('aws-sdk');
 
 /**
- *
  *  Returns an object with credentials for AWS' aws4 signed request for a given producer.
  *
  * @param {String} producer Producer's name, i.e. agri, budg, etc.
  * @returns {Object} Producer's AWS IAM secrets.
  *
  */
-module.exports = producer => {
-  if (!config) {
-    return console.error('Please create config.json file in project root.');
-  }
+module.exports = async producer => {
+  const secretsManager = new AWS.SecretsManager();
 
-  if (config.demo[producer]) {
-    const credentials = config.demo[producer];
-    const accessKeyId = credentials.AWS_ACCESS_KEY_ID;
-    const secretAccessKey = credentials.AWS_SECRET_ACCESS_KEY;
+  try {
+    const secretsResponse = await secretsManager
+      .getSecretValue({ SecretId: `producers/${producer}` })
+      .promise();
 
-    if (!accessKeyId || !secretAccessKey) {
-      return console.error(`Please verify ${producer}'s credentials.`);
-    }
+    const secrets = JSON.parse(secretsResponse.SecretString);
+
+    const {
+      AWS_ACCESS_KEY_ID: accessKeyId,
+      AWS_SECRET_ACCESS_KEY: secretAccessKey,
+    } = secrets;
+
     return {
       accessKeyId,
       secretAccessKey,
     };
+  } catch (e) {
+    return console.error(`Couldn't find credentials for producer ${producer}`);
   }
-
-  console.error(`Couldn't find credentials for producer ${producer}`);
-  return {};
 };
