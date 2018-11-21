@@ -4,7 +4,7 @@ import url from 'url';
 
 import request from '../lib/request';
 
-export const handler = async (event, context, callback) => {
+export const handler = async event => {
   const { PRODUCER_SECRET_NAME, SIGNED_UPLOADS_API } = process.env;
 
   const apiEndpoint = url.parse(`https://${SIGNED_UPLOADS_API}`);
@@ -28,14 +28,12 @@ export const handler = async (event, context, callback) => {
       : undefined;
 
   if (!producerKey) {
-    const response = {
+    return {
       statusCode: 400,
       body: JSON.stringify({
         message: `Missing key parameter`,
       }),
     };
-
-    return callback(null, response);
   }
 
   const params = {
@@ -55,23 +53,21 @@ export const handler = async (event, context, callback) => {
       })
     );
 
-    return callback(null, {
+    return {
       statusCode: 200,
       headers: {
         'Access-Control-Allow-Origin': '*', // Required for CORS support to work
         'Access-Control-Allow-Credentials': true, // Required for cookies, authorization headers with HTTPS
       },
       body: JSON.stringify({ signedUrl }),
-    });
+    };
   } catch (e) {
-    const response = {
+    return {
       statusCode: 400,
       body: JSON.stringify({
         message: e.message,
       }),
     };
-
-    return callback(null, response);
   }
 };
 
