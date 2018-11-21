@@ -63,14 +63,7 @@ export const getEuroValue = async (
       },
     });
   } catch (e) {
-    if (e.statusCode === 500) {
-      // Frequent scenario, error is short and simple, almost expected
-      console.error(`${service} is not available.`);
-    } else {
-      // Some less frequent scenario, give all the details.
-      console.error('error', url, qs, e);
-    }
-    return euroValue;
+    throw e;
   }
 
   if (

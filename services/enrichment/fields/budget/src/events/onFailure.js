@@ -1,8 +1,7 @@
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
-import request from 'request-promise-native';
 
 export const handler = async event => {
-  const { SERVICE_NAME, SERVICE_ENDPOINT } = process.env;
+  const { SERVICE_NAME } = process.env;
 
   const lambda = new AWS.Lambda({ apiVersion: '2015-03-31' });
 
@@ -24,11 +23,7 @@ export const handler = async event => {
   const functionName = functionParts.join('-');
 
   try {
-    // If service is not available, the handler will fail.
-    // And since it is attached to an SQS queue, it will retry until it succeeds.
-    await request.get({ url: SERVICE_ENDPOINT });
-
-    // Execute original handler if the service has come back online.
+    // Re-try original handler by re-running it.
     const params = {
       FunctionName: functionName,
       InvocationType: 'Event',
@@ -36,8 +31,7 @@ export const handler = async event => {
       Payload: Buffer.from(eventInitial, 'utf8'),
     };
 
-    const result = await lambda.invoke(params).promise();
-    return result;
+    await lambda.invoke(params).promise();
   } catch (e) {
     throw e;
   }
