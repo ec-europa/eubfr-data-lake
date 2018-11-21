@@ -33,6 +33,9 @@ provider:
     - Effect: "Allow"
       Action: "es:*"
       Resource: "arn:aws:es:${self:provider.region}:*:domain/*"
+    - Effect: "Allow"
+      Action: "lambda:InvokeFunction"
+      Resource: "*"
 
 functions:
   onEnrichRecordRequested:
@@ -48,7 +51,7 @@ functions:
         Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
       INDEX: ${self:custom.esIndex}
       SERVICE_CENTROID_ENRICHMENT: https://europa.eu/webtools/rest/gisco/nominatim/reverse.php
-      SERVICE_COUNTRY_ENRICHMENT: http://europa.eu/webtools/rest/gisco/nominatim/search.php
+      SERVICE_COUNTRY_ENRICHMENT: https://europa.eu/webtools/rest/gisco/nominatim/search.php
     events:
       - sns:
           arn:
@@ -61,6 +64,19 @@ functions:
                 - Ref: "AWS::AccountId"
                 - ":${self:provider.stage}-onEnrichRecordRequested"
           topicName: ${self:provider.stage}-onEnrichRecordRequested
+  onFailure:
+    handler: src/events/onFailure.handler
+    name: ${self:provider.stage}-${self:service}-failures
+    memorySize: 256
+    timeout: 60
+    environment:
+      SERVICE_NAME: ${self:service}
+    events:
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - EnrichmentFieldsLocationFailuresQueue
+              - Arn
 
 resources:
   Resources:

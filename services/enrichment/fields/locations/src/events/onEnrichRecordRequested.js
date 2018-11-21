@@ -3,26 +3,19 @@ import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependenc
 import connectionClass from 'http-aws-es';
 import elasticsearch from 'elasticsearch';
 import isEqual from 'lodash.isequal';
-import request from 'request-promise-native';
 
 import computeId from '@eubfr/lib/computeId';
 import { enrich } from '../lib/enrich';
 
-export const handler = async (event, context, callback) => {
-  const {
-    REGION,
-    QUEUE_NAME,
-    API,
-    INDEX,
-    SERVICE_CENTROID_ENRICHMENT,
-    SERVICE_COUNTRY_ENRICHMENT,
-  } = process.env;
+// Throwing errors within this handler will enqueue issues to EnrichmentFieldsLocationFailuresQueue.
+export const handler = async (event, context) => {
+  const { REGION, QUEUE_NAME, API, INDEX } = process.env;
 
   /*
    * Some checks here before going any further
    */
   if (!event.Records) {
-    return callback('No record');
+    return 'No record';
   }
 
   // Only work on the first record
@@ -30,7 +23,7 @@ export const handler = async (event, context, callback) => {
 
   // Was the lambda triggered correctly? Is the file extension supported? etc.
   if (!snsRecord || snsRecord.EventSource !== 'aws:sns') {
-    return callback('Bad record');
+    return 'Bad record';
   }
 
   /*
@@ -41,10 +34,10 @@ export const handler = async (event, context, callback) => {
   const record = JSON.parse(snsRecord.Sns.Message);
 
   /**
-   * 1. Pre-check if the document needs to be enriched
+   * Pre-check if the document needs to be enriched
    */
   if (!record.project_locations || record.project_locations.length === 0) {
-    return callback(null, 'no locations to enrich');
+    return 'no locations to enrich';
   }
 
   const numLocations = record.project_locations.length;
@@ -57,11 +50,11 @@ export const handler = async (event, context, callback) => {
     numLocationsEnriched &&
     numLocations === numLocationsEnriched
   ) {
-    return callback(null, 'nothing to do');
+    return 'nothing to do';
   }
 
   /**
-   * 2. If the pre-check passes, retrieve the existing record
+   * If the pre-check passes, retrieve the existing record
    */
 
   // Elasticsearch client instantiation
@@ -87,36 +80,24 @@ export const handler = async (event, context, callback) => {
       id,
     });
   } catch (e) {
-    // This will queue the problem to EnrichmentFieldsLocationFailuresQueue.
-    return callback(e);
+    console.error(`Project with ID ${id} was not found in Elasticsearch.`);
+    throw e;
   }
 
   if (!elasticHit || !elasticHit._source) {
-    return callback(null, 'record does not exist, stop enrichment');
-  }
-
-  /**
-   * Verify whether enrichment services are available at the moment.
-   */
-  try {
-    await request.get({ url: SERVICE_CENTROID_ENRICHMENT });
-    await request.get({ url: SERVICE_COUNTRY_ENRICHMENT });
-  } catch (e) {
-    // This will queue the problem to EnrichmentFieldsLocationFailuresQueue.
-    return callback(e);
+    return 'record does not exist, stop enrichment';
   }
 
   /*
-   * 3. Finally, enrich the record
+   * Finally, enrich the record.
    */
-  const enrichedRecord = await enrich(elasticHit._source);
-
-  if (!enrichedRecord || isEqual(elasticHit._source, enrichedRecord)) {
-    return callback(null, 'record not enriched');
-  }
-
-  // SEND TO SQS QUEUE
   try {
+    const enrichedRecord = await enrich(elasticHit._source);
+
+    if (!enrichedRecord || isEqual(elasticHit._source, enrichedRecord)) {
+      return 'record not enriched';
+    }
+
     // Get Account ID from lambda function arn in the context
     const accountId = context.invokedFunctionArn.split(':')[4];
 
@@ -134,10 +115,9 @@ export const handler = async (event, context, callback) => {
       QueueUrl: queueUrl,
     }).promise();
 
-    return callback(null, 'record enriched successfully and sent to queue');
+    return 'record enriched successfully and sent to queue';
   } catch (e) {
-    // This will queue the problem to EnrichmentFieldsLocationFailuresQueue.
-    return callback(e);
+    throw e;
   }
 };
 

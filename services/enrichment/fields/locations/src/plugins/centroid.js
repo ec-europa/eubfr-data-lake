@@ -1,5 +1,6 @@
 import request from 'request-promise-native';
 
+// Throwing errors in this helper will queue issue a dead letter queue.
 export const getCountryCode = async loc => {
   // Use centroid to determine country_code
   const { lat, lon } = loc.centroid;
@@ -29,7 +30,7 @@ export const getCountryCode = async loc => {
     });
   } catch (e) {
     console.error(url, qs, e);
-    return loc; // location not enriched
+    throw e;
   }
 
   if (results && results.address && results.address.country_code) {
@@ -75,7 +76,7 @@ export const enrichFromCentroid = async loc => {
     });
   } catch (e) {
     console.error(url, qs, e);
-    return loc; // location not enriched
+    throw e;
   }
 
   if (results.results && results.results.length) {
