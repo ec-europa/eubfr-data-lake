@@ -245,12 +245,12 @@ const getPartners = record => {
   for (let i = 1; i <= partnerKeys.length; i += 1) {
     if (record[`Partner ${i} name`]) {
       partnerArray.push({
-        name: record[`Partner ${i} name`],
-        type: record[`Partner ${i} organisation type`],
-        address: record[`Partner ${i} address`],
-        region: record[`Partner ${i} region`],
+        name: record[`Partner ${i} name`] || '',
+        type: record[`Partner ${i} organisation type`] || '',
+        address: record[`Partner ${i} address`] || '',
+        region: record[`Partner ${i} region`] || '',
         role: 'partner',
-        country: record[`Partner ${i} country`],
+        country: record[`Partner ${i} country`] || '',
         website: record[`Partner ${i} website`] || '',
         phone: '',
         email: '',

@@ -6,7 +6,7 @@ import mapper from '../../../src/lib/transform';
 import testRecord from '../../stubs/record.json';
 import testRecord2 from '../../stubs/record2.json';
 import testRecordFullYear from '../../stubs/record_full_year.json';
-import testRecord_Culture_2007_2013_Projects_Overview from '../../stubs/record_Culture_2007_2013_Projects_Overview.json';
+import testRecordCulture20072013ProjectsOverview from '../../stubs/record_Culture_2007_2013_Projects_Overview.json';
 
 describe('DG EAC XLS transformer', () => {
   let yearTwoDigits = {};
@@ -18,9 +18,7 @@ describe('DG EAC XLS transformer', () => {
     yearTwoDigits = mapper(testRecord);
     typeWellFormated = mapper(testRecord2);
     yearFourDigits = mapper(testRecordFullYear);
-    cultureProjectsOverview = mapper(
-      testRecord_Culture_2007_2013_Projects_Overview
-    );
+    cultureProjectsOverview = mapper(testRecordCulture20072013ProjectsOverview);
   });
 
   test('Returns null when record is not provided', () => {

@@ -76,6 +76,7 @@ Preprocess `programme_name`.
 
 Seeks for values in the following precedence:
 
+- `Programme Funding`
 - `Programme`
 
 **Parameters**
@@ -90,6 +91,7 @@ Preprocess `project_id`.
 
 Seeks for values in the following precedence:
 
+- `Project Identifier`
 - `Project Number`
 
 **Parameters**
@@ -222,8 +224,6 @@ Seeks for values in the following precedence:
 Returns **[Array][5]** A list of {Partner} objects
 
 ### formatDate
-
-Format date
 
 **Parameters**
 
