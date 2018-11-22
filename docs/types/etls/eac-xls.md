@@ -14,11 +14,180 @@ Transform function: [implementation details][2]
 
 Returns **Project** JSON matching the type fields.
 
+### getAction
+
+Preprocess `action`.
+
+Seeks for values in the following precedence:
+
+- `Action`
+
+**Parameters**
+
+- `record` **[Object][3]** The row received from parsed file
+
+Returns **[String][4]**
+
+### getBudget
+
+Preprocess `budget`.
+
+Seeks for values in the following precedence:
+
+- `EU Grant award in euros ...`
+
+**Parameters**
+
+- `record` **[Object][3]** The row received from parsed file
+
+Returns **Budget**
+
+### getCallYear
+
+Preprocess `call_year`.
+
+Seeks for values in the following precedence:
+
+- `Call year`
+
+**Parameters**
+
+- `record` **[Object][3]** The row received from parsed file
+
+Returns **[String][4]**
+
+### getDescription
+
+Preprocess `description`.
+
+Seeks for values in the following precedence:
+
+- `Project Summary`
+
+**Parameters**
+
+- `record` **[Object][3]** The row received from parsed file
+
+Returns **[String][4]**
+
+### getProgramme
+
+Preprocess `programme_name`.
+
+Seeks for values in the following precedence:
+
+- `Programme`
+
+**Parameters**
+
+- `record` **[Object][3]** The row received from parsed file
+
+Returns **[String][4]**
+
+### getProjectId
+
+Preprocess `project_id`.
+
+Seeks for values in the following precedence:
+
+- `Project Number`
+
+**Parameters**
+
+- `record` **[Object][3]** The row received from parsed file
+
+Returns **[String][4]**
+
+### getLocations
+
+Preprocess locations.
+
+Seeks for values in the following precedence:
+
+- `Participating countries`
+
+**Parameters**
+
+- `record` **[Object][3]** The row received from parsed file
+
+Returns **[Array][5]** List of {Location} objects for `project_locations` field
+
+### getProjectWebsite
+
+Preprocess `project_website`.
+
+Seeks for values in the following precedence:
+
+- `Project Website`
+
+**Parameters**
+
+- `record` **[Object][3]** The row received from parsed file
+
+Returns **[String][4]**
+
+### getResults
+
+Preprocess `results`.
+
+Seeks for values in the following precedence:
+
+- `Results Available`
+- `Results Platform Project Card`
+
+**Parameters**
+
+- `record` **[Object][3]** The row received from parsed file
+
+Returns **Result**
+
+### getProjectStatus
+
+Preprocess `status`.
+
+Seeks for values in the following precedence:
+
+- `Project Status`
+
+**Parameters**
+
+- `record` **[Object][3]** The row received from parsed file
+
+Returns **[String][4]**
+
+### getSubProgramme
+
+Preprocess `sub_programme_name`.
+
+Seeks for values in the following precedence:
+
+- `Sub-programme`
+
+**Parameters**
+
+- `record` **[Object][3]** The row received from parsed file
+
+Returns **[String][4]**
+
+### getSuccessStory
+
+Preprocess `success_story`.
+
+Seeks for values in the following precedence:
+
+- `Is Success Story`
+
+**Parameters**
+
+- `record` **[Object][3]** The row received from parsed file
+
+Returns **[String][4]**
+
 ### getCoordinators
 
-Preprocess coordinators
+Preprocess coordinators.
 
-Input fields taken from the `record` are:
+Seeks for values in the following precedence:
 
 - `Coordinator's name`
 - `Coordinator organisation type`
@@ -31,43 +200,13 @@ Input fields taken from the `record` are:
 
 - `record` **[Object][3]** The row received from harmonized storage
 
-Returns **[Array][4]** A list with a single {Coordinator} object
-
-### formatDate
-
-Format date
-
-**Parameters**
-
-- `date` **[Date][5]** Date in "10/9/14" (MM/DD/YY) or "10/9/2014" (MM/DD/YYYY) format
-
-**Examples**
-
-```javascript
-input => '10/9/2014';
-output => '2014-10-09T00:00:00.000Z';
-```
-
-Returns **[Date][5]** The date formatted into an ISO 8601 date format
-
-### getProjectTitle
-
-Preprocess `title`
-Input fields taken from the `record` are:
-
-- `Project Title`
-
-**Parameters**
-
-- `record` **[Object][3]** The row received from harmonized storage
-
-Returns **[String][6]**
+Returns **[Array][5]** A list with a single {Coordinator} object
 
 ### getPartners
 
-Preprocess partners
+Preprocess partners.
 
-Input fields taken from the `record` are:
+Seeks for values in the following precedence:
 
 - `Partner {n} name`
 - `Partner {n} organisation type`
@@ -80,77 +219,70 @@ Input fields taken from the `record` are:
 
 - `record` **[Object][3]** The row received from harmonized storage
 
-Returns **[Array][4]** A list of {Partner} objects
+Returns **[Array][5]** A list of {Partner} objects
 
-### getLocations
+### formatDate
 
-Preprocess locations
+Format date
+
+**Parameters**
+
+- `date` **[Date][6]** Date in "10/9/14" (MM/DD/YY) or "10/9/2014" (MM/DD/YYYY) format
+
+**Examples**
+
+```javascript
+input => '10/9/2014';
+output => '2014-10-09T00:00:00.000Z';
+```
+
+Returns **[Date][6]** The date formatted into an ISO 8601 date format
+
+### getStartDate
+
+Get end date before formatting.
 
 Input fields taken from the `record` are:
 
-- `Participating countries`
+- `Start Date`
 
 **Parameters**
 
 - `record` **[Object][3]** The row received from parsed file
 
-Returns **[Array][4]** List of {Location} objects for `project_locations` field
+Returns **[String][4]**
 
-### getProjectId
+### getEndDate
 
-Preprocess `project_id`
+Get end date before formatting.
+
+Input fields taken from the `record` are:
+
+- `End Date`
+
+**Parameters**
+
+- `record` **[Object][3]** The row received from parsed file
+
+Returns **[String][4]**
+
+### getProjectTitle
+
+Preprocess `title`.
+
 Seeks for values in the following precedence:
 
-- `Project Number`
+- `Project Title`
 
 **Parameters**
 
-- `record` **[Object][3]** The row received from parsed file
+- `record` **[Object][3]** The row received from harmonized storage
 
-Returns **[String][6]**
-
-### getCallYear
-
-Preprocess `call_year`
-Seeks for values in the following precedence:
-
-- `Call year`
-
-**Parameters**
-
-- `record` **[Object][3]** The row received from parsed file
-
-Returns **[String][6]**
-
-### getDescription
-
-Preprocess `description`
-Seeks for values in the following precedence:
-
-- `Project Summary`
-
-**Parameters**
-
-- `record` **[Object][3]** The row received from parsed file
-
-Returns **[String][6]**
-
-### getProjectWebsite
-
-Preprocess `project_website`
-Seeks for values in the following precedence:
-
-- `Project Website`
-
-**Parameters**
-
-- `record` **[Object][3]** The row received from parsed file
-
-Returns **[String][6]**
+Returns **[String][4]**
 
 ### getTypes
 
-Converts a single string with commas to an array
+Converts a single string with commas to an array.
 
 Input fields taken from the `record` are:
 
@@ -167,78 +299,11 @@ input => 'foo, bar, baz';
 output => ['foo', 'bar', 'baz'];
 ```
 
-Returns **[Array][4]** List of activity types
-
-### getProjectStatus
-
-Preprocess `status`
-Seeks for values in the following precedence:
-
-- `Project Status`
-
-**Parameters**
-
-- `record` **[Object][3]** The row received from parsed file
-
-Returns **[String][6]**
-
-### getSubProgramme
-
-Preprocess `sub_programme_name`
-Seeks for values in the following precedence:
-
-- `Sub-programme`
-
-**Parameters**
-
-- `record` **[Object][3]** The row received from parsed file
-
-Returns **[String][6]**
-
-### getSuccessStory
-
-Preprocess `success_story`
-Seeks for values in the following precedence:
-
-- `Is Success Story`
-
-**Parameters**
-
-- `record` **[Object][3]** The row received from parsed file
-
-Returns **[String][6]**
-
-### getStartDate
-
-Get end date before formatting.
-
-Input fields taken from the `record` are:
-
-- `Start Date`
-
-**Parameters**
-
-- `record` **[Object][3]** The row received from parsed file
-
-Returns **[String][6]**
-
-### getEndDate
-
-Get end date before formatting.
-
-Input fields taken from the `record` are:
-
-- `End Date`
-
-**Parameters**
-
-- `record` **[Object][3]** The row received from parsed file
-
-Returns **[String][6]**
+Returns **[Array][5]** List of activity types
 
 [1]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/eac/xls/test/stubs/record.json
 [2]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/eac/xls/src/lib/transform.js
 [3]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
-[4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
-[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date
-[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date
