@@ -6,16 +6,21 @@ import mapper from '../../../src/lib/transform';
 import testRecord from '../../stubs/record.json';
 import testRecord2 from '../../stubs/record2.json';
 import testRecordFullYear from '../../stubs/record_full_year.json';
+import testRecord_Culture_2007_2013_Projects_Overview from '../../stubs/record_Culture_2007_2013_Projects_Overview.json';
 
 describe('DG EAC XLS transformer', () => {
   let yearTwoDigits = {};
   let typeWellFormated = {};
   let yearFourDigits = {};
+  let cultureProjectsOverview = {};
 
   beforeAll(() => {
     yearTwoDigits = mapper(testRecord);
     typeWellFormated = mapper(testRecord2);
     yearFourDigits = mapper(testRecordFullYear);
+    cultureProjectsOverview = mapper(
+      testRecord_Culture_2007_2013_Projects_Overview
+    );
   });
 
   test('Returns null when record is not provided', () => {
@@ -32,5 +37,9 @@ describe('DG EAC XLS transformer', () => {
 
   test('Produces correct JSON output structure, year in 4 digits', () => {
     expect(yearFourDigits).toMatchSnapshot();
+  });
+
+  test('Produces correct JSON output structure, given Culture_2007_2013_Projects_Overview_2018-11-22 file from http://ec.europa.eu/programmes/creative-europe/projects/ce-projects-compendium/', () => {
+    expect(cultureProjectsOverview).toMatchSnapshot();
   });
 });

@@ -73,25 +73,29 @@ const getDescription = record => record['Project Summary'] || '';
  * Preprocess `programme_name`.
  *
  * Seeks for values in the following precedence:
+ * - `Programme Funding`
  * - `Programme`
  *
  * @memberof EacXlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
-const getProgramme = record => record.Programme || '';
+const getProgramme = record =>
+  record.Programme || record['Programme Funding'] || '';
 
 /**
  * Preprocess `project_id`.
  *
  * Seeks for values in the following precedence:
+ * - `Project Identifier`
  * - `Project Number`
  *
  * @memberof EacXlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
-const getProjectId = record => record['Project Number'] || '';
+const getProjectId = record =>
+  record['Project Number'] || record['Project Identifier'] || '';
 
 /**
  * Preprocess locations.
@@ -258,7 +262,7 @@ const getPartners = record => {
 };
 
 /**
- * Format date
+ *
  *
  * @memberof EacXlsTransform
  * @param {Date} date Date in "10/9/14" (MM/DD/YY) or "10/9/2014" (MM/DD/YYYY) format
