@@ -140,7 +140,8 @@ const getLocations = record =>
     }));
 
 /**
- * Preprocess `project_id`
+ * Preprocess `project_id`.
+ *
  * Seeks for values in the following precedence:
  * - `Project Number`
  *
@@ -184,8 +185,7 @@ const getDescription = record => record['Project Summary'] || '';
 const getProjectWebsite = record => record['Project Website'] || '';
 
 /**
- *
- * Converts a single string with commas to an array
+ * Converts a single string with commas to an array.
  *
  * Input fields taken from the `record` are:
  *
@@ -310,9 +310,6 @@ export default (record: Object): Project | null => {
     result: record['Results Platform Project Card'],
   };
 
-  // Preprocess type
-  const typeArray = getTypes(record);
-
   // Map the fields
   return {
     action: record.Action,
@@ -341,6 +338,6 @@ export default (record: Object): Project | null => {
       to_precision: 'day',
     },
     title: getProjectTitle(record),
-    type: typeArray,
+    type: getTypes(record),
   };
 };
