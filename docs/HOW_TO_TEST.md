@@ -35,7 +35,7 @@ Follow [these instructions](./GETTING_STARTED.md) to deploy a project under your
 
 ## Send data
 
-Open the demo dashboard: `http://eubfr-<your_stage_name>-demo-budg-dashboard.s3-website.eu-central-1.amazonaws.com/`.
+Open the demo dashboard: `http://eubfr-<your_stage_name>-demo-agri-dashboard.s3-website.eu-central-1.amazonaws.com/`.
 
 This page is a demo of what a producer dashboard could provide. From there, upload a test file (CSV, XLS). Then, hit the "Refresh" button to see if your file appears in the meta index.
 

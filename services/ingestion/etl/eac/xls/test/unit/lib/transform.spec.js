@@ -7,7 +7,7 @@ import testRecord from '../../stubs/record.json';
 import testRecord2 from '../../stubs/record2.json';
 import testRecordFullYear from '../../stubs/record_full_year.json';
 
-describe('DG BUDG XLS transformer', () => {
+describe('DG EAC XLS transformer', () => {
   let yearTwoDigits = {};
   let typeWellFormated = {};
   let yearFourDigits = {};

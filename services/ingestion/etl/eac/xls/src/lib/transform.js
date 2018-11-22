@@ -16,7 +16,7 @@ import type { Project } from '@eubfr/types';
  * - `Coordinator's country`
  * - `Coordinator's website`
  *
- * @memberof BudgXlsTransform
+ * @memberof EacXlsTransform
  * @param {Object} record The row received from harmonized storage
  * @returns {Array} A list with a single {Coordinator} object
  */
@@ -37,7 +37,7 @@ const getCoordinators = record => [
 /**
  * Format date
  *
- * @memberof BudgXlsTransform
+ * @memberof EacXlsTransform
  * @param {Date} date Date in "10/9/14" (MM/DD/YY) or "10/9/2014" (MM/DD/YYYY) format
  * @returns {Date} The date formatted into an ISO 8601 date format
  *
@@ -65,7 +65,7 @@ const formatDate = date => {
  * Input fields taken from the `record` are:
  * - `Project Title`
  *
- * @memberof BudgXlsTransform
+ * @memberof EacXlsTransform
  * @param {Object} record The row received from harmonized storage
  * @returns {String}
  */
@@ -83,7 +83,7 @@ const getProjectTitle = record => record['Project Title'] || '';
  * - `Partner {n} country`
  * - `Partner {n} website`
  *
- * @memberof BudgXlsTransform
+ * @memberof EacXlsTransform
  * @param {Object} record The row received from harmonized storage
  * @returns {Array} A list of {Partner} objects
  */
@@ -120,7 +120,7 @@ const getPartners = record => {
  *
  * - `Participating countries`
  *
- * @memberof BudgXlsTransform
+ * @memberof EacXlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {Array} List of {Location} objects for `project_locations` field
  */
@@ -144,7 +144,7 @@ const getLocations = record =>
  * Seeks for values in the following precedence:
  * - `Project Number`
  *
- * @memberof BudgXlsTransform
+ * @memberof EacXlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
@@ -155,7 +155,7 @@ const getProjectId = record => record['Project Number'] || '';
  * Seeks for values in the following precedence:
  * - `Call year`
  *
- * @memberof BudgXlsTransform
+ * @memberof EacXlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
@@ -166,7 +166,7 @@ const getCallYear = record => record['Call year'] || '';
  * Seeks for values in the following precedence:
  * - `Project Summary`
  *
- * @memberof BudgXlsTransform
+ * @memberof EacXlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
@@ -177,7 +177,7 @@ const getDescription = record => record['Project Summary'] || '';
  * Seeks for values in the following precedence:
  * - `Project Website`
  *
- * @memberof BudgXlsTransform
+ * @memberof EacXlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
@@ -191,7 +191,7 @@ const getProjectWebsite = record => record['Project Website'] || '';
  *
  * - `Activity type`
  *
- * @memberof BudgXlsTransform
+ * @memberof EacXlsTransform
  * @param {Object} record The row received from harmonized storage
  * @returns {Array} List of activity types
  *
@@ -213,7 +213,7 @@ const getTypes = record =>
  * Seeks for values in the following precedence:
  * - `Project Status`
  *
- * @memberof BudgXlsTransform
+ * @memberof EacXlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
@@ -224,7 +224,7 @@ const getProjectStatus = record => record['Project Status'] || '';
  * Seeks for values in the following precedence:
  * - `Sub-programme`
  *
- * @memberof BudgXlsTransform
+ * @memberof EacXlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
@@ -235,7 +235,7 @@ const getSubProgramme = record => record['Sub-programme'] || '';
  * Seeks for values in the following precedence:
  * - `Is Success Story`
  *
- * @memberof BudgXlsTransform
+ * @memberof EacXlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
@@ -247,7 +247,7 @@ const getSuccessStory = record => record['Is Success Story'] || '';
  * Input fields taken from the `record` are:
  * - `Start Date`
  *
- * @memberof BudgXlsTransform
+ * @memberof EacXlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
@@ -259,19 +259,19 @@ const getStartDate = record => record['Start date'] || null;
  * Input fields taken from the `record` are:
  * - `End Date`
  *
- * @memberof BudgXlsTransform
+ * @memberof EacXlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
 const getEndDate = record => record['End date'] || null;
 
 /**
- * Map fields for BUDG producer, XLS file types
+ * Map fields for EAC producer, XLS file types
  *
- * Example input data: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/budg/xls/test/stubs/record.json|stub}
+ * Example input data: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/eac/xls/test/stubs/record.json|stub}
  *
- * Transform function: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/budg/xls/src/lib/transform.js|implementation details}
- * @name BudgXlsTransform
+ * Transform function: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/eac/xls/src/lib/transform.js|implementation details}
+ * @name EacXlsTransform
  * @param {Object} record Piece of data to transform before going to harmonized storage.
  * @returns {Project} JSON matching the type fields.
  */
@@ -327,7 +327,7 @@ export default (record: Object): Project | null => {
     project_website: getProjectWebsite(record),
     complete: true,
     related_links: [],
-    reporting_organisation: 'BUDG',
+    reporting_organisation: 'EAC',
     results: resultObject,
     status: getProjectStatus(record),
     sub_programme_name: getSubProgramme(record),

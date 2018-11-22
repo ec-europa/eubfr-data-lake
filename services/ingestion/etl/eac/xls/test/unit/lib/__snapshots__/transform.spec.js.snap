@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DG BUDG XLS transformer Produces correct JSON output structure, type array well formated 1`] = `
+exports[`DG EAC XLS transformer Produces correct JSON output structure, type array well formated 1`] = `
 Object {
   "action": "Cooperation projects",
   "budget": Object {
@@ -103,7 +103,7 @@ Object {
   ],
   "project_website": "",
   "related_links": Array [],
-  "reporting_organisation": "BUDG",
+  "reporting_organisation": "EAC",
   "results": Object {
     "available": "No",
     "result": "http://ec.europa.eu/programmes/creative-europe/projects/ce-project-details-page/?nodeRef=workspace://SpacesStore/b0cdaa31-b137-4471-a347-3cfbb8c1ea61",
@@ -152,7 +152,7 @@ Object {
 }
 `;
 
-exports[`DG BUDG XLS transformer Produces correct JSON output structure, year in 2 digits 1`] = `
+exports[`DG EAC XLS transformer Produces correct JSON output structure, year in 2 digits 1`] = `
 Object {
   "action": "Cooperation projects",
   "budget": Object {
@@ -255,7 +255,7 @@ Object {
   ],
   "project_website": "",
   "related_links": Array [],
-  "reporting_organisation": "BUDG",
+  "reporting_organisation": "EAC",
   "results": Object {
     "available": "No",
     "result": "http://ec.europa.eu/programmes/creative-europe/projects/ce-project-details-page/?nodeRef=workspace://SpacesStore/b0cdaa31-b137-4471-a347-3cfbb8c1ea61",
@@ -343,7 +343,7 @@ Object {
 }
 `;
 
-exports[`DG BUDG XLS transformer Produces correct JSON output structure, year in 4 digits 1`] = `
+exports[`DG EAC XLS transformer Produces correct JSON output structure, year in 4 digits 1`] = `
 Object {
   "action": "Cooperation projects",
   "budget": Object {
@@ -446,7 +446,7 @@ Object {
   ],
   "project_website": "",
   "related_links": Array [],
-  "reporting_organisation": "BUDG",
+  "reporting_organisation": "EAC",
   "results": Object {
     "available": "No",
     "result": "http://ec.europa.eu/programmes/creative-europe/projects/ce-project-details-page/?nodeRef=workspace://SpacesStore/b0cdaa31-b137-4471-a347-3cfbb8c1ea61",
