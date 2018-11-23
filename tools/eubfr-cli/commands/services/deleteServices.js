@@ -3,7 +3,7 @@ const { promisify } = require('util');
 const { exec } = require('child_process');
 
 const shell = promisify(exec);
-const config = require('../../../../config.json');
+const config = require('../../../../config.json'); // eslint-disable-line import/no-unresolved
 
 // Protect certain stages from deletion.
 if (['test', 'acc', 'prod'].includes(config.stage)) {

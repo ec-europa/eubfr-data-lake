@@ -18,7 +18,7 @@ const shell = promisify(exec);
 const getServiceLocation = require('../../lib/getServiceLocation');
 const getAllProducers = require('../../lib/getAllProducers');
 
-const config = require('../../../../config.json');
+const config = require('../../../../config.json'); // eslint-disable-line import/no-unresolved
 
 const deployDemo = async ({ producer }) => {
   const demos = ['demo-dashboard-server', 'demo-dashboard-client'];
