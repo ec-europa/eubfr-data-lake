@@ -1,9 +1,3 @@
-const path = require('path');
-const { promisify } = require('util');
-const { exec } = require('child_process');
-
-const shell = promisify(exec);
-
 // Get config
 const config = require(`../../../../config.json`); // eslint-disable-line import/no-unresolved
 
@@ -14,33 +8,35 @@ if (['test', 'acc', 'prod'].includes(config.stage)) {
 }
 
 // Utilities
-const getDemos = require('../../lib/getDemos');
-const getServiceLocation = require('../../lib/getServiceLocation');
 const getAllProducers = require('../../lib/getAllProducers');
+const deleteServerlessService = require('../../lib/deleteServerlessService');
 
-const deleteServices = async ({ services }) => {
-  const demos = getDemos();
-  const demosToDelete = producer === '*' ? getAllProducers() : [producer];
-
-  const operations = list.map(async service => {
-    const serviceName = service.service;
-    const cwd = path.resolve(`${getServiceLocation(serviceName)}`);
-
-    try {
-      console.log(`Deleting ${serviceName} ...`);
-      console.time(serviceName);
-      await shell(
-        `npx sls remove --stage ${config.stage} --region ${config.region}`,
-        { cwd }
-      );
-      console.log(`${serviceName} has been deleted.`);
-      return console.timeEnd(serviceName);
-    } catch (e) {
-      return console.error(e);
-    }
+const deleteClient = async username => {
+  // Delete S3 buckets holding static assets (the React apps)
+  await deleteServerlessService('demo-dashboard-client', {
+    isClient: true,
+    username,
   });
 
-  return Promise.all(operations);
+  // Delete also the CloudFormation stacks created by SLS
+  await deleteServerlessService('demo-dashboard-client', { username });
 };
 
-module.exports = deleteServices;
+const deleteServer = async username =>
+  deleteServerlessService('demo-dashboard-server', { username });
+
+const deleteDemo = async ({ producer }) => {
+  const usernames = producer === '*' ? getAllProducers() : [producer];
+
+  const execute = async () =>
+    Promise.all([
+      ...usernames.map(async username =>
+        Promise.all([deleteClient(username), deleteServer(username)])
+      ),
+    ]);
+
+  // Start
+  execute();
+};
+
+module.exports = deleteDemo;

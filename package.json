@@ -12,7 +12,7 @@
     "deploy:services": "npx eubfr-cli services deploy",
     "deploy:resources": "npx eubfr-cli resources deploy",
     "delete": "run-p delete:*",
-    "delete:demo": "./scripts/cleaning/delete-demo.js",
+    "delete:demo": "npx eubfr-cli demo delete",
     "delete:dotfiles": "./scripts/cleaning/delete-dotfiles.sh",
     "delete:resources": "npx eubfr-cli resources delete",
     "delete:services": "npx eubfr-cli services delete",

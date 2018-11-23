@@ -1,10 +1,10 @@
 const { spawn } = require('child_process');
 
 // Get config
-const config = require(`../../config.json`); // eslint-disable-line import/no-unresolved
+const config = require('../../../config.json'); // eslint-disable-line import/no-unresolved
 
 // Helpers
-const resolveSymbolicLink = require('../../lib/resolveSymbolicLink');
+const getServiceLocation = require('../lib/getServiceLocation');
 
 module.exports = (service, { isClient = false, username = '' }) =>
   new Promise((resolve, reject) => {
@@ -25,7 +25,7 @@ module.exports = (service, { isClient = false, username = '' }) =>
         './node_modules/.bin/sls',
         ['client', 'remove', '--no-confirm'],
         {
-          cwd: resolveSymbolicLink(`node_modules/@eubfr/${service}`),
+          cwd: getServiceLocation(service),
           env: process.env,
         }
       );
@@ -34,7 +34,7 @@ module.exports = (service, { isClient = false, username = '' }) =>
         './node_modules/.bin/sls',
         ['remove', `--stage ${config.stage}`, `--region ${config.region}`],
         {
-          cwd: resolveSymbolicLink(`node_modules/@eubfr/${service}`),
+          cwd: getServiceLocation(service),
           env: process.env,
         }
       );
