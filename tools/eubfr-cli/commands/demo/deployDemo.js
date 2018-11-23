@@ -15,52 +15,51 @@ const { exec } = require('child_process');
 const shell = promisify(exec);
 
 // Utilities
-const getDemos = require('../../lib/getDemos');
 const getServiceLocation = require('../../lib/getServiceLocation');
 const getAllProducers = require('../../lib/getAllProducers');
 
 const config = require('../../../../config.json');
 
 const deployDemo = async ({ producer }) => {
-  const demos = getDemos();
-  const demosToDeploy = producer === '*' ? getAllProducers() : [producer];
+  const demos = ['demo-dashboard-server', 'demo-dashboard-client'];
+  const usernames = producer === '*' ? getAllProducers() : [producer];
 
-  for (const producerName of demosToDeploy) {
+  for (const username of usernames) {
     for (const demo of demos) {
       const cwd = path.resolve(`${getServiceLocation(demo)}`);
 
       if (demo.includes('server')) {
-        console.time(`${demo}-${producerName}`);
+        console.time(`${demo}-${username}`);
 
-        console.log(`Server (${producerName}): deploying`);
+        console.log(`Server (${username}): deploying`);
 
-        await shell(`yarn deploy --username ${producerName}`, { cwd });
+        await shell(`yarn deploy --username ${username}`, { cwd });
 
-        console.log(`Server (${producerName}): deployed`);
-        console.timeEnd(`${demo}-${producerName}`);
+        console.log(`Server (${username}): deployed`);
+        console.timeEnd(`${demo}-${username}`);
       }
 
       if (demo.includes('client')) {
-        console.time(`${demo}-${producerName}`);
-        console.log(`Client (${producerName}): clean previous build`);
+        console.time(`${demo}-${username}`);
+        console.log(`Client (${username}): clean previous build`);
         await shell('rm -rf build', { cwd });
 
-        console.log(`Client (${producerName}): building`);
-        process.env.EUBFR_USERNAME = producerName;
+        console.log(`Client (${username}): building`);
+        process.env.EUBFR_USERNAME = username;
         await shell('yarn run build', { cwd, env: process.env });
 
-        console.log(`Client (${producerName}): deploying`);
+        console.log(`Client (${username}): deploying`);
         await shell(
-          `yarn run sls client deploy --username ${producerName} --no-confirm`,
+          `yarn run sls client deploy --username ${username} --no-confirm`,
           { cwd }
         );
 
-        console.log(`Client (${producerName}): deployed`);
-        console.timeEnd(`${demo}-${producerName}`);
+        console.log(`Client (${username}): deployed`);
+        console.timeEnd(`${demo}-${username}`);
         console.log(
           `Demo dashboard is now available at http://eubfr-${
             config.stage
-          }-${demo}-${producerName}.s3-website.${config.region}.amazonaws.com`
+          }-${demo}-${username}.s3-website.${config.region}.amazonaws.com`
         );
       }
     }
