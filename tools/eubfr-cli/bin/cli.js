@@ -52,6 +52,20 @@ program.command('resources', 'Resources management');
 program.command('services', 'Services management');
 
 /**
+ * Manage demo applications
+ *
+ * ### Usage
+ *
+ * ```sh
+ * $ npx eubfr-cli demo -h
+ * ```
+ *
+ * @name Demo
+ * @public
+ */
+program.command('demo', 'Demo applications management');
+
+/**
  * Manage environment
  *
  * ### Usage
