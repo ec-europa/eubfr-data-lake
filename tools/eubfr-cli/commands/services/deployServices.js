@@ -5,11 +5,11 @@ const { exec } = require('child_process');
 const shell = promisify(exec);
 
 // Utilities
-const getAvailableServices = require('../../lib/getAvailableServices');
+const getServices = require('../../lib/getServices');
 const getServiceLocation = require('../../lib/getServiceLocation');
 
 const deployServices = async ({ services, producer }) => {
-  const list = getAvailableServices(services);
+  const list = getServices(services);
   const servicesToDeploy = [];
 
   // Handle producer-specific cases.

@@ -7,16 +7,23 @@ const shell = promisify(exec);
 // Get config
 const config = require(`../../../../config.json`); // eslint-disable-line import/no-unresolved
 
+// Protect certain stages from deletion.
+if (['test', 'acc', 'prod'].includes(config.stage)) {
+  console.log(`You are on protected stage ${config.stage}`);
+  process.exit();
+}
+
 // Utilities
-const getAvailableServices = require('../../lib/getAvailableServices');
+const getServices = require('../../lib/getServices');
 const getServiceLocation = require('../../lib/getServiceLocation');
 
 const deleteServices = async ({ services }) => {
-  const list = getAvailableServices(services);
+  const list = getServices(services);
 
   const operations = list.map(async service => {
     const serviceName = service.service;
     const cwd = path.resolve(`${getServiceLocation(serviceName)}`);
+
     try {
       console.log(`Deleting ${serviceName} ...`);
       console.time(serviceName);

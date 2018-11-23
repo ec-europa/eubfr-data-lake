@@ -11,6 +11,7 @@ const allServices = [
   { service: 'ingestion-etl-agri-csv', exportEnv: false },
   { service: 'ingestion-etl-budg-xls', exportEnv: false },
   { service: 'ingestion-etl-cordis-csv', exportEnv: false },
+  { service: 'ingestion-etl-fts-xls', exportEnv: false },
   { service: 'ingestion-etl-home-xls', exportEnv: false },
   { service: 'ingestion-etl-iati-csv', exportEnv: false },
   { service: 'ingestion-etl-inforegio-json', exportEnv: false },
@@ -29,10 +30,10 @@ module.exports.services = allServices;
 
 /**
  * Returns a list of services available in EUBFR project.
- * Given an empty string to get all available services in the project.
+ * Give an empty array to get all available services in the project.
  *
- * @param {Array} services List of service names, such as `enrichment-saver` or empty.
- * @returns {Array} List of services available, filtered by the parameter name or all when empty.
+ * @param {Array} services List of service names, such as `enrichment-saver`.
+ * @returns {Array} List of services available, filtered by the parameter or all when empty.
  */
 module.exports = services => {
   const selectedServices = [];
