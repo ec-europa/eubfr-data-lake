@@ -10,7 +10,7 @@
     "deploy:documentation": "./scripts/deployment/deploy-documentation.sh",
     "deploy:once": "./scripts/deployment/deploy-once.sh",
     "deploy:services": "./scripts/deployment/deploy.sh",
-    "deploy:resources": "./scripts/deployment/deploy-resources.sh",
+    "deploy:resources": "npx eubfr-cli resources deploy",
     "delete": "run-p delete:*",
     "delete:demo": "./scripts/cleaning/delete-demo.js",
     "delete:dotfiles": "./scripts/cleaning/delete-dotfiles.sh",
