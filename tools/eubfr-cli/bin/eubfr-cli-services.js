@@ -6,8 +6,8 @@ const program = require('commander');
 const hasValidOption = require('../lib/hasValidOption');
 
 // Commands
-const deployServices = require('../commands/services/deployServices');
-const deleteServices = require('../commands/services/deleteServices');
+const deployServices = require('../commands/services/deploy');
+const deleteServices = require('../commands/services/delete');
 
 /**
  *
