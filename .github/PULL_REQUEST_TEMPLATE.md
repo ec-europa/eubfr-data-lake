@@ -6,7 +6,6 @@ Please drop a few lines about the PR: what it does, how to test it, etc.
 
 When you add a new ETL/producer, please check for the following:
 
-- [ ] Producer's secrets are stored safely
 - [ ] Ensure the ETL is added to the corresponding `scripts/` for automated deployment and deletion
 - [ ] There is at least 1 unit test with a jest snapshot for the transform function of the ETL
 - [ ] Update the file PRODUCERS_DATA_AVAILABILITY_GRID.md indicating which fields are available in source data of ETL

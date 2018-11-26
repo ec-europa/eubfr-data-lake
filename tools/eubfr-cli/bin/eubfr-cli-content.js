@@ -27,7 +27,7 @@ const missingRequiredInput = '\n error: Missing required input parameters';
  * ```
  *
  * Examples:
- * 
+ *
  * Single file:
  *
  * ```sh
@@ -69,15 +69,21 @@ program
 
     if (producerIsSet) {
       const { producer } = options;
-      credentials = [{ [producer]: getCredentials(producer) }];
+      credentials = [{ [producer]: await getCredentials(producer) }];
     }
 
     if (!producerIsSet && !filesAreSet) {
       console.log('All files for all producers will be uploaded.');
       const producers = getAllProducers();
-      credentials = producers.map(producer => ({
-        [producer]: getCredentials(producer),
-      }));
+
+      credentials = await Promise.all(
+        producers.map(async producer => {
+          const producerCredentials = await getCredentials(producer);
+          return {
+            [producer]: producerCredentials,
+          };
+        })
+      );
     }
 
     await uploadFiles({ files, credentials, endpoints });
@@ -192,9 +198,15 @@ program
     );
 
     const producers = getAllProducers();
-    const credentials = producers.map(producer => ({
-      [producer]: getCredentials(producer),
-    }));
+
+    const credentials = await Promise.all(
+      producers.map(async producer => {
+        const producerCredentials = await getCredentials(producer);
+        return {
+          [producer]: producerCredentials,
+        };
+      })
+    );
 
     if (options.confirm) {
       await deleteFiles({ files, credentials, endpoints });
