@@ -14,8 +14,8 @@ custom:
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
   # EUBFR_USERNAME comes from cli parameter, but for spawn() and similar, it's from env var.
   EUBFR_USERNAME: ${opt:username, env:EUBFR_USERNAME, file(../../../config.json):username, ''}
-  PRODUCER_KEY_ID: ${opt:PRODUCER_KEY_ID, file(../../../config.json):demo.${self:custom.EUBFR_USERNAME}.AWS_ACCESS_KEY_ID, env:PRODUCER_KEY_ID, ''}
-  PRODUCER_SECRET_ACCESS_KEY: ${opt:PRODUCER_SECRET_ACCESS_KEY, file(../../../config.json):demo.${self:custom.EUBFR_USERNAME}.AWS_SECRET_ACCESS_KEY, env:PRODUCER_SECRET_ACCESS_KEY, ''}
+  # The producers/agri secret, for instance, is stored in AWS Secrets Manager service.
+  PRODUCER_SECRET_NAME: producers/${self:custom.EUBFR_USERNAME}
   SIGNED_UPLOADS_API:
     Fn::ImportValue: ${self:provider.stage}:storage-signed-uploads:ServiceEndpoint
   DELETER_API:
@@ -32,6 +32,11 @@ provider:
     name: eubfr-${self:custom.eubfrEnvironment}-deploy
   stackTags:
     ENV: ${self:custom.eubfrEnvironment}
+  iamRoleStatements:
+    -  Effect: "Allow"
+       Action:
+         - "secretsmanager:GetSecretValue"
+       Resource: "*"
 
 functions:
   docroot:
@@ -49,8 +54,7 @@ functions:
     memorySize: 128
     timeout: 60
     environment:
-      PRODUCER_KEY_ID: ${self:custom.PRODUCER_KEY_ID}
-      PRODUCER_SECRET_ACCESS_KEY: ${self:custom.PRODUCER_SECRET_ACCESS_KEY}
+      PRODUCER_SECRET_NAME: ${self:custom.PRODUCER_SECRET_NAME}
       SIGNED_UPLOADS_API: ${self:custom.SIGNED_UPLOADS_API}
     events:
       - http:
@@ -63,8 +67,7 @@ functions:
     memorySize: 128
     timeout: 60
     environment:
-      PRODUCER_KEY_ID: ${self:custom.PRODUCER_KEY_ID}
-      PRODUCER_SECRET_ACCESS_KEY: ${self:custom.PRODUCER_SECRET_ACCESS_KEY}
+      PRODUCER_SECRET_NAME: ${self:custom.PRODUCER_SECRET_NAME}
       DELETER_API: ${self:custom.DELETER_API}
     events:
       - http:
@@ -77,8 +80,7 @@ functions:
     memorySize: 128
     timeout: 60
     environment:
-      PRODUCER_KEY_ID: ${self:custom.PRODUCER_KEY_ID}
-      PRODUCER_SECRET_ACCESS_KEY: ${self:custom.PRODUCER_SECRET_ACCESS_KEY}
+      PRODUCER_SECRET_NAME: ${self:custom.PRODUCER_SECRET_NAME}
       SIGNED_UPLOADS_API: ${self:custom.SIGNED_UPLOADS_API}
     events:
       - http:
@@ -91,8 +93,7 @@ functions:
     memorySize: 128
     timeout: 60
     environment:
-      PRODUCER_KEY_ID: ${self:custom.PRODUCER_KEY_ID}
-      PRODUCER_SECRET_ACCESS_KEY: ${self:custom.PRODUCER_SECRET_ACCESS_KEY}
+      PRODUCER_SECRET_NAME: ${self:custom.PRODUCER_SECRET_NAME}
       SIGNED_UPLOADS_API: ${self:custom.SIGNED_UPLOADS_API}
     events:
       - http:

@@ -1,12 +1,26 @@
-const https = require('https');
-const aws4 = require('aws4');
-const url = require('url');
+import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
+import aws4 from 'aws4';
+import url from 'url';
 
-export const handler = (event, context, callback) => {
-  const apiEndpoint = url.parse(`https://${process.env.SIGNED_UPLOADS_API}`);
+import request from '../lib/request';
+
+export const handler = async event => {
+  const { PRODUCER_SECRET_NAME, SIGNED_UPLOADS_API } = process.env;
+
+  const apiEndpoint = url.parse(`https://${SIGNED_UPLOADS_API}`);
   const endpoint = '/storage/update';
-  const accessKeyId = process.env.PRODUCER_KEY_ID;
-  const secretAccessKey = process.env.PRODUCER_SECRET_ACCESS_KEY;
+
+  const secretsManager = new AWS.SecretsManager();
+  const secretsResponse = await secretsManager
+    .getSecretValue({ SecretId: PRODUCER_SECRET_NAME })
+    .promise();
+
+  const secrets = JSON.parse(secretsResponse.SecretString);
+
+  const {
+    AWS_ACCESS_KEY_ID: accessKeyId,
+    AWS_SECRET_ACCESS_KEY: secretAccessKey,
+  } = secrets;
 
   const producerKey =
     event.queryStringParameters && event.queryStringParameters.key
@@ -14,14 +28,12 @@ export const handler = (event, context, callback) => {
       : undefined;
 
   if (!producerKey) {
-    const response = {
+    return {
       statusCode: 400,
       body: JSON.stringify({
         message: `Missing key parameter`,
       }),
     };
-
-    return callback(null, response);
   }
 
   const params = {
@@ -33,36 +45,30 @@ export const handler = (event, context, callback) => {
     },
   };
 
-  // can specify any custom option or header as per usual
-  const req = https.request(
-    aws4.sign(params, {
-      accessKeyId,
-      secretAccessKey,
-    }),
-    res => {
-      res.setEncoding('utf8');
-      let body = '';
+  try {
+    const update = await request(
+      aws4.sign(params, {
+        accessKeyId,
+        secretAccessKey,
+      })
+    );
 
-      res.on('data', data => {
-        body += data;
-      });
-
-      res.on('end', () => {
-        callback(null, {
-          statusCode: 200,
-          headers: {
-            'Access-Control-Allow-Origin': '*', // Required for CORS support to work
-            'Access-Control-Allow-Credentials': true, // Required for cookies, authorization headers with HTTPS
-          },
-          body: JSON.stringify({ signedUrl: JSON.parse(body) }),
-        });
-      });
-    }
-  );
-
-  req.on('error', err => callback(err));
-
-  return req.end();
+    return {
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*', // Required for CORS support to work
+        'Access-Control-Allow-Credentials': true, // Required for cookies, authorization headers with HTTPS
+      },
+      body: JSON.stringify({ update }),
+    };
+  } catch (e) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({
+        message: e.message,
+      }),
+    };
+  }
 };
 
 export default handler;
