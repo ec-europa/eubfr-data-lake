@@ -33,7 +33,7 @@ provider:
   name: aws
   # Global resource, uses eubfrEnvironment as a stage
   stage: ${self:custom.eubfrEnvironment}
-  region: ${opt:region, file(../../config.json):region, 'eu-central-1'}
+  region: ${opt:region, file(../../config.json):region, env:EUBFR_AWS_REGION, 'eu-central-1'}
   deploymentBucket:
     name: eubfr-${self:custom.eubfrEnvironment}-deploy
   stackTags:

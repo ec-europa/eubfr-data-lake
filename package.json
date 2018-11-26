@@ -70,6 +70,5 @@
       "tools/**",
       "types"
     ]
-  },
-  "dependencies": {}
+  }
 }
