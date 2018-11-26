@@ -1,32 +1,46 @@
-const config = require('../../../config.json'); // eslint-disable-line import/no-unresolved
+const { promisify } = require('util');
+const AWS = require('aws-sdk');
+const awscred = require('awscred');
+
+const getUserCredentials = promisify(awscred.load);
 
 /**
- *
- *  Returns an object with credentials for AWS' aws4 signed request for a given producer.
+ * Uses the credentials of a given "power" user to request secrets from AWS Secrets Manager service.
+ * Returns an object with credentials for AWS' aws4 signed request for a given producer.
  *
  * @param {String} producer Producer's name, i.e. agri, budg, etc.
  * @returns {Object} Producer's AWS IAM secrets.
  *
  */
-module.exports = producer => {
-  if (!config) {
-    return console.error('Please create config.json file in project root.');
-  }
+module.exports = async producer => {
+  try {
+    // These are the credentials of the user who is a developer/deployment bot/etc.
+    const credentials = await getUserCredentials();
 
-  if (config.demo[producer]) {
-    const credentials = config.demo[producer];
-    const accessKeyId = credentials.AWS_ACCESS_KEY_ID;
-    const secretAccessKey = credentials.AWS_SECRET_ACCESS_KEY;
+    const { region } = credentials;
+    const { accessKeyId, secretAccessKey } = credentials.credentials;
 
-    if (!accessKeyId || !secretAccessKey) {
-      return console.error(`Please verify ${producer}'s credentials.`);
-    }
-    return {
+    const secretsManager = new AWS.SecretsManager({
       accessKeyId,
       secretAccessKey,
-    };
-  }
+      region,
+    });
 
-  console.error(`Couldn't find credentials for producer ${producer}`);
-  return {};
+    const secretsResponse = await secretsManager
+      .getSecretValue({ SecretId: `producers/${producer}` })
+      .promise();
+
+    const secrets = JSON.parse(secretsResponse.SecretString);
+
+    const { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY } = secrets;
+
+    // These are the credentials of the given producer, i.e. agri, budg, etc.
+    return {
+      accessKeyId: AWS_ACCESS_KEY_ID,
+      secretAccessKey: AWS_SECRET_ACCESS_KEY,
+    };
+  } catch (e) {
+    console.error(`Couldn't find credentials for producer ${producer}`);
+    return {};
+  }
 };
