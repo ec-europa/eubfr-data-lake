@@ -9,24 +9,24 @@ custom:
   privateDomain: ${self:custom.eubfrEnvironment}-private
   slsEsIndices:
     -
-      index: ${opt:stage, file(../../config.json):stage, 'dev'}-projects
+      index: ${opt:stage, file(../../config.json):stage, env:EUBFR_STAGE, 'dev'}-projects
       mapping: '${file(./mappings/project.js)}'
-      region: ${opt:region, file(../../config.json):region, 'eu-central-1'}
+      region: ${opt:region, file(../../config.json):region, env:EUBFR_AWS_REGION, 'eu-central-1'}
       endpointName: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
     -
-      index: ${opt:stage, file(../../config.json):stage, 'dev'}-meta
+      index: ${opt:stage, file(../../config.json):stage, env:EUBFR_STAGE, 'dev'}-meta
       mapping: ${file(./mappings/meta.js)}
-      region: ${opt:region, file(../../config.json):region, 'eu-central-1'}
+      region: ${opt:region, file(../../config.json):region, env:EUBFR_AWS_REGION, 'eu-central-1'}
       endpointName: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PrivateEndpoint
     -
-      index: ${opt:stage, file(../../config.json):stage, 'dev'}-logs
+      index: ${opt:stage, file(../../config.json):stage, env:EUBFR_STAGE, 'dev'}-logs
       mapping: ${file(./mappings/logs.js)}
-      region: ${opt:region, file(../../config.json):region, 'eu-central-1'}
+      region: ${opt:region, file(../../config.json):region, env:EUBFR_AWS_REGION, 'eu-central-1'}
       endpointName: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PrivateEndpoint
     -
-      index: ${opt:stage, file(../../config.json):stage, 'dev'}-quality-reports
+      index: ${opt:stage, file(../../config.json):stage, env:EUBFR_STAGE, 'dev'}-quality-reports
       mapping: ${file(./mappings/quality-report.js)}
-      region: ${opt:region, file(../../config.json):region, 'eu-central-1'}
+      region: ${opt:region, file(../../config.json):region, env:EUBFR_AWS_REGION, 'eu-central-1'}
       endpointName: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
 
 provider:

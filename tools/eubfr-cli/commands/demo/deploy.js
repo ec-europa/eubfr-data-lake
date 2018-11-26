@@ -22,7 +22,10 @@ const getServiceLocation = require('../../lib/getServiceLocation');
 const deployDemo = async ({ producer }) => {
   const { stage, region } = getConfigurations();
   const demos = ['demo-dashboard-server', 'demo-dashboard-client'];
-  const usernames = producer === '*' ? getAllProducers() : [producer];
+  // EUBFR_USERNAME can override flags.
+  const selectedProducer = process.env.EUBFR_USERNAME || producer;
+  const usernames =
+    selectedProducer === '*' ? getAllProducers() : [selectedProducer];
 
   for (const username of usernames) {
     for (const demo of demos) {

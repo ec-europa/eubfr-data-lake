@@ -9,18 +9,20 @@ const getServices = require('../../lib/getServices');
 const getServiceLocation = require('../../lib/getServiceLocation');
 
 const deployServices = async ({ services, producer }) => {
+  // EUBFR_USERNAME can override flags.
+  const selectedProducer = process.env.EUBFR_USERNAME || producer;
   const list = getServices(services);
   const servicesToDeploy = [];
 
   // Handle producer-specific cases.
-  if (producer !== '*') {
+  if (selectedProducer && selectedProducer !== '*') {
     list.forEach(service => {
       // If it's not an ETL, simply keep it.
       if (!service.service.includes(`ingestion-etl-`)) {
         servicesToDeploy.push(service);
       }
       // Otherwise, if it's an ETL, keep it only if it's related to the selected producer.
-      else if (service.service.includes(`ingestion-etl-${producer}`)) {
+      else if (service.service.includes(`ingestion-etl-${selectedProducer}`)) {
         servicesToDeploy.push(service);
       }
     });

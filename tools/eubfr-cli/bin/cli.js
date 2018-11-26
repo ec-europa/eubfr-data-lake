@@ -65,35 +65,6 @@ program.command('services', 'Services management');
  */
 program.command('demo', 'Demo applications management');
 
-/**
- * Manage environment
- *
- * ### Usage
- *
- * ```sh
- * $ npx eubfr-cli env -h
- * ```
- *
- * @name Environment
- * @public
- */
-program.command('env', 'Environment management');
-
-/**
- * Manage Elasticsearch assets
- *
- * ### Usage
- *
- * ```sh
- * $ npx eubfr-cli es -h
- * ```
- *
- * @name Elasticsearch
- * @public
- */
-
-program.command('es', 'Elasticsearch management');
-
 // The following comment contains `tree` results which cause lintint issues.
 /* eslint-disable no-irregular-whitespace */
 /**
@@ -139,6 +110,35 @@ program.command('es', 'Elasticsearch management');
  */
 /* eslint-enable no-irregular-whitespace */
 program.command('content', 'Content management');
+
+/**
+ * Manage environment
+ *
+ * ### Usage
+ *
+ * ```sh
+ * $ npx eubfr-cli env -h
+ * ```
+ *
+ * @name Environment
+ * @public
+ */
+program.command('env', 'Environment management');
+
+/**
+ * Manage Elasticsearch assets
+ *
+ * ### Usage
+ *
+ * ```sh
+ * $ npx eubfr-cli es -h
+ * ```
+ *
+ * @name Elasticsearch
+ * @public
+ */
+
+program.command('es', 'Elasticsearch management');
 
 // If no arguments provided, display help menu.
 if (!process.argv.slice(2).length) {
