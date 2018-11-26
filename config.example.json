@@ -3,10 +3,16 @@
   "region": "eu-central-1",
   "stage": "uuid",
   "username": "agri",
-  "demo": {
-    "agri": {
-      "AWS_ACCESS_KEY_ID": "",
-      "AWS_SECRET_ACCESS_KEY": ""
-    }
-  }
+  "demo": [
+    "agri",
+    "cordis",
+    "devco",
+    "eac",
+    "fts",
+    "home",
+    "iati",
+    "inforegio",
+    "valor",
+    "wifi4eu"
+  ]
 }
