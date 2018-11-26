@@ -1,4 +1,8 @@
-const { spawn } = require('child_process');
+const path = require('path');
+const { promisify } = require('util');
+const { exec } = require('child_process');
+
+const shell = promisify(exec);
 
 // Get config
 const config = require('../../../config.json'); // eslint-disable-line import/no-unresolved
@@ -6,52 +10,29 @@ const config = require('../../../config.json'); // eslint-disable-line import/no
 // Helpers
 const getServiceLocation = require('../lib/getServiceLocation');
 
-module.exports = (service, { isClient = false, username = '' }) =>
-  new Promise((resolve, reject) => {
-    const serviceName = `${service}${username ? `-${username}` : ''}${
-      isClient ? ' (client)' : ''
-    }`;
-    console.log(`Start deletion of ${serviceName}`);
+module.exports = async (service, { isClient = false, username = '' }) => {
+  const cwd = path.resolve(`${getServiceLocation(service)}`);
+  if (username) {
+    process.env.EUBFR_USERNAME = username;
+  }
+  const serviceName = `${service}${username ? `-${username}` : ''}${
+    isClient ? ' (client)' : ''
+  }`;
+
+  try {
+    console.log(`Deleting ${serviceName} ...`);
     console.time(serviceName);
-
-    let operation;
-
-    if (username) {
-      process.env.EUBFR_USERNAME = username;
-    }
-
     if (isClient) {
-      operation = spawn(
-        './node_modules/.bin/sls',
-        ['client', 'remove', '--no-confirm'],
-        {
-          cwd: getServiceLocation(service),
-          env: process.env,
-        }
-      );
+      await shell(`npx sls client remove --no-confirm`, { cwd });
     } else {
-      operation = spawn(
-        './node_modules/.bin/sls',
-        ['remove', `--stage ${config.stage}`, `--region ${config.region}`],
-        {
-          cwd: getServiceLocation(service),
-          env: process.env,
-        }
+      await shell(
+        `npx sls remove --stage ${config.stage} --region ${config.region}`,
+        { cwd }
       );
     }
-
-    operation.stdout.on('data', data => {
-      console.log('\x1b[36m', `${data}`, '\x1b[0m');
-    });
-
-    operation.stderr.on('data', err => {
-      reject(err.toString());
-      console.error('\x1b[31m', `${err}`, '\x1b[31m');
-    });
-
-    operation.on('close', () => {
-      console.timeEnd(serviceName);
-    });
-
-    operation.on('exit', resolve);
-  });
+    console.log(`${serviceName} has been deleted.`);
+    return console.timeEnd(serviceName);
+  } catch (e) {
+    return console.error(e);
+  }
+};
