@@ -1,8 +1,10 @@
-const config = require('../../../../config.json'); // eslint-disable-line import/no-unresolved
+const getConfigurations = require('../../lib/getConfigurations');
+
+const { stage } = getConfigurations();
 
 // Protect certain stages from deletion.
-if (['test', 'acc', 'prod'].includes(config.stage)) {
-  console.log(`You are on protected stage ${config.stage}`);
+if (['test', 'acc', 'prod'].includes(stage)) {
+  console.log(`You are on protected stage ${stage}`);
   process.exit();
 }
 
