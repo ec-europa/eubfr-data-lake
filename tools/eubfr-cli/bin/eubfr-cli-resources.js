@@ -3,8 +3,8 @@
 const program = require('commander');
 
 // Commands
-const deployResources = require('../commands/resources/deployResources');
-const deleteResources = require('../commands/resources/deleteResources');
+const deployResources = require('../commands/resources/deploy');
+const deleteResources = require('../commands/resources/delete');
 
 /**
  *

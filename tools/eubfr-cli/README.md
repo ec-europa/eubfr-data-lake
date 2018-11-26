@@ -10,25 +10,29 @@
   - [Delete][6]
 - [Services][7]
   - [Usage][8]
-  - [Deploy][9]
+  - [Delete][9]
   - [Delete][10]
-- [Environment][11]
-  - [Usage][12]
-  - [GenerateVariables][13]
-- [Elasticsearch][14]
-  - [Usage][15]
-  - [snapshotExec][16]
-  - [showDomains][17]
-  - [showCluster][18]
-  - [showIndices][19]
-  - [createIndex][20]
-  - [deleteIndices][21]
-- [Content][22]
-  - [Usage][23]
-  - [Notes][24]
-  - [Upload][25]
-  - [Show][26]
-  - [Delete][27]
+  - [Deploy][11]
+- [Demo][12]
+  - [Usage][13]
+  - [Deploy][14]
+- [Environment][15]
+  - [Usage][16]
+  - [GenerateVariables][17]
+- [Elasticsearch][18]
+  - [Usage][19]
+  - [snapshotExec][20]
+  - [showDomains][21]
+  - [showCluster][22]
+  - [showIndices][23]
+  - [createIndex][24]
+  - [deleteIndices][25]
+- [Content][26]
+  - [Usage][27]
+  - [Notes][28]
+  - [Upload][29]
+  - [Show][30]
+  - [Delete][31]
 
 ## Introduction
 
@@ -36,7 +40,7 @@ EUBFR CLI
 
 Low-level utilities for managing assets of EUBFR data lake.
 
-Please refer to [Getting Started guide][28] before jumping into using the utility.
+Please refer to [Getting Started guide][32] before jumping into using the utility.
 
 Each command and sub-command has a help menu, which you can open by passing `-h` or `--help` flags without any arguments.
 
@@ -90,6 +94,54 @@ Manage services
 $ npx eubfr-cli services -h
 ```
 
+### Delete
+
+Remove a demo application.
+
+Usage:
+
+```sh
+$ npx eubfr-cli demo delete -h
+```
+
+Examples:
+
+Delete all demo applications.
+
+```sh
+$ npx eubfr-cli demo delete
+```
+
+Delete only demo application of AGRI producer.
+
+```sh
+$ npx eubfr-cli demo delete -p agri
+```
+
+### Delete
+
+Remove a serverless service from AWS cloud.
+
+Usage:
+
+```sh
+$ npx eubfr-cli services delete -h
+```
+
+Examples:
+
+Delete all services.
+
+```sh
+$ npx eubfr-cli services delete
+```
+
+Delete only a given set of services.
+
+```sh
+$ npx eubfr-cli services delete storage-signed-uploads storage-deleter
+```
+
 ### Deploy
 
 Usage:
@@ -118,28 +170,36 @@ $ npx eubfr-cli services deploy -p agri
 $ npx eubfr-cli services deploy foo bar -p agri
 ```
 
-### Delete
+## Demo
 
-Remove a serverless service from AWS cloud.
+Manage demo applications
+
+### Usage
+
+```sh
+$ npx eubfr-cli demo -h
+```
+
+### Deploy
 
 Usage:
 
 ```sh
-$ npx eubfr-cli services delete -h
+$ npx eubfr-cli demo deploy -h
 ```
 
 Examples:
 
-Delete all services.
+Deploy all demo applications for all producers.
 
 ```sh
-$ npx eubfr-cli services delete
+$ npx eubfr-cli demo deploy
 ```
 
-Delete only a given set of services.
+Deploy all services, only for working with the AGRI producer.
 
 ```sh
-$ npx eubfr-cli services delete storage-signed-uploads
+$ npx eubfr-cli demo deploy -p agri
 ```
 
 ## Environment
@@ -191,8 +251,8 @@ $ npx eubfr-cli es -h
 
 ### snapshotExec
 
-- **See: [https://www.elastic.co/guide/en/elasticsearch/reference/6.2/modules-snapshots.html][29]**
-- **See: [https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-snapshot-create-6-2][30]**
+- **See: [https://www.elastic.co/guide/en/elasticsearch/reference/6.2/modules-snapshots.html][33]**
+- **See: [https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-snapshot-create-6-2][34]**
 
 Abstracted utility for making use of `snapshot` methods of ES JS SDK
 
@@ -502,25 +562,29 @@ You can skip the this prompt by adding `--confirm` flag.
 [6]: #delete
 [7]: #services
 [8]: #usage-2
-[9]: #deploy-1
-[10]: #delete-1
-[11]: #environment
-[12]: #usage-3
-[13]: #generatevariables
-[14]: #elasticsearch
-[15]: #usage-4
-[16]: #snapshotexec
-[17]: #showdomains
-[18]: #showcluster
-[19]: #showindices
-[20]: #createindex
-[21]: #deleteindices
-[22]: #content
-[23]: #usage-5
-[24]: #notes
-[25]: #upload
-[26]: #show
-[27]: #delete-2
-[28]: ./docs/GETTING_STARTED.md
-[29]: https://www.elastic.co/guide/en/elasticsearch/reference/6.2/modules-snapshots.html
-[30]: https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-snapshot-create-6-2
+[9]: #delete-1
+[10]: #delete-2
+[11]: #deploy-1
+[12]: #demo
+[13]: #usage-3
+[14]: #deploy-2
+[15]: #environment
+[16]: #usage-4
+[17]: #generatevariables
+[18]: #elasticsearch
+[19]: #usage-5
+[20]: #snapshotexec
+[21]: #showdomains
+[22]: #showcluster
+[23]: #showindices
+[24]: #createindex
+[25]: #deleteindices
+[26]: #content
+[27]: #usage-6
+[28]: #notes
+[29]: #upload
+[30]: #show
+[31]: #delete-3
+[32]: ./docs/GETTING_STARTED.md
+[33]: https://www.elastic.co/guide/en/elasticsearch/reference/6.2/modules-snapshots.html
+[34]: https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-snapshot-create-6-2

@@ -74,7 +74,7 @@ program
  * Delete only a given set of services.
  *
  * ```sh
- * $ npx eubfr-cli services delete storage-signed-uploads
+ * $ npx eubfr-cli services delete storage-signed-uploads storage-deleter
  * ```
  *
  * @memberof Services

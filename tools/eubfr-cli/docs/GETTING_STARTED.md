@@ -17,11 +17,11 @@ When you have the EUBFR project cloned to your development machine, run:
 yarn
 ```
 
-This will download and symlink dependencies.
+This will download and link dependencies.
 
 Next, if you haven't done so, copy `config.example.json` to `config.json` and set the values according to your environment. Note that `stage` can only contain alphanumeric characters.
 
-The CLI will read this configuration file to know which AWS environment you want to manage (i.e. `stage` property) and also get the necessary producers' credentials wherever and whenever necessary. (from `demo`)
+The CLI will read `config.json` file to know which AWS environment you want to manage by properties `config.stage` and `config.username`.
 
 ### Usage
 
@@ -78,7 +78,7 @@ The list of commands available in the EUBFR CLI is ordered by the priority of im
 More specifically:
 
 - `resources`: related to managing AWS resources in terms of EUBFR resources: raw and harmonized storage buckets, etc. These are important to deploy and create first on AWS, as services, such as ETLs rely on the existance of the harmonized storage bucket in order to store the results of transformations.
-- `services`: related to managing serverless services of the EUBFR project. These are shorthand commands such as `deploy` and `delete` which you'd normally do by, for example changing to the directory of a given service by `cd ./services/ingestion/etl/agri/csv/` and then either deploying `yarn deploy` or removing a service from the AWS console, i.e. `npx sls remove --stage chernka202 --region eu-central-1`. While working on a specific ETL, for example, instead of changing between directories and using different CLIs such as `yarn`, `sls` and `eubfr-cli`, simply use only the `eubfr-cli`.
+- `services`: related to managing `serverless` services of the EUBFR project. These are shorthand commands such as `deploy` and `delete` which you'd normally do by, for example changing to the directory of a given service by `cd ./services/ingestion/etl/agri/csv/` and then either deploying `yarn deploy` or removing a service from the AWS console, i.e. `npx sls remove --stage {username} --region eu-central-1`. While working on a specific ETL, for example, instead of changing between directories and using different CLIs such as `yarn`, `sls` and `eubfr-cli`, simply use only the `eubfr-cli`.
 - `demo`: demo applications make use of the `services` and add user-friendly UIs to manage content and visualize reports and logs of the data lake.
 - `content`: related to managing the content in the EUBFR data lake. Since content management is very producer-oriented task, you'd normally almost always use the `-p` or `--producer` flag to specify whose content you want to manage specifically. The `eubfr-cli content` is the low level interface of what the user would do in demo dashboards from browsers' UIs.
 - `env`: related to managing environment variables and other general project environment assets. Sometimes, when a given service such as the `@eubfr/storage-signed-uploads` service has already been deployed, but its `.env` file is either deprecated or incorrect. You can re-generate this data from the AWS with commands of `eubfr-cli env`.
