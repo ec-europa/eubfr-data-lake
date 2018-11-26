@@ -4,13 +4,12 @@ const { exec } = require('child_process');
 
 const shell = promisify(exec);
 
-// Get config
-const config = require('../../../config.json'); // eslint-disable-line import/no-unresolved
-
-// Helpers
+// Utilities
+const getConfigurations = require('../lib/getConfigurations');
 const getServiceLocation = require('../lib/getServiceLocation');
 
 module.exports = async (service, { isClient = false, username = '' }) => {
+  const { stage, region } = getConfigurations();
   const cwd = path.resolve(`${getServiceLocation(service)}`);
   if (username) {
     process.env.EUBFR_USERNAME = username;
@@ -25,10 +24,9 @@ module.exports = async (service, { isClient = false, username = '' }) => {
     if (isClient) {
       await shell(`npx sls client remove --no-confirm`, { cwd });
     } else {
-      await shell(
-        `npx sls remove --stage ${config.stage} --region ${config.region}`,
-        { cwd }
-      );
+      await shell(`npx sls remove --stage ${stage} --region ${region}`, {
+        cwd,
+      });
     }
     console.log(`${serviceName} has been deleted.`);
     return console.timeEnd(serviceName);

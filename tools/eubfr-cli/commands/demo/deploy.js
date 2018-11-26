@@ -15,12 +15,12 @@ const { exec } = require('child_process');
 const shell = promisify(exec);
 
 // Utilities
-const getServiceLocation = require('../../lib/getServiceLocation');
 const getAllProducers = require('../../lib/getAllProducers');
-
-const config = require('../../../../config.json'); // eslint-disable-line import/no-unresolved
+const getConfigurations = require('../../lib/getConfigurations');
+const getServiceLocation = require('../../lib/getServiceLocation');
 
 const deployDemo = async ({ producer }) => {
+  const { stage, region } = getConfigurations();
   const demos = ['demo-dashboard-server', 'demo-dashboard-client'];
   const usernames = producer === '*' ? getAllProducers() : [producer];
 
@@ -57,9 +57,7 @@ const deployDemo = async ({ producer }) => {
         console.log(`Client (${username}): deployed`);
         console.timeEnd(`${demo}-${username}`);
         console.log(
-          `Demo dashboard is now available at http://eubfr-${
-            config.stage
-          }-${demo}-${username}.s3-website.${config.region}.amazonaws.com`
+          `Demo dashboard is now available at http://eubfr-${stage}-${demo}-${username}.s3-website.${region}.amazonaws.com`
         );
       }
     }
