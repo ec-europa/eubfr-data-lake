@@ -15,6 +15,7 @@ const transforms = [
   'agri-csv',
   'budg-xls',
   'cordis-csv',
+  'devco-csv',
   'fts-xls',
   'home-xls',
   'iati-csv',
