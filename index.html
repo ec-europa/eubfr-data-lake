@@ -342,6 +342,51 @@
               
                 
                 <li class="ecl-link-block__item">
+                  <a href="#devcocsvtransform"
+                     class="ecl-link ecl-link--standalone ecl-link-block__link">
+                    DevcoCsvTransform
+                  </a>
+                
+                  
+                  <ul class="ecl-list">
+                    
+                      <li><a
+                        href="#devcocsvtransformgetbudget"
+                        class="ecl-link pre-open">
+                        getBudget
+                      </a></li>
+                    
+                      <li><a
+                        href="#devcocsvtransformgetcodebycountry"
+                        class="ecl-link pre-open">
+                        getCodeByCountry
+                      </a></li>
+                    
+                      <li><a
+                        href="#devcocsvtransformgetlocations"
+                        class="ecl-link pre-open">
+                        getLocations
+                      </a></li>
+                    
+                      <li><a
+                        href="#devcocsvtransformgetresults"
+                        class="ecl-link pre-open">
+                        getResults
+                      </a></li>
+                    
+                      <li><a
+                        href="#devcocsvtransformgettype"
+                        class="ecl-link pre-open">
+                        getType
+                      </a></li>
+                    
+                    </ul>
+                  
+                
+                </li>
+              
+                
+                <li class="ecl-link-block__item">
                   <a href="#ftsxlstransform"
                      class="ecl-link ecl-link--standalone ecl-link-block__link">
                     FtsXlsTransform
@@ -3526,6 +3571,408 @@ Input fields taken from the <code>record</code> are:</p>
       <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>
       :
         
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+</section>
+
+    </ul>
+  
+
+  
+
+  
+</li>
+
+                  
+            
+              <li class='ecl-list-item ecl-u-pv-m'>
+  
+    
+    <h3 class='ecl-heading ecl-heading--h3' id='devcocsvtransform'>
+      DevcoCsvTransform
+    </h3>
+    
+    
+  
+
+  <p>Map fields for DEVCO producer, CSV file types</p>
+<p>Example input data: <a href="https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/devco/csv/test/stubs/record.json">stub</a></p>
+<p>Transform function: <a href="https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/devco/csv/src/lib/transform.js">implementation details</a></p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        Piece of data to transform before going to harmonized storage.
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="#project">Project</a>
+      :
+        JSON matching the type fields.
+
+      
+    
+  
+
+  
+
+  
+
+  
+    <ul class="ecl-list">
+    <section class='ecl-u-clearfix ecl-u-pt-xs'>
+  
+    <a id='devcocsvtransformgetbudget' class="ecl-link ecl-link--standalone" aria-controls='devcocsvtransformgetbudget-panel' aria-expanded="true" href="#">
+      getBudget
+    </a>
+    <div id='devcocsvtransformgetbudget-panel' aria-labelledby='devcocsvtransformgetbudget' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess <code>budget</code></p>
+<p>Input fields taken from the <code>record</code> are:</p>
+<ul>
+<li><code>Total Budget\n(Million Euro)</code></li>
+<li><code>Total EU Contribution \n(Million Euro)</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="#budget">Budget</a>
+      :
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='devcocsvtransformgetcodebycountry' class="ecl-link ecl-link--standalone" aria-controls='devcocsvtransformgetcodebycountry-panel' aria-expanded="true" href="#">
+      getCodeByCountry
+    </a>
+    <div id='devcocsvtransformgetcodebycountry-panel' aria-labelledby='devcocsvtransformgetcodebycountry' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Gets country code from a country name.</p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>countryName (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)
+	        The name of the country
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>
+      :
+        The ISO 3166-1 country code
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='devcocsvtransformgetlocations' class="ecl-link ecl-link--standalone" aria-controls='devcocsvtransformgetlocations-panel' aria-expanded="true" href="#">
+      getLocations
+    </a>
+    <div id='devcocsvtransformgetlocations-panel' aria-labelledby='devcocsvtransformgetlocations' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess <code>project_locations</code></p>
+<p>Input fields taken from the <code>record</code> are:</p>
+<ul>
+<li><code>Country</code></li>
+<li><code>Region</code></li>
+<li><code>GIS Localisation</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>
+      :
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='devcocsvtransformgetresults' class="ecl-link ecl-link--standalone" aria-controls='devcocsvtransformgetresults-panel' aria-expanded="true" href="#">
+      getResults
+    </a>
+    <div id='devcocsvtransformgetresults-panel' aria-labelledby='devcocsvtransformgetresults' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess <code>results</code></p>
+<p>Input fields taken from the <code>record</code> are:</p>
+<ul>
+<li><code>1.1 Access on grid electricity ('000 people)</code></li>
+<li><code>1.2 Access mini grid electricity ('000 people)</code></li>
+<li><code>1.3 Access off-grid electricity ('000 people)</code></li>
+<li><code>1.4 Inferred access (additional generation) ('000 people)</code></li>
+<li><code>1.5 Inferred access (cross-border transmission) ('000 people)</code></li>
+<li><code>1.6 Access to biomass/biogas clean cooking ('000 people)</code></li>
+<li><code>1.7 Access to LPG/ethanol cooking ('000 people)</code></li>
+<li><code>1.8 Electricity from renewables (GWh/year)</code></li>
+<li><code>1.9 Renewable generation capacity (MW)</code></li>
+<li><code>1.10 Electricity from energy efficiency (liberated capacity) (MW)</code></li>
+<li><code>1.11 Transmission lines (km)</code></li>
+<li><code>1.12 Distribution lines (km)</code></li>
+<li><code>1.13 Energy Savings (MWh/year)</code></li>
+<li><code>1.14 GHG emissions avoided per year (ktons CO2eq)</code></li>
+<li><code>1.15 No of direct jobs person/year (construction)</code></li>
+<li><code>1.16 No of permanent jobs \n(operation)</code></li>
+</ul>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="#result">Result</a>
+      :
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</li>
+
+    </div>
+  
+    <a id='devcocsvtransformgettype' class="ecl-link ecl-link--standalone" aria-controls='devcocsvtransformgettype-panel' aria-expanded="true" href="#">
+      getType
+    </a>
+    <div id='devcocsvtransformgettype-panel' aria-labelledby='devcocsvtransformgettype' aria-hidden="false">
+      <li class='ecl-list-item ecl-u-pv-m'>
+  
+
+  <p>Preprocess <code>type</code></p>
+
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <h4 class="ecl-heading ecl-heading--h4">Parameters</h4>
+    <p class='ecl-paragraph'>
+      <ul class="ecl-list">
+      
+        <li>record (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+	        The row received from parsed file
+
+          
+        </li>
+      
+      </ul>
+    </p>
+  
+
+  
+
+  
+    
+      <h4 class="ecl-heading ecl-heading--h4">Returns</h4>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>
+      :
+        Project types
 
       
     
