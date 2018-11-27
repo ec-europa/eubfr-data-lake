@@ -2,53 +2,37 @@
 
 ### Table of Contents
 
-- [Introduction][1]
+- [Resources][1]
   - [Usage][2]
-- [Resources][3]
-  - [Usage][4]
-  - [Deploy][5]
-  - [Delete][6]
-- [Services][7]
+  - [Deploy][3]
+  - [Delete][4]
+- [Introduction][5]
+  - [Usage][6]
+- [Demo][7]
   - [Usage][8]
-  - [Delete][9]
-  - [Delete][10]
-  - [Deploy][11]
-- [Demo][12]
-  - [Usage][13]
-  - [Deploy][14]
-- [Environment][15]
-  - [Usage][16]
-  - [GenerateVariables][17]
-- [Elasticsearch][18]
+  - [Deploy][9]
+- [Environment][10]
+  - [Usage][11]
+  - [GenerateVariables][12]
+- [Services][13]
+  - [Usage][14]
+  - [Deploy][15]
+  - [Delete][16]
+  - [Delete][17]
+- [Content][18]
   - [Usage][19]
-  - [snapshotExec][20]
-  - [showDomains][21]
-  - [showCluster][22]
-  - [showIndices][23]
-  - [createIndex][24]
-  - [deleteIndices][25]
-- [Content][26]
-  - [Usage][27]
-  - [Notes][28]
-  - [Upload][29]
-  - [Show][30]
-  - [Delete][31]
-
-## Introduction
-
-EUBFR CLI
-
-Low-level utilities for managing assets of EUBFR data lake.
-
-Please refer to [Getting Started guide][32] before jumping into using the utility.
-
-Each command and sub-command has a help menu, which you can open by passing `-h` or `--help` flags without any arguments.
-
-### Usage
-
-```sh
-$ npx eubfr-cli -h
-```
+  - [Notes][20]
+  - [Upload][21]
+  - [Show][22]
+  - [Delete][23]
+- [Elasticsearch][24]
+  - [Usage][25]
+  - [snapshotExec][26]
+  - [showDomains][27]
+  - [showCluster][28]
+  - [showIndices][29]
+  - [createIndex][30]
+  - [deleteIndices][31]
 
 ## Resources
 
@@ -84,90 +68,20 @@ Usage:
 $ npx eubfr-cli resources delete
 ```
 
-## Services
+## Introduction
 
-Manage services
+EUBFR CLI
+
+Low-level utilities for managing assets of EUBFR data lake.
+
+Please refer to [Getting Started guide][32] before jumping into using the utility.
+
+Each command and sub-command has a help menu, which you can open by passing `-h` or `--help` flags without any arguments.
 
 ### Usage
 
 ```sh
-$ npx eubfr-cli services -h
-```
-
-### Delete
-
-Remove a demo application.
-
-Usage:
-
-```sh
-$ npx eubfr-cli demo delete -h
-```
-
-Examples:
-
-Delete all demo applications.
-
-```sh
-$ npx eubfr-cli demo delete
-```
-
-Delete only demo application of AGRI producer.
-
-```sh
-$ npx eubfr-cli demo delete -p agri
-```
-
-### Delete
-
-Remove a serverless service from AWS cloud.
-
-Usage:
-
-```sh
-$ npx eubfr-cli services delete -h
-```
-
-Examples:
-
-Delete all services.
-
-```sh
-$ npx eubfr-cli services delete
-```
-
-Delete only a given set of services.
-
-```sh
-$ npx eubfr-cli services delete storage-signed-uploads storage-deleter
-```
-
-### Deploy
-
-Usage:
-
-```sh
-$ npx eubfr-cli services deploy -h
-```
-
-Examples:
-
-Deploy all services for all producers.
-
-```sh
-$ npx eubfr-cli services deploy
-```
-
-Deploy all services, only for working with the AGRI producer.
-
-```sh
-$ npx eubfr-cli services deploy -p agri
-```
-
-(Re-)Deploy only a set of services for working a given producer.
-
-```sh
-$ npx eubfr-cli services deploy foo bar -p agri
+$ npx eubfr-cli -h
 ```
 
 ## Demo
@@ -238,6 +152,216 @@ Usage:
 ```sh
 $ npx eubfr-cli env generate-variables
 ```
+
+## Services
+
+Manage services
+
+### Usage
+
+```sh
+$ npx eubfr-cli services -h
+```
+
+### Deploy
+
+Usage:
+
+```sh
+$ npx eubfr-cli services deploy -h
+```
+
+Examples:
+
+Deploy all services for all producers.
+
+```sh
+$ npx eubfr-cli services deploy
+```
+
+Deploy all services, only for working with the AGRI producer.
+
+```sh
+$ npx eubfr-cli services deploy -p agri
+```
+
+(Re-)Deploy only a set of services for working a given producer.
+
+```sh
+$ npx eubfr-cli services deploy foo bar -p agri
+```
+
+### Delete
+
+Remove a demo application.
+
+Usage:
+
+```sh
+$ npx eubfr-cli demo delete -h
+```
+
+Examples:
+
+Delete all demo applications.
+
+```sh
+$ npx eubfr-cli demo delete
+```
+
+Delete only demo application of AGRI producer.
+
+```sh
+$ npx eubfr-cli demo delete -p agri
+```
+
+### Delete
+
+Remove a serverless service from AWS cloud.
+
+Usage:
+
+```sh
+$ npx eubfr-cli services delete -h
+```
+
+Examples:
+
+Delete all services.
+
+```sh
+$ npx eubfr-cli services delete
+```
+
+Delete only a given set of services.
+
+```sh
+$ npx eubfr-cli services delete storage-signed-uploads storage-deleter
+```
+
+## Content
+
+Manage content
+
+### Usage
+
+```sh
+$ npx eubfr-cli content -h
+```
+
+### Notes
+
+If you want to make use of the CLI to automatically upload or delete all content of a given stage, you can optionally create a `.content` folder in the root of your project, with the following example structure:
+
+    .
+    ├── agri
+    │   └── agri_history.csv
+    ├── budg
+    │   └── CreativeEurope_Projects_Overview_2017-08-21.xls
+    ├── iati
+    │   └── activity.csv
+    ├── inforegio
+    │   ├── EUBFR_VIEW_16052018.xml
+    │   └── regio_projects.json
+    ├── valor
+    │   └── valor_sample.xls
+    └── wifi4eu
+        └── wifi4euRegistrations.xlsx
+
+There are 2 abstracted operations on a project level:
+
+- `yarn content:upload` uploads files from `.content` producers' folders to their respective S3 buckets in the cloud. This triggers the ingestion process.
+- `yarn content:delete` deletes all the currently uploaded content of all producers, for a given stage.
+
+You will need to have the `config.json` file correctly setup in the root folder of the project, as producers' credentials are currently stored only there in the existing workflows.
+
+### Upload
+
+Upload content to the data lake.
+
+Usage:
+
+```sh
+$ npx eubfr-cli content upload -h
+```
+
+Examples:
+
+Single file:
+
+```sh
+$ npx eubfr-cli content upload .content/agri/agri_history.csv -p agri
+```
+
+Multiple files:
+
+```sh
+$ npx eubfr-cli content upload .content/inforegio/EUBFR_VIEW_16052018.xml .content/inforegio/regio_projects.json -p inforegio
+```
+
+All files:
+
+```sh
+$ npx eubfr-cli content upload
+```
+
+### Show
+
+Display files of a given producer.
+
+Usage:
+
+```sh
+$ npx eubfr-cli content show -h
+```
+
+Examples:
+
+Specific file by `computed_key`:
+
+```sh
+$ npx eubfr-cli content show agri/16598a36-db86-42a0-8041-c0d85021ad97.csv
+```
+
+All files of a given producer:
+
+```sh
+$ npx eubfr-cli content show -p agri
+```
+
+Please note that if you are sure there's an existing content,
+but you can't see it with this command, you'll need to double-check
+`eubfr-data-lake/demo/dashboard/client/.env` file to contain
+the correct value for `REACT_APP_STAGE`.
+If it's not the same as config.json's `stage`, run
+`npx eubfr-cli env generate-variables` to refresh the value of `REACT_APP_STAGE`.
+
+### Delete
+
+Delete files by `computed_key` field.
+
+Usage:
+
+```sh
+$ npx eubfr-cli content delete -h
+```
+
+Examples:
+
+Delete one or multiple files:
+
+```sh
+$ npx eubfr-cli content delete agri/foo budg/bar inforegio/baz
+```
+
+Delete all files of all producers:
+
+```sh
+$ npx eubfr-cli content delete
+```
+
+By default, you will be prompted to confirm your intention.
+You can skip the this prompt by adding `--confirm` flag.
 
 ## Elasticsearch
 
@@ -430,161 +554,37 @@ $ npx eubfr-cli es delete-indices user-index-1 --confirm -d REACT_APP_ES_PUBLIC_
 
 Skipping the `user-index-1` will delete all indices in the given domain, so be extra careful with this command.
 
-## Content
-
-Manage content
-
-### Usage
-
-```sh
-$ npx eubfr-cli content -h
-```
-
-### Notes
-
-If you want to make use of the CLI to automatically upload or delete all content of a given stage, you can optionally create a `.content` folder in the root of your project, with the following example structure:
-
-    .
-    ├── agri
-    │   └── agri_history.csv
-    ├── budg
-    │   └── CreativeEurope_Projects_Overview_2017-08-21.xls
-    ├── iati
-    │   └── activity.csv
-    ├── inforegio
-    │   ├── EUBFR_VIEW_16052018.xml
-    │   └── regio_projects.json
-    ├── valor
-    │   └── valor_sample.xls
-    └── wifi4eu
-        └── wifi4euRegistrations.xlsx
-
-There are 2 abstracted operations on a project level:
-
-- `yarn content:upload` uploads files from `.content` producers' folders to their respective S3 buckets in the cloud. This triggers the ingestion process.
-- `yarn content:delete` deletes all the currently uploaded content of all producers, for a given stage.
-
-You will need to have the `config.json` file correctly setup in the root folder of the project, as producers' credentials are currently stored only there in the existing workflows.
-
-### Upload
-
-Upload content to the data lake.
-
-Usage:
-
-```sh
-$ npx eubfr-cli content upload -h
-```
-
-Examples:
-
-Single file:
-
-```sh
-$ npx eubfr-cli content upload .content/agri/agri_history.csv -p agri
-```
-
-Multiple files:
-
-```sh
-$ npx eubfr-cli content upload .content/inforegio/EUBFR_VIEW_16052018.xml .content/inforegio/regio_projects.json -p inforegio
-```
-
-All files:
-
-```sh
-$ npx eubfr-cli content upload
-```
-
-### Show
-
-Display files of a given producer.
-
-Usage:
-
-```sh
-$ npx eubfr-cli content show -h
-```
-
-Examples:
-
-Specific file by `computed_key`:
-
-```sh
-$ npx eubfr-cli content show agri/16598a36-db86-42a0-8041-c0d85021ad97.csv
-```
-
-All files of a given producer:
-
-```sh
-$ npx eubfr-cli content show -p agri
-```
-
-Please note that if you are sure there's an existing content,
-but you can't see it with this command, you'll need to double-check
-`eubfr-data-lake/demo/dashboard/client/.env` file to contain
-the correct value for `REACT_APP_STAGE`.
-If it's not the same as config.json's `stage`, run
-`npx eubfr-cli env generate-variables` to refresh the value of `REACT_APP_STAGE`.
-
-### Delete
-
-Delete files by `computed_key` field.
-
-Usage:
-
-```sh
-$ npx eubfr-cli content delete -h
-```
-
-Examples:
-
-Delete one or multiple files:
-
-```sh
-$ npx eubfr-cli content delete agri/foo budg/bar inforegio/baz
-```
-
-Delete all files of all producers:
-
-```sh
-$ npx eubfr-cli content delete
-```
-
-By default, you will be prompted to confirm your intention.
-You can skip the this prompt by adding `--confirm` flag.
-
-[1]: #introduction
+[1]: #resources
 [2]: #usage
-[3]: #resources
-[4]: #usage-1
-[5]: #deploy
-[6]: #delete
-[7]: #services
+[3]: #deploy
+[4]: #delete
+[5]: #introduction
+[6]: #usage-1
+[7]: #demo
 [8]: #usage-2
-[9]: #delete-1
-[10]: #delete-2
-[11]: #deploy-1
-[12]: #demo
-[13]: #usage-3
-[14]: #deploy-2
-[15]: #environment
-[16]: #usage-4
-[17]: #generatevariables
-[18]: #elasticsearch
+[9]: #deploy-1
+[10]: #environment
+[11]: #usage-3
+[12]: #generatevariables
+[13]: #services
+[14]: #usage-4
+[15]: #deploy-2
+[16]: #delete-1
+[17]: #delete-2
+[18]: #content
 [19]: #usage-5
-[20]: #snapshotexec
-[21]: #showdomains
-[22]: #showcluster
-[23]: #showindices
-[24]: #createindex
-[25]: #deleteindices
-[26]: #content
-[27]: #usage-6
-[28]: #notes
-[29]: #upload
-[30]: #show
-[31]: #delete-3
+[20]: #notes
+[21]: #upload
+[22]: #show
+[23]: #delete-3
+[24]: #elasticsearch
+[25]: #usage-6
+[26]: #snapshotexec
+[27]: #showdomains
+[28]: #showcluster
+[29]: #showindices
+[30]: #createindex
+[31]: #deleteindices
 [32]: ./docs/GETTING_STARTED.md
 [33]: https://www.elastic.co/guide/en/elasticsearch/reference/6.2/modules-snapshots.html
 [34]: https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-snapshot-create-6-2
