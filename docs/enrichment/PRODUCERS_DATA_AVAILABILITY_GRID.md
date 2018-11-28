@@ -5,8 +5,8 @@ Below is a table with a list of producers and the data they provide (`×` marks 
 | Producer  | format | example (stub)   | address | centroid | country_code | nuts | postal_code | region | town |
 | --------- | ------ | ---------------- | ------- | -------- | ------------ | ---- | ----------- | ------ | ---- |
 | AGRI      | csv    | [record.json][1] | ×       | ×        | ×            |      | ×           |        | x    |
-| BUDG      | xls    | [record.json][2] |         |          | x            |      |             |        |      |
-| CORDIS    | csv    | [record.json][3] |         |          | x            |      |             |        |      |
+| CORDIS    | csv    | [record.json][2] |         |          | x            |      |             |        |      |
+| EAC       | xls    | [record.json][3] |         |          | x            |      |             |        |      |
 | FTS       | xls    | [record.json][4] | x       |          | x            | x    | x           |        | x    |
 | INFOREGIO | json   | [record.json][5] |         |          | x            | x    |             | x      |      |
 | INFOREGIO | xml    | [record.json][6] |         |          | x            | x    |             | x      |      |
@@ -15,8 +15,8 @@ Below is a table with a list of producers and the data they provide (`×` marks 
 | IATI      | csv    | [record.json][9] |         |          | x            |      |             |        |      |
 
 [1]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/agri/csv/test/stubs/record.json
-[2]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/budg/xls/test/stubs/record.json
-[3]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/cordis/csv/test/stubs/record.json
+[2]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/cordis/csv/test/stubs/record.json
+[3]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/eac/xls/test/stubs/record.json
 [4]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/fts/xls/test/stubs/record.json
 [5]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/json/test/stubs/record.json
 [6]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/inforegio/xml/test/stubs/record.json

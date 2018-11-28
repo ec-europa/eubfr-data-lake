@@ -4,7 +4,7 @@
 
 import onParseXLS from '../../../src/events/onParseXLS';
 
-describe(`Function onParseXLS in "@eubfr/ingestion-etl-budg-xls"`, () => {
+describe(`Function onParseXLS in "@eubfr/ingestion-etl-eac-xls"`, () => {
   test('The function requires BUCKET, REGION and STAGE', async () => {
     const event = {};
     const context = {};
