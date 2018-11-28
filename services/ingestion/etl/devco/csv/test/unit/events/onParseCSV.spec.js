@@ -2,10 +2,10 @@
  * @jest-environment node
  */
 
-import onParseXLS from '../../../src/events/onParseXLS';
+import onParseCSV from '../../../src/events/onParseCSV';
 
-describe(`Function onParseXLS in "@eubfr/ingestion-etl-budg-xls"`, () => {
-  test('The function requires BUCKET, REGION and STAGE', async () => {
+describe(`Function parseCsv in "@eubfr/ingestion-etl-devco-csv"`, () => {
+  test('The function requires BUCKET, REGION and STAGE environment variables', async () => {
     const event = {};
     const context = {};
 
@@ -17,6 +17,6 @@ describe(`Function onParseXLS in "@eubfr/ingestion-etl-budg-xls"`, () => {
 
     expect.assertions(1);
 
-    await onParseXLS(event, context, callback);
+    await onParseCSV(event, context, callback);
   });
 });

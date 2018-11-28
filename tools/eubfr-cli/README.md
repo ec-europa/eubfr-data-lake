@@ -387,7 +387,7 @@ If you want to make use of the CLI to automatically upload or delete all content
     .
     ├── agri
     │   └── agri_history.csv
-    ├── budg
+    ├── eac
     │   └── CreativeEurope_Projects_Overview_2017-08-21.xls
     ├── iati
     │   └── activity.csv
