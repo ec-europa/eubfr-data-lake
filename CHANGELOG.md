@@ -1,5 +1,26 @@
 # Change Log
 
+## 0.4.1 (2018-11-28)
+
+#### :rocket: New Feature
+
+- [#168](https://github.com/ec-europa/eubfr-data-lake/pull/168) feat(etl): add data from DEVCO - EUBFR-217 ([@kalinchernev](https://github.com/kalinchernev))
+- [#174](https://github.com/ec-europa/eubfr-data-lake/pull/174) feat(secrets-manager): improve workflows using AWS Secrets Manager service - EUBFR-224 ([@kalinchernev](https://github.com/kalinchernev))
+
+#### :bug: Bug Fix
+
+- [#172](https://github.com/ec-europa/eubfr-data-lake/pull/172) fix(etl): correct type field in BUDG ETL - EUBFR-220 ([@MrGRA](https://github.com/MrGRA))
+- [#170](https://github.com/ec-europa/eubfr-data-lake/pull/170) fix(etl): correct type field in BUDG ETL - EUBFR-220 ([@MrGRA](https://github.com/MrGRA))
+
+#### :nail_care: Enhancement
+
+- [#175](https://github.com/ec-europa/eubfr-data-lake/pull/175) refactor(etls): change budg to eac and update mapping - EUBFR-222 ([@kalinchernev](https://github.com/kalinchernev))
+
+#### Committers: 2
+
+- Guilherme Almeida ([@MrGRA](https://github.com/MrGRA))
+- Kalin Chernev ([@kalinchernev](https://github.com/kalinchernev))
+
 ## 0.3.1 (2018-11-08)
 
 #### :bug: Bug Fix
