@@ -129,7 +129,7 @@ yarn delete:demo
 Or, if you want to target a specific producer demo app:
 
 ```sh
-EUBFR_USERNAME=budg yarn run delete:demo
+EUBFR_USERNAME=agri yarn run delete:demo
 ```
 
 ## Notes
