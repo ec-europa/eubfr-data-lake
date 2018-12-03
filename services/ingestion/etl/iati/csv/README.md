@@ -1,3 +1,3 @@
-# IATI CSV ETL rules
+# IATI CSV ETL mapping rules
 
-As this ETL is expected to process long-running task, it's capable of running an ECS task to execute the parsing handler in a container in order to avoid timeouts.
+Model to compare with is available at: https://ec-europa.github.io/eubfr-data-lake/

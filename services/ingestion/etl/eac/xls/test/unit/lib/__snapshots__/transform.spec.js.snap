@@ -1,6 +1,198 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DG BUDG XLS transformer Produces correct JSON output structure, type array well formated 1`] = `
+exports[`DG EAC XLS transformer Produces correct JSON output structure, given Culture_2007_2013_Projects_Overview_2018-11-22 file from http://ec.europa.eu/programmes/creative-europe/projects/ce-projects-compendium/ 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "funding_area": Array [],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+  },
+  "call_year": "",
+  "complete": true,
+  "description": "The project aims at restoring the European dimension of the Romani language and culture, to inscrease solidarity and encourage minority valorisation and defend their human rights through audiovisual media.  It aims at providing a wider range of information about the functioniong of minority self-governments, ministries' programmes, governmental organisations helping minoriries and handicap people: with a focus on the Rom heritage.
+Keja will be in charge of film-making as didactic material and of technical trainings/interventions, and of providing linguistic adaptations of the audiovisual activities. A series of DVDs will be produced (with short movies, interactive exercises, recorded musical and literary illustrative material), a book, and a dictionary of the Romani language.",
+  "ec_priorities": Array [],
+  "media": Array [],
+  "programme_name": "Culture\\\\Culture (2007-2013)\\\\Multi-annual Cooperation Projects",
+  "project_id": "EACEA-148838",
+  "project_locations": Array [
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "HU",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "",
+      "town": "",
+    },
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "BG",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "",
+      "town": "",
+    },
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "FR",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "",
+      "town": "",
+    },
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "PL",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "",
+      "town": "",
+    },
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "RO",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "",
+      "town": "",
+    },
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "SK",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "",
+      "town": "",
+    },
+  ],
+  "project_website": "",
+  "related_links": Array [],
+  "reporting_organisation": "EAC",
+  "results": Object {
+    "available": "No",
+    "result": "https://ec.europa.eu/programmes/creative-europe/projects/ce-project-details/#project/148838-CU-1-2009-1-HU-CULTURE-VOL11",
+  },
+  "status": "",
+  "sub_programme_name": "",
+  "success_story": "No",
+  "themes": Array [],
+  "third_parties": Array [
+    Object {
+      "address": "Ülloi ut 23,  1091,  BUDAPEST",
+      "country": "HU",
+      "email": "",
+      "name": "KISEBBSEGI ES EMBERI JOGI ALAPITVANY- MINORITY AND HUMAN RIGHTS FOUNDATION",
+      "phone": "",
+      "region": "",
+      "role": "coordinator",
+      "type": "",
+      "website": "www.keja.hu",
+    },
+    Object {
+      "address": "15 Noemvri Str.1   1040  SOFIA",
+      "country": "BG",
+      "email": "",
+      "name": "INSTITUTE OF SOCIOLOGY AT BULGARIAN ACADEMY OF SCIENCES",
+      "phone": "",
+      "region": "",
+      "role": "partner",
+      "type": "",
+      "website": "",
+    },
+    Object {
+      "address": "RUE DE LILLE 2   75343  PARIS CEDEX 07",
+      "country": "FR",
+      "email": "",
+      "name": "INSTITUT NATIONAL DES LANGUES ET CIVILISATIONS ORIENTALES",
+      "phone": "",
+      "region": "",
+      "role": "partner",
+      "type": "",
+      "website": "",
+    },
+    Object {
+      "address": "Rynek 20-21   33 100  TARNOW",
+      "country": "PL",
+      "email": "",
+      "name": "REGIONAL MUSEUM IN TARNOW",
+      "phone": "",
+      "region": "",
+      "role": "partner",
+      "type": "",
+      "website": "",
+    },
+    Object {
+      "address": "Str.Buzesti 19, district 1   011011  BUCAREST",
+      "country": "RO",
+      "email": "",
+      "name": "ROMANI CRISS - ROMA CENTRE FOR SOCIAL INTERVENTION AND STUDIES",
+      "phone": "",
+      "region": "",
+      "role": "partner",
+      "type": "",
+      "website": "",
+    },
+    Object {
+      "address": "Povazska ulica 20   04011  KOSICE",
+      "country": "SK",
+      "email": "",
+      "name": "NADACIA DOBRA ROMSKA VILA KESAJ",
+      "phone": "",
+      "region": "",
+      "role": "partner",
+      "type": "",
+      "website": "",
+    },
+  ],
+  "timeframe": Object {
+    "from": "2009-01-09T00:00:00.000Z",
+    "from_precision": "day",
+    "to": "2016-06-06T00:00:00.000Z",
+    "to_precision": "day",
+  },
+  "title": "Restoring the European Dimension of the Romani Language & Culture",
+  "type": Array [],
+}
+`;
+
+exports[`DG EAC XLS transformer Produces correct JSON output structure, type array well formated 1`] = `
 Object {
   "action": "Cooperation projects",
   "budget": Object {
@@ -103,7 +295,7 @@ Object {
   ],
   "project_website": "",
   "related_links": Array [],
-  "reporting_organisation": "BUDG",
+  "reporting_organisation": "EAC",
   "results": Object {
     "available": "No",
     "result": "http://ec.europa.eu/programmes/creative-europe/projects/ce-project-details-page/?nodeRef=workspace://SpacesStore/b0cdaa31-b137-4471-a347-3cfbb8c1ea61",
@@ -152,7 +344,7 @@ Object {
 }
 `;
 
-exports[`DG BUDG XLS transformer Produces correct JSON output structure, year in 2 digits 1`] = `
+exports[`DG EAC XLS transformer Produces correct JSON output structure, year in 2 digits 1`] = `
 Object {
   "action": "Cooperation projects",
   "budget": Object {
@@ -255,7 +447,7 @@ Object {
   ],
   "project_website": "",
   "related_links": Array [],
-  "reporting_organisation": "BUDG",
+  "reporting_organisation": "EAC",
   "results": Object {
     "available": "No",
     "result": "http://ec.europa.eu/programmes/creative-europe/projects/ce-project-details-page/?nodeRef=workspace://SpacesStore/b0cdaa31-b137-4471-a347-3cfbb8c1ea61",
@@ -343,7 +535,7 @@ Object {
 }
 `;
 
-exports[`DG BUDG XLS transformer Produces correct JSON output structure, year in 4 digits 1`] = `
+exports[`DG EAC XLS transformer Produces correct JSON output structure, year in 4 digits 1`] = `
 Object {
   "action": "Cooperation projects",
   "budget": Object {
@@ -446,7 +638,7 @@ Object {
   ],
   "project_website": "",
   "related_links": Array [],
-  "reporting_organisation": "BUDG",
+  "reporting_organisation": "EAC",
   "results": Object {
     "available": "No",
     "result": "http://ec.europa.eu/programmes/creative-europe/projects/ce-project-details-page/?nodeRef=workspace://SpacesStore/b0cdaa31-b137-4471-a347-3cfbb8c1ea61",

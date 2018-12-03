@@ -1,4 +1,4 @@
-service: ingestion-etl-budg-xls
+service: ingestion-etl-eac-xls
 
 plugins:
   - serverless-webpack
@@ -60,8 +60,8 @@ functions:
                 - Ref: "AWS::Region"
                 - ":"
                 - Ref: "AWS::AccountId"
-                - ":${self:provider.stage}-etl-budg-xls"
-          topicName: ${self:provider.stage}-etl-budg-xls
+                - ":${self:provider.stage}-etl-eac-xls"
+          topicName: ${self:provider.stage}-etl-eac-xls
       - sns:
           arn:
             Fn::Join:
@@ -70,8 +70,8 @@ functions:
                 - Ref: "AWS::Region"
                 - ":"
                 - Ref: "AWS::AccountId"
-                - ":${self:provider.stage}-etl-budg-xlsx"
-          topicName: ${self:provider.stage}-etl-budg-xlsx
+                - ":${self:provider.stage}-etl-eac-xlsx"
+          topicName: ${self:provider.stage}-etl-eac-xlsx
 
 resources:
   Resources:
@@ -81,17 +81,17 @@ resources:
         DeadLetterConfig:
           TargetArn:
             Fn::ImportValue: ${self:provider.stage}:ingestion-dead-letter-queue:LambdaFailureQueue
-    SNSTopicBUDGXLS:
+    SNSTopicEACXLS:
       Type: AWS::SNS::Topic
       Properties:
-        TopicName: ${self:provider.stage}-etl-budg-xls
-        DisplayName: BUDG XLS ETL
-    SNSTopicBUDGXLSX:
+        TopicName: ${self:provider.stage}-etl-eac-xls
+        DisplayName: EAC XLS ETL
+    SNSTopicEACXLSX:
       Type: AWS::SNS::Topic
       Properties:
-        TopicName: ${self:provider.stage}-etl-budg-xlsx
-        DisplayName: BUDG XLSX ETL
-    SNSTopicBUDGXLSPolicy:
+        TopicName: ${self:provider.stage}-etl-eac-xlsx
+        DisplayName: EAC XLSX ETL
+    SNSTopicEACXLSPolicy:
       Type: AWS::SNS::TopicPolicy
       Properties:
         PolicyDocument:
@@ -110,7 +110,7 @@ resources:
                     - Ref: "AWS::Region"
                     - ":"
                     - Ref: "AWS::AccountId"
-                    - ":${self:provider.stage}-etl-budg-*"
+                    - ":${self:provider.stage}-etl-eac-*"
               Principal:
                 AWS:
                   Fn::Join:
@@ -122,5 +122,5 @@ resources:
                       - Ref: "AWS::Region"
                       - "-lambdaRole/${self:provider.stage}-ingestion-manager-onCreate"
         Topics:
-          - Ref: SNSTopicBUDGXLS
-          - Ref: SNSTopicBUDGXLSX
+          - Ref: SNSTopicEACXLS
+          - Ref: SNSTopicEACXLSX

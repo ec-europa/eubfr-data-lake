@@ -11,8 +11,8 @@ The EUBFR project uses several types which aim to make the results of ETLs data 
 Here's a list of the transformations made in ETLs around the `Project` model.
 
 - [AGRI - CSV](./etls/agri-csv.md)
-- [BUDG - XLS](./etls/budg-xls.md)
 - [CORDIS - CSV](./etls/cordis-csv.md)
+- [EAC - XLS](./etls/eac-xls.md)
 - [HOME - XLS](./etls/home-xls.md)
 - [INFOREGIO - JSON](./etls/inforegio-json.md)
 - [INFOREGIO - XML](./etls/inforegio-xml.md)

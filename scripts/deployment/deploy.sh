@@ -39,9 +39,11 @@ npx serverless deploy -v
 # Deploy ETL
 cd ../etl/agri/csv
 npx serverless deploy -v
-cd ../../budg/xls
-npx serverless deploy -v
 cd ../../cordis/csv
+npx serverless deploy -v
+cd ../../devco/csv
+npx serverless deploy -v
+cd ../../eac/xls
 npx serverless deploy -v
 cd ../../fts/xls
 npx serverless deploy -v
