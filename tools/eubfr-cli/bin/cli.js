@@ -100,7 +100,7 @@ program.command('es', 'Elasticsearch management');
  * .
  * ├── agri
  * │   └── agri_history.csv
- * ├── budg
+ * ├── eac
  * │   └── CreativeEurope_Projects_Overview_2017-08-21.xls
  * ├── iati
  * │   └── activity.csv

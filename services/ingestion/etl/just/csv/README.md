@@ -1,6 +1,4 @@
-# JUST ETL mapping
-
-Date of document revision: 23/03/2018
+# JUST CSV ETL mapping rules
 
 Model to compare with is available at: https://ec-europa.github.io/eubfr-data-lake/
 
