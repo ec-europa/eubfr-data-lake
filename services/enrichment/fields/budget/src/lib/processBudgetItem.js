@@ -1,6 +1,6 @@
 // @flow
-import sanitizeBudgetItem from '@eubfr/lib/budgetFormatter';
-import supportedCurrencies from '@eubfr/lib/supportedCurrencies';
+import sanitizeBudgetItem from '@eubfr/lib/budget/budgetFormatter';
+import supportedCurrencies from '@eubfr/lib/budget/supportedCurrencies';
 import type { BudgetItem, TimePrecision } from '@eubfr/types';
 
 import { getEuroValue } from './getEuroValue';

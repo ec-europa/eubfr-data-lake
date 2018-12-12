@@ -1,7 +1,10 @@
 // @flow
 
 import crypto from 'crypto';
-import { sanitizeBudgetItem, sanitizeValue } from '@eubfr/lib/budgetFormatter';
+import {
+  sanitizeBudgetItem,
+  sanitizeValue,
+} from '@eubfr/lib/budget/budgetFormatter';
 import getCountryCode from '@eubfr/lib/getCountryCode';
 import type { Project } from '@eubfr/types';
 
