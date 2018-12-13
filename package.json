@@ -39,7 +39,7 @@
     "babel-core": "6.26.3",
     "babel-eslint": "8.2.3",
     "documentation": "7.1.0",
-    "documentation-theme-ecl": "1.1.0",
+    "documentation-theme-ecl": "1.1.1",
     "eslint": "4.19.1",
     "eslint-config-airbnb-base": "12.1.0",
     "eslint-config-prettier": "2.9.0",

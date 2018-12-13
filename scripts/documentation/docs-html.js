@@ -12,6 +12,7 @@ documentation
       'project-name': 'EUBFR ETL documentation',
       'project-description':
         'Information about transform functions used throughout the project.',
+      'project-url': 'https://ec.europa.eu/commission/index_en',
       theme: 'node_modules/documentation-theme-ecl',
     })
   )
