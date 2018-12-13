@@ -1,6 +1,6 @@
 # Compute ECS
 
-Contains Dockerfile defining an image which accepts 2 parameters via environment variables and executes an AWS Lambda function via `runner.js` executable.
+Contains `Dockerfile` defining an image which accepts 2 parameters via environment variables and executes an AWS Lambda function via `runner.js` executable.
 
 Although the setup is based on Docker, the main target AWS service for making use of the setup is [AWS Fargate](https://aws.amazon.com/fargate/) because the majority of the other services around this service are based on the serverless framework.
 
@@ -10,10 +10,10 @@ This means that the main aim for this service to exist is to serve as a backup r
 
 The infrastructure is comprised of several resources which could be re-used through a given development stage.
 
-Use the `template.yaml` to deploy the necessary infrastructure, usually you'd do that once per environment. (dev, test, prod)
+Use the `template.yml` to deploy the necessary infrastructure, usually you'd do that once per environment, although 1 task can be reused throughout several environment as the code of the service is independent from the given stage.
 
 ```
-$ aws cloudformation deploy --template-file template.yaml --stack-name dev-compute-ecs --s3-bucket eubfr-dev-deploy --capabilities CAPABILITY_NAMED_IAM
+$ aws cloudformation deploy --template-file template.yml --stack-name dev-compute-ecs --s3-bucket eubfr-dev-deploy --capabilities CAPABILITY_NAMED_IAM
 ```
 
 Where the following could vary by the target environment stage:

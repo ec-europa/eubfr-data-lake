@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: CloudFormation template for Fargate.
+Description: CloudFormation template for runTask.
 
 Parameters:
   Image:
@@ -13,61 +13,7 @@ Parameters:
     Type: Number
     Default: 80
 
-Mappings:
-  # Hard values for the subnet masks. These masks define
-  # the range of internal IP addresses that can be assigned.
-  # The VPC can have all IP's from 10.0.0.0 to 10.0.255.255
-  # There are two subnets which cover the ranges:
-  #
-  # 10.0.0.0 - 10.0.0.255
-  # 10.0.1.0 - 10.0.1.255
-  #
-  # If you need more IP addresses (perhaps you have so many
-  # instances that you run out) then you can customize these
-  # ranges to add more
-  SubnetConfig:
-    VPC:
-      CIDR: '10.0.0.0/16'
-    PublicOne:
-      CIDR: '10.0.0.0/24'
-    PublicTwo:
-      CIDR: '10.0.1.0/24'
-
 Resources:
-  # VPC in which containers will be networked.
-  # It has two public subnets
-  # We distribute the subnets across the first two available subnets
-  # for the region, for high availability.
-  VPC:
-    Type: AWS::EC2::VPC
-    Properties:
-      EnableDnsSupport: true
-      EnableDnsHostnames: true
-      CidrBlock: !FindInMap ['SubnetConfig', 'VPC', 'CIDR']
-
-  # Two public subnets, where containers can have public IP addresses
-  PublicSubnetOne:
-    Type: AWS::EC2::Subnet
-    Properties:
-      AvailabilityZone:
-         Fn::Select:
-         - 0
-         - Fn::GetAZs: {Ref: 'AWS::Region'}
-      VpcId: !Ref 'VPC'
-      CidrBlock: !FindInMap ['SubnetConfig', 'PublicOne', 'CIDR']
-      MapPublicIpOnLaunch: true
-
-  PublicSubnetTwo:
-    Type: AWS::EC2::Subnet
-    Properties:
-      AvailabilityZone:
-         Fn::Select:
-         - 1
-         - Fn::GetAZs: {Ref: 'AWS::Region'}
-      VpcId: !Ref 'VPC'
-      CidrBlock: !FindInMap ['SubnetConfig', 'PublicTwo', 'CIDR']
-      MapPublicIpOnLaunch: true
-
   Cluster:
     Type: AWS::ECS::Cluster
     Properties:
@@ -89,13 +35,13 @@ Resources:
       # 1024 (1 vCPU) - Available memory values: 2GB, 3GB, 4GB, 5GB, 6GB, 7GB, 8GB
       # 2048 (2 vCPU) - Available memory values: Between 4GB and 16GB in 1GB increments
       # 4096 (4 vCPU) - Available memory values: Between 8GB and 30GB in 1GB increments
-      Cpu: 1024
+      Cpu: 2048
       # 0.5GB, 1GB, 2GB - Available cpu values: 256 (.25 vCPU)
       # 1GB, 2GB, 3GB, 4GB - Available cpu values: 512 (.5 vCPU)
       # 2GB, 3GB, 4GB, 5GB, 6GB, 7GB, 8GB - Available cpu values: 1024 (1 vCPU)
       # Between 4GB and 16GB in 1GB increments - Available cpu values: 2048 (2 vCPU)
       # Between 8GB and 30GB in 1GB increments - Available cpu values: 4096 (4 vCPU)
-      Memory: 2GB
+      Memory: 4GB
       # A role needed by ECS.
       # "The ARN of the task execution role that containers in this task can assume. All containers in this task are granted the permissions that are specified in this role."
       # "There is an optional task execution IAM role that you can specify with Fargate to allow your Fargate tasks to make API calls to Amazon ECR."
@@ -146,7 +92,6 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: !Join ['', [!Ref ServiceName, ContainerSecurityGroup]]
-      VpcId: !Ref VPC
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: !Ref ContainerPort
