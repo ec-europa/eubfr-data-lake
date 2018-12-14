@@ -9,6 +9,11 @@ const getServices = require('../../lib/getServices');
 const getServiceLocation = require('../../lib/getServiceLocation');
 
 const deployServices = async ({ services, producer }) => {
+  const slsBin = path.resolve(
+    require.resolve('serverless'),
+    '../../bin/serverless'
+  );
+
   // EUBFR_USERNAME can override flags.
   const selectedProducer = process.env.EUBFR_USERNAME || producer;
   const list = getServices(services);
@@ -43,11 +48,11 @@ const deployServices = async ({ services, producer }) => {
       console.time(serviceName);
       // Deploy the service.
       // eslint-disable-next-line
-      await shell('npx sls deploy', { cwd });
+      await shell(`${slsBin} deploy`, { cwd });
       if (service.exportEnv) {
         // Export environment variables.
         // eslint-disable-next-line
-        await shell('npx sls export-env', { cwd });
+        await shell(`${slsBin} export-env`, { cwd });
         console.log(`.env exported for ${serviceName}`);
       }
       console.log(`${serviceName} has been deployed`);

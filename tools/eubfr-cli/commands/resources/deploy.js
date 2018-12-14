@@ -7,6 +7,11 @@ const shell = promisify(exec);
 const getServiceLocation = require('../../lib/getServiceLocation');
 
 const deployResources = async () => {
+  const slsBin = path.resolve(
+    require.resolve('serverless'),
+    '../../bin/serverless'
+  );
+
   const resources = [
     'resources-raw-storage',
     'resources-harmonized-storage',
@@ -20,7 +25,7 @@ const deployResources = async () => {
       try {
         console.log(`Deploying ${resource}`);
         console.time(resource);
-        await shell('npx sls deploy', { cwd });
+        await shell(`${slsBin} deploy`, { cwd });
         console.log(`${resource} has been deployed`);
         console.timeEnd(resource);
       } catch (e) {

@@ -9,6 +9,10 @@ const getConfigurations = require('../../lib/getConfigurations');
 const getServiceLocation = require('../../lib/getServiceLocation');
 
 const deleteResources = async () => {
+  const slsBin = path.resolve(
+    require.resolve('serverless'),
+    '../../bin/serverless'
+  );
   const resources = ['resources-raw-storage', 'resources-harmonized-storage'];
   const { stage, region } = getConfigurations();
 
@@ -18,7 +22,7 @@ const deleteResources = async () => {
     try {
       console.log(`Deleting ${resource} ...`);
       console.time(resource);
-      await shell(`npx sls remove --stage ${stage} --region ${region}`, {
+      await shell(`${slsBin} remove --stage ${stage} --region ${region}`, {
         cwd,
       });
       console.log(`${resource} has been deleted.`);
