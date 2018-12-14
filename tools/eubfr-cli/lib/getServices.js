@@ -7,6 +7,7 @@ const allServices = [
   { service: 'storage-deleter', exportEnv: true },
   { service: 'ingestion-manager', exportEnv: false },
   { service: 'ingestion-cleaner', exportEnv: false },
+  { service: 'ingestion-dead-letter-queue', exportEnv: false },
   { service: 'ingestion-quality-analyzer', exportEnv: false },
   { service: 'ingestion-etl-agri-csv', exportEnv: false },
   { service: 'ingestion-etl-budg-xls', exportEnv: false },
