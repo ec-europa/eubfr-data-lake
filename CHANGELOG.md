@@ -1,5 +1,21 @@
 # Change Log
 
+## 0.5.0 (2018-12-14)
+
+#### :rocket: New Feature
+
+- [#160](https://github.com/ec-europa/eubfr-data-lake/pull/160) feat(ingestion): make use of AWS Fargate as fallback of timeout in lambda handlers - EUBFR-204 ([@kalinchernev](https://github.com/kalinchernev))
+
+#### :nail_care: Enhancement
+
+- [#179](https://github.com/ec-europa/eubfr-data-lake/pull/179) chore(documentation-theme): update to ECL v2 - noissue ([@kalinchernev](https://github.com/kalinchernev))
+- [#176](https://github.com/ec-europa/eubfr-data-lake/pull/176) refactor(cli): improve deployment workflows - EUBFR-146 ([@kalinchernev](https://github.com/kalinchernev))
+- [#166](https://github.com/ec-europa/eubfr-data-lake/pull/166) refactor(budgetFormatter): ignore spaces between when abbreviations - EUBFR-214 ([@kalinchernev](https://github.com/kalinchernev))
+
+#### Committers: 1
+
+- Kalin Chernev ([@kalinchernev](https://github.com/kalinchernev))
+
 ## 0.4.1 (2018-11-28)
 
 #### :rocket: New Feature
