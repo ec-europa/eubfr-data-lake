@@ -15,7 +15,7 @@ const pkg = require('../package.json');
  * ### Usage
  *
  * ```sh
- * $ npx eubfr-cli -h
+ * $ eubfr-cli -h
  * ```
  *
  * @name Introduction
@@ -29,7 +29,7 @@ program.version(pkg.version).usage('[resource] [action]');
  * ### Usage
  *
  * ```sh
- * $ npx eubfr-cli resources -h
+ * $ eubfr-cli resources -h
  * ```
  *
  * @name Resources
@@ -43,7 +43,7 @@ program.command('resources', 'Resources management');
  * ### Usage
  *
  * ```sh
- * $ npx eubfr-cli services -h
+ * $ eubfr-cli services -h
  * ```
  *
  * @name Services
@@ -52,33 +52,18 @@ program.command('resources', 'Resources management');
 program.command('services', 'Services management');
 
 /**
- * Manage environment
+ * Manage demo applications
  *
  * ### Usage
  *
  * ```sh
- * $ npx eubfr-cli env -h
+ * $ eubfr-cli demo -h
  * ```
  *
- * @name Environment
+ * @name Demo
  * @public
  */
-program.command('env', 'Environment management');
-
-/**
- * Manage Elasticsearch assets
- *
- * ### Usage
- *
- * ```sh
- * $ npx eubfr-cli es -h
- * ```
- *
- * @name Elasticsearch
- * @public
- */
-
-program.command('es', 'Elasticsearch management');
+program.command('demo', 'Demo applications management');
 
 // The following comment contains `tree` results which cause lintint issues.
 /* eslint-disable no-irregular-whitespace */
@@ -89,7 +74,7 @@ program.command('es', 'Elasticsearch management');
  * ### Usage
  *
  * ```sh
- * $ npx eubfr-cli content -h
+ * $ eubfr-cli content -h
  * ```
  *
  * ### Notes
@@ -125,6 +110,35 @@ program.command('es', 'Elasticsearch management');
  */
 /* eslint-enable no-irregular-whitespace */
 program.command('content', 'Content management');
+
+/**
+ * Manage environment
+ *
+ * ### Usage
+ *
+ * ```sh
+ * $ eubfr-cli env -h
+ * ```
+ *
+ * @name Environment
+ * @public
+ */
+program.command('env', 'Environment management');
+
+/**
+ * Manage Elasticsearch assets
+ *
+ * ### Usage
+ *
+ * ```sh
+ * $ eubfr-cli es -h
+ * ```
+ *
+ * @name Elasticsearch
+ * @public
+ */
+
+program.command('es', 'Elasticsearch management');
 
 // If no arguments provided, display help menu.
 if (!process.argv.slice(2).length) {

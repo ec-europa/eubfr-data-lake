@@ -18,7 +18,7 @@ const generateEnvironmentVariables = require('../commands/env/generateVariables'
  * These `.env` files are normally generated automatically for you when you deploy all services setting up your development environment.
  * However, if you receive an error for a missing environment variable, you can use this command to regenerate information about the necessary variables.
  *
- * For instance, you may try to get information about available Elasticsearch domains which are manageable by the CLI running `npx eubfr-cli es`.
+ * For instance, you may try to get information about available Elasticsearch domains which are manageable by the CLI running `eubfr-cli es`.
  * If you haven't deployed `@eubfr/demo-dashboard-client` or you have switched between staging environments working on different branches at the same code base, then you'll get an error like this:
  *
  * ```
@@ -32,7 +32,7 @@ const generateEnvironmentVariables = require('../commands/env/generateVariables'
  * Usage:
  *
  * ```sh
- * $ npx eubfr-cli env generate-variables
+ * $ eubfr-cli env generate-variables
  * ```
  *
  * @memberof Environment

@@ -6,6 +6,11 @@ const shell = promisify(exec);
 const getServiceLocation = require('../../lib/getServiceLocation');
 
 const generateEnvironmentVariables = () => {
+  const slsBin = path.resolve(
+    require.resolve('serverless'),
+    '../../bin/serverless'
+  );
+
   // The CLI needs these for various environment variables.
   const services = [
     'storage-deleter',
@@ -24,9 +29,9 @@ const generateEnvironmentVariables = () => {
 
       console.time(service);
       // First make sure latest code has been deployed correctly.
-      await shell('npx sls deploy', { cwd });
+      await shell(`${slsBin} deploy`, { cwd });
       // Export the necessary environment variables.
-      await shell('npx sls export-env', { cwd });
+      await shell(`${slsBin} export-env`, { cwd });
       console.timeEnd(service);
 
       return delete process.env.EUBFR_USERNAME;
