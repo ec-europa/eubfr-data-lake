@@ -31,6 +31,11 @@ provider:
     - Effect: "Allow"
       Action: "es:*"
       Resource: "arn:aws:es:${self:provider.region}:*:domain/*"
+    # Allow queueing messages to the DLQ https://docs.aws.amazon.com/lambda/latest/dg/dlq.html
+    - Effect: 'Allow'
+      Action:
+        - sqs:SendMessage
+      Resource: '*'
 
 functions:
   onObjectCreated:
@@ -78,3 +83,13 @@ functions:
                 - Ref: "AWS::AccountId"
                 - ":${self:provider.stage}-harmonized-object-removed"
           topicName: ${self:provider.stage}-harmonized-object-removed
+
+
+resources:
+  Resources:
+    OnObjectCreatedLambdaFunction:
+      Type: "AWS::Lambda::Function"
+      Properties:
+        DeadLetterConfig:
+          TargetArn:
+            Fn::ImportValue: ${self:provider.stage}:ingestion-dead-letter-queue:LambdaFailureQueue

@@ -36,6 +36,11 @@ provider:
            - - "arn:aws:s3:::"
              - ${self:custom.bucketName}
              - "/*"
+    # Allow queueing messages to the DLQ https://docs.aws.amazon.com/lambda/latest/dg/dlq.html
+    - Effect: 'Allow'
+      Action:
+        - sqs:SendMessage
+      Resource: '*'
 
 functions:
   parseCsv:
@@ -60,6 +65,12 @@ functions:
 
 resources:
   Resources:
+    ParseCsvLambdaFunction:
+      Type: "AWS::Lambda::Function"
+      Properties:
+        DeadLetterConfig:
+          TargetArn:
+            Fn::ImportValue: ${self:provider.stage}:ingestion-dead-letter-queue:LambdaFailureQueue
     SNSTopicJUSTCSV:
       Type: AWS::SNS::Topic
       Properties:

@@ -27,24 +27,28 @@ provider:
   stackTags:
     ENV: ${self:custom.eubfrEnvironment}
   iamRoleStatements:
-    -  Effect: "Allow"
-       Action:
-         - "s3:PutObject"
-       Resource:
-         Fn::Join:
-           - ""
-           - - "arn:aws:s3:::"
-             - ${self:custom.bucketName}
-             - "/*"
+    - Effect: 'Allow'
+      Action:
+        - 's3:PutObject'
+      Resource:
+        Fn::Join:
+          - ''
+          - - 'arn:aws:s3:::'
+            - ${self:custom.bucketName}
+            - '/*'
+    # Allow queueing messages to the DLQ https://docs.aws.amazon.com/lambda/latest/dg/dlq.html
+    - Effect: 'Allow'
+      Action:
+        - sqs:SendMessage
+      Resource: '*'
 
 functions:
   parseCsv:
     handler: src/events/onParseCSV.handler
     name: ${self:provider.stage}-${self:service}-parseCsv
-    # This producer could push files of hundreds of megabytes.
-    # Interruptions in parsing and upload should be avoided.
     timeout: 300
     memorySize: 2048
+
     environment:
       BUCKET: ${self:custom.bucketName}
       REGION: ${self:provider.region}
@@ -53,16 +57,22 @@ functions:
       - sns:
           arn:
             Fn::Join:
-              - ""
-              - - "arn:aws:sns:"
-                - Ref: "AWS::Region"
-                - ":"
-                - Ref: "AWS::AccountId"
-                - ":${self:provider.stage}-etl-iati-csv"
+              - ''
+              - - 'arn:aws:sns:'
+                - Ref: 'AWS::Region'
+                - ':'
+                - Ref: 'AWS::AccountId'
+                - ':${self:provider.stage}-etl-iati-csv'
           topicName: ${self:provider.stage}-etl-iati-csv
 
 resources:
   Resources:
+    ParseCsvLambdaFunction:
+      Type: "AWS::Lambda::Function"
+      Properties:
+        DeadLetterConfig:
+          TargetArn:
+            Fn::ImportValue: ${self:provider.stage}:ingestion-dead-letter-queue:LambdaFailureQueue
     SNSTopicIATICSV:
       Type: AWS::SNS::Topic
       Properties:
@@ -74,29 +84,26 @@ resources:
         PolicyDocument:
           Version: '2012-10-17'
           Statement:
-            -
-              Sid: Allow-IngestionManager-Publish
+            - Sid: Allow-IngestionManager-Publish
               Action:
                 - sns:Publish
               Effect: Allow
               Resource:
                 Fn::Join:
-                  - ""
-                  -
-                    - "arn:aws:sns:"
-                    - Ref: "AWS::Region"
-                    - ":"
-                    - Ref: "AWS::AccountId"
-                    - ":${self:provider.stage}-etl-iati-csv"
+                  - ''
+                  - - 'arn:aws:sns:'
+                    - Ref: 'AWS::Region'
+                    - ':'
+                    - Ref: 'AWS::AccountId'
+                    - ':${self:provider.stage}-etl-iati-csv'
               Principal:
                 AWS:
                   Fn::Join:
-                    - ""
-                    -
-                      - "arn:aws:sts::"
-                      - Ref: "AWS::AccountId"
-                      - ":assumed-role/ingestion-manager-${self:provider.stage}-"
-                      - Ref: "AWS::Region"
-                      - "-lambdaRole/${self:provider.stage}-ingestion-manager-onCreate"
+                    - ''
+                    - - 'arn:aws:sts::'
+                      - Ref: 'AWS::AccountId'
+                      - ':assumed-role/ingestion-manager-${self:provider.stage}-'
+                      - Ref: 'AWS::Region'
+                      - '-lambdaRole/${self:provider.stage}-ingestion-manager-onCreate'
         Topics:
           - Ref: SNSTopicIATICSV
