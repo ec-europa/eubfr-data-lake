@@ -14,7 +14,7 @@ const deleteDemos = require('../commands/demo/delete');
  * Usage:
  *
  * ```sh
- * $ npx eubfr-cli demo deploy -h
+ * $ eubfr-cli demo deploy -h
  * ```
  *
  * Examples:
@@ -22,13 +22,13 @@ const deleteDemos = require('../commands/demo/delete');
  * Deploy all demo applications for all producers.
  *
  * ```sh
- * $ npx eubfr-cli demo deploy
+ * $ eubfr-cli demo deploy
  * ```
  *
  * Deploy all services, only for working with the AGRI producer.
  *
  * ```sh
- * $ npx eubfr-cli demo deploy -p agri
+ * $ eubfr-cli demo deploy -p agri
  * ```
  *
  * @memberof Demo
@@ -54,7 +54,7 @@ program
  * Usage:
  *
  * ```sh
- * $ npx eubfr-cli demo delete -h
+ * $ eubfr-cli demo delete -h
  * ```
  *
  * Examples:
@@ -62,13 +62,13 @@ program
  * Delete all demo applications.
  *
  * ```sh
- * $ npx eubfr-cli demo delete
+ * $ eubfr-cli demo delete
  * ```
  *
  * Delete only demo application of AGRI producer.
  *
  * ```sh
- * $ npx eubfr-cli demo delete -p agri
+ * $ eubfr-cli demo delete -p agri
  * ```
  *
  * @memberof Services

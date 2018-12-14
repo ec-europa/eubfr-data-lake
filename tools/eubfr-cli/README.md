@@ -41,7 +41,7 @@ Manage resources
 ### Usage
 
 ```sh
-$ npx eubfr-cli resources -h
+$ eubfr-cli resources -h
 ```
 
 ### Deploy
@@ -51,7 +51,7 @@ Create all necessary AWS resources, such as S3 buckets for raw and harmonized st
 Usage:
 
 ```sh
-$ npx eubfr-cli resources deploy
+$ eubfr-cli resources deploy
 ```
 
 ### Delete
@@ -65,7 +65,7 @@ Especially useful when usually resources-harmonized-storage will fail on deploym
 Usage:
 
 ```sh
-$ npx eubfr-cli resources delete
+$ eubfr-cli resources delete
 ```
 
 ## Introduction
@@ -81,7 +81,7 @@ Each command and sub-command has a help menu, which you can open by passing `-h`
 ### Usage
 
 ```sh
-$ npx eubfr-cli -h
+$ eubfr-cli -h
 ```
 
 ## Demo
@@ -91,7 +91,7 @@ Manage demo applications
 ### Usage
 
 ```sh
-$ npx eubfr-cli demo -h
+$ eubfr-cli demo -h
 ```
 
 ### Deploy
@@ -99,7 +99,7 @@ $ npx eubfr-cli demo -h
 Usage:
 
 ```sh
-$ npx eubfr-cli demo deploy -h
+$ eubfr-cli demo deploy -h
 ```
 
 Examples:
@@ -107,13 +107,13 @@ Examples:
 Deploy all demo applications for all producers.
 
 ```sh
-$ npx eubfr-cli demo deploy
+$ eubfr-cli demo deploy
 ```
 
 Deploy all services, only for working with the AGRI producer.
 
 ```sh
-$ npx eubfr-cli demo deploy -p agri
+$ eubfr-cli demo deploy -p agri
 ```
 
 ## Environment
@@ -123,7 +123,7 @@ Manage environment
 ### Usage
 
 ```sh
-$ npx eubfr-cli env -h
+$ eubfr-cli env -h
 ```
 
 ### GenerateVariables
@@ -138,7 +138,7 @@ There are several services which require information from `.env` files, i.e. env
 These `.env` files are normally generated automatically for you when you deploy all services setting up your development environment.
 However, if you receive an error for a missing environment variable, you can use this command to regenerate information about the necessary variables.
 
-For instance, you may try to get information about available Elasticsearch domains which are manageable by the CLI running `npx eubfr-cli es`.
+For instance, you may try to get information about available Elasticsearch domains which are manageable by the CLI running `eubfr-cli es`.
 If you haven't deployed `@eubfr/demo-dashboard-client` or you have switched between staging environments working on different branches at the same code base, then you'll get an error like this:
 
     ENOENT: no such file or directory, open '.../eubfr-data-lake/demo/dashboard/client/.env'
@@ -150,7 +150,7 @@ These are signs that you need to re-generate all necessary `.env` files which co
 Usage:
 
 ```sh
-$ npx eubfr-cli env generate-variables
+$ eubfr-cli env generate-variables
 ```
 
 ## Services
@@ -160,7 +160,7 @@ Manage services
 ### Usage
 
 ```sh
-$ npx eubfr-cli services -h
+$ eubfr-cli services -h
 ```
 
 ### Deploy
@@ -168,7 +168,7 @@ $ npx eubfr-cli services -h
 Usage:
 
 ```sh
-$ npx eubfr-cli services deploy -h
+$ eubfr-cli services deploy -h
 ```
 
 Examples:
@@ -176,19 +176,19 @@ Examples:
 Deploy all services for all producers.
 
 ```sh
-$ npx eubfr-cli services deploy
+$ eubfr-cli services deploy
 ```
 
 Deploy all services, only for working with the AGRI producer.
 
 ```sh
-$ npx eubfr-cli services deploy -p agri
+$ eubfr-cli services deploy -p agri
 ```
 
 (Re-)Deploy only a set of services for working a given producer.
 
 ```sh
-$ npx eubfr-cli services deploy foo bar -p agri
+$ eubfr-cli services deploy foo bar -p agri
 ```
 
 ### Delete
@@ -198,7 +198,7 @@ Remove a demo application.
 Usage:
 
 ```sh
-$ npx eubfr-cli demo delete -h
+$ eubfr-cli demo delete -h
 ```
 
 Examples:
@@ -206,13 +206,13 @@ Examples:
 Delete all demo applications.
 
 ```sh
-$ npx eubfr-cli demo delete
+$ eubfr-cli demo delete
 ```
 
 Delete only demo application of AGRI producer.
 
 ```sh
-$ npx eubfr-cli demo delete -p agri
+$ eubfr-cli demo delete -p agri
 ```
 
 ### Delete
@@ -222,7 +222,7 @@ Remove a serverless service from AWS cloud.
 Usage:
 
 ```sh
-$ npx eubfr-cli services delete -h
+$ eubfr-cli services delete -h
 ```
 
 Examples:
@@ -230,13 +230,13 @@ Examples:
 Delete all services.
 
 ```sh
-$ npx eubfr-cli services delete
+$ eubfr-cli services delete
 ```
 
 Delete only a given set of services.
 
 ```sh
-$ npx eubfr-cli services delete storage-signed-uploads storage-deleter
+$ eubfr-cli services delete storage-signed-uploads storage-deleter
 ```
 
 ## Content
@@ -246,7 +246,7 @@ Manage content
 ### Usage
 
 ```sh
-$ npx eubfr-cli content -h
+$ eubfr-cli content -h
 ```
 
 ### Notes
@@ -282,7 +282,7 @@ Upload content to the data lake.
 Usage:
 
 ```sh
-$ npx eubfr-cli content upload -h
+$ eubfr-cli content upload -h
 ```
 
 Examples:
@@ -290,19 +290,19 @@ Examples:
 Single file:
 
 ```sh
-$ npx eubfr-cli content upload .content/agri/agri_history.csv -p agri
+$ eubfr-cli content upload .content/agri/agri_history.csv -p agri
 ```
 
 Multiple files:
 
 ```sh
-$ npx eubfr-cli content upload .content/inforegio/EUBFR_VIEW_16052018.xml .content/inforegio/regio_projects.json -p inforegio
+$ eubfr-cli content upload .content/inforegio/EUBFR_VIEW_16052018.xml .content/inforegio/regio_projects.json -p inforegio
 ```
 
 All files:
 
 ```sh
-$ npx eubfr-cli content upload
+$ eubfr-cli content upload
 ```
 
 ### Show
@@ -312,7 +312,7 @@ Display files of a given producer.
 Usage:
 
 ```sh
-$ npx eubfr-cli content show -h
+$ eubfr-cli content show -h
 ```
 
 Examples:
@@ -320,13 +320,13 @@ Examples:
 Specific file by `computed_key`:
 
 ```sh
-$ npx eubfr-cli content show agri/16598a36-db86-42a0-8041-c0d85021ad97.csv
+$ eubfr-cli content show agri/16598a36-db86-42a0-8041-c0d85021ad97.csv
 ```
 
 All files of a given producer:
 
 ```sh
-$ npx eubfr-cli content show -p agri
+$ eubfr-cli content show -p agri
 ```
 
 Please note that if you are sure there's an existing content,
@@ -334,7 +334,7 @@ but you can't see it with this command, you'll need to double-check
 `eubfr-data-lake/demo/dashboard/client/.env` file to contain
 the correct value for `REACT_APP_STAGE`.
 If it's not the same as config.json's `stage`, run
-`npx eubfr-cli env generate-variables` to refresh the value of `REACT_APP_STAGE`.
+`eubfr-cli env generate-variables` to refresh the value of `REACT_APP_STAGE`.
 
 ### Delete
 
@@ -343,7 +343,7 @@ Delete files by `computed_key` field.
 Usage:
 
 ```sh
-$ npx eubfr-cli content delete -h
+$ eubfr-cli content delete -h
 ```
 
 Examples:
@@ -351,13 +351,13 @@ Examples:
 Delete one or multiple files:
 
 ```sh
-$ npx eubfr-cli content delete agri/foo budg/bar inforegio/baz
+$ eubfr-cli content delete agri/foo budg/bar inforegio/baz
 ```
 
 Delete all files of all producers:
 
 ```sh
-$ npx eubfr-cli content delete
+$ eubfr-cli content delete
 ```
 
 By default, you will be prompted to confirm your intention.
@@ -370,7 +370,7 @@ Manage Elasticsearch assets
 ### Usage
 
 ```sh
-$ npx eubfr-cli es -h
+$ eubfr-cli es -h
 ```
 
 ### snapshotExec
@@ -394,7 +394,7 @@ You could, of course, setup clients and authentication yourself, this command is
 Usage:
 
 ```sh
-$ npx eubfr-cli es snapshot-exec -h
+$ eubfr-cli es snapshot-exec -h
 ```
 
 Examples:
@@ -404,43 +404,43 @@ Create a repository:
 Note that the integration with S3 has been setup, `body` of request is prepared for you.
 
 ```sh
-$ npx eubfr-cli es snapshot-exec createRepository --host https://es.domain/ --params '{ "repository": "repo_name", "verify": true }'
+$ eubfr-cli es snapshot-exec createRepository --host https://es.domain/ --params '{ "repository": "repo_name", "verify": true }'
 ```
 
 Get information about specific repositories:
 
 ```sh
-$ npx eubfr-cli es snapshot-exec getRepository --host https://es.domain/ --params '{ "repository": "repo_name" }'
+$ eubfr-cli es snapshot-exec getRepository --host https://es.domain/ --params '{ "repository": "repo_name" }'
 ```
 
 Delete a given repository:
 
 ```sh
-$ npx eubfr-cli es snapshot-exec deleteRepository --host https://es.domain/ --params '{ "repository": "repo_name" }'
+$ eubfr-cli es snapshot-exec deleteRepository --host https://es.domain/ --params '{ "repository": "repo_name" }'
 ```
 
 Verify a given repository:
 
 ```sh
-$ npx eubfr-cli es snapshot-exec verifyRepository --host https://es.domain/ --params '{ "repository": "repo_name" }'
+$ eubfr-cli es snapshot-exec verifyRepository --host https://es.domain/ --params '{ "repository": "repo_name" }'
 ```
 
 Create a snapshot:
 
 ```sh
-$ npx eubfr-cli es snapshot-exec create --host https://es.domain/ --params '{ "repository": "repo_name", "snapshot": "snap1" }'
+$ eubfr-cli es snapshot-exec create --host https://es.domain/ --params '{ "repository": "repo_name", "snapshot": "snap1" }'
 ```
 
 Get a snapshot:
 
 ```sh
-$ npx eubfr-cli es snapshot-exec get --host https://es.domain/ --params '{ "repository": "repo_name", "snapshot": "snap1" }'
+$ eubfr-cli es snapshot-exec get --host https://es.domain/ --params '{ "repository": "repo_name", "snapshot": "snap1" }'
 ```
 
 Get status of a given snapshot:
 
 ```sh
-$ npx eubfr-cli es snapshot-exec status --host https://es.domain/ --params '{ "repository": "repo_name", "snapshot": "snap1" }'
+$ eubfr-cli es snapshot-exec status --host https://es.domain/ --params '{ "repository": "repo_name", "snapshot": "snap1" }'
 ```
 
 ### showDomains
@@ -450,7 +450,7 @@ Display a list of manageable domains.
 Usage:
 
 ```sh
-$ npx eubfr-cli es show-domains
+$ eubfr-cli es show-domains
 ```
 
 Useful when you want to see the names of the Elasticsearch domains available for management throught the EUBFR CLI.
@@ -463,7 +463,7 @@ Display cluster information about a given domain.
 Usage:
 
 ```sh
-$ npx eubfr-cli es show-cluster
+$ eubfr-cli es show-cluster
 ```
 
 Once you have the basic information about the domains you can manage through the CLI.
@@ -471,7 +471,7 @@ Once you have the basic information about the domains you can manage through the
 Examples:
 
 ```sh
-$ npx eubfr-cli es show-cluster -d REACT_APP_ES_PUBLIC_ENDPOINT
+$ eubfr-cli es show-cluster -d REACT_APP_ES_PUBLIC_ENDPOINT
 ```
 
 ### showIndices
@@ -481,7 +481,7 @@ Display index information.
 Usage:
 
 ```sh
-$ npx eubfr-cli es show-indices -h
+$ eubfr-cli es show-indices -h
 ```
 
 This could be useful when you want to query for existing indices so that you either re-use or re-create.
@@ -489,19 +489,19 @@ This could be useful when you want to query for existing indices so that you eit
 Examples:
 
 ```sh
-$ npx eubfr-cli es show-indices -d REACT_APP_ES_PUBLIC_ENDPOINT
+$ eubfr-cli es show-indices -d REACT_APP_ES_PUBLIC_ENDPOINT
 ```
 
 Since output might be too long to read (and most probably it will be in `dev` stage which is shared between developers), it could help to pipe a `grep` in order to focus on more narrow list.
 
 ```sh
- $ npx eubfr-cli es show-indices -d REACT_APP_ES_PUBLIC_ENDPOINT | grep chernka
+ $ eubfr-cli es show-indices -d REACT_APP_ES_PUBLIC_ENDPOINT | grep chernka
 ```
 
 This will give you a list of existing indices created by the given user. Then, you can make a more narrow query by specifying an index as following:
 
 ```sh
-$ npx eubfr-cli es show-indices user-index-1 user-index-2 etc -d REACT_APP_ES_PUBLIC_ENDPOINT
+$ eubfr-cli es show-indices user-index-1 user-index-2 etc -d REACT_APP_ES_PUBLIC_ENDPOINT
 ```
 
 ### createIndex
@@ -511,7 +511,7 @@ Create an index in a given domain with an optional mapping.
 Usage:
 
 ```sh
-$ npx eubfr-cli es create-index -h
+$ eubfr-cli es create-index -h
 ```
 
 Used either when creating a new index with a free structure (no mapping rules) or when creating a new index with specific rules about the document structure.
@@ -519,13 +519,13 @@ Used either when creating a new index with a free structure (no mapping rules) o
 Simply create a new index:
 
 ```sh
-$ npx eubfr-cli es create-index user-index-1 -d REACT_APP_ES_PUBLIC_ENDPOINT
+$ eubfr-cli es create-index user-index-1 -d REACT_APP_ES_PUBLIC_ENDPOINT
 ```
 
 Create a new index with mapping:
 
 ```sh
-$ npx eubfr-cli es create-index user-index-1 -t project -m ./resources/elasticsearch/mappings/project.js -d REACT_APP_ES_PUBLIC_ENDPOINT
+$ eubfr-cli es create-index user-index-1 -t project -m ./resources/elasticsearch/mappings/project.js -d REACT_APP_ES_PUBLIC_ENDPOINT
 ```
 
 This is especially useful when you want to update mapping for a given index without re-creating the whole domain.
@@ -537,19 +537,19 @@ Delete indices from a given Elasticsearch domain.
 Usage:
 
 ```sh
-$ npx eubfr-cli es delete-indices -h
+$ eubfr-cli es delete-indices -h
 ```
 
 This could be useful when you want to change mapping of an index without re-creating the whole domain.
 
 ```sh
-$ npx eubfr-cli es delete-indices user-index-1 -d REACT_APP_ES_PUBLIC_ENDPOINT
+$ eubfr-cli es delete-indices user-index-1 -d REACT_APP_ES_PUBLIC_ENDPOINT
 ```
 
 If you would like to skip the confirmation, you can use the `--confirm` flag:
 
 ```sh
-$ npx eubfr-cli es delete-indices user-index-1 --confirm -d REACT_APP_ES_PUBLIC_ENDPOINT
+$ eubfr-cli es delete-indices user-index-1 --confirm -d REACT_APP_ES_PUBLIC_ENDPOINT
 ```
 
 Skipping the `user-index-1` will delete all indices in the given domain, so be extra careful with this command.

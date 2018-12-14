@@ -43,7 +43,7 @@ If the overview above is not enough, here's a more detailed walkthrough.
 For instance, the following two are totally the same things:
 
 ```sh
-$ npx eubfr-cli content upload -h
+$ eubfr-cli content upload -h
 ```
 
 and

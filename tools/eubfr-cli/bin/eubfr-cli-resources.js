@@ -13,7 +13,7 @@ const deleteResources = require('../commands/resources/delete');
  * Usage:
  *
  * ```sh
- * $ npx eubfr-cli resources deploy
+ * $ eubfr-cli resources deploy
  * ```
  *
  * @memberof Resources
@@ -38,7 +38,7 @@ program
  * Usage:
  *
  * ```sh
- * $ npx eubfr-cli resources delete
+ * $ eubfr-cli resources delete
  * ```
  *
  * @memberof Resources

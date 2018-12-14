@@ -54,26 +54,34 @@ or
 $ npx eubfr-cli
 ```
 
-The [npx](https://www.npmjs.com/package/npx) is a helper coming automatically with the version of node and npm.
+or, because the project uses yarn, [lerna](https://www.npmjs.com/package/lerna) and [workspaces](https://medium.com/trabe/monorepo-setup-with-lerna-and-yarn-workspaces-5d747d7c0e91) feature, you can also use the CLI as following:
+
+```sh
+$ yarn eubfr-cli
+```
+
+The main difference between `npx` and `yarn` is that `npx` would download missing dependencies if there are any, which could slower your workflow. Whereas `yarn` makes use of the workspaces feature and optimally finds the CLI binary, regardless of it's relative from execution to physical place in the repository.
 
 2.  Using the CLI from the global scope
 
-If you install the `@eubfr/cli` package globally, you won't need to add information about the path to the binary, but just run
+If you install the `@eubfr/cli` package globally, you will neither have the need to add information about the path to the binary, nor use a helper utility as `npx` or `yarn`, thus simply running the following:
 
 ```sh
 $ eubfr-cli
 ```
 
+From this point on, for simplicity in documentation, no utility will be used in order to give the choice to the user.
+
 You can "browse" available commands and sub-commands by passing `-h` or `--help` flag on each level, for example:
 
 ```sh
-$ npx eubfr-cli -h
+$ eubfr-cli -h
 ```
 
 Will show you that you can work on services and resources, then if you want to go deeper and manage services specifically, you can do:
 
 ```sh
-$ npx eubfr-cli services -h
+$ eubfr-cli services -h
 ```
 
 Which will show you commands options specifically for this type of CLI manageable resource.
@@ -81,7 +89,7 @@ Which will show you commands options specifically for this type of CLI manageabl
 Further, if you want to deploy a service, but you don't know the available options, you can also do:
 
 ```sh
-$ npx eubfr-cli services deploy -h
+$ eubfr-cli services deploy -h
 ```
 
 ### Workflows
@@ -89,7 +97,7 @@ $ npx eubfr-cli services deploy -h
 The list of commands available in the EUBFR CLI is ordered by the priority of importance of actions you would normally need to take to work with the EUBFR project in overall.
 
 ```sh
-npx eubfr-cli -h
+eubfr-cli -h
 
   Usage: eubfr-cli [resource] [action]
 

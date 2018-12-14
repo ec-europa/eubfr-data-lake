@@ -15,7 +15,7 @@ const pkg = require('../package.json');
  * ### Usage
  *
  * ```sh
- * $ npx eubfr-cli -h
+ * $ eubfr-cli -h
  * ```
  *
  * @name Introduction
@@ -29,7 +29,7 @@ program.version(pkg.version).usage('[resource] [action]');
  * ### Usage
  *
  * ```sh
- * $ npx eubfr-cli resources -h
+ * $ eubfr-cli resources -h
  * ```
  *
  * @name Resources
@@ -43,7 +43,7 @@ program.command('resources', 'Resources management');
  * ### Usage
  *
  * ```sh
- * $ npx eubfr-cli services -h
+ * $ eubfr-cli services -h
  * ```
  *
  * @name Services
@@ -57,7 +57,7 @@ program.command('services', 'Services management');
  * ### Usage
  *
  * ```sh
- * $ npx eubfr-cli demo -h
+ * $ eubfr-cli demo -h
  * ```
  *
  * @name Demo
@@ -74,7 +74,7 @@ program.command('demo', 'Demo applications management');
  * ### Usage
  *
  * ```sh
- * $ npx eubfr-cli content -h
+ * $ eubfr-cli content -h
  * ```
  *
  * ### Notes
@@ -117,7 +117,7 @@ program.command('content', 'Content management');
  * ### Usage
  *
  * ```sh
- * $ npx eubfr-cli env -h
+ * $ eubfr-cli env -h
  * ```
  *
  * @name Environment
@@ -131,7 +131,7 @@ program.command('env', 'Environment management');
  * ### Usage
  *
  * ```sh
- * $ npx eubfr-cli es -h
+ * $ eubfr-cli es -h
  * ```
  *
  * @name Elasticsearch
