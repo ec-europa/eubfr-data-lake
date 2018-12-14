@@ -23,7 +23,7 @@ const missingRequiredInput = '\n error: Missing required input parameters';
  * Usage:
  *
  * ```sh
- * $ npx eubfr-cli content upload -h
+ * $ eubfr-cli content upload -h
  * ```
  *
  * Examples:
@@ -31,19 +31,19 @@ const missingRequiredInput = '\n error: Missing required input parameters';
  * Single file:
  *
  * ```sh
- * $ npx eubfr-cli content upload .content/agri/agri_history.csv -p agri
+ * $ eubfr-cli content upload .content/agri/agri_history.csv -p agri
  * ```
  *
  * Multiple files:
  *
  * ```sh
- * $ npx eubfr-cli content upload .content/inforegio/EUBFR_VIEW_16052018.xml .content/inforegio/regio_projects.json -p inforegio
+ * $ eubfr-cli content upload .content/inforegio/EUBFR_VIEW_16052018.xml .content/inforegio/regio_projects.json -p inforegio
  *```
 
  * All files:
  *
  * ```sh
- * $ npx eubfr-cli content upload
+ * $ eubfr-cli content upload
  * ```
  * @memberof Content
  * @name Upload
@@ -95,7 +95,7 @@ program
  * Usage:
  *
  * ```sh
- * $ npx eubfr-cli content show -h
+ * $ eubfr-cli content show -h
  * ```
  *
  * Examples:
@@ -103,13 +103,13 @@ program
  * Specific file by `computed_key`:
  *
  * ```sh
- * $ npx eubfr-cli content show agri/16598a36-db86-42a0-8041-c0d85021ad97.csv
+ * $ eubfr-cli content show agri/16598a36-db86-42a0-8041-c0d85021ad97.csv
  * ```
  *
  * All files of a given producer:
  *
  * ```sh
- * $ npx eubfr-cli content show -p agri
+ * $ eubfr-cli content show -p agri
  * ```
  *
  * Please note that if you are sure there's an existing content,
@@ -117,7 +117,7 @@ program
  * `eubfr-data-lake/demo/dashboard/client/.env` file to contain
  * the correct value for `REACT_APP_STAGE`.
  * If it's not the same as config.json's `stage`, run
- * `npx eubfr-cli env generate-variables` to refresh the value of `REACT_APP_STAGE`.
+ * `eubfr-cli env generate-variables` to refresh the value of `REACT_APP_STAGE`.
  *
  * @memberof Content
  * @name Show
@@ -162,7 +162,7 @@ program
  * Usage:
  *
  * ```sh
- * $ npx eubfr-cli content delete -h
+ * $ eubfr-cli content delete -h
  * ```
  *
  * Examples:
@@ -170,13 +170,13 @@ program
  * Delete one or multiple files:
  *
  * ```sh
- * $ npx eubfr-cli content delete agri/foo budg/bar inforegio/baz
+ * $ eubfr-cli content delete agri/foo budg/bar inforegio/baz
  * ```
  *
  * Delete all files of all producers:
  *
  * ```sh
- * $ npx eubfr-cli content delete
+ * $ eubfr-cli content delete
  * ```
  *
  * By default, you will be prompted to confirm your intention.

@@ -6,7 +6,7 @@ import MessengerFactory from '@eubfr/logger-messenger/src/lib/MessengerFactory';
 import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 
 // Import logic
-import { extractMessage } from '../lib/sns';
+import extractMessage from '../lib/sns';
 import transformRecord from '../lib/transform';
 
 export const handler = async (event, context, callback) => {

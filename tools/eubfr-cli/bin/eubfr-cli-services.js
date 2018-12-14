@@ -6,15 +6,15 @@ const program = require('commander');
 const hasValidOption = require('../lib/hasValidOption');
 
 // Commands
-const deployServices = require('../commands/services/deployServices');
-const deleteServices = require('../commands/services/deleteServices');
+const deployServices = require('../commands/services/deploy');
+const deleteServices = require('../commands/services/delete');
 
 /**
  *
  * Usage:
  *
  * ```sh
- * $ npx eubfr-cli services deploy -h
+ * $ eubfr-cli services deploy -h
  * ```
  *
  * Examples:
@@ -22,19 +22,19 @@ const deleteServices = require('../commands/services/deleteServices');
  * Deploy all services for all producers.
  *
  * ```sh
- * $ npx eubfr-cli services deploy
+ * $ eubfr-cli services deploy
  * ```
  *
  * Deploy all services, only for working with the AGRI producer.
  *
  * ```sh
- * $ npx eubfr-cli services deploy -p agri
+ * $ eubfr-cli services deploy -p agri
  * ```
  *
  * (Re-)Deploy only a set of services for working a given producer.
  *
  * ```sh
- * $ npx eubfr-cli services deploy foo bar -p agri
+ * $ eubfr-cli services deploy foo bar -p agri
  * ```
  *
  * @memberof Services
@@ -60,7 +60,7 @@ program
  * Usage:
  *
  * ```sh
- * $ npx eubfr-cli services delete -h
+ * $ eubfr-cli services delete -h
  * ```
  *
  * Examples:
@@ -68,13 +68,13 @@ program
  * Delete all services.
  *
  * ```sh
- * $ npx eubfr-cli services delete
+ * $ eubfr-cli services delete
  * ```
  *
  * Delete only a given set of services.
  *
  * ```sh
- * $ npx eubfr-cli services delete storage-signed-uploads
+ * $ eubfr-cli services delete storage-signed-uploads storage-deleter
  * ```
  *
  * @memberof Services

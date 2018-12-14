@@ -4,29 +4,65 @@
 
 Map fields for JUST producer, CSV file types
 
-Example input data: [stub](https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/just/csv/test/stubs/record.json)
+Example input data: [stub][1]
 
-Transform function: [implementation details](https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/just/csv/src/lib/transform.js)
+Transform function: [implementation details][2]
 
 **Parameters**
 
-- `record` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Piece of data to transform before going to harmonized storage.
+- `record` **[Object][3]** Piece of data to transform before going to harmonized storage.
 
 Returns **Project** JSON matching the type fields.
 
-### formatDate
+### getLocations
 
-Format date
+Preprocess locations
+
+Input fields taken from the `record` are:
+
+- `field_prj_longitude`
+- `field_prj_latitude`
+- \`field_prj_country_iso
 
 **Parameters**
 
-- `date` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** Date in timestamp
+- `record` **[Object][3]** The row received from parsed file
+
+Returns **[Array][4]** List of {Location} objects for `project_locations` field
+
+### getBudget
+
+Preprocess budget
+
+**Parameters**
+
+- `record` **[Object][3]** The row received from parsed file
+
+Returns **Budget**
+
+### getRelatedLinks
+
+Preprocess related links
+
+Depends on record['Related links'] field
+
+**Parameters**
+
+- `record` **[Object][3]** The row received from parsed file
 
 **Examples**
 
 ```javascript
-input => '1388530800';
-output => '2013-12-31T23:00:00.000Z';
+input => "<a href=\"https://ec.europa.eu/inea/en/ten-t/ten-t-projects/projects-by-country/multi-country/2013-eu-92069-s\">INEA</a>;<a href=\"https://europa.eu/investeu/projects/central-european-green-corridors_en\">InvestEU</a>"
+output => [
+   { label: "INEA", url: "https://ec.europa.eu/inea/en/ten-t/ten-t-projects/projects-by-country/multi-country/2013-eu-92069-s" }
+   { label: "InvestEU", url: "https://europa.eu/investeu/projects/central-european-green-corridors_en" }
+ ]
 ```
 
-Returns **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** The date formatted into an ISO 8601 date format
+Returns **[Array][4]** List of {RelatedLink}
+
+[1]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/just/csv/test/stubs/record.json
+[2]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/just/csv/src/lib/transform.js
+[3]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array

@@ -20,8 +20,8 @@ provider:
   name: aws
   runtime: nodejs8.10
   timeout: 60
-  stage: ${opt:stage, file(../../../../../config.json):stage, 'dev'}
-  region: ${opt:region, file(../../../../../config.json):region, 'eu-central-1'}
+  stage: ${opt:stage, file(../../../../../config.json):stage, env:EUBFR_STAGE, 'dev'}
+  region: ${opt:region, file(../../../../../config.json):region, env:EUBFR_AWS_REGION, 'eu-central-1'}
   deploymentBucket:
     name: eubfr-${self:custom.eubfrEnvironment}-deploy
   stackTags:
@@ -36,6 +36,11 @@ provider:
            - - "arn:aws:s3:::"
              - ${self:custom.bucketName}
              - "/*"
+    # Allow queueing messages to the DLQ https://docs.aws.amazon.com/lambda/latest/dg/dlq.html
+    - Effect: 'Allow'
+      Action:
+        - sqs:SendMessage
+      Resource: '*'
 
 functions:
   parseXls:
@@ -70,6 +75,12 @@ functions:
 
 resources:
   Resources:
+    ParseXlsLambdaFunction:
+      Type: "AWS::Lambda::Function"
+      Properties:
+        DeadLetterConfig:
+          TargetArn:
+            Fn::ImportValue: ${self:provider.stage}:ingestion-dead-letter-queue:LambdaFailureQueue
     SNSTopicHOMEXLS:
       Type: AWS::SNS::Topic
       Properties:

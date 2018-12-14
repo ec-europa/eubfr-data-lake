@@ -41,7 +41,6 @@ const showCommand = async ({ file, producer, endpoints }) => {
 
   try {
     const response = await client.search(query);
-    console.log(response);
     const results =
       response.hits && response.hits.hits
         ? response.hits.hits.map(result => result._source)

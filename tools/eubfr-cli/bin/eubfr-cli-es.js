@@ -36,7 +36,7 @@ const missingRequiredInput = '\n error: Missing required input parameters';
  * Usage:
  *
  * ```sh
- * $ npx eubfr-cli es snapshot-exec -h
+ * $ eubfr-cli es snapshot-exec -h
  * ```
  *
  * Examples:
@@ -46,43 +46,43 @@ const missingRequiredInput = '\n error: Missing required input parameters';
  * Note that the integration with S3 has been setup, `body` of request is prepared for you.
  *
  * ```sh
- * $ npx eubfr-cli es snapshot-exec createRepository --host https://es.domain/ --params '{ "repository": "repo_name", "verify": true }'
+ * $ eubfr-cli es snapshot-exec createRepository --host https://es.domain/ --params '{ "repository": "repo_name", "verify": true }'
  * ```
  *
  * Get information about specific repositories:
  *
  * ```sh
- * $ npx eubfr-cli es snapshot-exec getRepository --host https://es.domain/ --params '{ "repository": "repo_name" }'
+ * $ eubfr-cli es snapshot-exec getRepository --host https://es.domain/ --params '{ "repository": "repo_name" }'
  * ```
  *
  * Delete a given repository:
  *
  * ```sh
- * $ npx eubfr-cli es snapshot-exec deleteRepository --host https://es.domain/ --params '{ "repository": "repo_name" }'
+ * $ eubfr-cli es snapshot-exec deleteRepository --host https://es.domain/ --params '{ "repository": "repo_name" }'
  * ```
  *
  * Verify a given repository:
  *
  * ```sh
- * $ npx eubfr-cli es snapshot-exec verifyRepository --host https://es.domain/ --params '{ "repository": "repo_name" }'
+ * $ eubfr-cli es snapshot-exec verifyRepository --host https://es.domain/ --params '{ "repository": "repo_name" }'
  * ```
  *
  * Create a snapshot:
  *
  * ```sh
- * $ npx eubfr-cli es snapshot-exec create --host https://es.domain/ --params '{ "repository": "repo_name", "snapshot": "snap1" }'
+ * $ eubfr-cli es snapshot-exec create --host https://es.domain/ --params '{ "repository": "repo_name", "snapshot": "snap1" }'
  * ```
  *
  * Get a snapshot:
  *
  * ```sh
- * $ npx eubfr-cli es snapshot-exec get --host https://es.domain/ --params '{ "repository": "repo_name", "snapshot": "snap1" }'
+ * $ eubfr-cli es snapshot-exec get --host https://es.domain/ --params '{ "repository": "repo_name", "snapshot": "snap1" }'
  * ```
  *
  * Get status of a given snapshot:
  *
  * ```sh
- * $ npx eubfr-cli es snapshot-exec status --host https://es.domain/ --params '{ "repository": "repo_name", "snapshot": "snap1" }'
+ * $ eubfr-cli es snapshot-exec status --host https://es.domain/ --params '{ "repository": "repo_name", "snapshot": "snap1" }'
  * ```
  *
  * @see https://www.elastic.co/guide/en/elasticsearch/reference/6.2/modules-snapshots.html
@@ -115,7 +115,7 @@ program
  * Usage:
  *
  * ```sh
- * $ npx eubfr-cli es show-domains
+ * $ eubfr-cli es show-domains
  * ```
  *
  * Useful when you want to see the names of the Elasticsearch domains available for management throught the EUBFR CLI.
@@ -137,7 +137,7 @@ program
  * Usage:
  *
  * ```sh
- * $ npx eubfr-cli es show-cluster
+ * $ eubfr-cli es show-cluster
  * ```
  *
  * Once you have the basic information about the domains you can manage through the CLI.
@@ -145,7 +145,7 @@ program
  * Examples:
  *
  * ```sh
- * $ npx eubfr-cli es show-cluster -d REACT_APP_ES_PUBLIC_ENDPOINT
+ * $ eubfr-cli es show-cluster -d REACT_APP_ES_PUBLIC_ENDPOINT
  * ```
  *
  * @memberof Elasticsearch
@@ -174,7 +174,7 @@ program
  * Usage:
  *
  * ```sh
- * $ npx eubfr-cli es show-indices -h
+ * $ eubfr-cli es show-indices -h
  * ```
  *
  * This could be useful when you want to query for existing indices so that you either re-use or re-create.
@@ -182,18 +182,18 @@ program
  * Examples:
  *
  * ```sh
- * $ npx eubfr-cli es show-indices -d REACT_APP_ES_PUBLIC_ENDPOINT
+ * $ eubfr-cli es show-indices -d REACT_APP_ES_PUBLIC_ENDPOINT
  * ```
  * Since output might be too long to read (and most probably it will be in `dev` stage which is shared between developers), it could help to pipe a `grep` in order to focus on more narrow list.
  *
  * ```sh
- *  $ npx eubfr-cli es show-indices -d REACT_APP_ES_PUBLIC_ENDPOINT | grep chernka
+ *  $ eubfr-cli es show-indices -d REACT_APP_ES_PUBLIC_ENDPOINT | grep chernka
  * ```
  *
  * This will give you a list of existing indices created by the given user. Then, you can make a more narrow query by specifying an index as following:
  *
  * ```sh
- * $ npx eubfr-cli es show-indices user-index-1 user-index-2 etc -d REACT_APP_ES_PUBLIC_ENDPOINT
+ * $ eubfr-cli es show-indices user-index-1 user-index-2 etc -d REACT_APP_ES_PUBLIC_ENDPOINT
  * ```
  *
  * @memberof Elasticsearch
@@ -222,7 +222,7 @@ program
  * Usage:
  *
  * ```sh
- * $ npx eubfr-cli es create-index -h
+ * $ eubfr-cli es create-index -h
  * ```
  *
  * Used either when creating a new index with a free structure (no mapping rules) or when creating a new index with specific rules about the document structure.
@@ -230,13 +230,13 @@ program
  * Simply create a new index:
  *
  * ```sh
- * $ npx eubfr-cli es create-index user-index-1 -d REACT_APP_ES_PUBLIC_ENDPOINT
+ * $ eubfr-cli es create-index user-index-1 -d REACT_APP_ES_PUBLIC_ENDPOINT
  * ```
  *
  * Create a new index with mapping:
  *
  * ```sh
- * $ npx eubfr-cli es create-index user-index-1 -t project -m ./resources/elasticsearch/mappings/project.js -d REACT_APP_ES_PUBLIC_ENDPOINT
+ * $ eubfr-cli es create-index user-index-1 -t project -m ./resources/elasticsearch/mappings/project.js -d REACT_APP_ES_PUBLIC_ENDPOINT
  * ```
  *
  * This is especially useful when you want to update mapping for a given index without re-creating the whole domain.
@@ -307,19 +307,19 @@ program
  * Usage:
  *
  * ```sh
- * $ npx eubfr-cli es delete-indices -h
+ * $ eubfr-cli es delete-indices -h
  * ```
  *
  * This could be useful when you want to change mapping of an index without re-creating the whole domain.
  *
  * ```sh
- * $ npx eubfr-cli es delete-indices user-index-1 -d REACT_APP_ES_PUBLIC_ENDPOINT
+ * $ eubfr-cli es delete-indices user-index-1 -d REACT_APP_ES_PUBLIC_ENDPOINT
  * ```
  *
  * If you would like to skip the confirmation, you can use the `--confirm` flag:
  *
  * ```sh
- * $ npx eubfr-cli es delete-indices user-index-1 --confirm -d REACT_APP_ES_PUBLIC_ENDPOINT
+ * $ eubfr-cli es delete-indices user-index-1 --confirm -d REACT_APP_ES_PUBLIC_ENDPOINT
  * ```
  *
  * Skipping the `user-index-1` will delete all indices in the given domain, so be extra careful with this command.
