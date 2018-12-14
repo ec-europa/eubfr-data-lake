@@ -93,6 +93,7 @@ export const handler = async (event, context, callback) => {
     });
 
     const handleError = async (e, cb) => {
+      // callback cb is reject of a promise
       await messenger.send({
         message: {
           computed_key: originalComputedKey,
@@ -109,7 +110,7 @@ export const handler = async (event, context, callback) => {
       .getObject({ Bucket: bucket, Key: key })
       .createReadStream();
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) =>
       readStream
         .pipe(split2(JSON.parse))
         .on('error', async e => handleError(e, reject))
@@ -156,8 +157,8 @@ export const handler = async (event, context, callback) => {
             .promise();
 
           return resolve('Results uploaded successfully, all went well.');
-        });
-    });
+        })
+    );
   } catch (err) {
     await messenger.send({
       message: {

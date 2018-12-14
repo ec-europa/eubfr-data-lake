@@ -1,0 +1,81 @@
+service: ingestion-dead-letter-queue
+
+plugins:
+  - serverless-webpack
+
+custom:
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules:
+      forceExclude:
+        - aws-sdk
+    packager: yarn
+  eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
+  bucketName: ${file(../../../resources/harmonized-storage/serverless.yml):custom.bucketName}
+
+package:
+  individually: true
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: ${opt:stage, file(../../../config.json):stage, 'dev'}
+  region: ${opt:region, file(../../../config.json):region, 'eu-central-1'}
+  deploymentBucket:
+    name: eubfr-${self:custom.eubfrEnvironment}-deploy
+  stackTags:
+    ENV: ${self:custom.eubfrEnvironment}
+  iamRoleStatements:
+    # Allow running AWS Fargate containers when AWS Lambda timeout cannot be bypassed.
+    - Effect: 'Allow'
+      Action:
+        - ecs:RunTask
+        - ec2:DescribeSubnets
+      Resource: '*'
+    - Effect: Allow
+      Action:
+        - iam:PassRole
+      Resource:
+        Fn::Join:
+          - ''
+          - - 'arn:aws:iam::'
+            - Ref: 'AWS::AccountId'
+            - ':role/runnerExecutionRole' # Ensure runnerExecutionRole existence beforehand deploying @eubfr/compute-ecs
+
+functions:
+  onFailure:
+    handler: src/events/onFailure.handler
+    name: ${self:provider.stage}-${self:service}
+    timeout: 120
+    # still useful for making use of the messenger
+    environment:
+      BUCKET: ${self:custom.bucketName}
+      REGION: ${self:provider.region}
+      STAGE: ${self:provider.stage}
+      # ECS task to execute handler without timeout limitations
+      # Ensure assets' existence beforehand deploying @eubfr/compute-ecs
+      RUNNER: runnerTaskDefinition
+      CLUSTER: runnerCluster
+      CONTAINER: runner
+    events:
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - LambdaFailureQueue
+              - Arn
+
+resources:
+  Resources:
+    LambdaFailureQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: ${self:provider.stage}-${self:service}
+        MessageRetentionPeriod: '1209600'
+        VisibilityTimeout: '120'
+  Outputs:
+    LambdaFailureQueue:
+      Description: The dead letter queue for AWS Lambda handlers.
+      Value:
+        Fn::GetAtt: ["LambdaFailureQueue", "Arn"]
+      Export:
+        Name: "${self:provider.stage}:${self:service}:LambdaFailureQueue"
