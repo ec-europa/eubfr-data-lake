@@ -6008,10 +6008,10 @@ doctrine@^2.0.0, doctrine@^2.0.2, doctrine@^2.1.0:
   dependencies:
     esutils "^2.0.2"
 
-documentation-theme-ecl@1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/documentation-theme-ecl/-/documentation-theme-ecl-1.1.1.tgz#83409fbbf6efca2c9b80f14f8ea7b62704a9b8ff"
-  integrity sha512-+1P+b0yQMLccc9e395a4h6sk/sSoTyG/botLV38p1vT3Isotns6zEkSU3w/uUjno6Woc6azTfJcGndmoEp+ssg==
+documentation-theme-ecl@1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/documentation-theme-ecl/-/documentation-theme-ecl-1.1.2.tgz#5557c0d4605be572e9163d453061a5d1a1b9a73e"
+  integrity sha512-LySnFR17Eh7C5SmlYX4tBb/7un9iS+CbVDEmIU7JL9aidq5m/iOhCrKweaEhIfrR2h82cEDAIkKWCC7zX0GQFg==
   dependencies:
     "@ecl/ec-preset-website" "2.0.0"
     anchor-js "4.1.0"
