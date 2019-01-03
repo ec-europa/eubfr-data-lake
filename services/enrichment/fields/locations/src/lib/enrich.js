@@ -9,19 +9,21 @@ export const enrich = async record => {
   const enrichedRecord = JSON.parse(JSON.stringify(record));
 
   const newLocations = await Promise.all(
-    enrichedRecord.project_locations.filter(loc => loc).map(async loc => {
-      let location = JSON.parse(JSON.stringify(loc));
+    enrichedRecord.project_locations
+      .filter(loc => loc)
+      .map(async loc => {
+        let location = JSON.parse(JSON.stringify(loc));
 
-      if (loc.centroid) {
-        location = await enrichFromCentroid(location);
-      }
+        if (loc.centroid) {
+          location = await enrichFromCentroid(location);
+        }
 
-      if (loc.country_code) {
-        location = await enrichFromCountry(location);
-      }
+        if (loc.country_code) {
+          location = await enrichFromCountry(location);
+        }
 
-      return location;
-    })
+        return location;
+      })
   );
 
   // Update locations

@@ -28,8 +28,8 @@ export const handler = async (event, context, callback) => {
 
   try {
     /*
-   * Extract information from the event
-   */
+     * Extract information from the event
+     */
 
     // Extract S3 record
     const s3record = JSON.parse(snsRecord.Sns.Message).Records[0];

@@ -6,16 +6,16 @@
     "deploy": "sls deploy -v"
   },
   "devDependencies": {
-    "aws-sdk": "2.248.1",
+    "aws-sdk": "2.382.0",
     "babel-core": "6.26.3",
     "babel-loader": "7.1.4",
     "babel-preset-env": "1.7.0",
-    "serverless": "1.28.0",
-    "serverless-webpack": "5.1.5",
-    "webpack": "4.10.0"
+    "serverless": "1.35.1",
+    "serverless-webpack": "5.2.0",
+    "webpack": "4.28.3"
   },
   "dependencies": {
-    "split2": "2.2.0",
-    "through2": "2.0.3"
+    "split2": "3.1.0",
+    "through2": "3.0.0"
   }
 }
