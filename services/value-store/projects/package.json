@@ -19,7 +19,7 @@
     "babel-core": "6.26.3",
     "babel-loader": "7.1.4",
     "babel-preset-env": "1.7.0",
-    "jest": "23.0.1",
+    "jest": "23.6.0",
     "serverless": "1.35.1",
     "serverless-webpack": "5.2.0",
     "webpack": "4.28.3"
