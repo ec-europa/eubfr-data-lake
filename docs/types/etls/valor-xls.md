@@ -7,9 +7,9 @@ Map fields for VALOR producer, XLS file types.
 Mapping document: [markdown version][1]
 Transform function: [implementation details][2]
 
-**Parameters**
+### Parameters
 
--   `record` **[Object][3]** Piece of data to transform before going to harmonized storage.
+- `record` **[Object][3]** Piece of data to transform before going to harmonized storage.
 
 Returns **Project** JSON matching the type fields.
 
@@ -17,23 +17,20 @@ Returns **Project** JSON matching the type fields.
 
 Format date
 
-**Parameters**
+#### Parameters
 
--   `date` **[Date][4]** Date in "10/9/14" (MM/DD/YY) or "10/9/2014" (MM/DD/YYYY) format
+- `date` **[Date][4]** Date in "10/9/14" (MM/DD/YY) or "10/9/2014" (MM/DD/YYYY) format
 
-**Examples**
+#### Examples
 
 ```javascript
-input => "10/9/2014"
-output => "2014-10-09T00:00:00.000Z"
+input => '10/9/2014';
+output => '2014-10-09T00:00:00.000Z';
 ```
 
 Returns **[Date][4]** The date formatted into an ISO 8601 date format
 
 [1]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/valor/xml/mapping.md
-
 [2]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/valor/xml/src/lib/transform.js
-
 [3]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
-
 [4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date

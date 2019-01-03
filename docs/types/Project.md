@@ -12,15 +12,15 @@ Describes field `project.budget.eu_contrib`.
 
 Type: [BudgetItem][2]
 
-**Properties**
+### Properties
 
--   `currency` **[string][3]** 
--   `raw` **[string][3]** 
--   `value` **[number][4]** 
--   `_original` **{currency: [string][3], raw: [string][3], value: [number][4]}?** 
--   `_original.currency` **[string][3]** 
--   `_original.raw` **[string][3]** 
--   `_original.value` **[number][4]** 
+- `currency` **[string][3]**
+- `raw` **[string][3]**
+- `value` **[number][4]**
+- `_original` **{currency: [string][3], raw: [string][3], value: [number][4]}?**
+- `_original.currency` **[string][3]**
+- `_original.raw` **[string][3]**
+- `_original.value` **[number][4]**
 
 ## Budget
 
@@ -28,15 +28,15 @@ Describes field `project.budget`.
 
 Type: [Budget][5]
 
-**Properties**
+### Properties
 
--   `eu_contrib` **[BudgetItem][2]** 
--   `funding_area` **[Array][6]&lt;[string][3]>** 
--   `mmf_heading` **[string][3]** 
--   `other_contrib` **[BudgetItem][2]** 
--   `private_fund` **[BudgetItem][2]** 
--   `public_fund` **[BudgetItem][2]** 
--   `total_cost` **[BudgetItem][2]** 
+- `eu_contrib` **[BudgetItem][2]**
+- `funding_area` **[Array][6]&lt;[string][3]>**
+- `mmf_heading` **[string][3]**
+- `other_contrib` **[BudgetItem][2]**
+- `private_fund` **[BudgetItem][2]**
+- `public_fund` **[BudgetItem][2]**
+- `total_cost` **[BudgetItem][2]**
 
 ## ThirdParty
 
@@ -44,17 +44,17 @@ Describes field `project.third_parties`.
 
 Type: [ThirdParty][7]
 
-**Properties**
+### Properties
 
--   `address` **[string][3]** 
--   `country` **[string][3]** 
--   `email` **[string][3]** 
--   `name` **[string][3]** 
--   `phone` **[string][3]** 
--   `region` **[string][3]** 
--   `role` **[string][3]** 
--   `type` **[string][3]** 
--   `website` **[string][3]** 
+- `address` **[string][3]**
+- `country` **[string][3]**
+- `email` **[string][3]**
+- `name` **[string][3]**
+- `phone` **[string][3]**
+- `region` **[string][3]**
+- `role` **[string][3]**
+- `type` **[string][3]**
+- `website` **[string][3]**
 
 ## Coordinates
 
@@ -62,10 +62,10 @@ Describes field `project.project_locations.centroid`.
 
 Type: [Coordinates][8]
 
-**Properties**
+### Properties
 
--   `lat` **[number][4]** 
--   `lon` **[number][4]** 
+- `lat` **[number][4]**
+- `lon` **[number][4]**
 
 ## Nuts
 
@@ -73,12 +73,12 @@ Describes field `project.project_locations.nuts`.
 
 Type: [Nuts][9]
 
-**Properties**
+### Properties
 
--   `code` **[string][3]** 
--   `name` **[string][3]** 
--   `level` **([number][4] | null)** 
--   `year` **([number][4] | null)** 
+- `code` **[string][3]**
+- `name` **[string][3]**
+- `level` **([number][4] | null)**
+- `year` **([number][4] | null)**
 
 ## Location
 
@@ -86,30 +86,30 @@ Describes field `project.project_locations`.
 
 Type: [Location][10]
 
-**Properties**
+### Properties
 
--   `address` **[string][3]** 
--   `centroid` **([Coordinates][8] | null)** 
--   `country_code` **[string][3]** 
--   `location` **(GeoJSON | null)** 
--   `nuts` **([Array][6]&lt;[Nuts][9]> | null)** 
--   `postal_code` **[string][3]** 
--   `region` **[string][3]** 
--   `town` **[string][3]** 
+- `address` **[string][3]**
+- `centroid` **([Coordinates][8] | null)**
+- `country_code` **[string][3]**
+- `location` **(GeoJSON | null)**
+- `nuts` **([Array][6]&lt;[Nuts][9]> | null)**
+- `postal_code` **[string][3]**
+- `region` **[string][3]**
+- `town` **[string][3]**
 
 ## MediaFileMeta
 
--   **See: [MediaObject][11]**
+- **See: [MediaObject][11]**
 
 Describes meta data of a media file
 
 Type: [MediaFileMeta][12]
 
-**Properties**
+### Properties
 
--   `description` **[string][3]** 
--   `mime_type` **[string][3]** 
--   `type` **[string][3]** 
+- `description` **[string][3]**
+- `mime_type` **[string][3]**
+- `type` **[string][3]**
 
 ## Media
 
@@ -118,11 +118,11 @@ Answers for what is where
 
 Type: [Media][13]
 
-**Properties**
+### Properties
 
--   `meta` **[MediaFileMeta][12]** 
--   `name` **[string][3]** 
--   `url` **[string][3]** 
+- `meta` **[MediaFileMeta][12]**
+- `name` **[string][3]**
+- `url` **[string][3]**
 
 ## RelatedLink
 
@@ -130,10 +130,10 @@ Describes field `project.related_links`.
 
 Type: [RelatedLink][14]
 
-**Properties**
+### Properties
 
--   `label` **[string][3]** 
--   `url` **[string][3]** 
+- `label` **[string][3]**
+- `url` **[string][3]**
 
 ## Result
 
@@ -141,10 +141,10 @@ Describes field `project.results`.
 
 Type: [Result][15]
 
-**Properties**
+### Properties
 
--   `available` **[string][3]** 
--   `result` **[string][3]** 
+- `available` **[string][3]**
+- `result` **[string][3]**
 
 ## TimePrecision
 
@@ -159,12 +159,12 @@ Describes field `project.timeframe`.
 
 Type: [Timeframe][17]
 
-**Properties**
+### Properties
 
--   `from` **([string][3] | null)** 
--   `from_precision` **[TimePrecision][16]** 
--   `to` **([string][3] | null)** 
--   `to_precision` **[TimePrecision][16]** 
+- `from` **([string][3] | null)**
+- `from_precision` **[TimePrecision][16]**
+- `to` **([string][3] | null)**
+- `to_precision` **[TimePrecision][16]**
 
 ## Project
 
@@ -172,65 +172,47 @@ Describes `project`.
 
 Type: [Project][18]
 
-**Properties**
+### Properties
 
--   `action` **[string][3]** 
--   `budget` **[Budget][5]** 
--   `call_year` **[string][3]** 
--   `description` **[string][3]** 
--   `ec_priorities` **[Array][6]&lt;[string][3]>** 
--   `media` **[Array][6]&lt;[Media][13]>** 
--   `programme_name` **[string][3]** 
--   `project_id` **[string][3]** 
--   `project_locations` **[Array][6]&lt;[Location][10]>** 
--   `project_website` **[string][3]** 
--   `complete` **[boolean][19]** 
--   `related_links` **[Array][6]&lt;[RelatedLink][14]>** 
--   `reporting_organisation` **[DirectorateAbbreviation][1]** 
--   `results` **[Result][15]** 
--   `status` **[string][3]** 
--   `sub_programme_name` **[string][3]** 
--   `success_story` **[string][3]** 
--   `themes` **[Array][6]&lt;[string][3]>** 
--   `third_parties` **[Array][6]&lt;[ThirdParty][7]>** 
--   `timeframe` **[Timeframe][17]** 
--   `title` **[string][3]** 
--   `type` **[Array][6]&lt;[string][3]>** 
+- `action` **[string][3]**
+- `budget` **[Budget][5]**
+- `call_year` **[string][3]**
+- `description` **[string][3]**
+- `ec_priorities` **[Array][6]&lt;[string][3]>**
+- `media` **[Array][6]&lt;[Media][13]>**
+- `programme_name` **[string][3]**
+- `project_id` **[string][3]**
+- `project_locations` **[Array][6]&lt;[Location][10]>**
+- `project_website` **[string][3]**
+- `complete` **[boolean][19]**
+- `related_links` **[Array][6]&lt;[RelatedLink][14]>**
+- `reporting_organisation` **[DirectorateAbbreviation][1]**
+- `results` **[Result][15]**
+- `status` **[string][3]**
+- `sub_programme_name` **[string][3]**
+- `success_story` **[string][3]**
+- `themes` **[Array][6]&lt;[string][3]>**
+- `third_parties` **[Array][6]&lt;[ThirdParty][7]>**
+- `timeframe` **[Timeframe][17]**
+- `title` **[string][3]**
+- `type` **[Array][6]&lt;[string][3]>**
 
 [1]: #directorateabbreviation
-
 [2]: #budgetitem
-
 [3]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
-
 [4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
-
 [5]: #budget
-
 [6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
-
 [7]: #thirdparty
-
 [8]: #coordinates
-
 [9]: #nuts
-
 [10]: #location
-
 [11]: http://schema.org/MediaObject
-
 [12]: #mediafilemeta
-
 [13]: #media
-
 [14]: #relatedlink
-
 [15]: #result
-
 [16]: #timeprecision
-
 [17]: #timeframe
-
 [18]: #project
-
 [19]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean

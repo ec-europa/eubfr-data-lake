@@ -8,7 +8,7 @@ Example input data: [stub][1]
 
 Transform function: [implementation details][2]
 
-**Parameters**
+### Parameters
 
 - `record` **[Object][3]** Piece of data to transform before going to harmonized storage.
 
@@ -22,7 +22,7 @@ Seeks for values in the following precedence:
 
 - `Action`
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
@@ -36,7 +36,7 @@ Seeks for values in the following precedence:
 
 - `EU Grant award in euros ...`
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
@@ -50,7 +50,7 @@ Seeks for values in the following precedence:
 
 - `Call year`
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
@@ -64,7 +64,7 @@ Seeks for values in the following precedence:
 
 - `Project Summary`
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
@@ -79,7 +79,7 @@ Seeks for values in the following precedence:
 - `Programme Funding`
 - `Programme`
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
@@ -94,7 +94,7 @@ Seeks for values in the following precedence:
 - `Project Identifier`
 - `Project Number`
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
@@ -108,7 +108,7 @@ Seeks for values in the following precedence:
 
 - `Participating countries`
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
@@ -122,7 +122,7 @@ Seeks for values in the following precedence:
 
 - `Project Website`
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
@@ -137,7 +137,7 @@ Seeks for values in the following precedence:
 - `Results Available`
 - `Results Platform Project Card`
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
@@ -151,7 +151,7 @@ Seeks for values in the following precedence:
 
 - `Project Status`
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
@@ -165,7 +165,7 @@ Seeks for values in the following precedence:
 
 - `Sub-programme`
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
@@ -179,7 +179,7 @@ Seeks for values in the following precedence:
 
 - `Is Success Story`
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
@@ -198,7 +198,7 @@ Seeks for values in the following precedence:
 - `Coordinator's country`
 - `Coordinator's website`
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from harmonized storage
 
@@ -217,7 +217,7 @@ Seeks for values in the following precedence:
 - `Partner {n} country`
 - `Partner {n} website`
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from harmonized storage
 
@@ -225,11 +225,11 @@ Returns **[Array][5]** A list of {Partner} objects
 
 ### formatDate
 
-**Parameters**
+#### Parameters
 
 - `date` **[Date][6]** Date in "10/9/14" (MM/DD/YY) or "10/9/2014" (MM/DD/YYYY) format
 
-**Examples**
+#### Examples
 
 ```javascript
 input => '10/9/2014';
@@ -246,7 +246,7 @@ Input fields taken from the `record` are:
 
 - `Start Date`
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
@@ -260,7 +260,7 @@ Input fields taken from the `record` are:
 
 - `End Date`
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
@@ -274,7 +274,7 @@ Seeks for values in the following precedence:
 
 - `Project Title`
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from harmonized storage
 
@@ -288,11 +288,11 @@ Input fields taken from the `record` are:
 
 - `Activity type`
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from harmonized storage
 
-**Examples**
+#### Examples
 
 ```javascript
 input => 'foo, bar, baz';

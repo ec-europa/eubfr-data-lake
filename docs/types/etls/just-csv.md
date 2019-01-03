@@ -8,7 +8,7 @@ Example input data: [stub][1]
 
 Transform function: [implementation details][2]
 
-**Parameters**
+### Parameters
 
 - `record` **[Object][3]** Piece of data to transform before going to harmonized storage.
 
@@ -24,7 +24,7 @@ Input fields taken from the `record` are:
 - `field_prj_latitude`
 - \`field_prj_country_iso
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
@@ -34,7 +34,7 @@ Returns **[Array][4]** List of {Location} objects for `project_locations` field
 
 Preprocess budget
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
@@ -46,11 +46,11 @@ Preprocess related links
 
 Depends on record['Related links'] field
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
-**Examples**
+#### Examples
 
 ```javascript
 input => "<a href=\"https://ec.europa.eu/inea/en/ten-t/ten-t-projects/projects-by-country/multi-country/2013-eu-92069-s\">INEA</a>;<a href=\"https://europa.eu/investeu/projects/central-european-green-corridors_en\">InvestEU</a>"
