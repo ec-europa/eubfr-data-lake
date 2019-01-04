@@ -30,5 +30,11 @@
     "serverless-export-env": "1.2.0",
     "serverless-finch": "2.3.2"
   },
-  "private": true
+  "private": true,
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

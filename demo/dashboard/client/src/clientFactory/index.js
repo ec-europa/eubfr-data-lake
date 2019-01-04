@@ -11,13 +11,13 @@ const getClients = () => {
 
   const privateClient = elasticsearch.Client({
     host: privateApiEndpoint,
-    apiVersion: '6.2',
+    apiVersion: '6.3',
     log: 'warning',
   });
 
   const publicClient = elasticsearch.Client({
     host: publicApiEndpoint,
-    apiVersion: '6.2',
+    apiVersion: '6.3',
     log: 'warning',
   });
 

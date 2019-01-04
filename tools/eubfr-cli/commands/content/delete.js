@@ -47,7 +47,7 @@ const deleteCommand = ({ files, credentials, endpoints }) => {
   const client = elasticsearch.Client({
     host,
     log: 'warning',
-    apiVersion: '6.2',
+    apiVersion: '6.3',
   });
 
   // Marker to delete all files for all producers
