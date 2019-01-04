@@ -15,9 +15,9 @@
   },
   "devDependencies": {
     "aws-sdk": "2.383.0",
-    "babel-core": "6.26.3",
+    "@babel/core": "7.2.2",
     "babel-loader": "8.0.5",
-    "babel-preset-env": "1.7.0",
+    "@babel/preset-env": "7.2.3",
     "jest": "23.6.0",
     "serverless": "1.35.1",
     "serverless-webpack": "5.2.0",

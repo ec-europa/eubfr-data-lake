@@ -2,8 +2,8 @@ const AWS = require('aws-sdk');
 const AwsConfigCredentials = require('serverless/lib/plugins/aws/configCredentials/awsConfigCredentials');
 const elasticsearch = require('elasticsearch');
 const connectionClass = require('http-aws-es');
-const listExports = require('./lib/listExports');
 const isEqual = require('lodash.isequal');
+const listExports = require('./lib/listExports');
 
 class CreateElasticIndexDeploy {
   constructor(serverless, options) {
