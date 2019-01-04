@@ -7,9 +7,9 @@
     "test:unit": "jest --testPathPattern=unit"
   },
   "devDependencies": {
-    "aws-sdk": "2.382.0",
+    "aws-sdk": "2.383.0",
     "babel-core": "6.26.3",
-    "babel-loader": "7.1.4",
+    "babel-loader": "8.0.5",
     "babel-preset-env": "1.7.0",
     "jest": "23.6.0",
     "serverless": "1.35.1",

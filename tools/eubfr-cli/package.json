@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "@eubfr/lib": "^0.3.0",
-    "aws-sdk": "2.382.0",
+    "aws-sdk": "2.383.0",
     "aws4": "1.8.0",
     "awscred": "1.4.2",
     "commander": "2.19.0",
