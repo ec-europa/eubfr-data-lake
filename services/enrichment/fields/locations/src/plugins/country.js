@@ -1,5 +1,6 @@
 import request from 'request-promise-native';
 
+// Throwing errors in this helper will queue issue a dead letter queue.
 export const enrichFromCountry = async loc => {
   const country = loc.country_code;
 
@@ -13,7 +14,9 @@ export const enrichFromCountry = async loc => {
     qs.city = loc.town;
   }
 
-  const url = 'http://europa.eu/webtools/rest/gisco/nominatim/search.php';
+  const url =
+    process.env.SERVICE_COUNTRY_ENRICHMENT ||
+    'http://europa.eu/webtools/rest/gisco/nominatim/search.php';
 
   let results;
 
@@ -28,7 +31,7 @@ export const enrichFromCountry = async loc => {
     });
   } catch (e) {
     console.error(url, qs, e);
-    return loc; // location not enriched
+    throw e;
   }
 
   if (results && results[0] && results[0].lon && results[0].lat) {
