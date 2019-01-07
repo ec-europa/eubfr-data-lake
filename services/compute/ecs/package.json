@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@eubfr/compute-ecs",
-  "version": "0.2.0",
+  "version": "0.5.0",
   "dependencies": {
     "aws-sdk": "2.248.1",
     "promisepipe": "3.0.0",
