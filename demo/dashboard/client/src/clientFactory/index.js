@@ -1,13 +1,9 @@
 import elasticsearch from 'elasticsearch';
 
 const getClients = () => {
-  const privateApiEndpoint = `https://${
-    process.env.REACT_APP_ES_PRIVATE_ENDPOINT
-  }`;
+  const privateApiEndpoint = process.env.REACT_APP_ES_PRIVATE_ENDPOINT;
 
-  const publicApiEndpoint = `https://${
-    process.env.REACT_APP_ES_PUBLIC_ENDPOINT
-  }`;
+  const publicApiEndpoint = process.env.REACT_APP_ES_PUBLIC_ENDPOINT;
 
   const privateClient = elasticsearch.Client({
     host: privateApiEndpoint,
