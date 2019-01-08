@@ -1,14 +1,14 @@
 {
   "private": true,
   "name": "@eubfr/ingestion-etl-wifi4eu-xls",
-  "version": "0.3.0",
+  "version": "0.5.0",
   "scripts": {
     "deploy": "sls deploy -v",
     "test:unit": "jest --testPathPattern=unit"
   },
   "dependencies": {
-    "@eubfr/lib": "^0.3.0",
-    "@eubfr/logger-messenger": "^0.1.0",
+    "@eubfr/lib": "^0.5.0",
+    "@eubfr/logger-messenger": "^0.5.0",
     "xlsx": "0.14.1"
   },
   "devDependencies": {
