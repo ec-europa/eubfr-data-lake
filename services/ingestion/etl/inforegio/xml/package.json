@@ -21,7 +21,7 @@
     "babel-jest": "23.6.0",
     "babel-loader": "8.0.5",
     "jest": "23.6.0",
-    "serverless": "1.35.1",
+    "serverless": "1.32.0",
     "serverless-webpack": "5.2.0",
     "webpack": "4.28.3"
   },

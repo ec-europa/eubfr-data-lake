@@ -7,6 +7,6 @@
     "elasticsearch": "15.2.0",
     "http-aws-es": "6.0.0",
     "lodash.isequal": "4.5.0",
-    "serverless": "1.35.1"
+    "serverless": "1.32.0"
   }
 }

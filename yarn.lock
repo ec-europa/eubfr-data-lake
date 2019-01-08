@@ -4077,7 +4077,22 @@ aws-sdk@2.x:
     uuid "3.1.0"
     xml2js "0.4.19"
 
-aws-sdk@^2.369.0, aws-sdk@^2.373.0:
+aws-sdk@^2.228.0:
+  version "2.384.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.384.0.tgz#c8fdce7c72f068f6d8b198b53cf33b6f35f3e811"
+  integrity sha512-E+pIOWFNhQH7GCkOl5GU+Vl42MlaKtAq0Yenaa2fRGult9097u7TnUx45V1pNKMCN9RnEFWQy3ZH1TEPEYJ0fw==
+  dependencies:
+    buffer "4.9.1"
+    events "1.1.1"
+    ieee754 "1.1.8"
+    jmespath "0.15.0"
+    querystring "0.2.0"
+    sax "1.2.1"
+    url "0.10.3"
+    uuid "3.1.0"
+    xml2js "0.4.19"
+
+aws-sdk@^2.369.0:
   version "2.382.0"
   resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.382.0.tgz#9212bc7aced9c051973578d06ea1978a57ccbd5f"
   integrity sha512-wGjZLYo2ZxGTlj2cHy/0zOfYJKUVBQYG1vpW4Cnbgo3HTtOu906a6tqkiD8QuN0EyEkn7i+wyjSiUFOCh3T/2g==
@@ -12838,7 +12853,7 @@ nan@^2.9.2:
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.11.1.tgz#90e22bccb8ca57ea4cd37cc83d3819b52eea6766"
   integrity sha512-iji6k87OSXa0CcrLl9z+ZiYSuR2o+c0bGuNmXdrhTQTakxytAFsC56SArGYoiHlJlFoHSnvmhpceZJaXkVuOtA==
 
-nanomatch@^1.2.13, nanomatch@^1.2.9:
+nanomatch@^1.2.9:
   version "1.2.13"
   resolved "https://registry.yarnpkg.com/nanomatch/-/nanomatch-1.2.13.tgz#b87a8aa4fc0de8fe6be88895b38983ff265bd119"
   integrity sha512-fpoe2T0RbHwBTBUOftAfBPaDEi06ufaUai0mE6Yn1kacc3SnTErfb/h+X94VXzI64rKFHYImXSvdwGGCmwOqCA==
@@ -16299,15 +16314,15 @@ serverless-webpack@5.2.0:
     semver "^5.5.0"
     ts-node "^3.2.0"
 
-serverless@1.35.1:
-  version "1.35.1"
-  resolved "https://registry.yarnpkg.com/serverless/-/serverless-1.35.1.tgz#636ef3a13f40d9ff2341784b57f9478cd23ea9e6"
-  integrity sha512-dywZe5ky45VfvWoZyYrrxOi39HaC2rMjz6rYNGAg1SH5WbzKOHe3O5Wrnc/gteQiA7OViTJlcchiQwtk8x6gdA==
+serverless@1.32.0:
+  version "1.32.0"
+  resolved "https://registry.yarnpkg.com/serverless/-/serverless-1.32.0.tgz#84bd7b56dfa14edea0bf95a685e9013dc9ff5ab8"
+  integrity sha512-SL668cuavNEM123Y/ZRw1xxCguz0cqybcnE0WZFxyaVUJfYGMRiaWi2TgQVLM0/2EdEz1hZL20c986Ue5zsPUw==
   dependencies:
     "@serverless/platform-sdk" "^0.3.0"
     archiver "^1.1.0"
     async "^1.5.2"
-    aws-sdk "^2.373.0"
+    aws-sdk "^2.228.0"
     bluebird "^3.5.0"
     chalk "^2.0.0"
     ci-info "^1.1.1"
@@ -16327,7 +16342,6 @@ serverless@1.35.1:
     lodash "^4.13.1"
     minimist "^1.2.0"
     moment "^2.13.0"
-    nanomatch "^1.2.13"
     node-fetch "^1.6.0"
     object-hash "^1.2.0"
     promise-queue "^2.2.3"
@@ -16337,7 +16351,6 @@ serverless@1.35.1:
     semver "^5.0.3"
     semver-regex "^1.0.0"
     tabtab "^2.2.2"
-    untildify "^3.0.3"
     update-notifier "^2.2.0"
     uuid "^2.0.2"
     write-file-atomic "^2.1.0"
@@ -17978,11 +17991,6 @@ unset-value@^1.0.0:
   dependencies:
     has-value "^0.3.1"
     isobject "^3.0.0"
-
-untildify@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/untildify/-/untildify-3.0.3.tgz#1e7b42b140bcfd922b22e70ca1265bfe3634c7c9"
-  integrity sha512-iSk/J8efr8uPT/Z4eSUywnqyrQU7DSdMfdqK4iWEaUVVmcP5JcnpRqmVMwcwcnmI1ATFNgC5V90u09tBynNFKA==
 
 unzip-response@^2.0.1:
   version "2.0.1"
