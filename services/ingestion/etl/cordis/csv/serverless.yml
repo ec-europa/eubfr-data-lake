@@ -27,15 +27,15 @@ provider:
   stackTags:
     ENV: ${self:custom.eubfrEnvironment}
   iamRoleStatements:
-    -  Effect: "Allow"
-       Action:
-         - "s3:PutObject"
-       Resource:
-         Fn::Join:
-           - ""
-           - - "arn:aws:s3:::"
-             - ${self:custom.bucketName}
-             - "/*"
+    - Effect: 'Allow'
+      Action:
+        - 's3:PutObject'
+      Resource:
+        Fn::Join:
+          - ''
+          - - 'arn:aws:s3:::'
+            - ${self:custom.bucketName}
+            - '/*'
     # Allow queueing messages to the DLQ https://docs.aws.amazon.com/lambda/latest/dg/dlq.html
     - Effect: 'Allow'
       Action:
@@ -55,18 +55,18 @@ functions:
       - sns:
           arn:
             Fn::Join:
-              - ""
-              - - "arn:aws:sns:"
-                - Ref: "AWS::Region"
-                - ":"
-                - Ref: "AWS::AccountId"
-                - ":${self:provider.stage}-etl-cordis-csv"
+              - ''
+              - - 'arn:aws:sns:'
+                - Ref: 'AWS::Region'
+                - ':'
+                - Ref: 'AWS::AccountId'
+                - ':${self:provider.stage}-etl-cordis-csv'
           topicName: ${self:provider.stage}-etl-cordis-csv
 
 resources:
   Resources:
     ParseCsvLambdaFunction:
-      Type: "AWS::Lambda::Function"
+      Type: 'AWS::Lambda::Function'
       Properties:
         DeadLetterConfig:
           TargetArn:
@@ -82,29 +82,26 @@ resources:
         PolicyDocument:
           Version: '2012-10-17'
           Statement:
-            -
-              Sid: Allow-IngestionManager-Publish
+            - Sid: Allow-IngestionManager-Publish
               Action:
                 - sns:Publish
               Effect: Allow
               Resource:
                 Fn::Join:
-                  - ""
-                  -
-                    - "arn:aws:sns:"
-                    - Ref: "AWS::Region"
-                    - ":"
-                    - Ref: "AWS::AccountId"
-                    - ":${self:provider.stage}-etl-cordis-csv"
+                  - ''
+                  - - 'arn:aws:sns:'
+                    - Ref: 'AWS::Region'
+                    - ':'
+                    - Ref: 'AWS::AccountId'
+                    - ':${self:provider.stage}-etl-cordis-csv'
               Principal:
                 AWS:
                   Fn::Join:
-                    - ""
-                    -
-                      - "arn:aws:sts::"
-                      - Ref: "AWS::AccountId"
-                      - ":assumed-role/ingestion-manager-${self:provider.stage}-"
-                      - Ref: "AWS::Region"
-                      - "-lambdaRole/${self:provider.stage}-ingestion-manager-onCreate"
+                    - ''
+                    - - 'arn:aws:sts::'
+                      - Ref: 'AWS::AccountId'
+                      - ':assumed-role/ingestion-manager-${self:provider.stage}-'
+                      - Ref: 'AWS::Region'
+                      - '-lambdaRole/${self:provider.stage}-ingestion-manager-onCreate'
         Topics:
           - Ref: SNSTopicCORDISCSV
