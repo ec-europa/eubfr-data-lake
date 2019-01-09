@@ -25,21 +25,21 @@ provider:
     REGION: ${self:provider.region}
     BUCKET: eubfr-${self:provider.stage}
     # export this with serverless-export-env for other services
-    DELETER_API: "${self:resources.Outputs.ServiceEndpoint.Value}"
+    DELETER_API: '${self:resources.Outputs.ServiceEndpoint.Value}'
   deploymentBucket:
     name: eubfr-${self:custom.eubfrEnvironment}-deploy
   stackTags:
     ENV: ${self:custom.eubfrEnvironment}
   versionFunctions: false
   iamRoleStatements:
-    -  Effect: "Allow"
-       Action:
-         - "s3:*"
-       Resource: "*"
+    - Effect: 'Allow'
+      Action:
+        - 's3:*'
+      Resource: '*'
     - Effect: Allow
       Action:
         - iam:ListGroupsForUser
-      Resource: "*"
+      Resource: '*'
 
 functions:
   delete-objects:
@@ -65,4 +65,4 @@ resources:
             - '.amazonaws.com/'
             - ${self:provider.stage}
       Export:
-        Name: "${self:provider.stage}:${self:service}:ServiceEndpoint"
+        Name: '${self:provider.stage}:${self:service}:ServiceEndpoint'
