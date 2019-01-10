@@ -9,7 +9,6 @@ module.exports = {
         modules: false,
         loose: true,
       },
-      '@babel/preset-env',
     ],
   ],
   env: {
@@ -22,7 +21,6 @@ module.exports = {
               node: '8.10',
             },
           },
-          '@babel/preset-env',
         ],
       ],
     },

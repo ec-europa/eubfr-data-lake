@@ -1,5 +1,6 @@
 module.exports = {
   presets: [
+    '@babel/preset-flow',
     [
       '@babel/preset-env',
       {
@@ -11,7 +12,6 @@ module.exports = {
       },
     ],
   ],
-  plugins: ['@babel/plugin-transform-flow-strip-types'],
   env: {
     test: {
       presets: [

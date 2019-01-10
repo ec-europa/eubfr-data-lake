@@ -64,7 +64,7 @@ class Reports extends React.Component {
                   if (data._source && data._source.report) {
                     // destructuring doesn't make sense here
                     // eslint-disable-next-line
-                      report = data._source.report;
+                    report = data._source.report;
                   }
 
                   this.setState({ reportsLoading: false, report });
