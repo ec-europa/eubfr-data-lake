@@ -40,3 +40,9 @@ Update the list of ETLs and their corresponding file types in `scripts/documenta
 ### Service-related utilities
 
 Update `tools/eubfr-cli/lib/getServices.js` which is used on deployment processes. Rarely you will need to set `exportEnv` flag on ETLs, though please double-check whether you will need the new producer to export variables on export.
+
+## Update data availability grid
+
+The different ETLs achieve different data coverage. For instance, some ETLs contain very little location information and the data needs to be further enriched during the ingestion, whereas other ETLs contain rich location information and further enrichment is not needed.
+
+For data quality purposes, please update `docs/enrichment/PRODUCERS_DATA_AVAILABILITY_GRID.md` indicating which fields are available in the source data of the ETL.
