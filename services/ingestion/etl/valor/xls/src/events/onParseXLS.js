@@ -41,9 +41,6 @@ export const handler = async (event, context) => {
       throw new Error('File extension should be .xls or .xlsx');
     }
 
-    // Get environment variables
-    const { BUCKET } = process.env;
-
     const messenger = MessengerFactory.Create({ context });
 
     const handleError = async (e, cb) => {

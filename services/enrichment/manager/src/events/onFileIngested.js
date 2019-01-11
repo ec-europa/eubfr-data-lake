@@ -5,7 +5,7 @@ import split2 from 'split2';
 
 import PublishToSNSTopic from '../lib/PublishToSNSTopic';
 
-export const handler = async event => {
+export const handler = async (event, context) => {
   const { REGION, STAGE } = process.env;
 
   /*
