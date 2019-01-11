@@ -6,30 +6,34 @@ export const enrich = async record => {
     return record;
   }
 
-  const enrichedRecord = JSON.parse(JSON.stringify(record));
+  try {
+    const enrichedRecord = JSON.parse(JSON.stringify(record));
 
-  const newLocations = await Promise.all(
-    enrichedRecord.project_locations
-      .filter(loc => loc)
-      .map(async loc => {
-        let location = JSON.parse(JSON.stringify(loc));
+    const newLocations = await Promise.all(
+      enrichedRecord.project_locations
+        .filter(loc => loc)
+        .map(async loc => {
+          let location = JSON.parse(JSON.stringify(loc));
 
-        if (loc.centroid) {
-          location = await enrichFromCentroid(location);
-        }
+          if (loc.centroid) {
+            location = await enrichFromCentroid(location);
+          }
 
-        if (loc.country_code) {
-          location = await enrichFromCountry(location);
-        }
+          if (loc.country_code) {
+            location = await enrichFromCountry(location);
+          }
 
-        return location;
-      })
-  );
+          return location;
+        })
+    );
 
-  // Update locations
-  enrichedRecord.project_locations = newLocations;
+    // Update locations
+    enrichedRecord.project_locations = newLocations;
 
-  return enrichedRecord;
+    return enrichedRecord;
+  } catch (error) {
+    throw error;
+  }
 };
 
 export default enrich;
