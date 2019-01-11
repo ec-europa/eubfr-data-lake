@@ -3944,7 +3944,22 @@ aws-sdk-mock@4.3.0:
     sinon "^7.1.1"
     traverse "^0.6.6"
 
-aws-sdk@2.385.0, aws-sdk@2.x, aws-sdk@^2.228.0, aws-sdk@^2.369.0:
+aws-sdk@2.386.0:
+  version "2.386.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.386.0.tgz#59c94086a69c4580ffce061d81972d3c1e20d9a1"
+  integrity sha512-ZQOa2KK2f7X0vxgQPeoRIWoBgU20pSMXUDRWF8vjHUacj34CTtGE5lurp2OLYFyiucLOp9OxP0R/zosYgecxPw==
+  dependencies:
+    buffer "4.9.1"
+    events "1.1.1"
+    ieee754 "1.1.8"
+    jmespath "0.15.0"
+    querystring "0.2.0"
+    sax "1.2.1"
+    url "0.10.3"
+    uuid "3.3.2"
+    xml2js "0.4.19"
+
+aws-sdk@2.x, aws-sdk@^2.228.0, aws-sdk@^2.369.0:
   version "2.385.0"
   resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.385.0.tgz#0b773bbf0e317cb2fe3fadb97540fe15bdeee133"
   integrity sha512-ensf8QVbFdHQYLwhHgkH0FpE7nVxDl1SYJMM09p7neveW48rxQEwSOi/BmXDuI2/xsm7aHASUEZqK6zzeEx77g==
@@ -8659,10 +8674,10 @@ flatten@^1.0.2:
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
   integrity sha1-2uRqnXj74lKSJYzB54CkHZXAN4I=
 
-flow-bin@0.89.0:
-  version "0.89.0"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.89.0.tgz#6bd29c2af7e0f429797f820662f33749105c32fa"
-  integrity sha512-DkO4PsXYrl53V6G5+t5HbRMC5ajYUQej2LEGPUZ+j9okTb41Sn5j9vfxsCpXMEAslYnQoysHhYu4GUZsQX/DrQ==
+flow-bin@0.90.0:
+  version "0.90.0"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.90.0.tgz#733b6d29a8c8a22b9a5d273611d9a8402faf3445"
+  integrity sha512-/syDchjhLLL7nELK1ggyWJifGXuMCTz74kvkjR1t9DcmasMrilLl9qAAotsACcNb98etEEJpsCrvP7WL64kadw==
 
 flow-geojson@2.0.7:
   version "2.0.7"
@@ -16006,10 +16021,10 @@ serverless-finch@2.3.2:
     minimatch "^3.0.4"
     prompt-confirm "^1.2.0"
 
-serverless-offline@3.32.1:
-  version "3.32.1"
-  resolved "https://registry.yarnpkg.com/serverless-offline/-/serverless-offline-3.32.1.tgz#a3b9b7c405e7c63eed164621cfcd9ab0933ce168"
-  integrity sha512-Bq/OylPQFtr5ZgJ1eTKuYqTEVXJzvThjTbAHAL3LG2Dsiowz125EmzWdOrzW9cUEpSKvIq038YeiBoNCaberEQ==
+serverless-offline@3.32.2:
+  version "3.32.2"
+  resolved "https://registry.yarnpkg.com/serverless-offline/-/serverless-offline-3.32.2.tgz#82b13848392398141bcea368adb3cde686018c60"
+  integrity sha512-t9g1uoy3tGlLxg2+fVDiUaPdWxydvr0ViOBWDVrsrdTNhOwax4Prh9X/y7hoiCAQIbIO+qo6Elw3628R06cPbA==
   dependencies:
     "@babel/core" "^7.0.0"
     "@babel/register" "^7.0.0"
@@ -18335,10 +18350,10 @@ webpack@4.19.1:
     watchpack "^1.5.0"
     webpack-sources "^1.2.0"
 
-webpack@4.28.3:
-  version "4.28.3"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.28.3.tgz#8acef6e77fad8a01bfd0c2b25aa3636d46511874"
-  integrity sha512-vLZN9k5I7Nr/XB1IDG9GbZB4yQd1sPuvufMFgJkx0b31fi2LD97KQIjwjxE7xytdruAYfu5S0FLBLjdxmwGJCg==
+webpack@4.28.4:
+  version "4.28.4"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.28.4.tgz#1ddae6c89887d7efb752adf0c3cd32b9b07eacd0"
+  integrity sha512-NxjD61WsK/a3JIdwWjtIpimmvE6UrRi3yG54/74Hk9rwNj5FPkA4DJCf1z4ByDWLkvZhTZE+P3C/eh6UD5lDcw==
   dependencies:
     "@webassemblyjs/ast" "1.7.11"
     "@webassemblyjs/helper-module-context" "1.7.11"
