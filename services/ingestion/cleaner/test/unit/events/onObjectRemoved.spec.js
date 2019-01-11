@@ -14,7 +14,6 @@ import eventEubfr from '../../stubs/events/onObjectRemoved/event-eubfr.json';
 
 // Explicitly set the correct module, as it might not map correctly after transpilation.
 AWS.setSDKInstance(AWS_SDK);
-const handler = promisify(onObjectRemoved);
 
 describe(`Function onObjectRemoved in "@eubfr/ingestion-cleaner"`, () => {
   afterEach(() => {
@@ -28,12 +27,13 @@ describe(`Function onObjectRemoved in "@eubfr/ingestion-cleaner"`, () => {
     const event = {};
     const context = {};
 
-    const callback = error => {
+    try {
+      await onObjectRemoved(event, context);
+    } catch (error) {
       expect(error.message).toEqual('BUCKET environment variable is required');
-    };
+    }
 
     expect.assertions(1);
-    await onObjectRemoved(event, context, callback);
   });
 
   test('The function expects SNS record with the official event stub', async () => {
@@ -41,12 +41,13 @@ describe(`Function onObjectRemoved in "@eubfr/ingestion-cleaner"`, () => {
     const event = eventOfficial;
     const context = {};
 
-    const callback = error => {
+    try {
+      await onObjectRemoved(event, context);
+    } catch (error) {
       expect(error.message).toEqual('Bad record');
-    };
+    }
 
     expect.assertions(1);
-    await onObjectRemoved(event, context, callback);
   });
 
   test('The function expects a message body from the actual event stub', async () => {
@@ -58,12 +59,14 @@ describe(`Function onObjectRemoved in "@eubfr/ingestion-cleaner"`, () => {
     delete copy.Records[0].Sns.Message;
 
     const context = {};
-    const callback = error => {
+
+    try {
+      await onObjectRemoved(copy, context);
+    } catch (error) {
       expect(error.message).toEqual('Missing message body');
-    };
+    }
 
     expect.assertions(1);
-    await onObjectRemoved(copy, context, callback);
   });
 });
 
@@ -83,14 +86,12 @@ describe(`Function onObjectRemoved in "@eubfr/ingestion-cleaner" when S3 service
     AWS.restore('S3', 'deleteObject');
   });
 
-  test('The function removes an object from S3 with the actual event stub', () => {
+  test('The function removes an object from S3 with the actual event stub', async () => {
     process.env.BUCKET = 'foo';
     const event = eventEubfr;
-    const context = {};
 
-    const result = handler(event, context);
-    expect.assertions(1);
-    return expect(result).resolves.toBe(`object removed`);
+    const result = await onObjectRemoved(event);
+    expect(result).toBe('object removed');
   });
 });
 
@@ -116,7 +117,7 @@ describe(`Function onObjectRemoved in "@eubfr/ingestion-cleaner" when S3 service
     const context = {};
 
     expect.assertions(1);
-    const result = handler(event, context);
+    const result = onObjectRemoved(event, context);
     return expect(result).rejects.toBe(`S3 failure`);
   });
 });

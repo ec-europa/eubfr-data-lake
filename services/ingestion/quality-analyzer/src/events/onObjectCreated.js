@@ -11,14 +11,12 @@ import deleteReports from '../lib/deleteReports';
 import getAvailableProperties from '../lib/getAvailableProperties';
 import getCoverageReport from '../lib/getCoverageReport';
 
-export const handler = async (event, context, callback) => {
+export const handler = async (event, context) => {
   const { API, INDEX, REGION, STAGE } = process.env;
 
   if (!API || !INDEX || !REGION || !STAGE) {
-    return callback(
-      new Error(
-        'API, INDEX, REGION and STAGE environment variables are required!'
-      )
+    throw new Error(
+      'API, INDEX, REGION and STAGE environment variables are required!'
     );
   }
 
@@ -26,7 +24,7 @@ export const handler = async (event, context, callback) => {
    * Some checks here before going any further
    */
   if (!event.Records) {
-    return callback(new Error('No record'));
+    throw new Error('No record');
   }
 
   // Only work on the first record
@@ -34,7 +32,7 @@ export const handler = async (event, context, callback) => {
 
   // Was the lambda triggered correctly? Is the file extension supported? etc.
   if (!snsRecord || snsRecord.EventSource !== 'aws:sns') {
-    return callback(new Error('Bad record'));
+    throw new Error('Bad record');
   }
 
   // Insantiate clients
@@ -168,7 +166,7 @@ export const handler = async (event, context, callback) => {
       to: ['logs'],
     });
 
-    return callback(err);
+    throw err;
   }
 };
 

@@ -6,24 +6,24 @@ import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 import { extractMessage, extractTopic, extractKey } from '../lib/extractors';
 import getHandlerData from '../lib/getHandlerData';
 
-export const handler = async (event, context, callback) => {
+export const handler = async (event, context) => {
   const { RUNNER, BUCKET, REGION, STAGE, CONTAINER, CLUSTER } = process.env;
 
-  const ec2 = new AWS.EC2();
-  const ecs = new AWS.ECS();
-  const messenger = MessengerFactory.Create({ context });
-
-  // Extract message
-  const sqsRecord = event.Records ? event.Records[0] : undefined;
-
-  const initialMessage = JSON.parse(sqsRecord.body);
-  const message = extractMessage(initialMessage);
-  const topicArn = extractTopic(initialMessage);
-  const key = extractKey(message);
-
-  const handlerData = getHandlerData(topicArn);
-
   try {
+    const ec2 = new AWS.EC2();
+    const ecs = new AWS.ECS();
+    const messenger = MessengerFactory.Create({ context });
+
+    // Extract message
+    const sqsRecord = event.Records ? event.Records[0] : undefined;
+
+    const initialMessage = JSON.parse(sqsRecord.body);
+    const message = extractMessage(initialMessage);
+    const topicArn = extractTopic(initialMessage);
+    const key = extractKey(message);
+
+    const handlerData = getHandlerData(topicArn);
+
     await messenger.send({
       message: {
         computed_key: key,
@@ -98,7 +98,7 @@ export const handler = async (event, context, callback) => {
     };
 
     const result = await ecs.runTask(runParams).promise();
-    return callback(null, result);
+    return result;
   } catch (e) {
     await messenger.send({
       message: {
@@ -108,7 +108,7 @@ export const handler = async (event, context, callback) => {
       },
       to: ['logs'],
     });
-    return callback(e);
+    throw e;
   }
 };
 

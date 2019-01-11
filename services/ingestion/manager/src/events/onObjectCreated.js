@@ -8,10 +8,10 @@ import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 
 let lastReqId;
 
-export const handler = async (event, context, callback) => {
+export const handler = async (event, context) => {
   // This function should not retry.
   if (lastReqId === context.awsRequestId) {
-    return callback(null, 'Lambda auto retry detected. Aborting.');
+    return 'Lambda auto retry detected. Aborting.';
   }
   lastReqId = context.awsRequestId;
 
@@ -19,10 +19,8 @@ export const handler = async (event, context, callback) => {
   const { API, INDEX, REGION, STAGE } = process.env;
 
   if (!API || !INDEX || !REGION || !STAGE) {
-    return callback(
-      new Error(
-        'API, INDEX, REGION and STAGE environment variables are required!'
-      )
+    throw new Error(
+      'API, INDEX, REGION and STAGE environment variables are required!'
     );
   }
 
@@ -31,7 +29,7 @@ export const handler = async (event, context, callback) => {
    */
 
   if (!event.Records) {
-    return callback(new Error('No record'));
+    throw new Error('No record');
   }
 
   // Only work on the first record
@@ -39,7 +37,7 @@ export const handler = async (event, context, callback) => {
 
   // Was the lambda triggered correctly? Is the file extension supported? etc.
   if (!snsRecord || snsRecord.EventSource !== 'aws:sns') {
-    return callback(new Error('Bad record'));
+    throw new Error('Bad record');
   }
 
   /*
@@ -123,7 +121,7 @@ export const handler = async (event, context, callback) => {
       to: ['logs'],
     });
 
-    return callback(err);
+    throw err;
   }
 
   try {
@@ -156,7 +154,7 @@ export const handler = async (event, context, callback) => {
       })
       .promise();
 
-    return callback(null, 'Everything is fine');
+    return 'Everything is fine';
   } catch (err) {
     // Log error pinging the right ETL topic.
     await messenger.send({
@@ -168,7 +166,7 @@ export const handler = async (event, context, callback) => {
       to: ['logs'],
     });
 
-    return callback(err);
+    throw err;
   }
 };
 
