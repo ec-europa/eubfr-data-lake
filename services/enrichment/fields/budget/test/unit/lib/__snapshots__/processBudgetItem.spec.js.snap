@@ -39,6 +39,19 @@ Object {
 }
 `;
 
+exports[`processBudgetItem helper function Enrichment scenario, daily precision, exchange rate not available, fallback to monthly 2`] = `
+Object {
+  "_original": Object {
+    "currency": "USD",
+    "raw": "63,115.00",
+    "value": 63115,
+  },
+  "currency": "EUR",
+  "raw": "EUR 51200",
+  "value": 51200,
+}
+`;
+
 exports[`processBudgetItem helper function Enrichment scenario, monthly precision 1`] = `
 Object {
   "_original": Object {

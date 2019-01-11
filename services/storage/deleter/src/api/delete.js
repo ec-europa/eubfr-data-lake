@@ -1,5 +1,5 @@
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
-import { checkAccess } from '../lib/checkAccess';
+import { getUserGroups } from '../lib/getUserGroups';
 import { extractUsername } from '../lib/extractUsername';
 
 export const handler = async event => {
@@ -13,7 +13,11 @@ export const handler = async event => {
     const { userArn } = event.requestContext.identity;
     const username = extractUsername(userArn);
 
-    const accessGranted = await checkAccess(username);
+    const groups = await getUserGroups(username);
+
+    const accessGranted = groups.Groups.some(
+      group => group.GroupName === 'Producers'
+    );
 
     if (!accessGranted) {
       return {

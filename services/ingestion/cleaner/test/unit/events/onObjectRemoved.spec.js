@@ -5,7 +5,6 @@
 import AWS from 'aws-sdk-mock';
 import AWS_SDK from 'aws-sdk';
 
-import { promisify } from 'util';
 import onObjectRemoved from '../../../src/events/onObjectRemoved';
 
 // Add stubs
