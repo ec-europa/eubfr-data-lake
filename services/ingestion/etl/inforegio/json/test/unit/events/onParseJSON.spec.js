@@ -20,13 +20,14 @@ describe(`Function onParseJSON in "@eubfr/ingestion-etl-inforegio-json"`, () => 
   test('The function expects a correct SNS record', async () => {
     const event = {};
     const context = {};
-    const callback = error => {
-      expect(error.message).toEqual('Bad record');
-    };
 
     expect.assertions(1);
 
-    await onParseJSON(event, context, callback);
+    try {
+      await onParseJSON(event, context);
+    } catch (error) {
+      expect(error.message).toEqual('Bad record');
+    }
   });
 
   test('The function expects a message with a well-formatted JSON object', async () => {
@@ -41,13 +42,12 @@ describe(`Function onParseJSON in "@eubfr/ingestion-etl-inforegio-json"`, () => 
       ],
     };
     const context = {};
-    const callback = error => {
+
+    try {
+      await onParseJSON(event, context);
+    } catch (error) {
       expect(error.message).toEqual('Unexpected token w in JSON at position 0');
-    };
-
-    expect.assertions(1);
-
-    await onParseJSON(event, context, callback);
+    }
   });
 
   test('The handler fails if the Message does not have an object with a key', async () => {
@@ -75,14 +75,13 @@ describe(`Function onParseJSON in "@eubfr/ingestion-etl-inforegio-json"`, () => 
     };
 
     const context = {};
-    const callback = error => {
+
+    try {
+      await onParseJSON(event, context);
+      await onParseJSON(event2, context);
+    } catch (error) {
       expect(error.message).toEqual('The message is not valid');
-    };
-
-    expect.assertions(2);
-
-    await onParseJSON(event, context, callback);
-    await onParseJSON(event2, context, callback);
+    }
   });
 
   test('The handler fails if the object key does not end with `.json', async () => {
@@ -98,12 +97,11 @@ describe(`Function onParseJSON in "@eubfr/ingestion-etl-inforegio-json"`, () => 
     };
 
     const context = {};
-    const callback = error => {
+
+    try {
+      await onParseJSON(event, context);
+    } catch (error) {
       expect(error.message).toEqual('File extension should be .json');
-    };
-
-    expect.assertions(1);
-
-    await onParseJSON(event, context, callback);
+    }
   });
 });

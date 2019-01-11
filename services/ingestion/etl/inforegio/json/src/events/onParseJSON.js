@@ -6,144 +6,142 @@ import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 
 import transformRecord from '../lib/transform';
 
-export const handler = async (event, context, callback) => {
-  // Extract env vars
+export const handler = async (event, context) => {
   const { BUCKET, REGION, STAGE } = process.env;
 
   if (!BUCKET || !REGION || !STAGE) {
-    return callback(
-      new Error('BUCKET, REGION and STAGE environment variables are required!')
+    throw new Error(
+      'BUCKET, REGION and STAGE environment variables are required!'
     );
   }
 
-  /*
-   * Some checks here before going any further
-   */
-
-  // Only work on the first record
-  const snsRecord = event.Records ? event.Records[0] : undefined;
-
-  // Was the lambda triggered correctly? Is the file extension supported? etc.
-  if (
-    !snsRecord ||
-    snsRecord.EventSource !== 'aws:sns' ||
-    !snsRecord.Sns ||
-    !snsRecord.Sns.Message
-  ) {
-    return callback(new Error('Bad record'));
-  }
-
-  /*
-   * Prepare file analysis
-   */
-
-  // Extract message
-  let message = {};
   try {
-    message = JSON.parse(snsRecord.Sns.Message);
-  } catch (e) {
-    return callback(e);
-  }
+    /**
+     * Some checks here before going any further.
+     */
 
-  if (!message.object || !message.object.key) {
-    return callback(new Error('The message is not valid'));
-  }
+    // Only work on the first record
+    const snsRecord = event.Records ? event.Records[0] : undefined;
 
-  // Check file extension
-  if (path.extname(message.object.key) !== '.json') {
-    return callback(new Error('File extension should be .json'));
-  }
+    // Was the lambda triggered correctly? Is the file extension supported? etc.
+    if (
+      !snsRecord ||
+      snsRecord.EventSource !== 'aws:sns' ||
+      !snsRecord.Sns ||
+      !snsRecord.Sns.Message
+    ) {
+      throw new Error('Bad record');
+    }
 
-  const messenger = MessengerFactory.Create({ context });
-  const s3 = new AWS.S3();
+    /**
+     * Prepare file analysis
+     */
 
-  const handleError = async (e, cb) => {
+    // Extract message
+    const message = JSON.parse(snsRecord.Sns.Message);
+
+    if (!message.object || !message.object.key) {
+      throw new Error('The message is not valid');
+    }
+
+    // Check file extension
+    if (path.extname(message.object.key) !== '.json') {
+      throw new Error('File extension should be .json');
+    }
+
+    const messenger = MessengerFactory.Create({ context });
+    const s3 = new AWS.S3();
+
+    const handleError = async (e, cb) => {
+      await messenger.send({
+        message: {
+          computed_key: message.object.key,
+          status_message: e.message,
+          status_code: STATUS.ERROR,
+        },
+        to: ['logs'],
+      });
+
+      return cb(e);
+    };
+
     await messenger.send({
       message: {
         computed_key: message.object.key,
-        status_message: e.message,
-        status_code: STATUS.ERROR,
+        status_message: 'Start parsing JSON...',
+        status_code: STATUS.PARSING,
       },
       to: ['logs'],
     });
 
-    return cb(e);
-  };
+    // Get file
+    const readStream = s3
+      .getObject({
+        Bucket: message.bucket.name,
+        Key: message.object.key,
+      })
+      .createReadStream();
 
-  await messenger.send({
-    message: {
-      computed_key: message.object.key,
-      status_message: 'Start parsing JSON...',
-      status_code: STATUS.PARSING,
-    },
-    to: ['logs'],
-  });
+    return new Promise((resolve, reject) => {
+      // Put data in buffer
+      const buffers = [];
+      readStream.on('data', data => {
+        buffers.push(data);
+      });
 
-  // Get file
-  const readStream = s3
-    .getObject({
-      Bucket: message.bucket.name,
-      Key: message.object.key,
-    })
-    .createReadStream();
+      readStream.on('error', e => handleError(e, reject));
 
-  return new Promise((resolve, reject) => {
-    // Put data in buffer
-    const buffers = [];
-    readStream.on('data', data => {
-      buffers.push(data);
-    });
+      // Manage data
+      readStream.on('end', () => {
+        let dataString = '';
 
-    readStream.on('error', e => handleError(e, reject));
+        try {
+          // Parse file
+          const buffer = Buffer.concat(buffers);
+          let parser = JSON.parse(buffer);
 
-    // Manage data
-    readStream.on('end', () => {
-      let dataString = '';
+          // Sometimes records are nested in items key.
+          parser = parser.items ? parser.items : parser;
 
-      try {
-        // Parse file
-        const buffer = Buffer.concat(buffers);
-        let parser = JSON.parse(buffer);
-
-        // Sometimes records are nested in items key.
-        parser = parser.items ? parser.items : parser;
-
-        for (let i = 0; i < parser.length; i += 1) {
-          // Transform data
-          const data = transformRecord(parser[i]);
-          dataString += `${JSON.stringify(data)}\n`;
-        }
-      } catch (e) {
-        return handleError(e, reject);
-      }
-
-      // Load data
-      const params = {
-        Bucket: BUCKET,
-        Key: `${message.object.key}.ndjson`,
-        Body: dataString,
-        ContentType: 'application/x-ndjson',
-      };
-
-      return s3.upload(params, async err => {
-        if (err) {
-          return handleError(err, reject);
+          for (let i = 0; i < parser.length; i += 1) {
+            // Transform data
+            const data = transformRecord(parser[i]);
+            dataString += `${JSON.stringify(data)}\n`;
+          }
+        } catch (e) {
+          return handleError(e, reject);
         }
 
-        await messenger.send({
-          message: {
-            computed_key: message.object.key,
-            status_message:
-              'JSON parsed successfully. Results will be uploaded to ElasticSearch soon...',
-            status_code: STATUS.PARSED,
-          },
-          to: ['logs'],
+        // Load data
+        const params = {
+          Bucket: BUCKET,
+          Key: `${message.object.key}.ndjson`,
+          Body: dataString,
+          ContentType: 'application/x-ndjson',
+        };
+
+        return s3.upload(params, async err => {
+          if (err) {
+            return handleError(err, reject);
+          }
+
+          await messenger.send({
+            message: {
+              computed_key: message.object.key,
+              status_message:
+                'JSON parsed successfully. Results will be uploaded to ElasticSearch soon...',
+              status_code: STATUS.PARSED,
+            },
+            to: ['logs'],
+          });
+
+          return resolve('JSON parsed successfully');
         });
-
-        return resolve('JSON parsed successfully');
       });
     });
-  });
+  } catch (e) {
+    throw e;
+  }
 };
 
 export default handler;

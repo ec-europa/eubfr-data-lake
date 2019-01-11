@@ -7,127 +7,139 @@ import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 
 import transformRecord from '../lib/transform';
 
-export const handler = async (event, context, callback) => {
-  /*
-   * Some checks here before going any further
-   */
+export const handler = async (event, context) => {
+  const { BUCKET, REGION, STAGE } = process.env;
 
-  // Only work on the first record
-  const snsRecord = event.Records ? event.Records[0] : undefined;
-
-  // Was the lambda triggered correctly? Is the file extension supported? etc.
-  if (!snsRecord || snsRecord.EventSource !== 'aws:sns') {
-    throw new Error('Bad record');
+  if (!BUCKET || !REGION || !STAGE) {
+    throw new Error(
+      'BUCKET, REGION and STAGE environment variables are required!'
+    );
   }
 
-  /*
+  try {
+    /**
+     * Some checks here before going any further.
+     */
+
+    // Only work on the first record
+    const snsRecord = event.Records ? event.Records[0] : undefined;
+
+    // Was the lambda triggered correctly? Is the file extension supported? etc.
+    if (!snsRecord || snsRecord.EventSource !== 'aws:sns') {
+      throw new Error('Bad record');
+    }
+
+    /*
    * Prepare file analysis
    */
 
-  // Extract message
-  const message = JSON.parse(snsRecord.Sns.Message);
+    // Extract message
+    const message = JSON.parse(snsRecord.Sns.Message);
 
-  // Check file extension
-  if (['.xls', '.xlsx'].indexOf(path.extname(message.object.key)) === -1) {
-    return callback(new Error('File extension should be .xls or .xlsx'));
-  }
+    // Check file extension
+    if (['.xls', '.xlsx'].indexOf(path.extname(message.object.key)) === -1) {
+      throw new Error('File extension should be .xls or .xlsx');
+    }
 
-  // Get environment variables
-  const { BUCKET } = process.env;
+    // Get environment variables
+    const { BUCKET } = process.env;
 
-  const messenger = MessengerFactory.Create({ context });
+    const messenger = MessengerFactory.Create({ context });
 
-  const handleError = async (e, cb) => {
+    const handleError = async (e, cb) => {
+      await messenger.send({
+        message: {
+          computed_key: message.object.key,
+          status_message: e.message,
+          status_code: STATUS.ERROR,
+        },
+        to: ['logs'],
+      });
+
+      return cb(e);
+    };
+
+    const s3 = new AWS.S3();
+
     await messenger.send({
       message: {
         computed_key: message.object.key,
-        status_message: e.message,
-        status_code: STATUS.ERROR,
+        status_message: 'Start parsing XLS...',
+        status_code: STATUS.PARSING,
       },
       to: ['logs'],
     });
 
-    return cb(e);
-  };
+    // Get file
+    const readStream = s3
+      .getObject({
+        Bucket: message.bucket.name,
+        Key: message.object.key,
+      })
+      .createReadStream();
 
-  const s3 = new AWS.S3();
+    return new Promise((resolve, reject) => {
+      // Put data in buffer
+      const buffers = [];
 
-  await messenger.send({
-    message: {
-      computed_key: message.object.key,
-      status_message: 'Start parsing XLS...',
-      status_code: STATUS.PARSING,
-    },
-    to: ['logs'],
-  });
+      readStream.on('data', data => {
+        buffers.push(data);
+      });
 
-  // Get file
-  const readStream = s3
-    .getObject({
-      Bucket: message.bucket.name,
-      Key: message.object.key,
-    })
-    .createReadStream();
+      readStream.on('error', async e => handleError(e, reject));
 
-  return new Promise((resolve, reject) => {
-    // Put data in buffer
-    const buffers = [];
+      // Manage data
+      readStream.on('end', () => {
+        let dataString = '';
 
-    readStream.on('data', data => {
-      buffers.push(data);
-    });
+        try {
+          // Parse file
+          const buffer = Buffer.concat(buffers);
+          const workbook = XLSX.read(buffer);
+          const sheetNameList = workbook.SheetNames;
+          const parser = XLSX.utils.sheet_to_json(
+            workbook.Sheets[sheetNameList[0]]
+          );
 
-    readStream.on('error', async e => handleError(e, reject));
-
-    // Manage data
-    readStream.on('end', () => {
-      let dataString = '';
-
-      try {
-        // Parse file
-        const buffer = Buffer.concat(buffers);
-        const workbook = XLSX.read(buffer);
-        const sheetNameList = workbook.SheetNames;
-        const parser = XLSX.utils.sheet_to_json(
-          workbook.Sheets[sheetNameList[0]]
-        );
-
-        for (let i = 0; i < parser.length; i += 1) {
-          // Transform data
-          const data = transformRecord(parser[i]);
-          dataString += `${JSON.stringify(data)}\n`;
-        }
-      } catch (e) {
-        return handleError(e, reject);
-      }
-
-      // Load data
-      const params = {
-        Bucket: BUCKET,
-        Key: `${message.object.key}.ndjson`,
-        Body: dataString,
-        ContentType: 'application/x-ndjson',
-      };
-
-      return s3.upload(params, async err => {
-        if (err) {
-          return handleError(err, reject);
+          for (let i = 0; i < parser.length; i += 1) {
+            // Transform data
+            const data = transformRecord(parser[i]);
+            dataString += `${JSON.stringify(data)}\n`;
+          }
+        } catch (e) {
+          return handleError(e, reject);
         }
 
-        await messenger.send({
-          message: {
-            computed_key: message.object.key,
-            status_message:
-              'XLS parsed successfully. Results will be uploaded to ElasticSearch soon...',
-            status_code: STATUS.PARSED,
-          },
-          to: ['logs'],
+        // Load data
+        const params = {
+          Bucket: BUCKET,
+          Key: `${message.object.key}.ndjson`,
+          Body: dataString,
+          ContentType: 'application/x-ndjson',
+        };
+
+        return s3.upload(params, async err => {
+          if (err) {
+            return handleError(err, reject);
+          }
+
+          await messenger.send({
+            message: {
+              computed_key: message.object.key,
+              status_message:
+                'XLS parsed successfully. Results will be uploaded to ElasticSearch soon...',
+              status_code: STATUS.PARSED,
+            },
+            to: ['logs'],
+          });
+
+          return resolve('XLS parsed successfully');
         });
-
-        return resolve('XLS parsed successfully');
       });
     });
-  });
+  } catch (e) {
+    throw e;
+  }
 };
 
 export default handler;
