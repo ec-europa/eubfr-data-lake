@@ -5,14 +5,14 @@ import split2 from 'split2';
 
 import PublishToSNSTopic from '../lib/PublishToSNSTopic';
 
-export const handler = async (event, context, callback) => {
+export const handler = async event => {
   const { REGION, STAGE } = process.env;
 
   /*
    * Some checks here before going any further
    */
   if (!event.Records) {
-    return callback('No record');
+    throw new Error('No record');
   }
 
   // Only work on the first record
@@ -20,7 +20,7 @@ export const handler = async (event, context, callback) => {
 
   // Was the lambda triggered correctly? Is the file extension supported? etc.
   if (!snsRecord || snsRecord.EventSource !== 'aws:sns') {
-    return callback('Bad record');
+    throw new Error('Bad record');
   }
 
   /*
@@ -87,7 +87,7 @@ export const handler = async (event, context, callback) => {
         );
     });
   } catch (err) {
-    return callback(err.message);
+    throw err;
   }
 };
 
