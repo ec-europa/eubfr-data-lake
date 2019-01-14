@@ -60,7 +60,9 @@ export const handler = async event => {
   };
 
   try {
-    const url = await s3.getSignedUrl('putObject', params).promise();
+    // The .promise() chained method is not necessary here.
+    // @read https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#getSignedUrl-property.
+    const url = await s3.getSignedUrl('putObject', params);
 
     return {
       statusCode: 200,
