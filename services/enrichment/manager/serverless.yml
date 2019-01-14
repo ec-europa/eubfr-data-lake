@@ -39,13 +39,12 @@ functions:
       - sns:
           arn:
             Fn::Join:
-              - ""
-              -
-                - "arn:aws:sns:"
-                - Ref: "AWS::Region"
-                - ":"
-                - Ref: "AWS::AccountId"
-                - ":${self:provider.stage}-onEnrichmentRequested"
+              - ''
+              - - 'arn:aws:sns:'
+                - Ref: 'AWS::Region'
+                - ':'
+                - Ref: 'AWS::AccountId'
+                - ':${self:provider.stage}-onEnrichmentRequested'
           topicName: ${self:provider.stage}-onEnrichmentRequested
 
 resources:
@@ -60,15 +59,14 @@ resources:
         PolicyDocument:
           Version: '2012-10-17'
           Statement:
-            -
-              Sid: AllowAllToRequestEnrichment
+            - Sid: AllowAllToRequestEnrichment
               Action:
                 - sns:Publish
               Effect: Allow
-              Resource: "*"
-              Principal: "*"
+              Resource: '*'
+              Principal: '*'
         Topics:
-        - Ref: EnrichmentTopic
+          - Ref: EnrichmentTopic
     EnrichRecordTopic:
       Type: AWS::SNS::Topic
       Properties:
@@ -79,12 +77,11 @@ resources:
         PolicyDocument:
           Version: '2012-10-17'
           Statement:
-            -
-              Sid: AllowAllToRequestRecordEnrichment
+            - Sid: AllowAllToRequestRecordEnrichment
               Action:
                 - sns:Publish
               Effect: Allow
-              Resource: "*"
-              Principal: "*"
+              Resource: '*'
+              Principal: '*'
         Topics:
-        - Ref: EnrichRecordTopic
+          - Ref: EnrichRecordTopic

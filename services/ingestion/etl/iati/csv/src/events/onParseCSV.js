@@ -76,7 +76,7 @@ export const handler = async (event, context, callback) => {
     .getObject({ Bucket: snsMessage.bucket.name, Key: key })
     .createReadStream();
 
-  let activities = '';
+  let projects = '';
 
   return new Promise((resolve, reject) => {
     readStream
@@ -89,7 +89,7 @@ export const handler = async (event, context, callback) => {
         handleError(new Error(`Error on transform: ${e.message}`, reject))
       )
       .on('data', data => {
-        activities += data;
+        projects += data;
       })
       .on('error', async e =>
         handleError(new Error(`Error on upload: ${e.message}`, reject))
@@ -99,7 +99,7 @@ export const handler = async (event, context, callback) => {
         const params = {
           Bucket: BUCKET,
           Key: `${key}.ndjson`,
-          Body: activities,
+          Body: projects,
           ContentType: 'application/x-ndjson',
         };
 

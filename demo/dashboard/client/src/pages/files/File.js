@@ -209,7 +209,8 @@ class File extends React.Component {
             File not found
           </h1>
           <Link to="/files" className="ecl-button ecl-button--secondary">
-            <span className="ecl-icon ecl-icon--left" />Go Back to My Files
+            <span className="ecl-icon ecl-icon--left" />
+            Go Back to My Files
           </Link>
         </Fragment>
       );
@@ -235,7 +236,8 @@ class File extends React.Component {
           <span title={message} className={getIcon(statusCode)} />
         </p>
         <Link to="/files" className="ecl-button ecl-button--secondary">
-          <span className="ecl-icon ecl-icon--left" />Go Back to My Files
+          <span className="ecl-icon ecl-icon--left" />
+          Go Back to My Files
         </Link>
 
         <div className="ecl-row ecl-u-mv-m">

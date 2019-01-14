@@ -93,7 +93,7 @@ export const handler = async (event, context, callback) => {
     // elasticsearch client instantiation
     const client = elasticsearch.Client({
       host: `https://${API}`,
-      apiVersion: '6.2',
+      apiVersion: '6.3',
       connectionClass,
       index: INDEX,
     });

@@ -21,11 +21,16 @@ import type { Project } from '@eubfr/types';
  * output => 'foo'
  */
 const checkData = data => {
-  if (data && typeof data === 'object') {
-    return data[0];
-  } else if (data && typeof data === 'string') {
-    return data;
+  if (data) {
+    if (typeof data === 'object') {
+      return data[0];
+    }
+
+    if (typeof data === 'string') {
+      return data;
+    }
   }
+
   return '';
 };
 

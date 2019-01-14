@@ -28,8 +28,8 @@ export const handler = async (event, context, callback) => {
 
   try {
     /*
-   * Extract information from the event
-   */
+     * Extract information from the event
+     */
 
     // Extract S3 record
     const s3record = JSON.parse(snsRecord.Sns.Message).Records[0];
@@ -39,7 +39,7 @@ export const handler = async (event, context, callback) => {
     // elasticsearch client instantiation
     const client = elasticsearch.Client({
       host: `https://${API}`,
-      apiVersion: '6.2',
+      apiVersion: '6.3',
       connectionClass,
       index: INDEX,
     });

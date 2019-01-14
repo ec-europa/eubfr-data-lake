@@ -184,11 +184,16 @@ const getLocations = record => {
  * @returns {string}
  */
 const getProjectWebsite = record => {
-  if (record.URL && typeof record.URL === 'object') {
-    return record.URL[0];
-  } else if (record.URL && typeof record.URL === 'string') {
-    return record.URL;
+  if (record.URL) {
+    if (typeof record.URL === 'object') {
+      return record.URL[0];
+    }
+
+    if (typeof record.URL === 'string') {
+      return record.URL;
+    }
   }
+
   return '';
 };
 

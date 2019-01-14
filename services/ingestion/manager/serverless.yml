@@ -19,6 +19,8 @@ package:
 provider:
   name: aws
   runtime: nodejs8.10
+  timeout: 120
+  memorySize: 512
   stage: ${opt:stage, file(../../../config.json):stage, env:EUBFR_STAGE, 'dev'}
   region: ${opt:region, file(../../../config.json):region, env:EUBFR_AWS_REGION, 'eu-central-1'}
   deploymentBucket:
@@ -33,9 +35,9 @@ provider:
     REGION: ${self:provider.region}
   iamRoleStatements:
     # http://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-aws-integrations.html?shortFooter=true#es-aws-integrations-s3-lambda-es-authorizations
-    - Effect: "Allow"
-      Action: "es:*"
-      Resource: "arn:aws:es:${self:provider.region}:*:domain/*"
+    - Effect: 'Allow'
+      Action: 'es:*'
+      Resource: 'arn:aws:es:${self:provider.region}:*:domain/*'
 
 functions:
   onCreate:
@@ -45,13 +47,12 @@ functions:
       - sns:
           arn:
             Fn::Join:
-              - ""
-              -
-                - "arn:aws:sns:"
-                - Ref: "AWS::Region"
-                - ":"
-                - Ref: "AWS::AccountId"
-                - ":${self:provider.stage}-object-created"
+              - ''
+              - - 'arn:aws:sns:'
+                - Ref: 'AWS::Region'
+                - ':'
+                - Ref: 'AWS::AccountId'
+                - ':${self:provider.stage}-object-created'
           topicName: ${self:provider.stage}-object-created
   onObjectRemoved:
     handler: src/events/onObjectRemoved.handler
@@ -60,11 +61,10 @@ functions:
       - sns:
           arn:
             Fn::Join:
-              - ""
-              -
-                - "arn:aws:sns:"
-                - Ref: "AWS::Region"
-                - ":"
-                - Ref: "AWS::AccountId"
-                - ":${self:provider.stage}-object-removed"
+              - ''
+              - - 'arn:aws:sns:'
+                - Ref: 'AWS::Region'
+                - ':'
+                - Ref: 'AWS::AccountId'
+                - ':${self:provider.stage}-object-removed'
           topicName: ${self:provider.stage}-object-removed

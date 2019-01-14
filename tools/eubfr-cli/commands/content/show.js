@@ -21,7 +21,7 @@ const showCommand = async ({ file, producer, endpoints }) => {
   const client = elasticsearch.Client({
     host,
     log: 'warning',
-    apiVersion: '6.2',
+    apiVersion: '6.3',
   });
 
   if (file) {

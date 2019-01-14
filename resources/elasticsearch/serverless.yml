@@ -8,23 +8,19 @@ custom:
   publicDomain: ${self:custom.eubfrEnvironment}-public
   privateDomain: ${self:custom.eubfrEnvironment}-private
   slsEsIndices:
-    -
-      index: ${opt:stage, file(../../config.json):stage, env:EUBFR_STAGE, 'dev'}-projects
+    - index: ${opt:stage, file(../../config.json):stage, env:EUBFR_STAGE, 'dev'}-projects
       mapping: '${file(./mappings/project.js)}'
       region: ${opt:region, file(../../config.json):region, env:EUBFR_AWS_REGION, 'eu-central-1'}
       endpointName: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
-    -
-      index: ${opt:stage, file(../../config.json):stage, env:EUBFR_STAGE, 'dev'}-meta
+    - index: ${opt:stage, file(../../config.json):stage, env:EUBFR_STAGE, 'dev'}-meta
       mapping: ${file(./mappings/meta.js)}
       region: ${opt:region, file(../../config.json):region, env:EUBFR_AWS_REGION, 'eu-central-1'}
       endpointName: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PrivateEndpoint
-    -
-      index: ${opt:stage, file(../../config.json):stage, env:EUBFR_STAGE, 'dev'}-logs
+    - index: ${opt:stage, file(../../config.json):stage, env:EUBFR_STAGE, 'dev'}-logs
       mapping: ${file(./mappings/logs.js)}
       region: ${opt:region, file(../../config.json):region, env:EUBFR_AWS_REGION, 'eu-central-1'}
       endpointName: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PrivateEndpoint
-    -
-      index: ${opt:stage, file(../../config.json):stage, env:EUBFR_STAGE, 'dev'}-quality-reports
+    - index: ${opt:stage, file(../../config.json):stage, env:EUBFR_STAGE, 'dev'}-quality-reports
       mapping: ${file(./mappings/quality-report.js)}
       region: ${opt:region, file(../../config.json):region, env:EUBFR_AWS_REGION, 'eu-central-1'}
       endpointName: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
@@ -47,7 +43,7 @@ resources:
       DeletionPolicy: Retain
       Properties:
         DomainName: ${self:custom.publicDomain}
-        ElasticsearchVersion: '6.2'
+        ElasticsearchVersion: '6.3'
         EBSOptions:
           EBSEnabled: true
           VolumeType: gp2
@@ -60,34 +56,34 @@ resources:
         AccessPolicies:
           Version: '2012-10-17'
           Statement:
-          # Public can query for information
-          - Effect: Allow
-            Principal: "*"
-            Action:
-             - "es:ESHttpHead"
-             - "es:ESHttpGet"
-            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*"
-          - Effect: Allow
-            Principal: "*"
-            Action:
-             - "es:ESHttpPost"
-            Resource:
-              - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*_analyze"
-              - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*_cat"
-              - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*_count"
-              # _field_stats and _field_caps are same https://www.elastic.co/guide/en/elasticsearch/reference/5.6/search-field-stats.html
-              # though AWS supports only the deprecated _field_stats for the moment
-              - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*_field_stats"
-              - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*_field_caps"
-              - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*_mtermvectors"
-              - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*_search"
+            # Public can query for information
+            - Effect: Allow
+              Principal: '*'
+              Action:
+                - 'es:ESHttpHead'
+                - 'es:ESHttpGet'
+              Resource: 'arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*'
+            - Effect: Allow
+              Principal: '*'
+              Action:
+                - 'es:ESHttpPost'
+              Resource:
+                - 'arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*_analyze'
+                - 'arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*_cat'
+                - 'arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*_count'
+                # _field_stats and _field_caps are same https://www.elastic.co/guide/en/elasticsearch/reference/5.6/search-field-stats.html
+                # though AWS supports only the deprecated _field_stats for the moment
+                - 'arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*_field_stats'
+                - 'arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*_field_caps'
+                - 'arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*_mtermvectors'
+                - 'arn:aws:es:${self:provider.region}:*:domain/${self:custom.publicDomain}/*_search'
     PrivateElasticSearchDomain:
       Type: AWS::Elasticsearch::Domain
       # Don't delete the elastic search instance when the CF stack is deleted
       DeletionPolicy: Retain
       Properties:
         DomainName: ${self:custom.privateDomain}
-        ElasticsearchVersion: '6.2'
+        ElasticsearchVersion: '6.3'
         EBSOptions:
           EBSEnabled: true
           VolumeType: gp2
@@ -100,39 +96,39 @@ resources:
         AccessPolicies:
           Version: '2012-10-17'
           Statement:
-          # Public can query for information
-          - Effect: Allow
-            Principal: "*"
-            Action:
-             - "es:ESHttpHead"
-             - "es:ESHttpGet"
-            Resource: "arn:aws:es:${self:provider.region}:*:domain/${self:custom.privateDomain}/*"
-          - Effect: Allow
-            Principal: "*"
-            Action:
-             - "es:ESHttpPost"
-            Resource:
-              - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.privateDomain}/*_analyze"
-              - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.privateDomain}/*_cat"
-              - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.privateDomain}/*_count"
-              # _field_stats and _field_caps are same https://www.elastic.co/guide/en/elasticsearch/reference/5.6/search-field-stats.html
-              # though AWS supports only the deprecated _field_stats for the moment
-              - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.privateDomain}/*_field_stats"
-              - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.privateDomain}/*_field_caps"
-              - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.privateDomain}/*_mtermvectors"
-              - "arn:aws:es:${self:provider.region}:*:domain/${self:custom.privateDomain}/*_search"
+            # Public can query for information
+            - Effect: Allow
+              Principal: '*'
+              Action:
+                - 'es:ESHttpHead'
+                - 'es:ESHttpGet'
+              Resource: 'arn:aws:es:${self:provider.region}:*:domain/${self:custom.privateDomain}/*'
+            - Effect: Allow
+              Principal: '*'
+              Action:
+                - 'es:ESHttpPost'
+              Resource:
+                - 'arn:aws:es:${self:provider.region}:*:domain/${self:custom.privateDomain}/*_analyze'
+                - 'arn:aws:es:${self:provider.region}:*:domain/${self:custom.privateDomain}/*_cat'
+                - 'arn:aws:es:${self:provider.region}:*:domain/${self:custom.privateDomain}/*_count'
+                # _field_stats and _field_caps are same https://www.elastic.co/guide/en/elasticsearch/reference/5.6/search-field-stats.html
+                # though AWS supports only the deprecated _field_stats for the moment
+                - 'arn:aws:es:${self:provider.region}:*:domain/${self:custom.privateDomain}/*_field_stats'
+                - 'arn:aws:es:${self:provider.region}:*:domain/${self:custom.privateDomain}/*_field_caps'
+                - 'arn:aws:es:${self:provider.region}:*:domain/${self:custom.privateDomain}/*_mtermvectors'
+                - 'arn:aws:es:${self:provider.region}:*:domain/${self:custom.privateDomain}/*_search'
   Outputs:
     PublicEndpoint:
       Description: The public elasticsearch domain.
       Value:
-        Fn::GetAtt: ["PublicElasticSearchDomain", "DomainEndpoint"]
+        Fn::GetAtt: ['PublicElasticSearchDomain', 'DomainEndpoint']
       Export:
         # Global varibale, uses eubfrEnvironment instead of stage
-        Name: "${self:custom.eubfrEnvironment}:${self:service}:PublicEndpoint"
+        Name: '${self:custom.eubfrEnvironment}:${self:service}:PublicEndpoint'
     PrivateEndpoint:
       Description: The private elasticsearch domain.
       Value:
-        Fn::GetAtt: ["PrivateElasticSearchDomain", "DomainEndpoint"]
+        Fn::GetAtt: ['PrivateElasticSearchDomain', 'DomainEndpoint']
       Export:
         # Global varibale, uses eubfrEnvironment instead of stage
-        Name: "${self:custom.eubfrEnvironment}:${self:service}:PrivateEndpoint"
+        Name: '${self:custom.eubfrEnvironment}:${self:service}:PrivateEndpoint'
