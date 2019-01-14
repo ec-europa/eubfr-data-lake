@@ -21,8 +21,8 @@ export const handler = async (event, context) => {
     const s3 = new AWS.S3();
 
     /*
-   * Some checks here before going any further
-   */
+     * Some checks here before going any further
+     */
 
     // Only work on the first record
     const snsRecord = event.Records ? event.Records[0] : undefined;
@@ -33,8 +33,8 @@ export const handler = async (event, context) => {
     }
 
     /*
-   * Prepare file analysis
-   */
+     * Prepare file analysis
+     */
 
     // Extract message
     const message = JSON.parse(snsRecord.Sns.Message);

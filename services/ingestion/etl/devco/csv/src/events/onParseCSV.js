@@ -8,7 +8,6 @@ import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 // Import logic
 import { extractMessage } from '../lib/sns';
 import transformRecord from '../lib/transform';
-import uploadFromStream from '../lib/uploadFromStream';
 
 export const handler = async (event, context) => {
   const { BUCKET, REGION, STAGE } = process.env;
@@ -42,8 +41,8 @@ export const handler = async (event, context) => {
     const s3 = new AWS.S3();
 
     /*
-   * Configure the pipeline
-   */
+     * Configure the pipeline
+     */
 
     // Parse
     const parser = parse({ columns: true, delimiter: ';' });
@@ -62,8 +61,8 @@ export const handler = async (event, context) => {
     );
 
     /*
-   * Start the hard work
-   */
+     * Start the hard work
+     */
     await messenger.send({
       message: {
         computed_key: key,
@@ -77,6 +76,8 @@ export const handler = async (event, context) => {
       .getObject({ Bucket: snsMessage.bucket.name, Key: key })
       .createReadStream();
 
+    let projects = '';
+
     return new Promise((resolve, reject) => {
       readStream
         .pipe(parser)
@@ -87,22 +88,36 @@ export const handler = async (event, context) => {
         .on('error', async e =>
           handleError(new Error(`Error on transform: ${e.message}`, reject))
         )
-        .pipe(uploadFromStream({ key, BUCKET, s3, handleError }))
+        .on('data', data => {
+          projects += data;
+        })
         .on('error', async e =>
-          handleError(new Error(`Error on upload: ${e.message}`, reject))
+          handleError(new Error(`Error on data: ${e.message}`, reject))
         )
         .on('end', async () => {
-          await messenger.send({
-            message: {
-              computed_key: key,
-              status_message:
-                'CSV parsed successfully. Results will be uploaded to ElasticSearch soon...',
-              status_code: STATUS.PARSED,
-            },
-            to: ['logs'],
-          });
+          // Load data
+          const params = {
+            Bucket: BUCKET,
+            Key: `${key}.ndjson`,
+            Body: projects,
+            ContentType: 'application/x-ndjson',
+          };
 
-          return resolve('CSV parsed successfully');
+          try {
+            await s3.upload(params).promise();
+
+            await messenger.send({
+              message: {
+                computed_key: key,
+                status_message:
+                  'CSV parsed successfully. Results will be uploaded to ElasticSearch soon...',
+                status_code: STATUS.PARSED,
+              },
+              to: ['logs'],
+            });
+          } catch (error) {
+            handleError(error, reject);
+          }
         });
     });
   } catch (e) {

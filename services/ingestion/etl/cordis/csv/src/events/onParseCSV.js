@@ -41,8 +41,8 @@ export const handler = async (event, context) => {
     const s3 = new AWS.S3();
 
     /*
-   * Configure the pipeline
-   */
+     * Configure the pipeline
+     */
 
     // Parse
     const parser = parse({ columns: true, delimiter: ';' });
@@ -61,8 +61,8 @@ export const handler = async (event, context) => {
     );
 
     /*
-   * Start the hard work
-   */
+     * Start the hard work
+     */
     await messenger.send({
       message: {
         computed_key: key,

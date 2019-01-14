@@ -7,7 +7,7 @@ Map fields for INFOREGIO producer, XML file types
 Mapping document: [markdown version][1]
 Transform function: [implementation details][2]
 
-**Parameters**
+### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
@@ -17,11 +17,11 @@ Returns **Project** JSON matching the type fields
 
 Check if field is an array or a sting
 
-**Parameters**
+#### Parameters
 
 - `data` **([Object][3] \| [string][4])** The input piece of data
 
-**Examples**
+#### Examples
 
 ```javascript
 input => ['foo'];
@@ -34,11 +34,11 @@ Returns **[string][4]** The string value of the input data
 
 Format date
 
-**Parameters**
+#### Parameters
 
 - `date` **[Date][5]** Date in `DD/MM/YYYY` format
 
-**Examples**
+#### Examples
 
 ```javascript
 input => '02/02/2018';
@@ -57,7 +57,7 @@ Input fields taken from the `record` are:
 - `Beneficiary_Post_Code`
 - `Beneficiary_City`
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
@@ -67,7 +67,7 @@ Returns **[string][4]** The address as consumed by {Partner}
 
 Formats information for the {BudgetItem}
 
-**Parameters**
+#### Parameters
 
 - `budget` **[string][4]** Prefixed currency value
 
@@ -81,11 +81,11 @@ Input fields taken from the `record` are:
 
 - `Funds`
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
-**Examples**
+#### Examples
 
 ```javascript
 input => 'foo;bar;baz';
@@ -98,7 +98,7 @@ Returns **[Array][6]** List of values for funding area
 
 Gets NUTS code level from a string
 
-**Parameters**
+#### Parameters
 
 - `code` **[String][4]** The NUTS code
 
@@ -114,7 +114,7 @@ Input fields taken from the `record` are:
 - `Project_region`
 - `Project_NUTS2_code`
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
@@ -128,11 +128,11 @@ Input fields taken from the `record` are:
 
 - `Themes`
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
-**Examples**
+#### Examples
 
 ```javascript
 input => 'foo; bar; baz';
@@ -151,7 +151,7 @@ Input fields taken from the `record` are:
 - `Beneficiary`
 - `Beneficiary_Country`
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from harmonized storage
 

@@ -8,9 +8,9 @@ Example input data: [stub][1]
 
 Transform function: [implementation details][2]
 
-**Parameters**
+### Parameters
 
--   `record` **[Object][3]** Piece of data to transform before going to harmonized storage.
+- `record` **[Object][3]** Piece of data to transform before going to harmonized storage.
 
 Returns **Project** JSON matching the type fields.
 
@@ -18,15 +18,15 @@ Returns **Project** JSON matching the type fields.
 
 Converts a single string to an array
 
-**Parameters**
+#### Parameters
 
--   `record` **[Object][3]** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
-**Examples**
+#### Examples
 
 ```javascript
-input => "Research & innovation; Investment for growth; Transport"
-output => ["Research & innovation", "Investment for growth", "Transport"]
+input => 'Research & innovation; Investment for growth; Transport';
+output => ['Research & innovation', 'Investment for growth', 'Transport'];
 ```
 
 Returns **[Array][4]** List of string values for `funding_area` field
@@ -35,15 +35,15 @@ Returns **[Array][4]** List of string values for `funding_area` field
 
 Preprocess coordinators
 
-**Parameters**
+#### Parameters
 
--   `record` **[Object][3]** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
-**Examples**
+#### Examples
 
 ```javascript
-input => "Eva Maria Plunger (VERBUND AG); foo; bar"
-output => ["Eva Maria Plunger (VERBUND AG)", "foo", "bar"]
+input => 'Eva Maria Plunger (VERBUND AG); foo; bar';
+output => ['Eva Maria Plunger (VERBUND AG)', 'foo', 'bar'];
 ```
 
 Returns **[Array][4]** List of {Coordinator} objects for `coordinators` field
@@ -52,15 +52,15 @@ Returns **[Array][4]** List of {Coordinator} objects for `coordinators` field
 
 Preprocess partners
 
-**Parameters**
+#### Parameters
 
--   `record` **[Object][3]** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
-**Examples**
+#### Examples
 
 ```javascript
-input => "foo, bar, baz"
-output => ["foo", "bar", "baz"]
+input => 'foo, bar, baz';
+output => ['foo', 'bar', 'baz'];
 ```
 
 Returns **[Array][4]** List of {Partner} objects for `partners` field
@@ -71,16 +71,16 @@ Preprocess locations
 
 Input fields taken from the `record` are:
 
--   `Project location longitude`
--   `Project location latitude`
--   `Project country(ies)`
--   `Project address(es)`
--   `Project postal code(s)`
--   `Project town(s)`
+- `Project location longitude`
+- `Project location latitude`
+- `Project country(ies)`
+- `Project address(es)`
+- `Project postal code(s)`
+- `Project town(s)`
 
-**Parameters**
+#### Parameters
 
--   `record` **[Object][3]** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
 Returns **[Array][4]** List of {Location} objects for `project_locations` field
 
@@ -90,11 +90,11 @@ Preprocess related links
 
 Depends on record['Related links'] field
 
-**Parameters**
+#### Parameters
 
--   `record` **[Object][3]** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
-**Examples**
+#### Examples
 
 ```javascript
 input => "<a href=\"https://ec.europa.eu/inea/en/ten-t/ten-t-projects/projects-by-country/multi-country/2013-eu-92069-s\">INEA</a>;<a href=\"https://europa.eu/investeu/projects/central-european-green-corridors_en\">InvestEU</a>"
@@ -110,15 +110,15 @@ Returns **([Array][4] \| [Object][3])** List of {RelatedLink}
 
 Format date
 
-**Parameters**
+#### Parameters
 
--   `date` **[Date][5]** Date in timestamp
+- `date` **[Date][5]** Date in timestamp
 
-**Examples**
+#### Examples
 
 ```javascript
-input => "1388530800"
-output => "2013-12-31T23:00:00.000Z"
+input => '1388530800';
+output => '2013-12-31T23:00:00.000Z';
 ```
 
 Returns **[Date][5]** The date formatted into an ISO 8601 date format
@@ -127,18 +127,14 @@ Returns **[Date][5]** The date formatted into an ISO 8601 date format
 
 Prepare media information
 
-**Parameters**
+#### Parameters
 
--   `record` **[Object][3]** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
-Returns **[Array][4]&lt;Media>** 
+Returns **[Array][4]&lt;Media>**
 
 [1]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/agri/csv/test/stubs/record.json
-
 [2]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/agri/csv/src/lib/transform.js
-
 [3]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
-
 [4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
-
 [5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date

@@ -8,9 +8,9 @@ Example input data: [stub][1]
 
 Transform function: [implementation details][2]
 
-**Parameters**
+### Parameters
 
--   `record` **[Object][3]** Piece of data to transform before going to harmonized storage.
+- `record` **[Object][3]** Piece of data to transform before going to harmonized storage.
 
 Returns **Project** JSON matching the type fields.
 
@@ -19,9 +19,9 @@ Returns **Project** JSON matching the type fields.
 Gets country code from a country name.
 Contains a map of exceptions.
 
-**Parameters**
+#### Parameters
 
--   `countryName` **[String][4]** The name of the country
+- `countryName` **[String][4]** The name of the country
 
 Returns **[String][4]** The ISO 3166-1 country code
 
@@ -29,9 +29,9 @@ Returns **[String][4]** The ISO 3166-1 country code
 
 Gets NUTS code level from a string
 
-**Parameters**
+#### Parameters
 
--   `code` **[String][4]** The NUTS code
+- `code` **[String][4]** The NUTS code
 
 Returns **[Number][5]** The level of NUTS or null if one can't be extracted
 
@@ -41,31 +41,31 @@ Preprocess budget
 
 Input fields taken from the `record` are:
 
--   `Total amount`
--   `Funding Type`
--   `Type`
+- `Total amount`
+- `Funding Type`
+- `Type`
 
-**Parameters**
+#### Parameters
 
--   `record` **[Object][3]** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
-Returns **Budget** 
+Returns **Budget**
 
 ### getLocations
 
 Preprocess project_locations
 Input fields taken from the `record` are:
 
--   `Address`
--   `City`
--   `Postal code`
--   `Country / Territory`
--   `NUTS2`
--   `Geographical Zone`
+- `Address`
+- `City`
+- `Postal code`
+- `Country / Territory`
+- `NUTS2`
+- `Geographical Zone`
 
-**Parameters**
+#### Parameters
 
--   `record` **[Object][3]** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
 Returns **[Array][6]** List of {Location} objects for `project_locations` field
 
@@ -75,25 +75,20 @@ Preprocess third_parties
 
 Input fields taken from the `record` are:
 
--   `Name of beneficiary`
--   `Coordinator`
--   `Address`
--   `Country / Territory`
+- `Name of beneficiary`
+- `Coordinator`
+- `Address`
+- `Country / Territory`
 
-**Parameters**
+#### Parameters
 
--   `record` **[Object][3]** The row received from parsed file
+- `record` **[Object][3]** The row received from parsed file
 
 Returns **[Array][6]** List of {ThirdParty} objects for `third_parties` field
 
 [1]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/fts/xls/test/stubs/record.json
-
 [2]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/fts/xls/src/lib/transform.js
-
 [3]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
-
 [4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
-
 [5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
-
 [6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array

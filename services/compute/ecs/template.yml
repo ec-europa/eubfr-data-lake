@@ -75,18 +75,16 @@ Resources:
       ManagedPolicyArns:
         - 'arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy'
       Policies:
-        -
-          PolicyName: "allowServicesOnEcsBehalf"
+        - PolicyName: 'allowServicesOnEcsBehalf'
           PolicyDocument:
-            Version: "2012-10-17"
+            Version: '2012-10-17'
             Statement:
-              -
-                Effect: "Allow"
+              - Effect: 'Allow'
                 Action:
                   - es:*
                   - lambda:*
                   - s3:*
-                Resource: "*"
+                Resource: '*'
 
   ContainerSecurityGroup:
     Type: AWS::EC2::SecurityGroup

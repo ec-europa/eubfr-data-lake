@@ -38,27 +38,26 @@ class Projects extends React.Component {
         .exists({
           index: indices.projects,
         })
-        .then(
-          exists =>
-            exists
-              ? this.clients.public
-                  .search({
-                    index: indices.projects,
-                    type: 'project',
-                    q: `computed_key:"${computedKey}.ndjson"`,
+        .then(exists =>
+          exists
+            ? this.clients.public
+                .search({
+                  index: indices.projects,
+                  type: 'project',
+                  q: `computed_key:"${computedKey}.ndjson"`,
+                })
+                .then(data =>
+                  this.setState({
+                    projectsLoading: false,
+                    relatedProjects: data.hits.hits,
+                    projectsCount: data.hits.total,
                   })
-                  .then(data =>
-                    this.setState({
-                      projectsLoading: false,
-                      relatedProjects: data.hits.hits,
-                      projectsCount: data.hits.total,
-                    })
-                  )
-                  .catch(error => {
-                    this.setEmptyProjects();
-                    throw Error(`An error occured: ${error.message}`);
-                  })
-              : this.setEmptyProjects()
+                )
+                .catch(error => {
+                  this.setEmptyProjects();
+                  throw Error(`An error occured: ${error.message}`);
+                })
+            : this.setEmptyProjects()
         )
         .catch(() => {
           this.setEmptyProjects();

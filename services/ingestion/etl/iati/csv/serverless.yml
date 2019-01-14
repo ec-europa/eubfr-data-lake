@@ -68,7 +68,7 @@ functions:
 resources:
   Resources:
     ParseCsvLambdaFunction:
-      Type: "AWS::Lambda::Function"
+      Type: 'AWS::Lambda::Function'
       Properties:
         DeadLetterConfig:
           TargetArn:

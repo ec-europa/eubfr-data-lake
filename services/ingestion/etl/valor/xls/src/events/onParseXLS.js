@@ -30,8 +30,8 @@ export const handler = async (event, context) => {
     }
 
     /*
-   * Prepare file analysis
-   */
+     * Prepare file analysis
+     */
 
     // Extract message
     const message = JSON.parse(snsRecord.Sns.Message);

@@ -50,31 +50,30 @@ class Reports extends React.Component {
         .exists({
           index: indices.qualityReports,
         })
-        .then(
-          exists =>
-            exists
-              ? this.clients.public
-                  .get({
-                    index: indices.qualityReports,
-                    type: 'report',
-                    id: `${computedKey}.ndjson`,
-                  })
-                  .then(data => {
-                    let report = [];
+        .then(exists =>
+          exists
+            ? this.clients.public
+                .get({
+                  index: indices.qualityReports,
+                  type: 'report',
+                  id: `${computedKey}.ndjson`,
+                })
+                .then(data => {
+                  let report = [];
 
-                    if (data._source && data._source.report) {
-                      // destructuring doesn't make sense here
-                      // eslint-disable-next-line
-                      report = data._source.report;
-                    }
+                  if (data._source && data._source.report) {
+                    // destructuring doesn't make sense here
+                    // eslint-disable-next-line
+                    report = data._source.report;
+                  }
 
-                    this.setState({ reportsLoading: false, report });
-                  })
-                  .catch(error => {
-                    this.resetReportState();
-                    throw Error(`An error occured: ${error.message}`);
-                  })
-              : this.resetReportState()
+                  this.setState({ reportsLoading: false, report });
+                })
+                .catch(error => {
+                  this.resetReportState();
+                  throw Error(`An error occured: ${error.message}`);
+                })
+            : this.resetReportState()
         )
         .catch(() => {
           this.resetReportState();

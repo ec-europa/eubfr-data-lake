@@ -7,18 +7,18 @@
     "deploy": "sls deploy -v",
     "start": "sls offline start"
   },
-  "devDependencies": {
-    "aws-sdk": "2.248.1",
-    "babel-core": "6.26.3",
-    "babel-loader": "7.1.4",
-    "babel-preset-env": "1.7.0",
-    "serverless": "1.28.0",
-    "serverless-export-env": "1.2.0",
-    "serverless-offline": "3.24.5",
-    "serverless-webpack": "5.1.5",
-    "webpack": "4.10.0"
-  },
   "dependencies": {
-    "uuid": "3.2.1"
+    "uuid": "3.3.2"
+  },
+  "devDependencies": {
+    "@babel/core": "7.2.2",
+    "@babel/preset-env": "7.2.3",
+    "aws-sdk": "2.386.0",
+    "babel-loader": "8.0.5",
+    "serverless": "1.32.0",
+    "serverless-export-env": "1.2.0",
+    "serverless-offline": "3.32.2",
+    "serverless-webpack": "5.2.0",
+    "webpack": "4.28.4"
   }
 }
