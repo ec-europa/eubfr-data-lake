@@ -7,8 +7,8 @@ custom:
   eubfrEnvironment: ${opt:eubfr_env, file(../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
   bucketName: eubfr-${self:provider.stage}-harmonized
   remover:
-     buckets:
-       - ${self:custom.bucketName}
+    buckets:
+      - ${self:custom.bucketName}
 
 provider:
   name: aws
@@ -35,8 +35,7 @@ resources:
         PolicyDocument:
           Version: '2012-10-17'
           Statement:
-            -
-              Effect: Allow
+            - Effect: Allow
               Principal: '*'
               Action: sns:Publish
               Resource: '*'
@@ -44,24 +43,22 @@ resources:
                 ArnLike:
                   aws:SourceArn:
                     Fn::Join:
-                    - ''
-                    - - 'arn:aws:s3:::'
-                      - ${self:custom.bucketName}
+                      - ''
+                      - - 'arn:aws:s3:::'
+                        - ${self:custom.bucketName}
         Topics:
-        - Ref: HarmonizedObjectCreatedTopic
-        - Ref: HarmonizedObjectRemovedTopic
+          - Ref: HarmonizedObjectCreatedTopic
+          - Ref: HarmonizedObjectRemovedTopic
     HarmonizedSourceBucket:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: ${self:custom.bucketName}
         NotificationConfiguration:
           TopicConfigurations:
-            -
-              Event: s3:ObjectCreated:*
+            - Event: s3:ObjectCreated:*
               Topic:
                 Ref: HarmonizedObjectCreatedTopic
-            -
-              Event: s3:ObjectRemoved:*
+            - Event: s3:ObjectRemoved:*
               Topic:
                 Ref: HarmonizedObjectRemovedTopic
     HarmonizedSourceBucketPolicy:
@@ -70,14 +67,12 @@ resources:
         Bucket: ${self:custom.bucketName}
         PolicyDocument:
           Statement:
-            -
-              Effect: Allow
+            - Effect: Allow
               Principal: '*'
               Action: s3:GetObject
               Resource:
                 Fn::Join:
                   - ''
-                  -
-                    - 'arn:aws:s3:::'
+                  - - 'arn:aws:s3:::'
                     - ${self:custom.bucketName}
                     - '/*'

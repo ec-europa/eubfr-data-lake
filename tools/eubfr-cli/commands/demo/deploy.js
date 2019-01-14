@@ -48,7 +48,14 @@ const deployDemo = async ({ producer }) => {
         await shell('rm -rf build', { cwd });
 
         console.log(`Client (${username}): building`);
+
+        /**
+         * We are skipping preflight checks so that differences in packages' versions won't affect the building process.
+         * @see https://github.com/facebook/create-react-app/issues/5247
+         */
+        process.env.SKIP_PREFLIGHT_CHECK = true;
         process.env.EUBFR_USERNAME = username;
+
         await shell('yarn run build', { cwd, env: process.env });
 
         console.log(`Client (${username}): deploying`);

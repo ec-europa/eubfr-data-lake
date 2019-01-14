@@ -22,7 +22,7 @@ const deleteIndices = async ({ indices, host }) => {
     const esOptions = {
       host,
       connectionClass,
-      apiVersion: '6.2',
+      apiVersion: '6.3',
       awsConfig: new AWS.Config({
         accessKeyId,
         secretAccessKey,

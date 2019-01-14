@@ -6,8 +6,8 @@ plugins:
 custom:
   eubfrEnvironment: ${opt:eubfr_env, file(../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
   remover:
-     buckets:
-       - eubfr-${self:provider.stage}
+    buckets:
+      - eubfr-${self:provider.stage}
 
 provider:
   name: aws
@@ -34,8 +34,7 @@ resources:
         PolicyDocument:
           Version: '2012-10-17'
           Statement:
-            -
-              Effect: Allow
+            - Effect: Allow
               Principal: '*'
               Action: sns:Publish
               Resource: '*'
@@ -43,12 +42,12 @@ resources:
                 ArnLike:
                   aws:SourceArn:
                     Fn::Join:
-                    - ''
-                    - - 'arn:aws:s3:::'
-                      - eubfr-${self:provider.stage}
+                      - ''
+                      - - 'arn:aws:s3:::'
+                        - eubfr-${self:provider.stage}
         Topics:
-        - Ref: ObjectCreatedTopic
-        - Ref: ObjectRemovedTopic
+          - Ref: ObjectCreatedTopic
+          - Ref: ObjectRemovedTopic
     SourceBucket:
       Type: AWS::S3::Bucket
       DependsOn: ObjectEventsTopicPolicy
@@ -57,25 +56,23 @@ resources:
         CorsConfiguration:
           CorsRules:
             - AllowedHeaders:
-                - "Authorization"
+                - 'Authorization'
               AllowedMethods:
                 - GET
               AllowedOrigins:
-                - "*"
+                - '*'
             - AllowedHeaders:
-                - "*"
+                - '*'
               AllowedMethods:
                 - PUT
               AllowedOrigins:
-                - "*"
+                - '*'
         NotificationConfiguration:
           TopicConfigurations:
-            -
-              Event: s3:ObjectCreated:*
+            - Event: s3:ObjectCreated:*
               Topic:
                 Ref: ObjectCreatedTopic
-            -
-              Event: s3:ObjectRemoved:*
+            - Event: s3:ObjectRemoved:*
               Topic:
                 Ref: ObjectRemovedTopic
     SourceBucketPolicy:
@@ -85,14 +82,12 @@ resources:
           Ref: SourceBucket
         PolicyDocument:
           Statement:
-            -
-              Effect: Allow
+            - Effect: Allow
               Principal: '*'
               Action: s3:GetObject
               Resource:
                 Fn::Join:
                   - ''
-                  -
-                    - 'arn:aws:s3:::'
+                  - - 'arn:aws:s3:::'
                     - eubfr-${self:provider.stage}
                     - '/*'

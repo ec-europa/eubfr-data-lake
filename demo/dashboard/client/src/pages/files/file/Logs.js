@@ -41,39 +41,38 @@ class Logs extends React.Component {
         .exists({
           index: indices.logs,
         })
-        .then(
-          exists =>
-            exists
-              ? this.clients.private
-                  .search({
-                    index: indices.logs,
-                    type: 'file',
-                    body: {
-                      query: {
-                        nested: {
-                          path: 'message',
-                          query: {
-                            match: {
-                              'message.computed_key': computedKey,
-                            },
+        .then(exists =>
+          exists
+            ? this.clients.private
+                .search({
+                  index: indices.logs,
+                  type: 'file',
+                  body: {
+                    query: {
+                      nested: {
+                        path: 'message',
+                        query: {
+                          match: {
+                            'message.computed_key': computedKey,
                           },
                         },
                       },
-                      sort: [{ time: { order: 'desc' } }],
                     },
-                  })
-                  .then(data => {
-                    this.setState({
-                      logsLoading: false,
-                      logs: data.hits.hits,
-                      logsCount: data.hits.total,
-                    });
-                  })
-                  .catch(error => {
-                    this.setEmptyLogs();
-                    throw Error(`An error occured: ${error.message}`);
-                  })
-              : this.setEmptyLogs()
+                    sort: [{ time: { order: 'desc' } }],
+                  },
+                })
+                .then(data => {
+                  this.setState({
+                    logsLoading: false,
+                    logs: data.hits.hits,
+                    logsCount: data.hits.total,
+                  });
+                })
+                .catch(error => {
+                  this.setEmptyLogs();
+                  throw Error(`An error occured: ${error.message}`);
+                })
+            : this.setEmptyLogs()
         )
         .catch(() => {
           this.setEmptyLogs();

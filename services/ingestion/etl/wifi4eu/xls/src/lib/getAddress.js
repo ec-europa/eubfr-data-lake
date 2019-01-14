@@ -39,7 +39,7 @@ export default record => {
     '.',
   ];
 
-  const addressNum = record['address num'].trim();
+  const addressNum = String(record['address num']).trim();
   const numberContainsTrash = trashStrings.includes(addressNum);
   const numberIsOnlyLetters = addressNum.match(/^[a-z]+$/i)
     ? addressNum.match(/^[a-z]+$/i).length
@@ -53,7 +53,7 @@ export default record => {
   }
 
   if (addressStreet && addressNumber) {
-    address = `${addressStreet.trim()} ${addressNumber}`;
+    address = `${addressStreet} ${addressNumber}`;
   } else {
     address = addressStreet;
   }

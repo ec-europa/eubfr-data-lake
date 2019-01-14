@@ -8,7 +8,7 @@ Example input data: [stub][1]
 
 Transform function: [implementation details][2]
 
-**Parameters**
+### Parameters
 
 - `record` **[Object][3]** Piece of data to transform before going to harmonized storage.
 
@@ -23,7 +23,7 @@ Input fields taken from the `record` are:
 - `Total Budget\n(Million Euro)`
 - `Total EU Contribution \n(Million Euro)`
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
@@ -33,7 +33,7 @@ Returns **Budget**
 
 Gets country code from a country name.
 
-**Parameters**
+#### Parameters
 
 - `countryName` **[String][4]** The name of the country
 
@@ -49,7 +49,7 @@ Input fields taken from the `record` are:
 - `Region`
 - `GIS Localisation`
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
@@ -78,7 +78,7 @@ Input fields taken from the `record` are:
 - `1.15 No of direct jobs person/year (construction)`
 - `1.16 No of permanent jobs \n(operation)`
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
@@ -88,7 +88,7 @@ Returns **Result**
 
 Preprocess `type`
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 

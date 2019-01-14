@@ -27,9 +27,9 @@ provider:
   stackTags:
     ENV: ${self:custom.eubfrEnvironment}
   iamRoleStatements:
-    - Effect: "Allow"
-      Action: "es:*"
-      Resource: "arn:aws:es:${self:provider.region}:*:domain/*"
+    - Effect: 'Allow'
+      Action: 'es:*'
+      Resource: 'arn:aws:es:${self:provider.region}:*:domain/*'
 
 functions:
   onEnrichedRecordQueued:
@@ -59,8 +59,8 @@ resources:
         RedrivePolicy:
           deadLetterTargetArn:
             Fn::GetAtt:
-            - DeadLetterQueue
-            - Arn
+              - DeadLetterQueue
+              - Arn
           maxReceiveCount: '10'
     DeadLetterQueue:
       Type: AWS::SQS::Queue

@@ -29,3 +29,6 @@
     browser: true
     node: true
     jest/globals: true
+  settings:
+    react:
+      version: detect

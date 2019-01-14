@@ -23,7 +23,7 @@ class ProjectsList extends Component {
   componentDidMount() {
     this.client = new elasticsearch.Client({
       host: apiEndpoint,
-      apiVersion: '6.2',
+      apiVersion: '6.3',
       log: 'warning',
     });
 
@@ -39,20 +39,19 @@ class ProjectsList extends Component {
       .exists({
         index: projectsIndex,
       })
-      .then(
-        exists =>
-          exists
-            ? this.client
-                .search({
-                  index: projectsIndex,
-                  type: 'project',
-                })
-                .then(data => this.setProjects(data.hits.hits))
-                .catch(error => {
-                  this.setProjects([]);
-                  throw Error(error.message);
-                })
-            : this.setProjects([])
+      .then(exists =>
+        exists
+          ? this.client
+              .search({
+                index: projectsIndex,
+                type: 'project',
+              })
+              .then(data => this.setProjects(data.hits.hits))
+              .catch(error => {
+                this.setProjects([]);
+                throw Error(error.message);
+              })
+          : this.setProjects([])
       )
       .catch(() => {
         this.setProjects([]);
