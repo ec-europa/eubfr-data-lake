@@ -85,7 +85,7 @@ const missingRequiredInput = '\n error: Missing required input parameters';
  * $ eubfr-cli es snapshot-exec status --host https://es.domain/ --params '{ "repository": "repo_name", "snapshot": "snap1" }'
  * ```
  *
- * @see https://www.elastic.co/guide/en/elasticsearch/reference/6.2/modules-snapshots.html
+ * @see https://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-snapshots.html
  * @see https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-snapshot-create-6-2
  *
  * @memberof Elasticsearch

@@ -10,8 +10,6 @@ import type {
   MultiPolygon2D,
 } from 'flow-geojson';
 
-import type { DirectorateAbbreviation } from './DirectorateAbbreviation';
-
 export type GeoJSON =
   | Point2D
   | MultiPoint2D
@@ -177,7 +175,7 @@ export type Project = {
   project_website: string,
   complete: boolean,
   related_links: Array<RelatedLink>,
-  reporting_organisation: DirectorateAbbreviation,
+  reporting_organisation: string,
   results: Result,
   status: string,
   sub_programme_name: string,

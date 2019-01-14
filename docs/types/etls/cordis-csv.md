@@ -8,7 +8,7 @@ Example input data: [stub][1]
 
 Transform function: [implementation details][2]
 
-**Parameters**
+### Parameters
 
 - `record` **[Object][3]** Piece of data to transform before going to harmonized storage.
 
@@ -22,7 +22,7 @@ Input fields taken from the `record` are:
 - `fundingScheme`
 - `Activity Area` (FP4)
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
@@ -37,7 +37,7 @@ Input fields taken from the `record` are:
 - `totalCost` (FR1-3 + FP5-7)
 - `Total Cost` (FP4)
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
@@ -47,7 +47,7 @@ Returns **[String][5]**
 
 Preprocess budget
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
@@ -65,7 +65,7 @@ Input fields taken from the `record` are:
 - `rcn` or `RCN` (FP4)
 - `topic`
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
@@ -80,7 +80,7 @@ Seeks for values in the following precedence:
 - `reference`
 - `Contract Number` (FP4)
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
@@ -94,7 +94,7 @@ Seeks for values in the following precedence:
 - `frameworkProgramme`
 - `Framework Programme` (FP4)
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
@@ -108,7 +108,7 @@ Input fields taken from the `record` are:
 - `participants`
 - `participantCountries`
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
@@ -124,7 +124,7 @@ Input fields taken from the `record` are:
 - `participants`
 - `participantCountries`
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
@@ -134,11 +134,11 @@ Returns **[Array][4]** List of {ThirdParty} objects
 
 Format date
 
-**Parameters**
+#### Parameters
 
 - `date` **[Date][7]** Date in `YYYY-MM-DD` or `DD/MM/YYYY` formats.
 
-**Examples**
+#### Examples
 
 ```javascript
 input => '2018-12-31';
@@ -161,7 +161,7 @@ Input fields taken from the `record` are:
 - `projectUrl` (FR1-3 + FP5-7)
 - `Project Website` (FP4)
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
@@ -176,7 +176,7 @@ Input fields taken from the `record` are:
 - `status` (FR1-3 + FP5-7)
 - `Status` (FP4)
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
@@ -191,7 +191,7 @@ Input fields taken from the `record` are:
 - `Keywords` (FP4)
 - `Subject` (FP4)
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
@@ -205,7 +205,7 @@ Input fields taken from the `record` are:
 - `title` (FR1-3 + FP5-7)
 - `Project Title` (FP4)
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
@@ -220,7 +220,7 @@ Input fields taken from the `record` are:
 - `startDate` (FR1-3 + FP5-7)
 - `Start Date`(FP4)
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
@@ -235,7 +235,7 @@ Input fields taken from the `record` are:
 - `endDate` (FR1-3 + FP5-7)
 - `End Date` (FP4)
 
-**Parameters**
+#### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 

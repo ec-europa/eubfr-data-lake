@@ -8,9 +8,9 @@ Example input data: [stub][1]
 
 Transform function: [implementation details][2]
 
-**Parameters**
+### Parameters
 
--   `record` **[Object][3]** Piece of data to transform before going to harmonized storage.
+- `record` **[Object][3]** Piece of data to transform before going to harmonized storage.
 
 Returns **Project** JSON matching the type fields.
 
@@ -20,11 +20,11 @@ Preprocess budget funding_area field
 
 Input fields taken from the `record` are:
 
--   `Project Call Id`
+- `Project Call Id`
 
-**Parameters**
+#### Parameters
 
--   `record` **[Object][3]** The row received from harmonized storage
+- `record` **[Object][3]** The row received from harmonized storage
 
 Returns **[Array][4]** List of string values for `funding_area` field
 
@@ -34,13 +34,13 @@ Preprocess budget field.
 
 Input fields taken from the `record` are:
 
--   `Project Requested EU Contrib`
+- `Project Requested EU Contrib`
 
-**Parameters**
+#### Parameters
 
--   `record` **[Object][3]** The row received from harmonized storage
+- `record` **[Object][3]** The row received from harmonized storage
 
-Returns **Budget** 
+Returns **Budget**
 
 ### getDescription
 
@@ -48,14 +48,14 @@ Preprocess description
 
 Input fields taken from the `record` are:
 
--   `Project Acronym`
--   `Project Duration`
--   `Proposal Free Keywords Uppercase`
--   `Project Abstract`
+- `Project Acronym`
+- `Project Duration`
+- `Proposal Free Keywords Uppercase`
+- `Project Abstract`
 
-**Parameters**
+#### Parameters
 
--   `record` **[Object][3]** Piece of data to transform before going to harmonized storage.
+- `record` **[Object][3]** Piece of data to transform before going to harmonized storage.
 
 Returns **[String][5]** The project description
 
@@ -65,11 +65,11 @@ Preprocess programme_name field
 
 Input fields taken from the `record` are:
 
--   `Project Call Id`
+- `Project Call Id`
 
-**Parameters**
+#### Parameters
 
--   `record` **[Object][3]** Piece of data to transform before going to harmonized storage.
+- `record` **[Object][3]** Piece of data to transform before going to harmonized storage.
 
 Returns **[Array][4]** List of abbreviations
 
@@ -79,11 +79,11 @@ Formats the project_locations
 
 Input fields taken from the `record` are:
 
--   `Participant LE Country Code`
+- `Participant LE Country Code`
 
-**Parameters**
+#### Parameters
 
--   `record` **[Object][3]** Piece of data to transform before going to harmonized storage.
+- `record` **[Object][3]** Piece of data to transform before going to harmonized storage.
 
 Returns **[Array][4]** List of {Location}
 
@@ -93,13 +93,13 @@ Formats the third_parties
 
 Input fields taken from the `record` are:
 
--   `Participant Legal Name`
--   `Participant Role`
--   `Participant LE Country Code`
+- `Participant Legal Name`
+- `Participant Role`
+- `Participant LE Country Code`
 
-**Parameters**
+#### Parameters
 
--   `record` **[Object][3]** Piece of data to transform before going to harmonized storage.
+- `record` **[Object][3]** Piece of data to transform before going to harmonized storage.
 
 Returns **[Array][4]** List of {ThirdParty}
 
@@ -107,27 +107,22 @@ Returns **[Array][4]** List of {ThirdParty}
 
 Format date
 
-**Parameters**
+#### Parameters
 
--   `date` **[Date][6]** Date in "10/9/14" (MM/DD/YY) or "10/9/2014" (MM/DD/YYYY) format
+- `date` **[Date][6]** Date in "10/9/14" (MM/DD/YY) or "10/9/2014" (MM/DD/YYYY) format
 
-**Examples**
+#### Examples
 
 ```javascript
-input => "10/9/2014"
-output => "2014-10-09T00:00:00.000Z"
+input => '10/9/2014';
+output => '2014-10-09T00:00:00.000Z';
 ```
 
 Returns **[Date][6]** The date formatted into an ISO 8601 date format
 
 [1]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/home/xls/test/stubs/record.json
-
 [2]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/home/xls/src/lib/transform.js
-
 [3]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
-
 [4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
-
 [5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
-
 [6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date

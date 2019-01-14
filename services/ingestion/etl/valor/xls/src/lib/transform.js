@@ -50,9 +50,10 @@ export default (record: Object): Project | null => {
   const budgetObject = {
     total_cost: sanitizeBudgetItem(),
     eu_contrib: sanitizeBudgetItem({
-      value: record[
-        "EU Grant award in euros (This amount represents the grant awarded after the selection stage and is indicative. Please note that any changes made during or after the project's lifetime will not be reflected here.)"
-      ].replace(/,/g, ''),
+      value:
+        record[
+          "EU Grant award in euros (This amount represents the grant awarded after the selection stage and is indicative. Please note that any changes made during or after the project's lifetime will not be reflected here.)"
+        ],
       currency: 'EUR',
       raw:
         record[

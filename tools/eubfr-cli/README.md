@@ -375,7 +375,7 @@ $ eubfr-cli es -h
 
 ### snapshotExec
 
-- **See: [https://www.elastic.co/guide/en/elasticsearch/reference/6.2/modules-snapshots.html][33]**
+- **See: [https://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-snapshots.html][33]**
 - **See: [https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-snapshot-create-6-2][34]**
 
 Abstracted utility for making use of `snapshot` methods of ES JS SDK
@@ -586,5 +586,5 @@ Skipping the `user-index-1` will delete all indices in the given domain, so be e
 [30]: #createindex
 [31]: #deleteindices
 [32]: ./docs/GETTING_STARTED.md
-[33]: https://www.elastic.co/guide/en/elasticsearch/reference/6.2/modules-snapshots.html
+[33]: https://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-snapshots.html
 [34]: https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-snapshot-create-6-2
