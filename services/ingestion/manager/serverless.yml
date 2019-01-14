@@ -40,9 +40,9 @@ provider:
       Resource: 'arn:aws:es:${self:provider.region}:*:domain/*'
 
 functions:
-  onCreate:
+  onObjectCreated:
     handler: src/events/onObjectCreated.handler
-    name: ${self:provider.stage}-${self:service}-onCreate
+    name: ${self:provider.stage}-${self:service}-onObjectCreated
     events:
       - sns:
           arn:

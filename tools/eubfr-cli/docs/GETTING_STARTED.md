@@ -31,10 +31,17 @@ Another option would be to set these settings using environment variables:
 ```sh
 export EUBFR_ENV=dev
 export EUBFR_STAGE=chernka123
+export EUBFR_AWS_REGION=eu-central-1
 export EUBFR_USERNAME=cordis
 ```
 
 Setting `EUBFR_USERNAME` will tell the EUBFR CLI to work only with assets related to this particular producer. This way, running deployment scripts, you'll get a working environment faster for CORIS, leaving out AGRI, HOME, etc.
+
+Please note that setting a default region to your working environment is required for the project to work properly, and this could be done in several ways:
+
+- Setting the environment variable as pointed out above
+- Using the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)
+- Any other conventional way setting the region either in `~/.aws/credentials` or other similar system-wide place.
 
 ### Usage
 
