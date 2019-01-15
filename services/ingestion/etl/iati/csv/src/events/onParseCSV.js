@@ -6,7 +6,7 @@ import MessengerFactory from '@eubfr/logger-messenger/src/lib/MessengerFactory';
 import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 
 // Import logic
-import extractMessage from '../lib/sns';
+import extractMessage from '../lib/extractMessage';
 import transformRecord from '../lib/transform';
 
 export const handler = async (event, context) => {
@@ -39,10 +39,6 @@ export const handler = async (event, context) => {
     };
 
     const s3 = new AWS.S3();
-
-    /*
-     * Configure the pipeline
-     */
 
     // Parse
     const parser = parse({ columns: true });
@@ -92,7 +88,6 @@ export const handler = async (event, context) => {
           projects += data;
         })
         .on('end', async () => {
-          // Load data
           const params = {
             Bucket: BUCKET,
             Key: `${key}.ndjson`,
@@ -100,23 +95,19 @@ export const handler = async (event, context) => {
             ContentType: 'application/x-ndjson',
           };
 
-          return s3.upload(params, async err => {
-            if (err) {
-              return handleError(err, reject);
-            }
+          await s3.upload(params).promise();
 
-            await messenger.send({
-              message: {
-                computed_key: key,
-                status_message:
-                  'CSV parsed successfully. Results will be uploaded to ElasticSearch soon...',
-                status_code: STATUS.PARSED,
-              },
-              to: ['logs'],
-            });
-
-            return resolve(null, 'CSV parsed successfully');
+          await messenger.send({
+            message: {
+              computed_key: key,
+              status_message:
+                'CSV parsed successfully. Results will be uploaded to ElasticSearch soon...',
+              status_code: STATUS.PARSED,
+            },
+            to: ['logs'],
           });
+
+          return resolve('CSV parsed successfully');
         });
     });
   } catch (e) {

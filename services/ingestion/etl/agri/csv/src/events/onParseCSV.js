@@ -10,6 +10,7 @@ import handleError from '../lib/handleError';
 // Pipeline.
 import parser from '../lib/parser';
 import transformer from '../lib/transformer';
+import uploader from '../lib/uploader';
 
 export const handler = async (event, context) => {
   const { BUCKET, REGION, STAGE } = process.env;
@@ -40,8 +41,6 @@ export const handler = async (event, context) => {
       .getObject({ Bucket: snsMessage.bucket.name, Key: key })
       .createReadStream();
 
-    let projects = '';
-
     return new Promise((resolve, reject) => {
       readStream
         .pipe(parser)
@@ -58,38 +57,19 @@ export const handler = async (event, context) => {
             { error: e, callback: reject }
           )
         )
-        .on('data', data => {
-          projects += data;
-        })
+        .pipe(uploader({ key, BUCKET, s3, reject }))
         .on('end', async () => {
-          // Load/Save data to S3 harmonized storage.
-          const params = {
-            Bucket: BUCKET,
-            Key: `${key}.ndjson`,
-            Body: projects,
-            ContentType: 'application/x-ndjson',
-          };
+          await messenger.send({
+            message: {
+              computed_key: key,
+              status_message:
+                'CSV parsed successfully. Results will be uploaded to ElasticSearch soon...',
+              status_code: STATUS.PARSED,
+            },
+            to: ['logs'],
+          });
 
-          try {
-            await s3.upload(params).promise();
-
-            await messenger.send({
-              message: {
-                computed_key: key,
-                status_message:
-                  'CSV parsed successfully. Results will be uploaded to ElasticSearch soon...',
-                status_code: STATUS.PARSED,
-              },
-              to: ['logs'],
-            });
-
-            return resolve(null, 'CSV parsed successfully');
-          } catch (error) {
-            return handleError(
-              { messenger, key, statusCode: STATUS.ERROR },
-              { error, callback: reject }
-            );
-          }
+          return resolve('CSV parsed successfully');
         });
     });
   } catch (e) {

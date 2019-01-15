@@ -1,4 +1,6 @@
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
+import parse from 'csv-parse';
+import transform from 'stream-transform';
 
 import MessengerFactory from '@eubfr/logger-messenger/src/lib/MessengerFactory';
 import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
@@ -6,10 +8,22 @@ import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 // ETL utilities.
 import extractMessage from '../lib/extractMessage';
 import handleError from '../lib/handleError';
+import transformRecord from '../lib/transform';
 
-// Pipeline.
-import parser from '../lib/parser';
-import transformer from '../lib/transformer';
+// Configuring the pipeline.
+const parser = parse({ columns: true, delimiter: ';' });
+
+const transformer = transform(
+  (record, cb) => {
+    try {
+      const data = transformRecord(record);
+      return cb(null, `${JSON.stringify(data)}\n`);
+    } catch (e) {
+      return cb(e);
+    }
+  },
+  { parallel: 10 }
+);
 
 export const handler = async (event, context) => {
   const { BUCKET, REGION, STAGE } = process.env;
@@ -62,10 +76,12 @@ export const handler = async (event, context) => {
           projects += data;
         })
         .on('error', async e =>
-          handleError(new Error(`Error on upload: ${e.message}`, reject))
+          handleError(
+            { messenger, key, statusCode: STATUS.ERROR },
+            { error: e, callback: reject }
+          )
         )
         .on('end', async () => {
-          // Load/Save data to S3 harmonized storage.
           const params = {
             Bucket: BUCKET,
             Key: `${key}.ndjson`,
@@ -73,26 +89,19 @@ export const handler = async (event, context) => {
             ContentType: 'application/x-ndjson',
           };
 
-          try {
-            await s3.upload(params).promise();
+          await s3.upload(params).promise();
 
-            await messenger.send({
-              message: {
-                computed_key: key,
-                status_message:
-                  'CSV parsed successfully. Results will be uploaded to ElasticSearch soon...',
-                status_code: STATUS.PARSED,
-              },
-              to: ['logs'],
-            });
+          await messenger.send({
+            message: {
+              computed_key: key,
+              status_message:
+                'CSV parsed successfully. Results will be uploaded to ElasticSearch soon...',
+              status_code: STATUS.PARSED,
+            },
+            to: ['logs'],
+          });
 
-            return resolve(null, 'CSV parsed successfully');
-          } catch (error) {
-            return handleError(
-              { messenger, key, statusCode: STATUS.ERROR },
-              { error, callback: reject }
-            );
-          }
+          return resolve('CSV parsed successfully');
         });
     });
   } catch (e) {
