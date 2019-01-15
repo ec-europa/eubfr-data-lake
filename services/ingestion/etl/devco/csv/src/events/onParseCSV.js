@@ -1,13 +1,15 @@
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
-import parse from 'csv-parse';
-import transform from 'stream-transform';
 
 import MessengerFactory from '@eubfr/logger-messenger/src/lib/MessengerFactory';
 import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 
-// Import logic
-import { extractMessage } from '../lib/sns';
-import transformRecord from '../lib/transform';
+// ETL utilities.
+import extractMessage from '../lib/extractMessage';
+import handleError from '../lib/handleError';
+
+// Pipeline.
+import parser from '../lib/parser';
+import transformer from '../lib/transformer';
 
 export const handler = async (event, context) => {
   const { BUCKET, REGION, STAGE } = process.env;
@@ -19,50 +21,12 @@ export const handler = async (event, context) => {
   }
 
   try {
-    // Validate handler execution and check event, context, etc.
     const snsMessage = extractMessage(event);
     const { key } = snsMessage.object;
 
     const messenger = MessengerFactory.Create({ context });
-
-    const handleError = async (e, cb) => {
-      await messenger.send({
-        message: {
-          computed_key: key,
-          status_message: e.message,
-          status_code: STATUS.ERROR,
-        },
-        to: ['logs'],
-      });
-
-      return cb(e);
-    };
-
     const s3 = new AWS.S3();
 
-    /*
-     * Configure the pipeline
-     */
-
-    // Parse
-    const parser = parse({ columns: true, delimiter: ';' });
-
-    // Transform
-    const transformer = transform(
-      (record, cb) => {
-        try {
-          const data = transformRecord(record);
-          return cb(null, `${JSON.stringify(data)}\n`);
-        } catch (e) {
-          return cb(e);
-        }
-      },
-      { parallel: 10 }
-    );
-
-    /*
-     * Start the hard work
-     */
     await messenger.send({
       message: {
         computed_key: key,
@@ -82,20 +46,28 @@ export const handler = async (event, context) => {
       readStream
         .pipe(parser)
         .on('error', async e =>
-          handleError(new Error(`Error on parse: ${e.message}`, reject))
+          handleError(
+            { messenger, key, statusCode: STATUS.ERROR },
+            { error: e, callback: reject }
+          )
         )
         .pipe(transformer)
         .on('error', async e =>
-          handleError(new Error(`Error on transform: ${e.message}`, reject))
+          handleError(
+            { messenger, key, statusCode: STATUS.ERROR },
+            { error: e, callback: reject }
+          )
         )
         .on('data', data => {
           projects += data;
         })
         .on('error', async e =>
-          handleError(new Error(`Error on data: ${e.message}`, reject))
+          handleError(
+            { messenger, key, statusCode: STATUS.ERROR },
+            { error: e, callback: reject }
+          )
         )
         .on('end', async () => {
-          // Load data
           const params = {
             Bucket: BUCKET,
             Key: `${key}.ndjson`,
@@ -103,21 +75,19 @@ export const handler = async (event, context) => {
             ContentType: 'application/x-ndjson',
           };
 
-          try {
-            await s3.upload(params).promise();
+          await s3.upload(params).promise();
 
-            await messenger.send({
-              message: {
-                computed_key: key,
-                status_message:
-                  'CSV parsed successfully. Results will be uploaded to ElasticSearch soon...',
-                status_code: STATUS.PARSED,
-              },
-              to: ['logs'],
-            });
-          } catch (error) {
-            handleError(error, reject);
-          }
+          await messenger.send({
+            message: {
+              computed_key: key,
+              status_message:
+                'CSV parsed successfully. Results will be uploaded to ElasticSearch soon...',
+              status_code: STATUS.PARSED,
+            },
+            to: ['logs'],
+          });
+
+          return resolve('CSV parsed successfully');
         });
     });
   } catch (e) {

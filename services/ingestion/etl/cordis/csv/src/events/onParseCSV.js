@@ -1,6 +1,4 @@
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
-import parse from 'csv-parse';
-import transform from 'stream-transform';
 
 import MessengerFactory from '@eubfr/logger-messenger/src/lib/MessengerFactory';
 import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
@@ -8,22 +6,10 @@ import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 // ETL utilities.
 import extractMessage from '../lib/extractMessage';
 import handleError from '../lib/handleError';
-import transformRecord from '../lib/transform';
 
-// Configuring the pipeline.
-const parser = parse({ columns: true, delimiter: ';' });
-
-const transformer = transform(
-  (record, cb) => {
-    try {
-      const data = transformRecord(record);
-      return cb(null, `${JSON.stringify(data)}\n`);
-    } catch (e) {
-      return cb(e);
-    }
-  },
-  { parallel: 10 }
-);
+// Pipeline.
+import parser from '../lib/parser';
+import transformer from '../lib/transformer';
 
 export const handler = async (event, context) => {
   const { BUCKET, REGION, STAGE } = process.env;

@@ -10,7 +10,6 @@ import handleError from '../lib/handleError';
 // Pipeline.
 import parser from '../lib/parser';
 import transformer from '../lib/transformer';
-import uploader from '../lib/uploader';
 
 export const handler = async (event, context) => {
   const { BUCKET, REGION, STAGE } = process.env;
@@ -41,6 +40,8 @@ export const handler = async (event, context) => {
       .getObject({ Bucket: snsMessage.bucket.name, Key: key })
       .createReadStream();
 
+    let projects = '';
+
     return new Promise((resolve, reject) => {
       readStream
         .pipe(parser)
@@ -57,8 +58,25 @@ export const handler = async (event, context) => {
             { error: e, callback: reject }
           )
         )
-        .pipe(uploader({ key, BUCKET, s3, reject }))
+        .on('data', data => {
+          projects += data;
+        })
+        .on('error', async e =>
+          handleError(
+            { messenger, key, statusCode: STATUS.ERROR },
+            { error: e, callback: reject }
+          )
+        )
         .on('end', async () => {
+          const params = {
+            Bucket: BUCKET,
+            Key: `${key}.ndjson`,
+            Body: projects,
+            ContentType: 'application/x-ndjson',
+          };
+
+          await s3.upload(params).promise();
+
           await messenger.send({
             message: {
               computed_key: key,
