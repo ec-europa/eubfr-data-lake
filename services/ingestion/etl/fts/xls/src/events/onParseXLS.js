@@ -1,12 +1,13 @@
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 import XLSX from 'xlsx';
 
+// ETL utilities.
+import ensureExtensions from '@eubfr/lib/etl/ensureExtensions';
+import extractMessage from '@eubfr/lib/etl/extractMessage';
+import handleError from '@eubfr/lib/etl/handleError';
+
 import MessengerFactory from '@eubfr/logger-messenger/src/lib/MessengerFactory';
 import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
-
-// ETL utilities.
-import extractMessage from '../lib/extractMessage';
-import handleError from '../lib/handleError';
 
 import transformRecord from '../lib/transform';
 
@@ -22,6 +23,10 @@ export const handler = async (event, context) => {
   try {
     const snsMessage = extractMessage(event);
     const { key } = snsMessage.object;
+
+    if (!ensureExtensions({ file: key, extensions: ['.xls', '.xlsx'] })) {
+      throw new Error('XLS or XLSX file expected for this ETL.');
+    }
 
     const messenger = MessengerFactory.Create({ context });
     const s3 = new AWS.S3();

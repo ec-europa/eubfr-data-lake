@@ -1,11 +1,12 @@
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 
+// ETL utilities.
+import ensureExtensions from '@eubfr/lib/etl/ensureExtensions';
+import extractMessage from '@eubfr/lib/etl/extractMessage';
+import handleError from '@eubfr/lib/etl/handleError';
+
 import MessengerFactory from '@eubfr/logger-messenger/src/lib/MessengerFactory';
 import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
-
-// ETL utilities.
-import extractMessage from '../lib/extractMessage';
-import handleError from '../lib/handleError';
 
 // Pipeline.
 import parser from '../lib/parser';
@@ -23,6 +24,10 @@ export const handler = async (event, context) => {
   try {
     const snsMessage = extractMessage(event);
     const { key } = snsMessage.object;
+
+    if (!ensureExtensions({ file: key, extensions: ['.csv'] })) {
+      throw new Error('CSV file expected for this ETL.');
+    }
 
     const messenger = MessengerFactory.Create({ context });
     const s3 = new AWS.S3();
