@@ -1,4 +1,6 @@
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
+import parse from 'csv-parse';
+import transform from 'stream-transform';
 
 // ETL utilities.
 import ensureExtensions from '@eubfr/lib/etl/ensureExtensions';
@@ -8,9 +10,7 @@ import handleError from '@eubfr/lib/etl/handleError';
 import MessengerFactory from '@eubfr/logger-messenger/src/lib/MessengerFactory';
 import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 
-// Pipeline.
-import parser from '../lib/parser';
-import transformer from '../lib/transformer';
+import transformRecord from '../lib/transform';
 
 export const handler = async (event, context) => {
   const { BUCKET, REGION, STAGE } = process.env;
@@ -21,17 +21,32 @@ export const handler = async (event, context) => {
     );
   }
 
+  const snsMessage = extractMessage(event);
+  const { key } = snsMessage.object;
+
+  if (!ensureExtensions({ file: key, extensions: ['.csv'] })) {
+    throw new Error('CSV file expected for this ETL.');
+  }
+
+  const messenger = MessengerFactory.Create({ context });
+  const s3 = new AWS.S3();
+
+  // Pipeline.
+  const parser = parse({ columns: true });
+
+  const transformer = transform(
+    (record, cb) => {
+      try {
+        const data = transformRecord(record);
+        return cb(null, `${JSON.stringify(data)}\n`);
+      } catch (e) {
+        return cb(e);
+      }
+    },
+    { parallel: 10 }
+  );
+
   try {
-    const snsMessage = extractMessage(event);
-    const { key } = snsMessage.object;
-
-    if (!ensureExtensions({ file: key, extensions: ['.csv'] })) {
-      throw new Error('CSV file expected for this ETL.');
-    }
-
-    const messenger = MessengerFactory.Create({ context });
-    const s3 = new AWS.S3();
-
     await messenger.send({
       message: {
         computed_key: key,
@@ -89,8 +104,8 @@ export const handler = async (event, context) => {
           return resolve('CSV parsed successfully');
         });
     });
-  } catch (e) {
-    throw e;
+  } catch (error) {
+    return handleError({ messenger, key, statusCode: STATUS.ERROR }, { error });
   }
 };
 
