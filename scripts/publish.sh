@@ -1,7 +1,5 @@
 #!/bin/sh
 
-# Heavily inspired by https://github.com/facebookincubator/create-react-app/blob/master/tasks/release.sh
-
 # Exit the script on any command with non 0 return code
 set -e
 
@@ -18,5 +16,5 @@ if [ -n "$(git status --porcelain)" ]; then
   exit 1;
 fi
 
-# Publish
-npx lerna publish --skip-git --skip-npm "$@"
+# Bump packages' versions
+./node_modules/.bin/lerna version --no-push --no-git-tag-version "$@"
