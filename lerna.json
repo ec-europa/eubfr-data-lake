@@ -15,10 +15,10 @@
     },
     "cacheDir": ".changelog"
   },
-  "commands": {
+  "command": {
     "publish": {
-      "allowBranch": "master",
-      "ignore": ["*.md", "test/**"]
-    }
+      "allowBranch": "master"
+    },
+    "ignoreChanges": ["*.md", "test/**"]
   }
 }
