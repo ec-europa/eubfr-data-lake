@@ -11,13 +11,13 @@
 - [Demo][7]
   - [Usage][8]
   - [Deploy][9]
-- [Environment][10]
-  - [Usage][11]
-  - [GenerateVariables][12]
-- [Services][13]
-  - [Usage][14]
-  - [Deploy][15]
-  - [Delete][16]
+  - [Delete][10]
+- [Environment][11]
+  - [Usage][12]
+  - [GenerateVariables][13]
+- [Services][14]
+  - [Usage][15]
+  - [Deploy][16]
   - [Delete][17]
 - [Content][18]
   - [Usage][19]
@@ -116,6 +116,30 @@ Deploy all services, only for working with the AGRI producer.
 $ eubfr-cli demo deploy -p agri
 ```
 
+### Delete
+
+Remove a demo application.
+
+Usage:
+
+```sh
+$ eubfr-cli demo delete -h
+```
+
+Examples:
+
+Delete all demo applications.
+
+```sh
+$ eubfr-cli demo delete
+```
+
+Delete only demo application of AGRI producer.
+
+```sh
+$ eubfr-cli demo delete -p agri
+```
+
 ## Environment
 
 Manage environment
@@ -189,30 +213,6 @@ $ eubfr-cli services deploy -p agri
 
 ```sh
 $ eubfr-cli services deploy foo bar -p agri
-```
-
-### Delete
-
-Remove a demo application.
-
-Usage:
-
-```sh
-$ eubfr-cli demo delete -h
-```
-
-Examples:
-
-Delete all demo applications.
-
-```sh
-$ eubfr-cli demo delete
-```
-
-Delete only demo application of AGRI producer.
-
-```sh
-$ eubfr-cli demo delete -p agri
 ```
 
 ### Delete
@@ -563,13 +563,13 @@ Skipping the `user-index-1` will delete all indices in the given domain, so be e
 [7]: #demo
 [8]: #usage-2
 [9]: #deploy-1
-[10]: #environment
-[11]: #usage-3
-[12]: #generatevariables
-[13]: #services
-[14]: #usage-4
-[15]: #deploy-2
-[16]: #delete-1
+[10]: #delete-1
+[11]: #environment
+[12]: #usage-3
+[13]: #generatevariables
+[14]: #services
+[15]: #usage-4
+[16]: #deploy-2
 [17]: #delete-2
 [18]: #content
 [19]: #usage-5
