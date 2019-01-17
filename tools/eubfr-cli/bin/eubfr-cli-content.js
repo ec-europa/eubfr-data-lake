@@ -130,6 +130,8 @@ program
   .option('-p, --producer [producer]', "Producer's name.")
   .action(async (file, options) => {
     const endpoints = getEndpoints();
+
+    console.log('Querying for existing content in the data lake ...');
     ensureVariables(
       ['REACT_APP_STAGE', 'REACT_APP_ES_PRIVATE_ENDPOINT'],
       endpoints

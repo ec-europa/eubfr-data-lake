@@ -57,7 +57,7 @@ When you work on a specific ETL and you want to save time from repetitive creati
 
 #### Upload
 
-For content upload to work, the following variable is required:
+For content upload to work, the following variables are required:
 
 ```sh
 export SIGNED_UPLOADS_API={service-id}.execute-api.eu-central-1.amazonaws.com/{eubfr-stage-value}
@@ -65,13 +65,22 @@ export SIGNED_UPLOADS_API={service-id}.execute-api.eu-central-1.amazonaws.com/{e
 
 The value for `SIGNED_UPLOADS_API` can be taken once `@eubfr/storage-signed-uploads` has been deployed.
 
-If the service is already deployed and does not need re-deployment, i.e. existing `test` and `prod` stages, go to [AWS Lambda console](https://eu-central-1.console.aws.amazon.com/lambda/home?region=eu-central-1#/functions) and search for `{eubfr-stage-value}-storage-signed-uploads-upsert-objects`. Get the necessary environment variable by clicking on the function and scrolling down to its `Environment variables` section.
+If the service is already deployed and does not need re-deployment, i.e. existing `test` and `prod` stages, go to [AWS Lambda web console](https://eu-central-1.console.aws.amazon.com/lambda/home?region=eu-central-1#/functions) and search for `{eubfr-stage-value}-storage-signed-uploads-upsert-objects`. Get the necessary environment variable by clicking on the function and scrolling down to its `Environment variables` section.
 
-===
+#### Show existing content
 
-Show:
-REACT_APP_STAGE
-REACT_APP_ES_PRIVATE_ENDPOINT
+To query and see existing content, the following variable is required:
+
+```sh
+export REACT_APP_STAGE=chernka123
+export REACT_APP_ES_PRIVATE_ENDPOINT=search-{eubfr-stage-value}-private-{service-id}.eu-central-1.es.amazonaws.com
+```
+
+`REACT_APP_STAGE` is the same as `EUBFR_STAGE`. EUBFR CLI will discover your stage from any of the two if set.
+
+The value for `REACT_APP_ES_PRIVATE_ENDPOINT` can be found from the [AWS Elasticsearch web console](https://eu-central-1.console.aws.amazon.com/es/home?region=eu-central-1#) and selecting the right `{eubfr-stage-value}-private` domain.
+
+For example, if you are working on `dev`, you would select `dev-private` and find the value for `Endpoint`. Take the value of `https://search-dev-private-{service-id}.eu-central-1.es.amazonaws.com` and strip the protocol prefix.
 
 Delete:
 DELETER_API

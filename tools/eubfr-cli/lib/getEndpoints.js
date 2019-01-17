@@ -18,6 +18,12 @@ const services = {
 const getEndpoints = () => {
   const endpoints = {};
 
+  // REACT_APP_STAGE and EUBFR_STAGE are the same thing.
+  // If the CRA-prefixed one is not available from .env, try to fallback to the global one.
+  if (!endpoints.REACT_APP_STAGE) {
+    endpoints.REACT_APP_STAGE = process.env.EUBFR_STAGE;
+  }
+
   Object.keys(services).forEach(service => {
     try {
       const dotEnvFile = path.resolve(`${getServiceLocation(service)}/.env`);
@@ -33,6 +39,7 @@ const getEndpoints = () => {
         );
       }
       services[service].forEach(
+        // eslint-disable-next-line no-return-assign
         variable =>
           (endpoints[variable] = process.env[variable]
             ? process.env[variable]
