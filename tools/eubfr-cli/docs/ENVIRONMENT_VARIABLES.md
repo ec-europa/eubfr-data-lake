@@ -69,7 +69,7 @@ If the service is already deployed and does not need re-deployment, i.e. existin
 
 #### Show existing content
 
-To query and see existing content, the following variable is required:
+To query and see existing content, the following variables are required:
 
 ```sh
 export REACT_APP_STAGE=chernka123
@@ -82,6 +82,16 @@ The value for `REACT_APP_ES_PRIVATE_ENDPOINT` can be found from the [AWS Elastic
 
 For example, if you are working on `dev`, you would select `dev-private` and find the value for `Endpoint`. Take the value of `https://search-dev-private-{service-id}.eu-central-1.es.amazonaws.com` and strip the protocol prefix.
 
-Delete:
-DELETER_API
-REACT_APP_ES_PRIVATE_ENDPOINT
+#### Delete content
+
+To delete content, the following variables are required:
+
+```sh
+export DELETER_API={service-id}.execute-api.eu-central-1.amazonaws.com/{eubfr-stage-value}
+export REACT_APP_STAGE=chernka123
+export REACT_APP_ES_PRIVATE_ENDPOINT=search-{eubfr-stage-value}-private-{service-id}.eu-central-1.es.amazonaws.com
+```
+
+The only missing variable which we haven't covered yet in the content management section is the `DELETER_API`. You can follow the same workflow as described above for `SIGNED_UPLOADS_API`. In fact, the `@eubfr/storage-deleter` service is the mirror service to `@eubfr/storage-signed-uploads`.
+
+When you are at the AWS Lambda web console, search for `{eubfr-stage-value}-storage-deleter-delete-objects`. The place for finding the value of the `DELETER_API` will be same as the approach you followed for finding `SIGNED_UPLOADS_API`. The format will also be the same, but with a different `{service-id}`.

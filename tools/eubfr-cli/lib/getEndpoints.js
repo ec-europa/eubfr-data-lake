@@ -6,8 +6,12 @@ const getServiceLocation = require('../lib/getServiceLocation');
 
 // Places where specific environment variables are stored
 const services = {
-  'storage-deleter': ['DELETER_API', 'REACT_APP_ES_PRIVATE_ENDPOINT'],
   'storage-signed-uploads': ['SIGNED_UPLOADS_API'],
+  'storage-deleter': [
+    'DELETER_API',
+    'REACT_APP_STAGE',
+    'REACT_APP_ES_PRIVATE_ENDPOINT',
+  ],
   'demo-dashboard-client': [
     'REACT_APP_DEMO_SERVER',
     'REACT_APP_ES_PUBLIC_ENDPOINT',
@@ -17,12 +21,6 @@ const services = {
 
 const getEndpoints = () => {
   const endpoints = {};
-
-  // REACT_APP_STAGE and EUBFR_STAGE are the same thing.
-  // If the CRA-prefixed one is not available from .env, try to fallback to the global one.
-  if (!endpoints.REACT_APP_STAGE) {
-    endpoints.REACT_APP_STAGE = process.env.EUBFR_STAGE;
-  }
 
   Object.keys(services).forEach(service => {
     try {
@@ -47,6 +45,12 @@ const getEndpoints = () => {
       );
     }
   });
+
+  // REACT_APP_STAGE and EUBFR_STAGE are the same thing.
+  // If the CRA-prefixed one is not available from .env, try to fallback to the global one.
+  if (!endpoints.REACT_APP_STAGE) {
+    endpoints.REACT_APP_STAGE = process.env.EUBFR_STAGE;
+  }
 
   if (process.env.VERBOSE) {
     console.info('EUBFR CLI endpoints context:');

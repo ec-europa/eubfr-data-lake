@@ -195,6 +195,8 @@ program
   .option('-c, --confirm [confirm]', 'Flag certainty of an operation.')
   .action(async (files, options) => {
     const endpoints = getEndpoints();
+
+    console.log('Deleting content from the data lake ...');
     ensureVariables(
       ['DELETER_API', 'REACT_APP_STAGE', 'REACT_APP_ES_PRIVATE_ENDPOINT'],
       endpoints
