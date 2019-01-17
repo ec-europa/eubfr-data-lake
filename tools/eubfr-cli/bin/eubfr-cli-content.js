@@ -56,6 +56,7 @@ program
   .action(async (files, options) => {
     const endpoints = getEndpoints();
 
+    console.log('Uploading new content to the data lake ...');
     ensureVariables(['SIGNED_UPLOADS_API'], endpoints);
 
     let credentials = [];
