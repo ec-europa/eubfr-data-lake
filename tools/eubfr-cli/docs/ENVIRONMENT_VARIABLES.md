@@ -47,7 +47,7 @@ export EUBFR_USERNAME=cordis
 
 Please keep in mind that setting `EUBFR_USERNAME` will force EUBFR CLI to work only with assets related to this particular producer. This way, running deployment scripts, you'll get a working environment faster for CORIS, leaving out AGRI, HOME, etc.
 
-## Management configurations
+## Management
 
 Here's a list of settings separated by their target goals:
 
@@ -95,3 +95,34 @@ export REACT_APP_ES_PRIVATE_ENDPOINT=search-{eubfr-stage-value}-private-{service
 The only missing variable which we haven't covered yet in the content management section is the `DELETER_API`. You can follow the same workflow as described above for `SIGNED_UPLOADS_API`. In fact, the `@eubfr/storage-deleter` service is the mirror service to `@eubfr/storage-signed-uploads`.
 
 When you are at the AWS Lambda web console, search for `{eubfr-stage-value}-storage-deleter-delete-objects`. The place for finding the value of the `DELETER_API` will be same as the approach you followed for finding `SIGNED_UPLOADS_API`. The format will also be the same, but with a different `{service-id}`.
+
+### Elasticsearch management
+
+When you want to work with the persistence layer, which is Elasticsearch at the moment, there are a few possible operations. To see the list, run the following:
+
+```sh
+$ eubfr-cli es
+```
+
+You can start by inspecting current state:
+
+```sh
+$ eubfr-cli es show-domains
+```
+
+Which will show you the names of the variables together with they current values. Regardless of whether you will be working with the public or the private endpoints, the two variables you will need to know are:
+
+```sh
+export REACT_APP_ES_PUBLIC_ENDPOINT=search-{eubfr-stage-value}-public-{service-id}.eu-central-1.es.amazonaws.com
+export REACT_APP_ES_PRIVATE_ENDPOINT=search-{eubfr-stage-value}-private-{service-id}.eu-central-1.es.amazonaws.com
+```
+
+Please note that if you try to use a given variable like:
+
+```sh
+$ eubfr-cli es show-cluster -d REACT_APP_ES_PUBLIC_ENDPOINT
+```
+
+And you receive `No living connections` message from Elasticsearch service, this is most probably because you don't have a value set for the endpoint you query for.
+
+To get values for these variables, visit the [AWS Elasticsearch web console](https://eu-central-1.console.aws.amazon.com/es/home?region=eu-central-1#), take `Endpoint`-s and strip the protocol prefixes.
