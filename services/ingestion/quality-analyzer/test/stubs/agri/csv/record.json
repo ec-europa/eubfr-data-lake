@@ -10,15 +10,12 @@
     "mmf_heading": "Sustainable Growth: Natural Resources"
   },
   "call_year": "",
-  "description":
-    "<p>This programme aims to increase the consumption of fruit and vegetables at school to encourage healthier eating habits, in the context of declining consumption of fresh fruit and vegetables and increasing incidence of child obesity. The distribution of products, mainly fresh fruit and vegetables, is supported by educational measures such as school gardens and farm visits, to improve children's awareness of how food is produced and the importance of good nutrition. EU aid per participating Member State (MS) is established by the Commission for each school year. MS participation is voluntary.</p>",
+  "description": "<p>This programme aims to increase the consumption of fruit and vegetables at school to encourage healthier eating habits, in the context of declining consumption of fresh fruit and vegetables and increasing incidence of child obesity. The distribution of products, mainly fresh fruit and vegetables, is supported by educational measures such as school gardens and farm visits, to improve children's awareness of how food is produced and the importance of good nutrition. EU aid per participating Member State (MS) is established by the Commission for each school year. MS participation is voluntary.</p>",
   "ec_priorities": ["Jobs, Growth and Investment"],
   "media": [
     {
-      "name":
-        "https://ec.europa.eu/budget/euprojects/sites/euprojects/files/veg_scheme.jpg",
-      "url":
-        "https://ec.europa.eu/budget/euprojects/sites/euprojects/files/veg_scheme.jpg",
+      "name": "https://ec.europa.eu/budget/euprojects/sites/euprojects/files/veg_scheme.jpg",
+      "url": "https://ec.europa.eu/budget/euprojects/sites/euprojects/files/veg_scheme.jpg",
       "meta": { "description": "", "mime_type": "", "type": "visual" }
     }
   ],
@@ -41,8 +38,7 @@
   "reporting_organisation": "",
   "results": {
     "available": "",
-    "result":
-      "Latest available figures, for the 2014/2015 school year, show that 1 351 661 children in 11 338 schools benefited from the programme."
+    "result": "Latest available figures, for the 2014/2015 school year, show that 1 351 661 children in 11 338 schools benefited from the programme."
   },
   "status": "",
   "sub_programme_name": "",
