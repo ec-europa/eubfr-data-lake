@@ -4,9 +4,17 @@ In the following guide, you will find detailed information about how to use envi
 
 In order to reuse AWS resources and keep complexity levels low, each developer works within a contained environment called stage. After work has been approved, changes are merged to upstream master. Then the master gets deployed to a set of fixed stages: `test`, acting as staging before production, and `prod`.
 
+## See current state
+
+In order to inspect the current values of the environment variables you'll be working with, run the following command:
+
+```sh
+$ eubfr-cli env print
+```
+
 ## Logs
 
-Use `VERBOSE` flag to inspect values of the environment variables used by the CLI.
+Use `VERBOSE` flag to inspect values of the environment variables used by the CLI when you run a specific command.
 
 For instance, if you try to upload content and you start to get warnings, re-run with `VERBOSE=*`, for example:
 
@@ -110,7 +118,7 @@ You can start by inspecting current state:
 $ eubfr-cli es show-domains
 ```
 
-Which will show you the names of the variables together with they current values. Regardless of whether you will be working with the public or the private endpoints, the two variables you will need to know are:
+Which will show you the names of the variables together with they current values. Regardless of whether you will be working with the public or the private endpoint, the two variables you will need to know are:
 
 ```sh
 export REACT_APP_ES_PUBLIC_ENDPOINT=search-{eubfr-stage-value}-public-{service-id}.eu-central-1.es.amazonaws.com
