@@ -2,6 +2,9 @@
  * @jest-environment node
  */
 
+// There are many files in this ETL, and for this reason variables are same as file names for easier discovery.
+/* eslint camelcase: 0 */
+
 import mapper from '../../../src/lib/transform';
 import testCoopIndustrialisedCountries_Projects_Overview from '../../stubs/CoopIndustrialisedCountries_Projects_Overview.json';
 import testCreativeEurope_Projects_Overview from '../../stubs/CreativeEurope_Projects_Overview.json';
@@ -96,5 +99,9 @@ describe('DG EAC CSV transformer', () => {
 
   test('Produces correct JSON output structure for CoopIndustrialisedCountries_Projects_Overview', () => {
     expect(CoopIndustrialisedCountries_Projects_Overview).toMatchSnapshot();
+  });
+
+  test('Produces correct JSON output structure for CreativeEurope_Projects_Overview', () => {
+    expect(CreativeEurope_Projects_Overview).toMatchSnapshot();
   });
 });

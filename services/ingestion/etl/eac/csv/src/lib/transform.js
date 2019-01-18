@@ -195,6 +195,7 @@ const getSuccessStory = record => record['Is Success Story'] || '';
  * Seeks for values in the following precedence:
  *
  * - `Coordinator's name`
+ * - `Coordinating organisation name`
  * - `Coordinator organisation type`
  * - `Coordinator's address`
  * - `Coordinator's region`
@@ -207,7 +208,10 @@ const getSuccessStory = record => record['Is Success Story'] || '';
  */
 const getCoordinators = record => [
   {
-    name: record["Coordinator's name"] || '',
+    name:
+      record["Coordinator's name"] ||
+      record['Coordinating organisation name'] ||
+      '',
     type: record['Coordinator organisation type'] || '',
     address: record["Coordinator's address"] || '',
     region: record["Coordinator's region"] || '',
@@ -266,23 +270,36 @@ const getPartners = record => {
  *
  *
  * @memberof EacCsvTransform
- * @param {Date} date Date in "10/9/14" (MM/DD/YY) or "10/9/2014" (MM/DD/YYYY) format
+ * @param {Date} date Date
+ *
+ * Supported formats:
+ *
+ * - `DD/MM/YYYY`
+ * - `YYYY-MM-DD`
+ *
  * @returns {Date} The date formatted into an ISO 8601 date format
  *
- * @example
- * input => "10/9/2014"
- * output => "2014-10-09T00:00:00.000Z"
  */
 const formatDate = date => {
   if (!date || typeof date !== 'string') return null;
-  const d = date.split(/\//);
-  if (d.length !== 3) return null;
-  // If year is given as 2 digits, make it 4 digits.
-  if (d[2].length === 2) d[2] = `20${d[2]}`;
-  const [month, day, year] = d;
-  if (!day || !month || !year) return null;
+
+  if (date.includes('/')) {
+    const d = date.split(/\//);
+    if (d.length !== 3) return null;
+
+    const [day, month, year] = d;
+
+    if (!day || !month || !year) return null;
+
+    try {
+      return new Date(Date.UTC(year, month - 1, day)).toISOString();
+    } catch (e) {
+      return null;
+    }
+  }
+
   try {
-    return new Date(Date.UTC(year, month - 1, day)).toISOString();
+    return new Date(date).toISOString();
   } catch (e) {
     return null;
   }
