@@ -54,7 +54,7 @@ class List extends Component {
               },
               aggs: {
                 group_by_name: {
-                  terms: { field: 'computed_key' },
+                  terms: { field: 'computed_key', size: 200 },
                   aggs: {
                     remove_dups: {
                       top_hits: {
@@ -119,6 +119,7 @@ class List extends Component {
                 logs_by_computed_key: {
                   terms: {
                     field: 'message.computed_key',
+                    size: 200,
                   },
                   aggs: {
                     full_logs: {
