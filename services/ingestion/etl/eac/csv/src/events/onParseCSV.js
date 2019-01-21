@@ -46,7 +46,7 @@ export const handler = async (event, context, callback) => {
    */
 
   // Parse
-  const parser = parse({ columns: true });
+  const parser = parse({ columns: true, skip_lines_with_error: true });
 
   // Transform
   const transformer = transform(
