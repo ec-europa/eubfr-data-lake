@@ -1,0 +1,3 @@
+# Working files should not be committed.
+*.csv
+*.ndjson

@@ -8,7 +8,6 @@ import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 // Import logic
 import { extractMessage } from '../lib/sns';
 import transformRecord from '../lib/transform';
-import uploadFromStream from '../lib/uploadFromStream';
 
 export const handler = async (event, context, callback) => {
   // Extract env vars
@@ -77,6 +76,8 @@ export const handler = async (event, context, callback) => {
     .getObject({ Bucket: snsMessage.bucket.name, Key: key })
     .createReadStream();
 
+  let projects = '';
+
   return new Promise((resolve, reject) => {
     readStream
       .pipe(parser)
@@ -87,22 +88,38 @@ export const handler = async (event, context, callback) => {
       .on('error', async e =>
         handleError(new Error(`Error on transform: ${e.message}`, reject))
       )
-      .pipe(uploadFromStream({ key, BUCKET, s3, handleError }))
+      .on('data', data => {
+        projects += data;
+      })
       .on('error', async e =>
         handleError(new Error(`Error on upload: ${e.message}`, reject))
       )
       .on('end', async () => {
-        await messenger.send({
-          message: {
-            computed_key: key,
-            status_message:
-              'CSV parsed successfully. Results will be uploaded to ElasticSearch soon...',
-            status_code: STATUS.PARSED,
-          },
-          to: ['logs'],
-        });
+        // Load data
+        const params = {
+          Bucket: BUCKET,
+          Key: `${key}.ndjson`,
+          Body: projects,
+          ContentType: 'application/x-ndjson',
+        };
 
-        return resolve('CSV parsed successfully');
+        return s3.upload(params, async err => {
+          if (err) {
+            return handleError(err, reject);
+          }
+
+          await messenger.send({
+            message: {
+              computed_key: key,
+              status_message:
+                'CSV parsed successfully. Results will be uploaded to ElasticSearch soon...',
+              status_code: STATUS.PARSED,
+            },
+            to: ['logs'],
+          });
+
+          return resolve(null, 'CSV parsed successfully');
+        });
       });
   });
 };

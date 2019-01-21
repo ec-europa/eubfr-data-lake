@@ -1,0 +1,27 @@
+service: parsers-csv
+
+plugins:
+  - serverless-webpack
+
+custom:
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules:
+      forceExclude:
+        - aws-sdk
+    packager: yarn
+
+package:
+  individually: true
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  timeout: 180
+  stage: 'dev'
+  region: 'eu-central-1'
+
+functions:
+  parseCsv:
+    handler: src/events/onParseCSV.handler
+    name: ${self:provider.stage}-${self:service}
