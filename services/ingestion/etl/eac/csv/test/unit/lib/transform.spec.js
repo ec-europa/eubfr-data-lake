@@ -104,4 +104,78 @@ describe('DG EAC CSV transformer', () => {
   test('Produces correct JSON output structure for CreativeEurope_Projects_Overview', () => {
     expect(CreativeEurope_Projects_Overview).toMatchSnapshot();
   });
+
+  test('Produces correct JSON output structure for Culture_2007_2013_Projects_Overview', () => {
+    expect(Culture_2007_2013_Projects_Overview).toMatchSnapshot();
+  });
+
+  test('Produces correct JSON output structure for ErasmusMundus_Projects_Overview', () => {
+    expect(ErasmusMundus_Projects_Overview).toMatchSnapshot();
+  });
+
+  test('Produces correct JSON output structure for ErasmusPlus_JeanMonnet_Projects_Overview', () => {
+    expect(ErasmusPlus_JeanMonnet_Projects_Overview).toMatchSnapshot();
+  });
+
+  test('Produces correct JSON output structure for ErasmusPlus_KA1_2014_LearningMobilityOfIndividuals_Projects_Overview', () => {
+    expect(
+      ErasmusPlus_KA1_2014_LearningMobilityOfIndividuals_Projects_Overview
+    ).toMatchSnapshot();
+  });
+
+  test('Produces correct JSON output structure for ErasmusPlus_KA1_2015_LearningMobilityOfIndividuals_Projects_Overview', () => {
+    expect(
+      ErasmusPlus_KA1_2015_LearningMobilityOfIndividuals_Projects_Overview
+    ).toMatchSnapshot();
+  });
+
+  test('Produces correct JSON output structure for ErasmusPlus_KA1_2016_LearningMobilityOfIndividuals_Projects_Overview', () => {
+    expect(
+      ErasmusPlus_KA1_2016_LearningMobilityOfIndividuals_Projects_Overview
+    ).toMatchSnapshot();
+  });
+
+  test('Produces correct JSON output structure for ErasmusPlus_KA1_2017_LearningMobilityOfIndividuals_Projects_Overview', () => {
+    expect(
+      ErasmusPlus_KA1_2017_LearningMobilityOfIndividuals_Projects_Overview
+    ).toMatchSnapshot();
+  });
+
+  test('Produces correct JSON output structure for ErasmusPlus_KA1_2018_LearningMobilityOfIndividuals_Projects_Overview', () => {
+    expect(
+      ErasmusPlus_KA1_2018_LearningMobilityOfIndividuals_Projects_Overview
+    ).toMatchSnapshot();
+  });
+
+  test('Produces correct JSON output structure for ErasmusPlus_KA2_CooperationForInnovationAndTheExchangeOfGoodPractices_Projects_Overview', () => {
+    expect(
+      ErasmusPlus_KA2_CooperationForInnovationAndTheExchangeOfGoodPractices_Projects_Overview
+    ).toMatchSnapshot();
+  });
+
+  test('Produces correct JSON output structure for ErasmusPlus_KA3_SupportForPolicyReform_Projects_Overview', () => {
+    expect(
+      ErasmusPlus_KA3_SupportForPolicyReform_Projects_Overview
+    ).toMatchSnapshot();
+  });
+
+  test('Produces correct JSON output structure for ErasmusPlus_Sports_Projects_Overview', () => {
+    expect(ErasmusPlus_Sports_Projects_Overview).toMatchSnapshot();
+  });
+
+  test('Produces correct JSON output structure for LifeLongLearning_Projects_Overview', () => {
+    expect(LifeLongLearning_Projects_Overview).toMatchSnapshot();
+  });
+
+  test('Produces correct JSON output structure for Sports_Projects_Overview', () => {
+    expect(Sports_Projects_Overview).toMatchSnapshot();
+  });
+
+  test('Produces correct JSON output structure for Tempus_Projects_Overview', () => {
+    expect(Tempus_Projects_Overview).toMatchSnapshot();
+  });
+
+  test('Produces correct JSON output structure for YouthInAction_Projects_Overview', () => {
+    expect(YouthInAction_Projects_Overview).toMatchSnapshot();
+  });
 });

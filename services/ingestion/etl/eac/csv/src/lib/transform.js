@@ -9,12 +9,13 @@ import type { Project } from '@eubfr/types';
  *
  * Seeks for values in the following precedence:
  * - `Action`
+ * - `Key Action`
  *
  * @memberof EacCsvTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
-const getAction = record => record.Action || '';
+const getAction = record => record.Action || record['Key Action'] || '';
 
 /**
  * Preprocess `budget`.
@@ -190,6 +191,24 @@ const getSubProgramme = record => record['Sub-programme'] || '';
 const getSuccessStory = record => record['Is Success Story'] || '';
 
 /**
+ * Preprocess `themes`.
+ *
+ * Seeks for values in the following precedence:
+ * - `Topics`
+ *
+ * @memberof EacCsvTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {String}
+ */
+const getThemes = record =>
+  (record.Topics != null &&
+    record.Topics !== '' &&
+    record.Topics.split(',')
+      .filter(a => a)
+      .map(a => a.trim())) ||
+  [];
+
+/**
  * Preprocess coordinators.
  *
  * Seeks for values in the following precedence:
@@ -267,7 +286,7 @@ const getPartners = record => {
 };
 
 /**
- *
+ * Preprocess/format date.
  *
  * @memberof EacCsvTransform
  * @param {Date} date Date
@@ -397,7 +416,7 @@ export default (record: Object): Project | null => {
     status: getProjectStatus(record),
     sub_programme_name: getSubProgramme(record),
     success_story: getSuccessStory(record),
-    themes: [],
+    themes: getThemes(record),
     third_parties: getCoordinators(record).concat(getPartners(record)),
     timeframe: {
       from: formatDate(getStartDate(record)),

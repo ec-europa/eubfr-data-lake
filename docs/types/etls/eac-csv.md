@@ -21,6 +21,7 @@ Preprocess `action`.
 Seeks for values in the following precedence:
 
 - `Action`
+- `Key Action`
 
 #### Parameters
 
@@ -185,6 +186,20 @@ Seeks for values in the following precedence:
 
 Returns **[String][4]**
 
+### getThemes
+
+Preprocess `themes`.
+
+Seeks for values in the following precedence:
+
+- `Topics`
+
+#### Parameters
+
+- `record` **[Object][3]** The row received from parsed file
+
+Returns **[String][4]**
+
 ### getCoordinators
 
 Preprocess coordinators.
@@ -226,16 +241,12 @@ Returns **[Array][5]** A list of {Partner} objects
 
 ### formatDate
 
+Preprocess/format date.
+
 #### Parameters
 
-- `date` **[Date][6]** Date in "10/9/14" (MM/DD/YY) or "10/9/2014" (MM/DD/YYYY) format
-
-#### Examples
-
-```javascript
-input => '10/9/2014';
-output => '2014-10-09T00:00:00.000Z';
-```
+- `date` **[Date][6]** DateSupported formats:- `DD/MM/YYYY`
+  - `YYYY-MM-DD`
 
 Returns **[Date][6]** The date formatted into an ISO 8601 date format
 
