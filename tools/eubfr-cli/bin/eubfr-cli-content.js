@@ -56,7 +56,12 @@ program
   .action(async (files, options) => {
     const endpoints = getEndpoints();
 
-    ensureVariables(['SIGNED_UPLOADS_API'], endpoints);
+    const missing = ensureVariables(['SIGNED_UPLOADS_API'], endpoints);
+
+    if (missing) {
+      console.error(`${missing} environment variable is missing.`);
+      process.exit(1);
+    }
 
     let credentials = [];
     const producerIsSet = hasValidOption('producer', options);
@@ -129,10 +134,16 @@ program
   .option('-p, --producer [producer]', "Producer's name.")
   .action(async (file, options) => {
     const endpoints = getEndpoints();
-    ensureVariables(
+
+    const missing = ensureVariables(
       ['REACT_APP_STAGE', 'REACT_APP_ES_PRIVATE_ENDPOINT'],
       endpoints
     );
+
+    if (missing) {
+      console.error(`${missing} environment variable is missing.`);
+      process.exit(1);
+    }
 
     const { producer } = options;
 
@@ -192,10 +203,16 @@ program
   .option('-c, --confirm [confirm]', 'Flag certainty of an operation.')
   .action(async (files, options) => {
     const endpoints = getEndpoints();
-    ensureVariables(
+
+    const missing = ensureVariables(
       ['DELETER_API', 'REACT_APP_STAGE', 'REACT_APP_ES_PRIVATE_ENDPOINT'],
       endpoints
     );
+
+    if (missing) {
+      console.error(`${missing} environment variable is missing.`);
+      process.exit(1);
+    }
 
     const producers = getAllProducers();
 
