@@ -3,7 +3,7 @@ const getConfigurations = require('./getConfigurations');
 const { stage } = getConfigurations();
 
 /**
- * Returns information whether a currently used stage is save to be deleted.
+ * Returns information whether a currently used stage is safe to be deleted.
  *
  * @returns {boolean} Whether current stage should be protected.
  */
