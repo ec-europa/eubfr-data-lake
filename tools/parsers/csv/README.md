@@ -23,7 +23,9 @@ In order to keep the implementation code as close as possible to the one which w
 
 ### Add sample file
 
-Add the file you want to test in the root of this package. Change the variable `file` in `/src/events/onParseCSV.js`.
+Add the file you want to test in the root of this package.
+
+Change the variable `FILE` in the `serverless.yml` configuration.
 
 ### Update your transform function
 

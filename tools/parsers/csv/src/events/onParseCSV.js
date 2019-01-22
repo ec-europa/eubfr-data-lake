@@ -6,8 +6,8 @@ import transform from 'stream-transform';
 import transformRecord from '../lib/transform';
 
 export const handler = () => {
-  // Change this in order to work with the right file for your case.
-  const file = 'ErasmusPlus_KA3_SupportForPolicyReform_Projects_Overview';
+  const { FILE: file } = process.env;
+
   const readStream = fs.createReadStream(path.resolve(`../../${file}.csv`));
   const writeStream = fs.createWriteStream(
     path.resolve(`../../${file}.ndjson`)
