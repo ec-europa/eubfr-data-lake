@@ -2,6 +2,9 @@
 
 const program = require('commander');
 
+// Utilities
+const shouldProtectStage = require('../lib/shouldProtectStage');
+
 // Commands
 const deployResources = require('../commands/resources/deploy');
 const deleteResources = require('../commands/resources/delete');
@@ -49,6 +52,11 @@ program
   .command('delete')
   .description('Delete resources.')
   .action(async () => {
+    if (shouldProtectStage()) {
+      console.log('You are on a protected stage!');
+      process.exit();
+    }
+
     await deleteResources();
   });
 
