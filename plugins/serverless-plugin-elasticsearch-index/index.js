@@ -6,6 +6,7 @@ const isEqual = require('lodash.isequal');
 const { promisify } = require('util');
 
 const getExportValueByName = require('./lib/getExportValueByName');
+
 const getUserCredentials = promisify(awscred.load);
 
 class CreateElasticIndexDeploy {
@@ -72,6 +73,8 @@ class CreateElasticIndexDeploy {
               )
             );
           }
+
+          return console.log('Finished updates on ES indices.');
         } catch (error) {
           throw error;
         }
