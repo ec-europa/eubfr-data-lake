@@ -5,13 +5,11 @@
 import AWS from 'aws-sdk-mock';
 import AWS_SDK from 'aws-sdk';
 
-import { promisify } from 'util';
-import upsert from '../../../src/api/upsert';
+import handler from '../../../src/api/upsert'; // eslint-disable-line import/no-named-as-default
 import eventStub from '../../stubs/eventHttpApiGateway.json';
 
 // Explicitly set the correct module, as it might not map correctly after transpilation.
 AWS.setSDKInstance(AWS_SDK);
-const handler = promisify(upsert);
 
 describe(`Service aws-node-singned-uploads: S3 mock for successful operations`, () => {
   beforeAll(() => {
@@ -42,18 +40,9 @@ describe(`Service aws-node-singned-uploads: S3 mock for successful operations`, 
     AWS.restore('IAM');
   });
 
-  test('Require environment variables', () => {
-    const event = {
-      requestContext: {
-        identity: {
-          userArn: 'arn:aws:iam::123456789012:user/test',
-        },
-      },
-    };
-    const context = {};
-
+  test('Require environment variables', async () => {
     try {
-      handler(event, context);
+      await handler();
     } catch (error) {
       expect(error.message).toEqual(
         'BUCKET and REGION environment variables are required!'
@@ -61,9 +50,10 @@ describe(`Service aws-node-singned-uploads: S3 mock for successful operations`, 
     }
   });
 
-  test('Require a header "x-amz-meta-producer-key"', () => {
+  test('Require a header "x-amz-meta-producer-key"', async () => {
     process.env.BUCKET = 'foo';
     process.env.REGION = 'bar';
+
     const event = {
       requestContext: {
         identity: {
@@ -71,25 +61,28 @@ describe(`Service aws-node-singned-uploads: S3 mock for successful operations`, 
         },
       },
     };
+
     const context = {};
 
     try {
-      const result = handler(event, context);
-      expect(result).resolves.toMatchSnapshot();
+      const result = await handler(event, context);
+      expect(result).toMatchSnapshot();
     } catch (error) {
       console.error(error);
     }
   });
 
-  test('Replies back with a JSON for a signed upload on success', () => {
+  test('Replies back with a JSON for a signed upload on success', async () => {
     process.env.BUCKET = 'foo';
     process.env.REGION = 'bar';
-    const event = eventStub;
+
+    // Deep clone
+    const event = JSON.parse(JSON.stringify(eventStub));
     const context = {};
 
     try {
-      const result = handler(event, context);
-      expect(result).resolves.toMatchSnapshot();
+      const result = await handler(event, context);
+      expect(result).toMatchSnapshot();
     } catch (error) {
       console.error(error);
     }
