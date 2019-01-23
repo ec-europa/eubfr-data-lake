@@ -3,7 +3,7 @@ const awscred = require('awscred');
 const elasticsearch = require('elasticsearch');
 const connectionClass = require('http-aws-es');
 const isEqual = require('lodash.isequal');
-const listExports = require('./lib/listExports');
+const getExportValueByName = require('./lib/getExportValueByName');
 const { promisify } = require('util');
 
 const getUserCredentials = promisify(awscred.load);
@@ -28,12 +28,10 @@ class CreateElasticIndexDeploy {
     // Get specific plugin configurations.
     const { region, index } = config;
 
-    const exportedVariables = await listExports(this.serverless.providers.aws);
-
-    // Map endpointName with the actual ES domain
-    const domain = exportedVariables.find(
-      exp => exp.Name === config.endpointName
-    ).Value;
+    const domain = await getExportValueByName({
+      name: config.endpointName,
+      region,
+    });
 
     // elasticsearch client configuration
     const esOptions = {
