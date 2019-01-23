@@ -1,9 +1,12 @@
 const AWS = require('aws-sdk');
-const AwsConfigCredentials = require('serverless/lib/plugins/aws/configCredentials/awsConfigCredentials');
+const awscred = require('awscred');
 const elasticsearch = require('elasticsearch');
 const connectionClass = require('http-aws-es');
 const isEqual = require('lodash.isequal');
 const listExports = require('./lib/listExports');
+const { promisify } = require('util');
+
+const getUserCredentials = promisify(awscred.load);
 
 class CreateElasticIndexDeploy {
   constructor(serverless, options) {
@@ -13,23 +16,16 @@ class CreateElasticIndexDeploy {
     this.hooks = {
       'after:deploy:deploy': this.afterDeployment.bind(this),
     };
-
-    // Setup credentials:
-    const slsAwsConfig = new AwsConfigCredentials(
-      this.serverless,
-      this.options
-    );
-
-    this.awsConfig = slsAwsConfig.getCredentials();
   }
 
   async setupElasticClient(config) {
-    const accessKeyId = this.awsConfig[1].split(' = ')[1];
-    const secretAccessKey = this.awsConfig[2].split(' = ')[1];
+    // Get user's AWS credentials.
+    const credentials = await getUserCredentials();
+    const { accessKeyId, secretAccessKey } = credentials.credentials;
 
-    // Setup elasticsearch:
+    // Setup elasticsearch.
 
-    // Get specific plugin configurations
+    // Get specific plugin configurations.
     const { region, index } = config;
 
     const exportedVariables = await listExports(this.serverless.providers.aws);
