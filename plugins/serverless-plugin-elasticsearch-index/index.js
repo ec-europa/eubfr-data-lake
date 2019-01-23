@@ -1,11 +1,11 @@
 const AWS = require('aws-sdk');
 const awscred = require('awscred');
-const elasticsearch = require('elasticsearch');
 const connectionClass = require('http-aws-es');
+const elasticsearch = require('elasticsearch');
 const isEqual = require('lodash.isequal');
-const getExportValueByName = require('./lib/getExportValueByName');
 const { promisify } = require('util');
 
+const getExportValueByName = require('./lib/getExportValueByName');
 const getUserCredentials = promisify(awscred.load);
 
 class CreateElasticIndexDeploy {
@@ -18,68 +18,65 @@ class CreateElasticIndexDeploy {
     };
   }
 
-  async setupElasticClient(config) {
-    // Get user's AWS credentials.
-    const credentials = await getUserCredentials();
-    const { accessKeyId, secretAccessKey } = credentials.credentials;
-
-    // Setup elasticsearch.
-
-    // Get specific plugin configurations.
-    const { region, index } = config;
-
-    const domain = await getExportValueByName({
-      name: config.endpointName,
-      region,
-    });
-
-    // elasticsearch client configuration
-    const esOptions = {
-      index,
-      connectionClass,
-      apiVersion: '6.3',
-      host: `https://${domain}`,
-      // this is required when out of a lambda function
-      awsConfig: new AWS.Config({
-        accessKeyId,
-        secretAccessKey,
-        region,
-      }),
-    };
-
-    // elasticsearch client instantiation
-    return elasticsearch.Client(esOptions);
-  }
-
-  // Create elasticsearch index after deployment has finished
-  async afterDeployment() {
+  afterDeployment() {
     const indices = this.serverless.service.custom.slsEsIndices;
 
-    await indices.forEach(async indexConfig => {
-      const client = await this.setupElasticClient(indexConfig);
-      const { index, mapping } = indexConfig;
+    return Promise.all(
+      indices.map(async indexConfig => {
+        try {
+          const credentials = await getUserCredentials();
+          const { accessKeyId, secretAccessKey } = credentials.credentials;
 
-      client.indices.exists({ index }).then(exists => {
-        if (!exists) {
-          return client.indices.create({ index, body: mapping });
-        }
+          const { index, mapping, region, endpointName } = indexConfig;
 
-        return client.indices.getMapping({ index }).then(existingMappping => {
+          const domain = await getExportValueByName({
+            name: endpointName,
+            region,
+          });
+
+          // elasticsearch client configuration
+          const esOptions = {
+            index,
+            connectionClass,
+            apiVersion: '6.3',
+            host: `https://${domain}`,
+            // this is required when out of a lambda function
+            awsConfig: new AWS.Config({
+              accessKeyId,
+              secretAccessKey,
+              region,
+            }),
+          };
+
+          const client = elasticsearch.Client(esOptions);
+
+          const exists = await client.indices.exists({ index });
+
+          if (!exists) {
+            return client.indices.create({ index, body: mapping });
+          }
+
+          const existingMappping = await client.indices.getMapping({ index });
+
           if (!isEqual(existingMappping[index], mapping)) {
             const types = Object.keys(mapping.mappings);
 
-            types.forEach(type =>
-              // Update mapping (if possible)
-              client.indices.putMapping({
-                index,
-                type,
-                body: mapping.mappings[type],
-              })
+            return Promise.all(
+              types.map(type =>
+                // Update mapping (if possible)
+                client.indices.putMapping({
+                  index,
+                  type,
+                  body: mapping.mappings[type],
+                })
+              )
             );
           }
-        });
-      });
-    });
+        } catch (error) {
+          throw error;
+        }
+      })
+    );
   }
 }
 

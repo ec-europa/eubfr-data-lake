@@ -14,15 +14,15 @@
   },
   "devDependencies": {
     "@babel/core": "7.2.2",
-    "@babel/preset-env": "7.2.3",
+    "@babel/preset-env": "7.3.1",
     "@babel/preset-flow": "7.0.0",
     "@eubfr/types": "^0.2.0",
-    "aws-sdk": "2.386.0",
+    "aws-sdk": "2.392.0",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "23.6.0",
     "babel-loader": "8.0.5",
     "jest": "23.6.0",
-    "serverless": "1.32.0",
+    "serverless": "1.36.2",
     "serverless-webpack": "5.2.0",
     "webpack": "4.28.4"
   },
