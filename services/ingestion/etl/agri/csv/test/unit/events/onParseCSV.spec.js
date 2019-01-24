@@ -9,14 +9,12 @@ describe(`Function parseCsv in "@eubfr/ingestion-etl-agri-csv"`, () => {
     const event = {};
     const context = {};
 
-    const callback = error => {
+    try {
+      await onParseCSV(event, context);
+    } catch (error) {
       expect(error.message).toEqual(
         'BUCKET, REGION and STAGE environment variables are required!'
       );
-    };
-
-    expect.assertions(1);
-
-    await onParseCSV(event, context, callback);
+    }
   });
 });

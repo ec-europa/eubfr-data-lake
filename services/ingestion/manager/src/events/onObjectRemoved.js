@@ -1,34 +1,32 @@
 import elasticsearch from 'elasticsearch';
 import connectionClass from 'http-aws-es';
 
-export const handler = async (event, context, callback) => {
+export const handler = async event => {
   const { API, INDEX } = process.env;
 
   if (!API || !INDEX) {
-    return callback(
-      new Error('API and INDEX environment variables are required!')
-    );
-  }
-
-  /*
-   * Some checks here before going any further
-   */
-
-  if (!event.Records) {
-    return callback(new Error('No record'));
-  }
-
-  // Only work on the first record
-  const snsRecord = event.Records[0];
-
-  // Was the lambda triggered correctly? Is the file extension supported? etc.
-  if (!snsRecord || snsRecord.EventSource !== 'aws:sns') {
-    return callback(new Error('Bad record'));
+    throw new Error('API and INDEX environment variables are required!');
   }
 
   try {
-    /*
-     * Extract information from the event
+    /**
+     * Validate input.
+     */
+
+    if (!event.Records) {
+      throw new Error('No record');
+    }
+
+    // Only work on the first record
+    const snsRecord = event.Records[0];
+
+    // Was the lambda triggered correctly? Is the file extension supported? etc.
+    if (!snsRecord || snsRecord.EventSource !== 'aws:sns') {
+      throw new Error('Bad record');
+    }
+
+    /**
+     * Extract information from the event.
      */
 
     // Extract S3 record
@@ -50,9 +48,9 @@ export const handler = async (event, context, callback) => {
       q: `computed_key:"${computedKey}"`,
     });
 
-    return callback(null, 'All fine');
+    return 'All fine';
   } catch (err) {
-    return callback(err);
+    throw err;
   }
 };
 
