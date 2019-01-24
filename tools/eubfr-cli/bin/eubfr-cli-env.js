@@ -4,6 +4,28 @@ const program = require('commander');
 
 // Commands
 const generateEnvironmentVariables = require('../commands/env/generateVariables');
+const printEnvironmentVariables = require('../commands/env/printVariables');
+
+/**
+ *
+ * Display the values of the environment variables needed by the CLI.
+ *
+ * Usage:
+ *
+ * ```sh
+ * $ eubfr-cli env print
+ * ```
+ *
+ * @memberof Environment
+ * @name Print
+ * @public
+ */
+program
+  .command('print')
+  .description(
+    'See the current values of the environment variables used by the CLI.'
+  )
+  .action(() => printEnvironmentVariables());
 
 /**
  *

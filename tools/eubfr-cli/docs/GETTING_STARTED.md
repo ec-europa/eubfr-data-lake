@@ -21,20 +21,15 @@ This will download and link dependencies.
 
 In general, there are 2 ways by which you can manage global settings for the project:
 
-- by a centralized configuration file `config.json`
-- by environment variables
+#### Configuration file `config.json`
 
 If you decide to use a centralized configuration file, make sure to copy `config.example.json` to `config.json` and set the values according to your environment. Note that `stage` can only contain alphanumeric characters. The CLI will read `config.json` file to know which AWS environment you want to manage by properties `config.stage` and `config.username`.
 
-Another option would be to set these settings using environment variables:
+#### Environment variables
 
-```sh
-export EUBFR_ENV=dev
-export EUBFR_STAGE=chernka123
-export EUBFR_USERNAME=cordis
-```
+Another option would be to set global settings using environment variables. This is particularly useful for automation systems for cotinuous testing, integration, delivery, etc.
 
-Setting `EUBFR_USERNAME` will tell the EUBFR CLI to work only with assets related to this particular producer. This way, running deployment scripts, you'll get a working environment faster for CORIS, leaving out AGRI, HOME, etc.
+Further details could be obtained in the [specialized documentation](./ENVIRONMENT_VARIABLES.md).
 
 ### Usage
 
