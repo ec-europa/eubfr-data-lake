@@ -56,6 +56,8 @@ program
   .action(async (files, options) => {
     const endpoints = getEndpoints();
 
+    console.log('Uploading new content to the data lake ...');
+
     const missing = ensureVariables(['SIGNED_UPLOADS_API'], endpoints);
 
     if (missing) {
@@ -135,6 +137,8 @@ program
   .action(async (file, options) => {
     const endpoints = getEndpoints();
 
+    console.log('Querying for existing content in the data lake ...');
+
     const missing = ensureVariables(
       ['REACT_APP_STAGE', 'REACT_APP_ES_PRIVATE_ENDPOINT'],
       endpoints
@@ -203,6 +207,8 @@ program
   .option('-c, --confirm [confirm]', 'Flag certainty of an operation.')
   .action(async (files, options) => {
     const endpoints = getEndpoints();
+
+    console.log('Deleting content from the data lake ...');
 
     const missing = ensureVariables(
       ['DELETER_API', 'REACT_APP_STAGE', 'REACT_APP_ES_PRIVATE_ENDPOINT'],

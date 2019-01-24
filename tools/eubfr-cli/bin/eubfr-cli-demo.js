@@ -72,7 +72,7 @@ program
  * $ eubfr-cli demo delete -p agri
  * ```
  *
- * @memberof Services
+ * @memberof Demo
  * @name Delete
  * @public
  */

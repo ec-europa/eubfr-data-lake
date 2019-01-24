@@ -176,7 +176,7 @@ class File extends React.Component {
           .then(response => response.json())
           .then(data =>
             this.setState({
-              link: data.signedUrl,
+              link: data.download,
               linkLoading: false,
             })
           )

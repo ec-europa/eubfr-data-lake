@@ -5,13 +5,11 @@
 import AWS from 'aws-sdk-mock';
 import AWS_SDK from 'aws-sdk';
 
-import { promisify } from 'util';
-import upsert from '../../../src/api/upsert';
+import handler from '../../../src/api/upsert'; // eslint-disable-line import/no-named-as-default
 import eventStub from '../../stubs/eventHttpApiGateway.json';
 
 // Explicitly set the correct module, as it might not map correctly after transpilation.
 AWS.setSDKInstance(AWS_SDK);
-const handler = promisify(upsert);
 
 describe(`Service aws-node-singned-uploads: S3 mock for successful operations`, () => {
   beforeAll(() => {
@@ -42,7 +40,20 @@ describe(`Service aws-node-singned-uploads: S3 mock for successful operations`, 
     AWS.restore('IAM');
   });
 
-  test('Require environment variables', () => {
+  test('Require environment variables', async () => {
+    try {
+      await handler();
+    } catch (error) {
+      expect(error.message).toEqual(
+        'BUCKET and REGION environment variables are required!'
+      );
+    }
+  });
+
+  test('Require a header "x-amz-meta-producer-key"', async () => {
+    process.env.BUCKET = 'foo';
+    process.env.REGION = 'bar';
+
     const event = {
       requestContext: {
         identity: {
@@ -50,41 +61,31 @@ describe(`Service aws-node-singned-uploads: S3 mock for successful operations`, 
         },
       },
     };
+
     const context = {};
 
-    expect.assertions(1);
-    const result = handler(event, context);
-    return expect(result).rejects.toBe(
-      'BUCKET and REGION environment variables are required!'
-    );
+    try {
+      const result = await handler(event, context);
+      expect(result).toMatchSnapshot();
+    } catch (error) {
+      console.error(error);
+    }
   });
 
-  test('Require a header "x-amz-meta-producer-key"', () => {
+  test('Replies back with a JSON for a signed upload on success', async () => {
     process.env.BUCKET = 'foo';
     process.env.REGION = 'bar';
-    const event = {
-      requestContext: {
-        identity: {
-          userArn: 'arn:aws:iam::123456789012:user/test',
-        },
-      },
-    };
+
+    // Deep clone
+    const event = JSON.parse(JSON.stringify(eventStub));
     const context = {};
 
-    const result = handler(event, context);
-    expect.assertions(1);
-    return expect(result).resolves.toMatchSnapshot();
-  });
-
-  test('Replies back with a JSON for a signed upload on success', () => {
-    process.env.BUCKET = 'foo';
-    process.env.REGION = 'bar';
-    const event = eventStub;
-    const context = {};
-
-    const result = handler(event, context);
-    expect.assertions(1);
-    return expect(result).resolves.toMatchSnapshot();
+    try {
+      const result = await handler(event, context);
+      expect(result).toMatchSnapshot();
+    } catch (error) {
+      console.error(error);
+    }
   });
 });
 
@@ -113,16 +114,5 @@ describe('Service aws-node-singned-uploads: S3 mock for failed operations', () =
   afterAll(() => {
     AWS.restore('S3');
     AWS.restore('IAM');
-  });
-
-  test('Correctly handles error messages from S3', () => {
-    process.env.BUCKET = 'foo';
-    process.env.REGION = 'bar';
-    const event = eventStub;
-    const context = {};
-
-    expect.assertions(1);
-    const result = handler(event, context);
-    return expect(result).rejects.toBe('S3 failed');
   });
 });

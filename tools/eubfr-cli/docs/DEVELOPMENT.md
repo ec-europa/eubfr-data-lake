@@ -7,7 +7,7 @@ In addition, the CLI covers many additional features which came handy during dev
 ## Background
 
 The current implementation of this CLI utility is built upon [commander](https://www.npmjs.com/package/commander).
-In order to keep code maintainable, each manageable resource in terms of EUBFR as a project is translated to a separate CLI executable using this [feature of commander](https://www.npmjs.com/package/commander#git-style-sub-commands).
+In order to keep code maintainable each manageable resource, in terms of EUBFR as a project, is translated to a separate CLI executable using this [feature of commander](https://www.npmjs.com/package/commander#git-style-sub-commands).
 
 ## Files overview
 
@@ -38,7 +38,7 @@ Here how the most important concepts are organized:
 
 If the overview above is not enough, here's a more detailed walkthrough.
 
-### Separate executables are `commander`-specific files acting like standalone CLI applications
+### Executables are `commander`-specific files acting like standalone CLI applications
 
 For instance, the following two are totally the same things:
 
@@ -54,9 +54,13 @@ $ ./tools/eubfr-cli/bin/eubfr-cli-content.js upload -h
 
 Each command contains several target sub-commands managing the given resource. For instance `eubfr-cli content` provides `upload`, `show` and `delete`.
 
-### The files in `/tools/eubfr-cli/commands` are high-level wrappers on top of commands
+Executables within `./bin/*` are the only place allowed to use `process.exit()` for ending a process.
 
-They map the `commander`' command declaration to the functionality of their target resource management. For instance, `eubfr-cli content upload` maps to function `uploadFiles` contained in `/tools/eubfr-cli/commands/content/upload.js`. Each command runs one function and each function is contained within one file.
+### Commands' implementations `/tools/eubfr-cli/commands`
+
+They map the `commander`'s command declaration (from the executables) to the functionality of their target resource management.
+
+For instance, `eubfr-cli content upload` maps to function `uploadFiles` contained in `/tools/eubfr-cli/commands/content/upload.js`. Each command runs one function and each function is contained within one file.
 
 Command files in `/tools/eubfr-cli/commands` call external APIs, such as Elasticsearch and AWS, as well as they emulate execution of other CLIs, such as `yarn` and `serverless`.
 
@@ -64,7 +68,9 @@ Command files in `/tools/eubfr-cli/commands` call external APIs, such as Elastic
 
 Although `/tools/eubfr-cli/commands` should be self-sufficient, tasks such as service deletion could be shared between deleting an ingestion service and a demo service, for example. When this is the case, service calls and shell emulation is allowed to be moved down in the specific helper.
 
-Alaways aim to keep shell emulation and service calls in `/tools/eubfr-cli/commands` layer.
+However, as a rule of thumb, alaways aim to keep shell emulation and service calls in `/tools/eubfr-cli/commands` layer.
+
+If a utility is to end a process, do not use `process.exit()` here, rather, return a boolean and make use of the utility in the executables section which can end processes.
 
 ## Documentation
 

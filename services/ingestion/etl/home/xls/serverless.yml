@@ -117,7 +117,7 @@ resources:
                       - Ref: 'AWS::AccountId'
                       - ':assumed-role/ingestion-manager-${self:provider.stage}-'
                       - Ref: 'AWS::Region'
-                      - '-lambdaRole/${self:provider.stage}-ingestion-manager-onCreate'
+                      - '-lambdaRole/${self:provider.stage}-ingestion-manager-onObjectCreated'
         Topics:
           - Ref: SNSTopicHOMEXLS
           - Ref: SNSTopicHOMEXLSX
