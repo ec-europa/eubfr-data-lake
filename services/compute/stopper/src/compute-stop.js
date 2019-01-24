@@ -1,14 +1,13 @@
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 
-export const handler = async (event, context, callback) => {
-  // Extract env vars
+export const handler = async () => {
   const { REGION } = process.env;
 
   if (!REGION) {
-    return callback(new Error('REGION environment variables is required!'));
+    throw new Error('REGION environment variables is required!');
   }
 
-  // clients
+  // AWS clients.
   const ec2 = new AWS.EC2({ region: REGION });
 
   const filters = {
@@ -48,9 +47,9 @@ export const handler = async (event, context, callback) => {
       Force: false,
     };
 
-    return ec2.stopInstances(params, callback);
+    await ec2.stopInstances(params).promise();
   } catch (e) {
-    return callback(e);
+    throw e;
   }
 };
 

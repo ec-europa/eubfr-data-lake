@@ -9,14 +9,10 @@ describe(`Function onObjectRemoved in "@eubfr/value-store-projects"`, () => {
     const event = {};
     const context = {};
 
-    expect.assertions(1);
-
-    const callback = error => {
+    try {
+      await onObjectRemoved(event, context);
+    } catch (error) {
       expect(error.message).toEqual('No record');
-    };
-
-    expect.assertions(1);
-
-    await onObjectRemoved(event, context, callback);
+    }
   });
 });

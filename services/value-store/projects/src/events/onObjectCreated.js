@@ -11,18 +11,18 @@ import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 import deleteProjects from '../lib/deleteProjects';
 import SaveStream from '../lib/SaveStream';
 
-export const handler = async (event, context, callback) => {
+export const handler = async (event, context) => {
   const { API, INDEX, REGION, STAGE, BATCH_SIZE } = process.env;
 
   if (!API || !INDEX || !REGION || !STAGE || !BATCH_SIZE) {
-    return callback(new Error('Missing environment variable!'));
+    throw new Error('Missing environment variable!');
   }
 
-  /*
+  /**
    * Some checks here before going any further
    */
   if (!event.Records) {
-    return callback(new Error('No record'));
+    throw new Error('No record');
   }
 
   // Only work on the first record
@@ -30,7 +30,7 @@ export const handler = async (event, context, callback) => {
 
   // Was the lambda triggered correctly? Is the file extension supported? etc.
   if (!snsRecord || snsRecord.EventSource !== 'aws:sns') {
-    return callback(new Error('Bad record'));
+    throw new Error('Bad record');
   }
 
   // Get Account ID from lambda function arn in the context
@@ -48,7 +48,7 @@ export const handler = async (event, context, callback) => {
   const messenger = MessengerFactory.Create({ context });
   const s3 = new AWS.S3();
 
-  /*
+  /**
    * Extract information from the event
    */
 
@@ -169,7 +169,7 @@ export const handler = async (event, context, callback) => {
       to: ['logs'],
     });
 
-    return callback(err);
+    throw err;
   }
 };
 

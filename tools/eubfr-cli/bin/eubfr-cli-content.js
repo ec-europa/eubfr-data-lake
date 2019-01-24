@@ -56,6 +56,7 @@ program
   .action(async (files, options) => {
     const endpoints = getEndpoints();
 
+    console.log('Uploading new content to the data lake ...');
     ensureVariables(['SIGNED_UPLOADS_API'], endpoints);
 
     let credentials = [];
@@ -129,6 +130,8 @@ program
   .option('-p, --producer [producer]', "Producer's name.")
   .action(async (file, options) => {
     const endpoints = getEndpoints();
+
+    console.log('Querying for existing content in the data lake ...');
     ensureVariables(
       ['REACT_APP_STAGE', 'REACT_APP_ES_PRIVATE_ENDPOINT'],
       endpoints
@@ -192,6 +195,8 @@ program
   .option('-c, --confirm [confirm]', 'Flag certainty of an operation.')
   .action(async (files, options) => {
     const endpoints = getEndpoints();
+
+    console.log('Deleting content from the data lake ...');
     ensureVariables(
       ['DELETER_API', 'REACT_APP_STAGE', 'REACT_APP_ES_PRIVATE_ENDPOINT'],
       endpoints
