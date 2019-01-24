@@ -2,37 +2,85 @@
 
 ### Table of Contents
 
-- [Resources][1]
+- [Environment][1]
   - [Usage][2]
-  - [Deploy][3]
-  - [Delete][4]
-- [Introduction][5]
+  - [Print][3]
+  - [GenerateVariables][4]
+- [Resources][5]
   - [Usage][6]
-- [Demo][7]
-  - [Usage][8]
-  - [Deploy][9]
-- [Environment][10]
-  - [Usage][11]
-  - [GenerateVariables][12]
-- [Services][13]
-  - [Usage][14]
-  - [Deploy][15]
-  - [Delete][16]
-  - [Delete][17]
-- [Content][18]
-  - [Usage][19]
-  - [Notes][20]
-  - [Upload][21]
-  - [Show][22]
-  - [Delete][23]
-- [Elasticsearch][24]
-  - [Usage][25]
-  - [snapshotExec][26]
-  - [showDomains][27]
-  - [showCluster][28]
-  - [showIndices][29]
-  - [createIndex][30]
-  - [deleteIndices][31]
+  - [Deploy][7]
+  - [Delete][8]
+- [Introduction][9]
+  - [Usage][10]
+- [Demo][11]
+  - [Usage][12]
+  - [Deploy][13]
+  - [Delete][14]
+- [Services][15]
+  - [Usage][16]
+  - [Deploy][17]
+  - [Delete][18]
+- [Content][19]
+  - [Usage][20]
+  - [Notes][21]
+  - [Upload][22]
+  - [Show][23]
+  - [Delete][24]
+- [Elasticsearch][25]
+  - [Usage][26]
+  - [snapshotExec][27]
+  - [showDomains][28]
+  - [showCluster][29]
+  - [showIndices][30]
+  - [createIndex][31]
+  - [deleteIndices][32]
+
+## Environment
+
+Manage environment
+
+### Usage
+
+```sh
+$ eubfr-cli env -h
+```
+
+### Print
+
+Display the values of the environment variables needed by the CLI.
+
+Usage:
+
+```sh
+$ eubfr-cli env print
+```
+
+### GenerateVariables
+
+The EUBFR CLI depends on a few environment variables which point to service API endpoints which are necessary for some commands to work.
+For example, when you want to use commands related to content upload, the CLI will go to `@eubfr/storage-signed-uploads` service and seek for `SIGNED_UPLOADS_API` stored in `.env` file local to the service.
+This endpoint is necessary for the CLI and other clients (client-side apps) to upload files to the data lake by signed uploads approach in AWS.
+For this `.env` file to exist in the service, the serverless service itself has to be deployed on AWS in order for the cloud to generate information about the endpoint resulted out of the resource creation.
+The `generate-variables` command helps you generate such `.env` files by re-uploading the serverless service (which you normally do by `npx sls deploy` from the folder of the service) and then running an export function. (which you usually do by `npx sls export-env`)
+
+There are several services which require information from `.env` files, i.e. environment variables in overall.
+These `.env` files are normally generated automatically for you when you deploy all services setting up your development environment.
+However, if you receive an error for a missing environment variable, you can use this command to regenerate information about the necessary variables.
+
+For instance, you may try to get information about available Elasticsearch domains which are manageable by the CLI running `eubfr-cli es`.
+If you haven't deployed `@eubfr/demo-dashboard-client` or you have switched between staging environments working on different branches at the same code base, then you'll get an error like this:
+
+    ENOENT: no such file or directory, open '.../eubfr-data-lake/demo/dashboard/client/.env'
+
+Or it could be also any other message that hints for a requirement of a given named environment variable, such as `SIGNED_UPLOADS_API`.
+
+These are signs that you need to re-generate all necessary `.env` files which contain information about the API endpoints.
+
+Usage:
+
+```sh
+$ eubfr-cli env generate-variables
+```
 
 ## Resources
 
@@ -74,7 +122,7 @@ EUBFR CLI
 
 Low-level utilities for managing assets of EUBFR data lake.
 
-Please refer to [Getting Started guide][32] before jumping into using the utility.
+Please refer to [Getting Started guide][33] before jumping into using the utility.
 
 Each command and sub-command has a help menu, which you can open by passing `-h` or `--help` flags without any arguments.
 
@@ -116,41 +164,28 @@ Deploy all services, only for working with the AGRI producer.
 $ eubfr-cli demo deploy -p agri
 ```
 
-## Environment
+### Delete
 
-Manage environment
-
-### Usage
-
-```sh
-$ eubfr-cli env -h
-```
-
-### GenerateVariables
-
-The EUBFR CLI depends on a few environment variables which point to service API endpoints which are necessary for some commands to work.
-For example, when you want to use commands related to content upload, the CLI will go to `@eubfr/storage-signed-uploads` service and seek for `SIGNED_UPLOADS_API` stored in `.env` file local to the service.
-This endpoint is necessary for the CLI and other clients (client-side apps) to upload files to the data lake by signed uploads approach in AWS.
-For this `.env` file to exist in the service, the serverless service itself has to be deployed on AWS in order for the cloud to generate information about the endpoint resulted out of the resource creation.
-The `generate-variables` command helps you generate such `.env` files by re-uploading the serverless service (which you normally do by `npx sls deploy` from the folder of the service) and then running an export function. (which you usually do by `npx sls export-env`)
-
-There are several services which require information from `.env` files, i.e. environment variables in overall.
-These `.env` files are normally generated automatically for you when you deploy all services setting up your development environment.
-However, if you receive an error for a missing environment variable, you can use this command to regenerate information about the necessary variables.
-
-For instance, you may try to get information about available Elasticsearch domains which are manageable by the CLI running `eubfr-cli es`.
-If you haven't deployed `@eubfr/demo-dashboard-client` or you have switched between staging environments working on different branches at the same code base, then you'll get an error like this:
-
-    ENOENT: no such file or directory, open '.../eubfr-data-lake/demo/dashboard/client/.env'
-
-Or it could be also any other message that hints for a requirement of a given named environment variable, such as `SIGNED_UPLOADS_API`.
-
-These are signs that you need to re-generate all necessary `.env` files which contain information about the API endpoints.
+Remove a demo application.
 
 Usage:
 
 ```sh
-$ eubfr-cli env generate-variables
+$ eubfr-cli demo delete -h
+```
+
+Examples:
+
+Delete all demo applications.
+
+```sh
+$ eubfr-cli demo delete
+```
+
+Delete only demo application of AGRI producer.
+
+```sh
+$ eubfr-cli demo delete -p agri
 ```
 
 ## Services
@@ -189,30 +224,6 @@ $ eubfr-cli services deploy -p agri
 
 ```sh
 $ eubfr-cli services deploy foo bar -p agri
-```
-
-### Delete
-
-Remove a demo application.
-
-Usage:
-
-```sh
-$ eubfr-cli demo delete -h
-```
-
-Examples:
-
-Delete all demo applications.
-
-```sh
-$ eubfr-cli demo delete
-```
-
-Delete only demo application of AGRI producer.
-
-```sh
-$ eubfr-cli demo delete -p agri
 ```
 
 ### Delete
@@ -267,12 +278,6 @@ If you want to make use of the CLI to automatically upload or delete all content
     │   └── valor_sample.xls
     └── wifi4eu
         └── wifi4euRegistrations.xlsx
-
-This content can be found at [eubfr-content](https://s3.console.aws.amazon.com/s3/buckets/eubfr-content/?region=eu-central-1&tab=overview) S3 bucket. If you have `aws` CLI installed, create the folder and get the content by:
-
-```sh
-$ mkdir .content && aws s3 sync s3://eubfr-content ./.content
-```
 
 There are 2 abstracted operations on a project level:
 
@@ -381,8 +386,8 @@ $ eubfr-cli es -h
 
 ### snapshotExec
 
-- **See: [https://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-snapshots.html][33]**
-- **See: [https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-snapshot-create-6-2][34]**
+- **See: [https://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-snapshots.html][34]**
+- **See: [https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-snapshot-create-6-2][35]**
 
 Abstracted utility for making use of `snapshot` methods of ES JS SDK
 
@@ -560,37 +565,38 @@ $ eubfr-cli es delete-indices user-index-1 --confirm -d REACT_APP_ES_PUBLIC_ENDP
 
 Skipping the `user-index-1` will delete all indices in the given domain, so be extra careful with this command.
 
-[1]: #resources
+[1]: #environment
 [2]: #usage
-[3]: #deploy
-[4]: #delete
-[5]: #introduction
+[3]: #print
+[4]: #generatevariables
+[5]: #resources
 [6]: #usage-1
-[7]: #demo
-[8]: #usage-2
-[9]: #deploy-1
-[10]: #environment
-[11]: #usage-3
-[12]: #generatevariables
-[13]: #services
-[14]: #usage-4
-[15]: #deploy-2
-[16]: #delete-1
-[17]: #delete-2
-[18]: #content
-[19]: #usage-5
-[20]: #notes
-[21]: #upload
-[22]: #show
-[23]: #delete-3
-[24]: #elasticsearch
-[25]: #usage-6
-[26]: #snapshotexec
-[27]: #showdomains
-[28]: #showcluster
-[29]: #showindices
-[30]: #createindex
-[31]: #deleteindices
-[32]: ./docs/GETTING_STARTED.md
-[33]: https://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-snapshots.html
-[34]: https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-snapshot-create-6-2
+[7]: #deploy
+[8]: #delete
+[9]: #introduction
+[10]: #usage-2
+[11]: #demo
+[12]: #usage-3
+[13]: #deploy-1
+[14]: #delete-1
+[15]: #services
+[16]: #usage-4
+[17]: #deploy-2
+[18]: #delete-2
+[19]: #content
+[20]: #usage-5
+[21]: #notes
+[22]: #upload
+[23]: #show
+[24]: #delete-3
+[25]: #elasticsearch
+[26]: #usage-6
+[27]: #snapshotexec
+[28]: #showdomains
+[29]: #showcluster
+[30]: #showindices
+[31]: #createindex
+[32]: #deleteindices
+[33]: ./docs/GETTING_STARTED.md
+[34]: https://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-snapshots.html
+[35]: https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-snapshot-create-6-2
