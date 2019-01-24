@@ -50,6 +50,7 @@ Here's a list of the required variables which one should set in order to be able
 ```sh
 export EUBFR_ENV=dev
 export EUBFR_STAGE=chernka123
+export EUBFR_AWS_REGION=eu-central-1
 export EUBFR_USERNAME=cordis
 ```
 

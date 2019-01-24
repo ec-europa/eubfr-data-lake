@@ -279,12 +279,6 @@ If you want to make use of the CLI to automatically upload or delete all content
     └── wifi4eu
         └── wifi4euRegistrations.xlsx
 
-This content can be found at [eubfr-content](https://s3.console.aws.amazon.com/s3/buckets/eubfr-content/?region=eu-central-1&tab=overview) S3 bucket. If you have `aws` CLI installed, create the folder and get the content by:
-
-```sh
-$ mkdir .content && aws s3 sync s3://eubfr-content ./.content
-```
-
 There are 2 abstracted operations on a project level:
 
 - `yarn content:upload` uploads files from `.content` producers' folders to their respective S3 buckets in the cloud. This triggers the ingestion process.

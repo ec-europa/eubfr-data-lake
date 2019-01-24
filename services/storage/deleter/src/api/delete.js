@@ -1,32 +1,32 @@
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
-import { checkAccess } from '../lib/checkAccess';
+import { getUserGroups } from '../lib/getUserGroups';
 import { extractUsername } from '../lib/extractUsername';
 
-// As each case has a return + cb and still some branching of the checks are problematic:
-// https://eslint.org/docs/rules/consistent-return#when-not-to-use-it
-// eslint-disable-next-line
-export const handler = (event, context, callback) => {
-  // Extract env vars
+export const handler = async event => {
   const { BUCKET, REGION } = process.env;
 
   if (!BUCKET || !REGION) {
-    return callback(
-      new Error('BUCKET and REGION environment variables are required!')
-    );
+    throw new Error('BUCKET and REGION environment variables are required!');
   }
 
-  const { userArn } = event.requestContext.identity;
-  const username = extractUsername(userArn);
+  try {
+    const { userArn } = event.requestContext.identity;
+    const username = extractUsername(userArn);
 
-  checkAccess(username).then(accessGranted => {
+    const groups = await getUserGroups(username);
+
+    const accessGranted = groups.Groups.some(
+      group => group.GroupName === 'Producers'
+    );
+
     if (!accessGranted) {
-      return callback(null, {
+      return {
         statusCode: 403,
         body: JSON.stringify({
           message:
             'Access denied. You have to be a member of the "Producers" group.',
         }),
-      });
+      };
     }
 
     const s3 = new AWS.S3({ signatureVersion: 'v4', REGION });
@@ -37,60 +37,53 @@ export const handler = (event, context, callback) => {
         : undefined;
 
     if (!file) {
-      const response = {
+      return {
         statusCode: 400,
         body: JSON.stringify({
           error: 'Missing x-amz-meta-computed-key header',
         }),
       };
-
-      return callback(null, response);
     }
 
     if (!file.startsWith(username)) {
-      const response = {
+      return {
         statusCode: 400,
         body: JSON.stringify({
           error: "You can't delete a file you don't own.",
         }),
       };
-
-      return callback(null, response);
     }
 
     // If producer has correctly submitted a key.
-    const params = {
-      Bucket: BUCKET,
-      Key: file,
-    };
+    const params = { Bucket: BUCKET, Key: file };
 
-    return s3.deleteObject(params, err => {
-      if (err) {
-        const response = {
-          statusCode: 400,
-          body: JSON.stringify({
-            error: 'An error occured',
-            err,
-          }),
-        };
+    try {
+      await s3.deleteObject(params).promise();
 
-        return callback(null, response);
-      }
-
-      const response = {
+      return {
         statusCode: 200,
         headers: {
-          'Access-Control-Allow-Origin': '*', // Required for CORS support to work
-          'Access-Control-Allow-Credentials': true, // Required for cookies, authorization headers with HTTPS
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': true,
         },
+        body: JSON.stringify(
+          // Required for CORS support to work.
+          // Required for cookies, authorization headers with HTTPS.
+          { message: 'Object deleted successfully.' }
+        ),
+      };
+    } catch (err) {
+      return {
+        statusCode: 400,
         body: JSON.stringify({
-          message: 'Object deleted successfully',
+          error: 'An error occured in s3.deleteObject method.',
+          err,
         }),
       };
-
-      return callback(null, response);
-    });
-  });
+    }
+  } catch (e) {
+    throw e;
+  }
 };
 
 export default handler;

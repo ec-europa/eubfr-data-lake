@@ -2,7 +2,7 @@
 
 exports[`Service aws-node-singned-uploads: S3 mock for successful operations Replies back with a JSON for a signed upload on success 1`] = `
 Object {
-  "body": "{\\"data\\":\\"https://example.com\\"}",
+  "body": "{}",
   "headers": Object {
     "Access-Control-Allow-Credentials": true,
     "Access-Control-Allow-Origin": "*",
