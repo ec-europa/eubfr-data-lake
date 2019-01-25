@@ -6,12 +6,12 @@
   - [Usage][2]
   - [Print][3]
   - [GenerateVariables][4]
-- [Resources][5]
+- [Introduction][5]
   - [Usage][6]
-  - [Deploy][7]
-  - [Delete][8]
-- [Introduction][9]
-  - [Usage][10]
+- [Resources][7]
+  - [Usage][8]
+  - [Deploy][9]
+  - [Delete][10]
 - [Demo][11]
   - [Usage][12]
   - [Deploy][13]
@@ -82,6 +82,22 @@ Usage:
 $ eubfr-cli env generate-variables
 ```
 
+## Introduction
+
+EUBFR CLI
+
+Low-level utilities for managing assets of EUBFR data lake.
+
+Please refer to [Getting Started guide][33] before jumping into using the utility.
+
+Each command and sub-command has a help menu, which you can open by passing `-h` or `--help` flags without any arguments.
+
+### Usage
+
+```sh
+$ eubfr-cli -h
+```
+
 ## Resources
 
 Manage resources
@@ -114,22 +130,6 @@ Usage:
 
 ```sh
 $ eubfr-cli resources delete
-```
-
-## Introduction
-
-EUBFR CLI
-
-Low-level utilities for managing assets of EUBFR data lake.
-
-Please refer to [Getting Started guide][33] before jumping into using the utility.
-
-Each command and sub-command has a help menu, which you can open by passing `-h` or `--help` flags without any arguments.
-
-### Usage
-
-```sh
-$ eubfr-cli -h
 ```
 
 ## Demo
@@ -279,6 +279,12 @@ If you want to make use of the CLI to automatically upload or delete all content
     └── wifi4eu
         └── wifi4euRegistrations.xlsx
 
+This content can be found at [eubfr-content][34] S3 bucket. If you have `aws` CLI installed, create the folder and get the content by:
+
+```sh
+$ mkdir .content && aws s3 sync s3://eubfr-content ./.content
+```
+
 There are 2 abstracted operations on a project level:
 
 - `yarn content:upload` uploads files from `.content` producers' folders to their respective S3 buckets in the cloud. This triggers the ingestion process.
@@ -386,8 +392,8 @@ $ eubfr-cli es -h
 
 ### snapshotExec
 
-- **See: [https://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-snapshots.html][34]**
-- **See: [https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-snapshot-create-6-2][35]**
+- **See: [https://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-snapshots.html][35]**
+- **See: [https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-snapshot-create-6-2][36]**
 
 Abstracted utility for making use of `snapshot` methods of ES JS SDK
 
@@ -569,12 +575,12 @@ Skipping the `user-index-1` will delete all indices in the given domain, so be e
 [2]: #usage
 [3]: #print
 [4]: #generatevariables
-[5]: #resources
+[5]: #introduction
 [6]: #usage-1
-[7]: #deploy
-[8]: #delete
-[9]: #introduction
-[10]: #usage-2
+[7]: #resources
+[8]: #usage-2
+[9]: #deploy
+[10]: #delete
 [11]: #demo
 [12]: #usage-3
 [13]: #deploy-1
@@ -598,5 +604,6 @@ Skipping the `user-index-1` will delete all indices in the given domain, so be e
 [31]: #createindex
 [32]: #deleteindices
 [33]: ./docs/GETTING_STARTED.md
-[34]: https://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-snapshots.html
-[35]: https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-snapshot-create-6-2
+[34]: https://s3.console.aws.amazon.com/s3/buckets/eubfr-content/?region=eu-central-1&tab=overview
+[35]: https://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-snapshots.html
+[36]: https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-snapshot-create-6-2
