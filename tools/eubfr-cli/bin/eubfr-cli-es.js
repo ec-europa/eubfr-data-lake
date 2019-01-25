@@ -7,6 +7,7 @@ const readline = require('readline');
 // Utilities
 const getEndpoints = require('../lib/getEndpoints');
 const hasValidOption = require('../lib/hasValidOption');
+const shouldProtectStage = require('../lib/shouldProtectStage');
 
 // Commands
 const showCluster = require('../commands/es/showCluster');
@@ -337,6 +338,11 @@ program
     if (!hasValidOption('domain', options)) {
       console.error(missingRequiredInput);
       process.exit(1);
+    }
+
+    if (shouldProtectStage()) {
+      console.log('You are on a protected stage!');
+      process.exit();
     }
 
     const endpoints = getEndpoints();

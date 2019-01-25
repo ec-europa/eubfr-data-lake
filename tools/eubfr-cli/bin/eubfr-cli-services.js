@@ -4,6 +4,7 @@ const program = require('commander');
 
 // Utilities
 const hasValidOption = require('../lib/hasValidOption');
+const shouldProtectStage = require('../lib/shouldProtectStage');
 
 // Commands
 const deployServices = require('../commands/services/deploy');
@@ -85,6 +86,11 @@ program
   .command('delete [services...]')
   .description('Delete services.')
   .action(async services => {
+    if (shouldProtectStage()) {
+      console.log('You are on a protected stage!');
+      process.exit();
+    }
+
     await deleteServices({ services });
   });
 
