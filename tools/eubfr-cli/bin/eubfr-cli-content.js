@@ -57,7 +57,13 @@ program
     const endpoints = getEndpoints();
 
     console.log('Uploading new content to the data lake ...');
-    ensureVariables(['SIGNED_UPLOADS_API'], endpoints);
+
+    const missing = ensureVariables(['SIGNED_UPLOADS_API'], endpoints);
+
+    if (missing) {
+      console.error(`${missing} environment variable is missing.`);
+      process.exit(1);
+    }
 
     let credentials = [];
     const producerIsSet = hasValidOption('producer', options);
@@ -132,10 +138,16 @@ program
     const endpoints = getEndpoints();
 
     console.log('Querying for existing content in the data lake ...');
-    ensureVariables(
+
+    const missing = ensureVariables(
       ['REACT_APP_STAGE', 'REACT_APP_ES_PRIVATE_ENDPOINT'],
       endpoints
     );
+
+    if (missing) {
+      console.error(`${missing} environment variable is missing.`);
+      process.exit(1);
+    }
 
     const { producer } = options;
 
@@ -197,10 +209,16 @@ program
     const endpoints = getEndpoints();
 
     console.log('Deleting content from the data lake ...');
-    ensureVariables(
+
+    const missing = ensureVariables(
       ['DELETER_API', 'REACT_APP_STAGE', 'REACT_APP_ES_PRIVATE_ENDPOINT'],
       endpoints
     );
+
+    if (missing) {
+      console.error(`${missing} environment variable is missing.`);
+      process.exit(1);
+    }
 
     const producers = getAllProducers();
 
