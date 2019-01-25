@@ -4,6 +4,7 @@ const program = require('commander');
 
 // Utilities
 const hasValidOption = require('../lib/hasValidOption');
+const shouldProtectStage = require('../lib/shouldProtectStage');
 
 // Commands
 const deployDemos = require('../commands/demo/deploy');
@@ -83,6 +84,11 @@ program
     const producer = hasValidOption('producer', options)
       ? options.producer
       : '*';
+
+    if (shouldProtectStage()) {
+      console.log('You are on a protected stage!');
+      process.exit();
+    }
 
     await deleteDemos({ producer });
   });
