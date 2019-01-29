@@ -1,9 +1,13 @@
 const AWS = require('aws-sdk');
-const AwsConfigCredentials = require('serverless/lib/plugins/aws/configCredentials/awsConfigCredentials');
-const elasticsearch = require('elasticsearch');
+const awscred = require('awscred');
 const connectionClass = require('http-aws-es');
+const elasticsearch = require('elasticsearch');
 const isEqual = require('lodash.isequal');
-const listExports = require('./lib/listExports');
+const { promisify } = require('util');
+
+const getExportValueByName = require('./lib/getExportValueByName');
+
+const getUserCredentials = promisify(awscred.load);
 
 class CreateElasticIndexDeploy {
   constructor(serverless, options) {
@@ -13,79 +17,69 @@ class CreateElasticIndexDeploy {
     this.hooks = {
       'after:deploy:deploy': this.afterDeployment.bind(this),
     };
-
-    // Setup credentials:
-    const slsAwsConfig = new AwsConfigCredentials(
-      this.serverless,
-      this.options
-    );
-
-    this.awsConfig = slsAwsConfig.getCredentials();
   }
 
-  async setupElasticClient(config) {
-    const accessKeyId = this.awsConfig[1].split(' = ')[1];
-    const secretAccessKey = this.awsConfig[2].split(' = ')[1];
-
-    // Setup elasticsearch:
-
-    // Get specific plugin configurations
-    const { region, index } = config;
-
-    const exportedVariables = await listExports(this.serverless.providers.aws);
-
-    // Map endpointName with the actual ES domain
-    const domain = exportedVariables.find(
-      exp => exp.Name === config.endpointName
-    ).Value;
-
-    // elasticsearch client configuration
-    const esOptions = {
-      index,
-      connectionClass,
-      apiVersion: '6.3',
-      host: `https://${domain}`,
-      // this is required when out of a lambda function
-      awsConfig: new AWS.Config({
-        accessKeyId,
-        secretAccessKey,
-        region,
-      }),
-    };
-
-    // elasticsearch client instantiation
-    return elasticsearch.Client(esOptions);
-  }
-
-  // Create elasticsearch index after deployment has finished
-  async afterDeployment() {
+  afterDeployment() {
     const indices = this.serverless.service.custom.slsEsIndices;
 
-    await indices.forEach(async indexConfig => {
-      const client = await this.setupElasticClient(indexConfig);
-      const { index, mapping } = indexConfig;
+    return Promise.all(
+      indices.map(async indexConfig => {
+        try {
+          const credentials = await getUserCredentials();
+          const { accessKeyId, secretAccessKey } = credentials.credentials;
 
-      client.indices.exists({ index }).then(exists => {
-        if (!exists) {
-          return client.indices.create({ index, body: mapping });
-        }
+          const { index, mapping, region, endpointName } = indexConfig;
 
-        return client.indices.getMapping({ index }).then(existingMappping => {
+          const domain = await getExportValueByName({
+            name: endpointName,
+            region,
+          });
+
+          // elasticsearch client configuration
+          const esOptions = {
+            index,
+            connectionClass,
+            apiVersion: '6.3',
+            host: `https://${domain}`,
+            // this is required when out of a lambda function
+            awsConfig: new AWS.Config({
+              accessKeyId,
+              secretAccessKey,
+              region,
+            }),
+          };
+
+          const client = elasticsearch.Client(esOptions);
+
+          const exists = await client.indices.exists({ index });
+
+          if (!exists) {
+            return client.indices.create({ index, body: mapping });
+          }
+
+          const existingMappping = await client.indices.getMapping({ index });
+
           if (!isEqual(existingMappping[index], mapping)) {
             const types = Object.keys(mapping.mappings);
 
-            types.forEach(type =>
-              // Update mapping (if possible)
-              client.indices.putMapping({
-                index,
-                type,
-                body: mapping.mappings[type],
-              })
+            return Promise.all(
+              types.map(type =>
+                // Update mapping (if possible)
+                client.indices.putMapping({
+                  index,
+                  type,
+                  body: mapping.mappings[type],
+                })
+              )
             );
           }
-        });
-      });
-    });
+
+          return console.log('Finished updates on ES indices.');
+        } catch (error) {
+          throw error;
+        }
+      })
+    );
   }
 }
 
