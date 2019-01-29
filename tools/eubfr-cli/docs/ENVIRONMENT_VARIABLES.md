@@ -52,6 +52,7 @@ export EUBFR_ENV=dev
 export EUBFR_STAGE=chernka123
 export EUBFR_AWS_REGION=eu-central-1
 export EUBFR_USERNAME=cordis
+export EUBFR_CONTENT_REPOSITORY=eubfr-content
 ```
 
 Please keep in mind that setting `EUBFR_USERNAME` will force EUBFR CLI to work only with assets related to this particular producer. This way, running deployment scripts, you'll get a working environment faster for CORIS, leaving out AGRI, HOME, etc.
@@ -63,6 +64,14 @@ Here's a list of settings separated by their target goals:
 ### Content management
 
 When you work on a specific ETL and you want to save time from repetitive creation and deletion of content to test how you changes reflect online.
+
+#### Download
+
+If you want to download all the files which are ready to be ingested in the data lake, you will need to set the S3 bucket serving the purpose of the content repository:
+
+```sh
+export EUBFR_CONTENT_REPOSITORY=eubfr-content
+```
 
 #### Upload
 
