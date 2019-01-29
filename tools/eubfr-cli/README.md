@@ -23,17 +23,18 @@
 - [Content][19]
   - [Usage][20]
   - [Notes][21]
-  - [Upload][22]
-  - [Show][23]
-  - [Delete][24]
-- [Elasticsearch][25]
-  - [Usage][26]
-  - [snapshotExec][27]
-  - [showDomains][28]
-  - [showCluster][29]
-  - [showIndices][30]
-  - [createIndex][31]
-  - [deleteIndices][32]
+  - [Download][22]
+  - [Upload][23]
+  - [Show][24]
+  - [Delete][25]
+- [Elasticsearch][26]
+  - [Usage][27]
+  - [snapshotExec][28]
+  - [showDomains][29]
+  - [showCluster][30]
+  - [showIndices][31]
+  - [createIndex][32]
+  - [deleteIndices][33]
 
 ## Environment
 
@@ -88,7 +89,7 @@ EUBFR CLI
 
 Low-level utilities for managing assets of EUBFR data lake.
 
-Please refer to [Getting Started guide][33] before jumping into using the utility.
+Please refer to [Getting Started guide][34] before jumping into using the utility.
 
 Each command and sub-command has a help menu, which you can open by passing `-h` or `--help` flags without any arguments.
 
@@ -279,10 +280,16 @@ If you want to make use of the CLI to automatically upload or delete all content
     └── wifi4eu
         └── wifi4euRegistrations.xlsx
 
-This content can be found at [eubfr-content][34] S3 bucket. If you have `aws` CLI installed, create the folder and get the content by:
+This content can be found at [eubfr-content][35] S3 bucket. If you have `aws` CLI installed, create the folder and get the content by:
 
 ```sh
 $ mkdir .content && aws s3 sync s3://eubfr-content ./.content
+```
+
+Or, if you want to use the EUBFR CLI, you can also download the content by:
+
+```sh
+$ eubfr-cli content download --confirm
 ```
 
 There are 2 abstracted operations on a project level:
@@ -291,6 +298,38 @@ There are 2 abstracted operations on a project level:
 - `yarn content:delete` deletes all the currently uploaded content of all producers, for a given stage.
 
 You will need to have the `config.json` file correctly setup in the root folder of the project, as producers' credentials are currently stored only there in the existing workflows.
+
+### Download
+
+Get all necessary files for the data lake from a content repository.
+
+To use this command, you will need to set `EUBFR_CONTENT_REPOSITORY` environment variable with the name of the S3 bucket which is the content repository.
+
+Usage:
+
+```sh
+$ eubfr-cli content download -h
+```
+
+Examples:
+
+Get only the files necessary to work with AGRI producer.
+
+```sh
+$ eubfr-cli content download -p agri
+```
+
+Download files in a specific folder if the script does not have permissions to write in default `.content`.
+
+```sh
+$ eubfr-cli content download -f /tmp
+```
+
+Download all files for all producers in default `.content` folder without interactions.
+
+```sh
+$ eubfr-cli content download --confirm
+```
 
 ### Upload
 
@@ -392,8 +431,8 @@ $ eubfr-cli es -h
 
 ### snapshotExec
 
-- **See: [https://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-snapshots.html][35]**
-- **See: [https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-snapshot-create-6-2][36]**
+- **See: [https://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-snapshots.html][36]**
+- **See: [https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-snapshot-create-6-2][37]**
 
 Abstracted utility for making use of `snapshot` methods of ES JS SDK
 
@@ -592,18 +631,19 @@ Skipping the `user-index-1` will delete all indices in the given domain, so be e
 [19]: #content
 [20]: #usage-5
 [21]: #notes
-[22]: #upload
-[23]: #show
-[24]: #delete-3
-[25]: #elasticsearch
-[26]: #usage-6
-[27]: #snapshotexec
-[28]: #showdomains
-[29]: #showcluster
-[30]: #showindices
-[31]: #createindex
-[32]: #deleteindices
-[33]: ./docs/GETTING_STARTED.md
-[34]: https://s3.console.aws.amazon.com/s3/buckets/eubfr-content/?region=eu-central-1&tab=overview
-[35]: https://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-snapshots.html
-[36]: https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-snapshot-create-6-2
+[22]: #download
+[23]: #upload
+[24]: #show
+[25]: #delete-3
+[26]: #elasticsearch
+[27]: #usage-6
+[28]: #snapshotexec
+[29]: #showdomains
+[30]: #showcluster
+[31]: #showindices
+[32]: #createindex
+[33]: #deleteindices
+[34]: ./docs/GETTING_STARTED.md
+[35]: https://s3.console.aws.amazon.com/s3/buckets/eubfr-content/?region=eu-central-1&tab=overview
+[36]: https://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-snapshots.html
+[37]: https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-snapshot-create-6-2

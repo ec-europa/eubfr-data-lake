@@ -104,6 +104,12 @@ program.command('demo', 'Demo applications management');
  * $ mkdir .content && aws s3 sync s3://eubfr-content ./.content
  * ```
  *
+ * Or, if you want to use the EUBFR CLI, you can also download the content by:
+ *
+ * ```sh
+ * $ eubfr-cli content download --confirm
+ * ```
+ *
  * There are 2 abstracted operations on a project level:
  *
  * - `yarn content:upload` uploads files from `.content` producers' folders to their respective S3 buckets in the cloud. This triggers the ingestion process.
