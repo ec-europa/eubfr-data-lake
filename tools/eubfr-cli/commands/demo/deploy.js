@@ -19,7 +19,7 @@ const getAllProducers = require('../../lib/getAllProducers');
 const getConfigurations = require('../../lib/getConfigurations');
 const getServiceLocation = require('../../lib/getServiceLocation');
 
-const deployDemo = async ({ producer }) => {
+const demoDeployCommand = async ({ producer }) => {
   const { stage, region } = getConfigurations();
   const demos = ['demo-dashboard-server', 'demo-dashboard-client'];
   // EUBFR_USERNAME can override flags.
@@ -74,4 +74,4 @@ const deployDemo = async ({ producer }) => {
   }
 };
 
-module.exports = deployDemo;
+module.exports = demoDeployCommand;

@@ -7,8 +7,8 @@ const hasValidOption = require('../lib/hasValidOption');
 const shouldProtectStage = require('../lib/shouldProtectStage');
 
 // Commands
-const deployServices = require('../commands/services/deploy');
-const deleteServices = require('../commands/services/delete');
+const servicesDeleteCommand = require('../commands/services/delete');
+const servicesDeployCommand = require('../commands/services/deploy');
 
 /**
  *
@@ -51,7 +51,7 @@ program
       ? options.producer
       : '*';
 
-    await deployServices({ services, producer });
+    await servicesDeployCommand({ services, producer });
   });
 
 /**
@@ -91,7 +91,7 @@ program
       process.exit();
     }
 
-    await deleteServices({ services });
+    await servicesDeleteCommand({ services });
   });
 
 // If no arguments provided, display help menu.

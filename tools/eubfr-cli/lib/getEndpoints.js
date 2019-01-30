@@ -52,6 +52,11 @@ const getEndpoints = () => {
     endpoints.REACT_APP_STAGE = process.env.EUBFR_STAGE;
   }
 
+  // Make it easy for anyone to start working with the content.
+  if (!endpoints.EUBFR_CONTENT_REPOSITORY) {
+    endpoints.EUBFR_CONTENT_REPOSITORY = 'eubfr-content';
+  }
+
   if (process.env.VERBOSE) {
     console.info('EUBFR CLI endpoints context:');
     console.info(prettyjson.render(endpoints));

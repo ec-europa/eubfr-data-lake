@@ -11,10 +11,10 @@ const getAllProducers = require('../lib/getAllProducers');
 const hasValidOption = require('../lib/hasValidOption');
 
 // Commands
-const downloadFiles = require('../commands/content/download');
-const uploadFiles = require('../commands/content/upload');
-const showFile = require('../commands/content/show');
-const deleteFiles = require('../commands/content/delete');
+const contentDeleteCommand = require('../commands/content/delete');
+const contentDownloadCommand = require('../commands/content/download');
+const contentShowCommand = require('../commands/content/show');
+const contentUploadCommand = require('../commands/content/upload');
 
 const missingRequiredInput = '\n error: Missing required input parameters';
 
@@ -78,7 +78,7 @@ program
       console.log('This might take some time.');
 
       if (options.confirm) {
-        await downloadFiles({ folder, producer });
+        await contentDownloadCommand({ folder, producer });
       } else {
         // Initiate the prompt interface.
         const rl = readline.createInterface({
@@ -88,7 +88,7 @@ program
 
         rl.question('Are you sure? <yes|y> ', async answer => {
           if (answer === 'y' || answer === 'yes') {
-            await downloadFiles({ folder, producer });
+            await contentDownloadCommand({ folder, producer });
           }
 
           rl.close();
@@ -109,7 +109,7 @@ program
       }
 
       if (options.confirm) {
-        await downloadFiles({ folder, producer });
+        await contentDownloadCommand({ folder, producer });
       } else {
         // Initiate the prompt interface.
         const rl = readline.createInterface({
@@ -119,7 +119,7 @@ program
 
         rl.question('Are you sure? <yes|y> ', async answer => {
           if (answer === 'y' || answer === 'yes') {
-            await downloadFiles({ folder, producer });
+            await contentDownloadCommand({ folder, producer });
           }
 
           rl.close();
@@ -204,7 +204,7 @@ program
       );
     }
 
-    await uploadFiles({ files, credentials, endpoints });
+    await contentUploadCommand({ files, credentials, endpoints });
   });
 
 /**
@@ -278,7 +278,7 @@ program
       process.exit(1);
     }
 
-    await showFile({ file, producer, endpoints });
+    await contentShowCommand({ file, producer, endpoints });
   });
 
 /**
@@ -343,7 +343,7 @@ program
     );
 
     if (options.confirm) {
-      await deleteFiles({ files, credentials, endpoints });
+      await contentDeleteCommand({ files, credentials, endpoints });
     } else {
       // Initiate the prompt interface.
       const rl = readline.createInterface({
@@ -353,7 +353,7 @@ program
 
       rl.question('Are you sure? <yes|y> ', async answer => {
         if (answer === 'y' || answer === 'yes') {
-          await deleteFiles({ files, credentials, endpoints });
+          await contentDeleteCommand({ files, credentials, endpoints });
         }
 
         rl.close();

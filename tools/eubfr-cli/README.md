@@ -5,7 +5,7 @@
 - [Environment][1]
   - [Usage][2]
   - [Print][3]
-  - [GenerateVariables][4]
+  - [Generate][4]
 - [Introduction][5]
   - [Usage][6]
 - [Resources][7]
@@ -29,12 +29,12 @@
   - [Delete][25]
 - [Elasticsearch][26]
   - [Usage][27]
-  - [snapshotExec][28]
-  - [showDomains][29]
-  - [showCluster][30]
-  - [showIndices][31]
-  - [createIndex][32]
-  - [deleteIndices][33]
+  - [SnapshotExec][28]
+  - [ShowDomains][29]
+  - [ShowCluster][30]
+  - [ShowIndices][31]
+  - [CreateIndex][32]
+  - [DeleteIndices][33]
 
 ## Environment
 
@@ -56,7 +56,7 @@ Usage:
 $ eubfr-cli env print
 ```
 
-### GenerateVariables
+### Generate
 
 The EUBFR CLI depends on a few environment variables which point to service API endpoints which are necessary for some commands to work.
 For example, when you want to use commands related to content upload, the CLI will go to `@eubfr/storage-signed-uploads` service and seek for `SIGNED_UPLOADS_API` stored in `.env` file local to the service.
@@ -429,7 +429,7 @@ Manage Elasticsearch assets
 $ eubfr-cli es -h
 ```
 
-### snapshotExec
+### SnapshotExec
 
 - **See: [https://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-snapshots.html][36]**
 - **See: [https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-snapshot-create-6-2][37]**
@@ -499,7 +499,7 @@ Get status of a given snapshot:
 $ eubfr-cli es snapshot-exec status --host https://es.domain/ --params '{ "repository": "repo_name", "snapshot": "snap1" }'
 ```
 
-### showDomains
+### ShowDomains
 
 Display a list of manageable domains.
 
@@ -512,7 +512,7 @@ $ eubfr-cli es show-domains
 Useful when you want to see the names of the Elasticsearch domains available for management throught the EUBFR CLI.
 This will give you information about the named environment variables holding information about their corresponding hosts. (API endpoints)
 
-### showCluster
+### ShowCluster
 
 Display cluster information about a given domain.
 
@@ -530,7 +530,7 @@ Examples:
 $ eubfr-cli es show-cluster -d REACT_APP_ES_PUBLIC_ENDPOINT
 ```
 
-### showIndices
+### ShowIndices
 
 Display index information.
 
@@ -560,7 +560,7 @@ This will give you a list of existing indices created by the given user. Then, y
 $ eubfr-cli es show-indices user-index-1 user-index-2 etc -d REACT_APP_ES_PUBLIC_ENDPOINT
 ```
 
-### createIndex
+### CreateIndex
 
 Create an index in a given domain with an optional mapping.
 
@@ -586,7 +586,7 @@ $ eubfr-cli es create-index user-index-1 -t project -m ./resources/elasticsearch
 
 This is especially useful when you want to update mapping for a given index without re-creating the whole domain.
 
-### deleteIndices
+### DeleteIndices
 
 Delete indices from a given Elasticsearch domain.
 
@@ -613,7 +613,7 @@ Skipping the `user-index-1` will delete all indices in the given domain, so be e
 [1]: #environment
 [2]: #usage
 [3]: #print
-[4]: #generatevariables
+[4]: #generate
 [5]: #introduction
 [6]: #usage-1
 [7]: #resources

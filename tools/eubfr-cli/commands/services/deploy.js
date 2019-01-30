@@ -8,7 +8,7 @@ const shell = promisify(exec);
 const getServices = require('../../lib/getServices');
 const getServiceLocation = require('../../lib/getServiceLocation');
 
-const deployServices = async ({ services, producer }) => {
+const servicesDeployCommand = async ({ services, producer }) => {
   const slsBin = path.resolve(
     require.resolve('serverless'),
     '../../bin/serverless'
@@ -63,4 +63,4 @@ const deployServices = async ({ services, producer }) => {
   }
 };
 
-module.exports = deployServices;
+module.exports = servicesDeployCommand;

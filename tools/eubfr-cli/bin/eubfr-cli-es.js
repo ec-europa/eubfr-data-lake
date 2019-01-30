@@ -90,7 +90,7 @@ const missingRequiredInput = '\n error: Missing required input parameters';
  * @see https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-snapshot-create-6-2
  *
  * @memberof Elasticsearch
- * @name snapshotExec
+ * @name SnapshotExec
  * @public
  */
 program
@@ -123,7 +123,7 @@ program
  * This will give you information about the named environment variables holding information about their corresponding hosts. (API endpoints)
  *
  * @memberof Elasticsearch
- * @name showDomains
+ * @name ShowDomains
  * @public
  */
 program
@@ -150,7 +150,7 @@ program
  * ```
  *
  * @memberof Elasticsearch
- * @name showCluster
+ * @name ShowCluster
  * @public
  */
 program
@@ -198,7 +198,7 @@ program
  * ```
  *
  * @memberof Elasticsearch
- * @name showIndices
+ * @name ShowIndices
  * @public
  */
 program
@@ -243,7 +243,7 @@ program
  * This is especially useful when you want to update mapping for a given index without re-creating the whole domain.
  *
  * @memberof Elasticsearch
- * @name createIndex
+ * @name CreateIndex
  * @public
  */
 program
@@ -326,7 +326,7 @@ program
  * Skipping the `user-index-1` will delete all indices in the given domain, so be extra careful with this command.
  *
  * @memberof Elasticsearch
- * @name deleteIndices
+ * @name DeleteIndices
  * @public
  */
 program

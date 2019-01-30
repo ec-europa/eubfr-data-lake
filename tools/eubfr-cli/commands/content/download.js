@@ -1,6 +1,6 @@
 const getContentFiles = require('../../lib/getContentFiles');
 
-const getContentFilesCommand = async ({ folder, producer }) => {
+const contentDownloadCommand = async ({ folder, producer }) => {
   try {
     await getContentFiles({ folder, producer });
     return console.log('Files have been downloaded successfully.');
@@ -9,4 +9,4 @@ const getContentFilesCommand = async ({ folder, producer }) => {
   }
 };
 
-module.exports = getContentFilesCommand;
+module.exports = contentDownloadCommand;

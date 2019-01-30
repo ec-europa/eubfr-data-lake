@@ -8,7 +8,7 @@ const shell = promisify(exec);
 const getConfigurations = require('../../lib/getConfigurations');
 const getServiceLocation = require('../../lib/getServiceLocation');
 
-const deleteResources = async () => {
+const resourcesDeleteCommand = async () => {
   const slsBin = path.resolve(
     require.resolve('serverless'),
     '../../bin/serverless'
@@ -35,4 +35,4 @@ const deleteResources = async () => {
   return Promise.all(operations);
 };
 
-module.exports = deleteResources;
+module.exports = resourcesDeleteCommand;
