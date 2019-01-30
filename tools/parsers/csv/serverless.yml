@@ -26,6 +26,5 @@ functions:
     handler: src/events/onParseCSV.handler
     name: ${self:provider.stage}-${self:service}
     environment:
-      # Change this in order to work with the right file for your case.
-      FILE: ErasmusPlus_KA3_SupportForPolicyReform_Projects_Overview
-            
+      # Rename for your specific file.
+      FILE: sample

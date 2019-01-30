@@ -15,7 +15,7 @@ export const handler = () => {
 
   // Try with both to see the difference.
   // const parser = parse({ columns: true, skip_lines_with_error: true });
-  const parser = parse({ columns: true });
+  const parser = parse({ columns: true, to: 11 });
 
   // Transform
   const transformer = transform(
