@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DG DEVCO XLS transformer Produces correct JSON output structure 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "funding_area": Array [],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "EUR",
+      "raw": 0.618036,
+      "value": 618036,
+    },
+  },
+  "call_year": "",
+  "complete": true,
+  "description": "Fourniture, installation, mise en SAV d'un an des équipements photovoltaïques au bénéfice de onze (11) délégations régionales du Ministère des Finances et du Budget et de trois (03) communes pilotes",
+  "ec_priorities": Array [],
+  "media": Array [],
+  "programme_name": "EDF",
+  "project_id": 100,
+  "project_locations": Array [
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "TD",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "West Africa",
+      "town": "",
+    },
+  ],
+  "project_website": "",
+  "related_links": Array [],
+  "reporting_organisation": "DEVCO",
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
+  "status": "On going",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [],
+  "third_parties": Array [],
+  "timeframe": Object {
+    "from": "1970-01-01T00:00:02.018Z",
+    "from_precision": "year",
+    "to": null,
+    "to_precision": "year",
+  },
+  "title": "Fourniture, installation, mise en SAV d'un an des équipements photovoltaïques au bénéfice de onze (11) délégations régionales du Ministère des Finances et du Budget et de trois (03) communes pilotes (Implementing Entity: Aplicaciones Tecnicas de la Energiasl)",
+  "type": Array [
+    "Mini grid including generation, ",
+  ],
+}
+`;

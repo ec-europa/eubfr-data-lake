@@ -14,8 +14,8 @@ import type { Project } from '@eubfr/types';
  * Preprocess `budget`
  *
  * Input fields taken from the `record` are:
- * - `Total Budget\n(Million Euro)`
- * - `Total EU Contribution \n(Million Euro)`
+ * - `Total EU Contribution \r\n(Million Euro)`
+ * - `Total Budget\r\n(Million Euro)`
  *
  * @memberof DevcoXlsTransform
  * @param {Object} record The row received from parsed file
@@ -28,7 +28,7 @@ const getBudget = record => {
   );
 
   const totalCost = extractBudgetData(
-    `${record['Total Budget\n(Million Euro)']} million EUR`
+    `${record['Total Budget\r\n(Million Euro)']} million EUR`
   );
 
   const budget = {
@@ -45,7 +45,7 @@ const getBudget = record => {
     total_cost: sanitizeBudgetItem({
       value: totalCost.value,
       currency: 'EUR',
-      raw: record['Total Budget\n(Million Euro)'],
+      raw: record['Total EU Contribution \r\n(Million Euro)'],
     }),
   };
 
@@ -69,7 +69,6 @@ const getCodeByCountry = countryName =>
  * Input fields taken from the `record` are:
  * - `Country`
  * - `Region`
- * - `GIS Localisation`
  *
  * @memberof DevcoXlsTransform
  * @param {Object} record The row received from parsed file
@@ -77,18 +76,8 @@ const getCodeByCountry = countryName =>
  */
 
 const getLocations = record => {
-  let centroid = null;
   const locations = [];
-
   const code = getCountryCode(getCodeByCountry(record.Country));
-
-  const coordinates = record['GIS Localisation'].split(',');
-  if (coordinates && coordinates.length > 1) {
-    centroid = {
-      lat: parseFloat(coordinates[0].replace(/\n/g, '')),
-      lon: parseFloat(coordinates[1].replace(/\n/g, '')),
-    };
-  }
 
   if (code) {
     locations.push({
@@ -98,7 +87,7 @@ const getLocations = record => {
       address: '',
       postal_code: '',
       town: '',
-      centroid,
+      centroid: null,
       location: null,
     });
   }
@@ -211,7 +200,7 @@ export default (record: Object): Project | null => {
     ec_priorities: [],
     media: [],
     programme_name: record['Funding Source'] || '',
-    project_id: record.ID,
+    project_id: record.ID || '',
     project_locations: getLocations(record),
     project_website: '',
     complete: true,

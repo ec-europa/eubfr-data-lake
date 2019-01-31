@@ -12,15 +12,15 @@ Model to compare with is available at: https://ec-europa.github.io/eubfr-data-la
 | Project Title                                                     | title                          |
 | CRIS No or ExCom Des                                              |                                |
 | Project Type                                                      | type                           |
-| Total Budget\n(Million Euro)                                      | budget.total_cost              |
+| Total Budget\r\n(Million Euro)                                    | budget.total_cost              |
 | Investment Grant (Million Euro)                                   |                                |
 | TA (Million Euro)                                                 |                                |
-| Interest Rate Subsidy \n(Million Euro)                            |                                |
+| Interest Rate Subsidy \r\n(Million Euro)                          |                                |
 | Guarantee (Million Euro)                                          |                                |
 | Equity (Million Euro)                                             |                                |
 | Budget Support (Million Euro)                                     |                                |
 | Loan (Million Euro)                                               |                                |
-| Total EU Contribution \n(Million Euro)                            | budget.eu_contrib              |
+| Total EU Contribution \r\n(Million Euro)                          | budget.eu_contrib              |
 | Leverage                                                          |                                |
 | 1.1 Access on grid electricity ('000 people)                      | results                        |
 | 1.2 Access mini grid electricity ('000 people)                    | results                        |
@@ -44,5 +44,4 @@ Model to compare with is available at: https://ec-europa.github.io/eubfr-data-la
 | Starting Date                                                     | timeframe.from                 |
 | Ending Date                                                       | timeframe.to                   |
 | For AREI Projects (Endorsement) Y/N                               |                                |
-| GIS Localisation                                                  | project_locations.centroid     |
 | Comments                                                          |                                |
