@@ -55,8 +55,36 @@ Object {
   "related_links": Array [],
   "reporting_organisation": "DEVCO",
   "results": Object {
-    "available": "",
-    "result": "",
+    "available": "yes",
+    "result": "Direct and Inferred electricity access ('000 people): 0 
+Clean cooking and fuel access ('000 people): 0 
+Direct and Inferred access to energy ('000 people): 0 
+Electricity from renewabes (GWh/year): 0.24528000000000005 
+Reneable generation capacity (MW): 0.14 
+Electricity generation capacity (MW): 0.14 
+Transmission and distribution lines (km): 0 
+GHG emissions avoided per year (ktons CO2eq): 0.2 
+No of direct and permanent jons (construction and operation): 0 
+(Access to energy): 0 
+(Renewable energy generation and energy efficiency): 0.14 
+(Contribution to the fight against climate change): 0.2 
+1
+(No of people provided with access to electricity with EU support): 0 
+2
+(Renewable energy production supported by the EU): 0.24528000000000005 
+3
+(GHG emission avoided): 0.2 
+7.1.1
+Percentage of population with access to electricity): 0 
+7.1.2
+(Proportion of population with primary reliance on clean fuels and technology): 0 
+7.2.1 
+Renewable energy share in the total final energy consumption): 0.24528000000000005 
+7.3.1 
+(Energy intensity measured in terms of primary energy and GDP): 0 
+8.3.1 
+(Proportion of informal employement in non-agriculture employment, by sex): 0 
+",
   },
   "status": "On going",
   "sub_programme_name": "",
