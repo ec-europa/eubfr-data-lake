@@ -23,34 +23,48 @@ import type { Project } from '@eubfr/types';
  */
 
 const getBudget = record => {
-  const euContrib = extractBudgetData(
-    `${record['Total EU Contribution (Million Euro)']} m EUR`
-  );
+  const euContribString = record['Total EU Contribution (Million Euro)']
+    ? `EUR ${record['Total EU Contribution (Million Euro)']} million`
+    : null;
+  const euContrib = euContribString
+    ? sanitizeBudgetItem(extractBudgetData(euContribString))
+    : sanitizeBudgetItem();
 
-  const totalCost = extractBudgetData(
-    `${record['Total Budget (Million Euro)']} m EUR`
-  );
+  const totalCostString = record['Total Budget (Million Euro)']
+    ? `EUR ${record['Total Budget (Million Euro)']} million`
+    : null;
+  const totalCost = totalCostString
+    ? sanitizeBudgetItem(extractBudgetData(totalCostString))
+    : sanitizeBudgetItem();
 
   const budget = {
-    eu_contrib: sanitizeBudgetItem({
-      value: euContrib.value,
-      currency: 'EUR',
-      raw: record['Total EU Contribution (Million Euro)'],
-    }),
+    eu_contrib: euContrib,
     funding_area: [],
     mmf_heading: '',
     other_contrib: sanitizeBudgetItem(),
     private_fund: sanitizeBudgetItem(),
     public_fund: sanitizeBudgetItem(),
-    total_cost: sanitizeBudgetItem({
-      value: totalCost.value,
-      currency: 'EUR',
-      raw: record['Total EU Contribution (Million Euro)'],
-    }),
+    total_cost: totalCost,
   };
 
   return budget;
 };
+
+/**
+ * Preprocess `description`
+ *
+ * Input fields taken from the `record` are:
+ * - `Description and main objectives`
+ *
+ * @memberof DevcoXlsTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {import('aws-sdk/clients/elbv2').String}
+ */
+
+const getDescription = record =>
+  record['Description and main objectives']
+    ? record['Description and main objectives'].trim()
+    : '';
 
 /**
  * Gets country code from a country name.
@@ -232,9 +246,11 @@ const getResults = record => {
 
 const getType = record =>
   record['Project Type']
-    .split(',')
-    .map(el => el.trim())
-    .filter(type => type);
+    ? record['Project Type']
+        .split(',')
+        .map(el => el.trim())
+        .filter(type => type)
+    : [];
 
 /**
  * Map fields for DEVCO producer, CSV file types
@@ -254,7 +270,7 @@ export default (record: Object): Project | null => {
     action: '',
     budget: getBudget(record),
     call_year: '',
-    description: record['Description and main objectives'] || '',
+    description: getDescription(record),
     ec_priorities: [],
     media: [],
     programme_name: record['Funding Source'] || '',
