@@ -5,7 +5,7 @@
 import mapper from '../../../src/lib/transform';
 import testRecord from '../../stubs/record.json';
 
-describe('DG DEVCO CSV transformer', () => {
+describe('DG DEVCO XLS transformer', () => {
   let result = {};
 
   beforeAll(() => {

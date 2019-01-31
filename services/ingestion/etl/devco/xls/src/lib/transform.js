@@ -6,8 +6,8 @@ import extractBudgetData from '@eubfr/lib/budget/extractBudgetData';
 import sanitizeBudgetItem from '@eubfr/lib/budget/budgetFormatter';
 import type { Project } from '@eubfr/types';
 
-/*
- * Transform message (DEVCO CSV)
+/**
+ * Transform message (DEVCO XLS)
  */
 
 /**
@@ -17,7 +17,7 @@ import type { Project } from '@eubfr/types';
  * - `Total Budget\n(Million Euro)`
  * - `Total EU Contribution \n(Million Euro)`
  *
- * @memberof DevcoCsvTransform
+ * @memberof DevcoXlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {Budget}
  */
@@ -55,7 +55,7 @@ const getBudget = record => {
 /**
  * Gets country code from a country name.
  *
- * @memberof DevcoCsvTransform
+ * @memberof DevcoXlsTransform
  * @param {String} countryName The name of the country
  * @returns {String} The ISO 3166-1 country code
  */
@@ -71,7 +71,7 @@ const getCodeByCountry = countryName =>
  * - `Region`
  * - `GIS Localisation`
  *
- * @memberof DevcoCsvTransform
+ * @memberof DevcoXlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {Array}
  */
@@ -128,7 +128,7 @@ const getLocations = record => {
  * - `1.15 No of direct jobs person/year (construction)`
  * - `1.16 No of permanent jobs \n(operation)`
  *
- * @memberof DevcoCsvTransform
+ * @memberof DevcoXlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {Result}
  */
@@ -181,7 +181,7 @@ const getResults = record => {
 /**
  * Preprocess `type`
  *
- * @memberof DevcoCsvTransform
+ * @memberof DevcoXlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {Array} Project types
  */
@@ -195,7 +195,7 @@ const getType = record =>
  * Example input data: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/devco/csv/test/stubs/record.json|stub}
  *
  * Transform function: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/devco/csv/src/lib/transform.js|implementation details}
- * @name DevcoCsvTransform
+ * @name DevcoXlsTransform
  * @param {Object} record Piece of data to transform before going to harmonized storage.
  * @returns {Project} JSON matching the type fields.
  */
