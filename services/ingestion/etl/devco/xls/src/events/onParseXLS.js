@@ -65,30 +65,52 @@ export const handler = async (event, context) => {
       // Manage data
       readStream.on('end', async () => {
         let uploadData = '';
-        const records = [];
-
+        const projects = [];
+        const useful = ['Core Indicators', 'Agregated Indicaters'];
         const buffer = Buffer.concat(buffers);
         const workbook = XLSX.read(buffer);
+        const sheets = workbook.SheetNames;
 
-        // Get 'Agregated Indicaters' sheet, which is the 3rd.
-        const ws = workbook.Sheets[2];
-        const rows = XLSX.utils.sheet_to_json(ws);
+        sheets.forEach(sheet => {
+          const records = [];
+          const ws = workbook.Sheets[sheet];
+          const rows = XLSX.utils.sheet_to_json(ws);
 
-        // Because raw file contains macros, we need to do some preparations.
-        // Re-map fields' names to be human-readable such.
-        rows.forEach(row => {
-          const record = {};
+          if (useful.includes(sheet) && rows.length) {
+            const header = rows.shift();
 
-          Object.keys(row).map(field => {
-            record[header[field]] = row[field];
-          });
+            rows.forEach(row => {
+              const record = {};
 
-          records.push(record);
+              Object.keys(row).forEach(field => {
+                const improvedField = header[field].replace(
+                  /(\r\n|\n|\r)/gm,
+                  ' '
+                );
+                record[improvedField] = row[field];
+              });
+
+              records.push(record);
+            });
+
+            projects.push(records);
+          }
         });
 
+        // At this point we have a two-dimensional array with records from two sheets.
+        const p1 = projects.pop();
+        const p2 = projects.pop();
+
+        p1.forEach((p1project, i) => {
+          const merged = Object.assign({}, p1project, p2[i]);
+          projects.push(merged);
+        });
+
+        // At this point, `projects` is a one-dimensional array with records merging information from the 2 sheets we are interested in.
+
         // Apply specific transformations for this ETL.
-        records.forEach(record => {
-          const data = transformRecord(record);
+        projects.forEach(project => {
+          const data = transformRecord(project);
           uploadData += `${JSON.stringify(data)}\n`;
         });
 
