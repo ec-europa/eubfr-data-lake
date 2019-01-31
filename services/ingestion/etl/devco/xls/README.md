@@ -63,5 +63,6 @@ Model to compare with is available at: https://ec-europa.github.io/eubfr-data-la
 | Contract Status                                                                          | status                         |
 | Starting Date                                                                            | timeframe.from                 |
 | Ending Date                                                                              | timeframe.to                   |
+| Date of data entry                                                                       |                                |
 | For AREI Projects (Endorsement) Y/N                                                      |                                |
 | Comments                                                                                 |                                |

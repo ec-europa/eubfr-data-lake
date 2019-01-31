@@ -272,11 +272,11 @@ export default (record: Object): Project | null => {
     third_parties: [],
     timeframe: {
       from: record['Starting Date']
-        ? new Date(record['Starting Date']).toISOString()
+        ? new Date(String(record['Starting Date'])).toISOString()
         : null,
       from_precision: 'year',
       to: record['Ending Date']
-        ? new Date(record['Ending Date']).toISOString()
+        ? new Date(String(record['Ending Date'])).toISOString()
         : null,
       to_precision: 'year',
     },
