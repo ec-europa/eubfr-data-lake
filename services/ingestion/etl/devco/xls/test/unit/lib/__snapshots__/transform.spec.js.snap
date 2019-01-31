@@ -5,9 +5,9 @@ Object {
   "action": "",
   "budget": Object {
     "eu_contrib": Object {
-      "currency": "",
-      "raw": "",
-      "value": 0,
+      "currency": "EUR",
+      "raw": 0.618036,
+      "value": 618036,
     },
     "funding_area": Array [],
     "mmf_heading": "",
@@ -27,9 +27,9 @@ Object {
       "value": 0,
     },
     "total_cost": Object {
-      "currency": "",
-      "raw": "",
-      "value": 0,
+      "currency": "EUR",
+      "raw": 0.618036,
+      "value": 618036,
     },
   },
   "call_year": "",
@@ -71,6 +71,7 @@ Distribution lines (km): 0
 Energy Savings (MWh/year): 0 
 GHG emissions avoided per year (ktons CO2eq): 0.2 
 No of direct jobs person/year (construction): 0 
+No of permanent jobs (operation): 0 
 Direct and Inferred electricity access ('000 people): 0 
 Clean cooking and fuel access ('000 people): 0 
 Direct and Inferred access to energy ('000 people): 0 
@@ -78,7 +79,19 @@ Electricity from renewabes (GWh/year): 0.24528000000000005
 Reneable generation capacity (MW): 0.14 
 Electricity generation capacity (MW): 0.14 
 Transmission and distribution lines (km): 0 
+GHG emissions avoided per year (ktons CO2eq): 0.2 
 No of direct and permanent jons (construction and operation): 0 
+BET1 Access to energy: 0 
+BET2 Renewable energy generation and energy efficiency: 0.14 
+BET3 Contribution to the fight against climate change: 0.2 
+EURF 1 No of people provided with access to electricity with EU support: 0 
+EURF 2 Renewable energy production supported by the EU: 0.24528000000000005 
+EURF 3 GHG emission avoided: 0.2 
+SDG Percentage of population with access to electricity: 0 
+SDG Proportion of population with primary reliance on clean fuels and technology: 0 
+SDG Renewable energy share in the total final energy consumption: 0.24528000000000005 
+SDG Energy intensity measured in terms of primary energy and GDP: 0 
+SDG Proportion of informal employement in non-agriculture employment, by sex: 0 
 ",
   },
   "status": "On going",
@@ -94,7 +107,7 @@ No of direct and permanent jons (construction and operation): 0
   },
   "title": "Fourniture, installation, mise en SAV d'un an des équipements photovoltaïques au bénéfice de onze (11) délégations régionales du Ministère des Finances et du Budget et de trois (03) communes pilotes (Implementing Entity: Aplicaciones Tecnicas de la Energiasl)",
   "type": Array [
-    "Mini grid including generation, ",
+    "Mini grid including generation",
   ],
 }
 `;
