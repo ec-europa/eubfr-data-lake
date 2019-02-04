@@ -16,7 +16,7 @@ Returns **Project** JSON matching the type fields.
 
 ### getFundingArea
 
-Converts a single string to an array
+Preprocess values for `funding_area` used in `budget`.
 
 #### Parameters
 
@@ -29,45 +29,98 @@ input => 'Research & innovation; Investment for growth; Transport';
 output => ['Research & innovation', 'Investment for growth', 'Transport'];
 ```
 
-Returns **[Array][4]** List of string values for `funding_area` field
+Returns **[Array][4]**
 
-### getCoordinators
+### getBudget
 
-Preprocess coordinators
+Preprocess `budget` field.
 
-#### Parameters
+Input fields taken from the `record` are:
 
-- `record` **[Object][3]** The row received from parsed file
-
-#### Examples
-
-```javascript
-input => 'Eva Maria Plunger (VERBUND AG); foo; bar';
-output => ['Eva Maria Plunger (VERBUND AG)', 'foo', 'bar'];
-```
-
-Returns **[Array][4]** List of {Coordinator} objects for `coordinators` field
-
-### getPartners
-
-Preprocess partners
+- `Total project budget`
+- `EU Budget contribution`
+- `EU Budget MFF heading`
 
 #### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
-#### Examples
+Returns **Budget**
 
-```javascript
-input => 'foo, bar, baz';
-output => ['foo', 'bar', 'baz'];
-```
+### getDescription
 
-Returns **[Array][4]** List of {Partner} objects for `partners` field
+Preprocess `description` field.
+
+Input fields taken from the `record` are:
+
+- `Project description`
+
+#### Parameters
+
+- `record` **[Object][3]** The row received from parsed file
+
+Returns **[String][5]**
+
+### getPriorities
+
+Preprocess `ec_priorities` field.
+
+Input fields taken from the `record` are:
+
+- `EC’s priorities`
+
+#### Parameters
+
+- `record` **[Object][3]** The row received from parsed file
+
+Returns **[String][5]**
+
+### getMedia
+
+Preprocess `media` field.
+
+Input fields taken from the `record` are:
+
+- `Visual`
+- `Link to a video`
+
+#### Parameters
+
+- `record` **[Object][3]** The row received from parsed file
+
+Returns **[Array][4]&lt;Media>**
+
+### getProgramme
+
+Preprocess `programme_name` field.
+
+Input fields taken from the `record` are:
+
+- `Programme name`
+
+#### Parameters
+
+- `record` **[Object][3]** The row received from parsed file
+
+Returns **[String][5]**
+
+### getId
+
+Preprocess `project_id` field.
+
+Input fields taken from the `record` are:
+
+- `Nid`
+
+#### Parameters
+
+- `record` **[Object][3]** The row received from parsed file
+
+Returns **[String][5]**
 
 ### getLocations
 
-Preprocess locations
+Preprocess `project_locations` field.
 
 Input fields taken from the `record` are:
 
@@ -82,13 +135,29 @@ Input fields taken from the `record` are:
 
 - `record` **[Object][3]** The row received from parsed file
 
-Returns **[Array][4]** List of {Location} objects for `project_locations` field
+Returns **[Array][4]&lt;[Location][6]>**
+
+### getWebsite
+
+Preprocess `project_website` field.
+
+Input fields taken from the `record` are:
+
+- `Project webpage`
+
+#### Parameters
+
+- `record` **[Object][3]** The row received from parsed file
+
+Returns **[String][5]**
 
 ### getRelatedLinks
 
-Preprocess related links
+Preprocess `related_links` field.
 
-Depends on record['Related links'] field
+Input fields taken from the `record` are:
+
+- `Related links`
 
 #### Parameters
 
@@ -104,15 +173,81 @@ output => [
  ]
 ```
 
-Returns **([Array][4] \| [Object][3])** List of {RelatedLink}
+Returns **[Array][4]** List of {RelatedLink}
 
-### formatDate
+### getReportingOrganisation
 
-Format date
+Preprocess `reporting_organisation` field.
+
+Input fields taken from the `record` are:
+
+- `Author`
 
 #### Parameters
 
-- `date` **[Date][5]** Date in timestamp
+- `record` **[Object][3]** The row received from parsed file
+
+Returns **[String][5]**
+
+### getResults
+
+Preprocess `results` field.
+
+Input fields taken from the `record` are:
+
+- `Results`
+
+#### Parameters
+
+- `record` **[Object][3]** The row received from parsed file
+
+Returns **Result**
+
+### getCoordinators
+
+Preprocess coordinators for `third_parties` field.
+
+Input fields taken from the `record` are:
+
+- `Coordinators`
+
+#### Parameters
+
+- `record` **[Object][3]** The row received from parsed file
+
+Returns **[Array][4]&lt;Coordinator>**
+
+### getPartners
+
+Preprocess partners for `third_parties` field.
+
+Input fields taken from the `record` are:
+
+- `Partners`
+
+#### Parameters
+
+- `record` **[Object][3]** The row received from parsed file
+
+Returns **[Array][4]&lt;Partner>**
+
+### getThirdParties
+
+Preprocess `third_parties` field.
+
+#### Parameters
+
+- `record` **[Object][3]** The row received from parsed file
+
+Returns **[Array][4]&lt;ThirdParty>**
+
+### formatDate
+
+Formats date.
+
+#### Parameters
+
+- `date` **[Date][7]** Date in timestamp
 
 #### Examples
 
@@ -121,20 +256,41 @@ input => '1388530800';
 output => '2013-12-31T23:00:00.000Z';
 ```
 
-Returns **[Date][5]** The date formatted into an ISO 8601 date format
+Returns **[Date][7]** The date formatted into an ISO 8601 date format
 
-### getMedia
+### getTimeframe
 
-Prepare media information
+Preprocess `timeframe` field.
+
+Input fields taken from the `record` are:
+
+- `Timeframe start`
+- `Timeframe end`
 
 #### Parameters
 
 - `record` **[Object][3]** The row received from parsed file
 
-Returns **[Array][4]&lt;Media>**
+Returns **Timeframe**
+
+### getTitle
+
+Preprocess `title` field.
+
+Input fields taken from the `record` are:
+
+- `Name`
+
+#### Parameters
+
+- `record` **[Object][3]** The row received from parsed file
+
+Returns **[String][5]**
 
 [1]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/agri/csv/test/stubs/record.json
 [2]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/agri/csv/src/lib/transform.js
 [3]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 [4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
-[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date
+[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[6]: https://developer.mozilla.org/docs/Web/API/Location
+[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date
