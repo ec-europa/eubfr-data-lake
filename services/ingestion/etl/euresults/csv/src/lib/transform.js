@@ -7,7 +7,7 @@ import type { Project } from '@eubfr/types';
 /**
  * Preprocess values for `funding_area` used in `budget`.
  *
- * @memberof AgriCsvTransform
+ * @memberof euResultsCsvTransform
  * @param {Object} record The row received from parsed file
  * @returns {Array}
  *
@@ -31,7 +31,7 @@ const getFundingArea = record =>
  * - `EU Budget contribution`
  * - `EU Budget MFF heading`
  *
- * @memberof AgriCsvTransform
+ * @memberof euResultsCsvTransform
  * @param {Object} record The row received from parsed file
  * @returns {Budget}
  */
@@ -59,7 +59,7 @@ const getBudget = record => ({
  * Input fields taken from the `record` are:
  * - `Project description`
  *
- * @memberof AgriCsvTransform
+ * @memberof euResultsCsvTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
@@ -71,7 +71,7 @@ const getDescription = record => record['Project description'] || '';
  * Input fields taken from the `record` are:
  * - `EC’s priorities`
  *
- * @memberof AgriCsvTransform
+ * @memberof euResultsCsvTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
@@ -85,7 +85,7 @@ const getPriorities = record =>
  * - `Visual`
  * - `Link to a video`
  *
- * @memberof AgriCsvTransform
+ * @memberof euResultsCsvTransform
  * @param {Object} record The row received from parsed file
  * @returns {Array<Media>}
  */
@@ -122,7 +122,7 @@ const getMedia = record => {
  * Input fields taken from the `record` are:
  * - `Programme name`
  *
- * @memberof AgriCsvTransform
+ * @memberof euResultsCsvTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
@@ -134,7 +134,7 @@ const getProgramme = record => record['Programme name'] || '';
  * Input fields taken from the `record` are:
  * - `Nid`
  *
- * @memberof AgriCsvTransform
+ * @memberof euResultsCsvTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
@@ -152,7 +152,7 @@ const getId = record => record.Nid || '';
  * - `Project postal code(s)`
  * - `Project town(s)`
  *
- * @memberof AgriCsvTransform
+ * @memberof euResultsCsvTransform
  * @param {Object} record The row received from parsed file
  * @returns {Array<Location>}
  */
@@ -199,7 +199,7 @@ const getLocations = record => {
  * Input fields taken from the `record` are:
  * - `Project webpage`
  *
- * @memberof AgriCsvTransform
+ * @memberof euResultsCsvTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
@@ -211,7 +211,7 @@ const getWebsite = record => record['Project webpage'] || '';
  * Input fields taken from the `record` are:
  * - `Related links`
  *
- * @memberof AgriCsvTransform
+ * @memberof euResultsCsvTransform
  * @param {Object} record The row received from parsed file
  * @returns {Array} List of {RelatedLink}
  *
@@ -249,7 +249,7 @@ const getRelatedLinks = record =>
  * Input fields taken from the `record` are:
  * - `Author`
  *
- * @memberof AgriCsvTransform
+ * @memberof euResultsCsvTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
@@ -261,7 +261,7 @@ const getReportingOrganisation = record => record.Author || '';
  * Input fields taken from the `record` are:
  * - `Results`
  *
- * @memberof AgriCsvTransform
+ * @memberof euResultsCsvTransform
  * @param {Object} record The row received from parsed file
  * @returns {Result}
  */
@@ -276,7 +276,7 @@ const getResults = record => ({
  * Input fields taken from the `record` are:
  * - `Coordinators`
  *
- * @memberof AgriCsvTransform
+ * @memberof euResultsCsvTransform
  * @param {Object} record The row received from parsed file
  * @returns {Array<Coordinator>}
  */
@@ -301,7 +301,7 @@ const getCoordinators = record =>
  * Input fields taken from the `record` are:
  * - `Partners`
  *
- * @memberof AgriCsvTransform
+ * @memberof euResultsCsvTransform
  * @param {Object} record The row received from parsed file
  * @returns {Array<Partner>}
  */
@@ -323,7 +323,7 @@ const getPartners = record =>
 /**
  * Preprocess `third_parties` field.
  *
- * @memberof AgriCsvTransform
+ * @memberof euResultsCsvTransform
  * @param {Object} record The row received from parsed file
  * @returns {Array<ThirdParty>}
  */
@@ -334,7 +334,7 @@ const getThirdParties = record => {
 /**
  * Formats date.
  *
- * @memberof AgriCsvTransform
+ * @memberof euResultsCsvTransform
  * @param {Date} date Date in timestamp
  * @returns {Date} The date formatted into an ISO 8601 date format
  *
@@ -352,7 +352,7 @@ const formatDate = date =>
  * - `Timeframe start`
  * - `Timeframe end`
  *
- * @memberof AgriCsvTransform
+ * @memberof euResultsCsvTransform
  * @param {Object} record The row received from parsed file
  * @returns {Timeframe}
  */
@@ -385,19 +385,19 @@ const getTimeframe = record => {
  * Input fields taken from the `record` are:
  * - `Name`
  *
- * @memberof AgriCsvTransform
+ * @memberof euResultsCsvTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
 const getTitle = record => record.Name || '';
 
 /**
- * Map fields for AGRI producer, CSV file types
+ * Map fields for EU Results producer, CSV file types
  *
- * Example input data: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/agri/csv/test/stubs/record.json|stub}
+ * Example input data: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/euresults/csv/test/stubs/record.json|stub}
  *
- * Transform function: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/agri/csv/src/lib/transform.js|implementation details}
- * @name AgriCsvTransform
+ * Transform function: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/euresults/csv/src/lib/transform.js|implementation details}
+ * @name euResultsCsvTransform
  * @param {Object} record Piece of data to transform before going to harmonized storage.
  * @returns {Project} JSON matching the type fields.
  */

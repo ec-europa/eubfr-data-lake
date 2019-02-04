@@ -85,15 +85,15 @@ yarn deploy:demo
 On the other hand, if you want to work on the demo client locally, first deploy the demo server and then start the client:
 
 ```sh
-# Example: AGRI demo
+# Example: EAC demo
 
 # Deploy the server first
 cd ./demo/dashboard/server
-EUBFR_USERNAME=agri yarn deploy
+EUBFR_USERNAME=eac yarn deploy
 
 # Then start the client locally
 cd ../client
-EUBFR_USERNAME=agri yarn start
+EUBFR_USERNAME=eac yarn start
 ```
 
 If you don't provide the `EUBFR_USERNAME` variable, it will fall back to the producer defined in your `config.json` (`username` field).
@@ -129,7 +129,7 @@ yarn delete:demo
 Or, if you want to target a specific producer demo app:
 
 ```sh
-EUBFR_USERNAME=agri yarn run delete:demo
+EUBFR_USERNAME=eac yarn run delete:demo
 ```
 
 ## Notes

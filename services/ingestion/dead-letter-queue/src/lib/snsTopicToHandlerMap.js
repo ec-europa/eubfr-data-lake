@@ -11,8 +11,8 @@
  */
 
 const snsTopicToHandlerMap = {
-  'etl-agri-csv': {
-    name: 'ingestion-etl-agri-csv-parseCsv',
+  'etl-euresults-csv': {
+    name: 'ingestion-etl-euresults-csv-parseCsv',
     path: 'src/events/onParseCSV',
   },
   'etl-budg-xls': {

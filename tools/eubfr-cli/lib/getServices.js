@@ -9,7 +9,7 @@ const allServices = [
   { service: 'ingestion-cleaner', exportEnv: false },
   { service: 'ingestion-dead-letter-queue', exportEnv: false },
   { service: 'ingestion-quality-analyzer', exportEnv: false },
-  { service: 'ingestion-etl-agri-csv', exportEnv: false },
+  { service: 'ingestion-etl-euresults-csv', exportEnv: false },
   { service: 'ingestion-etl-cordis-csv', exportEnv: false },
   { service: 'ingestion-etl-devco-csv', exportEnv: false },
   { service: 'ingestion-etl-eac-xls', exportEnv: false },

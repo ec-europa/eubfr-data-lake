@@ -1,4 +1,4 @@
-service: ingestion-etl-agri-csv
+service: ingestion-etl-euresults-csv
 
 plugins:
   - serverless-webpack
@@ -60,8 +60,8 @@ functions:
                 - Ref: 'AWS::Region'
                 - ':'
                 - Ref: 'AWS::AccountId'
-                - ':${self:provider.stage}-etl-agri-csv'
-          topicName: ${self:provider.stage}-etl-agri-csv
+                - ':${self:provider.stage}-etl-euresults-csv'
+          topicName: ${self:provider.stage}-etl-euresults-csv
 
 resources:
   Resources:
@@ -71,12 +71,12 @@ resources:
         DeadLetterConfig:
           TargetArn:
             Fn::ImportValue: ${self:provider.stage}:ingestion-dead-letter-queue:LambdaFailureQueue
-    SNSTopicAGRICSV:
+    SNSTopicEURESULTSCSV:
       Type: AWS::SNS::Topic
       Properties:
-        TopicName: ${self:provider.stage}-etl-agri-csv
-        DisplayName: AGRI CSV ETL
-    SNSTopicAGRICSVPolicy:
+        TopicName: ${self:provider.stage}-etl-euresults-csv
+        DisplayName: EU RESULTS CSV ETL
+    SNSTopicEURESULTSCSVPolicy:
       Type: AWS::SNS::TopicPolicy
       Properties:
         PolicyDocument:
@@ -93,7 +93,7 @@ resources:
                     - Ref: 'AWS::Region'
                     - ':'
                     - Ref: 'AWS::AccountId'
-                    - ':${self:provider.stage}-etl-agri-csv'
+                    - ':${self:provider.stage}-etl-euresults-csv'
               Principal:
                 AWS:
                   Fn::Join:
@@ -104,4 +104,4 @@ resources:
                       - Ref: 'AWS::Region'
                       - '-lambdaRole/${self:provider.stage}-ingestion-manager-onObjectCreated'
         Topics:
-          - Ref: SNSTopicAGRICSV
+          - Ref: SNSTopicEURESULTSCSV

@@ -158,10 +158,10 @@ Deploy all demo applications for all producers.
 $ eubfr-cli demo deploy
 ```
 
-Deploy all services, only for working with the AGRI producer.
+Deploy all services, only for working with the EAC producer.
 
 ```sh
-$ eubfr-cli demo deploy -p agri
+$ eubfr-cli demo deploy -p eac
 ```
 
 ### Delete
@@ -182,10 +182,10 @@ Delete all demo applications.
 $ eubfr-cli demo delete
 ```
 
-Delete only demo application of AGRI producer.
+Delete only demo application of EAC producer.
 
 ```sh
-$ eubfr-cli demo delete -p agri
+$ eubfr-cli demo delete -p eac
 ```
 
 ## Services
@@ -214,16 +214,16 @@ Deploy all services for all producers.
 $ eubfr-cli services deploy
 ```
 
-Deploy all services, only for working with the AGRI producer.
+Deploy all services, only for working with the EAC producer.
 
 ```sh
-$ eubfr-cli services deploy -p agri
+$ eubfr-cli services deploy -p eac
 ```
 
 (Re-)Deploy only a set of services for working a given producer.
 
 ```sh
-$ eubfr-cli services deploy foo bar -p agri
+$ eubfr-cli services deploy foo bar -p eac
 ```
 
 ### Delete
@@ -307,7 +307,7 @@ Examples:
 Single file:
 
 ```sh
-$ eubfr-cli content upload .content/agri/agri_history.csv -p agri
+$ eubfr-cli content upload .content/eac/CreativeEurope_Projects_Overview.csv -p eac
 ```
 
 Multiple files:
@@ -337,13 +337,13 @@ Examples:
 Specific file by `computed_key`:
 
 ```sh
-$ eubfr-cli content show agri/16598a36-db86-42a0-8041-c0d85021ad97.csv
+$ eubfr-cli content show eac/16598a36-db86-42a0-8041-c0d85021ad97.csv
 ```
 
 All files of a given producer:
 
 ```sh
-$ eubfr-cli content show -p agri
+$ eubfr-cli content show -p eac
 ```
 
 Please note that if you are sure there's an existing content,
@@ -368,7 +368,7 @@ Examples:
 Delete one or multiple files:
 
 ```sh
-$ eubfr-cli content delete agri/foo budg/bar inforegio/baz
+$ eubfr-cli content delete eac/foo cordis/bar inforegio/baz
 ```
 
 Delete all files of all producers:

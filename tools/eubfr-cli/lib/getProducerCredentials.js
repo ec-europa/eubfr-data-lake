@@ -8,7 +8,7 @@ const getUserCredentials = promisify(awscred.load);
  * Uses the credentials of a given "power" user to request secrets from AWS Secrets Manager service.
  * Returns an object with credentials for AWS' aws4 signed request for a given producer.
  *
- * @param {String} producer Producer's name, i.e. agri, budg, etc.
+ * @param {String} producer Producer's name
  * @returns {Object} Producer's AWS IAM secrets.
  *
  */
@@ -34,7 +34,7 @@ module.exports = async producer => {
 
     const { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY } = secrets;
 
-    // These are the credentials of the given producer, i.e. agri, budg, etc.
+    // These are producer's credentials.
     return {
       accessKeyId: AWS_ACCESS_KEY_ID,
       secretAccessKey: AWS_SECRET_ACCESS_KEY,

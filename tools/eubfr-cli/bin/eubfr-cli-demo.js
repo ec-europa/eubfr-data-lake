@@ -26,10 +26,10 @@ const deleteDemos = require('../commands/demo/delete');
  * $ eubfr-cli demo deploy
  * ```
  *
- * Deploy all services, only for working with the AGRI producer.
+ * Deploy all services, only for working with the EAC producer.
  *
  * ```sh
- * $ eubfr-cli demo deploy -p agri
+ * $ eubfr-cli demo deploy -p eac
  * ```
  *
  * @memberof Demo
@@ -66,10 +66,10 @@ program
  * $ eubfr-cli demo delete
  * ```
  *
- * Delete only demo application of AGRI producer.
+ * Delete only demo application of EAC producer.
  *
  * ```sh
- * $ eubfr-cli demo delete -p agri
+ * $ eubfr-cli demo delete -p eac
  * ```
  *
  * @memberof Demo

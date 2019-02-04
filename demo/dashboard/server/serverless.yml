@@ -14,7 +14,6 @@ custom:
   eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
   # EUBFR_USERNAME comes from cli parameter, but for spawn() and similar, it's from env var.
   EUBFR_USERNAME: ${opt:username, env:EUBFR_USERNAME, file(../../../config.json):username, ''}
-  # The producers/agri secret, for instance, is stored in AWS Secrets Manager service.
   PRODUCER_SECRET_NAME: producers/${self:custom.EUBFR_USERNAME}
   SIGNED_UPLOADS_API:
     Fn::ImportValue: ${self:provider.stage}:storage-signed-uploads:ServiceEndpoint
