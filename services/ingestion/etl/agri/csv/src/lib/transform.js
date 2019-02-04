@@ -294,7 +294,7 @@ export default (record: Object): Project | null => {
     project_website: record['Project webpage'] || '',
     complete: true,
     related_links: links,
-    reporting_organisation: 'AGRI',
+    reporting_organisation: record.Author || '',
     results: resultObject,
     status: '',
     sub_programme_name: '',

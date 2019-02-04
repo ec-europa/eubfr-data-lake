@@ -3,34 +3,28 @@
   "Original ID": "",
   "Name": "Central European Green Corridors",
   "Project acronym": "",
-  "Visual":
-    "https://ec.europa.eu/budget/euprojects/sites/euprojects/files/at_cegc_985x270_0.jpg",
-  "Project description":
-    "<p>Under the EU-funded Central European Green Corridors project, 115 fast-charging stations for electric cars have opened in Germany, Austria, Slovenia, Slovakia and Croatia – allowing cross-border electromobility with your e-car between Munich and Zagreb. Further network expansion, offers and services for customers and energy supply solutions also drive the project’s roll-out of electric transport. Partners include public sector bodies and private companies.</p>",
-  "Results":
-    "Installation and operation of 115 fast-charging stations in 5 European countries,Development and implementation of electromobility and cross-border services for e-car users,Strategic planning for a European fast-charging network.Since the implementation of the Central European Green Corridors project, the European fast-charging network for electric vehicles has continued to grow. An additional 200 fast-charging stations – 180 in Italy and 20 in Austria – are developed. The charging networks in the various countries are compatible with each other. This gives even more citizens the chance to take advantage of cross-border electromobility.",
+  "Visual": "https://ec.europa.eu/budget/euprojects/sites/euprojects/files/at_cegc_985x270_0.jpg",
+  "Project description": "<p>Under the EU-funded Central European Green Corridors project, 115 fast-charging stations for electric cars have opened in Germany, Austria, Slovenia, Slovakia and Croatia – allowing cross-border electromobility with your e-car between Munich and Zagreb. Further network expansion, offers and services for customers and energy supply solutions also drive the project’s roll-out of electric transport. Partners include public sector bodies and private companies.</p>",
+  "Results": "Installation and operation of 115 fast-charging stations in 5 European countries,Development and implementation of electromobility and cross-border services for e-car users,Strategic planning for a European fast-charging network.Since the implementation of the Central European Green Corridors project, the European fast-charging network for electric vehicles has continued to grow. An additional 200 fast-charging stations – 180 in Italy and 20 in Austria – are developed. The charging networks in the various countries are compatible with each other. This gives even more citizens the chance to take advantage of cross-border electromobility.",
   "Coordinators": "Eva Maria Plunger (VERBUND AG)",
-  "Partners":
-    "Bayern Innovativ, BMW, Nissan, Renault, Volkswagen, Republic of Slovenia, ZSE, Schrack Technik, GreenWay, City of Zagreb, SMATRICS",
+  "Partners": "Bayern Innovativ, BMW, Nissan, Renault, Volkswagen, Republic of Slovenia, ZSE, Schrack Technik, GreenWay, City of Zagreb, SMATRICS",
   "Project address(es)": "",
   "Project postal code(s)": "",
   "Project town(s)": "",
   "Project country(ies)": "AT;HR;DE;SK;SI",
-  "Project location latitude":
-    "48.211312000000;45.803508000000;49.449922000000;48.143047000000;46.048183000000",
-  "Project location longitude":
-    "16.367315000000;16.017459000000;11.103470000000;17.124260000000;14.501456000000",
+  "Project location latitude": "48.211312000000;45.803508000000;49.449922000000;48.143047000000;46.048183000000",
+  "Project location longitude": "16.367315000000;16.017459000000;11.103470000000;17.124260000000;14.501456000000",
   "Link to a video": "",
   "Timeframe start": "1388530800 to 1420066800",
   "Timeframe end": "1388530800 to 1420066800",
   "Project webpage": "http://www.cegc-project.eu/",
-  "Related links":
-    "<a href=\"https://ec.europa.eu/inea/en/ten-t/ten-t-projects/projects-by-country/multi-country/2013-eu-92069-s\">INEA</a>;<a href=\"https://europa.eu/investeu/projects/central-european-green-corridors_en\">InvestEU</a>",
-  "EU Budget MFF heading":
-    "Smart and Inclusive Growth: Competitiveness for growth and jobs",
+  "Related links": "<a href=\"https://ec.europa.eu/inea/en/ten-t/ten-t-projects/projects-by-country/multi-country/2013-eu-92069-s\">INEA</a>;<a href=\"https://europa.eu/investeu/projects/central-european-green-corridors_en\">InvestEU</a>",
+  "EU Budget MFF heading": "Smart and Inclusive Growth: Competitiveness for growth and jobs",
   "Programme name": "Connecting Europe Facility",
   "Funding area": "Research & innovation;Investment for growth;Transport",
   "EC’s priorities": "Jobs, Growth and Investment",
   "EU Budget contribution": "3562000",
-  "Total project budget": ""
+  "Total project budget": "",
+  "Author": "DG BUDG",
+  "Language": "English"
 }
