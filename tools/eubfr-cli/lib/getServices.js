@@ -13,6 +13,7 @@ const allServices = [
   { service: 'ingestion-etl-cordis-csv', exportEnv: false },
   { service: 'ingestion-etl-devco-csv', exportEnv: false },
   { service: 'ingestion-etl-eac-xls', exportEnv: false },
+  { service: 'ingestion-etl-euinvest-csv', exportEnv: false },
   { service: 'ingestion-etl-fts-xls', exportEnv: false },
   { service: 'ingestion-etl-home-xls', exportEnv: false },
   { service: 'ingestion-etl-iati-csv', exportEnv: false },
