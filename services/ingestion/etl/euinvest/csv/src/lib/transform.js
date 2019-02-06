@@ -32,8 +32,6 @@ const getBudget = record => {
       currency: 'EUR',
       raw: record['EU Funding'],
     });
-  } else {
-    budget.eu_contrib = sanitizeBudgetItem();
   }
 
   return budget;
