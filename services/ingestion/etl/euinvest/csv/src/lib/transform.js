@@ -58,7 +58,7 @@ const getDescription = record => {
   if (!about && background) return background;
 
   if (about && background) {
-    return (about + '\n' + background).trim();
+    return `${about}\n${background}`.trim();
   }
 
   // If there is neither an about, nor background information.
@@ -174,8 +174,7 @@ const getLinks = record =>
  * @returns {Array}
  */
 const getThemes = record =>
-  record['Sector']
-    .split(',')
+  record.Sector.split(',')
     .map(t => t.trim())
     .filter(t => t);
 
