@@ -2,21 +2,23 @@
 
 Model to compare with is available at: https://ec-europa.github.io/eubfr-data-lake/
 
-| Field                  | Target            |
-| ---------------------- | ----------------- |
-| Title                  | title             |
-| Subtitle               | title             |
-| Banner                 | media             |
-| Banner copy            | media             |
-| About this project     | description       |
-| Sector                 | themes            |
-| Background information | description       |
-| Coordinator            | third_parties     |
-| External links         | related_link      |
-| EU Funding             | budget.eu_contrib |
-| Partners               | third_parties     |
-| Timeframe              | timeframe         |
-| Docs to download       |                   |
-| Project location       | locations         |
-| Visual                 | media             |
-| © Images               | media             |
+| Field                | Target                 |
+| -------------------- | ---------------------- |
+| \_nid                | project_id             |
+| \_title              | title                  |
+| \_subtitle           | title                  |
+| \_banner             | media                  |
+| \_banner_copy        | media                  |
+| \_about_this_project | description            |
+| \_sector             | themes                 |
+| \_background_info    | description            |
+| \_coordinator        | third_parties          |
+| \_external_links     | related_link           |
+| \_eu_funding         | budget.eu_contrib      |
+| \_partners           | third_parties          |
+| \_timeframe          | timeframe              |
+| \_download_docs      |                        |
+| \_location           | locations              |
+| \_visual             | media                  |
+| \_images_copyright   | media                  |
+| author               | reporting_organisation |

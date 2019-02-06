@@ -20,7 +20,7 @@ Preprocess `budget` field.
 
 Input fields taken from the `record` are:
 
-- `EU Funding`
+- `_eu_funding`
 
 #### Parameters
 
@@ -34,8 +34,8 @@ Preprocess `description` field.
 
 Input fields taken from the `record` are:
 
-- `About this project`
-- `Background information`
+- `_about_this_project`
+- `_background_info`
 
 #### Parameters
 
@@ -49,10 +49,10 @@ Preprocess `media` field.
 
 Input fields taken from the `record` are:
 
-- `Banner`
-- `Banner copy`
-- `Visual`
-- `© Images`
+- `_banner`
+- `_banner_copy`
+- `_visual`
+- `_images_copyright`
 
 #### Parameters
 
@@ -60,13 +60,27 @@ Input fields taken from the `record` are:
 
 Returns **[Array][5]&lt;Media>**
 
+### getId
+
+Preprocess `project_id` field.
+
+Input fields taken from the `record` are:
+
+- `_nid`
+
+#### Parameters
+
+- `record` **[Object][3]** The row received from parsed file
+
+Returns **[String][4]**
+
 ### getLocations
 
 Preprocess `locations` field.
 
 Input fields taken from the `record` are:
 
-- `Project location`
+- `_location`
 
 #### Parameters
 
@@ -80,7 +94,7 @@ Preprocess `related_links` field.
 
 Input fields taken from the `record` are:
 
-- `External links`
+- `_external_links`
 
 #### Parameters
 
@@ -94,7 +108,7 @@ Preprocess `themes` field.
 
 Input fields taken from the `record` are:
 
-- `Sector`
+- `_sector`
 
 #### Parameters
 
@@ -108,8 +122,8 @@ Preprocess `third_parties` field.
 
 Input fields taken from the `record` are:
 
-- `Coordinator`
-- `Partners`
+- `_coordinator`
+- `_partners`
 
 #### Parameters
 
@@ -154,7 +168,8 @@ Preprocess `title` field.
 
 Input fields taken from the `record` are:
 
-- `Title`
+- `_title`
+- `_subtitle`
 
 #### Parameters
 

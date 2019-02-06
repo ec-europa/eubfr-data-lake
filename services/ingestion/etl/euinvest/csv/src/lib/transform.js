@@ -9,7 +9,7 @@ import type { Project } from '@eubfr/types';
  *
  * Input fields taken from the `record` are:
  *
- * - `EU Funding`
+ * - `_eu_funding`
  *
  * @memberof EuInvestCSVTransform
  * @param {Object} record The row received from parsed file
@@ -26,11 +26,11 @@ const getBudget = record => {
     mmf_heading: '',
   };
 
-  if (record['EU Funding']) {
+  if (record._eu_funding) {
     budget.eu_contrib = sanitizeBudgetItem({
-      value: record['EU Funding'],
+      value: record._eu_funding,
       currency: 'EUR',
-      raw: record['EU Funding'],
+      raw: record._eu_funding,
     });
   }
 
@@ -42,16 +42,16 @@ const getBudget = record => {
  *
  * Input fields taken from the `record` are:
  *
- * - `About this project`
- * - `Background information`
+ * - `_about_this_project`
+ * - `_background_info`
  *
  * @memberof EuInvestCSVTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
 const getDescription = record => {
-  const about = record['About this project'] || '';
-  const background = record['Background information'] || '';
+  const about = record._about_this_project || '';
+  const background = record._background_info || '';
 
   if (about && !background) return about;
 
@@ -70,10 +70,10 @@ const getDescription = record => {
  *
  * Input fields taken from the `record` are:
  *
- * - `Banner`
- * - `Banner copy`
- * - `Visual`
- * - `© Images`
+ * - `_banner`
+ * - `_banner_copy`
+ * - `_visual`
+ * - `_images_copyright`
  *
  * @memberof EuInvestCSVTransform
  * @param {Object} record The row received from parsed file
@@ -82,24 +82,24 @@ const getDescription = record => {
 const getMedia = record => {
   const media = [];
 
-  if (record.Banner) {
+  if (record._banner) {
     media.push({
-      name: record.Banner,
-      url: record.Banner,
+      name: record._banner,
+      url: record._banner,
       meta: {
-        description: record['Banner copy'] || '',
+        description: record._banner_copy || '',
         mime_type: '',
         type: 'visual',
       },
     });
   }
 
-  if (record.Visual) {
+  if (record._visual) {
     media.push({
-      name: record.Visual,
-      url: record.Visual,
+      name: record._visual,
+      url: record._visual,
       meta: {
-        description: record['© Images'] || '',
+        description: record._images_copyright || '',
         mime_type: '',
         type: 'visual',
       },
@@ -110,11 +110,24 @@ const getMedia = record => {
 };
 
 /**
+ * Preprocess `project_id` field.
+ *
+ * Input fields taken from the `record` are:
+ *
+ * - `_nid`
+ *
+ * @memberof EuInvestCSVTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {String}
+ */
+const getId = record => record._nid || '';
+
+/**
  * Preprocess `locations` field.
  *
  * Input fields taken from the `record` are:
  *
- * - `Project location`
+ * - `_location`
  *
  * @memberof EuInvestCSVTransform
  * @param {Object} record The row received from parsed file
@@ -123,8 +136,8 @@ const getMedia = record => {
 const getLocations = record => {
   const locations = [];
 
-  if (record['Project location']) {
-    const locParts = record['Project location']
+  if (record._location) {
+    const locParts = record._location
       .split(',')
       .map(p => p.trim())
       .filter(l => l);
@@ -149,15 +162,15 @@ const getLocations = record => {
  *
  * Input fields taken from the `record` are:
  *
- * - `External links`
+ * - `_external_links`
  *
  * @memberof EuInvestCSVTransform
  * @param {Object} record The row received from parsed file
  * @returns {Array<RelatedLink>}
  */
 const getLinks = record =>
-  record['External links']
-    .split(',')
+  record._external_links
+    .split(';')
     .map(l => l.trim())
     .filter(l => l)
     .map(url => ({ url, label: '' }));
@@ -167,14 +180,15 @@ const getLinks = record =>
  *
  * Input fields taken from the `record` are:
  *
- * - `Sector`
+ * - `_sector`
  *
  * @memberof EuInvestCSVTransform
  * @param {Object} record The row received from parsed file
  * @returns {Array}
  */
 const getThemes = record =>
-  record.Sector.split(',')
+  record._sector
+    .split(';')
     .map(t => t.trim())
     .filter(t => t);
 
@@ -183,8 +197,8 @@ const getThemes = record =>
  *
  * Input fields taken from the `record` are:
  *
- * - `Coordinator`
- * - `Partners`
+ * - `_coordinator`
+ * - `_partners`
  *
  * @memberof EuInvestCSVTransform
  * @param {Object} record The row received from parsed file
@@ -193,9 +207,9 @@ const getThemes = record =>
 const getThirdParties = record => {
   const thirdParties = [];
 
-  if (record.Coordinator) {
+  if (record._coordinator) {
     thirdParties.push({
-      name: record.Coordinator.trim(),
+      name: record._coordinator.trim(),
       type: '',
       address: '',
       region: '',
@@ -207,8 +221,9 @@ const getThirdParties = record => {
     });
   }
 
-  if (record.Partners) {
-    const partners = record.Partners.split(',')
+  if (record._partners) {
+    const partners = record._partners
+      .split(',')
       .map(p => p.trim())
       .filter(p => p)
       .map(name => ({
@@ -272,8 +287,8 @@ const getTimeframe = record => {
     to_precision: 'day',
   };
 
-  if (record.Timeframe) {
-    const tParts = record.Timeframe.split('to').map(t => t.trim());
+  if (record._timeframe) {
+    const tParts = record._timeframe.split('to').map(t => t.trim());
     const [from, to] = tParts;
 
     const fromDate = formatDate(from);
@@ -291,13 +306,26 @@ const getTimeframe = record => {
  *
  * Input fields taken from the `record` are:
  *
- * - `Title`
+ * - `_title`
+ * - `_subtitle`
  *
  * @memberof EuInvestCSVTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
-const getTitle = record => record.Title || '';
+const getTitle = record => {
+  let title = '';
+
+  if (record._title) {
+    title = record._title;
+  }
+
+  if (record._subtitle) {
+    title = `${title} | ${record._subtitle}`;
+  }
+
+  return title;
+};
 
 /**
  * Map fields for EUINVEST producer, CSV file types
@@ -320,7 +348,7 @@ export default (record: Object): Project | null => {
     ec_priorities: [],
     media: getMedia(record),
     programme_name: '',
-    project_id: '',
+    project_id: getId(record),
     project_locations: getLocations(record),
     project_website: '',
     complete: true,
