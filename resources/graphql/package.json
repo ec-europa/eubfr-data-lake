@@ -1,0 +1,25 @@
+{
+  "private": true,
+  "name": "@eubfr/resources-graphql",
+  "version": "0.5.0",
+  "scripts": {
+    "deploy": "sls deploy -v",
+    "start": "sls offline start"
+  },
+  "dependencies": {
+    "apollo-server-lambda": "2.4.0",
+    "elasticsearch": "15.3.1",
+    "graphql": "14.1.1",
+    "http-aws-es": "6.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "7.2.2",
+    "@babel/preset-env": "7.3.1",
+    "aws-sdk": "2.395.0",
+    "babel-loader": "8.0.5",
+    "serverless": "1.36.3",
+    "serverless-offline": "4.2.0",
+    "serverless-webpack": "5.2.0",
+    "webpack": "4.29.0"
+  }
+}

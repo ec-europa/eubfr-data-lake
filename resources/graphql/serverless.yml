@@ -1,0 +1,47 @@
+service: resources-graphql
+
+plugins:
+  - serverless-webpack
+  - serverless-offline
+
+custom:
+  esIndex: ${self:provider.stage}-projects
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules:
+      forceExclude:
+        - aws-sdk
+    packager: yarn
+  eubfrEnvironment: ${opt:eubfr_env, file(../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
+  serverless-offline:
+    port: 4000
+
+package:
+  individually: true
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: ${opt:stage, file(../../config.json):stage, env:EUBFR_STAGE, 'dev'}
+  region: ${opt:region, file(../../config.json):region, env:EUBFR_AWS_REGION, 'eu-central-1'}
+  deploymentBucket:
+    name: eubfr-${self:custom.eubfrEnvironment}-deploy
+  stackTags:
+    ENV: ${self:custom.eubfrEnvironment}
+  iamRoleStatements:
+    # http://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-aws-integrations.html?shortFooter=true#es-aws-integrations-s3-lambda-es-authorizations
+    - Effect: 'Allow'
+      Action: 'es:*'
+      Resource: 'arn:aws:es:${self:provider.region}:*:domain/*'
+
+functions:
+  graphql:
+    handler: src/api/graphql.handler
+    events:
+      - http:
+          path: graphql
+          method: post
+          cors: true
+      - http:
+          path: graphql
+          method: get
