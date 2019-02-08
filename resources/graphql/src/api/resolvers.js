@@ -1,4 +1,4 @@
-export const resolvers = {
+const resolvers = {
   Query: {
     ping: (root, args) => {
       console.log(root, args);

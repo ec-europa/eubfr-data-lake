@@ -1,17 +1,19 @@
 import { ApolloServer } from 'apollo-server-lambda';
-import { schema } from './schema';
-import { resolvers } from './resolvers';
+import schema from './schema';
+import resolvers from './resolvers';
+
+const { API_ID, STAGE, REGION, IS_LOCAL } = process.env;
+
+const endpoint = IS_LOCAL
+  ? 'http://localhost:4000/graphql'
+  : `https://${API_ID}.execute-api.${REGION}.amazonaws.com/${STAGE}/graphql`;
 
 const server = new ApolloServer({
   typeDefs: schema,
   resolvers,
   formatError: error => {
-    console.log(error);
+    console.error(error);
     return error;
-  },
-  formatResponse: response => {
-    console.log(response);
-    return response;
   },
   context: ({ event, context }) => ({
     headers: event.headers,
@@ -19,9 +21,9 @@ const server = new ApolloServer({
     event,
     context,
   }),
-  playground: {
-    endpoint: 'http://localhost:4000/graphql',
-  },
+  playground: { endpoint },
+  // Allow plaground to be used in production.
+  introspection: true,
   tracing: true,
 });
 

@@ -36,6 +36,15 @@ provider:
 
 functions:
   graphql:
+    memorySize: 1024
+    timeout: 300
+    environment:
+      API:
+        Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
+      INDEX: ${self:custom.esIndex}
+      API_ID: { 'Ref': 'ApiGatewayRestApi' }
+      STAGE: ${self:provider.stage}
+      REGION: ${self:provider.region}
     handler: src/api/graphql.handler
     events:
       - http:

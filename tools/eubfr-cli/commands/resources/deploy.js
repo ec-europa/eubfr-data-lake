@@ -16,6 +16,7 @@ const deployResources = async () => {
     'resources-raw-storage',
     'resources-harmonized-storage',
     'resources-elasticsearch',
+    'resources-graphql',
   ];
 
   await Promise.all(

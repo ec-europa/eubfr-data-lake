@@ -1,12 +1,14 @@
-const schema = `
+// Optional dependency helps with formatting in editors.
+import { gql } from 'apollo-server-lambda';
 
-type Query {
-    ping(): String
-}
+const schema = gql`
+  type Query {
+    ping: String
+  }
 
-schema {
+  schema {
     query: Query
-}`;
+  }
+`;
 
-// eslint-disable-next-line import/prefer-default-export
-export { schema };
+export default schema;
