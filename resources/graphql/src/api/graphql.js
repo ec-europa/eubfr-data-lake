@@ -1,63 +1,90 @@
+import { promisify } from 'util';
+import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
+import awscred from 'awscred';
+
 import elasticsearch from 'elasticsearch';
 import connectionClass from 'http-aws-es';
+
 import { GraphQLSchema, GraphQLObjectType } from 'graphql';
 import { composeWithElastic } from 'graphql-compose-elasticsearch';
 import { ApolloServer } from 'apollo-server-lambda';
 
-import getProjectMapping from '../../../elasticsearch/mappings/project';
+import getProjectMapping from '@eubfr/resources-elasticsearch/mappings/project';
 
+const getUserCredentials = promisify(awscred.load);
 const projectMapping = getProjectMapping();
 
-const { API_ID, API, INDEX, TYPE, STAGE, REGION, IS_LOCAL } = process.env;
+// Wrapper around apollo server's factory to allow for async operations.
+const createHandler = async () => {
+  const { API_ID, API, INDEX, TYPE, STAGE, REGION, IS_LOCAL } = process.env;
 
-const endpoint = IS_LOCAL
-  ? 'http://localhost:4000/graphql'
-  : `https://${API_ID}.execute-api.${REGION}.amazonaws.com/${STAGE}/graphql`;
+  const endpoint = IS_LOCAL
+    ? 'http://localhost:4000/graphql'
+    : `https://${API_ID}.execute-api.${REGION}.amazonaws.com/${STAGE}/graphql`;
 
-const ProjectTC = composeWithElastic({
-  graphqlTypeName: 'Project',
-  elasticIndex: INDEX,
-  elasticType: TYPE,
-  elasticMapping: projectMapping.mappings.project,
-  elasticClient: new elasticsearch.Client({
+  const credentials = await getUserCredentials();
+
+  const { region } = credentials;
+  const { accessKeyId, secretAccessKey } = credentials.credentials;
+
+  const elasticClient = new elasticsearch.Client({
     host: `https://${API}`,
     connectionClass,
+    awsConfig: IS_LOCAL
+      ? new AWS.Config({
+          accessKeyId,
+          secretAccessKey,
+          region,
+        })
+      : {},
     apiVersion: '6.3',
     trace: true,
-  }),
-});
+  });
 
-const schema = new GraphQLSchema({
-  query: new GraphQLObjectType({
-    name: 'Query',
-    fields: {
-      projects: ProjectTC.getResolver('search').getFieldConfig(),
+  const ProjectTC = composeWithElastic({
+    graphqlTypeName: 'Project',
+    elasticIndex: INDEX,
+    elasticType: TYPE,
+    elasticMapping: projectMapping.mappings.project,
+    elasticClient,
+  });
+
+  const schema = new GraphQLSchema({
+    query: new GraphQLObjectType({
+      name: 'Query',
+      fields: {
+        projects: ProjectTC.getResolver('search').getFieldConfig(),
+      },
+    }),
+  });
+
+  const server = new ApolloServer({
+    schema,
+    formatError: error => {
+      console.error(error);
+      return error;
     },
-  }),
-});
+    context: ({ event, context }) => ({
+      headers: event.headers,
+      functionName: context.functionName,
+      event,
+      context,
+    }),
+    playground: { endpoint },
+    // Allow playground to be used when deployed.
+    introspection: true,
+    tracing: true,
+  });
 
-const server = new ApolloServer({
-  schema,
-  formatError: error => {
-    console.error(error);
-    return error;
-  },
-  context: ({ event, context }) => ({
-    headers: event.headers,
-    functionName: context.functionName,
-    event,
-    context,
-  }),
-  playground: { endpoint },
-  // Allow playground to be used when deployed.
-  introspection: true,
-  tracing: true,
-});
+  return server.createHandler({
+    cors: {
+      origin: '*',
+    },
+  });
+};
 
-export const handler = server.createHandler({
-  cors: {
-    origin: '*',
-  },
-});
+export const handler = (event, context, callback) => {
+  createHandler().then(h => h(event, context, callback));
+};
 
 export default handler;

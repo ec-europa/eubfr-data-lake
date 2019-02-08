@@ -5,11 +5,13 @@
   "scripts": {
     "export": "sls export-env",
     "deploy": "sls deploy -v",
-    "prepare": "npm run deploy && npm run export",
+    "prep": "npm run deploy && npm run export",
     "start": "IS_LOCAL=true sls offline start"
   },
   "dependencies": {
+    "@eubfr/resources-elasticsearch": "^0.5.0",
     "apollo-server-lambda": "2.4.0",
+    "awscred": "1.4.2",
     "elasticsearch": "15.3.1",
     "graphql": "14.1.1",
     "graphql-compose": "5.10.1",
