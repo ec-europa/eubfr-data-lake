@@ -42,6 +42,7 @@ functions:
       API:
         Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
       INDEX: ${self:custom.esIndex}
+      TYPE: 'project'
       API_ID: { 'Ref': 'ApiGatewayRestApi' }
       STAGE: ${self:provider.stage}
       REGION: ${self:provider.region}

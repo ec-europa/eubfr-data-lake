@@ -1,6 +1,5 @@
 import { ApolloServer } from 'apollo-server-lambda';
 import schema from './schema';
-import resolvers from './resolvers';
 
 const { API_ID, STAGE, REGION, IS_LOCAL } = process.env;
 
@@ -9,8 +8,7 @@ const endpoint = IS_LOCAL
   : `https://${API_ID}.execute-api.${REGION}.amazonaws.com/${STAGE}/graphql`;
 
 const server = new ApolloServer({
-  typeDefs: schema,
-  resolvers,
+  schema,
   formatError: error => {
     console.error(error);
     return error;

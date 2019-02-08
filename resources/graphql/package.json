@@ -10,6 +10,8 @@
     "apollo-server-lambda": "2.4.0",
     "elasticsearch": "15.3.1",
     "graphql": "14.1.1",
+    "graphql-compose": "5.10.1",
+    "graphql-compose-elasticsearch": "2.2.2",
     "http-aws-es": "6.0.0"
   },
   "devDependencies": {
