@@ -20,7 +20,7 @@ const server = new ApolloServer({
     context,
   }),
   playground: { endpoint },
-  // Allow plaground to be used in production.
+  // Allow playground to be used when deployed.
   introspection: true,
   tracing: true,
 });

@@ -5,7 +5,6 @@ plugins:
   - serverless-offline
 
 custom:
-  esIndex: ${self:provider.stage}-projects
   webpack:
     webpackConfig: ./webpack.config.js
     includeModules:
@@ -41,7 +40,7 @@ functions:
     environment:
       API:
         Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
-      INDEX: ${self:custom.esIndex}
+      INDEX: ${self:provider.stage}-projects
       TYPE: 'project'
       API_ID: { 'Ref': 'ApiGatewayRestApi' }
       STAGE: ${self:provider.stage}
