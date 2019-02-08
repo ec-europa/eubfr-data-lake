@@ -3,8 +3,10 @@
   "name": "@eubfr/resources-graphql",
   "version": "0.5.0",
   "scripts": {
+    "export": "sls export-env",
     "deploy": "sls deploy -v",
-    "start": "sls offline start"
+    "prepare": "npm run deploy && npm run export",
+    "start": "IS_LOCAL=true sls offline start"
   },
   "dependencies": {
     "apollo-server-lambda": "2.4.0",
@@ -20,6 +22,7 @@
     "aws-sdk": "2.395.0",
     "babel-loader": "8.0.5",
     "serverless": "1.36.3",
+    "serverless-export-env": "1.2.0",
     "serverless-offline": "4.2.0",
     "serverless-webpack": "5.2.0",
     "webpack": "4.29.0"

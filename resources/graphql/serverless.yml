@@ -1,6 +1,7 @@
 service: resources-graphql
 
 plugins:
+  - serverless-export-env
   - serverless-webpack
   - serverless-offline
 
@@ -38,13 +39,13 @@ functions:
     memorySize: 1024
     timeout: 300
     environment:
-      API:
-        Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
       INDEX: ${self:provider.stage}-projects
-      TYPE: 'project'
-      API_ID: { 'Ref': 'ApiGatewayRestApi' }
+      TYPE: project
       STAGE: ${self:provider.stage}
       REGION: ${self:provider.region}
+      API_ID: { 'Ref': 'ApiGatewayRestApi' }
+      API:
+        Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
     handler: src/api/graphql.handler
     events:
       - http:
