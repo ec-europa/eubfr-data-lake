@@ -11,7 +11,7 @@ const allServices = [
   { service: 'ingestion-quality-analyzer', exportEnv: false },
   { service: 'ingestion-etl-agri-csv', exportEnv: false },
   { service: 'ingestion-etl-cordis-csv', exportEnv: false },
-  { service: 'ingestion-etl-devco-csv', exportEnv: false },
+  { service: 'ingestion-etl-devco-xls', exportEnv: false },
   { service: 'ingestion-etl-eac-csv', exportEnv: false },
   { service: 'ingestion-etl-fts-xls', exportEnv: false },
   { service: 'ingestion-etl-home-xls', exportEnv: false },
