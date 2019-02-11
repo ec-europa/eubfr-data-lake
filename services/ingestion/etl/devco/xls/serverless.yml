@@ -1,4 +1,4 @@
-service: ingestion-etl-devco-csv
+service: ingestion-etl-devco-xls
 
 plugins:
   - serverless-webpack
@@ -19,7 +19,7 @@ package:
 provider:
   name: aws
   runtime: nodejs8.10
-  timeout: 180
+  timeout: 60
   stage: ${opt:stage, file(../../../../../config.json):stage, env:EUBFR_STAGE, 'dev'}
   region: ${opt:region, file(../../../../../config.json):region, env:EUBFR_AWS_REGION, 'eu-central-1'}
   deploymentBucket:
@@ -43,10 +43,10 @@ provider:
       Resource: '*'
 
 functions:
-  parseCsv:
-    handler: src/events/onParseCSV.handler
-    name: ${self:provider.stage}-${self:service}-parseCsv
-    memorySize: 256
+  parseXls:
+    handler: src/events/onParseXLS.handler
+    name: ${self:provider.stage}-${self:service}-parseXls
+    memorySize: 1024
     environment:
       BUCKET: ${self:custom.bucketName}
       REGION: ${self:provider.region}
@@ -60,23 +60,53 @@ functions:
                 - Ref: 'AWS::Region'
                 - ':'
                 - Ref: 'AWS::AccountId'
-                - ':${self:provider.stage}-etl-devco-csv'
-          topicName: ${self:provider.stage}-etl-devco-csv
+                - ':${self:provider.stage}-etl-devco-xls'
+          topicName: ${self:provider.stage}-etl-devco-xls
+      - sns:
+          arn:
+            Fn::Join:
+              - ''
+              - - 'arn:aws:sns:'
+                - Ref: 'AWS::Region'
+                - ':'
+                - Ref: 'AWS::AccountId'
+                - ':${self:provider.stage}-etl-devco-xlsx'
+          topicName: ${self:provider.stage}-etl-devco-xlsx
+      - sns:
+          arn:
+            Fn::Join:
+              - ''
+              - - 'arn:aws:sns:'
+                - Ref: 'AWS::Region'
+                - ':'
+                - Ref: 'AWS::AccountId'
+                - ':${self:provider.stage}-etl-devco-xlsm'
+          topicName: ${self:provider.stage}-etl-devco-xlsm
 
 resources:
   Resources:
-    ParseCsvLambdaFunction:
+    ParseXlsLambdaFunction:
       Type: 'AWS::Lambda::Function'
       Properties:
         DeadLetterConfig:
           TargetArn:
             Fn::ImportValue: ${self:provider.stage}:ingestion-dead-letter-queue:LambdaFailureQueue
-    SNSTopicDEVCOCSV:
+    SNSTopicDevcoXLS:
       Type: AWS::SNS::Topic
       Properties:
-        TopicName: ${self:provider.stage}-etl-devco-csv
-        DisplayName: DEVCO CSV ETL
-    SNSTopicDEVCOCSVPolicy:
+        TopicName: ${self:provider.stage}-etl-devco-xls
+        DisplayName: Devco XLS ETL
+    SNSTopicDevcoXLSX:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: ${self:provider.stage}-etl-devco-xlsx
+        DisplayName: Devco XLSX ETL
+    SNSTopicDevcoXLSM:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: ${self:provider.stage}-etl-devco-xlsm
+        DisplayName: Devco XLSM ETL
+    SNSTopicDevcoXLSPolicy:
       Type: AWS::SNS::TopicPolicy
       Properties:
         PolicyDocument:
@@ -93,7 +123,7 @@ resources:
                     - Ref: 'AWS::Region'
                     - ':'
                     - Ref: 'AWS::AccountId'
-                    - ':${self:provider.stage}-etl-devco-csv'
+                    - ':${self:provider.stage}-etl-devco-*'
               Principal:
                 AWS:
                   Fn::Join:
@@ -104,4 +134,6 @@ resources:
                       - Ref: 'AWS::Region'
                       - '-lambdaRole/${self:provider.stage}-ingestion-manager-onObjectCreated'
         Topics:
-          - Ref: SNSTopicDEVCOCSV
+          - Ref: SNSTopicDevcoXLS
+          - Ref: SNSTopicDevcoXLSX
+          - Ref: SNSTopicDevcoXLSM
