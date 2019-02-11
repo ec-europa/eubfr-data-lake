@@ -33,6 +33,10 @@ provider:
     - Effect: 'Allow'
       Action: 'es:*'
       Resource: 'arn:aws:es:${self:provider.region}:*:domain/*'
+    - Effect: 'Allow'
+      Action:
+        - 'secretsmanager:GetSecretValue'
+      Resource: '*'
 
 functions:
   graphql:
@@ -45,6 +49,7 @@ functions:
       API_ID: { 'Ref': 'ApiGatewayRestApi' }
       API:
         Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
+      SERVICE_SECRET_NAME: services/elastic-graphql
     handler: src/api/graphql.handler
     events:
       - http:

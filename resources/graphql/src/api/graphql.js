@@ -16,27 +16,52 @@ const projectMapping = getProjectMapping();
 
 // Wrapper around apollo server's factory to allow for async operations.
 const createHandler = async () => {
-  const { API_ID, API, INDEX, TYPE, STAGE, REGION, IS_LOCAL } = process.env;
+  const {
+    API_ID,
+    API,
+    INDEX,
+    TYPE,
+    STAGE,
+    REGION: region,
+    IS_LOCAL,
+    SERVICE_SECRET_NAME,
+  } = process.env;
 
   const endpoint = IS_LOCAL
     ? 'http://localhost:4000/graphql'
-    : `https://${API_ID}.execute-api.${REGION}.amazonaws.com/${STAGE}/graphql`;
+    : `https://${API_ID}.execute-api.${region}.amazonaws.com/${STAGE}/graphql`;
 
-  const credentials = await getUserCredentials();
+  let accessKeyId = '';
+  let secretAccessKey = '';
 
-  const { region } = credentials;
-  const { accessKeyId, secretAccessKey } = credentials.credentials;
+  if (IS_LOCAL) {
+    const credentials = await getUserCredentials();
+
+    const { accessKeyId: id, secretAccessKey: key } = credentials.credentials;
+    accessKeyId = id;
+    secretAccessKey = key;
+  } else {
+    const secretsManager = new AWS.SecretsManager();
+    const secretsResponse = await secretsManager
+      .getSecretValue({ SecretId: SERVICE_SECRET_NAME })
+      .promise();
+
+    const secrets = JSON.parse(secretsResponse.SecretString);
+
+    const { AWS_ACCESS_KEY_ID: id, AWS_SECRET_ACCESS_KEY: key } = secrets;
+
+    accessKeyId = id;
+    secretAccessKey = key;
+  }
 
   const elasticClient = new elasticsearch.Client({
     host: `https://${API}`,
     connectionClass,
-    awsConfig: IS_LOCAL
-      ? new AWS.Config({
-          accessKeyId,
-          secretAccessKey,
-          region,
-        })
-      : {},
+    awsConfig: new AWS.Config({
+      accessKeyId,
+      secretAccessKey,
+      region,
+    }),
     apiVersion: '6.3',
     trace: true,
   });
