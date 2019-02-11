@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 var ca = require('../client_action').makeFactoryWithModifier(function(spec) {
   return require('lodash').merge(spec, {
     params: {
