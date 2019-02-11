@@ -21,6 +21,7 @@
     "flow": "flow",
     "flow-watch": "flow-watch",
     "lint": "eslint .",
+    "postinstall": "patch-package",
     "publish": "./scripts/publish.sh",
     "test:unit": "lerna run --parallel test:unit",
     "test:lint": "npm run lint",
