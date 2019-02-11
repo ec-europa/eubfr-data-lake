@@ -12,6 +12,12 @@ module.exports = {
   externals: [{ 'aws-sdk': true }],
   module: {
     rules: [
+      // graphql-compose-elasticsearch publishes mjs and builds cjs.
+      {
+        test: /\.cjs$/,
+        include: /node_modules/,
+        type: 'javascript/auto',
+      },
       {
         test: /\.mjs$/,
         include: /node_modules/,

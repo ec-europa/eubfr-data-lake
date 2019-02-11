@@ -47,13 +47,26 @@ const createHandler = async () => {
     elasticType: TYPE,
     elasticMapping: projectMapping.mappings.project,
     elasticClient,
+    pluralFields: [
+      'ec_priorities',
+      'media',
+      'project_locations',
+      'related_links',
+      'themes',
+      'third_parties',
+      'type',
+    ],
   });
 
   const schema = new GraphQLSchema({
     query: new GraphQLObjectType({
       name: 'Query',
       fields: {
+        projectById: ProjectTC.getResolver('findById').getFieldConfig(),
         projects: ProjectTC.getResolver('search').getFieldConfig(),
+        projectsPagination: ProjectTC.getResolver(
+          'searchPagination'
+        ).getFieldConfig(),
       },
     }),
   });
@@ -84,7 +97,9 @@ const createHandler = async () => {
 };
 
 export const handler = (event, context, callback) => {
-  createHandler().then(h => h(event, context, callback));
+  createHandler()
+    .then(handle => handle(event, context, callback))
+    .catch(e => callback(e));
 };
 
 export default handler;
