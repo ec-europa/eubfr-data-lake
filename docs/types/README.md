@@ -12,9 +12,8 @@ Here's a list of the transformations made in ETLs around the `Project` model.
 
 - [AGRI - CSV](./etls/agri-csv.md)
 - [CORDIS - CSV](./etls/cordis-csv.md)
-- [EAC - XLS](./etls/eac-xls.md)
+- [EAC - CSV](./etls/eac-csv.md)
 - [HOME - XLS](./etls/home-xls.md)
 - [INFOREGIO - JSON](./etls/inforegio-json.md)
 - [INFOREGIO - XML](./etls/inforegio-xml.md)
-- [VALOR - XLS](./etls/valor-xls.md)
 - [WIFI4EU - XLS](./etls/wifi4eu-xls.md)
