@@ -42,6 +42,7 @@ const createHandler = async () => {
   });
 
   const ProjectTC = composeWithElastic({
+    apiVersion: '6.3',
     graphqlTypeName: 'Project',
     elasticIndex: INDEX,
     elasticType: TYPE,
@@ -56,6 +57,7 @@ const createHandler = async () => {
       'third_parties',
       'type',
     ],
+    elasticApiFilePath: './src/api/6_3.js',
   });
 
   const schema = new GraphQLSchema({

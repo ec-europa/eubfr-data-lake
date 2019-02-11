@@ -23,6 +23,7 @@
     "@babel/preset-env": "7.3.1",
     "aws-sdk": "2.395.0",
     "babel-loader": "8.0.5",
+    "copy-webpack-plugin": "4.6.0",
     "serverless": "1.36.3",
     "serverless-export-env": "1.2.0",
     "serverless-offline": "4.2.0",

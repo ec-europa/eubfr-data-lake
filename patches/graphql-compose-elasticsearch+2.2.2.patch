@@ -1,0 +1,89 @@
+diff --git a/node_modules/graphql-compose-elasticsearch/mjs/ElasticApiParser.mjs b/node_modules/graphql-compose-elasticsearch/mjs/ElasticApiParser.mjs
+index 182ba9a..06c0485 100644
+--- a/node_modules/graphql-compose-elasticsearch/mjs/ElasticApiParser.mjs
++++ b/node_modules/graphql-compose-elasticsearch/mjs/ElasticApiParser.mjs
+@@ -8,12 +8,11 @@ import fs from 'fs';
+ import path from 'path';
+ import { upperFirst, TypeComposer, EnumTypeComposer } from 'graphql-compose';
+ import { reorderKeys } from './utils';
++
+ export default class ElasticApiParser {
+   constructor(opts = {}) {
+-    // avaliable versions can be found in installed package `elasticsearch`
+-    // in file /node_modules/elasticsearch/src/lib/apis/index.js
+     this.apiVersion = opts.apiVersion || opts.elasticClient && opts.elasticClient.transport && opts.elasticClient.transport._config && opts.elasticClient.transport._config.apiVersion || '_default';
+-    const apiFilePath = path.resolve(opts.elasticApiFilePath || ElasticApiParser.findApiVersionFile(this.apiVersion));
++    const apiFilePath = path.resolve('./src/api/6_3.js');
+     const source = ElasticApiParser.loadApiFile(apiFilePath);
+     this.parsedSource = ElasticApiParser.parseSource(source);
+     this.elasticClient = opts.elasticClient;
+diff --git a/node_modules/graphql-compose-elasticsearch/mjs/composeWithElastic.mjs b/node_modules/graphql-compose-elasticsearch/mjs/composeWithElastic.mjs
+index e24fc4d..27bc471 100644
+--- a/node_modules/graphql-compose-elasticsearch/mjs/composeWithElastic.mjs
++++ b/node_modules/graphql-compose-elasticsearch/mjs/composeWithElastic.mjs
+@@ -1,10 +1,10 @@
+-import { TypeComposer } from 'graphql-compose';
+ import { convertToSourceTC, inputPropertiesToGraphQLTypes } from './mappingConverter';
+ import createSearchResolver from './resolvers/search';
+ import createSearchConnectionResolver from './resolvers/searchConnection';
+ import createSearchPaginationResolver from './resolvers/searchPagination';
+ import createFindByIdResolver from './resolvers/findById';
+ import createUpdateByIdResolver from './resolvers/updateById';
++
+ export function composeWithElastic(opts) {
+   if (!opts) {
+     throw new Error('Opts is required argument for composeWithElastic()');
+diff --git a/node_modules/graphql-compose-elasticsearch/mjs/resolvers/findById.mjs b/node_modules/graphql-compose-elasticsearch/mjs/resolvers/findById.mjs
+index c0d7cba..cff45c4 100644
+--- a/node_modules/graphql-compose-elasticsearch/mjs/resolvers/findById.mjs
++++ b/node_modules/graphql-compose-elasticsearch/mjs/resolvers/findById.mjs
+@@ -5,6 +5,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
+ import { Resolver, TypeComposer } from 'graphql-compose';
+ import ElasticApiParser from '../ElasticApiParser';
+ import { getFindByIdOutputTC } from '../types/FindByIdOutput';
++
+ export default function createFindByIdResolver(fieldMap, sourceTC, opts) {
+   if (!fieldMap || !fieldMap._all) {
+     throw new Error('First arg for Resolver findById() should be fieldMap of FieldsMapByElasticType type.');
+@@ -15,10 +16,14 @@ export default function createFindByIdResolver(fieldMap, sourceTC, opts) {
+   }
+ 
+   const prefix = opts.prefix || 'Es';
++
+   const parser = new ElasticApiParser({
+     elasticClient: opts.elasticClient,
++    elasticApiFilePath: opts.elasticApiFilePath,
++    apiVersion: opts.apiVersion,
+     prefix
+   });
++
+   const findByIdFC = parser.generateFieldConfig('get', {
+     index: opts.elasticIndex,
+     type: opts.elasticType
+diff --git a/node_modules/graphql-compose-elasticsearch/mjs/resolvers/search.mjs b/node_modules/graphql-compose-elasticsearch/mjs/resolvers/search.mjs
+index f946657..e8d7ade 100644
+--- a/node_modules/graphql-compose-elasticsearch/mjs/resolvers/search.mjs
++++ b/node_modules/graphql-compose-elasticsearch/mjs/resolvers/search.mjs
+@@ -7,6 +7,7 @@ import { Resolver, TypeComposer, InputTypeComposer, isObject } from 'graphql-com
+ import ElasticApiParser from '../ElasticApiParser';
+ import { getSearchBodyITC, prepareBodyInResolve } from '../elasticDSL/SearchBody';
+ import { getSearchOutputTC } from '../types/SearchOutput';
++
+ export default function createSearchResolver(fieldMap, sourceTC, opts) {
+   if (!fieldMap || !fieldMap._all) {
+     throw new Error('First arg for Resolver search() should be fieldMap of FieldsMapByElasticType type.');
+@@ -17,10 +18,14 @@ export default function createSearchResolver(fieldMap, sourceTC, opts) {
+   }
+ 
+   const prefix = opts.prefix || 'Es';
++
+   const parser = new ElasticApiParser({
+     elasticClient: opts.elasticClient,
++    elasticApiFilePath: opts.elasticApiFilePath,
++    apiVersion: opts.apiVersion,
+     prefix
+   });
++
+   const searchITC = getSearchBodyITC({
+     prefix,
+     fieldMap

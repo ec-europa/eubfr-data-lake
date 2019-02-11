@@ -1,14 +1,13 @@
-const slsw = require('serverless-webpack');
 const path = require('path');
+const slsw = require('serverless-webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: slsw.lib.entries,
   target: 'node',
-  mode: slsw.lib.webpack.isLocal ? 'development' : 'production',
-  optimization: {
-    minimize: process.env.EUBFR_ENV && process.env.EUBFR_ENV === 'prod',
-  },
-  devtool: 'nosources-source-map',
+  mode: 'development',
+  optimization: { minimize: false },
+  devtool: 'source-map',
   externals: [{ 'aws-sdk': true }],
   module: {
     rules: [
@@ -35,6 +34,18 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new CopyWebpackPlugin(
+      [
+        {
+          from: './src/api/6_3.js',
+          to: './src/api/6_3.js',
+          toType: 'file',
+        },
+      ],
+      {}
+    ),
+  ],
   output: {
     libraryTarget: 'commonjs2',
     path: path.join(__dirname, '.webpack'),
