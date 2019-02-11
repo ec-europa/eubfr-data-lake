@@ -1,7 +1,6 @@
 {
   "computed_key": "iati/45da84c2-a349-4610-a03a-85ad86d092fd.csv.ndjson",
-  "created_by":
-    "AWS:AROAIJA6MYF2IOUY6G5TU:chernka1622-ingestion-etl-iati-csv-parseCsv",
+  "created_by": "AWS:AROAIJA6MYF2IOUY6G5TU:chernka1622-ingestion-etl-iati-csv-parseCsv",
   "last_modified": "2018-04-13T07:09:16.000Z",
   "action": "",
   "budget": {
@@ -33,8 +32,7 @@
   ],
   "project_website": "",
   "related_links": [],
-  "reporting_organisation":
-    "European Commission - Development and Cooperation-EuropeAid",
+  "reporting_organisation": "European Commission - Development and Cooperation-EuropeAid",
   "results": { "available": "", "result": "" },
   "status": "",
   "sub_programme_name": "",

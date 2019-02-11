@@ -15,14 +15,13 @@ const transforms = [
   'agri-csv',
   'cordis-csv',
   'devco-xls',
-  'eac-xls',
+  'eac-csv',
   'fts-xls',
   'home-xls',
   'iati-csv',
   'inforegio-json',
   'inforegio-xml',
   'just-csv',
-  'valor-xls',
   'wifi4eu-xls',
 ];
 
