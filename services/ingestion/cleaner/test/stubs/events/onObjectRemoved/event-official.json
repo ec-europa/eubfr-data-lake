@@ -22,8 +22,7 @@
         "s3SchemaVersion": "1.0"
       },
       "responseElements": {
-        "x-amz-id-2":
-          "EXAMPLE123/5678abcdefghijklambdaisawesome/mnopqrstuvwxyzABCDEFGH",
+        "x-amz-id-2": "EXAMPLE123/5678abcdefghijklambdaisawesome/mnopqrstuvwxyzABCDEFGH",
         "x-amz-request-id": "EXAMPLE123456789"
       },
       "awsRegion": "us-east-1",

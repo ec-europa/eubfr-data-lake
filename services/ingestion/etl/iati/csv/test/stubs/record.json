@@ -3,15 +3,12 @@
   "hierarchy": "2",
   "last-updated-datetime": "2018-03-08 00:00:00",
   "default-language": "en",
-  "reporting-org":
-    "European Commission - Development and Cooperation-EuropeAid",
+  "reporting-org": "European Commission - Development and Cooperation-EuropeAid",
   "reporting-org-ref": "XI-IATI-EC_DEVCO",
   "reporting-org-type": "Other Public Sector",
   "reporting-org-type-code": "15",
-  "title":
-    "Gestion de l'achat de services et lamélioration du fonctionnement des services de santé dans la Province Orientale",
-  "description":
-    "ce contrat permet à l'établissement d'utilité publique qui assure les opérations décentraliser indirectes publiques dans la Province orientale de fonctionner",
+  "title": "Gestion de l'achat de services et lamélioration du fonctionnement des services de santé dans la Province Orientale",
+  "description": "ce contrat permet à l'établissement d'utilité publique qui assure les opérations décentraliser indirectes publiques dans la Province orientale de fonctionner",
   "activity-status-code": "3",
   "start-planned": "2011-07-05",
   "end-planned": "2015-02-04",
@@ -21,8 +18,7 @@
   "participating-org-ref (Accountable)": "10000",
   "participating-org-type (Accountable)": "",
   "participating-org-type-code (Accountable)": "",
-  "participating-org (Funding)":
-    "European Commission - Directorate-General for International Cooperation and Development (DEVCO)",
+  "participating-org (Funding)": "European Commission - Directorate-General for International Cooperation and Development (DEVCO)",
   "participating-org-ref (Funding)": "XI-IATI-EC_DEVCO",
   "participating-org-type (Funding)": "Other Public Sector",
   "participating-org-type-code (Funding)": "15",

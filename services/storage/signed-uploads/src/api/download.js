@@ -45,27 +45,23 @@ export const handler = async event => {
       };
     }
 
-    try {
-      // If producer has correctly submitted a key.
-      const params = { Bucket: BUCKET, Key: file, Expires: 300 };
-      const url = await S3.getSignedUrl('putObject', params);
+    // If producer has correctly submitted a key.
+    const params = { Bucket: BUCKET, Key: file, Expires: 300 };
+    const url = await S3.getSignedUrl('getObject', params);
 
-      return {
-        statusCode: 200,
-        headers: {
-          'Access-Control-Allow-Origin': '*', // Required for CORS support to work
-          'Access-Control-Allow-Credentials': true, // Required for cookies, authorization headers with HTTPS
-        },
-        body: JSON.stringify(url),
-      };
-    } catch (error) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify(error),
-      };
-    }
+    return {
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*', // Required for CORS support to work
+        'Access-Control-Allow-Credentials': true, // Required for cookies, authorization headers with HTTPS
+      },
+      body: JSON.stringify(url),
+    };
   } catch (e) {
-    throw e;
+    return {
+      statusCode: 400,
+      body: JSON.stringify(e),
+    };
   }
 };
 
