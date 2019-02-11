@@ -40,7 +40,8 @@ provider:
 
 functions:
   graphql:
-    memorySize: 1024
+    memorySize: 3008
+    timeout: 300
     environment:
       INDEX: ${self:provider.stage}-projects
       TYPE: project
