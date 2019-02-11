@@ -14,8 +14,8 @@ documentation
 const transforms = [
   'agri-csv',
   'cordis-csv',
-  'devco-csv',
-  'eac-xls',
+  'devco-xls',
+  'eac-csv',
   'euinvest-csv',
   'fts-xls',
   'home-xls',
@@ -23,7 +23,6 @@ const transforms = [
   'inforegio-json',
   'inforegio-xml',
   'just-csv',
-  'valor-xls',
   'wifi4eu-xls',
 ];
 

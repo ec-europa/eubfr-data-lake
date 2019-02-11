@@ -54,35 +54,18 @@ export const handler = async event => {
       };
     }
 
-    // If producer has correctly submitted a key.
-    const params = { Bucket: BUCKET, Key: file };
+    await s3.deleteObject({ Bucket: BUCKET, Key: file }).promise();
 
-    try {
-      await s3.deleteObject(params).promise();
-
-      return {
-        statusCode: 200,
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Credentials': true,
-        },
-        body: JSON.stringify(
-          // Required for CORS support to work.
-          // Required for cookies, authorization headers with HTTPS.
-          { message: 'Object deleted successfully.' }
-        ),
-      };
-    } catch (err) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({
-          error: 'An error occured in s3.deleteObject method.',
-          err,
-        }),
-      };
-    }
+    return {
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*', // Required for CORS support to work.
+        'Access-Control-Allow-Credentials': true, // Required for cookies, authorization headers with HTTPS.
+      },
+      body: JSON.stringify({ message: 'Object deleted successfully.' }),
+    };
   } catch (e) {
-    throw e;
+    return { statusCode: 400, body: JSON.stringify(e) };
   }
 };
 
