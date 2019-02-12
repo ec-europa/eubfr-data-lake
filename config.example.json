@@ -2,10 +2,10 @@
   "eubfr_env": "dev",
   "region": "eu-central-1",
   "stage": "uuid",
-  "username": "agri",
+  "username": "euresults",
   "demo": [
-    "agri",
     "cordis",
+    "euresults",
     "devco",
     "eac",
     "euinvest",

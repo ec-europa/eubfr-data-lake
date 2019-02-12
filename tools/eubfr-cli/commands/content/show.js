@@ -7,7 +7,7 @@ const elasticsearch = require('elasticsearch');
  * @param {String} file
  *   The specific file to view. Optional, all items are shown by default.
  * @param {String} producer
- *   The producer's name. For example: 'agri', 'budg', etc.
+ *   The producer's name. For example: 'cordis', 'eac', etc.
  */
 const showCommand = async ({ file, producer, endpoints }) => {
   const index = `${endpoints.REACT_APP_STAGE}-meta`;

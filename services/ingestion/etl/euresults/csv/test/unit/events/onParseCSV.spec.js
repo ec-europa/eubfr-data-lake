@@ -4,7 +4,7 @@
 
 import onParseCSV from '../../../src/events/onParseCSV';
 
-describe(`Function parseCsv in "@eubfr/ingestion-etl-agri-csv"`, () => {
+describe(`Function parseCsv in "@eubfr/ingestion-etl-euresults-csv"`, () => {
   test('The function requires BUCKET, REGION and STAGE environment variables', async () => {
     const event = {};
     const context = {};

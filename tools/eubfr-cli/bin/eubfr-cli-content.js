@@ -31,7 +31,7 @@ const missingRequiredInput = '\n error: Missing required input parameters';
  * Single file:
  *
  * ```sh
- * $ eubfr-cli content upload .content/agri/agri_history.csv -p agri
+ * $ eubfr-cli content upload .content/eac/CreativeEurope_Projects_Overview.csv -p eac
  * ```
  *
  * Multiple files:
@@ -110,13 +110,13 @@ program
  * Specific file by `computed_key`:
  *
  * ```sh
- * $ eubfr-cli content show agri/16598a36-db86-42a0-8041-c0d85021ad97.csv
+ * $ eubfr-cli content show eac/16598a36-db86-42a0-8041-c0d85021ad97.csv
  * ```
  *
  * All files of a given producer:
  *
  * ```sh
- * $ eubfr-cli content show -p agri
+ * $ eubfr-cli content show -p eac
  * ```
  *
  * Please note that if you are sure there's an existing content,
@@ -185,7 +185,7 @@ program
  * Delete one or multiple files:
  *
  * ```sh
- * $ eubfr-cli content delete agri/foo budg/bar inforegio/baz
+ * $ eubfr-cli content delete eac/foo cordis/bar inforegio/baz
  * ```
  *
  * Delete all files of all producers:
