@@ -7,11 +7,6 @@
 - [#193](https://github.com/ec-europa/eubfr-data-lake/pull/193) feat(etls): add euinvest producer - EUBFR-238 ([@kalinchernev](https://github.com/kalinchernev))
 - [#191](https://github.com/ec-europa/eubfr-data-lake/pull/191) feat(etls): add energy projects data from DEVCO - EUBFR-240 ([@kalinchernev](https://github.com/kalinchernev))
 - [#185](https://github.com/ec-europa/eubfr-data-lake/pull/185) feat(eubfr-cli): accept environment variables - EUBFR-232 ([@kalinchernev](https://github.com/kalinchernev))
-- [#160](https://github.com/ec-europa/eubfr-data-lake/pull/160) feat(ingestion): make use of AWS Fargate as fallback of timeout in lambda handlers - EUBFR-204 ([@kalinchernev](https://github.com/kalinchernev))
-
-#### :boom: Breaking Change
-
-- [#166](https://github.com/ec-europa/eubfr-data-lake/pull/166) refactor(budgetFormatter): ignore spaces between when abbreviations - EUBFR-214 ([@kalinchernev](https://github.com/kalinchernev))
 
 #### :nail_care: Enhancement
 
@@ -20,8 +15,6 @@
 - [#189](https://github.com/ec-europa/eubfr-data-lake/pull/189) chore(deps): upgrade dependencies - EUBFR-230 ([@kalinchernev](https://github.com/kalinchernev))
 - [#188](https://github.com/ec-europa/eubfr-data-lake/pull/188) refactor(eubfr-cli): correct stage protection logic - EUBFR-233 ([@kalinchernev](https://github.com/kalinchernev))
 - [#173](https://github.com/ec-europa/eubfr-data-lake/pull/173) refactor(enrichment): improve resilience - EUBFR-159 ([@kalinchernev](https://github.com/kalinchernev))
-- [#179](https://github.com/ec-europa/eubfr-data-lake/pull/179) chore(documentation-theme): update to ECL v2 - noissue ([@kalinchernev](https://github.com/kalinchernev))
-- [#176](https://github.com/ec-europa/eubfr-data-lake/pull/176) refactor(cli): improve deployment workflows - EUBFR-146 ([@kalinchernev](https://github.com/kalinchernev))
 
 #### :memo: Documentation
 
