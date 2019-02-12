@@ -192,6 +192,7 @@ const formatDate = date =>
  * */
 const getMedia = record => {
   const media = [];
+
   if (record.Visual) {
     media.push({
       name: record.Visual,
@@ -203,6 +204,7 @@ const getMedia = record => {
       },
     });
   }
+
   if (record['Link to a video']) {
     media.push({
       name: record['Link to a video'] || '',
@@ -214,6 +216,7 @@ const getMedia = record => {
       },
     });
   }
+
   return media;
 };
 
