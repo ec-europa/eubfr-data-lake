@@ -19,7 +19,7 @@ Use `VERBOSE` flag to inspect values of the environment variables used by the CL
 For instance, if you try to upload content and you start to get warnings, re-run with `VERBOSE=*`, for example:
 
 ```sh
-$ VERBOSE=* npx eubfr-cli content upload -p agri
+$ VERBOSE=* npx eubfr-cli content upload -p eac
 ```
 
 This will print a screen similar to the following:
@@ -55,7 +55,7 @@ export EUBFR_USERNAME=cordis
 export EUBFR_CONTENT_REPOSITORY=eubfr-content
 ```
 
-Please keep in mind that setting `EUBFR_USERNAME` will force EUBFR CLI to work only with assets related to this particular producer. This way, running deployment scripts, you'll get a working environment faster for CORIS, leaving out AGRI, HOME, etc.
+Please keep in mind that setting `EUBFR_USERNAME` will force EUBFR CLI to work only with assets related to this particular producer. This way, running deployment scripts, you'll get a working environment faster for CORIS, leaving out EAC, HOME, etc.
 
 ## Management
 

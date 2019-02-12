@@ -11,20 +11,32 @@
  */
 
 const snsTopicToHandlerMap = {
-  'etl-agri-csv': {
-    name: 'ingestion-etl-agri-csv-parseCsv',
-    path: 'src/events/onParseCSV',
-  },
-  'etl-budg-xls': {
-    name: 'ingestion-etl-budg-xls-parseXls',
-    path: 'src/events/onParseXLS',
-  },
-  'etl-budg-xlsx': {
-    name: 'ingestion-etl-budg-xls-parseXls',
-    path: 'src/events/onParseXLS',
-  },
   'etl-cordis-csv': {
     name: 'ingestion-etl-cordis-csv-parseCsv',
+    path: 'src/events/onParseCSV',
+  },
+  'etl-devco-xls': {
+    name: 'ingestion-etl-devco-xls-parseXls',
+    path: 'src/events/onParseXls',
+  },
+  'etl-devco-xlsx': {
+    name: 'ingestion-etl-devco-xls-parseXls',
+    path: 'src/events/onParseXls',
+  },
+  'etl-devco-xlsm': {
+    name: 'ingestion-etl-devco-xls-parseXls',
+    path: 'src/events/onParseXls',
+  },
+  'etl-eac-csv': {
+    name: 'ingestion-etl-eac-csv-parseCsv',
+    path: 'src/events/onParseCSV',
+  },
+  'etl-euinvest-csv': {
+    name: 'ingestion-etl-euinvest-csv-parseCsv',
+    path: 'src/events/onParseCSV',
+  },
+  'etl-euresults-csv': {
+    name: 'ingestion-etl-euresults-csv-parseCsv',
     path: 'src/events/onParseCSV',
   },
   'etl-fts-xls': {
@@ -58,14 +70,6 @@ const snsTopicToHandlerMap = {
   'etl-just-csv': {
     name: 'ingestion-etl-just-csv-parseCsv',
     path: 'src/events/onParseCSV',
-  },
-  'etl-valor-xls': {
-    name: 'ingestion-etl-valor-xls-parseXls',
-    path: 'src/events/onParseXLS',
-  },
-  'etl-valor-xlsx': {
-    name: 'ingestion-etl-valor-xls-parseXls',
-    path: 'src/events/onParseXLS',
   },
   'etl-wifi4eu-xls': {
     name: 'ingestion-etl-wifi4eu-xls-parseXls',

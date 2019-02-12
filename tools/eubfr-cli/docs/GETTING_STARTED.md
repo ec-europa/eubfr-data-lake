@@ -131,7 +131,7 @@ Related to managing AWS resources in terms of EUBFR resources: raw and harmonize
 
 - `services`
 
-Related to managing `serverless` services of the EUBFR project. These are shorthand commands such as `deploy` and `delete` which you'd normally do by, for example changing to the directory of a given service by `cd ./services/ingestion/etl/agri/csv/` and then either deploying `yarn deploy` or removing a service from the AWS console, i.e. `npx sls remove --stage {username} --region eu-central-1`. While working on a specific ETL, for example, instead of changing between directories and using different CLIs such as `yarn`, `sls` and `eubfr-cli`, simply use only the `eubfr-cli`.
+Related to managing `serverless` services of the EUBFR project. These are shorthand commands such as `deploy` and `delete` which you'd normally do by, for example changing to the directory of a given service by `cd ./services/ingestion/etl/eac/csv/` and then either deploying `yarn deploy` or removing a service from the AWS console, i.e. `npx sls remove --stage {username} --region eu-central-1`. While working on a specific ETL, for example, instead of changing between directories and using different CLIs such as `yarn`, `sls` and `eubfr-cli`, simply use only the `eubfr-cli`.
 
 - `demo`
 

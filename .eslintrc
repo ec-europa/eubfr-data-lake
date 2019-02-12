@@ -14,11 +14,8 @@
     - react
     - flowtype
   rules:
-    no-underscore-dangle:
-      - error
-      - allow:
-        - _source
-        - _original
+    // Elasticsearch fields, as well as some producers have such conventions.
+    no-underscore-dangle: off
     prettier/prettier:
       - error
       -

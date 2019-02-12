@@ -26,16 +26,16 @@ const servicesDeployCommand = require('../commands/services/deploy');
  * $ eubfr-cli services deploy
  * ```
  *
- * Deploy all services, only for working with the AGRI producer.
+ * Deploy all services, only for working with the EAC producer.
  *
  * ```sh
- * $ eubfr-cli services deploy -p agri
+ * $ eubfr-cli services deploy -p eac
  * ```
  *
  * (Re-)Deploy only a set of services for working a given producer.
  *
  * ```sh
- * $ eubfr-cli services deploy foo bar -p agri
+ * $ eubfr-cli services deploy foo bar -p eac
  * ```
  *
  * @memberof Services
