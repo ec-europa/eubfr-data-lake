@@ -16,6 +16,7 @@ const transforms = [
   'euresults-csv',
   'devco-xls',
   'eac-csv',
+  'euinvest-csv',
   'fts-xls',
   'home-xls',
   'iati-csv',

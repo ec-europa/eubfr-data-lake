@@ -1,0 +1,180 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EU Invest CSV transformer Produces correct JSON output structure 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "EUR",
+      "raw": "986947",
+      "value": 986947,
+    },
+    "funding_area": Array [],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+  },
+  "call_year": "",
+  "complete": true,
+  "description": "The EU-funded LIFE CERSUDS project has developed an innovative and sustainable urban drainage system that uses low-value ceramic tiles to filter water through paving. The system provides a way for cities to adapt to climate change by reducing the impact of flooding and facilitating reuse of stored water.
+
+Spain’s Insurance Compensation Consortium estimates that flooding causes €800 million worth of damage per year
+The LIFE CERSUDS project has set up a 3,200 m2 demonstrator of its ceramic tile-based drainage system in one of the main streets in Benicàssim, Valencia
+Valencia produces 80% of Spain's ceramic tiles
+The system will help resolve flooding problems and provide an outlet for unused stock from the ceramic industry",
+  "ec_priorities": Array [],
+  "media": Array [
+    Object {
+      "meta": Object {
+        "description": "",
+        "mime_type": "",
+        "type": "visual",
+      },
+      "name": "https://europa.eu/investeu/sites/investeu/files/es_cersuds_baner_985x270_01.png",
+      "url": "https://europa.eu/investeu/sites/investeu/files/es_cersuds_baner_985x270_01.png",
+    },
+    Object {
+      "meta": Object {
+        "description": "CERSUDS",
+        "mime_type": "",
+        "type": "visual",
+      },
+      "name": "https://europa.eu/investeu/sites/investeu/files/es_cersuds_homepage_768x432_01.png",
+      "url": "https://europa.eu/investeu/sites/investeu/files/es_cersuds_homepage_768x432_01.png",
+    },
+  ],
+  "programme_name": "",
+  "project_id": "546",
+  "project_locations": Array [
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "ES",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "Benicàssim",
+      "town": "",
+    },
+  ],
+  "project_website": "",
+  "related_links": Array [
+    Object {
+      "label": "",
+      "url": "http://www.lifecersuds.eu/es",
+    },
+    Object {
+      "label": "",
+      "url": "http://www.itc.uji.es/",
+    },
+  ],
+  "reporting_organisation": "",
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
+  "status": "",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [
+    "Development and sustainability",
+    "Environment",
+    "Infrastructure",
+    "Innovation",
+  ],
+  "third_parties": Array [
+    Object {
+      "address": "",
+      "country": "",
+      "email": "",
+      "name": "Institute for Ceramic Technology (ITC-AICE)",
+      "phone": "",
+      "region": "",
+      "role": "coordinator",
+      "type": "",
+      "website": "",
+    },
+    Object {
+      "address": "",
+      "country": "",
+      "email": "",
+      "name": "Polytechnic University of Valencia",
+      "phone": "",
+      "region": "",
+      "role": "partner",
+      "type": "",
+      "website": "",
+    },
+    Object {
+      "address": "",
+      "country": "",
+      "email": "",
+      "name": "Municipality of Benicàssim",
+      "phone": "",
+      "region": "",
+      "role": "partner",
+      "type": "",
+      "website": "",
+    },
+    Object {
+      "address": "",
+      "country": "",
+      "email": "",
+      "name": "CHM",
+      "phone": "",
+      "region": "",
+      "role": "partner",
+      "type": "",
+      "website": "",
+    },
+    Object {
+      "address": "",
+      "country": "",
+      "email": "",
+      "name": "Trencadís de sempre",
+      "phone": "",
+      "region": "",
+      "role": "partner",
+      "type": "",
+      "website": "",
+    },
+    Object {
+      "address": "",
+      "country": "",
+      "email": "",
+      "name": "Centro Ceramico Bologna and Centro Tecnológico da Cerâmica e do Vidro",
+      "phone": "",
+      "region": "",
+      "role": "partner",
+      "type": "",
+      "website": "",
+    },
+  ],
+  "timeframe": Object {
+    "from": "2016-12-11T00:00:00.000Z",
+    "from_precision": "day",
+    "to": "2019-12-11T00:00:00.000Z",
+    "to_precision": "day",
+  },
+  "title": "Innovative urban drainage | Tile-based system to combat flooding and droughts in cities",
+  "type": Array [],
+}
+`;
