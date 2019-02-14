@@ -135,7 +135,7 @@ const getDescription = record =>
  *
  * @memberof DevcoXlsTransform
  * @param {Object} record The row received from parsed file
- * @returns {SingleValueField}
+ * @returns {SimpleValueField}
  */
 const getCrisNumber = record => {
   const number = {
@@ -158,7 +158,7 @@ const getCrisNumber = record => {
  *
  * @memberof DevcoXlsTransform
  * @param {Object} record The row received from parsed file
- * @returns {SingleValueField}
+ * @returns {SimpleValueField}
  */
 const getInvestor = record => {
   const investor = {
@@ -181,7 +181,7 @@ const getInvestor = record => {
  *
  * @memberof DevcoXlsTransform
  * @param {Object} record The row received from parsed file
- * @returns {SingleValueField}
+ * @returns {SimpleValueField}
  */
 const getLeverage = record => {
   const leverage = {
@@ -240,7 +240,7 @@ const getLeverage = record => {
  *
  * @memberof DevcoXlsTransform
  * @param {Object} record The row received from parsed file
- * @returns {Array<Indicator>}
+ * @returns {Array<TypedValueField>}
  */
 const getResultsIndicators = record => {
   const indicators = [];
@@ -334,8 +334,10 @@ const getResultsIndicators = record => {
         .toLowerCase();
 
       const indicator = {
-        indicator: fieldLabel,
-        value: record[field],
+        field: fieldLabel,
+        type: 'indicator',
+        raw: record[field],
+        formatted: '',
       };
 
       indicators.push(indicator);
@@ -353,7 +355,7 @@ const getResultsIndicators = record => {
  *
  * @memberof DevcoXlsTransform
  * @param {Object} record The row received from parsed file
- * @returns {SingleValueField}
+ * @returns {SimpleValueField}
  */
 const getProjectStage = record => {
   const stage = {
@@ -404,7 +406,7 @@ const getDateEntry = record => {
  *
  * @memberof DevcoXlsTransform
  * @param {Object} record The row received from parsed file
- * @returns {SingleValueField}
+ * @returns {SimpleValueField}
  */
 const getAreiProjectsEndorsement = record => {
   const arei = {

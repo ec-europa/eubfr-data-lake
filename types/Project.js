@@ -169,15 +169,26 @@ export type Timeframe = {
  * @type {Indicator}
  */
 export type Indicator = {
-  indicator: string,
+  field: string,
   value: string,
 };
 
 /**
  * Describes a generic field in an ETL which does not have any other specific structure.
- * @type {SingleValueField}
+ * @type {SimpleValueField}
  */
-export type SingleValueField = {
+export type SimpleValueField = {
+  raw: string,
+  formatted: string,
+};
+
+/**
+ * Describes a field which has a certain type of value.
+ * @type {TypedValueField}
+ */
+export type TypedValueField = {
+  field: string,
+  type: string,
   raw: string,
   formatted: string,
 };
@@ -193,13 +204,13 @@ export type Project = {
   comments: string,
   complete: boolean,
   description: string,
-  devco_arei_projects_endorsement?: SingleValueField,
-  devco_cris_number?: SingleValueField,
+  devco_arei_projects_endorsement?: SimpleValueField,
+  devco_cris_number?: SimpleValueField,
   devco_date_entry?: string | null,
-  devco_lead_investor?: SingleValueField,
-  devco_leverage?: SingleValueField,
-  devco_project_stage?: SingleValueField,
-  devco_results_indicators?: Array<Indicator>,
+  devco_lead_investor?: SimpleValueField,
+  devco_leverage?: SimpleValueField,
+  devco_project_stage?: SimpleValueField,
+  devco_results_indicators?: Array<TypedValueField>,
   ec_priorities: Array<string>,
   media: Array<Media>,
   programme_name: string,
