@@ -68,12 +68,18 @@ Object {
     },
   },
   "call_year": "",
+  "comments": "Politique de l'énergie et gestion administrative",
   "complete": true,
   "description": "Fourniture, installation, mise en SAV d'un an des équipements photovoltaïques au bénéfice de onze (11) délégations régionales du Ministère des Finances et du Budget et de trois (03) communes pilotes",
+  "devco_arei_projects_endorsement": Object {
+    "formatted": "",
+    "raw": "",
+  },
   "devco_cris_number": Object {
     "formatted": "",
     "raw": "2016 / 371004",
   },
+  "devco_date_entry": "2018-08-01T00:00:00.000Z",
   "devco_lead_investor": Object {
     "formatted": "",
     "raw": "EC",
@@ -82,6 +88,156 @@ Object {
     "formatted": "",
     "raw": 1,
   },
+  "devco_project_stage": Object {
+    "formatted": "",
+    "raw": "",
+  },
+  "devco_results_indicators": Array [
+    Object {
+      "indicator": "access_grid_electricity_000_people",
+      "value": 0,
+    },
+    Object {
+      "indicator": "access_mini_grid_electricity_000_people",
+      "value": 0,
+    },
+    Object {
+      "indicator": "access_off_grid_electricity_000_people",
+      "value": 0,
+    },
+    Object {
+      "indicator": "inferred_access_additional_generation_000_people",
+      "value": 0,
+    },
+    Object {
+      "indicator": "inferred_access_cross_border_transmission_000_people",
+      "value": 0,
+    },
+    Object {
+      "indicator": "access_biomassbiogas_clean_cooking_000_people",
+      "value": 0,
+    },
+    Object {
+      "indicator": "access_lpgethanol_cooking_000_people",
+      "value": 0,
+    },
+    Object {
+      "indicator": "electricity_from_renewables_gwhyear",
+      "value": 0.24528000000000005,
+    },
+    Object {
+      "indicator": "renewable_generation_capacity_mw",
+      "value": 0.14,
+    },
+    Object {
+      "indicator": "electricity_from_energy_efficiency_liberated_capacity_mw",
+      "value": 0,
+    },
+    Object {
+      "indicator": "transmission_lines_km",
+      "value": 0,
+    },
+    Object {
+      "indicator": "distribution_lines_km",
+      "value": 0,
+    },
+    Object {
+      "indicator": "energy_savings_mwhyear",
+      "value": 0,
+    },
+    Object {
+      "indicator": "ghg_emissions_avoided_per_year_ktons_co2eq",
+      "value": 0.2,
+    },
+    Object {
+      "indicator": "no_direct_jobs_personyear_construction",
+      "value": 0,
+    },
+    Object {
+      "indicator": "no_permanent_jobs_operation",
+      "value": 0,
+    },
+    Object {
+      "indicator": "direct_inferred_electricity_access_000_people",
+      "value": 0,
+    },
+    Object {
+      "indicator": "clean_cooking_fuel_access_000_people",
+      "value": 0,
+    },
+    Object {
+      "indicator": "direct_inferred_access_energy_000_people",
+      "value": 0,
+    },
+    Object {
+      "indicator": "electricity_from_renewabes_gwhyear",
+      "value": 0.24528000000000005,
+    },
+    Object {
+      "indicator": "reneable_generation_capacity_mw",
+      "value": 0.14,
+    },
+    Object {
+      "indicator": "electricity_generation_capacity_mw",
+      "value": 0.14,
+    },
+    Object {
+      "indicator": "transmission_distribution_lines_km",
+      "value": 0,
+    },
+    Object {
+      "indicator": "ghg_emissions_avoided_per_year_ktons_co2eq",
+      "value": 0.2,
+    },
+    Object {
+      "indicator": "no_direct_permanent_jons_construction_operation",
+      "value": 0,
+    },
+    Object {
+      "indicator": "bet1_access_energy",
+      "value": 0,
+    },
+    Object {
+      "indicator": "bet2_renewable_energy_generation_energy_efficiency",
+      "value": 0.14,
+    },
+    Object {
+      "indicator": "bet3_contribution_fight_against_climate_change",
+      "value": 0.2,
+    },
+    Object {
+      "indicator": "eurf_1_no_people_provided_access_electricity_eu_support",
+      "value": 0,
+    },
+    Object {
+      "indicator": "eurf_2_renewable_energy_production_supported_by_eu",
+      "value": 0.24528000000000005,
+    },
+    Object {
+      "indicator": "eurf_3_ghg_emission_avoided",
+      "value": 0.2,
+    },
+    Object {
+      "indicator": "sdg_percentage_population_access_electricity",
+      "value": 0,
+    },
+    Object {
+      "indicator": "sdg_proportion_population_primary_reliance_clean_fuels_technology",
+      "value": 0,
+    },
+    Object {
+      "indicator": "sdg_renewable_energy_share_total_final_energy_consumption",
+      "value": 0.24528000000000005,
+    },
+    Object {
+      "indicator": "sdg_energy_intensity_measured_terms_primary_energy_gdp",
+      "value": 0,
+    },
+    Object {
+      "indicator": "sdg_proportion_informal_employement_non_agriculture_employment_by_sex",
+      "value": 0,
+    },
+  ],
   "ec_priorities": Array [],
   "media": Array [],
   "programme_name": "EDF",

@@ -186,6 +186,7 @@ export default (record: Object): Project | null => {
     action: '',
     budget: getBudget(),
     call_year: getCallYear(record),
+    comments: '',
     description: getProjectDescription(record),
     ec_priorities: [],
     media: [],

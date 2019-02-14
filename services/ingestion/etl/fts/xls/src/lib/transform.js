@@ -247,6 +247,7 @@ export default (record: Object): Project | null => {
     action: '',
     budget: getBudget(record),
     call_year: record.Year || '',
+    comments: '',
     description: record['Budget line name and number'] || '',
     ec_priorities: [],
     media: [],

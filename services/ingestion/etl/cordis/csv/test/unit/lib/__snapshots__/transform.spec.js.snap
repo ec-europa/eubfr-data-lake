@@ -35,6 +35,7 @@ Object {
     },
   },
   "call_year": "",
+  "comments": "",
   "complete": true,
   "description": "RCN: 30802
 Objectives: %LTo understand the mechanisms leading to the formation of nitrous acid on the
@@ -107,6 +108,7 @@ Object {
     },
   },
   "call_year": "",
+  "comments": "",
   "complete": true,
   "description": "rcn: 215949
 acronym: UNISECO
@@ -523,6 +525,7 @@ Object {
     },
   },
   "call_year": "",
+  "comments": "",
   "complete": true,
   "description": "rcn: 14088
 objective: As a result of the rapid increase in forest damages in Mid-Europe, the need for the reduction of air pollutions from energy conversion and energy-end-use technologies became an important political objective.",
@@ -633,6 +636,7 @@ Object {
     },
   },
   "call_year": "",
+  "comments": "",
   "complete": true,
   "description": "rcn: 215954
 acronym: SMARTER

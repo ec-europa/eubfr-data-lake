@@ -402,6 +402,7 @@ export default (record: Object): Project | null => {
     action: getAction(record),
     budget: getBudget(record),
     call_year: getCallYear(record),
+    comments: '',
     description: getDescription(record),
     ec_priorities: [],
     media: [],
