@@ -7,21 +7,21 @@ Model to compare with is available at: https://ec-europa.github.io/eubfr-data-la
 | ID                                                                                       | project_id                     |
 | Country                                                                                  | project_locations.country_code |
 | Region                                                                                   | project_locations.region       |
-| Lead Financier                                                                           |                                |
+| Lead Financier                                                                           | devco_lead_investor            |
 | Funding Source                                                                           | programme_name                 |
 | Project Title                                                                            | title                          |
-| CRIS No or ExCom Des                                                                     |                                |
+| CRIS No or ExCom Des                                                                     | devco_cris_number              |
 | Project Type                                                                             | type                           |
 | Total Budget (Million Euro)                                                              | budget.total_cost              |
-| Investment Grant (Million Euro)                                                          |                                |
-| TA (Million Euro)                                                                        |                                |
-| Interest Rate Subsidy (Million Euro)                                                     |                                |
-| Guarantee (Million Euro)                                                                 |                                |
-| Equity (Million Euro)                                                                    |                                |
-| Budget Support (Million Euro)                                                            |                                |
-| Loan (Million Euro)                                                                      |                                |
+| Investment Grant (Million Euro)                                                          | devco_investment_grant         |
+| TA (Million Euro)                                                                        | devco_ta                       |
+| Interest Rate Subsidy (Million Euro)                                                     | devco_interest_rate_subsidy    |
+| Guarantee (Million Euro)                                                                 | devco_guarantee                |
+| Equity (Million Euro)                                                                    | devco_equity                   |
+| Budget Support (Million Euro)                                                            | devco_budget_support           |
+| Loan (Million Euro)                                                                      | devco_loan                     |
 | Total EU Contribution (Million Euro)                                                     | budget.eu_contrib              |
-| Leverage                                                                                 |                                |
+| Leverage                                                                                 | devco_leverage                 |
 | 1.1 Access on grid electricity ('000 people)                                             | results                        |
 | 1.2 Access mini grid electricity ('000 people)                                           | results                        |
 | 1.3 Access off-grid electricity ('000 people)                                            | results                        |

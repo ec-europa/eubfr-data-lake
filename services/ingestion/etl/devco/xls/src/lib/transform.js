@@ -16,12 +16,18 @@ import type { Project } from '@eubfr/types';
  * Input fields taken from the `record` are:
  * - `Total EU Contribution (Million Euro)`
  * - `Total Budget (Million Euro)`
+ * - `Investment Grant (Million Euro)`
+ * - `TA (Million Euro)`
+ * - `Interest Rate Subsidy (Million Euro)`
+ * - `Guarantee (Million Euro)`
+ * - `Equity (Million Euro)`
+ * - `Budget Support (Million Euro)`
+ * - `Loan (Million Euro)`
  *
  * @memberof DevcoXlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {Budget}
  */
-
 const getBudget = record => {
   const euContribString = record['Total EU Contribution (Million Euro)']
     ? `EUR ${record['Total EU Contribution (Million Euro)']} million`
@@ -37,7 +43,63 @@ const getBudget = record => {
     ? sanitizeBudgetItem(extractBudgetData(totalCostString))
     : sanitizeBudgetItem();
 
+  const investmentGrantString = record['Investment Grant (Million Euro)']
+    ? `EUR ${record['Investment Grant (Million Euro)']} million`
+    : null;
+  const investmentGrant = investmentGrantString
+    ? sanitizeBudgetItem(extractBudgetData(investmentGrantString))
+    : sanitizeBudgetItem();
+
+  const taString = record['TA (Million Euro)']
+    ? `EUR ${record['TA (Million Euro)']} million`
+    : null;
+  const ta = taString
+    ? sanitizeBudgetItem(extractBudgetData(taString))
+    : sanitizeBudgetItem();
+
+  const interestRateString = record['Interest Rate Subsidy (Million Euro)']
+    ? `EUR ${record['Interest Rate Subsidy (Million Euro)']} million`
+    : null;
+  const interestRate = interestRateString
+    ? sanitizeBudgetItem(extractBudgetData(interestRateString))
+    : sanitizeBudgetItem();
+
+  const guaranteeString = record['Guarantee (Million Euro)']
+    ? `EUR ${record['Guarantee (Million Euro)']} million`
+    : null;
+  const guarantee = guaranteeString
+    ? sanitizeBudgetItem(extractBudgetData(guaranteeString))
+    : sanitizeBudgetItem();
+
+  const equityString = record['Equity (Million Euro)']
+    ? `EUR ${record['Equity (Million Euro)']} million`
+    : null;
+  const equity = equityString
+    ? sanitizeBudgetItem(extractBudgetData(equityString))
+    : sanitizeBudgetItem();
+
+  const budgetSupportString = record['Budget Support (Million Euro)']
+    ? `EUR ${record['Budget Support (Million Euro)']} million`
+    : null;
+  const budgetSupport = budgetSupportString
+    ? sanitizeBudgetItem(extractBudgetData(budgetSupportString))
+    : sanitizeBudgetItem();
+
+  const loanString = record['Loan (Million Euro)']
+    ? `EUR ${record['Loan (Million Euro)']} million`
+    : null;
+  const loan = loanString
+    ? sanitizeBudgetItem(extractBudgetData(loanString))
+    : sanitizeBudgetItem();
+
   const budget = {
+    devco_budget_support: budgetSupport,
+    devco_equity: equity,
+    devco_guarantee: guarantee,
+    devco_interest_rate_subsidy: interestRate,
+    devco_investment_grant: investmentGrant,
+    devco_ta: ta,
+    devco_loan: loan,
     eu_contrib: euContrib,
     funding_area: [],
     mmf_heading: '',
@@ -58,13 +120,81 @@ const getBudget = record => {
  *
  * @memberof DevcoXlsTransform
  * @param {Object} record The row received from parsed file
- * @returns {import('aws-sdk/clients/elbv2').String}
+ * @returns {String}
  */
-
 const getDescription = record =>
   record['Description and main objectives']
     ? record['Description and main objectives'].trim()
     : '';
+
+/**
+ * Preprocess `devco_cris_number`
+ *
+ * Input fields taken from the `record` are:
+ * - `CRIS No or ExCom Des`
+ *
+ * @memberof DevcoXlsTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {SingleValueField}
+ */
+const getCrisNumber = record => {
+  const number = {
+    raw: '',
+    formatted: '',
+  };
+
+  if (record['CRIS No or ExCom Des']) {
+    number.raw = record['CRIS No or ExCom Des'];
+  }
+
+  return number;
+};
+
+/**
+ * Preprocess `devco_lead_investor`
+ *
+ * Input fields taken from the `record` are:
+ * - `Lead Financier`
+ *
+ * @memberof DevcoXlsTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {SingleValueField}
+ */
+const getInvestor = record => {
+  const investor = {
+    raw: '',
+    formatted: '',
+  };
+
+  if (record['Lead Financier']) {
+    investor.raw = record['Lead Financier'];
+  }
+
+  return investor;
+};
+
+/**
+ * Preprocess `devco_leverage`
+ *
+ * Input fields taken from the `record` are:
+ * - `Leverage`
+ *
+ * @memberof DevcoXlsTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {SingleValueField}
+ */
+const getLeverage = record => {
+  const leverage = {
+    raw: '',
+    formatted: '',
+  };
+
+  if (record['Leverage']) {
+    leverage.raw = record['Leverage'];
+  }
+
+  return leverage;
+};
 
 /**
  * Gets country code from a country name.
@@ -73,7 +203,6 @@ const getDescription = record =>
  * @param {String} countryName The name of the country
  * @returns {String} The ISO 3166-1 country code
  */
-
 const getCodeByCountry = countryName =>
   countries.getAlpha2Code(countryName, 'en');
 
@@ -88,7 +217,6 @@ const getCodeByCountry = countryName =>
  * @param {Object} record The row received from parsed file
  * @returns {Array}
  */
-
 const getLocations = record => {
   const locations = [];
   const code = getCountryCode(getCodeByCountry(record.Country));
@@ -155,7 +283,6 @@ const getLocations = record => {
  * @param {Object} record The row received from parsed file
  * @returns {Result}
  */
-
 const getResults = record => {
   let resultIsAvailable = false;
   let resultsContents = '';
@@ -243,7 +370,6 @@ const getResults = record => {
  * @param {Object} record The row received from parsed file
  * @returns {Array} Project types
  */
-
 const getType = record =>
   record['Project Type']
     ? record['Project Type']
@@ -272,6 +398,9 @@ export default (record: Object): Project | null => {
     call_year: '',
     description: getDescription(record),
     ec_priorities: [],
+    devco_cris_number: getCrisNumber(record),
+    devco_lead_investor: getInvestor(record),
+    devco_leverage: getLeverage(record),
     media: [],
     programme_name: record['Funding Source'] || '',
     project_id: record.ID || '',

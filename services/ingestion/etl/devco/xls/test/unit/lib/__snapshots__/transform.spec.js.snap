@@ -4,6 +4,41 @@ exports[`DG DEVCO XLS transformer Produces correct JSON output structure 1`] = `
 Object {
   "action": "",
   "budget": Object {
+    "devco_budget_support": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "devco_equity": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "devco_guarantee": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "devco_interest_rate_subsidy": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "devco_investment_grant": Object {
+      "currency": "EUR",
+      "raw": "EUR 0.618036 million",
+      "value": 618036,
+    },
+    "devco_loan": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "devco_ta": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
     "eu_contrib": Object {
       "currency": "EUR",
       "raw": "EUR 0.618036 million",
@@ -35,6 +70,18 @@ Object {
   "call_year": "",
   "complete": true,
   "description": "Fourniture, installation, mise en SAV d'un an des équipements photovoltaïques au bénéfice de onze (11) délégations régionales du Ministère des Finances et du Budget et de trois (03) communes pilotes",
+  "devco_cris_number": Object {
+    "formatted": "",
+    "raw": "2016 / 371004",
+  },
+  "devco_lead_investor": Object {
+    "formatted": "",
+    "raw": "EC",
+  },
+  "devco_leverage": Object {
+    "formatted": "",
+    "raw": 1,
+  },
   "ec_priorities": Array [],
   "media": Array [],
   "programme_name": "EDF",
