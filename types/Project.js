@@ -165,15 +165,6 @@ export type Timeframe = {
 };
 
 /**
- * Describes an element of `devco_results_indicators`.
- * @type {Indicator}
- */
-export type Indicator = {
-  field: string,
-  value: string,
-};
-
-/**
  * Describes a generic field in an ETL which does not have any other specific structure.
  * @type {SimpleValueField}
  */

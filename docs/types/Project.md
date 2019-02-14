@@ -166,22 +166,11 @@ Type: [Timeframe][16]
 - `to` **([string][2] | null)**
 - `to_precision` **[TimePrecision][15]**
 
-## Indicator
-
-Describes an element of `devco_results_indicators`.
-
-Type: [Indicator][17]
-
-### Properties
-
-- `field` **[string][2]**
-- `value` **[string][2]**
-
 ## SimpleValueField
 
 Describes a generic field in an ETL which does not have any other specific structure.
 
-Type: [SimpleValueField][18]
+Type: [SimpleValueField][17]
 
 ### Properties
 
@@ -192,7 +181,7 @@ Type: [SimpleValueField][18]
 
 Describes a field which has a certain type of value.
 
-Type: [TypedValueField][19]
+Type: [TypedValueField][18]
 
 ### Properties
 
@@ -205,7 +194,7 @@ Type: [TypedValueField][19]
 
 Describes `project`.
 
-Type: [Project][20]
+Type: [Project][19]
 
 ### Properties
 
@@ -213,15 +202,15 @@ Type: [Project][20]
 - `budget` **[Budget][4]**
 - `call_year` **[string][2]**
 - `comments` **[string][2]**
-- `complete` **[boolean][21]**
+- `complete` **[boolean][20]**
 - `description` **[string][2]**
-- `devco_arei_projects_endorsement` **[SimpleValueField][18]?**
-- `devco_cris_number` **[SimpleValueField][18]?**
+- `devco_arei_projects_endorsement` **[SimpleValueField][17]?**
+- `devco_cris_number` **[SimpleValueField][17]?**
 - `devco_date_entry` **([string][2] | null)?**
-- `devco_lead_investor` **[SimpleValueField][18]?**
-- `devco_leverage` **[SimpleValueField][18]?**
-- `devco_project_stage` **[SimpleValueField][18]?**
-- `devco_results_indicators` **[Array][5]&lt;[TypedValueField][19]>?**
+- `devco_lead_investor` **[SimpleValueField][17]?**
+- `devco_leverage` **[SimpleValueField][17]?**
+- `devco_project_stage` **[SimpleValueField][17]?**
+- `devco_results_indicators` **[Array][5]&lt;[TypedValueField][18]>?**
 - `ec_priorities` **[Array][5]&lt;[string][2]>**
 - `media` **[Array][5]&lt;[Media][12]>**
 - `programme_name` **[string][2]**
@@ -256,8 +245,7 @@ Type: [Project][20]
 [14]: #result
 [15]: #timeprecision
 [16]: #timeframe
-[17]: #indicator
-[18]: #simplevaluefield
-[19]: #typedvaluefield
-[20]: #project
-[21]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[17]: #simplevaluefield
+[18]: #typedvaluefield
+[19]: #project
+[20]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
