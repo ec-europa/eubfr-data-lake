@@ -16,6 +16,22 @@ const budgetItem = {
   },
 };
 
+const SimpleValueField = {
+  properties: {
+    raw: { type: 'long' },
+    formatted: { type: 'long' },
+  },
+};
+
+const TypedValueField = {
+  properties: {
+    field: { type: 'keyword' },
+    type: { type: 'keyword' },
+    raw: { type: 'long' },
+    formatted: { type: 'long' },
+  },
+};
+
 const textWithKeyword = {
   type: 'text',
   fields: { keyword: { type: 'keyword', ignore_above: 256 } },
@@ -28,6 +44,12 @@ module.exports = () => ({
         action: { type: 'text' },
         budget: {
           properties: {
+            devco_equity: budgetItem,
+            devco_guarantee: budgetItem,
+            devco_interest_rate_subsidy: budgetItem,
+            devco_investment_grant: budgetItem,
+            devco_loan: budgetItem,
+            devco_ta: budgetItem,
             eu_contrib: budgetItem,
             funding_area: textWithKeyword,
             mmf_heading: textWithKeyword,
@@ -41,6 +63,13 @@ module.exports = () => ({
         computed_key: { type: 'keyword' },
         created_by: { type: 'keyword' },
         description: { type: 'text' },
+        devco_arei_projects_endorsement: SimpleValueField,
+        devco_cris_number: SimpleValueField,
+        devco_date_entry: SimpleValueField,
+        devco_lead_investor: SimpleValueField,
+        devco_leverage: SimpleValueField,
+        devco_project_stage: SimpleValueField,
+        devco_results_indicators: TypedValueField,
         ec_priorities: textWithKeyword,
         last_modified: { type: 'date' },
         media: {
