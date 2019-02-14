@@ -70,7 +70,7 @@ Input fields taken from the `record` are:
 
 - `record` **[Object][3]** The row received from parsed file
 
-Returns **SingleValueField**
+Returns **SimpleValueField**
 
 ### getInvestor
 
@@ -84,7 +84,7 @@ Input fields taken from the `record` are:
 
 - `record` **[Object][3]** The row received from parsed file
 
-Returns **SingleValueField**
+Returns **SimpleValueField**
 
 ### getLeverage
 
@@ -98,7 +98,7 @@ Input fields taken from the `record` are:
 
 - `record` **[Object][3]** The row received from parsed file
 
-Returns **SingleValueField**
+Returns **SimpleValueField**
 
 ### getResultsIndicators
 
@@ -147,7 +147,7 @@ Input fields taken from the `record` are:
 
 - `record` **[Object][3]** The row received from parsed file
 
-Returns **[Array][5]&lt;Indicator>**
+Returns **[Array][5]&lt;TypedValueField>**
 
 ### getProjectStage
 
@@ -161,7 +161,7 @@ Input fields taken from the `record` are:
 
 - `record` **[Object][3]** The row received from parsed file
 
-Returns **SingleValueField**
+Returns **SimpleValueField**
 
 ### getDateEntry
 
@@ -189,7 +189,7 @@ Input fields taken from the `record` are:
 
 - `record` **[Object][3]** The row received from parsed file
 
-Returns **SingleValueField**
+Returns **SimpleValueField**
 
 ### getCodeByCountry
 
