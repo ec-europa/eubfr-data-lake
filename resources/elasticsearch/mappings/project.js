@@ -21,6 +21,22 @@ const textWithKeyword = {
   fields: { keyword: { type: 'keyword', ignore_above: 256 } },
 };
 
+const simpleValueField = {
+  properties: {
+    raw: { type: 'text' },
+    formatted: { type: 'text' },
+  },
+};
+
+const typedValueField = {
+  properties: {
+    field: { type: 'keyword' },
+    type: { type: 'keyword' },
+    raw: { type: 'text' },
+    formatted: { type: 'text' },
+  },
+};
+
 module.exports = () => ({
   mappings: {
     project: {
@@ -48,6 +64,13 @@ module.exports = () => ({
         computed_key: { type: 'keyword' },
         created_by: { type: 'keyword' },
         description: { type: 'text' },
+        devco_arei_projects_endorsement: simpleValueField,
+        devco_cris_number: simpleValueField,
+        devco_date_entry: { type: 'date' },
+        devco_lead_investor: simpleValueField,
+        devco_leverage: simpleValueField,
+        devco_project_stage: simpleValueField,
+        devco_results_indicators: typedValueField,
         ec_priorities: textWithKeyword,
         last_modified: { type: 'date' },
         media: {
