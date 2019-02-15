@@ -44,6 +44,20 @@ Input fields taken from the `record` are:
 
 Returns **Budget**
 
+### getComments
+
+Preprocess `comments`.
+
+Input fields taken from the `record` are:
+
+- `Comments`
+
+#### Parameters
+
+- `record` **[Object][3]** The row received from parsed file
+
+Returns **[String][4]**
+
 ### getDescription
 
 Preprocess `description`.

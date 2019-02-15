@@ -113,6 +113,19 @@ const getBudget = record => {
 };
 
 /**
+ * Preprocess `comments`.
+ *
+ * Input fields taken from the `record` are:
+ * - `Comments`
+ *
+ * @memberof DevcoXlsTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {String}
+ */
+const getComments = record =>
+  record.Comments ? record.Comments.replace(/ +(?= )/g, '').trim() : '';
+
+/**
  * Preprocess `description`.
  *
  * Input fields taken from the `record` are:
@@ -621,7 +634,7 @@ export default (record: Object): Project | null => {
     action: '',
     budget: getBudget(record),
     call_year: '',
-    comments: record.Comments || '',
+    comments: getComments(record),
     description: getDescription(record),
     ec_priorities: [],
     devco_cris_number: getCrisNumber(record),
