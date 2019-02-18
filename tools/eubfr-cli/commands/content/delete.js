@@ -32,7 +32,7 @@ const deleteFile = async ({ computedKey, creds, requestParams }) => {
  * @param {Array} credentials
  *   List of credentials for the producers.
  */
-const deleteCommand = ({ files, credentials, endpoints }) => {
+const contentDeleteCommand = ({ files, credentials, endpoints }) => {
   // Prepare variables for further requests.
   const resource = 'storage/delete';
   const api = url.parse(`https://${endpoints.DELETER_API}`);
@@ -102,4 +102,4 @@ const deleteCommand = ({ files, credentials, endpoints }) => {
   );
 };
 
-module.exports = deleteCommand;
+module.exports = contentDeleteCommand;

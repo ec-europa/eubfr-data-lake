@@ -16,7 +16,7 @@ const deleteClient = async username => {
 const deleteServer = async username =>
   deleteServerlessService('demo-dashboard-server', { username });
 
-const deleteDemo = async ({ producer }) => {
+const demoDeleteCommand = async ({ producer }) => {
   const usernames = producer === '*' ? getAllProducers() : [producer];
 
   const execute = async () =>
@@ -30,4 +30,4 @@ const deleteDemo = async ({ producer }) => {
   execute();
 };
 
-module.exports = deleteDemo;
+module.exports = demoDeleteCommand;

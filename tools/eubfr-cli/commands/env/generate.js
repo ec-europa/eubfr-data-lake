@@ -5,7 +5,7 @@ const { exec } = require('child_process');
 const shell = promisify(exec);
 const getServiceLocation = require('../../lib/getServiceLocation');
 
-const generateEnvironmentVariables = () => {
+const envGenerateCommand = () => {
   const slsBin = path.resolve(
     require.resolve('serverless'),
     '../../bin/serverless'
@@ -43,4 +43,4 @@ const generateEnvironmentVariables = () => {
   return Promise.all(operations);
 };
 
-module.exports = generateEnvironmentVariables;
+module.exports = envGenerateCommand;

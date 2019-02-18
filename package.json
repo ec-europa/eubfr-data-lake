@@ -3,6 +3,7 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "changelog": "lerna-changelog",
+    "content:download": "eubfr-cli content download",
     "content:upload": "eubfr-cli content upload",
     "content:delete": "eubfr-cli content delete",
     "deploy": "run-s deploy:resources deploy:services deploy:demo",

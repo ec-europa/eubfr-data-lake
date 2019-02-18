@@ -3,8 +3,8 @@
 const program = require('commander');
 
 // Commands
-const generateEnvironmentVariables = require('../commands/env/generateVariables');
-const printEnvironmentVariables = require('../commands/env/printVariables');
+const envGenerateCommand = require('../commands/env/generate');
+const envPrintCommand = require('../commands/env/print');
 
 /**
  *
@@ -25,7 +25,7 @@ program
   .description(
     'See the current values of the environment variables used by the CLI.'
   )
-  .action(() => printEnvironmentVariables());
+  .action(() => envPrintCommand());
 
 /**
  *
@@ -58,13 +58,13 @@ program
  * ```
  *
  * @memberof Environment
- * @name GenerateVariables
+ * @name Generate
  * @public
  */
 program
-  .command('generate-variables')
+  .command('generate')
   .description('Generate all necessary .env files for using the CLI.')
-  .action(() => generateEnvironmentVariables());
+  .action(() => envGenerateCommand());
 
 // If no arguments provided, display help menu.
 if (!process.argv.slice(2).length) {
