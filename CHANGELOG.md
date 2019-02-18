@@ -1,5 +1,32 @@
 # Change Log
 
+## 0.6.0 (2018-12-14)
+
+#### :rocket: New Feature
+
+- [#193](https://github.com/ec-europa/eubfr-data-lake/pull/193) feat(etls): add euinvest producer - EUBFR-238 ([@kalinchernev](https://github.com/kalinchernev))
+- [#191](https://github.com/ec-europa/eubfr-data-lake/pull/191) feat(etls): add energy projects data from DEVCO - EUBFR-240 ([@kalinchernev](https://github.com/kalinchernev))
+- [#185](https://github.com/ec-europa/eubfr-data-lake/pull/185) feat(eubfr-cli): accept environment variables - EUBFR-232 ([@kalinchernev](https://github.com/kalinchernev))
+
+#### :nail_care: Enhancement
+
+- [#192](https://github.com/ec-europa/eubfr-data-lake/pull/192) refactor(etls): update projects from EU Results - EUBFR-239 ([@kalinchernev](https://github.com/kalinchernev))
+- [#186](https://github.com/ec-europa/eubfr-data-lake/pull/186) refactor(etls): update eac to accept CSV files - EUBFR-223 ([@kalinchernev](https://github.com/kalinchernev))
+- [#189](https://github.com/ec-europa/eubfr-data-lake/pull/189) chore(deps): upgrade dependencies - EUBFR-230 ([@kalinchernev](https://github.com/kalinchernev))
+- [#188](https://github.com/ec-europa/eubfr-data-lake/pull/188) refactor(eubfr-cli): correct stage protection logic - EUBFR-233 ([@kalinchernev](https://github.com/kalinchernev))
+- [#173](https://github.com/ec-europa/eubfr-data-lake/pull/173) refactor(enrichment): improve resilience - EUBFR-159 ([@kalinchernev](https://github.com/kalinchernev))
+
+#### :memo: Documentation
+
+- [#187](https://github.com/ec-europa/eubfr-data-lake/pull/187) docs(content): sync .content to s3 bucket - noissue ([@kalinchernev](https://github.com/kalinchernev))
+- [#182](https://github.com/ec-europa/eubfr-data-lake/pull/182) docs(etls): update documentation for creating new ETLs - EUBFR-231 ([@kalinchernev](https://github.com/kalinchernev))
+
+#### :house: Internal
+
+- [#184](https://github.com/ec-europa/eubfr-data-lake/pull/184) refactor(handlers): remove callback from async lambda handlers - EUBFR-229 ([@kalinchernev](https://github.com/kalinchernev))
+- [#183](https://github.com/ec-europa/eubfr-data-lake/pull/183) chore(release): improve workflows - EUBFR-228 ([@kalinchernev](https://github.com/kalinchernev))
+- [#181](https://github.com/ec-europa/eubfr-data-lake/pull/181) chore(deps): upgrade dependencies - EUBFR-218 ([@kalinchernev](https://github.com/kalinchernev))
+
 ## 0.5.0 (2018-12-14)
 
 #### :rocket: New Feature
