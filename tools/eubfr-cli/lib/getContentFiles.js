@@ -11,6 +11,17 @@ const getContentFiles = async ({ folder, producer }) => {
   const s3 = new AWS.S3();
 
   try {
+    await s3.headBucket({ Bucket: repo }).promise();
+  } catch (error) {
+    if (error.code === 'NotFound') {
+      console.log(`The S3 bucket "${repo}" does not exist.`);
+      return console.log(
+        'Please change with EUBFR_CONTENT_REPOSITORY environment variable.'
+      );
+    }
+  }
+
+  try {
     // Ensure the folder where we are going to place the files exists.
     if (!fs.existsSync(folder)) {
       fs.mkdirSync(folder);

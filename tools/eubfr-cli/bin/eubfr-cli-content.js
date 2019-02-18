@@ -60,10 +60,10 @@ program
   .option('-p, --producer [producer]', "Producer's name.")
   .option('-c, --confirm [confirm]', 'Flag certainty of an operation.')
   .action(async options => {
-    // Ensure we know where to get the content from.
     if (!process.env.EUBFR_CONTENT_REPOSITORY) {
-      console.error('Please specify EUBFR_CONTENT_REPOSITORY.');
-      process.exit(1);
+      process.env.EUBFR_CONTENT_REPOSITORY = 'eubfr-content';
+      console.info("EUBFR_CONTENT_REPOSITORY is 'eubfr-content' by default.");
+      console.info('Change it to download content from another S3 bucket.');
     }
 
     const folderIsSet = hasValidOption('folder', options);
