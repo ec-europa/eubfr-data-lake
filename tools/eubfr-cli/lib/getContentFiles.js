@@ -4,7 +4,7 @@ const fs = require('fs');
 /**
  * Utility to sync an S3 content repository to a local file system.
  */
-const getContentFiles = async ({ folder, producer }) => {
+const getContentFiles = async ({ folder, producer, override }) => {
   // This presence of a value in this variable is assured by the top-level command.
   const { EUBFR_CONTENT_REPOSITORY: repo } = process.env;
 
@@ -47,18 +47,25 @@ const getContentFiles = async ({ folder, producer }) => {
             if (!fs.existsSync(`${folder}/${target}`)) {
               fs.mkdirSync(`${folder}/${target}`);
               // Nothing more to do if it's a folder.
-              resolve();
+              return resolve();
             }
           } else {
-            const localFile = fs.createWriteStream(`${folder}/${target}`);
+            const file = `${folder}/${target}`;
+
+            if (fs.existsSync(file) && !override) {
+              console.log(`Skipped (existing): ${file}`);
+              return resolve();
+            }
+
+            const localFile = fs.createWriteStream(file);
 
             s3.getObject({ Bucket: repo, Key: target })
               .createReadStream()
               .on('error', error => reject(error))
               .pipe(localFile)
               .on('close', () => {
-                console.log(`Downloaded: ${folder}/${target}`);
-                resolve();
+                console.log(`Downloaded: ${file}`);
+                return resolve();
               });
           }
         });

@@ -21,7 +21,8 @@ const missingRequiredInput = '\n error: Missing required input parameters';
 /**
  * Get all necessary files for the data lake from a content repository.
  *
- * To use this command, you will need to set `EUBFR_CONTENT_REPOSITORY` environment variable with the name of the S3 bucket which is the content repository.
+ * This command depends on an environment variable `EUBFR_CONTENT_REPOSITORY`.
+ * It's the name of the S3 bucket which is the content repository.
  *
  * Usage:
  *
@@ -49,6 +50,12 @@ const missingRequiredInput = '\n error: Missing required input parameters';
  * $ eubfr-cli content download --confirm
  * ```
  *
+ * Download files and override existing.
+ *
+ * ```sh
+ * $ eubfr-cli content download --override
+ * ```
+ *
  * @memberof Content
  * @name Download
  * @public
@@ -57,6 +64,7 @@ program
   .command('download')
   .description('Get content for the data lake from a central repository.')
   .option('-f, --folder [folder]', 'Location for the downloads.')
+  .option('-o, --override [override]', 'Existing files will be overriden.')
   .option('-p, --producer [producer]', "Producer's name.")
   .option('-c, --confirm [confirm]', 'Flag certainty of an operation.')
   .action(async options => {
@@ -72,13 +80,14 @@ program
     // Set defaults if optional settings are not specified.
     const folder = folderIsSet ? options.folder : '.content';
     const producer = producerIsSet ? options.producer : '*';
+    const override = options.override ? options.override : false;
 
     if (!folderIsSet && !producerIsSet) {
       console.log('All files for all producers will be downloaded.');
       console.log('This might take some time.');
 
       if (options.confirm) {
-        await contentDownloadCommand({ folder, producer });
+        await contentDownloadCommand({ folder, producer, override });
       } else {
         // Initiate the prompt interface.
         const rl = readline.createInterface({
@@ -88,7 +97,7 @@ program
 
         rl.question('Are you sure? <yes|y> ', async answer => {
           if (answer === 'y' || answer === 'yes') {
-            await contentDownloadCommand({ folder, producer });
+            await contentDownloadCommand({ folder, producer, override });
           }
 
           rl.close();
@@ -109,7 +118,7 @@ program
       }
 
       if (options.confirm) {
-        await contentDownloadCommand({ folder, producer });
+        await contentDownloadCommand({ folder, producer, override });
       } else {
         // Initiate the prompt interface.
         const rl = readline.createInterface({
@@ -119,7 +128,7 @@ program
 
         rl.question('Are you sure? <yes|y> ', async answer => {
           if (answer === 'y' || answer === 'yes') {
-            await contentDownloadCommand({ folder, producer });
+            await contentDownloadCommand({ folder, producer, override });
           }
 
           rl.close();
