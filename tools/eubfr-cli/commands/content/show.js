@@ -9,7 +9,7 @@ const elasticsearch = require('elasticsearch');
  * @param {String} producer
  *   The producer's name. For example: 'cordis', 'eac', etc.
  */
-const showCommand = async ({ file, producer, endpoints }) => {
+const contentShowCommand = async ({ file, producer, endpoints }) => {
   const index = `${endpoints.REACT_APP_STAGE}-meta`;
   const host = `https://${endpoints.REACT_APP_ES_PRIVATE_ENDPOINT}`;
 
@@ -51,4 +51,4 @@ const showCommand = async ({ file, producer, endpoints }) => {
   }
 };
 
-module.exports = showCommand;
+module.exports = contentShowCommand;

@@ -65,8 +65,6 @@ program.command('services', 'Services management');
  */
 program.command('demo', 'Demo applications management');
 
-// The following comment contains `tree` results which cause lintint issues.
-/* eslint-disable no-irregular-whitespace */
 /**
  *
  * Manage content
@@ -79,42 +77,39 @@ program.command('demo', 'Demo applications management');
  *
  * ### Notes
  *
- * If you want to make use of the CLI to automatically upload or delete all content of a given stage, you can optionally create a `.content` folder in the root of your project, with the following example structure:
+ * The [eubfr-content](https://s3.console.aws.amazon.com/s3/buckets/eubfr-content/?region=eu-central-1&tab=overview) S3 bucket is a central content repository which holds files which could be ingested by the data lake.
  *
- * ```
- * .
- * ├── agri
- * │   └── agri_history.csv
- * ├── eac
- * │   └── CreativeEurope_Projects_Overview_2017-08-21.xls
- * ├── iati
- * │   └── activity.csv
- * ├── inforegio
- * │   ├── EUBFR_VIEW_16052018.xml
- * │   └── regio_projects.json
- * ├── valor
- * │   └── valor_sample.xls
- * └── wifi4eu
- *     └── wifi4euRegistrations.xlsx
- * ```
+ * Content is a core resource for the data lake, and although it's not required to have it while working with the project, it's highly recommended that you have a local copy to work faster.
  *
- * This content can be found at [eubfr-content](https://s3.console.aws.amazon.com/s3/buckets/eubfr-content/?region=eu-central-1&tab=overview) S3 bucket. If you have `aws` CLI installed, create the folder and get the content by:
+ * You can clone the content repository locally in several ways:
+ *
+ * With the AWS CLI:
  *
  * ```sh
  * $ mkdir .content && aws s3 sync s3://eubfr-content ./.content
  * ```
  *
- * There are 2 abstracted operations on a project level:
+ * With the EUBFR CLI:
  *
- * - `yarn content:upload` uploads files from `.content` producers' folders to their respective S3 buckets in the cloud. This triggers the ingestion process.
- * - `yarn content:delete` deletes all the currently uploaded content of all producers, for a given stage.
+ * ```sh
+ * $ eubfr-cli content download --confirm
+ * ```
  *
- * You will need to have the `config.json` file correctly setup in the root folder of the project, as producers' credentials are currently stored only there in the existing workflows.
+ * With the Yarn CLI (abstracted commands to EUBFR CLI)
+ *
+ * ```sh
+ * $ yarn content:download
+ * ```
+ *
+ * To see more abstracted project-level operations related to content:
+ *
+ * ```sh
+ * $ yarn run | grep content
+ * ```
  *
  * @name Content
  * @public
  */
-/* eslint-enable no-irregular-whitespace */
 program.command('content', 'Content management');
 
 /**

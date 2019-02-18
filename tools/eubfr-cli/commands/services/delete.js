@@ -2,7 +2,7 @@
 const getServices = require('../../lib/getServices');
 const deleteServerlessService = require('../../lib/deleteServerlessService');
 
-const deleteServices = async ({ services }) => {
+const servicesDeleteCommand = async ({ services }) => {
   const list = getServices(services);
 
   const operations = list.map(async service => {
@@ -12,4 +12,4 @@ const deleteServices = async ({ services }) => {
   return Promise.all(operations);
 };
 
-module.exports = deleteServices;
+module.exports = servicesDeleteCommand;

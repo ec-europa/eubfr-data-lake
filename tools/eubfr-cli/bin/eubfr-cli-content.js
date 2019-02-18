@@ -11,11 +11,132 @@ const getAllProducers = require('../lib/getAllProducers');
 const hasValidOption = require('../lib/hasValidOption');
 
 // Commands
-const uploadFiles = require('../commands/content/upload');
-const showFile = require('../commands/content/show');
-const deleteFiles = require('../commands/content/delete');
+const contentDeleteCommand = require('../commands/content/delete');
+const contentDownloadCommand = require('../commands/content/download');
+const contentShowCommand = require('../commands/content/show');
+const contentUploadCommand = require('../commands/content/upload');
 
 const missingRequiredInput = '\n error: Missing required input parameters';
+
+/**
+ * Get all necessary files for the data lake from a content repository.
+ *
+ * This command depends on an environment variable `EUBFR_CONTENT_REPOSITORY`.
+ * It's the name of the S3 bucket which is the content repository.
+ *
+ * Usage:
+ *
+ * ```sh
+ * $ eubfr-cli content download -h
+ * ```
+ *
+ * Examples:
+ *
+ * Get only the files necessary to work with AGRI producer.
+ *
+ * ```sh
+ * $ eubfr-cli content download -p agri
+ * ```
+ *
+ * Download files in a specific folder if the script does not have permissions to write in default `.content`.
+ *
+ * ```sh
+ * $ eubfr-cli content download -f /tmp
+ * ```
+ *
+ * Download all files for all producers in default `.content` folder without interactions.
+ *
+ * ```sh
+ * $ eubfr-cli content download --confirm
+ * ```
+ *
+ * Download files and override existing.
+ *
+ * ```sh
+ * $ eubfr-cli content download --override
+ * ```
+ *
+ * @memberof Content
+ * @name Download
+ * @public
+ */
+program
+  .command('download')
+  .description('Get content for the data lake from a central repository.')
+  .option('-f, --folder [folder]', 'Location for the downloads.')
+  .option('-o, --override [override]', 'Existing files will be overriden.')
+  .option('-p, --producer [producer]', "Producer's name.")
+  .option('-c, --confirm [confirm]', 'Flag certainty of an operation.')
+  .action(async options => {
+    if (!process.env.EUBFR_CONTENT_REPOSITORY) {
+      process.env.EUBFR_CONTENT_REPOSITORY = 'eubfr-content';
+      console.info("EUBFR_CONTENT_REPOSITORY is 'eubfr-content' by default.");
+      console.info('Change it to download content from another S3 bucket.');
+    }
+
+    const folderIsSet = hasValidOption('folder', options);
+    const producerIsSet = hasValidOption('producer', options);
+
+    // Set defaults if optional settings are not specified.
+    const folder = folderIsSet ? options.folder : '.content';
+    const producer = producerIsSet ? options.producer : '*';
+    const override = options.override ? options.override : false;
+
+    if (!folderIsSet && !producerIsSet) {
+      console.log('All files for all producers will be downloaded.');
+      console.log('This could be a slow and bandwidth-heavy operation!');
+      console.log('Consider using --producer flag for a lighter download.');
+
+      if (options.confirm) {
+        await contentDownloadCommand({ folder, producer, override });
+      } else {
+        // Initiate the prompt interface.
+        const rl = readline.createInterface({
+          input: process.stdin,
+          output: process.stdout,
+        });
+
+        rl.question('Are you sure? <yes|y> ', async answer => {
+          if (answer === 'y' || answer === 'yes') {
+            await contentDownloadCommand({ folder, producer, override });
+          }
+
+          rl.close();
+        });
+      }
+    } else {
+      // If the user has changed any of the two defaults, it's important to provide feedback about it, as the other CLI commands depend on them.
+      if (folderIsSet) {
+        console.log(`Files will be downloaded in folder: ${folder}.`);
+        console.log('Use it when specifying path in upload operations.');
+      }
+
+      if (producerIsSet) {
+        console.log(`Only files for ${producer} will be downloaded.`);
+        console.log(
+          'Please consider setting EUBFR_USERNAME in order to narrow down deployment and upload operations to this producer for the other operations as well.'
+        );
+      }
+
+      if (options.confirm) {
+        await contentDownloadCommand({ folder, producer, override });
+      } else {
+        // Initiate the prompt interface.
+        const rl = readline.createInterface({
+          input: process.stdin,
+          output: process.stdout,
+        });
+
+        rl.question('Are you sure? <yes|y> ', async answer => {
+          if (answer === 'y' || answer === 'yes') {
+            await contentDownloadCommand({ folder, producer, override });
+          }
+
+          rl.close();
+        });
+      }
+    }
+  });
 
 /**
  * Upload content to the data lake.
@@ -93,7 +214,7 @@ program
       );
     }
 
-    await uploadFiles({ files, credentials, endpoints });
+    await contentUploadCommand({ files, credentials, endpoints });
   });
 
 /**
@@ -167,7 +288,7 @@ program
       process.exit(1);
     }
 
-    await showFile({ file, producer, endpoints });
+    await contentShowCommand({ file, producer, endpoints });
   });
 
 /**
@@ -232,7 +353,7 @@ program
     );
 
     if (options.confirm) {
-      await deleteFiles({ files, credentials, endpoints });
+      await contentDeleteCommand({ files, credentials, endpoints });
     } else {
       // Initiate the prompt interface.
       const rl = readline.createInterface({
@@ -242,7 +363,7 @@ program
 
       rl.question('Are you sure? <yes|y> ', async answer => {
         if (answer === 'y' || answer === 'yes') {
-          await deleteFiles({ files, credentials, endpoints });
+          await contentDeleteCommand({ files, credentials, endpoints });
         }
 
         rl.close();

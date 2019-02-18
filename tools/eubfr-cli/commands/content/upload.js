@@ -46,7 +46,7 @@ const uploadFile = async ({ file, creds, requestParams }) => {
  * @param {Array} credentials
  *   List of credentials for the producers.
  */
-const uploadCommand = ({ files, credentials, endpoints }) => {
+const contentUploadCommand = ({ files, credentials, endpoints }) => {
   // Prepare signed upload request
   const resource = 'storage/signed_url';
   const api = url.parse(`https://${endpoints.SIGNED_UPLOADS_API}`);
@@ -82,4 +82,4 @@ const uploadCommand = ({ files, credentials, endpoints }) => {
   );
 };
 
-module.exports = uploadCommand;
+module.exports = contentUploadCommand;

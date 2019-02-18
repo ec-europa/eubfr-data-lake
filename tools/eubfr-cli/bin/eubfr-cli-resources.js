@@ -6,8 +6,8 @@ const program = require('commander');
 const shouldProtectStage = require('../lib/shouldProtectStage');
 
 // Commands
-const deployResources = require('../commands/resources/deploy');
-const deleteResources = require('../commands/resources/delete');
+const resourcesDeleteCommand = require('../commands/resources/delete');
+const resourcesDeployCommand = require('../commands/resources/deploy');
 
 /**
  *
@@ -27,7 +27,7 @@ program
   .command('deploy')
   .description('Deploy resources.')
   .action(async () => {
-    await deployResources();
+    await resourcesDeployCommand();
   });
 
 /**
@@ -57,7 +57,7 @@ program
       process.exit();
     }
 
-    await deleteResources();
+    await resourcesDeleteCommand();
   });
 
 // If no arguments provided, display help menu.
