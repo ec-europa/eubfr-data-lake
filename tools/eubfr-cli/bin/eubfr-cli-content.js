@@ -84,7 +84,8 @@ program
 
     if (!folderIsSet && !producerIsSet) {
       console.log('All files for all producers will be downloaded.');
-      console.log('This might take some time.');
+      console.log('This could be a slow and bandwidth-heavy operation!');
+      console.log('Consider using --producer flag for a lighter download.');
 
       if (options.confirm) {
         await contentDownloadCommand({ folder, producer, override });

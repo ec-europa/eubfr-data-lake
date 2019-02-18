@@ -47,26 +47,28 @@ const getContentFiles = async ({ folder, producer, override }) => {
             if (!fs.existsSync(`${folder}/${target}`)) {
               fs.mkdirSync(`${folder}/${target}`);
               // Nothing more to do if it's a folder.
-              return resolve();
+              resolve();
             }
           } else {
-            const file = `${folder}/${target}`;
+            const fileToDownload = `${folder}/${target}`;
+            console.log(`Downloading: ${fileToDownload}`);
 
-            if (fs.existsSync(file) && !override) {
-              console.log(`Skipped (existing): ${file}`);
-              return resolve();
+            if (fs.existsSync(fileToDownload) && !override) {
+              console.log(`Skipped: ${fileToDownload}`);
             }
 
-            const localFile = fs.createWriteStream(file);
+            if (!fs.existsSync(fileToDownload) || override) {
+              const localFile = fs.createWriteStream(fileToDownload);
 
-            s3.getObject({ Bucket: repo, Key: target })
-              .createReadStream()
-              .on('error', error => reject(error))
-              .pipe(localFile)
-              .on('close', () => {
-                console.log(`Downloaded: ${file}`);
-                return resolve();
-              });
+              s3.getObject({ Bucket: repo, Key: target })
+                .createReadStream()
+                .on('error', error => reject(error))
+                .pipe(localFile)
+                .on('close', () => {
+                  console.log(`Downloaded: ${fileToDownload}`);
+                  resolve();
+                });
+            }
           }
         });
       })
