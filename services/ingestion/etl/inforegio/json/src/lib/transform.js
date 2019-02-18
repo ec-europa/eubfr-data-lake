@@ -256,6 +256,7 @@ export default (record: Object): Project | null => {
     action: '',
     budget: budgetObject,
     call_year: '',
+    comments: '',
     description: record.quote,
     ec_priorities: [],
     media: [],

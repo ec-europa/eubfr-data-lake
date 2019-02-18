@@ -147,6 +147,7 @@ export default (record: Object): Project | null => {
     action: record.field_prj_cat_actions || '',
     budget: getBudget(record),
     call_year: record.field_prj_year || '',
+    comments: '',
     description: record.field_prj_summary || '',
     ec_priorities: [],
     media: [],

@@ -21,6 +21,22 @@ const textWithKeyword = {
   fields: { keyword: { type: 'keyword', ignore_above: 256 } },
 };
 
+const simpleValueField = {
+  properties: {
+    raw: { type: 'text' },
+    formatted: { type: 'text' },
+  },
+};
+
+const typedValueField = {
+  properties: {
+    field: { type: 'keyword' },
+    type: { type: 'keyword' },
+    raw: { type: 'text' },
+    formatted: { type: 'text' },
+  },
+};
+
 module.exports = () => ({
   mappings: {
     project: {
@@ -28,6 +44,12 @@ module.exports = () => ({
         action: { type: 'text' },
         budget: {
           properties: {
+            devco_equity: budgetItem,
+            devco_guarantee: budgetItem,
+            devco_interest_rate_subsidy: budgetItem,
+            devco_investment_grant: budgetItem,
+            devco_loan: budgetItem,
+            devco_ta: budgetItem,
             eu_contrib: budgetItem,
             funding_area: textWithKeyword,
             mmf_heading: textWithKeyword,
@@ -38,9 +60,17 @@ module.exports = () => ({
           },
         },
         call_year: { type: 'text' },
+        comments: { type: 'text' },
         computed_key: { type: 'keyword' },
         created_by: { type: 'keyword' },
         description: { type: 'text' },
+        devco_arei_projects_endorsement: simpleValueField,
+        devco_cris_number: simpleValueField,
+        devco_date_entry: { type: 'date' },
+        devco_lead_investor: simpleValueField,
+        devco_leverage: simpleValueField,
+        devco_project_stage: simpleValueField,
+        devco_results_indicators: typedValueField,
         ec_priorities: textWithKeyword,
         last_modified: { type: 'date' },
         media: {

@@ -38,6 +38,12 @@ export type BudgetItem = {
  * @type {Budget}
  */
 export type Budget = {
+  devco_equity?: BudgetItem,
+  devco_guarantee?: BudgetItem,
+  devco_interest_rate_subsidy?: BudgetItem,
+  devco_investment_grant?: BudgetItem,
+  devco_loan?: BudgetItem,
+  devco_ta?: BudgetItem,
   eu_contrib: BudgetItem,
   funding_area: Array<string>,
   mmf_heading: string,
@@ -159,6 +165,26 @@ export type Timeframe = {
 };
 
 /**
+ * Describes a generic field in an ETL which does not have any other specific structure.
+ * @type {SimpleValueField}
+ */
+export type SimpleValueField = {
+  raw: string,
+  formatted: string,
+};
+
+/**
+ * Describes a field which has a certain type of value.
+ * @type {TypedValueField}
+ */
+export type TypedValueField = {
+  field: string,
+  type: string,
+  raw: string,
+  formatted: string,
+};
+
+/**
  * Describes `project`.
  * @type {Project}
  */
@@ -166,14 +192,22 @@ export type Project = {
   action: string,
   budget: Budget,
   call_year: string,
+  comments: string,
+  complete: boolean,
   description: string,
+  devco_arei_projects_endorsement?: SimpleValueField,
+  devco_cris_number?: SimpleValueField,
+  devco_date_entry?: string | null,
+  devco_lead_investor?: SimpleValueField,
+  devco_leverage?: SimpleValueField,
+  devco_project_stage?: SimpleValueField,
+  devco_results_indicators?: Array<TypedValueField>,
   ec_priorities: Array<string>,
   media: Array<Media>,
   programme_name: string,
   project_id: string,
   project_locations: Array<Location>,
   project_website: string,
-  complete: boolean,
   related_links: Array<RelatedLink>,
   reporting_organisation: string,
   results: Result,

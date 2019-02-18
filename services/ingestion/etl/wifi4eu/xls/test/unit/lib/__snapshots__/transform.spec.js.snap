@@ -33,6 +33,7 @@ Object {
     },
   },
   "call_year": "2018",
+  "comments": "",
   "complete": true,
   "description": "The European Commission wishes to promote free Wi-Fi connectivity for citizens and visitors in public spaces such as parks, squares, public building, libraries, health centres, and museums everywhere in Europe through WiFi4EU.",
   "ec_priorities": Array [],

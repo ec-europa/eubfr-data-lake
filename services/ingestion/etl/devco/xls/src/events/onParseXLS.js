@@ -1,3 +1,4 @@
+import { EOL } from 'os';
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 import XLSX from 'xlsx';
 
@@ -111,7 +112,7 @@ export const handler = async (event, context) => {
         // Apply specific transformations for this ETL.
         projects.forEach(project => {
           const data = transformRecord(project);
-          uploadData += `${JSON.stringify(data)}\n`;
+          uploadData += `${JSON.stringify(data)}${EOL}`;
         });
 
         // Load data

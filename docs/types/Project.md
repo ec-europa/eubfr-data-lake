@@ -24,6 +24,12 @@ Type: [Budget][4]
 
 ### Properties
 
+- `devco_equity` **[BudgetItem][1]?**
+- `devco_guarantee` **[BudgetItem][1]?**
+- `devco_interest_rate_subsidy` **[BudgetItem][1]?**
+- `devco_investment_grant` **[BudgetItem][1]?**
+- `devco_loan` **[BudgetItem][1]?**
+- `devco_ta` **[BudgetItem][1]?**
 - `eu_contrib` **[BudgetItem][1]**
 - `funding_area` **[Array][5]&lt;[string][2]>**
 - `mmf_heading` **[string][2]**
@@ -160,25 +166,57 @@ Type: [Timeframe][16]
 - `to` **([string][2] | null)**
 - `to_precision` **[TimePrecision][15]**
 
+## SimpleValueField
+
+Describes a generic field in an ETL which does not have any other specific structure.
+
+Type: [SimpleValueField][17]
+
+### Properties
+
+- `raw` **[string][2]**
+- `formatted` **[string][2]**
+
+## TypedValueField
+
+Describes a field which has a certain type of value.
+
+Type: [TypedValueField][18]
+
+### Properties
+
+- `field` **[string][2]**
+- `type` **[string][2]**
+- `raw` **[string][2]**
+- `formatted` **[string][2]**
+
 ## Project
 
 Describes `project`.
 
-Type: [Project][17]
+Type: [Project][19]
 
 ### Properties
 
 - `action` **[string][2]**
 - `budget` **[Budget][4]**
 - `call_year` **[string][2]**
+- `comments` **[string][2]**
+- `complete` **[boolean][20]**
 - `description` **[string][2]**
+- `devco_arei_projects_endorsement` **[SimpleValueField][17]?**
+- `devco_cris_number` **[SimpleValueField][17]?**
+- `devco_date_entry` **([string][2] | null)?**
+- `devco_lead_investor` **[SimpleValueField][17]?**
+- `devco_leverage` **[SimpleValueField][17]?**
+- `devco_project_stage` **[SimpleValueField][17]?**
+- `devco_results_indicators` **[Array][5]&lt;[TypedValueField][18]>?**
 - `ec_priorities` **[Array][5]&lt;[string][2]>**
 - `media` **[Array][5]&lt;[Media][12]>**
 - `programme_name` **[string][2]**
 - `project_id` **[string][2]**
 - `project_locations` **[Array][5]&lt;[Location][9]>**
 - `project_website` **[string][2]**
-- `complete` **[boolean][18]**
 - `related_links` **[Array][5]&lt;[RelatedLink][13]>**
 - `reporting_organisation` **[string][2]**
 - `results` **[Result][14]**
@@ -207,5 +245,7 @@ Type: [Project][17]
 [14]: #result
 [15]: #timeprecision
 [16]: #timeframe
-[17]: #project
-[18]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[17]: #simplevaluefield
+[18]: #typedvaluefield
+[19]: #project
+[20]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
