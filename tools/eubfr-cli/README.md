@@ -297,7 +297,8 @@ $ yarn run | grep content
 
 Get all necessary files for the data lake from a content repository.
 
-To use this command, you will need to set `EUBFR_CONTENT_REPOSITORY` environment variable with the name of the S3 bucket which is the content repository.
+This command depends on an environment variable `EUBFR_CONTENT_REPOSITORY`.
+It's the name of the S3 bucket which is the content repository.
 
 Usage:
 
@@ -323,6 +324,12 @@ Download all files for all producers in default `.content` folder without intera
 
 ```sh
 $ eubfr-cli content download --confirm
+```
+
+Download files and override existing.
+
+```sh
+$ eubfr-cli content download --override
 ```
 
 ### Upload
