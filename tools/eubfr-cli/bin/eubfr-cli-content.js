@@ -113,9 +113,18 @@ program
 
       if (producerIsSet) {
         console.log(`Only files for ${producer} will be downloaded.`);
-        console.log(
-          'Please consider setting EUBFR_USERNAME in order to narrow down deployment and upload operations to this producer for the other operations as well.'
-        );
+        if (!process.env.EUBFR_USERNAME) {
+          console.log(
+            'Please consider setting EUBFR_USERNAME in order to narrow down deployment and upload operations to this producer for the other operations as well.'
+          );
+        }
+        if (process.env.EUBFR_USERNAME !== producer) {
+          console.log(
+            `You are downloading content for ${producer}, but EUBFR_USERNAME is ${
+              process.env.EUBFR_USERNAME
+            }. This could lead to issues among content-related CLI commands.`
+          );
+        }
       }
 
       if (options.confirm) {

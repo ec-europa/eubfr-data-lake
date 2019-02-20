@@ -51,4 +51,23 @@ pipeline:
       - ./scripts/deployment/deploy-documentation.sh
     when:
       event: [push]
+      branch: master      
+
+  deploy:
+    image: node:8.10
+    secrets:
+      [
+        eubfr_env,
+        eubfr_stage,
+        aws_access_key_id,
+        aws_secret_access_key,
+        eubfr_aws_region,
+        eubfr_content_repository,
+      ]
+    commands:
+      - npx serverless config credentials --provider aws --key $${AWS_ACCESS_KEY_ID} --secret $${AWS_SECRET_ACCESS_KEY}
+      - yarn deploy
+    when:
+      event: [push]
       branch: master
+  
