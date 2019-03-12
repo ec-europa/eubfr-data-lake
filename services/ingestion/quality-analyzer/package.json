@@ -14,14 +14,14 @@
     "split2": "3.1.1"
   },
   "devDependencies": {
-    "@babel/core": "7.4.0",
-    "@babel/preset-env": "7.4.2",
+    "@babel/core": "7.4.3",
+    "@babel/preset-env": "7.4.3",
     "@babel/preset-flow": "7.0.0",
     "@eubfr/types": "^0.6.0",
-    "aws-sdk": "2.433.0",
-    "babel-jest": "24.6.0",
+    "aws-sdk": "2.434.0",
+    "babel-jest": "24.7.0",
     "babel-loader": "8.0.5",
-    "jest": "24.6.0",
+    "jest": "24.7.0",
     "serverless": "1.40.0",
     "serverless-webpack": "5.2.0",
     "webpack": "4.29.6"

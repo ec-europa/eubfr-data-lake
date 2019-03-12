@@ -10,9 +10,9 @@
     "through2": "3.0.1"
   },
   "devDependencies": {
-    "@babel/core": "7.4.0",
-    "@babel/preset-env": "7.4.2",
-    "aws-sdk": "2.433.0",
+    "@babel/core": "7.4.3",
+    "@babel/preset-env": "7.4.3",
+    "aws-sdk": "2.434.0",
     "babel-loader": "8.0.5",
     "serverless": "1.40.0",
     "serverless-webpack": "5.2.0",

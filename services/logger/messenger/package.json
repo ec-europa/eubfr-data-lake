@@ -6,6 +6,6 @@
     "@eubfr/logger-listener": "^0.6.0"
   },
   "devDependencies": {
-    "aws-sdk": "2.433.0"
+    "aws-sdk": "2.434.0"
   }
 }

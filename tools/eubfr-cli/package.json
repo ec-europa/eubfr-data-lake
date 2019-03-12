@@ -7,10 +7,10 @@
   },
   "dependencies": {
     "@eubfr/lib": "^0.6.0",
-    "aws-sdk": "2.433.0",
+    "aws-sdk": "2.434.0",
     "aws4": "1.8.0",
     "awscred": "1.4.2",
-    "commander": "2.19.0",
+    "commander": "2.20.0",
     "deepmerge": "3.2.0",
     "elasticsearch": "15.4.1",
     "envfile": "3.0.0",
