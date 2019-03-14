@@ -1889,6 +1889,11 @@
   resolved "https://registry.yarnpkg.com/@ecl/ec-preset-website/-/ec-preset-website-2.0.0.tgz#e147c5d9b3e796e38b0409580a828ecfdcf2e4a4"
   integrity sha512-4DaFCQbaW8TdgedYQazoftqs+IFDlVLq0i5coJ6t5xTEyBPsGxvM+xB2T1Yl4pCGcRzYhSdcpwtMKw/Acoj6Kg==
 
+"@ecl/ec-preset-website@2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@ecl/ec-preset-website/-/ec-preset-website-2.1.1.tgz#651815e7c9a63fa1afae9b33c924603fecd4feaa"
+  integrity sha512-04voiCEJ437bPXHLWMPHh1bPLqhBDJj4WgZsW3szUeHzKE47Dk9wveEwl8AppjYtkdUpDOshD6lYn+hizZPpxQ==
+
 "@ecl/ec-style-color@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@ecl/ec-style-color/-/ec-style-color-1.0.0.tgz#6f225d34eee21e13b0cca7640a7721e159781c75"

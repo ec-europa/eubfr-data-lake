@@ -1,164 +1,138 @@
 import React from 'react';
 
 const Footer = () => (
-  <footer className="ecl-footer">
-    <div className="ecl-footer__corporate">
-      <div className="ecl-footer__corporate-top">
-        <div className="ecl-container">
-          <div className="ecl-row">
-            <div className="ecl-footer__column ecl-col-md">
-              <h2
-                className="ecl-heading ecl-heading--h4 ecl-footer__column-title"
-                id="footer-corporate-about-ec"
-              >
-                European Commission
-              </h2>
-              <ul
-                className="ecl-list ecl-list--unstyled ecl-footer__list"
-                aria-labelledby="footer-corporate-about-ec"
-              >
-                <li className="ecl-footer__list-item">
-                  <a
-                    className="ecl-link ecl-link--inverted ecl-footer__link"
-                    href="https://ec.europa.eu/commission/index_en"
-                  >
-                    Commission and its priorities
-                  </a>
-                </li>
-                <li className="ecl-footer__list-item">
-                  <a
-                    className="ecl-link ecl-link--inverted ecl-footer__link"
-                    href="https://ec.europa.eu/info/index_en"
-                  >
-                    Policies information and services
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div className="ecl-footer__column ecl-col-md">
-              <h2
-                className="ecl-heading ecl-heading--h4 ecl-footer__column-title"
-                id="footer-corporate-social-media"
-              >
-                Follow the European Commission
-              </h2>
-              <ul
-                className="ecl-list ecl-list--unstyled ecl-list--inline ecl-footer__list ecl-footer__list--inline  ecl-footer__social-links"
-                aria-labelledby="footer-corporate-social-media"
-              >
-                <li className="ecl-footer__list-item">
-                  <a
-                    className="ecl-link ecl-link--inverted ecl-footer__link"
-                    href="https://www.facebook.com/EuropeanCommission"
-                  >
-                    {' '}
-                    <span className="ecl-icon ecl-icon--facebook ecl-footer__social-icon" />
-                    <span>Facebook</span>{' '}
-                  </a>
-                </li>
-                <li className="ecl-footer__list-item">
-                  <a
-                    className="ecl-link ecl-link--inverted ecl-footer__link"
-                    href="https://twitter.com/EU_commission"
-                  >
-                    {' '}
-                    <span className="ecl-icon ecl-icon--twitter ecl-footer__social-icon" />
-                    <span>Twitter</span>{' '}
-                  </a>
-                </li>
-                <li className="ecl-footer__list-item">
-                  <a
-                    className="ecl-link ecl-link--inverted ecl-link--external ecl-footer__link"
-                    href="https://europa.eu/european-union/contact/social-networks_en#n:|i:4|e:1|t:|s"
-                  >
-                    Other social media
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div className="ecl-footer__column ecl-col-md">
-              <h2
-                className="ecl-heading ecl-heading--h4 ecl-footer__column-title"
-                id="footer-corporate-about-eu"
-              >
-                European Union
-              </h2>
-              <ul
-                className="ecl-list ecl-list--unstyled ecl-footer__list"
-                aria-labelledby="footer-corporate-about-eu"
-              >
-                <li className="ecl-footer__list-item">
-                  <a
-                    className="ecl-link ecl-link--inverted ecl-footer__link"
-                    href="https://europa.eu/european-union/about-eu/institutions-bodies_en"
-                  >
-                    EU institutions
-                  </a>
-                </li>
-                <li className="ecl-footer__list-item">
-                  <a
-                    className="ecl-link ecl-link--inverted ecl-footer__link"
-                    href="https://europa.eu/european-union/index_en"
-                  >
-                    European Union
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="ecl-footer__corporate-bottom">
-        <div className="ecl-container">
-          <div className="ecl-row">
-            <div className="ecl-col">
-              <ul className="ecl-list ecl-list--unstyled ecl-list--inline ecl-footer__list ecl-footer__list--inline">
-                <li className="ecl-footer__list-item">
-                  <a
-                    className="ecl-link ecl-link--inverted ecl-footer__link"
-                    href="http://ec.europa.eu/info/about-commissions-new-web-presence_en"
-                  >
-                    About the Commission&apos;s new web presence
-                  </a>
-                </li>
-                <li className="ecl-footer__list-item">
-                  <a
-                    className="ecl-link ecl-link--inverted ecl-footer__link"
-                    href="http://ec.europa.eu/info/resources-partners_en"
-                  >
-                    Resources for partners
-                  </a>
-                </li>
-                <li className="ecl-footer__list-item">
-                  <a
-                    className="ecl-link ecl-link--inverted ecl-footer__link"
-                    href="http://ec.europa.eu/info/cookies_en"
-                  >
-                    Cookies
-                  </a>
-                </li>
-                <li className="ecl-footer__list-item">
-                  <a
-                    className="ecl-link ecl-link--inverted ecl-footer__link"
-                    href="http://ec.europa.eu/info/legal-notice_en"
-                  >
-                    Legal notice
-                  </a>
-                </li>
-                <li className="ecl-footer__list-item">
-                  <a
-                    className="ecl-link ecl-link--inverted ecl-footer__link"
-                    href="http://ec.europa.eu/info/contact_en"
-                  >
-                    Contact
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
+  <footer class="ecl-footer">
+    <a
+      href="#top"
+      class="ecl-footer__back-to-top ecl-link ecl-link--standalone ecl-link--icon ecl-link--icon-after"
+    >
+      <span class="ecl-link__label">Go to top</span>&nbsp;
+    </a>
+    <div class="ecl-footer__sections">
+      <div class="ecl-container">
+        <div class="ecl-row">
+          <section class="ecl-footer__section ecl-col-12 ecl-col-md-4">
+            <h1 class="ecl-footer__section-title">European Commission</h1>
+            <ul class="ecl-footer__section-list">
+              <li class="ecl-footer__section-item">
+                <a
+                  href="/example"
+                  class="ecl-footer__section-link ecl-link ecl-link--standalone"
+                >
+                  Commission and its priorities
+                </a>
+              </li>
+              <li class="ecl-footer__section-item">
+                <a
+                  href="/example"
+                  class="ecl-footer__section-link ecl-link ecl-link--standalone"
+                >
+                  Policies, information and services
+                </a>
+              </li>
+            </ul>
+          </section>
+          <section class="ecl-footer__section ecl-col-12 ecl-col-md-4">
+            <h1 class="ecl-footer__section-title">
+              Follow the European Commission
+            </h1>
+            <ul class="ecl-footer__section-list ecl-footer__section-list--inline">
+              <li class="ecl-footer__section-item">
+                <a
+                  href="/example"
+                  class="ecl-footer__section-link ecl-link ecl-link--standalone ecl-link--icon ecl-link--icon-before"
+                >
+                  <span class="ecl-link__label">Facebook</span>
+                </a>
+              </li>
+              <li class="ecl-footer__section-item">
+                <a
+                  href="/example"
+                  class="ecl-footer__section-link ecl-link ecl-link--standalone ecl-link--icon ecl-link--icon-before"
+                >
+                  <span class="ecl-link__label">Twitter</span>
+                </a>
+              </li>
+              <li class="ecl-footer__section-item">
+                <a
+                  href="/example"
+                  class="ecl-footer__section-link ecl-link ecl-link--standalone ecl-link--icon ecl-link--icon-after"
+                >
+                  <span class="ecl-link__label">Other social networks</span>
+                </a>
+              </li>
+            </ul>
+          </section>
+          <section class="ecl-footer__section ecl-col-12 ecl-col-md-4">
+            <h1 class="ecl-footer__section-title">European Union</h1>
+            <ul class="ecl-footer__section-list">
+              <li class="ecl-footer__section-item">
+                <a
+                  href="/example"
+                  class="ecl-footer__section-link ecl-link ecl-link--standalone ecl-link--icon ecl-link--icon-after"
+                >
+                  <span class="ecl-link__label">European Union</span>&nbsp;
+                </a>
+              </li>
+              <li class="ecl-footer__section-item">
+                <a
+                  href="/example"
+                  class="ecl-footer__section-link ecl-link ecl-link--standalone ecl-link--icon ecl-link--icon-after"
+                >
+                  <span class="ecl-link__label">EU institutions</span>&nbsp;
+                </a>
+              </li>
+            </ul>
+          </section>
         </div>
       </div>
     </div>
+    <section class="ecl-footer__common">
+      <div class="ecl-container ecl-footer__common-container">
+        <a
+          href="/example"
+          class="ecl-footer__common-link ecl-link ecl-link--standalone"
+        >
+          About the Commission's new web presence
+        </a>
+        <a
+          href="/example"
+          class="ecl-footer__common-link ecl-link ecl-link--standalone"
+        >
+          Language policy
+        </a>
+        <a
+          href="/example"
+          class="ecl-footer__common-link ecl-link ecl-link--standalone"
+        >
+          Resources for partners
+        </a>
+        <a
+          href="/example"
+          class="ecl-footer__common-link ecl-link ecl-link--standalone"
+        >
+          Cookies
+        </a>
+        <a
+          href="/example"
+          class="ecl-footer__common-link ecl-link ecl-link--standalone"
+        >
+          Privacy policy
+        </a>
+        <a
+          href="/example"
+          class="ecl-footer__common-link ecl-link ecl-link--standalone"
+        >
+          Legal notice
+        </a>
+        <a
+          href="/example"
+          class="ecl-footer__common-link ecl-link ecl-link--standalone"
+        >
+          Contact
+        </a>
+      </div>
+    </section>
   </footer>
 );
 
