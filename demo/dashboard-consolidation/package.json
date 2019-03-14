@@ -1,9 +1,9 @@
 {
   "private": true,
-  "name": "@eubfr/demo-website",
+  "name": "@eubfr/demo-dashboard-consolidation",
   "version": "0.6.0",
   "scripts": {
-    "start": "npm run prepare && react-scripts start",
+    "start": "react-scripts start",
     "build": "npm run prepare && react-scripts build",
     "deploy": "sls client deploy --no-confirm",
     "prepare": "serverless deploy && serverless export-env",
@@ -23,5 +23,11 @@
     "serverless": "1.36.3",
     "serverless-export-env": "1.2.0",
     "serverless-finch": "2.3.2"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
