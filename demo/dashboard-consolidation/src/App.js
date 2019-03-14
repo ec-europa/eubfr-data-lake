@@ -1,20 +1,21 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import '@ecl/ec-preset-website/dist/styles/ecl-ec-preset-website.css';
-import SiteHeader from './components/SiteHeader';
-import Header from './components/Header';
-import PageHeader from './components/PageHeader';
-import Footer from './components/Footer';
+import SiteHeader from './components/partials/SiteHeader';
+import Header from './components/partials/Header';
+import PageHeader from './components/partials/PageHeader';
+import Main from './components/Main';
+import Footer from './components/partials/Footer';
 
 import './App.css';
 
 const App = () => (
-  <div>
+  <Fragment>
     <SiteHeader />
     <Header />
     <PageHeader />
-    <div className="ecl-container">Placeholder</div>
+    <Main />
     <Footer />
-  </div>
+  </Fragment>
 );
 
 export default App;

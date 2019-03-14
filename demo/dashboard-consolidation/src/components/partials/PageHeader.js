@@ -25,7 +25,7 @@ const PageHeader = () => (
       </nav>
       <h1 className="ecl-page-header__title">Consolidation Dashboard</h1>
       <p className="ecl-page-header__description">
-        Facilitates the marking of duplicate records.
+        Facilitates the flaggin of duplicate records.
       </p>
     </div>
   </div>
