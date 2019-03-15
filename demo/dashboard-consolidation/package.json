@@ -6,6 +6,7 @@
     "start": "react-scripts start",
     "build": "npm run prepare && react-scripts build",
     "deploy": "sls client deploy --no-confirm",
+    "export": "serverless export-env",
     "prepare": "serverless deploy && serverless export-env",
     "release": "npm run build && npm run deploy",
     "test": "react-scripts test --env=jsdom",
@@ -14,6 +15,7 @@
   "dependencies": {
     "@ecl/ec-preset-website": "2.1.1",
     "elasticsearch": "15.3.1",
+    "lodash": "4.17.11",
     "prop-types": "15.6.2",
     "react": "16.7.0",
     "react-dom": "16.7.0",

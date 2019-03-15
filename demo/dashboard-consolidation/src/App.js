@@ -6,8 +6,6 @@ import PageHeader from './components/partials/PageHeader';
 import Main from './components/Main';
 import Footer from './components/partials/Footer';
 
-import './App.css';
-
 const App = () => (
   <Fragment>
     <SiteHeader />

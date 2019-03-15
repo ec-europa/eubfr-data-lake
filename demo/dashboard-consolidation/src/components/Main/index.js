@@ -1,62 +1,57 @@
 import React from 'react';
+import Jobs from '../Jobs';
 
-const Main = () => (
-  <main className="ecl-u-pv-xl">
-    <div className="ecl-container">
-      <div className="ecl-row ecl-u-mt-l">
-        <div className="ecl-col-sm-12 ecl-col-md-4">
-          <article className="ecl-card">
-            <header className="ecl-card__header">
-              <div className="ecl-card__image" alt="card image" />
-              <div className="ecl-card__meta">Meta1 | Meta2</div>
-              <h1 className="ecl-card__title">
-                <a
-                  level="1"
-                  href="/example"
-                  className="ecl-link ecl-link--standalone"
-                >
-                  Better regulation
-                </a>
-              </h1>
-            </header>
-            <section className="ecl-card__body">
-              <div className="ecl-card__description">
-                Transparently designing and evaluating evidence-based EU
-                legislation, backed by citizens views.
-              </div>
-            </section>
-            <footer className="ecl-card__footer">
-              <ul className="ecl-card__info-container">
-                <li className="ecl-card__info-item">
-                  <span className="ecl-card__info-label">2018/10/22</span>
-                </li>
-                <li className="ecl-card__info-item">
-                  <span className="ecl-card__info-label">Luxembourg</span>
-                </li>
-              </ul>
-              <ul className="ecl-card__tag-container">
-                <li className="ecl-card__tag-item">
-                  <a href="/example" className="ecl-card__tag ecl-tag">
-                    tag 1
-                  </a>
-                </li>
-                <li className="ecl-card__tag-item">
-                  <a href="/example" className="ecl-card__tag ecl-tag">
-                    tag 2
-                  </a>
-                </li>
-                <li className="ecl-card__tag-item">
-                  <a href="/example" className="ecl-card__tag ecl-tag">
-                    tag 3
-                  </a>
-                </li>
-              </ul>
-            </footer>
-          </article>
+import clients from '../../clientFactory';
+import indices from '../../clientFactory/esIndices';
+
+class Main extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      jobs: [],
+    };
+
+    this.clients = null;
+    this.getJobs = this.getJobs.bind(this);
+  }
+
+  componentDidMount() {
+    this.clients = clients.Create();
+    this.getJobs();
+  }
+
+  getJobs() {
+    return this.clients.public
+      .search({
+        index: indices.jobs,
+        type: 'job',
+        from: 0,
+        size: 9,
+      })
+      .then(data => {
+        const jobs = data.hits && data.hits.hits ? data.hits.hits : [];
+
+        this.setState({ jobs });
+      })
+      .catch(error => {
+        console.error(`An error occured: ${error.message}`);
+      });
+  }
+
+  render() {
+    return (
+      <main className="ecl-u-pv-xl">
+        <div className="ecl-container">
+          {this.state.jobs.length ? (
+            <Jobs jobs={this.state.jobs} />
+          ) : (
+            'There are no jobs to process at the moment.'
+          )}
         </div>
-      </div>
-    </div>
-  </main>
-);
+      </main>
+    );
+  }
+}
 
 export default Main;
