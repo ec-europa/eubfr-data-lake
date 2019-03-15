@@ -1,11 +1,12 @@
 import React from 'react';
+import { chunk } from 'lodash';
 
-import Jobs from '../Jobs';
+import clients from '../clientFactory';
+import indices from '../clientFactory/esIndices';
 
-import clients from '../../clientFactory';
-import indices from '../../clientFactory/esIndices';
+import JobCard from '../components/Jobs/Card';
 
-class Main extends React.Component {
+class JobsPage extends React.Component {
   constructor() {
     super();
 
@@ -41,18 +42,18 @@ class Main extends React.Component {
   }
 
   render() {
-    return (
-      <main className="ecl-u-pv-xl">
-        <div className="ecl-container">
-          {this.state.jobs.length ? (
-            <Jobs jobs={this.state.jobs} />
-          ) : (
-            'There are no jobs to process at the moment.'
-          )}
-        </div>
-      </main>
-    );
+    const { jobs } = this.state;
+
+    return jobs.length
+      ? chunk(jobs, 3).map(group => (
+          <div className="ecl-row ecl-u-mt-l">
+            {group.map((job, key) => (
+              <JobCard key={key} job={job} />
+            ))}
+          </div>
+        ))
+      : 'No jobs for the moment.';
   }
 }
 
-export default Main;
+export default JobsPage;

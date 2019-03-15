@@ -8,17 +8,19 @@ import Header from './components/partials/Header';
 import PageHeader from './components/partials/PageHeader';
 import Footer from './components/partials/Footer';
 
-import Main from './components/Main';
-import JobPage from './components/Job/JobPage';
+import JobsPage from './pages/jobs';
 
 const App = () => (
   <HashRouter>
     <Fragment>
       <Header />
       <PageHeader />
-      <Route exact path="/" render={() => <Redirect to="/jobs" />} />
-      <Route path="/jobs" component={Main} />
-      <Route path="/jobs/:jobId" component={JobPage} />
+      <main className="ecl-u-pv-xl">
+        <div className="ecl-container">
+          <Route exact path="/" render={() => <Redirect to="/jobs" />} />
+          <Route path="/jobs" component={JobsPage} />
+        </div>
+      </main>
       <Footer />
     </Fragment>
   </HashRouter>

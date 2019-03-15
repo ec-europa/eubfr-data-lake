@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Job = ({ job }) => {
+const JobCard = ({ job }) => {
   const { _source: task, _id: id } = job;
 
   const hasDuplicates = task['CONTAINS DUPLICATES ?'];
@@ -39,4 +39,4 @@ const Job = ({ job }) => {
   );
 };
 
-export default Job;
+export default JobCard;
