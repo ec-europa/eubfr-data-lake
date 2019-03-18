@@ -42,7 +42,7 @@ const JobCard = ({ job }) => {
 
 JobCard.propTypes = {
   job: PropTypes.shape({
-    _source: PropTypes.string,
+    _source: PropTypes.object,
     _id: PropTypes.string,
   }),
 };
