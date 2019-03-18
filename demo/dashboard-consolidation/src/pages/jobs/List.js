@@ -1,12 +1,12 @@
 import React from 'react';
 import { chunk } from 'lodash';
 
-import clients from '../clientFactory';
-import indices from '../clientFactory/esIndices';
+import clients from '../../clientFactory';
+import indices from '../../clientFactory/esIndices';
 
-import JobCard from '../components/Jobs/Card';
+import Card from './Card';
 
-class JobsPage extends React.Component {
+class List extends React.Component {
   constructor() {
     super();
 
@@ -45,10 +45,10 @@ class JobsPage extends React.Component {
     const { jobs } = this.state;
 
     return jobs.length
-      ? chunk(jobs, 3).map(group => (
-          <div className="ecl-row ecl-u-mt-l">
+      ? chunk(jobs, 3).map((group, k) => (
+          <div key={k} className="ecl-row ecl-u-mt-l">
             {group.map((job, key) => (
-              <JobCard key={key} job={job} />
+              <Card key={key} job={job} />
             ))}
           </div>
         ))
@@ -56,4 +56,4 @@ class JobsPage extends React.Component {
   }
 }
 
-export default JobsPage;
+export default List;

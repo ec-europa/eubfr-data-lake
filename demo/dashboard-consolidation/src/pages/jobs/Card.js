@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const JobCard = ({ job }) => {
   const { _source: task, _id: id } = job;
@@ -17,7 +18,7 @@ const JobCard = ({ job }) => {
           <h1 className="ecl-card__title">
             <Link
               level="1"
-              to={`/jobs/${id}`}
+              to={`/jobs/${encodeURIComponent(id)}`}
               className="ecl-link ecl-link--standalone"
             >
               {JSON.stringify(_id)}
@@ -37,6 +38,13 @@ const JobCard = ({ job }) => {
       </article>
     </div>
   );
+};
+
+JobCard.propTypes = {
+  job: PropTypes.shape({
+    _source: PropTypes.string,
+    _id: PropTypes.string,
+  }),
 };
 
 export default JobCard;

@@ -8,7 +8,7 @@ import Header from './components/partials/Header';
 import PageHeader from './components/partials/PageHeader';
 import Footer from './components/partials/Footer';
 
-import JobsPage from './pages/jobs';
+import Jobs from './pages/Jobs';
 
 const App = () => (
   <HashRouter>
@@ -18,7 +18,7 @@ const App = () => (
       <main className="ecl-u-pv-xl">
         <div className="ecl-container">
           <Route exact path="/" render={() => <Redirect to="/jobs" />} />
-          <Route path="/jobs" component={JobsPage} />
+          <Route path="/jobs" component={Jobs} />
         </div>
       </main>
       <Footer />
