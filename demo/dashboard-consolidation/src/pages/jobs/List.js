@@ -13,6 +13,7 @@ class List extends React.Component {
 
     this.state = {
       total: 0,
+      length: 0,
       current: 1,
       jobs: [],
     };
@@ -36,18 +37,22 @@ class List extends React.Component {
     const { current } = this.state;
     const from = (Number(current) - 1) * size;
 
+    const params = {
+      index: indices.jobs,
+      type: 'job',
+      from,
+      size,
+    };
+
     return this.clients.public
-      .search({
-        index: indices.jobs,
-        type: 'job',
-        from,
-        size,
-      })
+      .search(params)
       .then(data => {
+        console.log(data);
         const jobs = data.hits && data.hits.hits ? data.hits.hits : [];
         const { total } = data.hits;
+        const length = Math.ceil(Number(total) / size);
 
-        this.setState({ jobs, total });
+        this.setState({ jobs, total, length });
       })
       .catch(error => {
         console.error(`An error occured: ${error.message}`);
@@ -55,7 +60,7 @@ class List extends React.Component {
   }
 
   render() {
-    const { jobs, total, current } = this.state;
+    const { jobs, current, length } = this.state;
 
     return jobs.length ? (
       <Fragment>
@@ -67,7 +72,7 @@ class List extends React.Component {
           </div>
         ))}
         <Pager
-          length={total}
+          length={length}
           current={current}
           onChange={this.handlePageChange}
         />
