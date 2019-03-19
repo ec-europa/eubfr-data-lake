@@ -59,18 +59,18 @@ class List extends React.Component {
 
     return jobs.length ? (
       <Fragment>
-        <Pager
-          length={total}
-          current={current}
-          onChange={this.handlePageChange}
-        />
         {chunk(jobs, 3).map((group, k) => (
-          <div key={k} className="ecl-row ecl-u-mt-l">
+          <div key={k} className="ecl-row ecl-u-mt-l ecl-u-mb-l">
             {group.map((job, key) => (
               <Card key={key} job={job} />
             ))}
           </div>
         ))}
+        <Pager
+          length={total}
+          current={current}
+          onChange={this.handlePageChange}
+        />
       </Fragment>
     ) : (
       'No jobs for the moment.'
