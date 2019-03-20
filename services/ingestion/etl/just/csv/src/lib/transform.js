@@ -154,7 +154,7 @@ export default (record: Object): Project | null => {
     project_id: record.field_prj_ref_number || '',
     project_locations: locationArray,
     project_website: record.field_prj_website || '',
-    complete: true,
+    complete: false,
     related_links: links,
     reporting_organisation: 'JUST',
     results: resultObject,

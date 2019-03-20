@@ -35,7 +35,7 @@ Object {
     },
   },
   "call_year": "2017",
-  "complete": true,
+  "complete": false,
   "description": "Optimising the integration and interconnection of transport modes and enhancing interoperability (06.02.01.03)",
   "ec_priorities": Array [],
   "media": Array [],
