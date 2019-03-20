@@ -276,7 +276,7 @@ export default (record: Object): Project | null => {
     project_id: record['Project Number'],
     project_locations: getProjectLocations(record),
     project_website: '',
-    complete: true,
+    complete: false,
     related_links: [],
     reporting_organisation: 'HOME',
     results: {

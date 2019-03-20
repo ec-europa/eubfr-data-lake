@@ -431,7 +431,7 @@ export default (record: Object): Project | null => {
     project_id: getProjectId(record),
     project_locations: getLocations(record),
     project_website: getProjectWebsite(record),
-    complete: true,
+    complete: false,
     related_links: [],
     reporting_organisation: 'RTD',
     results: {

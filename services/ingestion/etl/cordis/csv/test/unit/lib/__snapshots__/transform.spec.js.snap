@@ -35,7 +35,7 @@ Object {
     },
   },
   "call_year": "",
-  "complete": true,
+  "complete": false,
   "description": "RCN: 30802
 Objectives: %LTo understand the mechanisms leading to the formation of nitrous acid on the
 General Information: %L Nitrous acid is of particular importance in atmospheric chemistry, because the photolysis of HONO significantly %L enhances photooxidation processes early in the morning due to the rapid production of OH radicals. The %L proposed investigations will contribute to answer the following specific questions about the formation and %L occurrence of nitrous acid: %L -What are the formation mechanisms and sources of HONO in the atmosphere ? %L -In particular, which heterogeneous mechanisms are responsible for converting NOx (i.e. NO2 into %LHONO) ? %L -What are the parameters of heterogeneous HONO formation which are needed for later inclusion in %Ltropospheric models ? %L -What is the contribution of HONO photolysis to the urban and polar OH budget ? %L According to these questions a co-ordinated workplan comprised of field experiments as well as laboratory and %L modelling studies has been developed. The data which will be obtained will result in a better understanding of %L important chemical processes in the lower atmosphere. %L As a consequence the results from the present study can form the basis to assess the impact of those processes %L on a regional scale, in particular in relation to HONO as a chemical warning signal in urban areas.",
@@ -107,7 +107,7 @@ Object {
     },
   },
   "call_year": "",
-  "complete": true,
+  "complete": false,
   "description": "rcn: 215949
 acronym: UNISECO
 topics: SFS-29-2017
@@ -523,7 +523,7 @@ Object {
     },
   },
   "call_year": "",
-  "complete": true,
+  "complete": false,
   "description": "rcn: 14088
 objective: As a result of the rapid increase in forest damages in Mid-Europe, the need for the reduction of air pollutions from energy conversion and energy-end-use technologies became an important political objective.",
   "ec_priorities": Array [],
@@ -633,7 +633,7 @@ Object {
     },
   },
   "call_year": "",
-  "complete": true,
+  "complete": false,
   "description": "rcn: 215954
 acronym: SMARTER
 topics: SFS-15-2016-2017
