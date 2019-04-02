@@ -7,16 +7,16 @@
   },
   "dependencies": {
     "@eubfr/lib": "^0.6.0",
-    "aws-sdk": "2.395.0",
+    "aws-sdk": "2.433.0",
     "aws4": "1.8.0",
     "awscred": "1.4.2",
     "commander": "2.19.0",
-    "deepmerge": "3.1.0",
-    "elasticsearch": "15.3.1",
+    "deepmerge": "3.2.0",
+    "elasticsearch": "15.4.1",
     "envfile": "3.0.0",
     "http-aws-es": "6.0.0",
     "prettyjson": "1.2.1",
-    "request-promise-native": "1.0.5"
+    "request-promise-native": "1.0.7"
   },
   "engines": {
     "node": ">=8.0"

@@ -8,22 +8,22 @@
   },
   "dependencies": {
     "@eubfr/lib": "^0.6.0",
-    "elasticsearch": "15.3.1",
+    "elasticsearch": "15.4.1",
     "http-aws-es": "6.0.0",
     "lodash.isequal": "4.5.0",
-    "request-promise-native": "1.0.5"
+    "request-promise-native": "1.0.7"
   },
   "devDependencies": {
-    "@babel/core": "7.2.2",
-    "@babel/preset-env": "7.3.1",
+    "@babel/core": "7.4.0",
+    "@babel/preset-env": "7.4.2",
     "@eubfr/types": "^0.6.0",
-    "aws-sdk": "2.395.0",
-    "babel-jest": "24.0.0",
+    "aws-sdk": "2.433.0",
+    "babel-jest": "24.6.0",
     "babel-loader": "8.0.5",
-    "jest": "24.0.0",
-    "serverless": "1.36.3",
+    "jest": "24.6.0",
+    "serverless": "1.40.0",
     "serverless-webpack": "5.2.0",
-    "webpack": "4.29.0"
+    "webpack": "4.29.6"
   },
   "jest": {
     "transform": {

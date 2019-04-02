@@ -10,6 +10,6 @@
     "numeral": "2.0.6"
   },
   "devDependencies": {
-    "jest": "24.0.0"
+    "jest": "24.6.0"
   }
 }

@@ -3,8 +3,8 @@
   "name": "@eubfr/compute-ecs",
   "version": "0.6.0",
   "dependencies": {
-    "aws-sdk": "2.395.0",
+    "aws-sdk": "2.433.0",
     "promisepipe": "3.0.0",
-    "unzipper": "0.9.10"
+    "unzipper": "0.9.11"
   }
 }
