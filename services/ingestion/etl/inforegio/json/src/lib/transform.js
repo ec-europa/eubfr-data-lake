@@ -264,7 +264,7 @@ export default (record: Object): Project | null => {
     project_id: record.PROJECTID.toString(),
     project_locations: locationArray,
     project_website: getProjectWebsite(record),
-    complete: true,
+    complete: false,
     related_links: [],
     reporting_organisation: 'REGIO',
     results: {

@@ -254,7 +254,7 @@ export default (record: Object): Project | null => {
     project_id: record['Commitment position key'],
     project_locations: getLocations(record),
     project_website: '',
-    complete: true,
+    complete: false,
     related_links: [],
     reporting_organisation: 'BUDG',
     results: {
