@@ -12,6 +12,7 @@ documentation
   });
 
 const transforms = [
+  'bulgaria-xls',
   'cordis-csv',
   'euresults-csv',
   'devco-xls',

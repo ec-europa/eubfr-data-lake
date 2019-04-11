@@ -1,0 +1,22 @@
+{
+  "Records": [
+    {
+      "EventSource": "aws:sns",
+      "EventVersion": "1.0",
+      "EventSubscriptionArn": "arn:aws:sns:eu-central-1:491621799026:chernka249bg-etl-bulgaria-xlsx:2d71d46a-d632-40cc-925a-14ca4e7afc06",
+      "Sns": {
+        "Type": "Notification",
+        "MessageId": "e9978fac-1a31-58f3-b8ad-da84e160f49a",
+        "TopicArn": "arn:aws:sns:eu-central-1:491621799026:chernka249bg-etl-bulgaria-xlsx",
+        "Subject": null,
+        "Message": "{\"eventTime\":\"2019-04-11T08:21:36.998Z\",\"userIdentity\":{\"principalId\":\"AWS:AROAXE5XRKRZD7ULU347I:chernka249bg-storage-signed-uploads-upsert-objects\"},\"bucket\":{\"name\":\"eubfr-chernka249bg\",\"ownerIdentity\":{\"principalId\":\"ABTN0CERTFU87\"},\"arn\":\"arn:aws:s3:::eubfr-chernka249bg\"},\"object\":{\"key\":\"bulgaria/d830603f-b578-45c1-b784-736c53be06eb.xlsx\",\"size\":18813,\"eTag\":\"5f896dd6e93cfceb912162fa25cd76dc\",\"sequencer\":\"005CAEF910D7BC9A5D\"}}",
+        "Timestamp": "2019-04-11T08:21:37.557Z",
+        "SignatureVersion": "1",
+        "Signature": "gYYwuZei4Uv9Jyd3ve11eMzUCww2C/xavnGOALJJtv+4UNUq5ZSo67NEZRyosPhpwgrpIWxDs0k+Mcnr8WcaSiLSUUniZXTMqIh6V9C2KcvzLXjJcIr8MON3cZqJaSPtKpzvBDOD3EZmpk6Crj9PJ0YvRtACXZhLlddrX/TGJSnidgRYAmxAeGgbT2hCxls6Nmt071dip3SvNvH6+W4Kr3HDSzd/M44A0ZW7Kifx6Jf/01RBN+i1xd3kncRt44NxasRYwLYurIUrePg0GVb5Wm2kmGaG8B4eRLjVvEfHSY3AKevKouT2XEDGLrdZYhr44hdyiLQPcKjz4QqroVVBpw==",
+        "SigningCertUrl": "https://sns.eu-central-1.amazonaws.com/SimpleNotificationService-6aad65c2f9911b05cd53efda11f913f9.pem",
+        "UnsubscribeUrl": "https://sns.eu-central-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:eu-central-1:491621799026:chernka249bg-etl-bulgaria-xlsx:2d71d46a-d632-40cc-925a-14ca4e7afc06",
+        "MessageAttributes": {}
+      }
+    }
+  ]
+}

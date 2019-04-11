@@ -119,7 +119,7 @@ to do debugging locally.
 1.  In `webpack.config.js`, set a new property if not already set `devtool: 'source-map'`.
     This way, Webpack will generate human-readable code.
 
-2.  Include a `debug;` statement on the line of your code where you want to set a breakpoint.
+2.  Include a `debugger;` statement on the line of your code where you want to set a breakpoint.
 
 3.  Run the following in the CLI
     `node --inspect-brk ./node_modules/.bin/serverless invoke local -f fooFunction --path eventStub.json`
@@ -142,6 +142,12 @@ Alternatively, you can also use Node.js core [REPL][14] to step into your code.
 
 As a result, you will be able step in and debug your cloud function locally with an emulation decently close to the real environment.
 
+Another debugger you can use is [ndb][15]. If you decide to use `ndb`, the command could be:
+
+```sh
+$ ndb npx sls invoke local -f parseXls --path eventStub.json
+```
+
 ![Serverless debugging](./assets/serverless-debugging.jpg)
 
 **Note**
@@ -153,7 +159,7 @@ resource you want to test will be an actual file existing in the cloud and the l
 function will operate quite closer to real life.
 
 Another close resemblance to S3 read stream of files is to use the Node.js's core
-[fs.createReadStream(path[, options])][15]. If you use this swapping approach you win
+[fs.createReadStream(path[, options])][16]. If you use this swapping approach you win
 independence of AWS services, but you lose possible system-specific behaviors of
 AWS SDK.
 
@@ -187,4 +193,5 @@ various helper functions.
 [12]: https://developers.google.com/web/tools/chrome-devtools/
 [13]: https://medium.com/@paul_irish/debugging-node-js-nightlies-with-chrome-devtools-7c4a1b95ae27
 [14]: https://nodejs.org/api/repl.html
-[15]: https://nodejs.org/api/fs.html#fs_fs_createreadstream_path_options
+[15]: https://www.npmjs.com/package/ndb
+[16]: https://nodejs.org/api/fs.html#fs_fs_createreadstream_path_options
