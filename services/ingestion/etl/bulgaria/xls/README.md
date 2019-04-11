@@ -12,6 +12,5 @@ Model to compare with is available at: https://ec-europa.github.io/eubfr-data-la
 | Total Eligible Costs Granted for the Operation        | budget.total_cost              |
 | % of EC co-financing                                  | budget.eu_contrib              |
 | Location                                              | project_locations.country_code |
-| Name of Categories of Interventions for the Operation | themes                         |
-| Date of Last Update of the List of Operations themes  |
-|                                                       |
+| Name of Categories of Interventions for the Operation |                                |
+| Date of Last Update of the List of Operations themes  |                                |

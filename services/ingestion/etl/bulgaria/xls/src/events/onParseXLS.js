@@ -11,21 +11,7 @@ import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 
 import transformRecord from '../lib/transform';
 
-export const handler = async event => {
-  const context = {
-    callbackWaitsForEmptyEventLoop: true,
-    logGroupName:
-      '/aws/lambda/chernka249bg-ingestion-etl-bulgaria-xls-parseXls',
-    logStreamName: '2019/04/11/[$LATEST]5eb941b6c31748979f9f6fed5f7a3c17',
-    functionName: 'chernka249bg-ingestion-etl-bulgaria-xls-parseXls',
-    memoryLimitInMB: '1024',
-    functionVersion: '$LATEST',
-    invokeid: '8eac3d15-24d2-409f-be66-1413a22f9591',
-    awsRequestId: '8eac3d15-24d2-409f-be66-1413a22f9591',
-    invokedFunctionArn:
-      'arn:aws:lambda:eu-central-1:491621799026:function:chernka249bg-ingestion-etl-bulgaria-xls-parseXls',
-  };
-
+export const handler = async (event, context) => {
   const { BUCKET, REGION, STAGE } = process.env;
 
   if (!BUCKET || !REGION || !STAGE) {

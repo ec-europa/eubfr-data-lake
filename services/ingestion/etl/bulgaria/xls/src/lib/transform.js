@@ -1,21 +1,47 @@
+// @flow
+
 import sanitizeBudgetItem from '@eubfr/lib/budget/budgetFormatter';
+import numeral from 'numeral';
+import type { Project } from '@eubfr/types';
 
 /**
- * Preprocess budget field.
+ * Preprocess `budget` field.
+ *
+ * Input fields taken from the `record` are:
+ * - `Total Eligible Costs Granted for the Operation`
+ * - `% of EC co-financing`
  *
  * @memberof BulgariaXlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {Budget}
  */
-const getBudget = () => ({
-  total_cost: sanitizeBudgetItem(),
-  eu_contrib: sanitizeBudgetItem(),
-  private_fund: sanitizeBudgetItem(),
-  public_fund: sanitizeBudgetItem(),
-  other_contrib: sanitizeBudgetItem(),
-  funding_area: [],
-  mmf_heading: '',
-});
+const getBudget = record => {
+  const { _value: total } = numeral(
+    record['Total Eligible Costs Granted for the Operation']
+  );
+  const { _value: percentage } = numeral(record['% of EC co-financing']);
+  const euContrib = (total * percentage) / 100;
+
+  const budget = {
+    total_cost: sanitizeBudgetItem({
+      value: total,
+      currency: 'BGN',
+      raw: record['Total Eligible Costs Granted for the Operation'],
+    }),
+    eu_contrib: sanitizeBudgetItem({
+      value: euContrib,
+      currency: 'BGN',
+      raw: euContrib,
+    }),
+    private_fund: sanitizeBudgetItem(),
+    public_fund: sanitizeBudgetItem(),
+    other_contrib: sanitizeBudgetItem(),
+    funding_area: [],
+    mmf_heading: '',
+  };
+
+  return budget;
+};
 
 /**
  * Preprocess `description` field.
@@ -31,6 +57,123 @@ const getProjectDescription = record =>
   record['Summary of the Operation'] || '';
 
 /**
+ * Preprocess `third_parties` field.
+ *
+ * Input fields taken from the `record` are:
+ * - `Beneficiary Name`
+ *
+ * @memberof BulgariaXlsTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {Array<ThirdParty>}
+ */
+
+const getThirdParties = record => {
+  const beneficieries = [];
+
+  if (record['Beneficiary Name']) {
+    const beneficiary = {
+      address: '',
+      country: '',
+      email: '',
+      name: record['Beneficiary Name'],
+      phone: '',
+      region: '',
+      role: '',
+      type: 'beneficiary',
+      website: '',
+    };
+
+    beneficieries.push(beneficiary);
+  }
+
+  return beneficieries;
+};
+
+/**
+ * Preprocess `project_locations`.
+ *
+ * Input fields taken from the `record` are:
+ *
+ * - `Location`
+ *
+ * @memberof BulgariaXlsTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {Array<Location>}
+ */
+const getLocations = record => {
+  const locations = [];
+
+  if (record.Location) {
+    const cities = record.Location.split(';').filter(c => c);
+
+    cities.forEach(city => {
+      locations.push({
+        address: '',
+        centroid: null,
+        country_code: 'BG',
+        location: null,
+        nuts: [],
+        postal_code: '',
+        region: '',
+        town: city,
+      });
+    });
+  }
+
+  return locations;
+};
+
+/**
+ * Format date.
+ *
+ * @memberof BulgariaXlsTransform
+ * @param {Date} date Date in DD.MM.YYYY format
+ * @returns {Date} The date formatted into an ISO 8601 date format
+ *
+ * @example
+ * input => "01.01.2009"
+ * output => "2009-01-01T00:00:00.000Z"
+ */
+const formatDate = date => {
+  if (!date || typeof date !== 'string') return null;
+  const d = date.split('.');
+  if (d.length !== 3) return null;
+  const [day, month, year] = d;
+  if (!day || !month || !year) return null;
+  try {
+    return new Date(Date.UTC(year, month - 1, day)).toISOString();
+  } catch (e) {
+    return null;
+  }
+};
+
+/**
+ * Preprocess `timeframe` field.
+ *
+ * Input fields taken from the `record` are:
+ * - `Operation Start Date`
+ * - `Date of Completion of the Operation`
+ *
+ * @memberof BulgariaXlsTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {Timeframe}
+ */
+const getTimeframe = record => {
+  const timeframe = {
+    from: record['Operation Start Date']
+      ? formatDate(record['Operation Start Date'])
+      : '',
+    from_precision: 'day',
+    to: record['Date of Completion of the Operation']
+      ? formatDate(record['Date of Completion of the Operation'])
+      : '',
+    to_precision: 'day',
+  };
+
+  return timeframe;
+};
+
+/**
  * Preprocess `title` field.
  *
  * Input fields taken from the `record` are:
@@ -40,7 +183,10 @@ const getProjectDescription = record =>
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
-const getProjectTitle = record => record['Operation Name'] || '';
+const getProjectTitle = record =>
+  record['Operation Name']
+    ? record['Operation Name'].replace(/['"]+/g, '')
+    : '';
 
 /**
  * Map fields for BULGARIAXLS producer, XLS and XLSX file types
@@ -53,20 +199,20 @@ const getProjectTitle = record => record['Operation Name'] || '';
  * @param {Object} record Piece of data to transform before going to harmonized storage.
  * @returns {Project} JSON matching the type fields.
  */
-export default record => {
+export default (record: Object): Project | null => {
   if (!record) return null;
 
   return {
     action: '',
-    budget: getBudget(),
+    budget: getBudget(record),
     call_year: '',
     description: getProjectDescription(record),
     ec_priorities: [],
     media: [],
-    third_parties: [],
+    third_parties: getThirdParties(record),
     programme_name: '',
     project_id: '',
-    project_locations: '',
+    project_locations: getLocations(record),
     project_website: '',
     complete: false,
     related_links: [],
@@ -79,7 +225,7 @@ export default record => {
     sub_programme_name: '',
     success_story: '',
     themes: [],
-    timeframe: '',
+    timeframe: getTimeframe(record),
     title: getProjectTitle(record),
     type: [],
   };
