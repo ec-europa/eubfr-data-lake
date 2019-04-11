@@ -1,5 +1,6 @@
 // @flow
 
+import crypto from 'crypto';
 import sanitizeBudgetItem from '@eubfr/lib/budget/budgetFormatter';
 import numeral from 'numeral';
 import type { Project } from '@eubfr/types';
@@ -90,6 +91,22 @@ const getThirdParties = record => {
 };
 
 /**
+ * Generates `project_id`.
+ *
+ * Input fields taken from the `record` are:
+ * - `Operation Name`
+ *
+ * @memberof BulgariaXlsTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {String}
+ */
+const getProjectId = record =>
+  crypto
+    .createHash('md5')
+    .update(record['Operation Name'])
+    .digest('hex');
+
+/**
  * Preprocess `project_locations`.
  *
  * Input fields taken from the `record` are:
@@ -104,19 +121,22 @@ const getLocations = record => {
   const locations = [];
 
   if (record.Location) {
-    const cities = record.Location.split(';').filter(c => c);
+    const locs = record.Location.split(';').filter(l => l);
 
-    cities.forEach(city => {
-      locations.push({
-        address: '',
-        centroid: null,
-        country_code: 'BG',
-        location: null,
-        nuts: [],
-        postal_code: '',
-        region: '',
-        town: city,
-      });
+    locs.forEach(location => {
+      // Sometimes it's the country, sometimes a town, respect it only when it's a the town, as we know the country.
+      if (location !== 'Bulgaria') {
+        locations.push({
+          address: '',
+          centroid: null,
+          country_code: 'BG',
+          location: null,
+          nuts: [],
+          postal_code: '',
+          region: '',
+          town: location.replace(/(\r\n|\n|\r)/gm, ''),
+        });
+      }
     });
   }
 
@@ -211,7 +231,7 @@ export default (record: Object): Project | null => {
     media: [],
     third_parties: getThirdParties(record),
     programme_name: '',
-    project_id: '',
+    project_id: getProjectId(record),
     project_locations: getLocations(record),
     project_website: '',
     complete: false,
