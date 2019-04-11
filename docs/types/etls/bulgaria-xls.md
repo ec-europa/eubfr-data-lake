@@ -57,6 +57,20 @@ Input fields taken from the `record` are:
 
 Returns **[Array][5]&lt;ThirdParty>**
 
+### getProjectId
+
+Generates `project_id`.
+
+Input fields taken from the `record` are:
+
+- `Operation Name`
+
+#### Parameters
+
+- `record` **[Object][3]** The row received from parsed file
+
+Returns **[String][4]**
+
 ### getLocations
 
 Preprocess `project_locations`.
