@@ -1,0 +1,123 @@
+service: ingestion-etl-interreg2014TC16M4TN002-xls
+
+plugins:
+  - serverless-webpack
+
+custom:
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules:
+      forceExclude:
+        - aws-sdk
+    packager: yarn
+  eubfrEnvironment: ${opt:eubfr_env, file(../../../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
+  bucketName: ${file(../../../../../resources/harmonized-storage/serverless.yml):custom.bucketName}
+
+package:
+  individually: true
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  timeout: 300
+  stage: ${opt:stage, file(../../../../../config.json):stage, env:EUBFR_STAGE, 'dev'}
+  region: ${opt:region, file(../../../../../config.json):region, env:EUBFR_AWS_REGION, 'eu-central-1'}
+  deploymentBucket:
+    name: eubfr-${self:custom.eubfrEnvironment}-deploy
+  stackTags:
+    ENV: ${self:custom.eubfrEnvironment}
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - 's3:PutObject'
+      Resource:
+        Fn::Join:
+          - ''
+          - - 'arn:aws:s3:::'
+            - ${self:custom.bucketName}
+            - '/*'
+    # Allow queueing messages to the DLQ https://docs.aws.amazon.com/lambda/latest/dg/dlq.html
+    - Effect: 'Allow'
+      Action:
+        - sqs:SendMessage
+      Resource: '*'
+
+functions:
+  parseXls:
+    handler: src/events/onParseXLS.handler
+    name: ${self:provider.stage}-${self:service}-parseXls
+    memorySize: 3008
+    environment:
+      BUCKET: ${self:custom.bucketName}
+      REGION: ${self:provider.region}
+      STAGE: ${self:provider.stage}
+    events:
+      - sns:
+          arn:
+            Fn::Join:
+              - ''
+              - - 'arn:aws:sns:'
+                - Ref: 'AWS::Region'
+                - ':'
+                - Ref: 'AWS::AccountId'
+                - ':${self:provider.stage}-etl-interreg2014TC16M4TN002-xls'
+          topicName: ${self:provider.stage}-etl-interreg2014TC16M4TN002-xls
+      - sns:
+          arn:
+            Fn::Join:
+              - ''
+              - - 'arn:aws:sns:'
+                - Ref: 'AWS::Region'
+                - ':'
+                - Ref: 'AWS::AccountId'
+                - ':${self:provider.stage}-etl-interreg2014TC16M4TN002-xlsx'
+          topicName: ${self:provider.stage}-etl-interreg2014TC16M4TN002-xlsx
+
+resources:
+  Resources:
+    ParseXlsLambdaFunction:
+      Type: 'AWS::Lambda::Function'
+      Properties:
+        DeadLetterConfig:
+          TargetArn:
+            Fn::ImportValue: ${self:provider.stage}:ingestion-dead-letter-queue:LambdaFailureQueue
+    SNSTopicinterreg2014TC16M4TN002XLS:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: ${self:provider.stage}-etl-interreg2014TC16M4TN002-xls
+        DisplayName: interreg2014TC16M4TN002 XLS ETL
+    SNSTopicinterreg2014TC16M4TN002XLSX:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: ${self:provider.stage}-etl-interreg2014TC16M4TN002-xlsx
+        DisplayName: interreg2014TC16M4TN002 XLSX ETL
+    SNSTopicinterreg2014TC16M4TN002XLSPolicy:
+      Type: AWS::SNS::TopicPolicy
+      Properties:
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Sid: Allow-IngestionManager-Publish
+              Action:
+                - sns:Publish
+              Effect: Allow
+              Resource:
+                Fn::Join:
+                  - ''
+                  - - 'arn:aws:sns:'
+                    - Ref: 'AWS::Region'
+                    - ':'
+                    - Ref: 'AWS::AccountId'
+                    - ':${self:provider.stage}-etl-interreg2014TC16M4TN002-*'
+              Principal:
+                AWS:
+                  Fn::Join:
+                    - ''
+                    - - 'arn:aws:sts::'
+                      - Ref: 'AWS::AccountId'
+                      - ':assumed-role/ingestion-manager-${self:provider.stage}-'
+                      - Ref: 'AWS::Region'
+                      - '-lambdaRole/${self:provider.stage}-ingestion-manager-onObjectCreated'
+        Topics:
+          - Ref: SNSTopicinterreg2014TC16M4TN002XLS
+          - Ref: SNSTopicinterreg2014TC16M4TN002XLSX

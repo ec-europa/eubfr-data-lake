@@ -13,15 +13,16 @@ documentation
 
 const transforms = [
   'cordis-csv',
-  'euresults-csv',
   'devco-xls',
   'eac-csv',
   'euinvest-csv',
+  'euresults-csv',
   'fts-xls',
   'home-xls',
   'iati-csv',
   'inforegio-json',
   'inforegio-xml',
+  'interreg2014TC16M4TN002-xls',
   'just-csv',
   'wifi4eu-xls',
 ];
