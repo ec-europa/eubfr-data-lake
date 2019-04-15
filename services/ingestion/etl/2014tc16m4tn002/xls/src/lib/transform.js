@@ -1,4 +1,6 @@
-// import type { Project } from '@eubfr/types';
+// @flow
+
+import type { Project } from '@eubfr/types';
 import sanitizeBudgetItem from '@eubfr/lib/budget/budgetFormatter';
 
 /**
@@ -27,7 +29,7 @@ const getBudget = record => ({
   private_fund: sanitizeBudgetItem(),
   public_fund: sanitizeBudgetItem(),
   other_contrib: sanitizeBudgetItem(),
-  funding_area: '',
+  funding_area: [],
   mmf_heading: '',
 });
 
@@ -72,15 +74,145 @@ const getDescription = record => {
 const getProjectId = record =>
   record['Project Number/Codice del progetto'] || '';
 
-const getLocations = record => [];
+/**
+ * Preprocess `project_locations`.
+ *
+ * Input fields taken from the `record` are:
+ * - `Participating Countries/Paesi partecipanti`
+ * - `LP COUNTRY/Paese del LP`
+ *
+ * @memberof 2014tc16m4tn002XlsTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {Array<Location>}
+ */
 
-const getThemes = record => [];
+const getLocations = record => {
+  const locations = [];
 
-const getThirdParties = record => [];
+  const countries = record['Participating Countries/Paesi partecipanti'].split(
+    ','
+  );
 
-const getTimeframe = record => [];
+  const countryLeader = record['LP COUNTRY/Paese del LP'] || '';
 
-const getTitle = record => '';
+  // As we work only with country codes and there's no additional information, add it only if it's not present yet.
+  if (!countries.includes(countryLeader)) {
+    countries.push(countryLeader);
+  }
+
+  countries
+    .filter(c => c)
+    .forEach(countryCode => {
+      locations.push({
+        address: '',
+        centroid: null,
+        country_code: countryCode,
+        location: null,
+        nuts: [],
+        postal_code: '',
+        region: '',
+        town: '',
+      });
+    });
+
+  return locations;
+};
+
+/**
+ * Preprocess `themes`.
+ *
+ * Input fields taken from the `record` are:
+ * - `Intervention category/Categoria dell' operazione`
+ *
+ * @memberof 2014tc16m4tn002XlsTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {Array<String>}
+ */
+
+const getThemes = record => {
+  const themes = [];
+
+  if (record["Intervention category/Categoria dell' operazione"]) {
+    themes.push(
+      record["Intervention category/Categoria dell' operazione"]
+        .trim()
+        .replace(/(\r\n|\n|\r)/gm, ' ')
+        .replace(/ {1,}/g, ' ')
+    );
+  }
+
+  return themes;
+};
+
+/**
+ * Preprocess `third_parties`.
+ *
+ * Input fields taken from the `record` are:
+ * - `LEAD PARTNER/ Nome del Capofila`
+ * - `LP COUNTRY/Paese del LP`
+ *
+ * @memberof 2014tc16m4tn002XlsTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {Array<ThirdParty>}
+ */
+
+const getThirdParties = record => {
+  const thirdParties = [];
+  const name = record['LEAD PARTNER/ Nome del Capofila']
+    ? record['LEAD PARTNER/ Nome del Capofila'].trim()
+    : '';
+  const country = record['LP COUNTRY/Paese del LP'];
+
+  if (name || country) {
+    thirdParties.push({
+      address: '',
+      country,
+      email: '',
+      name,
+      phone: '',
+      region: '',
+      role: 'coordinator',
+      type: '',
+      website: '',
+    });
+  }
+
+  return thirdParties;
+};
+
+/**
+ * Preprocess `third_parties`.
+ *
+ * Input fields taken from the `record` are:
+ * - `START DATE/Data di inizio`
+ * - `END DATE/Data di fine`
+ *
+ * @memberof 2014tc16m4tn002XlsTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {Timeframe}
+ */
+
+// For the moment dates are not parsed in a good format from the xls file.
+const getTimeframe = () => ({
+  from: null,
+  from_precision: 'day',
+  to: null,
+  to_precision: 'day',
+});
+
+/**
+ * Preprocess `title`.
+ *
+ * Input fields taken from the `record` are:
+ * - `Title/Titolo`
+ *
+ * @memberof 2014tc16m4tn002XlsTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {String}
+ */
+
+const getTitle = record =>
+  record['Title/Titolo'] ? record['Title/Titolo'].trim() : '';
 
 /**
  * Map fields for 2014tc16m4tn002 producer, XLS file types
@@ -92,8 +224,7 @@ const getTitle = record => '';
  * @param {Object} record Piece of data to transform before going to harmonized storage.
  * @returns {Project} JSON matching the type fields.
  */
-// export default (record: Object): Project | null => {
-export default record => {
+export default (record: Object): Project | null => {
   if (!record) return null;
 
   // Map the fields
@@ -120,7 +251,7 @@ export default record => {
     success_story: '',
     themes: getThemes(record),
     third_parties: getThirdParties(record),
-    timeframe: getTimeframe(record),
+    timeframe: getTimeframe(),
     title: getTitle(record),
     type: [],
   };
