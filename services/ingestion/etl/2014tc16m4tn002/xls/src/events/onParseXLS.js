@@ -71,47 +71,44 @@ export const handler = async (event, context) => {
           workbook.Sheets[sheetNameList[0]]
         );
 
-        const aggregated = [];
+        // Remove first two rows of useless data.
+        parsedRows.shift();
+        parsedRows.shift();
 
-        // Fields which contain multiple values.
-        // To be aggregated throughout sub-records.
-        const fieldsToAggregate = [
-          'Name of beneficiary',
-          'Coordinator',
-          'Address',
-          'City',
-          'Postal code',
-          'Country / Territory',
-          'NUTS2',
-          'Geographical Zone',
-        ];
+        const columnsMap = parsedRows.shift();
 
-        parsedRows.forEach(record => {
-          // "Commitment position key" is the `project_id`.
-          // If it's present, we can make use of the data
-          if (record['Commitment position key'] !== '') {
-            return aggregated.push(record);
-          }
+        // Work with the rest of the data.
+        const improvedData = parsedData
+          .map(row => {
+            const improvedRow = {};
 
-          // Otherwise, the record at hand is a "sub-record"
-          // It needs to be merged with the last record.
-          const lastRecord = aggregated.pop();
+            // Re-map keys.
+            // Update: 20 November 2018 => Title/Titolo
+            // __EMPTY_1 => Project Number/Codice del progetto
+            const rowKeys = Object.keys(row);
 
-          // Use `;` as a delimiter to merge previous value with current (last) item.
-          // For each field which worths merging.
-          fieldsToAggregate.forEach(field => {
-            lastRecord[field] = `${lastRecord[field]};${record[field]}`;
-          });
+            // Some rows are not actual projects, but a sort of separators.
+            // Take into account rows which have exactly 15 fields, which a regular project row is.
+            if (rowKeys.length === 15) {
+              rowKeys.forEach(columnKey => {
+                // __EMPTY and __EMPTY_13 are not having named columns.
+                if (columnsMap[columnKey]) {
+                  const columnName = columnsMap[columnKey].trim();
+                  improvedRow[columnName] = row[columnKey];
+                }
+              });
+            }
 
-          return aggregated.push(lastRecord);
-        });
+            return improvedRow;
+          })
+          // Remove empty objecs.
+          .filter(row => Object.keys(row).length !== 0);
 
-        for (let i = 0; i < aggregated.length; i += 1) {
-          const record = aggregated[i];
-          // Transform data
-          const data = transformRecord(record);
+        improvedData.forEach(record => {
+          // const data = transformRecord(record);
+          const data = record;
           dataString += `${JSON.stringify(data)}\n`;
-        }
+        });
 
         // Load data
         const params = {

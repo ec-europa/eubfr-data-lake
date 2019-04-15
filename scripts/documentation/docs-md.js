@@ -22,7 +22,7 @@ const transforms = [
   'iati-csv',
   'inforegio-json',
   'inforegio-xml',
-  'interreg2014TC16M4TN002-xls',
+  '2014tc16m4tn002-xls',
   'just-csv',
   'wifi4eu-xls',
 ];

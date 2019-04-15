@@ -1,4 +1,4 @@
-service: ingestion-etl-interreg2014TC16M4TN002-xls
+service: ingestion-etl-2014tc16m4tn002-xls
 
 plugins:
   - serverless-webpack
@@ -60,8 +60,8 @@ functions:
                 - Ref: 'AWS::Region'
                 - ':'
                 - Ref: 'AWS::AccountId'
-                - ':${self:provider.stage}-etl-interreg2014TC16M4TN002-xls'
-          topicName: ${self:provider.stage}-etl-interreg2014TC16M4TN002-xls
+                - ':${self:provider.stage}-etl-2014tc16m4tn002-xls'
+          topicName: ${self:provider.stage}-etl-2014tc16m4tn002-xls
       - sns:
           arn:
             Fn::Join:
@@ -70,8 +70,8 @@ functions:
                 - Ref: 'AWS::Region'
                 - ':'
                 - Ref: 'AWS::AccountId'
-                - ':${self:provider.stage}-etl-interreg2014TC16M4TN002-xlsx'
-          topicName: ${self:provider.stage}-etl-interreg2014TC16M4TN002-xlsx
+                - ':${self:provider.stage}-etl-2014tc16m4tn002-xlsx'
+          topicName: ${self:provider.stage}-etl-2014tc16m4tn002-xlsx
 
 resources:
   Resources:
@@ -81,17 +81,17 @@ resources:
         DeadLetterConfig:
           TargetArn:
             Fn::ImportValue: ${self:provider.stage}:ingestion-dead-letter-queue:LambdaFailureQueue
-    SNSTopicinterreg2014TC16M4TN002XLS:
+    SNSTopic2014tc16m4tn002XLS:
       Type: AWS::SNS::Topic
       Properties:
-        TopicName: ${self:provider.stage}-etl-interreg2014TC16M4TN002-xls
-        DisplayName: interreg2014TC16M4TN002 XLS ETL
-    SNSTopicinterreg2014TC16M4TN002XLSX:
+        TopicName: ${self:provider.stage}-etl-2014tc16m4tn002-xls
+        DisplayName: 2014tc16m4tn002 XLS ETL
+    SNSTopic2014tc16m4tn002XLSX:
       Type: AWS::SNS::Topic
       Properties:
-        TopicName: ${self:provider.stage}-etl-interreg2014TC16M4TN002-xlsx
-        DisplayName: interreg2014TC16M4TN002 XLSX ETL
-    SNSTopicinterreg2014TC16M4TN002XLSPolicy:
+        TopicName: ${self:provider.stage}-etl-2014tc16m4tn002-xlsx
+        DisplayName: 2014tc16m4tn002 XLSX ETL
+    SNSTopic2014tc16m4tn002XLSPolicy:
       Type: AWS::SNS::TopicPolicy
       Properties:
         PolicyDocument:
@@ -108,7 +108,7 @@ resources:
                     - Ref: 'AWS::Region'
                     - ':'
                     - Ref: 'AWS::AccountId'
-                    - ':${self:provider.stage}-etl-interreg2014TC16M4TN002-*'
+                    - ':${self:provider.stage}-etl-2014tc16m4tn002-*'
               Principal:
                 AWS:
                   Fn::Join:
@@ -119,5 +119,5 @@ resources:
                       - Ref: 'AWS::Region'
                       - '-lambdaRole/${self:provider.stage}-ingestion-manager-onObjectCreated'
         Topics:
-          - Ref: SNSTopicinterreg2014TC16M4TN002XLS
-          - Ref: SNSTopicinterreg2014TC16M4TN002XLSX
+          - Ref: SNSTopic2014tc16m4tn002XLS
+          - Ref: SNSTopic2014tc16m4tn002XLSX

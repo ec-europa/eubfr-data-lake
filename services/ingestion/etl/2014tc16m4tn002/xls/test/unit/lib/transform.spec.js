@@ -5,7 +5,7 @@
 import mapper from '../../../src/lib/transform';
 import testRecord from '../../stubs/record.json';
 
-describe('interreg2014TC16M4TN002 XLS transformer', () => {
+describe('2014tc16m4tn002 XLS transformer', () => {
   let result = {};
 
   beforeAll(() => {

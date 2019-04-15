@@ -19,7 +19,7 @@ const allServices = [
   { service: 'ingestion-etl-iati-csv', exportEnv: false },
   { service: 'ingestion-etl-inforegio-json', exportEnv: false },
   { service: 'ingestion-etl-inforegio-xml', exportEnv: false },
-  { service: 'ingestion-etl-interreg2014TC16M4TN002-xls', exportEnv: false },
+  { service: 'ingestion-etl-2014tc16m4tn002-xls', exportEnv: false },
   { service: 'ingestion-etl-wifi4eu-xls', exportEnv: false },
   { service: 'value-store-projects', exportEnv: false },
   { service: 'logger-listener', exportEnv: false },
