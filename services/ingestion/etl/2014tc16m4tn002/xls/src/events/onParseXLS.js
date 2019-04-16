@@ -78,7 +78,7 @@ export const handler = async (event, context) => {
         const columnsMap = parsedRows.shift();
 
         // Work with the rest of the data.
-        const improvedData = parsedData
+        const improvedData = parsedRows
           .map(row => {
             const improvedRow = {};
 
@@ -89,24 +89,27 @@ export const handler = async (event, context) => {
 
             // Some rows are not actual projects, but a sort of separators.
             // Take into account rows which have exactly 15 fields, which a regular project row is.
-            if (rowKeys.length === 15) {
-              rowKeys.forEach(columnKey => {
-                // __EMPTY and __EMPTY_13 are not having named columns.
-                if (columnsMap[columnKey]) {
-                  const columnName = columnsMap[columnKey].trim();
-                  improvedRow[columnName] = row[columnKey];
-                }
-              });
-            }
+            rowKeys.forEach(columnKey => {
+              // __EMPTY and __EMPTY_13 are not having named columns.
+              if (columnsMap[columnKey]) {
+                const columnName = columnsMap[columnKey].trim();
+                improvedRow[columnName] = row[columnKey];
+              }
+            });
 
             return improvedRow;
           })
-          // Remove empty objecs.
-          .filter(row => Object.keys(row).length !== 0);
+          // Keep only such rows which contain sufficient number of useful fields.
+          .filter(row => Object.keys(row).length === 13)
+          // Some records are still having mirrored properties sets. And we don't need them.
+          // Still there are some records with similarities, not 100% match.
+          // The "END DATE/Data di fine" one is a field with exact match we can rely on to cover both cases.
+          .filter(
+            row => row['END DATE/Data di fine'] !== 'END DATE/Data di fine'
+          );
 
         improvedData.forEach(record => {
-          // const data = transformRecord(record);
-          const data = record;
+          const data = transformRecord(record);
           dataString += `${JSON.stringify(data)}\n`;
         });
 

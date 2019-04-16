@@ -9,7 +9,7 @@ Object {
       "raw": 904453.12,
       "value": 904453.12,
     },
-    "funding_area": "",
+    "funding_area": Array [],
     "mmf_heading": "",
     "other_contrib": Object {
       "currency": "",
@@ -62,7 +62,7 @@ fisheries and aquaculture for the coming years in the Adriatic and Ionian Sea re
   "ec_priorities": Array [],
   "media": Array [],
   "programme_name": "",
-  "project_id": 278,
+  "project_id": "07cdfd23373b17c6b337251c22b7ea57",
   "project_locations": Array [
     Object {
       "address": "",

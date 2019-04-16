@@ -1,5 +1,5 @@
 // @flow
-
+import crypto from 'crypto';
 import type { Project } from '@eubfr/types';
 import sanitizeBudgetItem from '@eubfr/lib/budget/budgetFormatter';
 
@@ -49,7 +49,7 @@ const getDescription = record => {
   const desc = {};
   let description = '';
 
-  desc['Acronym'] = record['Project acronym/Acronimo del progetto'] || '';
+  desc.Acronym = record['Project acronym/Acronimo del progetto'] || '';
   desc['Operation summary'] =
     record["OPERATION SUMMARY / Sintesi dell'operazione"] || '';
 
@@ -72,7 +72,12 @@ const getDescription = record => {
  */
 
 const getProjectId = record =>
-  record['Project Number/Codice del progetto'] || '';
+  record['Project Number/Codice del progetto']
+    ? crypto
+        .createHash('md5')
+        .update(String(record['Project Number/Codice del progetto']))
+        .digest('hex')
+    : '';
 
 /**
  * Preprocess `project_locations`.
