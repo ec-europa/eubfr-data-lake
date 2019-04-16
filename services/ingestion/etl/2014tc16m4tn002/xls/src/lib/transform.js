@@ -197,13 +197,21 @@ const getThirdParties = record => {
  * @returns {Timeframe}
  */
 
-// For the moment dates are not parsed in a good format from the xls file.
-const getTimeframe = () => ({
-  from: null,
-  from_precision: 'day',
-  to: null,
-  to_precision: 'day',
-});
+const getTimeframe = record => {
+  const from = record['START DATE/Data di inizio']
+    ? new Date(record['START DATE/Data di inizio']).toISOString()
+    : null;
+  const to = record['END DATE/Data di fine']
+    ? new Date(record['END DATE/Data di fine']).toISOString()
+    : null;
+
+  return {
+    from,
+    from_precision: 'day',
+    to,
+    to_precision: 'day',
+  };
+};
 
 /**
  * Preprocess `title`.
@@ -246,7 +254,7 @@ export default (record: Object): Project | null => {
     project_website: '',
     complete: false,
     related_links: [],
-    reporting_organisation: 'REGIO',
+    reporting_organisation: 'Member states',
     results: {
       available: '',
       result: '',
@@ -256,7 +264,7 @@ export default (record: Object): Project | null => {
     success_story: '',
     themes: getThemes(record),
     third_parties: getThirdParties(record),
-    timeframe: getTimeframe(),
+    timeframe: getTimeframe(record),
     title: getTitle(record),
     type: [],
   };

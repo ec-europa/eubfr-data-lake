@@ -65,10 +65,14 @@ export const handler = async (event, context) => {
 
         // Parse file
         const buffer = Buffer.concat(buffers);
-        const workbook = XLSX.read(buffer);
+        const workbook = XLSX.read(buffer, {
+          cellText: false,
+          cellDates: true,
+        });
         const sheetNameList = workbook.SheetNames;
         const parsedRows = XLSX.utils.sheet_to_json(
-          workbook.Sheets[sheetNameList[0]]
+          workbook.Sheets[sheetNameList[0]],
+          { dateNF: 'MM"/"DD"/"YYYY' }
         );
 
         // Remove first two rows of useless data.

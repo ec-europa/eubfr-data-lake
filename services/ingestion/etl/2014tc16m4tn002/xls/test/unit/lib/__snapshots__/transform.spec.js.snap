@@ -107,7 +107,7 @@ fisheries and aquaculture for the coming years in the Adriatic and Ionian Sea re
   ],
   "project_website": "",
   "related_links": Array [],
-  "reporting_organisation": "REGIO",
+  "reporting_organisation": "Member states",
   "results": Object {
     "available": "",
     "result": "",
@@ -132,9 +132,9 @@ fisheries and aquaculture for the coming years in the Adriatic and Ionian Sea re
     },
   ],
   "timeframe": Object {
-    "from": null,
+    "from": "2018-01-01T00:00:00.000Z",
     "from_precision": "day",
-    "to": null,
+    "to": "2019-12-31T00:00:00.000Z",
     "to_precision": "day",
   },
   "title": "Promoting small scale fisheries and aquaculture transnational networking in Adriatic-Ionian macroregion",
