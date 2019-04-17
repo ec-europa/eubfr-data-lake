@@ -1,6 +1,5 @@
 import AWS from 'aws-sdk'; // eslint-disable-line import/no-extraneous-dependencies
 import parse from 'csv-parse/lib/sync';
-import transform from 'stream-transform';
 
 // ETL utilities.
 import ensureExtensions from '@eubfr/lib/etl/ensureExtensions';
@@ -107,6 +106,8 @@ export const handler = async (event, context) => {
       },
       to: ['logs'],
     });
+
+    return console.log('Done');
   } catch (error) {
     return handleError({ messenger, key, statusCode: STATUS.ERROR }, { error });
   }
