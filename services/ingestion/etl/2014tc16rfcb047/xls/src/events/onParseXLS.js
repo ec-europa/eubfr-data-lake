@@ -10,6 +10,7 @@ import MessengerFactory from '@eubfr/logger-messenger/src/lib/MessengerFactory';
 import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 
 import transformRecord from '../lib/transform';
+import trimObjectKeys from '../lib/trimObjectKeys';
 
 export const handler = async (event, context) => {
   const { BUCKET, REGION, STAGE } = process.env;
@@ -76,8 +77,7 @@ export const handler = async (event, context) => {
         );
 
         parsedRows.forEach(record => {
-          debugger;
-          const data = transformRecord(record);
+          const data = transformRecord(trimObjectKeys(record));
           dataString += `${JSON.stringify(data)}\n`;
         });
 
