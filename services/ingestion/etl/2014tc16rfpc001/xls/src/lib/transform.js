@@ -84,7 +84,7 @@ const getDescription = record => {
  * Preprocess `project_id`.
  *
  * Input fields taken from the `record` are:
- * - `Operation/Project Name`
+ * - `eMS Ref`
  *
  * @memberof 2014tc16rfcb014CsvTransform
  * @param {Object} record The row received from parsed file
@@ -94,7 +94,7 @@ const getDescription = record => {
 const getProjectId = record =>
   crypto
     .createHash('md5')
-    .update(record['Operation/Project Name'])
+    .update(String(record['eMS Ref']))
     .digest('hex');
 
 /**
