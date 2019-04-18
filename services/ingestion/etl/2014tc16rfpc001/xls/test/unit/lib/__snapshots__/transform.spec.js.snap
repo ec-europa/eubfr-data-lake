@@ -1,0 +1,84 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`2014tc16rfpc001 XLS transformer Produces correct JSON output structure 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "EUR",
+      "raw": 245571.72171499996,
+      "value": 245571.72171499996,
+    },
+    "funding_area": Array [],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "EUR",
+      "raw": 28890790.79,
+      "value": 28890790.79,
+    },
+  },
+  "call_year": "",
+  "complete": false,
+  "description": "Theme: 1
+eMS Ref: 4022
+Operation/Project Summary: The Education Authority has been awarded €28,890,790.79 under the PEACE IV Programme to provide direct, sustained, curriculum-based contact between pupils and teachers from all backgrounds. The project will involve collaboration between schools from different sectors in order to promote relations and enhance children's skills and attitudes to contribute to a cohesive society.                        
+
+Project Partners: Léargas Ireland. 
+Committed Outputs: 1) Schools involved in Shared Education: 280                                   2)Teachers trained with the capacity to facilitate Shared Education: 2,000                                                                 3)Participants in Shared Education classrooms: 135,000                                                                                                                                  Performance Framework target by 2018 for the number of participants in shared education classrooms: 19,200 
+Total ERDF + Match (€/£): 28890790.79
+Total ERDF Allocated (€/£): 24557172.17
+Category of Intervention: 55
+",
+  "ec_priorities": Array [],
+  "media": Array [],
+  "programme_name": "",
+  "project_id": "828b0778fa597006460eeb15d154292f",
+  "project_locations": Array [
+    Object {
+      "address": "Northern Ireland & Ireland",
+      "centroid": null,
+      "country_code": "",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "BT1 2NQ",
+      "region": "",
+      "town": "",
+    },
+  ],
+  "project_website": "",
+  "related_links": Array [],
+  "reporting_organisation": "Member states",
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
+  "status": "LoO Accepted",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [],
+  "third_parties": Array [],
+  "timeframe": Object {
+    "from": "2016-09-30T21:00:00.000Z",
+    "from_precision": "day",
+    "to": "2022-03-30T21:00:00.000Z",
+    "to_precision": "day",
+  },
+  "title": "PEACE IV Shared Education Programme - Collaboration Through Sharing in Education - CASE",
+  "type": Array [],
+}
+`;
