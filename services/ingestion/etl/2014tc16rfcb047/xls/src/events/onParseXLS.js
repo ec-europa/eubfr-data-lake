@@ -71,10 +71,14 @@ export const handler = async (event, context) => {
           cellDates: true,
         });
         const sheetNameList = workbook.SheetNames;
-        const parsedRows = XLSX.utils.sheet_to_json(
-          workbook.Sheets[sheetNameList[0]]
-          // { dateNF: 'DD"/"MM"/"YYYY' }
-        );
+        const parsedRows = XLSX.utils
+          .sheet_to_json(
+            workbook.Sheets[sheetNameList[0]]
+            // { dateNF: 'DD"/"MM"/"YYYY' }
+          )
+          // There are records which are inconveniently split into several rows.
+          // The majority (except 1) fit into the following transform functions.
+          .filter(row => Object.keys(row).length === 17);
 
         parsedRows.forEach(record => {
           const data = transformRecord(trimObjectKeys(record));

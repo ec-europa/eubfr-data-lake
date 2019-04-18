@@ -19,4 +19,11 @@ describe('2014tc16rfcb047 XLS transformer', () => {
   test('Produces correct JSON output structure', () => {
     expect(result).toMatchSnapshot();
   });
+
+  test('Handles an exceptional date format DD.MM.YYYY', () => {
+    const copy = JSON.parse(JSON.stringify(testRecord));
+    copy['Operation Start Date'] = '31.12.2021';
+    const transformed = mapper(copy);
+    expect(transformed.timeframe.from).toBe('2021-12-31T00:00:00.000Z');
+  });
 });

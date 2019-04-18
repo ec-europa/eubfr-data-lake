@@ -1,5 +1,6 @@
 // @flow
 
+import crypto from 'crypto';
 import type { Project } from '@eubfr/types';
 import sanitizeBudgetItem from '@eubfr/lib/budget/budgetFormatter';
 import numeral from 'numeral';
@@ -78,6 +79,29 @@ const getDescription = record => {
 
   return description;
 };
+
+/**
+ * Preprocess `project_id`.
+ *
+ * Uses `Project Ref`, but if it's not present, the ID is generated based on `Operation/Project Name`.
+ *
+ * Input fields taken from the `record` are:
+ *
+ * - `Project Ref`
+ * - `Operation/Project Name`
+ *
+ * @memberof 2014tc16rfcb014CsvTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {String}
+ */
+
+const getProjectId = record =>
+  record['Project Ref']
+    ? String(record['Project Ref']).trim()
+    : crypto
+        .createHash('md5')
+        .update(record['Operation/Project Name'])
+        .digest('hex');
 
 /**
  * Preprocess `project_locations`.
@@ -162,6 +186,29 @@ const getThirdParties = record => {
 };
 
 /**
+ * Format date.
+ *
+ * @memberof 2014tc16rfcb014CsvTransform
+ * @param {Date} date Date in ready Date() object or DD.MM.YYYY as a fallback.
+ * @returns {Date} The date formatted into an ISO 8601 date format
+ *
+ */
+const formatDate = date => {
+  if (!date) return null;
+
+  try {
+    return new Date(date).toISOString();
+  } catch (error) {
+    const parts = date.split('.');
+
+    const [day, month, year] = parts;
+
+    if (!day || !month || !year) return null;
+    return new Date(Date.UTC(year, month - 1, day)).toISOString();
+  }
+};
+
+/**
  * Preprocess `timeframe`.
  *
  * Input fields taken from the `record` are:
@@ -179,9 +226,9 @@ const getTimeframe = record => {
   const to = record['Operation End Date'] || null;
 
   return {
-    from: new Date(from).toISOString(),
+    from: formatDate(from),
     from_precision: 'day',
-    to: new Date(to).toISOString(),
+    to: formatDate(to),
     to_precision: 'day',
   };
 };
@@ -226,7 +273,7 @@ export default (record: Object): Project | null => {
     ec_priorities: [],
     media: [],
     programme_name: '',
-    project_id: '',
+    project_id: getProjectId(record),
     project_locations: getLocations(record),
     project_website: '',
     complete: false,

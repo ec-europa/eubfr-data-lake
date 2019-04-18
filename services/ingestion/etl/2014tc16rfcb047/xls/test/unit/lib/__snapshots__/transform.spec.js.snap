@@ -49,7 +49,7 @@ Category of Intervention: 060
   "ec_priorities": Array [],
   "media": Array [],
   "programme_name": "",
-  "project_id": "",
+  "project_id": "045",
   "project_locations": Array [
     Object {
       "address": "Northern Ireland, Ireland & Scotland",
