@@ -256,7 +256,6 @@ const getTitle = record =>
  * @returns {Project} JSON matching the type fields.
  */
 export default (record: Object): Project | null => {
-  debugger;
   if (!record) return null;
 
   // Map the fields
