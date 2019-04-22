@@ -186,22 +186,24 @@ const getThirdParties = record => {
  * Format date.
  *
  * @memberof 2014tc16rfcb014CsvTransform
- * @param {Date} date Date in ready Date() object or DD/MM/YY as a fallback.
+ * @param {Date} date Date in DD/MM/YYYY format
  * @returns {Date} The date formatted into an ISO 8601 date format
  *
+ * @example
+ * input => "01/01/2009"
+ * output => "2009-01-01T00:00:00.000Z"
  */
+
 const formatDate = date => {
-  if (!date) return null;
-
+  if (!date || typeof date !== 'string') return null;
+  const d = date.split(/\//);
+  if (d.length !== 3) return null;
+  const [day, month, year] = d;
+  if (!day || !month || !year) return null;
   try {
-    return new Date(date).toISOString();
-  } catch (error) {
-    const parts = date.split('/');
-
-    const [day, month, year] = parts;
-
-    if (!day || !month || !year) return null;
     return new Date(Date.UTC(year, month - 1, day)).toISOString();
+  } catch (e) {
+    return null;
   }
 };
 

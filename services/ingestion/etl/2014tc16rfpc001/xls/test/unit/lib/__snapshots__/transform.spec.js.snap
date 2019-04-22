@@ -73,9 +73,9 @@ Category of Intervention: 055
   "themes": Array [],
   "third_parties": Array [],
   "timeframe": Object {
-    "from": "2016-09-30T21:00:00.000Z",
+    "from": "2016-10-01T00:00:00.000Z",
     "from_precision": "day",
-    "to": "2022-03-30T21:00:00.000Z",
+    "to": "2022-03-31T00:00:00.000Z",
     "to_precision": "day",
   },
   "title": "PEACE IV Shared Education Programme - Collaboration Through Sharing in Education - CASE",
