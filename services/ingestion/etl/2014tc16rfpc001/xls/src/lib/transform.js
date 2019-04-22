@@ -3,6 +3,7 @@
 import crypto from 'crypto';
 import type { Project } from '@eubfr/types';
 import sanitizeBudgetItem from '@eubfr/lib/budget/budgetFormatter';
+import extractBudgetData from '@eubfr/lib/budget/extractBudgetData';
 import numeral from 'numeral';
 
 /**
@@ -19,19 +20,21 @@ import numeral from 'numeral';
  */
 
 const getBudget = record => {
+  const budgetData = extractBudgetData(record['Total Project Cost (€/£)']);
+
   const { _value: total } = numeral(record['Total Project Cost (€/£)']);
   const { _value: percentage } = numeral(record['Union Co-Financing Rate %']);
-  const euContrib = (total * percentage) / 100;
+  const euContrib = total * percentage;
 
   return {
     total_cost: sanitizeBudgetItem({
       value: total,
-      currency: 'EUR',
+      currency: budgetData.currency,
       raw: record['Total Project Cost (€/£)'],
     }),
     eu_contrib: sanitizeBudgetItem({
       value: euContrib,
-      currency: 'EUR',
+      currency: budgetData.currency,
       raw: euContrib,
     }),
     private_fund: sanitizeBudgetItem(),
@@ -183,7 +186,7 @@ const getThirdParties = record => {
  * Format date.
  *
  * @memberof 2014tc16rfcb014CsvTransform
- * @param {Date} date Date in ready Date() object or DD.MM.YYYY as a fallback.
+ * @param {Date} date Date in ready Date() object or DD/MM/YY as a fallback.
  * @returns {Date} The date formatted into an ISO 8601 date format
  *
  */
@@ -193,7 +196,7 @@ const formatDate = date => {
   try {
     return new Date(date).toISOString();
   } catch (error) {
-    const parts = date.split('.');
+    const parts = date.split('/');
 
     const [day, month, year] = parts;
 

@@ -1,4 +1,4 @@
-const trimObjectKeys = o => {
+const improveObjectKeys = o => {
   const newObject = {};
 
   Object.keys(o).forEach(key => {
@@ -9,4 +9,4 @@ const trimObjectKeys = o => {
   return newObject;
 };
 
-module.exports = trimObjectKeys;
+module.exports = improveObjectKeys;

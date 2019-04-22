@@ -10,7 +10,7 @@ import MessengerFactory from '@eubfr/logger-messenger/src/lib/MessengerFactory';
 import { STATUS } from '@eubfr/logger-messenger/src/lib/status';
 
 import transformRecord from '../lib/transform';
-import trimObjectKeys from '../lib/trimObjectKeys';
+import improveObjectKeys from '../lib/improveObjectKeys';
 
 export const handler = async (event, context) => {
   const { BUCKET, REGION, STAGE } = process.env;
@@ -49,6 +49,7 @@ export const handler = async (event, context) => {
     return new Promise((resolve, reject) => {
       // Put data in buffer
       const buffers = [];
+
       readStream.on('data', data => {
         buffers.push(data);
       });
@@ -66,17 +67,18 @@ export const handler = async (event, context) => {
 
         // Parse file
         const buffer = Buffer.concat(buffers);
-        const workbook = XLSX.read(buffer, {
-          cellText: false,
-          cellDates: true,
-        });
+
+        const workbook = XLSX.read(buffer);
+
         const sheetNameList = workbook.SheetNames;
         const parsedRows = XLSX.utils.sheet_to_json(
-          workbook.Sheets[sheetNameList[0]]
+          workbook.Sheets[sheetNameList[0]],
+          // This provides formatted values for columns: K, L and M, which contain mixture of currencies.
+          { raw: false }
         );
 
         parsedRows.forEach(record => {
-          const data = transformRecord(trimObjectKeys(record));
+          const data = transformRecord(improveObjectKeys(record));
           dataString += `${JSON.stringify(data)}\n`;
         });
 
