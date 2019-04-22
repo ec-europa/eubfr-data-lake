@@ -140,6 +140,20 @@ const getLocations = record => {
     });
   }
 
+  // If no other information, fill in the basics so that the project can be visualized on maps.
+  if (locations.length === 0) {
+    locations.push({
+      address: '',
+      centroid: null,
+      country_code: 'BG',
+      location: null,
+      nuts: [],
+      postal_code: '',
+      region: '',
+      town: '',
+    });
+  }
+
   return locations;
 };
 
