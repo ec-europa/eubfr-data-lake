@@ -12,6 +12,8 @@ documentation
   });
 
 const transforms = [
+  '2014tc16m4tn002-xls',
+  'bulgaria-xls',
   'cordis-csv',
   'devco-xls',
   'eac-csv',
@@ -22,7 +24,6 @@ const transforms = [
   'iati-csv',
   'inforegio-json',
   'inforegio-xml',
-  '2014tc16m4tn002-xls',
   'just-csv',
   'wifi4eu-xls',
 ];
