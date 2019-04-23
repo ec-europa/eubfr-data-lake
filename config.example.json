@@ -4,6 +4,8 @@
   "stage": "uuid",
   "username": "euresults",
   "demo": [
+    "2014tc16m4tn002",
+    "2014tc16rftn002",
     "cordis",
     "devco",
     "eac",
@@ -13,7 +15,6 @@
     "home",
     "iati",
     "inforegio",
-    "2014tc16m4tn002",
     "wifi4eu"
   ]
 }

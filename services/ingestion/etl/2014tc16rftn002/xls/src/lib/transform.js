@@ -1,5 +1,7 @@
 // @flow
-import crypto from 'crypto';
+
+import countries from 'i18n-iso-countries';
+import getCountryCode from '@eubfr/lib/getCountryCode';
 import type { Project } from '@eubfr/types';
 import sanitizeBudgetItem from '@eubfr/lib/budget/budgetFormatter';
 
@@ -7,24 +9,24 @@ import sanitizeBudgetItem from '@eubfr/lib/budget/budgetFormatter';
  * Preprocess `budget`.
  *
  * Input fields taken from the `record` are:
- * - `Total Budget/Spesa totale`
- * - `ERDF Contribution/FESR confinanziamento`
+ * - `Total of eligible expenditure`
+ * - `ERDF expenditure allocated`
  *
- * @memberof 2014tc16m4tn002XlsTransform
+ * @memberof 2014tc16rftn002XlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {Budget}
  */
 
 const getBudget = record => ({
   total_cost: sanitizeBudgetItem({
-    value: record['Total Budget/Spesa totale'],
+    value: record['Total of eligible expenditure'],
     currency: 'EUR',
-    raw: record['Total Budget/Spesa totale'],
+    raw: record['Total of eligible expenditure'],
   }),
   eu_contrib: sanitizeBudgetItem({
-    value: record['ERDF Contribution/FESR confinanziamento'],
+    value: record['ERDF expenditure allocated'],
     currency: 'EUR',
-    raw: record['ERDF Contribution/FESR confinanziamento'],
+    raw: record['ERDF expenditure allocated'],
   }),
   private_fund: sanitizeBudgetItem(),
   public_fund: sanitizeBudgetItem(),
@@ -37,24 +39,20 @@ const getBudget = record => ({
  * Preprocess `description`.
  *
  * Input fields taken from the `record` are:
- * - `Project acronym/Acronimo del progetto`
- * - `OPERATION SUMMARY / Sintesi dell'operazione`
+ * - `Acronym`
+ * - `Summary`
  *
- * @memberof 2014tc16m4tn002XlsTransform
+ * @memberof 2014tc16rftn002XlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
 
 const getDescription = record => {
-  const desc = {};
   let description = '';
+  const fields = ['Acronym', 'Summary'];
 
-  desc.Acronym = record['Project acronym/Acronimo del progetto'] || '';
-  desc['Operation summary'] =
-    record["OPERATION SUMMARY / Sintesi dell'operazione"] || '';
-
-  Object.keys(desc).forEach(descriptionField => {
-    description += `${descriptionField}: ${desc[descriptionField]} \n`;
+  fields.forEach(descriptionField => {
+    description += `${descriptionField}: ${record[descriptionField]} \n`;
   });
 
   return description;
@@ -64,61 +62,53 @@ const getDescription = record => {
  * Preprocess `project_id`.
  *
  * Input fields taken from the `record` are:
- * - `Project Number/Codice del progetto`
+ * - `Operation code nr.`
  *
- * @memberof 2014tc16m4tn002XlsTransform
+ * @memberof 2014tc16rftn002XlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
 
-const getProjectId = record =>
-  record['Project Number/Codice del progetto']
-    ? crypto
-        .createHash('md5')
-        .update(String(record['Project Number/Codice del progetto']))
-        .digest('hex')
-    : '';
+const getProjectId = record => record['Operation code nr.'];
+
+/**
+ * Gets country code from a country name.
+ *
+ * @memberof 2014tc16rftn002XlsTransform
+ * @param {String} countryName The name of the country
+ * @returns {String} The ISO 3166-1 country code
+ */
+
+const getCodeByCountry = countryName =>
+  countries.getAlpha2Code(countryName, 'en');
 
 /**
  * Preprocess `project_locations`.
  *
  * Input fields taken from the `record` are:
- * - `Participating Countries/Paesi partecipanti`
- * - `LP COUNTRY/Paese del LP`
+ * - `Country`
  *
- * @memberof 2014tc16m4tn002XlsTransform
+ * @memberof 2014tc16rftn002XlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {Array<Location>}
  */
 
 const getLocations = record => {
   const locations = [];
+  const code = getCountryCode(getCodeByCountry(record.Country));
 
-  const countries = record['Participating Countries/Paesi partecipanti'].split(
-    ','
-  );
-
-  const countryLeader = record['LP COUNTRY/Paese del LP'] || '';
-
-  // As we work only with country codes and there's no additional information, add it only if it's not present yet.
-  if (!countries.includes(countryLeader)) {
-    countries.push(countryLeader);
-  }
-
-  countries
-    .filter(c => c)
-    .forEach(countryCode => {
-      locations.push({
-        address: '',
-        centroid: null,
-        country_code: countryCode,
-        location: null,
-        nuts: [],
-        postal_code: '',
-        region: '',
-        town: '',
-      });
+  if (record.Country) {
+    locations.push({
+      address: '',
+      centroid: null,
+      country_code: code,
+      location: null,
+      nuts: [],
+      postal_code: '',
+      region: '',
+      town: '',
     });
+  }
 
   return locations;
 };
@@ -127,9 +117,9 @@ const getLocations = record => {
  * Preprocess `themes`.
  *
  * Input fields taken from the `record` are:
- * - `Intervention category/Categoria dell' operazione`
+ * - `Programme specific objective`
  *
- * @memberof 2014tc16m4tn002XlsTransform
+ * @memberof 2014tc16rftn002XlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {Array<String>}
  */
@@ -137,13 +127,8 @@ const getLocations = record => {
 const getThemes = record => {
   const themes = [];
 
-  if (record["Intervention category/Categoria dell' operazione"]) {
-    themes.push(
-      record["Intervention category/Categoria dell' operazione"]
-        .trim()
-        .replace(/(\r\n|\n|\r)/gm, ' ')
-        .replace(/ {1,}/g, ' ')
-    );
+  if (record['Programme specific objective']) {
+    themes.push(record['Programme specific objective'].trim());
   }
 
   return themes;
@@ -153,20 +138,25 @@ const getThemes = record => {
  * Preprocess `third_parties`.
  *
  * Input fields taken from the `record` are:
- * - `LEAD PARTNER/ Nome del Capofila`
- * - `LP COUNTRY/Paese del LP`
+ * - `Lead partner name`
+ * - `Lead partner location region`
+ * - `Country`
  *
- * @memberof 2014tc16m4tn002XlsTransform
+ * @memberof 2014tc16rftn002XlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {Array<ThirdParty>}
  */
 
 const getThirdParties = record => {
   const thirdParties = [];
-  const name = record['LEAD PARTNER/ Nome del Capofila']
-    ? record['LEAD PARTNER/ Nome del Capofila'].trim()
+
+  const name = record['Lead partner name']
+    ? record['Lead partner name'].trim()
     : '';
-  const country = record['LP COUNTRY/Paese del LP'];
+  const region = record['Lead partner location region']
+    ? record['Lead partner location region'].trim()
+    : '';
+  const country = record.Country;
 
   if (name || country) {
     thirdParties.push({
@@ -175,7 +165,7 @@ const getThirdParties = record => {
       email: '',
       name,
       phone: '',
-      region: '',
+      region,
       role: 'coordinator',
       type: '',
       website: '',
@@ -189,20 +179,20 @@ const getThirdParties = record => {
  * Preprocess `timeframe`.
  *
  * Input fields taken from the `record` are:
- * - `START DATE/Data di inizio`
- * - `END DATE/Data di fine`
+ * - `Start date`
+ * - `End date`
  *
- * @memberof 2014tc16m4tn002XlsTransform
+ * @memberof 2014tc16rftn002XlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {Timeframe}
  */
 
 const getTimeframe = record => {
-  const from = record['START DATE/Data di inizio']
-    ? new Date(record['START DATE/Data di inizio']).toISOString()
+  const from = record['Start date']
+    ? new Date(record['Start date']).toISOString()
     : null;
-  const to = record['END DATE/Data di fine']
-    ? new Date(record['END DATE/Data di fine']).toISOString()
+  const to = record['End date']
+    ? new Date(record['End date']).toISOString()
     : null;
 
   return {
@@ -217,23 +207,23 @@ const getTimeframe = record => {
  * Preprocess `title`.
  *
  * Input fields taken from the `record` are:
- * - `Title/Titolo`
+ * - `Operation name`
  *
- * @memberof 2014tc16m4tn002XlsTransform
+ * @memberof 2014tc16rftn002XlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
 
 const getTitle = record =>
-  record['Title/Titolo'] ? record['Title/Titolo'].trim() : '';
+  record['Operation name'] ? record['Operation name'].trim() : '';
 
 /**
- * Map fields for 2014tc16m4tn002 producer, XLS file types
+ * Map fields for 2014tc16rftn002 producer, XLS file types
  *
- * Example input data: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/2014tc16m4tn002/xls/test/stubs/record.json|stub}
+ * Example input data: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/2014tc16rftn002/xls/test/stubs/record.json|stub}
  *
- * Transform function: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/2014tc16m4tn002/xls/src/lib/transform.js|implementation details}
- * @name 2014tc16m4tn002XlsTransform
+ * Transform function: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/2014tc16rftn002/xls/src/lib/transform.js|implementation details}
+ * @name 2014tc16rftn002XlsTransform
  * @param {Object} record Piece of data to transform before going to harmonized storage.
  * @returns {Project} JSON matching the type fields.
  */
