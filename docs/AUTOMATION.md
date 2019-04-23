@@ -69,7 +69,7 @@ DRONE_GITLAB_SECRET=value of Secret
 DRONE_SECRET=value of your preference
 ```
 
-The, run the following:
+Then, run the following:
 
 ```sh
 $ docker-compose up
