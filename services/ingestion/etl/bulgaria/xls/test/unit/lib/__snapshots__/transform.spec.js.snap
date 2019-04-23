@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Member state producer: Bulgaria, XLS transformer Produces correct JSON output structure 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "BGN",
+      "raw": 1465010.235,
+      "value": 1465010.235,
+    },
+    "funding_area": Array [],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "BGN",
+      "raw": "1 953 346.98",
+      "value": 1953346.98,
+    },
+  },
+  "call_year": "",
+  "complete": false,
+  "description": "Implementation of removal operations, including related measures in accordance with the standards laid down in the EU law. Compulsory administrative measures are recurrent during 2014–2020. The execution of effective measures will be supported for TCN’s accommodated in the detention centres and for procedures of escorting these persons outside the EU. The action envisages covering translation and interpretation expenses, travel expenses to the country of origin or third safe country, obtaining the necessary travel documents, daily allowances, medical insurances, as well as medical exams before the return operation, etc. As of 2014 no removal operations in cooperation with FRONTEX are envisaged.",
+  "ec_priorities": Array [],
+  "media": Array [],
+  "programme_name": "",
+  "project_id": "7d6cd57b29f500431e9925e340751f4c",
+  "project_locations": Array [
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "BG",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "",
+      "town": "",
+    },
+  ],
+  "project_website": "",
+  "related_links": Array [],
+  "reporting_organisation": "REGIO",
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
+  "status": "",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [],
+  "third_parties": Array [
+    Object {
+      "address": "",
+      "country": "",
+      "email": "",
+      "name": "129010666 Migration Directorate - Ministry of Interior",
+      "phone": "",
+      "region": "",
+      "role": "",
+      "type": "beneficiary",
+      "website": "",
+    },
+  ],
+  "timeframe": Object {
+    "from": "2015-10-14T00:00:00.000Z",
+    "from_precision": "day",
+    "to": "2019-06-01T00:00:00.000Z",
+    "to_precision": "day",
+  },
+  "title": "Implementation of compulsory administrative measures to TNCs and covering translation.",
+  "type": Array [],
+}
+`;
