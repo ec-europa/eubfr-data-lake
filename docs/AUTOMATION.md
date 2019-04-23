@@ -79,7 +79,7 @@ When the server is running, open `http://ada4e47d.ngrok.io` in your browser and 
 
 When authorized, [activate the project](https://0-8-0.docs.drone.io/getting-started/) in the web UI.
 
-This activate is necessary for you to be able to configure the secrets and make use of the hooks attached for changes to trigger builds in the Drone automation system.
+This activation is necessary for you to be able to configure the secrets and make use of the hooks attached for changes to trigger builds in the Drone automation system.
 
 ### Secrets
 
