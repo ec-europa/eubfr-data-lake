@@ -11,10 +11,8 @@ The EUBFR project uses several types which aim to make the results of ETLs data 
 Here's a list of the transformations made in ETLs around the `Project` model.
 
 - [2014tc16m4tn002 - XLS](./etls/2014tc16m4tn002-xls.md)
-  <<<<<<< HEAD
-- # [2014tc16rfcb014 - CSV](./etls/2014tc16rfcb014-csv.md)
+- [2014tc16rfcb014 - CSV](./etls/2014tc16rfcb014-csv.md)
 - [2014tc16rfpc001 - XLS](./etls/2014tc16rfpc001-xls.md)
-  > > > > > > > a83c571a3863235cd02afd7372496e18cb3a8f29
 - [bulgaria - XLS](./etls/bulgaria-xls.md)
 - [CORDIS - CSV](./etls/cordis-csv.md)
 - [DEVCO - XLS](./etls/devco-xls.md)
