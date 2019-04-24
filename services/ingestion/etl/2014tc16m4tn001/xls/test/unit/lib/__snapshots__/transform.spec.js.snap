@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`2014tc16m4tn001 XLS transformer Produces correct JSON output structure 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "EUR",
+      "raw": 2786750.3299999996,
+      "value": 2786750.3299999996,
+    },
+    "funding_area": Array [],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "EUR",
+      "raw": 3278529.8,
+      "value": 3278529.8,
+    },
+  },
+  "call_year": "",
+  "complete": false,
+  "description": "Axis: 1 
+Objective: 1 
+Acronym: + RESILIENT 
+Operation summary: +RESILIENT puts together a 4-helix partnership of 8 MED countries to tackle the need for innovation conducive to increased socially-responsive competitiveness of SMEs & stimulate new jobs, especially for companies operating in the social economy. It aims to kickstart a process of policy change at regional level in the involved areas resulting in the integration of successful elements into the new Cohesion policy (EU2020+). The overall objective is to positively influence, adapt/change the different structural elements of policy governing \\"clusters with high social vocation and responsiveness\\" (SVRC) by leveraging on innovation dynamics led by technology, open data & successful models with social relevance & impact, creating socially-responsive value chains at a transnational level. SVRC are usually codified only at local level, so the project addresses the transnational dimension as networking and capacity building approach to achieve a critical mass, increase horizontal opportunities for SMEs, mobility, employability and for scaling up into Cohesion Policy and Funds. It is an integrated project that establishes a structural approach to policy & practice improvement of emerging dynamics in social innovation through an overarching process based on the intertwined use of open data & the creation of a transnational socially-responsive value chain. This includes studying existing initiatives, adapting and testing, with the final objective of capitalizing them in the MED area. 
+Call for proposals: 2nd call 
+ERDF: 2667650.1999999997 
+IPA Funds: 119100.13 
+",
+  "ec_priorities": Array [],
+  "media": Array [],
+  "programme_name": "",
+  "project_id": "",
+  "project_locations": Array [
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "IT",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": 30123,
+      "region": "",
+      "town": "",
+    },
+  ],
+  "project_website": "",
+  "related_links": Array [],
+  "reporting_organisation": "Member states",
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
+  "status": "",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [],
+  "third_parties": Array [
+    Object {
+      "address": "",
+      "country": "ITALY",
+      "email": "",
+      "name": "Veneto Region – Operational Unit for EU and State Relations",
+      "phone": "",
+      "region": "",
+      "role": "coordinator",
+      "type": "",
+      "website": "",
+    },
+  ],
+  "timeframe": Object {
+    "from": "2018-01-31T21:00:00.000Z",
+    "from_precision": "day",
+    "to": "2022-01-30T21:00:00.000Z",
+    "to_precision": "day",
+  },
+  "title": "Mediterranean Open REsouRcEs for Social Innovation of SociaLly ResponsIve ENTerprises",
+  "type": Array [
+    "Integrated project",
+  ],
+}
+`;
