@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`2014tc16rftn002 XLS transformer Produces correct JSON output structure 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "EUR",
+      "raw": 1636114.5,
+      "value": 1636114.5,
+    },
+    "funding_area": Array [],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "EUR",
+      "raw": 2181486,
+      "value": 2181486,
+    },
+  },
+  "call_year": "",
+  "complete": false,
+  "description": "Acronym: ADSA 
+Summary: Digital startups markets are not only local but European and International. ADSA thus aims at supporting digital startups based in the Atlantic Area , to develop their business outside their regions and countries, at EU level. The Atlantic Area is considered as a first step towards EU and International business development for digital startups. ADSA will also contribute to the positive image of the Atlantic Area  in terms of digital dynamism. 
+",
+  "ec_priorities": Array [],
+  "media": Array [],
+  "programme_name": "",
+  "project_id": "EAPA_21/2016",
+  "project_locations": Array [
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "FR",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "",
+      "town": "",
+    },
+  ],
+  "project_website": "",
+  "related_links": Array [],
+  "reporting_organisation": "Member states",
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
+  "status": "",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [
+    "1.1 Enhancing innovation capacity through cooperation to foster competitiveness",
+  ],
+  "third_parties": Array [
+    Object {
+      "address": "",
+      "country": "France",
+      "email": "",
+      "name": "Technopôle Brest Iroise",
+      "phone": "",
+      "region": "Bretagne",
+      "role": "coordinator",
+      "type": "",
+      "website": "",
+    },
+  ],
+  "timeframe": Object {
+    "from": "2017-06-01T00:00:00.000Z",
+    "from_precision": "day",
+    "to": "2020-11-30T00:00:00.000Z",
+    "to_precision": "day",
+  },
+  "title": "Supporting Atlantic Digital Startups to go International",
+  "type": Array [],
+}
+`;
