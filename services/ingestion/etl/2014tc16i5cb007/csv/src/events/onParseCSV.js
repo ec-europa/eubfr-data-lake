@@ -37,7 +37,6 @@ export const handler = async (event, context) => {
   const transformer = transform(
     (record, cb) => {
       try {
-        debugger;
         const data = transformRecord(record);
         return cb(null, `${JSON.stringify(data)}\n`);
       } catch (e) {
