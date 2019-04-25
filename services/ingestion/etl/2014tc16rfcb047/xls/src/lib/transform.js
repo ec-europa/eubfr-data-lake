@@ -134,11 +134,8 @@ const getLocations = record => {
     }, []);
 
   const locations = [];
-  const countriesMulti = record.Country.split(',')
-    .map(item => item.trim())
-    .map(item => item.split('&'));
-
-  const countryNames = flatten(countriesMulti).map(country => country.trim());
+  // Get a list of countries separated by the following: `,`, `&`.
+  const countryNames = record.Country.trim().split(/\s*(?:,|&)\s*/);
 
   countryNames.forEach(name => {
     const countryCode = getCountryCode(getCodeByCountry(name));
