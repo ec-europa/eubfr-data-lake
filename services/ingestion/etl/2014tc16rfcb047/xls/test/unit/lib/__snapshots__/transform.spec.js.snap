@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`2014tc16rfcb047 XLS transformer Produces correct JSON output structure 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "EUR",
+      "raw": 6781065.21,
+      "value": 6781065.21,
+    },
+    "funding_area": Array [],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "EUR",
+      "raw": 8506928.97,
+      "value": 8506928.97,
+    },
+  },
+  "call_year": "",
+  "complete": false,
+  "description": "Theme: 1.1
+eMS Ref Num: 5031
+Operation/Project Summary: The Border and Regions Airways Training Hub (BREATH) Project, led by the Dundalk Institute of Technology (DIT), has been awarded up to €6,781,065.21 ERDF under the INTERREG VA Programme. BREATH aims to tackle Chronic Obstructive Pulmonary Disease (COPD) by harnessing the complementary resources and expertise of the project partners. COPD is an incurable lung disease that is highly prevalent in Northern Ireland, the Border Counties of Ireland, and Western Scotland. COPD imposes a huge economic burden on the Region and it has been forecast that the disease will be responsible for one-third of deaths by 2020. BREATH will provide an innovative, industry-relevant training programme to stimulate R&I, attract inward investment and enhance economic development.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               Project Partners: Queen's University Belfast and the University of the West of Scotland. 
+Committed Outputs: Enterprises receiving support: 5
+Enterprises receiving grants: 2
+Enterprises receiving non-financial support: 5
+Researchers in supported entities: 22 (total of 89.5 researcher years)
+Enterprises cooperating with research institutions: 5                                                                                                                                                                                                                                             Enterprises participating in cross-border, transnational or interregional research projects: 2                                                                                                                                                    Research institutions participating in cross-border, transnational or interregional research projects: 3
+Total ERDF + Match (€): 7727271.2
+Total ERDF Allocated (€): 6781065.21
+Union Co-Financing Rate %: 80
+Category of Intervention: 060
+",
+  "ec_priorities": Array [],
+  "media": Array [],
+  "programme_name": "",
+  "project_id": "045",
+  "project_locations": Array [
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "IE",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "",
+      "town": "",
+    },
+  ],
+  "project_website": "",
+  "related_links": Array [],
+  "reporting_organisation": "Member states",
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
+  "status": "LoO Accepted",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [],
+  "third_parties": Array [
+    Object {
+      "address": "",
+      "country": "",
+      "email": "",
+      "name": "Dundalk Institute of Technology (DIT)",
+      "phone": "",
+      "region": "",
+      "role": "Lead Partner",
+      "type": "",
+      "website": "",
+    },
+  ],
+  "timeframe": Object {
+    "from": "2016-12-31T21:00:00.000Z",
+    "from_precision": "day",
+    "to": "2021-12-30T21:00:00.000Z",
+    "to_precision": "day",
+  },
+  "title": "BREATH (Border and Regions Airways Training Hub)",
+  "type": Array [],
+}
+`;
