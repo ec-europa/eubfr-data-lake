@@ -1,49 +1,42 @@
 // @flow
 
 import crypto from 'crypto';
+import countries from 'i18n-iso-countries';
+
 import type { Project } from '@eubfr/types';
+import getCountryCode from '@eubfr/lib/getCountryCode';
 import sanitizeBudgetItem from '@eubfr/lib/budget/budgetFormatter';
-import extractBudgetData from '@eubfr/lib/budget/extractBudgetData';
-import numeral from 'numeral';
 
 /**
  * Preprocess `budget`.
  *
  * Input fields taken from the `record` are:
  *
- * - `Total Project Cost (€/£)`
- * - `Union Co-Financing Rate %`
+ * - `Total Project Cost (€)`
+ * - `Total ERDF Allocated (€)`
  *
- * @memberof 2014tc16rfpc001XlsTransform
+ * @memberof 2014tc16rfcb047XlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {Budget}
  */
 
-const getBudget = record => {
-  const budgetData = extractBudgetData(record['Total Project Cost (€/£)']);
-
-  const { _value: total } = numeral(record['Total Project Cost (€/£)']);
-  const { _value: percentage } = numeral(record['Union Co-Financing Rate %']);
-  const euContrib = total * percentage;
-
-  return {
-    total_cost: sanitizeBudgetItem({
-      value: total,
-      currency: budgetData.currency,
-      raw: record['Total Project Cost (€/£)'],
-    }),
-    eu_contrib: sanitizeBudgetItem({
-      value: euContrib,
-      currency: budgetData.currency,
-      raw: euContrib,
-    }),
-    private_fund: sanitizeBudgetItem(),
-    public_fund: sanitizeBudgetItem(),
-    other_contrib: sanitizeBudgetItem(),
-    funding_area: [],
-    mmf_heading: '',
-  };
-};
+const getBudget = record => ({
+  total_cost: sanitizeBudgetItem({
+    value: record['Total Project Cost (€)'],
+    currency: 'EUR',
+    raw: record['Total Project Cost (€)'],
+  }),
+  eu_contrib: sanitizeBudgetItem({
+    value: record['Total ERDF Allocated (€)'],
+    currency: 'EUR',
+    raw: record['Total ERDF Allocated (€)'],
+  }),
+  private_fund: sanitizeBudgetItem(),
+  public_fund: sanitizeBudgetItem(),
+  other_contrib: sanitizeBudgetItem(),
+  funding_area: [],
+  mmf_heading: '',
+});
 
 /**
  * Preprocess `description`.
@@ -51,14 +44,15 @@ const getBudget = record => {
  * Input fields taken from the `record` are:
  *
  * - `Theme`
- * - `eMS Ref`
+ * - `eMS Ref Num`
  * - `Operation/Project Summary`
  * - `Committed Outputs`
- * - `Total ERDF + Match (€/£)`
- * - `Total ERDF Allocated (€/£)`
+ * - `Total ERDF + Match (€)`
+ * - `Total ERDF Allocated (€)`
+ * - `Union Co-Financing Rate %`
  * - `Category of Intervention`
  *
- * @memberof 2014tc16rfpc001XlsTransform
+ * @memberof 2014tc16rfcb047XlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
@@ -68,11 +62,12 @@ const getDescription = record => {
 
   const fields = [
     'Theme',
-    'eMS Ref',
+    'eMS Ref Num',
     'Operation/Project Summary',
     'Committed Outputs',
-    'Total ERDF + Match (€/£)',
-    'Total ERDF Allocated (€/£)',
+    'Total ERDF + Match (€)',
+    'Total ERDF Allocated (€)',
+    'Union Co-Financing Rate %',
     'Category of Intervention',
   ];
 
@@ -86,47 +81,69 @@ const getDescription = record => {
 /**
  * Preprocess `project_id`.
  *
- * Input fields taken from the `record` are:
- * - `eMS Ref`
+ * Uses `Project Ref`, but if it's not present, the ID is generated based on `Operation/Project Name`.
  *
- * @memberof 2014tc16rfpc001XlsTransform
+ * Input fields taken from the `record` are:
+ *
+ * - `Project Ref`
+ * - `Operation/Project Name`
+ *
+ * @memberof 2014tc16rfcb047XlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
 
 const getProjectId = record =>
-  crypto
-    .createHash('md5')
-    .update(String(record['eMS Ref']))
-    .digest('hex');
+  record['Project Ref']
+    ? String(record['Project Ref']).trim()
+    : crypto
+        .createHash('md5')
+        .update(record['Operation/Project Name'])
+        .digest('hex');
+
+/**
+ * Gets country code from a country name.
+ *
+ * @memberof 2014tc16rfcb047XlsTransform
+ * @param {String} countryName The name of the country
+ * @returns {String} The ISO 3166-1 country code
+ */
+
+const getCodeByCountry = countryName =>
+  countries.getAlpha2Code(countryName, 'en');
 
 /**
  * Preprocess `project_locations`.
  *
  * Input fields taken from the `record` are:
  *
- * - `Operation Postcode`
  * - `Country`
  *
- * @memberof 2014tc16rfpc001XlsTransform
+ * @memberof 2014tc16rfcb047XlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {Array<Location>}
  */
 
 const getLocations = record => {
   const locations = [];
-  const postCode = record['Operation Postcode'];
-  const country = record.Country;
+  // Get a list of countries separated by the following: `,`, `&`.
+  const countryNames = record.Country.trim().split(/\s*(?:,|&)\s*/);
 
-  locations.push({
-    address: country,
-    centroid: null,
-    country_code: '',
-    location: null,
-    nuts: [],
-    postal_code: postCode,
-    region: '',
-    town: '',
+  countryNames.forEach(name => {
+    const countryCode = getCountryCode(getCodeByCountry(name));
+
+    if (countryCode) {
+      locations.push({
+        address: '',
+        centroid: null,
+        country_code: countryCode,
+        location: null,
+        nuts: [],
+        postal_code: '',
+        region: '',
+        town: '',
+      });
+    }
   });
 
   return locations;
@@ -139,7 +156,7 @@ const getLocations = record => {
  *
  * - `Status`
  *
- * @memberof 2014tc16rfpc001XlsTransform
+ * @memberof 2014tc16rfcb047XlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
@@ -153,7 +170,7 @@ const getStatus = record => (record.Status ? record.Status.trim() : '');
  *
  * - `Beneficiary/Lead Partner Name`
  *
- * @memberof 2014tc16rfpc001XlsTransform
+ * @memberof 2014tc16rfcb047XlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {Array<ThirdParty>}
  */
@@ -185,25 +202,23 @@ const getThirdParties = record => {
 /**
  * Format date.
  *
- * @memberof 2014tc16rfpc001XlsTransform
- * @param {Date} date Date in DD/MM/YYYY format
+ * @memberof 2014tc16rfcb047XlsTransform
+ * @param {Date} date Date in ready Date() object or DD.MM.YYYY as a fallback.
  * @returns {Date} The date formatted into an ISO 8601 date format
  *
- * @example
- * input => "01/01/2009"
- * output => "2009-01-01T00:00:00.000Z"
  */
-
 const formatDate = date => {
-  if (!date || typeof date !== 'string') return null;
-  const d = date.split(/\//);
-  if (d.length !== 3) return null;
-  const [day, month, year] = d;
-  if (!day || !month || !year) return null;
+  if (!date) return null;
+
   try {
+    return new Date(date).toISOString();
+  } catch (error) {
+    const parts = date.split('.');
+
+    const [day, month, year] = parts;
+
+    if (!day || !month || !year) return null;
     return new Date(Date.UTC(year, month - 1, day)).toISOString();
-  } catch (e) {
-    return null;
   }
 };
 
@@ -215,7 +230,7 @@ const formatDate = date => {
  * - `Operation Start Date`
  * - `Operation End Date`
  *
- * @memberof 2014tc16rfpc001XlsTransform
+ * @memberof 2014tc16rfcb047XlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {Timeframe}
  */
@@ -239,7 +254,7 @@ const getTimeframe = record => {
  *
  * - `Operation/Project Name`
  *
- * @memberof 2014tc16rfpc001XlsTransform
+ * @memberof 2014tc16rfcb047XlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
@@ -250,13 +265,13 @@ const getTitle = record =>
     : '';
 
 /**
- * Map fields for 2014tc16rfpc001 producer, XLS file types
+ * Map fields for 2014tc16rfcb047 producer, XLS file types
  *
- * Example input data: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/2014tc16rfpc001/xls/test/stubs/record.json|stub}
+ * Example input data: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/2014tc16rfcb047/xls/test/stubs/record.json|stub}
  *
- * Transform function: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/2014tc16rfpc001/xls/src/lib/transform.js|implementation details}
+ * Transform function: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/2014tc16rfcb047/xls/src/lib/transform.js|implementation details}
  *
- * @name 2014tc16rfpc001XlsTransform
+ * @name 2014tc16rfcb047XlsTransform
  * @param {Object} record Piece of data to transform before going to harmonized storage.
  * @returns {Project} JSON matching the type fields.
  */
