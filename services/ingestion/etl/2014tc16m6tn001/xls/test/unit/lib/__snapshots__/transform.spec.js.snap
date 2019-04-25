@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DG HOME XLS transformer Produces correct JSON output structure 1`] = `
+exports[`2014tc16m6tn001 XLS transformer Produces correct JSON output structure 1`] = `
 Object {
   "action": "",
   "budget": Object {
@@ -48,7 +48,7 @@ RARE Partners will define the prerequisites of effective institutional cooperati
   "media": Array [],
   "programme_name": "",
   "project_id": "485e7ecdb84750d805869ccdebca49f0",
-  "project_locations": "",
+  "project_locations": Array [],
   "project_website": "",
   "related_links": Array [],
   "reporting_organisation": "Member states",

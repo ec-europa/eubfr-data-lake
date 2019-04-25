@@ -5,7 +5,7 @@
 import mapper from '../../../src/lib/transform';
 import record from '../../stubs/record.json';
 
-describe('DG HOME XLS transformer', () => {
+describe('2014tc16m6tn001 XLS transformer', () => {
   let result = {};
 
   beforeAll(() => {
