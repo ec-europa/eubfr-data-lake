@@ -125,14 +125,6 @@ const getCodeByCountry = countryName =>
  */
 
 const getLocations = record => {
-  // Tiny utility, as .flat() is not available in node.
-  const flatten = arr =>
-    arr.reduce((flat, toFlatten) => {
-      return flat.concat(
-        Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten
-      );
-    }, []);
-
   const locations = [];
   // Get a list of countries separated by the following: `,`, `&`.
   const countryNames = record.Country.trim().split(/\s*(?:,|&)\s*/);
