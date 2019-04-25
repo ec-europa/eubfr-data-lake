@@ -14,7 +14,7 @@ import numeral from 'numeral';
  * - `Total Project Cost (€/£)`
  * - `Union Co-Financing Rate %`
  *
- * @memberof 2014tc16rfcb014CsvTransform
+ * @memberof 2014tc16rfpc001XlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {Budget}
  */
@@ -58,7 +58,7 @@ const getBudget = record => {
  * - `Total ERDF Allocated (€/£)`
  * - `Category of Intervention`
  *
- * @memberof 2014tc16rfcb014CsvTransform
+ * @memberof 2014tc16rfpc001XlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
@@ -89,7 +89,7 @@ const getDescription = record => {
  * Input fields taken from the `record` are:
  * - `eMS Ref`
  *
- * @memberof 2014tc16rfcb014CsvTransform
+ * @memberof 2014tc16rfpc001XlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
@@ -108,7 +108,7 @@ const getProjectId = record =>
  * - `Operation Postcode`
  * - `Country`
  *
- * @memberof 2014tc16rfcb014CsvTransform
+ * @memberof 2014tc16rfpc001XlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {Array<Location>}
  */
@@ -139,7 +139,7 @@ const getLocations = record => {
  *
  * - `Status`
  *
- * @memberof 2014tc16rfcb014CsvTransform
+ * @memberof 2014tc16rfpc001XlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
@@ -153,7 +153,7 @@ const getStatus = record => (record.Status ? record.Status.trim() : '');
  *
  * - `Beneficiary/Lead Partner Name`
  *
- * @memberof 2014tc16rfcb014CsvTransform
+ * @memberof 2014tc16rfpc001XlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {Array<ThirdParty>}
  */
@@ -185,7 +185,7 @@ const getThirdParties = record => {
 /**
  * Format date.
  *
- * @memberof 2014tc16rfcb014CsvTransform
+ * @memberof 2014tc16rfpc001XlsTransform
  * @param {Date} date Date in DD/MM/YYYY format
  * @returns {Date} The date formatted into an ISO 8601 date format
  *
@@ -215,7 +215,7 @@ const formatDate = date => {
  * - `Operation Start Date`
  * - `Operation End Date`
  *
- * @memberof 2014tc16rfcb014CsvTransform
+ * @memberof 2014tc16rfpc001XlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {Timeframe}
  */
@@ -239,7 +239,7 @@ const getTimeframe = record => {
  *
  * - `Operation/Project Name`
  *
- * @memberof 2014tc16rfcb014CsvTransform
+ * @memberof 2014tc16rfpc001XlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */

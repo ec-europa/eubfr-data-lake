@@ -1,9 +1,11 @@
 // @flow
 
 import crypto from 'crypto';
+import countries from 'i18n-iso-countries';
+
 import type { Project } from '@eubfr/types';
+import getCountryCode from '@eubfr/lib/getCountryCode';
 import sanitizeBudgetItem from '@eubfr/lib/budget/budgetFormatter';
-import numeral from 'numeral';
 
 /**
  * Preprocess `budget`.
@@ -11,36 +13,30 @@ import numeral from 'numeral';
  * Input fields taken from the `record` are:
  *
  * - `Total Project Cost (€)`
- * - `Union Co-Financing Rate %`
+ * - `Total ERDF Allocated (€)`
  *
- * @memberof 2014tc16rfcb014CsvTransform
+ * @memberof 2014tc16rfcb047XlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {Budget}
  */
 
-const getBudget = record => {
-  const { _value: total } = numeral(record['Total Project Cost (€)']);
-  const { _value: percentage } = numeral(record['Union Co-Financing Rate %']);
-  const euContrib = (total * percentage) / 100;
-
-  return {
-    total_cost: sanitizeBudgetItem({
-      value: total,
-      currency: 'EUR',
-      raw: record['Total Project Cost (€)'],
-    }),
-    eu_contrib: sanitizeBudgetItem({
-      value: euContrib,
-      currency: 'EUR',
-      raw: euContrib,
-    }),
-    private_fund: sanitizeBudgetItem(),
-    public_fund: sanitizeBudgetItem(),
-    other_contrib: sanitizeBudgetItem(),
-    funding_area: [],
-    mmf_heading: '',
-  };
-};
+const getBudget = record => ({
+  total_cost: sanitizeBudgetItem({
+    value: record['Total Project Cost (€)'],
+    currency: 'EUR',
+    raw: record['Total Project Cost (€)'],
+  }),
+  eu_contrib: sanitizeBudgetItem({
+    value: record['Total ERDF Allocated (€)'],
+    currency: 'EUR',
+    raw: record['Total ERDF Allocated (€)'],
+  }),
+  private_fund: sanitizeBudgetItem(),
+  public_fund: sanitizeBudgetItem(),
+  other_contrib: sanitizeBudgetItem(),
+  funding_area: [],
+  mmf_heading: '',
+});
 
 /**
  * Preprocess `description`.
@@ -53,9 +49,10 @@ const getBudget = record => {
  * - `Committed Outputs`
  * - `Total ERDF + Match (€)`
  * - `Total ERDF Allocated (€)`
+ * - `Union Co-Financing Rate %`
  * - `Category of Intervention`
  *
- * @memberof 2014tc16rfcb014CsvTransform
+ * @memberof 2014tc16rfcb047XlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
@@ -70,6 +67,7 @@ const getDescription = record => {
     'Committed Outputs',
     'Total ERDF + Match (€)',
     'Total ERDF Allocated (€)',
+    'Union Co-Financing Rate %',
     'Category of Intervention',
   ];
 
@@ -90,7 +88,7 @@ const getDescription = record => {
  * - `Project Ref`
  * - `Operation/Project Name`
  *
- * @memberof 2014tc16rfcb014CsvTransform
+ * @memberof 2014tc16rfcb047XlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
@@ -104,32 +102,59 @@ const getProjectId = record =>
         .digest('hex');
 
 /**
+ * Gets country code from a country name.
+ *
+ * @memberof 2014tc16rfcb047XlsTransform
+ * @param {String} countryName The name of the country
+ * @returns {String} The ISO 3166-1 country code
+ */
+
+const getCodeByCountry = countryName =>
+  countries.getAlpha2Code(countryName, 'en');
+
+/**
  * Preprocess `project_locations`.
  *
  * Input fields taken from the `record` are:
  *
- * - `Operation Postcode`
  * - `Country`
  *
- * @memberof 2014tc16rfcb014CsvTransform
+ * @memberof 2014tc16rfcb047XlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {Array<Location>}
  */
 
 const getLocations = record => {
-  const locations = [];
-  const postCode = record['Operation Postcode'];
-  const country = record.Country;
+  // Tiny utility, as .flat() is not available in node.
+  const flatten = arr =>
+    arr.reduce((flat, toFlatten) => {
+      return flat.concat(
+        Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten
+      );
+    }, []);
 
-  locations.push({
-    address: country,
-    centroid: null,
-    country_code: '',
-    location: null,
-    nuts: [],
-    postal_code: postCode,
-    region: '',
-    town: '',
+  const locations = [];
+  const countriesMulti = record.Country.split(',')
+    .map(item => item.trim())
+    .map(item => item.split('&'));
+
+  const countryNames = flatten(countriesMulti).map(country => country.trim());
+
+  countryNames.forEach(name => {
+    const countryCode = getCountryCode(getCodeByCountry(name));
+
+    if (countryCode) {
+      locations.push({
+        address: '',
+        centroid: null,
+        country_code: countryCode,
+        location: null,
+        nuts: [],
+        postal_code: '',
+        region: '',
+        town: '',
+      });
+    }
   });
 
   return locations;
@@ -142,7 +167,7 @@ const getLocations = record => {
  *
  * - `Status`
  *
- * @memberof 2014tc16rfcb014CsvTransform
+ * @memberof 2014tc16rfcb047XlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
@@ -156,7 +181,7 @@ const getStatus = record => (record.Status ? record.Status.trim() : '');
  *
  * - `Beneficiary/Lead Partner Name`
  *
- * @memberof 2014tc16rfcb014CsvTransform
+ * @memberof 2014tc16rfcb047XlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {Array<ThirdParty>}
  */
@@ -188,7 +213,7 @@ const getThirdParties = record => {
 /**
  * Format date.
  *
- * @memberof 2014tc16rfcb014CsvTransform
+ * @memberof 2014tc16rfcb047XlsTransform
  * @param {Date} date Date in ready Date() object or DD.MM.YYYY as a fallback.
  * @returns {Date} The date formatted into an ISO 8601 date format
  *
@@ -216,7 +241,7 @@ const formatDate = date => {
  * - `Operation Start Date`
  * - `Operation End Date`
  *
- * @memberof 2014tc16rfcb014CsvTransform
+ * @memberof 2014tc16rfcb047XlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {Timeframe}
  */
@@ -240,7 +265,7 @@ const getTimeframe = record => {
  *
  * - `Operation/Project Name`
  *
- * @memberof 2014tc16rfcb014CsvTransform
+ * @memberof 2014tc16rfcb047XlsTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */

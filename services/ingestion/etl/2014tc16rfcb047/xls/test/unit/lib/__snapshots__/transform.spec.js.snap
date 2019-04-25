@@ -6,8 +6,8 @@ Object {
   "budget": Object {
     "eu_contrib": Object {
       "currency": "EUR",
-      "raw": 6805543.176,
-      "value": 6805543.176,
+      "raw": 6781065.21,
+      "value": 6781065.21,
     },
     "funding_area": Array [],
     "mmf_heading": "",
@@ -44,6 +44,7 @@ Researchers in supported entities: 22 (total of 89.5 researcher years)
 Enterprises cooperating with research institutions: 5                                                                                                                                                                                                                                             Enterprises participating in cross-border, transnational or interregional research projects: 2                                                                                                                                                    Research institutions participating in cross-border, transnational or interregional research projects: 3
 Total ERDF + Match (€): 7727271.2
 Total ERDF Allocated (€): 6781065.21
+Union Co-Financing Rate %: 80
 Category of Intervention: 060
 ",
   "ec_priorities": Array [],
@@ -52,12 +53,12 @@ Category of Intervention: 060
   "project_id": "045",
   "project_locations": Array [
     Object {
-      "address": "Northern Ireland, Ireland & Scotland",
+      "address": "",
       "centroid": null,
-      "country_code": "",
+      "country_code": "IE",
       "location": null,
       "nuts": Array [],
-      "postal_code": "A91 K584",
+      "postal_code": "",
       "region": "",
       "town": "",
     },
