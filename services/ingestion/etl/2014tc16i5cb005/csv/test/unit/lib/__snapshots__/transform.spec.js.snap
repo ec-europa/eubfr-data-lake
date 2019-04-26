@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`2014tc16i5cb005 CSV transformer Produces correct JSON output structure 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "EUR",
+      "raw": "85.00%",
+      "value": 503161.84349999996,
+    },
+    "funding_area": Array [],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "EUR",
+      "raw": "591955.11",
+      "value": 591955.11,
+    },
+  },
+  "call_year": "",
+  "complete": false,
+  "description": "Project call: CB005.1 
+Project intervention field: 087 Adaptation to climate change measures and prevention and management of climate related risks e.g. erosion, fires, flooding, storms and drought, including awareness raising, civil protection and disaster management systems and infrastructures 
+Last modified: 01.12.2017 
+",
+  "ec_priorities": Array [],
+  "media": Array [],
+  "programme_name": "",
+  "project_id": "CB005.1.11.005",
+  "project_locations": Array [
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "BG",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "Haskovo",
+      "town": "",
+    },
+  ],
+  "project_website": "",
+  "related_links": Array [],
+  "reporting_organisation": "Member states",
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
+  "status": "",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [],
+  "third_parties": Array [
+    Object {
+      "address": "",
+      "country": "Bulgaria",
+      "email": "",
+      "name": "Directorate General Fire Safety and Civil Protection - Ministry of interior",
+      "phone": "",
+      "region": "Haskovo",
+      "role": "coordinator",
+      "type": "",
+      "website": "",
+    },
+  ],
+  "timeframe": Object {
+    "from": "2017-03-21T00:00:00.000Z",
+    "from_precision": "day",
+    "to": "2019-03-20T00:00:00.000Z",
+    "to_precision": "day",
+  },
+  "title": "Increasing the operational capacity for forest fires and improving prevention of disasters",
+  "type": Array [],
+}
+`;
