@@ -14,7 +14,10 @@ documentation
 const transforms = [
   '2014tc16i5cb005-csv',
   '2014tc16m4tn002-xls',
+  '2014tc16rfcb014-csv',
+  '2014tc16rfcb047-xls',
   '2014tc16rfpc001-xls',
+  '2014tc16rftn002-xls',
   'bulgaria-xls',
   'cordis-csv',
   'devco-xls',
