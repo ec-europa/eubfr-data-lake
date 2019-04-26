@@ -24,13 +24,26 @@ import type { Project } from '@eubfr/types';
  */
 
 const getBudget = record => {
+  let euContrib = 0;
   const { _value: total } = numeral(record['Project final contract amount']);
 
+  /**
+   * Numeral understands percentages:
+   * - "500665.00%" =>  5006.650000000001
+   * - "85.00%" => 0.85
+   */
   const { _value: percentage } = numeral(
     record['Project EU co-financing rate']
   );
 
-  const euContrib = total * percentage;
+  // Use it as an actual percentage.
+  if (percentage > 0 && percentage < 100) {
+    euContrib = total * percentage;
+  }
+  // When rate is not a percentage, convert it back to actual value.
+  else {
+    euContrib = percentage * 100;
+  }
 
   return {
     eu_contrib: sanitizeBudgetItem({
