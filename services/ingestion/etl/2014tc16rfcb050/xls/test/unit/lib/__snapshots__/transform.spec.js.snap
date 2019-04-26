@@ -1,0 +1,82 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`2014tc16rfcb050 XLS transformer Produces correct JSON output structure 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "EUR",
+      "raw": "1511289.1965;1488710.7995",
+      "value": 2999999.9960000003,
+    },
+    "funding_area": Array [],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "EUR",
+      "raw": "1777987.29;1751424.47",
+      "value": 3529411.76,
+    },
+  },
+  "call_year": "",
+  "complete": false,
+  "description": "Theme: undefined
+eMS Ref: undefined
+Operation/Project Summary: undefined
+Committed Outputs: undefined
+Total ERDF + Match (€/£): undefined
+Total ERDF Allocated (€/£): undefined
+Category of Intervention: undefined
+",
+  "ec_priorities": Array [],
+  "media": Array [],
+  "programme_name": "",
+  "project_id": "5e543256c480ac577d30f76f9120eb74",
+  "project_locations": Array [
+    Object {
+      "address": "Latvia;Estonia",
+      "centroid": null,
+      "country_code": "",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": undefined,
+      "region": "",
+      "town": "",
+    },
+  ],
+  "project_website": "",
+  "related_links": Array [],
+  "reporting_organisation": "Member states",
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
+  "status": "",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [],
+  "third_parties": Array [],
+  "timeframe": Object {
+    "from": null,
+    "from_precision": "day",
+    "to": null,
+    "to_precision": "day",
+  },
+  "title": "",
+  "type": Array [],
+}
+`;

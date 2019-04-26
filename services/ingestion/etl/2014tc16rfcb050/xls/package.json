@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@eubfr/ingestion-etl-2014tc16i5cb005-csv",
+  "name": "@eubfr/ingestion-etl-2014tc16rfcb050-xls",
   "version": "0.6.0",
   "scripts": {
     "deploy": "sls deploy -v",
@@ -9,10 +9,8 @@
   "dependencies": {
     "@eubfr/lib": "^0.6.0",
     "@eubfr/logger-messenger": "^0.6.0",
-    "csv-parse": "4.3.4",
     "i18n-iso-countries": "3.7.8",
-    "numeral": "2.0.6",
-    "stream-transform": "1.0.8"
+    "xlsx": "0.14.2"
   },
   "devDependencies": {
     "@babel/core": "7.4.3",
