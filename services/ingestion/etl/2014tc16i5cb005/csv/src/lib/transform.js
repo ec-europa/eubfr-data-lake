@@ -37,7 +37,7 @@ const getBudget = record => {
   );
 
   // Use it as an actual percentage.
-  if (percentage > 0 && percentage < 100) {
+  if (percentage > 0 && percentage < 1) {
     euContrib = total * percentage;
   }
   // When rate is not a percentage, convert it back to actual value.
