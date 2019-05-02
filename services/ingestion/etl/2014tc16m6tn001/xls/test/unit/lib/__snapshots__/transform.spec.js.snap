@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`2014tc16m6tn001 XLS transformer Produces correct JSON output structure 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "EUR",
+      "raw": 85,
+      "value": 1733219.785,
+    },
+    "funding_area": Array [],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "EUR",
+      "raw": 2039082.1,
+      "value": 2039082.1,
+    },
+  },
+  "call_year": "",
+  "complete": false,
+  "description": "Programme & operation specific objective: Improve institutional capacities to tackle major societal challenges (short title). Strengthen multilevel- and transnational governance and institutional capacities and provide viable institutional and legal frameworks for more effective, wider and deeper transnational cooperation across the Danube region in areas with major societal challenges. 
+Priority axis: Priority 4 - Well-governed Danube region 
+Operation summary: Roma people are the largest ethnic minority in the European Union (EU) and among the most deprived, facing social exclusion, discrimination and unequal access to employment, education, housing and health. Most of the estimated 5,2 M Roma people living in the Danube Region today still face intolerance, discrimination and exclusion from the labour market.
+
+Despite all efforts so far, policy makers and public entities are still lacking in-depth knowledge of the target group, proper institutional capacities and tools for integrating fragmented and inefficient services, an efficient institutional framework to interweave interventions and cooperate with key stakeholders, especially civil society and the private sector. The lack of, or inadequacy of evaluation & monitoring tools has also been a major obstacle in designing & implementing policies explicitly targeting the marginalised Roma.
+
+Therefore, RARE aims to enhance the capacities of and cooperation among actors having a stake in the labour market participation of the Roma in order to better exploit their economic potential. RARE will result in equipping partner institutions with new opportunities for synergies and innovation to effectively tackle labour market inclusion of the Roma in the Danube Region and monitor and assess efficiency of interventions.
+
+RARE Partners will define the prerequisites of effective institutional cooperation, elaborate and test innovative intervention models for labour market inclusion and will develop convincing economic argumentation for such interventions. The leveraging of know-how acquired in RARE will be facilitated by persuasive and easily digestible presentation of knowledge facilitated through sensitisation activities and transnational and national networks of stakeholders. 
+",
+  "ec_priorities": Array [],
+  "media": Array [],
+  "programme_name": "",
+  "project_id": "485e7ecdb84750d805869ccdebca49f0",
+  "project_locations": Array [],
+  "project_website": "",
+  "related_links": Array [],
+  "reporting_organisation": "Member states",
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
+  "status": "",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [
+    "(11 ETC) ETC specific for transnational cooperation: enhancing institutional capacity of public authorities and stakeholders and efficient public administration by developing and coordinating macro-regional and sea-basin strategies",
+  ],
+  "third_parties": Array [
+    Object {
+      "address": "",
+      "country": "",
+      "email": "",
+      "name": "Hungarian Charity Service of the Order of Malta (Magyar Máltai Szeretetszolgálat Egyesület)",
+      "phone": "",
+      "region": "",
+      "role": "coordinator",
+      "type": "",
+      "website": "",
+    },
+  ],
+  "timeframe": Object {
+    "from": "2017-01-01T00:00:00.000Z",
+    "from_precision": "day",
+    "to": "2019-06-30T00:00:00.000Z",
+    "to_precision": "day",
+  },
+  "title": "DTP1-320-4.1 RARE",
+  "type": Array [],
+}
+`;
