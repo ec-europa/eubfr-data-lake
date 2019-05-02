@@ -34,27 +34,35 @@ Object {
   },
   "call_year": "",
   "complete": false,
-  "description": "Theme: undefined
-eMS Ref: undefined
-Operation/Project Summary: undefined
-Committed Outputs: undefined
-Total ERDF + Match (€/£): undefined
-Total ERDF Allocated (€/£): undefined
-Category of Intervention: undefined
+  "description": "acronym: Valga-Valka Centre
+operation summary: Project’s background:The Twin Town Valga–Valka is located at the southern border of Estonia and the northern border of Latvia. The town of Valga is the administrative centre of Valga County and Valka is the administrative centre of Valka Municipality. The Twin Towns Valga–Valka motto is „One city, two states” to acknowledge Valga–Valka as an one town for its inhabitants regardless of their nationality and whether they live or do not live in the South or North of the Estonia–Latvia state border. The aim of the new Central Area and the Pedestrian Street is to support a cross border activity and create a new common urban space that is re-connecting both parts of the town. Cross-border nature:During the project we would like to develop the common public space, including the Central Area and the Pedestrian Street in the Twin Town Centre of Valga-Valka. We want to gain a cosy and unique public area for our citizens and guests. We expect to have the Central Area for daily use with eventuality of a smooth transformation for different events like the Border Market, the Town Festival etc. We expect the new Pedestrian Street to connect Lugaži Church in the centre of Valka with Jaani Church in the centre of Valga. Both Central Area and Pedestrian Street should foresee space for small local businesses and for leisure time activities of citizens and guests and thus revitalizing the Twin Town Centre. We aim to improve public knowledge of Valga-Valka as cultural and commerce area representing best from Latvia and Estonia. We want to create an attractive heart of the town of which inhabitants can be proud of. We would like to break the border in peoples’ mind and promote the Valga-Valka as the joint town not only for the inhabitants of Valga and Valka but also for visitors, tourists and investors. All these changes and improvements could be made reality only by cross-border cooperation of the Valka Municipality Council and the Valga Town Government. General objective:To improve and revitalize the cross–border joint urban area on the border of Estonia and Latvia in the centre of Valga–Valka Twin town. Direct objectives: To improve physical connectivity and create new joint and integrated cross-border urban area in the Valga-Valka Twin Town Centre.To promote Valga-Valka as a joint town, encourage integration of communities across the borders and increase visibility of the developed Twin Town Centre among inhabitants, tourists and entrepreneurs.To develop appropriate business environment to support and attract private investments and entrepreneurship and promote cross–border cooperation in Valga-Valka Twin Town Centre. Main activities:1. Reconstruction of the Central Area and Pedestrian Street in Valga–Valka Twin Town Centre (incl. preparation of the Technical documentation):1.1. Creating the multifunctional cross-border Central Area on the border of Estonia and Latvia including an area for open-air markets, festive events, playgrounds, innovative street lighting systems, original urban space furniture, etc.1.2. Creating the Pedestrian Street linking the churches in both town centres (Lugažu Church in the centre of Valka and Jaani Church in the centre of Valga) thus open the possibility for small businesses such as coffees, restaurants, different services, etc.1.3. Creating the new options for crossing the border at the new cross-border Central Area, thus giving the opportunity to break the border in peoples’ minds.1.4. Creating an attractive area along the banks of Varžupīte / Konnaoja by linking this revitalized green area with the actual greenway along the Pedele / Pedeli River – river that crosses the border.1.5. Linking / activation of actual buildings around the newly established cross-border Central Area and Pedestrian Street with the goal to attract entrepreneurs to the area.2. Project dissemination and marketing.2.1. Online marketing activities that help to achieve project’s objectives through online marketing campaign on social media, partners’ homepages and creating tourism-orientated new website.2.2. Communicating project’s process to media for raising awareness of project.2.3. Organizing physical marketing campaigns using print materials to reach wider audience in order to introduce new area.2.4. Linking the area to tourism networks, attracting new investors, businesses and events to the area and developing tourism information to increase the usage of area. 
+cofinancingrate: 85
 ",
-  "ec_priorities": Array [],
+  "ec_priorities": Array [
+    "6f Promoting innovative technologies to improve environmental protection and resource efficiency in the waste sector, water sector, and with regard to soil or to reduce air pollution",
+  ],
   "media": Array [],
   "programme_name": "",
-  "project_id": "5e543256c480ac577d30f76f9120eb74",
+  "project_id": "1a533450ea2691d4b53c468b246f8bd4",
   "project_locations": Array [
     Object {
-      "address": "Latvia;Estonia",
+      "address": "",
       "centroid": null,
-      "country_code": "",
+      "country_code": "LV",
       "location": null,
       "nuts": Array [],
-      "postal_code": undefined,
-      "region": "",
+      "postal_code": "",
+      "region": "Vidzeme",
+      "town": "",
+    },
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "EE",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "Lõuna-Eesti",
       "town": "",
     },
   ],
@@ -69,14 +77,37 @@ Category of Intervention: undefined
   "sub_programme_name": "",
   "success_story": "",
   "themes": Array [],
-  "third_parties": Array [],
+  "third_parties": Array [
+    Object {
+      "address": "Valka municipality Seminara 9",
+      "country": "Latvia",
+      "email": "",
+      "name": "Valkas novada dome",
+      "phone": "",
+      "region": "Vidzeme",
+      "role": "LP",
+      "type": "",
+      "website": "",
+    },
+    Object {
+      "address": "Valga town Puiestee 8",
+      "country": "Estonia",
+      "email": "",
+      "name": "Valga Linnavalitsus",
+      "phone": "",
+      "region": "Lõuna-Eesti",
+      "role": "PP",
+      "type": "",
+      "website": "",
+    },
+  ],
   "timeframe": Object {
-    "from": null,
+    "from": "2017-06-01T00:00:00.000Z",
     "from_precision": "day",
-    "to": null,
+    "to": "2020-05-31T00:00:00.000Z",
     "to_precision": "day",
   },
-  "title": "",
+  "title": "Valga – Valka Twin Town Centre Development",
   "type": Array [],
 }
 `;

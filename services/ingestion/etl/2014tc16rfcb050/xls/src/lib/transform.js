@@ -25,8 +25,9 @@ const getBudget = record => {
 
   record['total eligible expenditure']
     .split(';')
-    .forEach(expense => (total += Number(expense)));
-  record['ERDF'].split(';').forEach(expense => (euContrib += Number(expense)));
+    .forEach(expense => (total += Number(expense))); // eslint-disable-line
+
+  record.ERDF.split(';').forEach(expense => (euContrib += Number(expense))); // eslint-disable-line
 
   return {
     total_cost: sanitizeBudgetItem({
@@ -37,7 +38,7 @@ const getBudget = record => {
     eu_contrib: sanitizeBudgetItem({
       value: euContrib,
       currency: 'EUR',
-      raw: record['ERDF'],
+      raw: record.ERDF,
     }),
     private_fund: sanitizeBudgetItem(),
     public_fund: sanitizeBudgetItem(),
@@ -52,13 +53,9 @@ const getBudget = record => {
  *
  * Input fields taken from the `record` are:
  *
- * - `Theme`
- * - `eMS Ref`
- * - `Operation/Project Summary`
- * - `Committed Outputs`
- * - `Total ERDF + Match (€/£)`
- * - `Total ERDF Allocated (€/£)`
- * - `Category of Intervention`
+ * - `acronym`
+ * - `operation summary`
+ * - `cofinancingrate`
  *
  * @memberof 2014tc16rfcb050XlsTransform
  * @param {Object} record The row received from parsed file
@@ -68,15 +65,7 @@ const getBudget = record => {
 const getDescription = record => {
   let description = '';
 
-  const fields = [
-    'Theme',
-    'eMS Ref',
-    'Operation/Project Summary',
-    'Committed Outputs',
-    'Total ERDF + Match (€/£)',
-    'Total ERDF Allocated (€/£)',
-    'Category of Intervention',
-  ];
+  const fields = ['acronym', 'operation summary', 'cofinancingrate'];
 
   fields.forEach(field => {
     description += `${field}: ${record[field]}\n`;
@@ -86,10 +75,32 @@ const getDescription = record => {
 };
 
 /**
+ * Preprocess `ec_priorities`.
+ *
+ * Input fields taken from the `record` are:
+ *
+ * - `investment priority`
+ *
+ * @memberof 2014tc16rfcb050XlsTransform
+ * @param {Object} record The row received from parsed file
+ * @returns {Array<String>}
+ */
+
+const getPriorities = record =>
+  record['investment priority']
+    ? record['investment priority']
+        .split(';')
+        .filter(a => a)
+        .map(a => a.trim())
+        .map(a => a.replace(/(\r\n|\n|\r)/gm, ''))
+        .map(a => a.replace(/ {1,}/g, ' '))
+    : [];
+
+/**
  * Preprocess `project_id`.
  *
  * Input fields taken from the `record` are:
- * - `eMS Ref`
+ * - `operation name`
  *
  * @memberof 2014tc16rfcb050XlsTransform
  * @param {Object} record The row received from parsed file
@@ -99,7 +110,7 @@ const getDescription = record => {
 const getProjectId = record =>
   crypto
     .createHash('md5')
-    .update(String(record['eMS Ref']))
+    .update(record['operation name'])
     .digest('hex');
 
 /**
@@ -118,7 +129,7 @@ const getCodeByCountry = countryName =>
  *
  * Input fields taken from the `record` are:
  *
- * - `Operation Postcode`
+ * - `nutslabel`
  * - `Country`
  *
  * @memberof 2014tc16rfcb050XlsTransform
@@ -127,45 +138,53 @@ const getCodeByCountry = countryName =>
  */
 
 const getLocations = record => {
-  const code = getCountryCode(getCodeByCountry(record.Country));
   const locations = [];
-  const postCode = record['Operation Postcode'];
-  const country = record.Country;
 
-  locations.push({
-    address: country,
-    centroid: null,
-    country_code: '',
-    location: null,
-    nuts: [],
-    postal_code: postCode,
-    region: '',
-    town: '',
-  });
+  const countryList = record.Country.split(';')
+    .filter(c => c)
+    .map(c => c.trim())
+    .map(c => getCountryCode(getCodeByCountry(c)));
+
+  const regions = record.nutslabel
+    .split(';')
+    .filter(r => r)
+    .map(r => r.trim());
+
+  if (countryList.length) {
+    countryList.forEach((code, key) => {
+      // In project locations we care about unique locations in terms of country codes.
+      const existing = locations.find(
+        location => location.country_code === code
+      );
+
+      if (!existing) {
+        locations.push({
+          address: '',
+          centroid: null,
+          country_code: code,
+          location: null,
+          nuts: [],
+          postal_code: '',
+          region: regions[key],
+          town: '',
+        });
+      }
+    });
+  }
 
   return locations;
 };
-
-/**
- * Preprocess `status`.
- *
- * Input fields taken from the `record` are:
- *
- * - `Status`
- *
- * @memberof 2014tc16rfcb050XlsTransform
- * @param {Object} record The row received from parsed file
- * @returns {String}
- */
-
-const getStatus = record => (record.Status ? record.Status.trim() : '');
 
 /**
  * Preprocess `third_parties`.
  *
  * Input fields taken from the `record` are:
  *
- * - `Beneficiary/Lead Partner Name`
+ * - `beneficiary name`
+ * - `role`
+ * - `nutslabel`
+ * - `Country`
+ * - `beneficiary address`
  *
  * @memberof 2014tc16rfcb050XlsTransform
  * @param {Object} record The row received from parsed file
@@ -175,21 +194,51 @@ const getStatus = record => (record.Status ? record.Status.trim() : '');
 const getThirdParties = record => {
   const thirdParties = [];
 
-  const name = record['Beneficiary/Lead Partner Name']
-    ? record['Beneficiary/Lead Partner Name'].trim()
-    : '';
+  const actors = record['beneficiary name']
+    ? record['beneficiary name']
+        .split(';')
+        .filter(a => a)
+        .map(a => a.trim())
+    : [];
 
-  if (name) {
-    thirdParties.push({
-      address: '',
-      country: '',
-      email: '',
-      name,
-      phone: '',
-      region: '',
-      role: 'Lead Partner',
-      type: '',
-      website: '',
+  const addresses = record['beneficiary address']
+    ? record['beneficiary address']
+        .split(';')
+        .filter(a => a)
+        .map(a => a.trim())
+        .map(a => a.replace(/(\r\n|\n|\r)/gm, ''))
+        .map(a => a.replace(/ {1,}/g, ' '))
+    : [];
+
+  const regions = record.nutslabel
+    .split(';')
+    .filter(r => r)
+    .map(r => r.trim());
+
+  const roles = record.role
+    ? record.role
+        .split(';')
+        .filter(r => r)
+        .map(r => r.trim())
+    : [];
+
+  const countryList = record.Country.split(';')
+    .filter(c => c)
+    .map(c => c.trim());
+
+  if (actors.length) {
+    actors.forEach((name, key) => {
+      thirdParties.push({
+        address: addresses[key],
+        country: countryList[key],
+        email: '',
+        name,
+        phone: '',
+        region: regions[key],
+        role: roles[key],
+        type: '',
+        website: '',
+      });
     });
   }
 
@@ -200,22 +249,16 @@ const getThirdParties = record => {
  * Format date.
  *
  * @memberof 2014tc16rfcb050XlsTransform
- * @param {Date} date Date in DD/MM/YYYY format
+ * @param {Date} date Date in YYYY-MM-DD format
  * @returns {Date} The date formatted into an ISO 8601 date format
  *
- * @example
- * input => "01/01/2009"
- * output => "2009-01-01T00:00:00.000Z"
  */
 
 const formatDate = date => {
   if (!date || typeof date !== 'string') return null;
-  const d = date.split(/\//);
-  if (d.length !== 3) return null;
-  const [day, month, year] = d;
-  if (!day || !month || !year) return null;
+
   try {
-    return new Date(Date.UTC(year, month - 1, day)).toISOString();
+    return new Date(date).toISOString();
   } catch (e) {
     return null;
   }
@@ -226,8 +269,8 @@ const formatDate = date => {
  *
  * Input fields taken from the `record` are:
  *
- * - `Operation Start Date`
- * - `Operation End Date`
+ * - `operation start date`
+ * - `operation end date`
  *
  * @memberof 2014tc16rfcb050XlsTransform
  * @param {Object} record The row received from parsed file
@@ -235,8 +278,8 @@ const formatDate = date => {
  */
 
 const getTimeframe = record => {
-  const from = record['Operation Start Date'] || null;
-  const to = record['Operation End Date'] || null;
+  const from = record['operation start date'] || null;
+  const to = record['operation end date'] || null;
 
   return {
     from: formatDate(from),
@@ -251,7 +294,7 @@ const getTimeframe = record => {
  *
  * Input fields taken from the `record` are:
  *
- * - `Operation/Project Name`
+ * - `operation name`
  *
  * @memberof 2014tc16rfcb050XlsTransform
  * @param {Object} record The row received from parsed file
@@ -259,9 +302,7 @@ const getTimeframe = record => {
  */
 
 const getTitle = record =>
-  record['Operation/Project Name']
-    ? record['Operation/Project Name'].trim()
-    : '';
+  record['operation name'] ? record['operation name'].trim() : '';
 
 /**
  * Map fields for 2014tc16rfcb050 producer, XLS file types
@@ -283,7 +324,7 @@ export default (record: Object): Project | null => {
     budget: getBudget(record),
     call_year: '',
     description: getDescription(record),
-    ec_priorities: [],
+    ec_priorities: getPriorities(record),
     media: [],
     programme_name: '',
     project_id: getProjectId(record),
@@ -296,7 +337,7 @@ export default (record: Object): Project | null => {
       available: '',
       result: '',
     },
-    status: getStatus(record),
+    status: '',
     sub_programme_name: '',
     success_story: '',
     themes: [],

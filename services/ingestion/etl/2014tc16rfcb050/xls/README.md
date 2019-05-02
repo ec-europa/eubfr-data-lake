@@ -6,13 +6,12 @@ Model to compare with is available at: https://ec-europa.github.io/eubfr-data-la
 | -------------------------- | -------------------------------- |
 | beneficiary name           | third_parties                    |
 | role                       | third_parties                    |
-| role                       | third_parties                    |
-| operation name             | title                            |
+| operation name             | title, project_id                |
 | acronym                    | description                      |
 | operation summary          | description                      |
 | operation start date       | timeframe.from                   |
 | operation end date         | timeframe.to                     |
-| nutslabel                  | project_locations                |
+| nutslabel                  | third_parties, project_locations |
 | Country                    | third_parties, project_locations |
 | beneficiary address        | third_parties                    |
 | total eligible expenditure | budget.total_cost                |
