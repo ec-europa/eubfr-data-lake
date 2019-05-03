@@ -63,36 +63,71 @@ export const handler = async (event, context) => {
 
       // Manage data
       readStream.on('end', async () => {
+        const records = [];
         let dataString = '';
-        const recordsPrepared = [];
 
         // Parse file
         const buffer = Buffer.concat(buffers);
         const workbook = XLSX.read(buffer);
 
+        // Two sheets contain useful information from this file.
         const ops = XLSX.utils.sheet_to_json(workbook.Sheets['Operations']);
         const bens = XLSX.utils.sheet_to_json(workbook.Sheets['Beneficiaries']);
 
-        const projects = getRecords(ops);
+        // Extract useful data and convert EMPTY props to their human-readable values.
+        const operations = getRecords(ops);
         const beneficiaries = getRecords(bens);
 
-        projects.forEach(project => {
-          // Try to get details about the given project's beneficiary.
-          const beneficiary = beneficiaries.findIndex(
-            needle =>
-              needle['Beneficiary name in English'] ===
-              beneficiaries['Beneficiary name in English']
+        operations.forEach(operation => {
+          // Marker.
+          const operationName = operation['Operation name'];
+          // Accumulator of reletated information.
+          const operationBeneficiaries = [];
+          // A copy to modify.
+          const operationCombined = JSON.parse(JSON.stringify(operation));
+          // Remove the following fields which are going to be taken from the separate, more informative sheet about beneficieries.
+          delete operationCombined['Beneficiary name'];
+          delete operationCombined['Beneficiary name in English'];
+          delete operationCombined['Has the lead of the operation (Y/N)'];
+          delete operationCombined[
+            'Total eligible expenditure allocated to the beneficiary'
+          ];
+          delete operationCombined[
+            'Union co-financing rate in % (average as in CP)'
+          ];
+
+          // Find the "leading" index marking a series of items from the list of beneficiaries belonging to the project.
+          const start = beneficiaries.findIndex(
+            needle => needle['Operation name'] === operationName
           );
 
-          if (beneficiary) {
-            // Merge project data with the detailed beneficiary data.
-            recordsPrepared.push({ ...project, ...beneficiary });
-          } else {
-            recordsPrepared.push(project);
+          // We want to take only those beneficiaries which belong to the selected project.
+          for (let i = start; i < beneficiaries.length; i++) {
+            if (
+              beneficiaries[i]['Operation name'] !== operationName && // Keep the first start/needle leader.
+              beneficiaries[i]['Operation name'] // When the loop hits a row with this property, it means the merge in Excel has finished and we have gathered all related beneficiries to the given operation.
+            ) {
+              break;
+            }
+
+            operationBeneficiaries.push(beneficiaries[i]);
           }
+
+          operationBeneficiaries.forEach(beneficiary => {
+            // Except the operation name, copy all data form beneficiaries back to the main operation/project.
+            Object.keys(beneficiary).forEach(field => {
+              if (operationCombined[field] && field !== 'Operation name') {
+                operationCombined[field] += `;${beneficiary[field]}`;
+              } else {
+                operationCombined[field] = beneficiary[field];
+              }
+            });
+          });
+
+          records.push(operationCombined);
         });
 
-        recordsPrepared.forEach(record => {
+        records.forEach(record => {
           const data = transformRecord(record);
           dataString += `${JSON.stringify(data)}\n`;
         });
