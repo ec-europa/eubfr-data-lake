@@ -71,8 +71,8 @@ export const handler = async (event, context) => {
         const workbook = XLSX.read(buffer);
 
         // Two sheets contain useful information from this file.
-        const ops = XLSX.utils.sheet_to_json(workbook.Sheets['Operations']);
-        const bens = XLSX.utils.sheet_to_json(workbook.Sheets['Beneficiaries']);
+        const ops = XLSX.utils.sheet_to_json(workbook.Sheets.Operations);
+        const bens = XLSX.utils.sheet_to_json(workbook.Sheets.Beneficiaries);
 
         // Extract useful data and convert EMPTY props to their human-readable values.
         const operations = getRecords(ops);
@@ -102,7 +102,7 @@ export const handler = async (event, context) => {
           );
 
           // We want to take only those beneficiaries which belong to the selected project.
-          for (let i = start; i < beneficiaries.length; i++) {
+          for (let i = start; i < beneficiaries.length; i += 1) {
             if (
               beneficiaries[i]['Operation name'] !== operationName && // Keep the first start/needle leader.
               beneficiaries[i]['Operation name'] // When the loop hits a row with this property, it means the merge in Excel has finished and we have gathered all related beneficiries to the given operation.

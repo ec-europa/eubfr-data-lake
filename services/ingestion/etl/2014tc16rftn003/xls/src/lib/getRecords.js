@@ -29,7 +29,7 @@ const getRecords = parsedRows => {
       }
     });
 
-    records.push(improvedRow);
+    return records.push(improvedRow);
   });
 
   return records;
