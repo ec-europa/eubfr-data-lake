@@ -100,6 +100,20 @@ const getProjectId = record =>
     : '';
 
 /**
+ * Gets NUTS code level from a string.
+ *
+ * @memberof 2014tc16rftn003XlsTransform
+ * @param {String} code The NUTS code
+ * @returns {Number} The level of NUTS or null if one can't be extracted
+ */
+const getNutsCodeLevel = code => {
+  if (code && code.length >= 2) {
+    return code.length - 2;
+  }
+  return null;
+};
+
+/**
  * Preprocess `project_locations`.
  *
  * Input fields taken from the `record` are:
@@ -146,9 +160,15 @@ const getLocations = record => {
     const town = data.towns[key];
     const nuts = [];
 
-    ['NUTS1', 'NUTS2', 'NUTS3'].forEach(code => {
-      const number = data[code][key].split(' ')[0];
-      nuts.push(number);
+    ['NUTS1', 'NUTS2', 'NUTS3'].forEach(nutsCode => {
+      const code = data[nutsCode][key].split(' ')[0];
+
+      nuts.push({
+        code,
+        name: '',
+        level: getNutsCodeLevel(code),
+        year: null,
+      });
     });
 
     locations.push({
