@@ -7,35 +7,49 @@ import improveObjectKeys from './improveObjectKeys';
  * @returns {Array<Object>} Improved list of records.
  */
 const getRecords = ({ rows, type }) => {
+  let headerRow = {};
   const records = [];
 
   switch (type) {
     case 'ESF': {
       // First row is the header.
-      const headerRow = rows.shift();
+      headerRow = rows.shift();
       // Remove row with information in Polish.
       rows.shift();
 
-      // Normalize the list by replacing properties
-      rows
-        .map(record => {
-          const mapped = {};
-          Object.keys(record).forEach(prop => {
-            mapped[headerRow[prop]] = record[prop];
-          });
-          return mapped;
-        })
-        .map(improveObjectKeys)
-        .forEach(record => records.push(record));
+      break;
+    }
+
+    case 'ESIF': {
+      // The first few rows contain explanations.
+      rows.shift();
+      rows.shift();
+
+      // English version of the columns.
+      headerRow = rows.shift();
+      // French version
+      rows.shift();
 
       break;
     }
-    case 'ESIF':
-      break;
 
     default:
       break;
   }
+
+  // Normalize the list by replacing properties
+  rows
+    .map(record => {
+      const remapped = {};
+
+      Object.keys(record).forEach(prop => {
+        remapped[headerRow[prop]] = record[prop];
+      });
+
+      return remapped;
+    })
+    .map(improveObjectKeys)
+    .forEach(record => records.push(record));
 
   return records;
 };

@@ -25,4 +25,8 @@ describe('XLS transformers for 2014uk16rfop001', () => {
   test('Type ESF: produces correct JSON output structure', () => {
     expect(esf).toMatchSnapshot();
   });
+
+  test('Type ESIF: produces correct JSON output structure', () => {
+    expect(esif).toMatchSnapshot();
+  });
 });
