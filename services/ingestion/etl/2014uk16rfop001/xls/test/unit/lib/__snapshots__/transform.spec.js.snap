@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`XLS transformers for 2014uk16rfop001 Type ESF: produces correct JSON output structure 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "GBP",
+      "raw": 0.5,
+      "value": 433332,
+    },
+    "funding_area": Array [],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "GBP",
+      "raw": 866664,
+      "value": 866664,
+    },
+  },
+  "call_year": "",
+  "complete": false,
+  "description": "To establish and manage a geographic or employer sector based Career Cluster that aims to improve the labour market relevance of education",
+  "ec_priorities": Array [],
+  "media": Array [],
+  "programme_name": "",
+  "project_id": "42ce684eaf8ac11f096d80fe5d84cde5",
+  "project_locations": Array [
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "GB",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "LONDON",
+      "town": "",
+    },
+  ],
+  "project_website": "",
+  "related_links": Array [],
+  "reporting_organisation": "Member states",
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
+  "status": "",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [
+    "02     Sustainable integration of young people not in employment, education or training in the labour market",
+  ],
+  "third_parties": Array [
+    Object {
+      "address": "",
+      "country": "GB",
+      "email": "",
+      "name": "15BILLION",
+      "phone": "",
+      "region": "",
+      "role": "Beneficiary",
+      "type": "",
+      "website": "",
+    },
+  ],
+  "timeframe": Object {
+    "from": "2016-06-30T22:00:00.000Z",
+    "from_precision": "day",
+    "to": "2019-03-30T21:00:00.000Z",
+    "to_precision": "day",
+  },
+  "title": "CAREERS CLUSTERS NORTH AND EAST LONDON",
+  "type": Array [],
+}
+`;
