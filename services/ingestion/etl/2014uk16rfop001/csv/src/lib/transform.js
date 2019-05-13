@@ -237,9 +237,9 @@ const getTimeframe = record => {
 
   return {
     from: formatDate(from),
-    from_precision: 'day',
+    from_precision: 'month',
     to: formatDate(to),
-    to_precision: 'day',
+    to_precision: 'month',
   };
 };
 
