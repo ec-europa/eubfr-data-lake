@@ -201,17 +201,18 @@ const getThirdParties = record =>
  */
 const formatDate = date => {
   if (!date || typeof date !== 'string') return null;
+
+  // Since input format cannot be parsed by native Date() constructor directly:
   const d = date.split('-');
   if (d.length !== 2) return null;
-
+  // We extract information about month and year manually.
   const [m, y] = d;
-
   if (!m || !y) return null;
-
+  // Get month natively from original date string for the UTC method.
   const month = new Date(d).getMonth();
 
   try {
-    return new Date(Date.UTC(`20${y}`, month)).toISOString();
+    return new Date(Date.UTC(Number(`20${y}`), month)).toISOString();
   } catch (e) {
     return null;
   }
