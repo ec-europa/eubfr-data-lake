@@ -204,12 +204,14 @@ const formatDate = date => {
   const d = date.split('-');
   if (d.length !== 2) return null;
 
-  const [month, yy] = d;
+  const [m, y] = d;
 
-  if (!month || !yy) return null;
+  if (!m || !y) return null;
+
+  const month = new Date(d).getMonth();
 
   try {
-    return new Date(`${month} 20${yy}`).toISOString();
+    return new Date(Date.UTC(`20${y}`, month)).toISOString();
   } catch (e) {
     return null;
   }

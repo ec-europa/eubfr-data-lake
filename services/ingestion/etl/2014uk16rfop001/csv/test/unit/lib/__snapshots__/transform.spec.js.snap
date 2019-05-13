@@ -170,9 +170,9 @@ Local enterprise partnership area: National
     },
   ],
   "timeframe": Object {
-    "from": "2015-03-31T21:00:00.000Z",
+    "from": "2015-04-01T00:00:00.000Z",
     "from_precision": "day",
-    "to": "2020-11-30T22:00:00.000Z",
+    "to": "2020-12-01T00:00:00.000Z",
     "to_precision": "day",
   },
   "title": "CFO3",
