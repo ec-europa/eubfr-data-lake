@@ -38,10 +38,10 @@ const transforms = [
 ];
 
 transforms.forEach(transform => {
-  const etl = transform.split('-');
+  const [name, format] = transform.split('-');
 
   documentation
-    .build(`**/etl/${etl[0]}/${etl[1]}/**/transform.js`, {})
+    .build(`**/etl/${name}/${format}/**/transform.js`, {})
     .then(documentation.formats.md)
     .then(output => {
       fs.writeFileSync(

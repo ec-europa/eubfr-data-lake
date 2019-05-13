@@ -218,7 +218,7 @@ const getTitle = record =>
   record['Name of Project'] ? record['Name of Project'].trim() : '';
 
 /**
- * Map fields for 2014uk16rfop001 producer, XLS file types
+ * Map fields for 2014uk16rfop001 producer, XLS file types, ESIF funding type.
  *
  * Example input data: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/2014uk16rfop001/xls/test/stubs/ESIF/record.json|stub}
  *
