@@ -27,15 +27,9 @@ const getBudget = record => {
   let euContrib = 0;
   const { _value: total } = numeral(record['Project final contract amount']);
 
-  /**
-   * Numeral understands percentages:
-   * - "500665.00%" =>  5006.650000000001
-   * - "85.00%" => 0.85
-   */
   const { _value: percentage } = numeral(
     record['Project EU co-financing rate']
   );
-
   // Use it as an actual percentage.
   if (percentage <= 1) {
     euContrib = total * percentage;
@@ -47,7 +41,7 @@ const getBudget = record => {
 
   return {
     eu_contrib: sanitizeBudgetItem({
-      value: euContrib,
+      value: Math.floor(euContrib),
       currency: 'EUR',
       raw: record['Project EU co-financing rate'],
     }),
@@ -57,7 +51,7 @@ const getBudget = record => {
     private_fund: sanitizeBudgetItem(),
     public_fund: sanitizeBudgetItem(),
     total_cost: sanitizeBudgetItem({
-      value: total,
+      value: Math.floor(total),
       currency: 'EUR',
       raw: record['Project final contract amount'],
     }),
