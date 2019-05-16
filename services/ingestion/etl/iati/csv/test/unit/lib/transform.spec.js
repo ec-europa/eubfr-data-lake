@@ -20,6 +20,11 @@ describe('DG IATI CSV transformer', () => {
     expect(result).toMatchSnapshot();
   });
 
+  test('Budget values do not contain decimals', () => {
+    expect(result.budget.eu_contrib.value % 1).toBe(0);
+    expect(result.budget.total_cost.value % 1).toBe(0);
+  });
+
   test('Project location information is correctly mapped', () => {
     const firstLocation = result.project_locations[0];
     expect(firstLocation).toMatchSnapshot();
