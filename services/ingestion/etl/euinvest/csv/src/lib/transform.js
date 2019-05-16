@@ -127,7 +127,7 @@ const getId = record => record._nid || '';
  *
  * Input fields taken from the `record` are:
  *
- * - `_location`_location
+ * - `_location`
  *
  * @memberof EuInvestCSVTransform
  * @param {Object} record The row received from parsed file
@@ -135,6 +135,7 @@ const getId = record => record._nid || '';
  */
 const getLocations = record => {
   const locations = [];
+  const re = new RegExp(/[,/]/i); // separate either by comma or slash.
 
   if (record._location) {
     const locationItems = record._location
@@ -143,17 +144,20 @@ const getLocations = record => {
       .filter(l => l);
 
     locationItems.forEach(item => {
-      const [region, code] = item.split(',').map(a => a.trim());
+      const regions = item.split(re).map(a => a.trim());
+      const code = regions.pop(); // code is always the last item.
 
-      locations.push({
-        centroid: null,
-        address: '',
-        country_code: getCountryCode(code),
-        location: null,
-        nuts: [],
-        postal_code: '',
-        region,
-        town: '',
+      regions.forEach(region => {
+        locations.push({
+          centroid: null,
+          address: '',
+          country_code: getCountryCode(code),
+          location: null,
+          nuts: [],
+          postal_code: '',
+          region,
+          town: '',
+        });
       });
     });
   }
@@ -210,8 +214,10 @@ const getThemes = record =>
  */
 const getThirdParties = record => {
   const thirdParties = [];
+  // Remove items like N/A, n/a, etc.
+  const re = new RegExp(/^(?:n\/a)$/i);
 
-  if (record._coordinator) {
+  if (record._coordinator && !re.test(record._coordinator)) {
     thirdParties.push({
       name: record._coordinator.trim(),
       type: '',
@@ -230,6 +236,7 @@ const getThirdParties = record => {
       .split(',')
       .map(p => p.trim())
       .filter(p => p)
+      .filter(p => !re.test(p))
       .map(name => ({
         name,
         type: '',
