@@ -22,12 +22,12 @@ import sanitizeBudgetItem from '@eubfr/lib/budget/budgetFormatter';
 
 const getBudget = record => ({
   total_cost: sanitizeBudgetItem({
-    value: record['Total Project Cost (€)'],
+    value: Math.floor(record['Total Project Cost (€)']),
     currency: 'EUR',
     raw: record['Total Project Cost (€)'],
   }),
   eu_contrib: sanitizeBudgetItem({
-    value: record['Total ERDF Allocated (€)'],
+    value: Math.floor(record['Total ERDF Allocated (€)']),
     currency: 'EUR',
     raw: record['Total ERDF Allocated (€)'],
   }),
