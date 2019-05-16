@@ -7,7 +7,7 @@ Object {
     "eu_contrib": Object {
       "currency": "EUR",
       "raw": 1636114.5,
-      "value": 1636114.5,
+      "value": 1636114,
     },
     "funding_area": Array [],
     "mmf_heading": "",
