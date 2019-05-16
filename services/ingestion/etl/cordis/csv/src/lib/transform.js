@@ -65,7 +65,7 @@ const getBudget = record => {
 
   const budget = {
     total_cost: sanitizeBudgetItem({
-      value: totalCost,
+      value: Math.floor(totalCost),
       currency: 'EUR',
       raw: totalCost,
     }),
@@ -80,7 +80,7 @@ const getBudget = record => {
   if (record.ecMaxContribution && record.ecMaxContribution > 100) {
     euContrib = {
       eu_contrib: sanitizeBudgetItem({
-        value: record.ecMaxContribution,
+        value: Math.floor(record.ecMaxContribution),
         currency: 'EUR',
         raw: record.ecMaxContribution,
       }),
