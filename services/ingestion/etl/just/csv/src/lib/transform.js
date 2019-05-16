@@ -64,12 +64,12 @@ const getLocations = record => {
  */
 const getBudget = record => ({
   total_cost: sanitizeBudgetItem({
-    value: record.field_prj_total_budget,
+    value: Math.floor(record.field_prj_total_budget),
     currency: 'EUR',
     raw: record.field_prj_total_budget,
   }),
   eu_contrib: sanitizeBudgetItem({
-    value: record.field_prj_eu_budget,
+    value: Math.floor(record.field_prj_eu_budget),
     currency: 'EUR',
     raw: record.field_prj_eu_budget,
   }),
