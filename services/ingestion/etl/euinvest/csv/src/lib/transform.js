@@ -127,7 +127,7 @@ const getId = record => record._nid || '';
  *
  * Input fields taken from the `record` are:
  *
- * - `_location`
+ * - `_location`_location
  *
  * @memberof EuInvestCSVTransform
  * @param {Object} record The row received from parsed file
@@ -137,20 +137,24 @@ const getLocations = record => {
   const locations = [];
 
   if (record._location) {
-    const locParts = record._location
-      .split(',')
+    const locationItems = record._location
+      .split(';')
       .map(p => p.trim())
       .filter(l => l);
 
-    locations.push({
-      centroid: null,
-      address: '',
-      country_code: getCountryCode(locParts[1]),
-      location: null,
-      nuts: [],
-      postal_code: '',
-      region: locParts[0],
-      town: '',
+    locationItems.forEach(item => {
+      const [region, code] = item.split(',').map(a => a.trim());
+
+      locations.push({
+        centroid: null,
+        address: '',
+        country_code: getCountryCode(code),
+        location: null,
+        nuts: [],
+        postal_code: '',
+        region,
+        town: '',
+      });
     });
   }
 
