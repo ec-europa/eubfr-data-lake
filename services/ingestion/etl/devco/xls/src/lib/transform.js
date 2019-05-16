@@ -1,6 +1,7 @@
 // @flow
 
 import countries from 'i18n-iso-countries';
+import numeral from 'numeral';
 import getCountryCode from '@eubfr/lib/getCountryCode';
 import extractBudgetData from '@eubfr/lib/budget/extractBudgetData';
 import sanitizeBudgetItem from '@eubfr/lib/budget/budgetFormatter';
@@ -26,15 +27,31 @@ const getBudget = record => {
   const euContribString = record['Total EU Contribution (Million Euro)']
     ? `EUR ${record['Total EU Contribution (Million Euro)']} million`
     : null;
-  const euContrib = euContribString
-    ? sanitizeBudgetItem(extractBudgetData(euContribString))
+
+  const euContribData = extractBudgetData(euContribString);
+  const { _value: euContribValue } = numeral(euContribData.value);
+
+  const euContrib = euContribValue
+    ? sanitizeBudgetItem({
+        value: euContribValue,
+        currency: euContribData.currency,
+        raw: euContribData.raw,
+      })
     : sanitizeBudgetItem();
 
   const totalCostString = record['Total Budget (Million Euro)']
     ? `EUR ${record['Total Budget (Million Euro)']} million`
     : null;
-  const totalCost = totalCostString
-    ? sanitizeBudgetItem(extractBudgetData(totalCostString))
+
+  const totalCostData = extractBudgetData(totalCostString);
+  const { _value: totalCostValue } = numeral(totalCostData.value);
+
+  const totalCost = totalCostValue
+    ? sanitizeBudgetItem({
+        value: totalCostValue,
+        currency: totalCostData.currency,
+        raw: totalCostData.raw,
+      })
     : sanitizeBudgetItem();
 
   const budget = {
