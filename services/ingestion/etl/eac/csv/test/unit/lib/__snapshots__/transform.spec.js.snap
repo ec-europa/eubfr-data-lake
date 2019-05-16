@@ -1330,7 +1330,7 @@ Object {
     "eu_contrib": Object {
       "currency": "EUR",
       "raw": "112527.93",
-      "value": 112527.93,
+      "value": 112527,
     },
     "funding_area": Array [],
     "mmf_heading": "",
@@ -2051,9 +2051,9 @@ Object {
   "action": "",
   "budget": Object {
     "eu_contrib": Object {
-      "currency": "EUR",
+      "currency": "",
       "raw": "240000.0 EUR",
-      "value": 2400000,
+      "value": 0,
     },
     "funding_area": Array [],
     "mmf_heading": "",
