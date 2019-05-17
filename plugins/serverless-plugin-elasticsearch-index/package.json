@@ -3,11 +3,11 @@
   "name": "serverless-plugin-elasticsearch-index",
   "version": "0.7.0",
   "dependencies": {
-    "aws-sdk": "2.434.0",
+    "aws-sdk": "2.457.0",
     "awscred": "1.4.2",
     "elasticsearch": "15.4.1",
     "http-aws-es": "6.0.0",
     "lodash.isequal": "4.5.0",
-    "serverless": "1.40.0"
+    "serverless": "1.42.3"
   }
 }
