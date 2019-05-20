@@ -23,7 +23,7 @@ const showCluster = async host => {
     const esOptions = {
       host,
       connectionClass,
-      apiVersion: '6.3',
+      apiVersion: '6.5',
       awsConfig: new AWS.Config({
         accessKeyId,
         secretAccessKey,
