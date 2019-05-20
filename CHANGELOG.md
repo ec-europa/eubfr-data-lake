@@ -1,5 +1,27 @@
 # Change Log
 
+## 0.7.0 (2019-05-14)
+
+#### :rocket: New Feature
+
+- [#211](https://github.com/ec-europa/eubfr-data-lake/pull/211) feat(etls): add interreg 2014TC16M6TN001 - EUBFR-258 ([@kalinchernev](https://github.com/kalinchernev))
+- [#207](https://github.com/ec-europa/eubfr-data-lake/pull/207) feat(etls): add interreg 2014TC16I5CB005 - EUBFR-258 ([@kalinchernev](https://github.com/kalinchernev))
+- [#204](https://github.com/ec-europa/eubfr-data-lake/pull/204) feat(etls): add interreg 2014TC16RFCB047 - EUBFR-258 ([@kalinchernev](https://github.com/kalinchernev))
+- [#203](https://github.com/ec-europa/eubfr-data-lake/pull/203) feat(etls): add interreg 2014TC16RFCB014 - EUBFR-258 ([@kalinchernev](https://github.com/kalinchernev))
+- [#206](https://github.com/ec-europa/eubfr-data-lake/pull/206) feat(etls): add interreg 2014TC16RFTN002 - EUBFR-258 ([@kalinchernev](https://github.com/kalinchernev))
+- [#205](https://github.com/ec-europa/eubfr-data-lake/pull/205) feat(etls): add interreg 2014TC16RFPC001 - EUBFR-258 ([@kalinchernev](https://github.com/kalinchernev))
+- [#201](https://github.com/ec-europa/eubfr-data-lake/pull/201) feat(etls): add producer: bulgaria - EUBFR-257 ([@kalinchernev](https://github.com/kalinchernev))
+- [#202](https://github.com/ec-europa/eubfr-data-lake/pull/202) feat(etls): add interreg 2014TC16M4TN002 - EUBFR-258 ([@kalinchernev](https://github.com/kalinchernev))
+- [#190](https://github.com/ec-europa/eubfr-data-lake/pull/190) feat(eubfr-cli): content download - EUBFR-234 ([@kalinchernev](https://github.com/kalinchernev))
+
+#### :nail_care: Enhancement
+
+- [#199](https://github.com/ec-europa/eubfr-data-lake/pull/199) refactor(etls): toggle complete flag - EUBFR-250 ([@kalinchernev](https://github.com/kalinchernev))
+
+#### :house: Internal
+
+- [#200](https://github.com/ec-europa/eubfr-data-lake/pull/200) chore(deps): upgrades - noissue ([@kalinchernev](https://github.com/kalinchernev))
+
 ## 0.6.0 (2018-12-14)
 
 #### :rocket: New Feature
