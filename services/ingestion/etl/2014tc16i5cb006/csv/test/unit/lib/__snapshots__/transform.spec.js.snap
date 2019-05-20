@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`2014tc16i5cb006 CSV transformer Produces correct JSON output structure 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "EUR",
+      "raw": "85.00%",
+      "value": 99589.7485,
+    },
+    "funding_area": Array [],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "EUR",
+      "raw": "117164.41€",
+      "value": 117164.41,
+    },
+  },
+  "call_year": "",
+  "complete": false,
+  "description": "Project call: CB006.1 
+Project intervention field: 085 Protection and enhancement of biodiversity, nature protection and green infrastructure 
+Last modified: 28.07.2017 
+",
+  "ec_priorities": Array [],
+  "media": Array [],
+  "programme_name": "",
+  "project_id": "CB006.1.11.013",
+  "project_locations": Array [],
+  "project_website": "",
+  "related_links": Array [],
+  "reporting_organisation": "Member states",
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
+  "status": "",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [],
+  "third_parties": Array [
+    Object {
+      "address": "",
+      "country": "Macedonia",
+      "email": "",
+      "name": "Centre for development of the South-East planning region",
+      "phone": "",
+      "region": "South-East region",
+      "role": "coordinator",
+      "type": "",
+      "website": "",
+    },
+  ],
+  "timeframe": Object {
+    "from": "2016-10-17T00:00:00.000Z",
+    "from_precision": "day",
+    "to": "2018-01-16T00:00:00.000Z",
+    "to_precision": "day",
+  },
+  "title": "Think Composting - dedication to the organic full circle",
+  "type": Array [],
+}
+`;
