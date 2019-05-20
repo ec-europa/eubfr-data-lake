@@ -29,7 +29,7 @@ export const handler = async event => {
     // elasticsearch client configuration
     const options = {
       host: `https://${API}`,
-      apiVersion: '6.3',
+      apiVersion: '6.5',
       connectionClass,
       index: INDEX,
     };
