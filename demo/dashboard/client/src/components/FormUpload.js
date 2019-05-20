@@ -40,6 +40,8 @@ class FormUpload extends Component {
       .then(handleErrors)
       .then(data => data.json())
       .then(j => {
+        console.log(j);
+        debugger;
         const url = j.signedUrl;
         // Remove the additional double quote from start and end.
         // It messes with the way createCORSRequest() works internally for ReactS3Uploader

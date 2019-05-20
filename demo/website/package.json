@@ -20,7 +20,7 @@
     "react-scripts": "3.0.1"
   },
   "devDependencies": {
-    "serverless": "1.42.3",
+    "serverless": "1.40.0",
     "serverless-export-env": "1.2.0",
     "serverless-finch": "2.4.2"
   }

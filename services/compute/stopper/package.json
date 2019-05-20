@@ -11,7 +11,7 @@
     "@babel/preset-env": "7.4.4",
     "aws-sdk": "2.457.0",
     "babel-loader": "8.0.6",
-    "serverless": "1.42.3",
+    "serverless": "1.40.0",
     "serverless-webpack": "5.3.0",
     "webpack": "4.31.0"
   }
