@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`2014tc16i5cb007 CSV transformer Produces correct JSON output structure 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "EUR",
+      "raw": "85.00%",
+      "value": 481442.669,
+    },
+    "funding_area": Array [],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "EUR",
+      "raw": "566403.14€",
+      "value": 566403.14,
+    },
+  },
+  "call_year": "",
+  "complete": false,
+  "description": "Project call: CB007.1 
+Last modified: 02.10.2018 
+",
+  "ec_priorities": Array [],
+  "media": Array [],
+  "programme_name": "",
+  "project_id": "CB007.1.11.075",
+  "project_locations": Array [
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "BG",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "Kyustendil",
+      "town": "",
+    },
+  ],
+  "project_website": "",
+  "related_links": Array [],
+  "reporting_organisation": "Member states",
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
+  "status": "",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [],
+  "third_parties": Array [
+    Object {
+      "address": "",
+      "country": "Bulgaria",
+      "email": "",
+      "name": "Municipality of Sapareva Banya",
+      "phone": "",
+      "region": "Kyustendil",
+      "role": "coordinator",
+      "type": "",
+      "website": "",
+    },
+  ],
+  "timeframe": Object {
+    "from": "2017-12-15T00:00:00.000Z",
+    "from_precision": "day",
+    "to": "2019-10-14T00:00:00.000Z",
+    "to_precision": "day",
+  },
+  "title": "Balneological tourism - the future of health",
+  "type": Array [],
+}
+`;
