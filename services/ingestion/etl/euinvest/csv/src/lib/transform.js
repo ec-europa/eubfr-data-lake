@@ -1,7 +1,7 @@
 // @flow
 
 import extractLocationData from '@eubfr/lib/location/extractLocationData';
-import getCountryCode from '@eubfr/lib/getCountryCode';
+import getCountryCode from '@eubfr/lib/location/getCountryCode';
 import sanitizeBudgetItem from '@eubfr/lib/budget/budgetFormatter';
 import type { Project } from '@eubfr/types';
 
