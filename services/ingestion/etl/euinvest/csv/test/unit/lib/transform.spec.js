@@ -4,12 +4,21 @@
 
 import mapper from '../../../src/lib/transform';
 import testRecord from '../../stubs/record.json';
+import testRecord1 from '../../stubs/recordLocations1';
+import testRecord2 from '../../stubs/recordLocations2';
+import testRecord3 from '../../stubs/recordLocations3';
 
 describe('EU Invest CSV transformer', () => {
   let result = {};
+  let result1 = {};
+  let result2 = {};
+  let result3 = {};
 
   beforeAll(() => {
     result = mapper(testRecord);
+    result1 = mapper(testRecord1);
+    result2 = mapper(testRecord2);
+    result3 = mapper(testRecord3);
   });
 
   test('Returns null when record is not provided', () => {
@@ -32,6 +41,10 @@ describe('EU Invest CSV transformer', () => {
     expect(resultCopy.project_locations[4].country_code).toBe('PL');
   });
 
+  test('Snapshot project_locations: can work with a list of values which do not contain regions', () => {
+    expect(result1).toMatchSnapshot();
+  });
+
   test('Field project_locations: can handle multiple regions', () => {
     // Make a change in the copy, no need for another stub for testing a specific field.
     const copy = JSON.parse(JSON.stringify(testRecord));
@@ -45,6 +58,10 @@ describe('EU Invest CSV transformer', () => {
     // Country codes are the same though.Baden-Württemberg
     expect(resultCopy.project_locations[0].country_code).toBe('DE');
     expect(resultCopy.project_locations[1].country_code).toBe('DE');
+  });
+
+  test('Snapshot project_locations: can handle multiple regions', () => {
+    expect(result2).toMatchSnapshot();
   });
 
   test('Field project_locations: can handle multiple regions separated by a slash', () => {
@@ -62,6 +79,10 @@ describe('EU Invest CSV transformer', () => {
     // Country codes are the same though.
     expect(resultCopy.project_locations[0].country_code).toBe('DE');
     expect(resultCopy.project_locations[1].country_code).toBe('DE');
+  });
+
+  test('Snapshot project_locations: can handle multiple regions separated by a slash', () => {
+    expect(result3).toMatchSnapshot();
   });
 
   test('Field third_parties: do not take into account N/A entries for the coordinator', () => {
