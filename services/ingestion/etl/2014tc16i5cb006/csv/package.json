@@ -1,0 +1,35 @@
+{
+  "private": true,
+  "name": "@eubfr/ingestion-etl-2014tc16i5cb006-csv",
+  "version": "0.7.0",
+  "scripts": {
+    "deploy": "sls deploy -v",
+    "test:unit": "jest --testPathPattern=unit"
+  },
+  "dependencies": {
+    "i18n-iso-countries": "3.7.8",
+    "@eubfr/lib": "^0.7.0",
+    "@eubfr/logger-messenger": "^0.7.0",
+    "csv-parse": "4.3.4",
+    "numeral": "2.0.6",
+    "stream-transform": "1.0.8"
+  },
+  "devDependencies": {
+    "@babel/core": "7.4.3",
+    "@babel/preset-env": "7.4.3",
+    "@babel/preset-flow": "7.0.0",
+    "@eubfr/types": "^0.7.0",
+    "aws-sdk": "2.434.0",
+    "babel-jest": "24.7.0",
+    "babel-loader": "8.0.5",
+    "jest": "24.7.0",
+    "serverless": "1.40.0",
+    "serverless-webpack": "5.2.0",
+    "webpack": "4.29.6"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    }
+  }
+}
