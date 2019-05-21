@@ -651,3 +651,109 @@ In Hungary, Spar, Bay Zoltán Nonprofit and the Maltese Charity Service will hol
   "type": Array [],
 }
 `;
+
+exports[`EU Invest CSV transformer Snapshot third_parties: do not take into account N/A entries for the coordinator 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "EUR",
+      "raw": "70000000",
+      "value": 70000000,
+    },
+    "funding_area": Array [],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+  },
+  "call_year": "",
+  "complete": true,
+  "description": "Environmental sustainability requires a significant commitment from all economic sectors, including healthcare. In Italy, the challenge has been taken up by the Ca’ Foncello hospital in Treviso where, thanks to support from the Veneto Region and the EU, existing buildings are to be refurbished and new facilities built. This will help the hospital increase energy efficiency, lower carbon dioxide emissions and achieve a high level of eco-sustainability by 2024.
+
+The project will cut the hospital's energy consumption and emissions, and enable it to reuse waste water
+Five hectares of green space will surround the hospital
+1,000 bed spaces and 200 outpatient rooms will be created
+The overall cost is €250 million, of which circa €70 million comes from the EU",
+  "ec_priorities": Array [],
+  "media": Array [
+    Object {
+      "meta": Object {
+        "description": "",
+        "mime_type": "",
+        "type": "visual",
+      },
+      "name": "https://europa.eu/investeu/sites/investeu/files/it_trevisohospital_baner_985x270_tvnuovacittadella4.png",
+      "url": "https://europa.eu/investeu/sites/investeu/files/it_trevisohospital_baner_985x270_tvnuovacittadella4.png",
+    },
+    Object {
+      "meta": Object {
+        "description": "",
+        "mime_type": "",
+        "type": "visual",
+      },
+      "name": "https://europa.eu/investeu/sites/investeu/files/it_trevisohospital_homepage_768x432_tvnuovacittadella4.png",
+      "url": "https://europa.eu/investeu/sites/investeu/files/it_trevisohospital_homepage_768x432_tvnuovacittadella4.png",
+    },
+  ],
+  "programme_name": "",
+  "project_id": "398",
+  "project_locations": Array [
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "IT",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "Treviso",
+      "town": "",
+    },
+  ],
+  "project_website": "",
+  "related_links": Array [
+    Object {
+      "label": "",
+      "url": "N/A",
+    },
+  ],
+  "reporting_organisation": "",
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
+  "status": "",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [
+    "Development and sustainability",
+    "Environment",
+  ],
+  "third_parties": Array [],
+  "timeframe": Object {
+    "from": "2014-03-30T00:00:00.000Z",
+    "from_precision": "day",
+    "to": "2024-03-30T00:00:00.000Z",
+    "to_precision": "day",
+  },
+  "title": "Treviso’s new hospital focused on health and sustainability | Redevelopment to modernise facilities and help save energy",
+  "type": Array [],
+}
+`;

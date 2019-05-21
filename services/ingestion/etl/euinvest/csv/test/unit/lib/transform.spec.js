@@ -7,18 +7,21 @@ import testRecord from '../../stubs/record.json';
 import testRecord1 from '../../stubs/recordLocations1';
 import testRecord2 from '../../stubs/recordLocations2';
 import testRecord3 from '../../stubs/recordLocations3';
+import testRecord4 from '../../stubs/recordCoordinator';
 
 describe('EU Invest CSV transformer', () => {
   let result = {};
   let result1 = {};
   let result2 = {};
   let result3 = {};
+  let result4 = {};
 
   beforeAll(() => {
     result = mapper(testRecord);
     result1 = mapper(testRecord1);
     result2 = mapper(testRecord2);
     result3 = mapper(testRecord3);
+    result4 = mapper(testRecord4);
   });
 
   test('Returns null when record is not provided', () => {
@@ -95,6 +98,10 @@ describe('EU Invest CSV transformer', () => {
       actor => actor.name === 'N/A'
     );
     expect(badItem).toBe(-1);
+  });
+
+  test('Snapshot third_parties: do not take into account N/A entries for the coordinator', () => {
+    expect(result4).toMatchSnapshot();
   });
 
   test('Field third_parties: do not take into account N/A entries for partners', () => {
