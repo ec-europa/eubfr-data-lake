@@ -71,8 +71,8 @@ The system will help resolve flooding problems and provide an outlet for unused 
       "location": null,
       "nuts": Array [],
       "postal_code": "",
-      "region": "Benicàssim",
-      "town": "",
+      "region": "",
+      "town": "Benicàssim",
     },
   ],
   "project_website": "",
@@ -179,7 +179,7 @@ The system will help resolve flooding problems and provide an outlet for unused 
 }
 `;
 
-exports[`EU Invest CSV transformer Snapshot project_locations: can handle multiple regions 1`] = `
+exports[`EU Invest CSV transformer Snapshot project_locations: can handle a region and a town, separated by a comma 1`] = `
 Object {
   "action": "",
   "budget": Object {
@@ -249,18 +249,8 @@ The campaign is funded by the EU to the tune of €285,300 and by the state of B
       "location": null,
       "nuts": Array [],
       "postal_code": "",
-      "region": "Emmendingen",
-      "town": "",
-    },
-    Object {
-      "address": "",
-      "centroid": null,
-      "country_code": "DE",
-      "location": null,
-      "nuts": Array [],
-      "postal_code": "",
       "region": "Baden-Württemberg",
-      "town": "",
+      "town": "Emmendingen",
     },
   ],
   "project_website": "",
@@ -306,7 +296,7 @@ The campaign is funded by the EU to the tune of €285,300 and by the state of B
 }
 `;
 
-exports[`EU Invest CSV transformer Snapshot project_locations: can handle multiple regions separated by a slash 1`] = `
+exports[`EU Invest CSV transformer Snapshot project_locations: can handle a region and a town, separated by a slash 1`] = `
 Object {
   "action": "",
   "budget": Object {
@@ -376,18 +366,8 @@ The workshop is linked to a technology factory which is also funded by the EU",
       "location": null,
       "nuts": Array [],
       "postal_code": "",
-      "region": "Albstadt-Tailfingen",
-      "town": "",
-    },
-    Object {
-      "address": "",
-      "centroid": null,
-      "country_code": "DE",
-      "location": null,
-      "nuts": Array [],
-      "postal_code": "",
       "region": "Baden-Württemberg",
-      "town": "",
+      "town": "Albstadt-Tailfingen",
     },
   ],
   "project_website": "",
@@ -723,8 +703,8 @@ The overall cost is €250 million, of which circa €70 million comes from th
       "location": null,
       "nuts": Array [],
       "postal_code": "",
-      "region": "Treviso",
-      "town": "",
+      "region": "",
+      "town": "Treviso",
     },
   ],
   "project_website": "",

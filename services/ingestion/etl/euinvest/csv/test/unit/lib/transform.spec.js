@@ -48,43 +48,37 @@ describe('EU Invest CSV transformer', () => {
     expect(result1).toMatchSnapshot();
   });
 
-  test('Field project_locations: can handle multiple regions', () => {
+  test('Field project_locations: can handle a region and a town, separated by a comma', () => {
     // Make a change in the copy, no need for another stub for testing a specific field.
     const copy = JSON.parse(JSON.stringify(testRecord));
     copy._location = 'Emmendingen, Baden-Württemberg , DE';
     const resultCopy = mapper(copy);
 
-    expect(resultCopy.project_locations.length).toBe(2);
-    // Regions are handled separately.
-    expect(resultCopy.project_locations[0].region).toBe('Emmendingen');
-    expect(resultCopy.project_locations[1].region).toBe('Baden-Württemberg');
-    // Country codes are the same though.Baden-Württemberg
+    expect(resultCopy.project_locations.length).toBe(1);
+    expect(resultCopy.project_locations[0].town).toBe('Emmendingen');
+    expect(resultCopy.project_locations[0].region).toBe('Baden-Württemberg');
     expect(resultCopy.project_locations[0].country_code).toBe('DE');
-    expect(resultCopy.project_locations[1].country_code).toBe('DE');
   });
 
-  test('Snapshot project_locations: can handle multiple regions', () => {
+  test('Snapshot project_locations: can handle a region and a town, separated by a comma', () => {
     expect(result2).toMatchSnapshot();
   });
 
-  test('Field project_locations: can handle multiple regions separated by a slash', () => {
+  test('Field project_locations: can handle a region and a town, separated by a slash', () => {
     // Make a change in the copy, no need for another stub for testing a specific field.
     const copy = JSON.parse(JSON.stringify(testRecord));
     copy._location = 'Albstadt - Tailfingen / Baden - Württemberg, DE;';
     const resultCopy = mapper(copy);
 
-    expect(resultCopy.project_locations.length).toBe(2);
+    expect(resultCopy.project_locations.length).toBe(1);
     // Regions are handled separately.
-    expect(resultCopy.project_locations[0].region).toBe(
-      'Albstadt - Tailfingen'
-    );
-    expect(resultCopy.project_locations[1].region).toBe('Baden - Württemberg');
+    expect(resultCopy.project_locations[0].town).toBe('Albstadt - Tailfingen');
+    expect(resultCopy.project_locations[0].region).toBe('Baden - Württemberg');
     // Country codes are the same though.
     expect(resultCopy.project_locations[0].country_code).toBe('DE');
-    expect(resultCopy.project_locations[1].country_code).toBe('DE');
   });
 
-  test('Snapshot project_locations: can handle multiple regions separated by a slash', () => {
+  test('Snapshot project_locations: can handle a region and a town, separated by a slash', () => {
     expect(result3).toMatchSnapshot();
   });
 

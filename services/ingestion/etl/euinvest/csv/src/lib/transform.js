@@ -1,7 +1,8 @@
 // @flow
 
-import sanitizeBudgetItem from '@eubfr/lib/budget/budgetFormatter';
+import extractLocationData from '@eubfr/lib/location/extractLocationData';
 import getCountryCode from '@eubfr/lib/getCountryCode';
+import sanitizeBudgetItem from '@eubfr/lib/budget/budgetFormatter';
 import type { Project } from '@eubfr/types';
 
 /**
@@ -135,17 +136,63 @@ const getId = record => record._nid || '';
  */
 const getLocations = record => {
   const locations = [];
-  const re = new RegExp(/[,/]/i); // separate either by comma or slash.
 
   if (record._location) {
-    const locationItems = record._location
-      .split(';')
-      .map(p => p.trim())
-      .filter(l => l);
+    const locationData = extractLocationData(record._location);
+    const { countryCodes, regions, towns } = locationData;
 
-    locationItems.forEach(item => {
-      const regions = item.split(re).map(a => a.trim());
-      const code = regions.pop(); // code is always the last item.
+    // Check what scenario we have.
+    // Length checks are with "greater than" in order for all to return boolean.
+
+    // Only country codes.
+    const onlyCodes =
+      countryCodes.length > 0 && regions.length === 0 && towns.length === 0;
+
+    // Contains equal information for each piece.
+    const exactMatch =
+      countryCodes.length === regions.length &&
+      countryCodes.length === towns.length;
+
+    // Single location for all regions, no towns.
+    const multiRegion =
+      countryCodes.length === 1 && regions.length > 0 && towns.length === 0;
+
+    // Single location for all towns, no regions.
+    const multiTown =
+      countryCodes.length === 1 && regions.length === 0 && towns.length > 0;
+
+    if (onlyCodes) {
+      countryCodes.forEach(code => {
+        locations.push({
+          centroid: null,
+          address: '',
+          country_code: getCountryCode(code),
+          location: null,
+          nuts: [],
+          postal_code: '',
+          region: '',
+          town: '',
+        });
+      });
+    }
+
+    if (exactMatch) {
+      countryCodes.forEach((code, i) => {
+        locations.push({
+          centroid: null,
+          address: '',
+          country_code: getCountryCode(code),
+          location: null,
+          nuts: [],
+          postal_code: '',
+          region: regions[i],
+          town: towns[i],
+        });
+      });
+    }
+
+    if (multiRegion) {
+      const code = countryCodes[0];
 
       regions.forEach(region => {
         locations.push({
@@ -159,7 +206,24 @@ const getLocations = record => {
           town: '',
         });
       });
-    });
+    }
+
+    if (multiTown) {
+      const code = countryCodes[0];
+
+      towns.forEach(town => {
+        locations.push({
+          centroid: null,
+          address: '',
+          country_code: getCountryCode(code),
+          location: null,
+          nuts: [],
+          postal_code: '',
+          region: '',
+          town,
+        });
+      });
+    }
   }
 
   return locations;
