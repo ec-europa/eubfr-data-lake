@@ -185,8 +185,8 @@ const getLocations = record => {
           location: null,
           nuts: [],
           postal_code: '',
-          region: regions[i],
-          town: towns[i],
+          region: regions[i] || '',
+          town: towns[i] || '',
         });
       });
     }
