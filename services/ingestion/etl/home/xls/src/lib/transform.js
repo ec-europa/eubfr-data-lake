@@ -2,7 +2,7 @@
 
 import numeral from 'numeral';
 import sanitizeBudgetItem from '@eubfr/lib/budget/budgetFormatter';
-import getCountryCode from '@eubfr/lib/getCountryCode';
+import getCountryCode from '@eubfr/lib/location/getCountryCode';
 import type { Project } from '@eubfr/types';
 
 /**

@@ -5,7 +5,7 @@ import {
   sanitizeBudgetItem,
   sanitizeValue,
 } from '@eubfr/lib/budget/budgetFormatter';
-import getCountryCode from '@eubfr/lib/getCountryCode';
+import getCountryCode from '@eubfr/lib/location/getCountryCode';
 import type { Project } from '@eubfr/types';
 
 /*
