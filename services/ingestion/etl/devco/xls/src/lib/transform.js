@@ -1,7 +1,7 @@
 // @flow
 
 import countries from 'i18n-iso-countries';
-import getCountryCode from '@eubfr/lib/getCountryCode';
+import getCountryCode from '@eubfr/lib/location/getCountryCode';
 import extractBudgetData from '@eubfr/lib/budget/extractBudgetData';
 import sanitizeBudgetItem from '@eubfr/lib/budget/budgetFormatter';
 import type { Project } from '@eubfr/types';
