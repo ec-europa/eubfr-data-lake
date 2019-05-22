@@ -7,7 +7,7 @@ import sanitizeBudgetItem from '@eubfr/lib/budget/budgetFormatter';
 import type { Project } from '@eubfr/types';
 
 /*
- * Transform message (2014tc16i5cb006 CSV)
+ * Transform message (2014tc16i5cb007 CSV)
  */
 
 /**
@@ -18,7 +18,7 @@ import type { Project } from '@eubfr/types';
  * - `Project final contract amount`
  * - `Project EU co-financing rate`
  *
- * @memberof 2014tc16i5cb006CsvTransform
+ * @memberof 2014tc16i5cb007CsvTransform
  * @param {Object} record The row received from parsed file
  * @returns {Budget}
  */
@@ -60,7 +60,7 @@ const getBudget = record => {
  * - `Project intervention field`
  * - `Last modified`
  *
- * @memberof 2014tc16i5cb006CsvTransform
+ * @memberof 2014tc16i5cb007CsvTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
@@ -88,7 +88,7 @@ const getDescription = record => {
  * Input fields taken from the `record` are:
  * - `Project code`
  *
- * @memberof 2014tc16i5cb006CsvTransform
+ * @memberof 2014tc16i5cb007CsvTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
@@ -98,7 +98,7 @@ const getProjectId = record => record['Project code'];
 /**
  * Gets country code from a country name.
  *
- * @memberof 2014tc16i5cb006CsvTransform
+ * @memberof 2014tc16i5cb007CsvTransform
  * @param {String} countryName The name of the country
  * @returns {String} The ISO 3166-1 country code
  */
@@ -114,7 +114,7 @@ const getCodeByCountry = countryName =>
  * - `Region`
  * - `Country`
  *
- * @memberof 2014tc16i5cb006CsvTransform
+ * @memberof 2014tc16i5cb007CsvTransform
  * @param {Object} record The row received from parsed file
  * @returns {Array<Location>}
  */
@@ -148,7 +148,7 @@ const getLocations = record => {
  * - `Region`
  * - `Country`
  *
- * @memberof 2014tc16i5cb006CsvTransform
+ * @memberof 2014tc16i5cb007CsvTransform
  * @param {Object} record The row received from parsed file
  * @returns {Array<ThirdParty>}
  */
@@ -174,7 +174,7 @@ const getThirdParties = record => {
 /**
  * Format date.
  *
- * @memberof 2014tc16i5cb006CsvTransform
+ * @memberof 2014tc16i5cb007CsvTransform
  * @param {Date} date Date in DD.MM.YYYY format
  * @returns {Date} The date formatted into an ISO 8601 date format
  *
@@ -203,7 +203,7 @@ const formatDate = date => {
  * - `Project start date`
  * - `Project end date`
  *
- * @memberof 2014tc16i5cb006CsvTransform
+ * @memberof 2014tc16i5cb007CsvTransform
  * @param {Object} record The row received from parsed file
  * @returns {Timeframe}
  */
@@ -227,7 +227,7 @@ const getTimeframe = record => {
  *
  * - `Project title`
  *
- * @memberof 2014tc16i5cb006CsvTransform
+ * @memberof 2014tc16i5cb007CsvTransform
  * @param {Object} record The row received from parsed file
  * @returns {String}
  */
@@ -236,12 +236,12 @@ const getTitle = record =>
   record['Project title'] ? record['Project title'].trim() : '';
 
 /**
- * Map fields for 2014tc16i5cb006 producer, CSV file types
+ * Map fields for 2014tc16i5cb007 producer, CSV file types
  *
- * Example input data: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/2014tc16i5cb006/csv/test/stubs/record.json|stub}
+ * Example input data: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/2014tc16i5cb007/csv/test/stubs/record.json|stub}
  *
- * Transform function: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/2014tc16i5cb006/csv/src/lib/transform.js|implementation details}
- * @name 2014tc16i5cb006CsvTransform
+ * Transform function: {@link https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/2014tc16i5cb007/csv/src/lib/transform.js|implementation details}
+ * @name 2014tc16i5cb007CsvTransform
  * @param {Object} record Piece of data to transform before going to harmonized storage.
  * @returns {Project} JSON matching the type fields.
  */

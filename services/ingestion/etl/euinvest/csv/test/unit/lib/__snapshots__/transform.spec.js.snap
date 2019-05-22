@@ -71,8 +71,8 @@ The system will help resolve flooding problems and provide an outlet for unused 
       "location": null,
       "nuts": Array [],
       "postal_code": "",
-      "region": "Benicàssim",
-      "town": "",
+      "region": "",
+      "town": "Benicàssim",
     },
   ],
   "project_website": "",
@@ -175,6 +175,565 @@ The system will help resolve flooding problems and provide an outlet for unused 
     "to_precision": "day",
   },
   "title": "Innovative urban drainage | Tile-based system to combat flooding and droughts in cities",
+  "type": Array [],
+}
+`;
+
+exports[`EU Invest CSV transformer Snapshot project_locations: can handle a region and a town, separated by a comma 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "funding_area": Array [],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+  },
+  "call_year": "",
+  "complete": true,
+  "description": "To help counteract climate change, the EU is backing the German town of Emmendingen’s ‘Emmendingen Energy House’ campaign. The campaign supports residents wanting to cut energy use by renovating their homes, including through technical consultancy and a network of building modernisation professionals.
+
+The ‘Emmendingen Energy House’ campaign facilitates renovation of older residential buildings in order to tackle climate change
+Campaign tools include awareness raising among residents, a local consultancy programme and a network of building modernisation professionals
+The campaign is funded by the EU to the tune of €285,300 and by the state of Baden-Württemberg",
+  "ec_priorities": Array [],
+  "media": Array [
+    Object {
+      "meta": Object {
+        "description": "",
+        "mime_type": "",
+        "type": "visual",
+      },
+      "name": "https://europa.eu/investeu/sites/investeu/files/de_bawu_banner_985x270.png",
+      "url": "https://europa.eu/investeu/sites/investeu/files/de_bawu_banner_985x270.png",
+    },
+    Object {
+      "meta": Object {
+        "description": "Stadt Emmendingen",
+        "mime_type": "",
+        "type": "visual",
+      },
+      "name": "https://europa.eu/investeu/sites/investeu/files/de_bawu_homepage_768x432.png",
+      "url": "https://europa.eu/investeu/sites/investeu/files/de_bawu_homepage_768x432.png",
+    },
+  ],
+  "programme_name": "",
+  "project_id": "518",
+  "project_locations": Array [
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "DE",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "Baden-Württemberg",
+      "town": "Emmendingen",
+    },
+  ],
+  "project_website": "",
+  "related_links": Array [
+    Object {
+      "label": "",
+      "url": "http://www.energiehaus.info/die-kampagne/energiehaus-emmendingen/",
+    },
+  ],
+  "reporting_organisation": "",
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
+  "status": "",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [
+    "Environment",
+    "Research and development",
+  ],
+  "third_parties": Array [
+    Object {
+      "address": "",
+      "country": "",
+      "email": "",
+      "name": "Armin Bobsien (Climate Protection Manager)",
+      "phone": "",
+      "region": "",
+      "role": "coordinator",
+      "type": "",
+      "website": "",
+    },
+  ],
+  "timeframe": Object {
+    "from": "2016-07-24T00:00:00.000Z",
+    "from_precision": "day",
+    "to": "2019-07-24T00:00:00.000Z",
+    "to_precision": "day",
+  },
+  "title": "Energy-efficient Emmendingen | German town protects the climate house by house",
+  "type": Array [],
+}
+`;
+
+exports[`EU Invest CSV transformer Snapshot project_locations: can handle a region and a town, separated by a slash 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "EUR",
+      "raw": "2900000",
+      "value": 2900000,
+    },
+    "funding_area": Array [],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+  },
+  "call_year": "",
+  "complete": true,
+  "description": "Backed by the EU since 2013, the technology workshop and new factory at Albstadt, Germany provide support for start-ups and networking opportunities. Together with local universities and medium-sized companies, the workshop helps entrepreneurs turn ideas into successful businesses. Through its training offer, it is tackling the dearth of technology specialists and encouraging lifelong learning.
+
+Albstadt technology workshop has received around €2.9 million from the EU
+50 jobs and a regional venture capital network have been created, more than 500 events are organised each year and 350 students have taken up technical training
+The workshop is linked to a technology factory which is also funded by the EU",
+  "ec_priorities": Array [],
+  "media": Array [
+    Object {
+      "meta": Object {
+        "description": "",
+        "mime_type": "",
+        "type": "visual",
+      },
+      "name": "https://europa.eu/investeu/sites/investeu/files/de_technologiewerkstatt_banner985x270.jpg",
+      "url": "https://europa.eu/investeu/sites/investeu/files/de_technologiewerkstatt_banner985x270.jpg",
+    },
+    Object {
+      "meta": Object {
+        "description": "Dirk Wilhelmy, Corinna Spitzbarth www.corinnaspitzbarth.de",
+        "mime_type": "",
+        "type": "visual",
+      },
+      "name": "https://europa.eu/investeu/sites/investeu/files/de_technologiewerkstatt_homepage768x432.jpg",
+      "url": "https://europa.eu/investeu/sites/investeu/files/de_technologiewerkstatt_homepage768x432.jpg",
+    },
+  ],
+  "programme_name": "",
+  "project_id": "515",
+  "project_locations": Array [
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "DE",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "Baden-Württemberg",
+      "town": "Albstadt-Tailfingen",
+    },
+  ],
+  "project_website": "",
+  "related_links": Array [
+    Object {
+      "label": "",
+      "url": "http://www.technologiewerkstatt.de/startseite.html",
+    },
+    Object {
+      "label": "",
+      "url": "http://www.facebook.com/Technologiewerkstatt",
+    },
+  ],
+  "reporting_organisation": "",
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
+  "status": "",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [
+    "Digital technology",
+    "Entrepreneurship",
+    "Innovation",
+    "Research and development",
+  ],
+  "third_parties": Array [
+    Object {
+      "address": "",
+      "country": "",
+      "email": "",
+      "name": "City of Albstadt",
+      "phone": "",
+      "region": "",
+      "role": "coordinator",
+      "type": "",
+      "website": "",
+    },
+    Object {
+      "address": "",
+      "country": "",
+      "email": "",
+      "name": "University of Albstadt-Sigmaringen",
+      "phone": "",
+      "region": "",
+      "role": "partner",
+      "type": "",
+      "website": "",
+    },
+    Object {
+      "address": "",
+      "country": "",
+      "email": "",
+      "name": "Scientific and Medical Institute",
+      "phone": "",
+      "region": "",
+      "role": "partner",
+      "type": "",
+      "website": "",
+    },
+    Object {
+      "address": "",
+      "country": "",
+      "email": "",
+      "name": "Regional companies and local training facilities",
+      "phone": "",
+      "region": "",
+      "role": "partner",
+      "type": "",
+      "website": "",
+    },
+  ],
+  "timeframe": Object {
+    "from": "2013-07-07T00:00:00.000Z",
+    "from_precision": "day",
+    "to": "2019-07-07T00:00:00.000Z",
+    "to_precision": "day",
+  },
+  "title": "Help for tech start-ups | Albstadt workshop turns ideas into successful firms",
+  "type": Array [],
+}
+`;
+
+exports[`EU Invest CSV transformer Snapshot project_locations: can work with a list of values which do not contain regions 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "EUR",
+      "raw": "2360000",
+      "value": 2360000,
+    },
+    "funding_area": Array [],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+  },
+  "call_year": "",
+  "complete": true,
+  "description": "Some people make a habit of throwing away good food, while many others can’t afford even the most basic ingredients for their daily meals. An EU-funded campaign coordinated in Hungary by Bay Zoltán Nonprofit Ltd. and its partners aims to cut food waste while helping the less fortunate.
+
+In the EU, an average family of four throws away a kilo of good food a day
+The Strefowa project aims to tackle food waste with initiatives in 5 countries (Czech Republic, Italy, Hungary, Austria and Poland)
+It has received €2.36 million in EU funding
+In Hungary, Spar, Bay Zoltán Nonprofit and the Maltese Charity Service will hold joint campaigns every 6 months",
+  "ec_priorities": Array [],
+  "media": Array [
+    Object {
+      "meta": Object {
+        "description": "",
+        "mime_type": "",
+        "type": "visual",
+      },
+      "name": "https://europa.eu/investeu/sites/investeu/files/hu_strefowa_banner985x270_.jpg",
+      "url": "https://europa.eu/investeu/sites/investeu/files/hu_strefowa_banner985x270_.jpg",
+    },
+    Object {
+      "meta": Object {
+        "description": "",
+        "mime_type": "",
+        "type": "visual",
+      },
+      "name": "https://europa.eu/investeu/sites/investeu/files/hu_strefowa_homepage768x432_01.jpg",
+      "url": "https://europa.eu/investeu/sites/investeu/files/hu_strefowa_homepage768x432_01.jpg",
+    },
+  ],
+  "programme_name": "",
+  "project_id": "404",
+  "project_locations": Array [
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "HU",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "",
+      "town": "",
+    },
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "CZ",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "",
+      "town": "",
+    },
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "IT",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "",
+      "town": "",
+    },
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "AT",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "",
+      "town": "",
+    },
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "PL",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "",
+      "town": "",
+    },
+  ],
+  "project_website": "",
+  "related_links": Array [
+    Object {
+      "label": "",
+      "url": "http://www.reducefoodwaste.eu",
+    },
+  ],
+  "reporting_organisation": "",
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
+  "status": "",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [
+    "Development and sustainability",
+    "Social inclusion",
+  ],
+  "third_parties": Array [
+    Object {
+      "address": "",
+      "country": "",
+      "email": "",
+      "name": "Bay Zoltán Nonprofit Ltd.",
+      "phone": "",
+      "region": "",
+      "role": "coordinator",
+      "type": "",
+      "website": "",
+    },
+    Object {
+      "address": "",
+      "country": "",
+      "email": "",
+      "name": "Spar Magyarország Ltd",
+      "phone": "",
+      "region": "",
+      "role": "partner",
+      "type": "",
+      "website": "",
+    },
+    Object {
+      "address": "",
+      "country": "",
+      "email": "",
+      "name": "Maltese Charity Service",
+      "phone": "",
+      "region": "",
+      "role": "partner",
+      "type": "",
+      "website": "",
+    },
+  ],
+  "timeframe": Object {
+    "from": "2016-06-08T00:00:00.000Z",
+    "from_precision": "day",
+    "to": "2019-06-08T00:00:00.000Z",
+    "to_precision": "day",
+  },
+  "title": "Helping others by saving food | Anti-food waste campaign gathers pace across Central Eastern Europe",
+  "type": Array [],
+}
+`;
+
+exports[`EU Invest CSV transformer Snapshot third_parties: do not take into account N/A entries for the coordinator 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "EUR",
+      "raw": "70000000",
+      "value": 70000000,
+    },
+    "funding_area": Array [],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+  },
+  "call_year": "",
+  "complete": true,
+  "description": "Environmental sustainability requires a significant commitment from all economic sectors, including healthcare. In Italy, the challenge has been taken up by the Ca’ Foncello hospital in Treviso where, thanks to support from the Veneto Region and the EU, existing buildings are to be refurbished and new facilities built. This will help the hospital increase energy efficiency, lower carbon dioxide emissions and achieve a high level of eco-sustainability by 2024.
+
+The project will cut the hospital's energy consumption and emissions, and enable it to reuse waste water
+Five hectares of green space will surround the hospital
+1,000 bed spaces and 200 outpatient rooms will be created
+The overall cost is €250 million, of which circa €70 million comes from the EU",
+  "ec_priorities": Array [],
+  "media": Array [
+    Object {
+      "meta": Object {
+        "description": "",
+        "mime_type": "",
+        "type": "visual",
+      },
+      "name": "https://europa.eu/investeu/sites/investeu/files/it_trevisohospital_baner_985x270_tvnuovacittadella4.png",
+      "url": "https://europa.eu/investeu/sites/investeu/files/it_trevisohospital_baner_985x270_tvnuovacittadella4.png",
+    },
+    Object {
+      "meta": Object {
+        "description": "",
+        "mime_type": "",
+        "type": "visual",
+      },
+      "name": "https://europa.eu/investeu/sites/investeu/files/it_trevisohospital_homepage_768x432_tvnuovacittadella4.png",
+      "url": "https://europa.eu/investeu/sites/investeu/files/it_trevisohospital_homepage_768x432_tvnuovacittadella4.png",
+    },
+  ],
+  "programme_name": "",
+  "project_id": "398",
+  "project_locations": Array [
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "IT",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "",
+      "town": "Treviso",
+    },
+  ],
+  "project_website": "",
+  "related_links": Array [
+    Object {
+      "label": "",
+      "url": "N/A",
+    },
+  ],
+  "reporting_organisation": "",
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
+  "status": "",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [
+    "Development and sustainability",
+    "Environment",
+  ],
+  "third_parties": Array [],
+  "timeframe": Object {
+    "from": "2014-03-30T00:00:00.000Z",
+    "from_precision": "day",
+    "to": "2024-03-30T00:00:00.000Z",
+    "to_precision": "day",
+  },
+  "title": "Treviso’s new hospital focused on health and sustainability | Redevelopment to modernise facilities and help save energy",
   "type": Array [],
 }
 `;
