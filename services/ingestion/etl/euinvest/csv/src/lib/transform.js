@@ -1,7 +1,8 @@
 // @flow
 
+import extractLocationData from '@eubfr/lib/location/extractLocationData';
+import getCountryCode from '@eubfr/lib/location/getCountryCode';
 import sanitizeBudgetItem from '@eubfr/lib/budget/budgetFormatter';
-import getCountryCode from '@eubfr/lib/getCountryCode';
 import type { Project } from '@eubfr/types';
 
 /**
@@ -137,21 +138,92 @@ const getLocations = record => {
   const locations = [];
 
   if (record._location) {
-    const locParts = record._location
-      .split(',')
-      .map(p => p.trim())
-      .filter(l => l);
+    const locationData = extractLocationData(record._location);
+    const { countryCodes, regions, towns } = locationData;
 
-    locations.push({
-      centroid: null,
-      address: '',
-      country_code: getCountryCode(locParts[1]),
-      location: null,
-      nuts: [],
-      postal_code: '',
-      region: locParts[0],
-      town: '',
-    });
+    // Check what scenario we have.
+    // Length checks are with "greater than" in order for all to return boolean.
+
+    // Only country codes.
+    const onlyCodes =
+      countryCodes.length > 0 && regions.length === 0 && towns.length === 0;
+
+    // Contains equal information for each piece.
+    const exactMatch =
+      countryCodes.length === regions.length &&
+      countryCodes.length === towns.length;
+
+    // Single location for all regions, no towns.
+    const multiRegion =
+      countryCodes.length === 1 && regions.length > 0 && towns.length === 0;
+
+    // Single location for all towns, no regions.
+    const multiTown =
+      countryCodes.length === 1 && regions.length === 0 && towns.length > 0;
+
+    if (onlyCodes) {
+      countryCodes.forEach(code => {
+        locations.push({
+          centroid: null,
+          address: '',
+          country_code: getCountryCode(code),
+          location: null,
+          nuts: [],
+          postal_code: '',
+          region: '',
+          town: '',
+        });
+      });
+    }
+
+    if (exactMatch) {
+      countryCodes.forEach((code, i) => {
+        locations.push({
+          centroid: null,
+          address: '',
+          country_code: getCountryCode(code),
+          location: null,
+          nuts: [],
+          postal_code: '',
+          region: regions[i] || '',
+          town: towns[i] || '',
+        });
+      });
+    }
+
+    if (multiRegion) {
+      const code = countryCodes[0];
+
+      regions.forEach(region => {
+        locations.push({
+          centroid: null,
+          address: '',
+          country_code: getCountryCode(code),
+          location: null,
+          nuts: [],
+          postal_code: '',
+          region,
+          town: '',
+        });
+      });
+    }
+
+    if (multiTown) {
+      const code = countryCodes[0];
+
+      towns.forEach(town => {
+        locations.push({
+          centroid: null,
+          address: '',
+          country_code: getCountryCode(code),
+          location: null,
+          nuts: [],
+          postal_code: '',
+          region: '',
+          town,
+        });
+      });
+    }
   }
 
   return locations;
@@ -206,8 +278,10 @@ const getThemes = record =>
  */
 const getThirdParties = record => {
   const thirdParties = [];
+  // Remove items like N/A, n/a, etc.
+  const re = new RegExp(/^(?:n\/a)$/i);
 
-  if (record._coordinator) {
+  if (record._coordinator && !re.test(record._coordinator)) {
     thirdParties.push({
       name: record._coordinator.trim(),
       type: '',
@@ -226,6 +300,7 @@ const getThirdParties = record => {
       .split(',')
       .map(p => p.trim())
       .filter(p => p)
+      .filter(p => !re.test(p))
       .map(name => ({
         name,
         type: '',
