@@ -14,6 +14,7 @@ import FormUpload from '../../components/FormUpload';
 import LogsTab from './file/Logs';
 import ProjectsTab from './file/Projects';
 import ReportsTab from './file/Reports';
+import EnrichmentTab from './file/Enrichment';
 
 import './File.css';
 
@@ -293,11 +294,20 @@ class File extends React.Component {
             </li>
             <li className="ecl-navigation-list__item">
               <NavLink
+                to={`${match.url}/enrichment`}
+                className="ecl-navigation-list__link ecl-link"
+                activeClassName="ecl-navigation-list__link--active"
+              >
+                Enrichment
+              </NavLink>
+            </li>
+            <li className="ecl-navigation-list__item">
+              <NavLink
                 to={`${match.url}/reports`}
                 className="ecl-navigation-list__link ecl-link"
                 activeClassName="ecl-navigation-list__link--active"
               >
-                Reports
+                Data quality report
               </NavLink>
             </li>
           </ul>
@@ -340,6 +350,10 @@ class File extends React.Component {
         <Route
           path={`${match.url}/projects`}
           render={() => <ProjectsTab computedKey={computedKey} />}
+        />
+        <Route
+          path={`${match.url}/enrichment`}
+          render={() => <EnrichmentTab computedKey={computedKey} />}
         />
         <Route
           path={`${match.url}/reports`}
