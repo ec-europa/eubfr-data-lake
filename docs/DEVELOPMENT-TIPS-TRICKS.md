@@ -179,6 +179,54 @@ Its use cases are described in the assertions and also they make it easy to iter
 faster on logic by again using the watch mode of jest and comparing the results of
 various helper functions.
 
+### Develop demo clients locally
+
+Each producer has its own dashboard through which data is loaded to the data lake. These dashboards are based on [Create React App][17]. The APIs used by the client apps are based on serverless services.
+
+In a regular workflow, when in `dev`, each developer deploys the necessary resources in order to work with a given dashboard, both locally and remotely when deployed on S3. This is not always a convenient workflow for developers who want ot focus their work only on the React web app, without spending the time and CloudFormation resources.
+
+In order to be able to develop locally, one still needs a set of deployed cloud resources. The `test` stage is one which is always deployed and if the developer needs to improve the web app without adding a new ETL, then it's acceptable to use the outputs of the already existing `test` CloudFormation resources.
+
+To do so, one first needs to get the required information about surface APIs and set the necessary environment variables. Steps to achieve that:
+
+1. Edit `config.json` file
+
+```json
+{
+  "eubfr_env": "test",
+  "region": "eu-central-1",
+  "stage": "test",
+  "username": "euinvest",
+  "demo": ["euinvest"]
+}
+```
+
+2. Export environment variables for the existing resources on AWS
+
+```sh
+$ eubfr-cli env generate
+```
+
+After the success of this operation, 3 files `.env` will be created on your local file system. For working with the React web app, the interesting file is at `eubfr-data-lake/demo/dashboard/client/.env` with the following contents:
+
+```
+REACT_APP_STAGE=test
+REACT_APP_PRODUCER=
+REACT_APP_DEMO_SERVER=
+REACT_APP_ES_PUBLIC_ENDPOINT=
+REACT_APP_ES_PRIVATE_ENDPOINT=
+```
+
+The only property to change here is `REACT_APP_PRODUCER` in order to specify which producer's dashboard to visualize.
+
+Then, when you have your producer selected, start the project:
+
+```sh
+$ yarn react:start
+```
+
+This will use the cloud existing resources for the given set of environment variables and will start the dashboard locally.
+
 [1]: ./types/README.md
 [2]: https://github.com/ec-europa/eubfr-data-lake/blob/master/services/ingestion/etl/just/csv/README.md
 [3]: https://github.com/ec-europa/eubfr-data-lake/pull/102
@@ -195,3 +243,4 @@ various helper functions.
 [14]: https://nodejs.org/api/repl.html
 [15]: https://www.npmjs.com/package/ndb
 [16]: https://nodejs.org/api/fs.html#fs_fs_createreadstream_path_options
+[17]: https://github.com/facebook/create-react-app
