@@ -18,6 +18,7 @@ const allServices = [
   { service: 'ingestion-etl-2014tc16rfcb014-csv', exportEnv: false },
   { service: 'ingestion-etl-2014tc16rfcb021-xls', exportEnv: false },
   { service: 'ingestion-etl-2014tc16rfcb047-xls', exportEnv: false },
+  { service: 'ingestion-etl-2014tc16rfcb050-xls', exportEnv: false },
   { service: 'ingestion-etl-2014tc16rfpc001-xls', exportEnv: false },
   { service: 'ingestion-etl-2014tc16rftn002-xls', exportEnv: false },
   { service: 'ingestion-etl-bulgaria-xls', exportEnv: false },
