@@ -1,9 +1,13 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import Collapsible from 'react-collapsible';
+
 import Spinner from '../../../components/Spinner';
 
 import clients from '../../../clientFactory';
 import indices from '../../../clientFactory/esIndices';
+
+import enrichmentDecorator from '../../../lib/enrichmentDecorator';
 
 class Enrichment extends React.Component {
   constructor() {
@@ -21,6 +25,8 @@ class Enrichment extends React.Component {
   }
 
   componentDidMount() {
+    this._isMounted = true;
+
     this.clients = clients.Create();
     this.loadData();
   }
@@ -42,6 +48,7 @@ class Enrichment extends React.Component {
             index: indices.projects,
             type: 'project',
             q: `computed_key:"${computedKey}.ndjson"`,
+            size: 200,
           });
 
           this.setState({
@@ -71,6 +78,7 @@ class Enrichment extends React.Component {
   }
 
   render() {
+    let enrichedCount = 0;
     const { projects, isLoading, projectsTotal } = this.state;
 
     if (isLoading) {
@@ -84,43 +92,31 @@ class Enrichment extends React.Component {
       );
     }
 
+    const projectsDecorated = enrichmentDecorator(projects);
+    projectsDecorated.forEach(p => {
+      if (p.enrichmentResults) {
+        enrichedCount += 1;
+      }
+    });
+
     return (
       <Fragment>
         <p>Total number of projects: {projectsTotal}</p>
-        {console.log(projects)}
+        <p>Enriched projects: {enrichedCount}</p>
 
-        <ul className="ecl-list--unstyled">
-          {projects.map(project => (
-            <li className="ecl-list-item" key={project._source.project_id}>
-              <div className="ecl-field ecl-u-pa-xs">
-                <div className="ecl-field__label">ID</div>
-                <div className="ecl-field__body">{project._id}</div>
-              </div>
-              <div className="ecl-field ecl-u-pa-xs">
-                <div className="ecl-field__label">Title</div>
-                <div className="ecl-field__body">{project._source.title}</div>
-              </div>
-              <div className="ecl-field">
-                <div className="ecl-field__label">EU Contribution:</div>
-                <div className="ecl-field__body">
-                  {JSON.stringify(project._source.budget.eu_contrib)}
-                </div>
-              </div>
-              <div className="ecl-field">
-                <div className="ecl-field__label">Total:</div>
-                <div className="ecl-field__body">
-                  {JSON.stringify(project._source.budget.total_cost)}
-                </div>
-              </div>
-              <div className="ecl-field">
-                <div className="ecl-field__label">Locations:</div>
-                <div className="ecl-field__body">
-                  {JSON.stringify(project._source.project_locations)}
-                </div>
-              </div>
-            </li>
-          ))}
-        </ul>
+        {projectsDecorated.map(project => {
+          const { _id: key, _source: doc } = project;
+          const { title } = doc;
+          const isEnriched = project.enrichmentResults
+            ? ' (has been enriched)'
+            : '';
+
+          return (
+            <Collapsible trigger={title + isEnriched} key={key}>
+              {JSON.stringify(project.enrichmentResults, null, 2)}
+            </Collapsible>
+          );
+        })}
       </Fragment>
     );
   }
