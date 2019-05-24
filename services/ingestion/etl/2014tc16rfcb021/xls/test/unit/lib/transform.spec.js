@@ -34,7 +34,6 @@ describe('2014tc16rfcb021 XLS transformer', () => {
   });
 
   test('Produces correct JSON output in case of Dates in an ISO format', () => {
-    console.log(resultDates);
     expect(resultDates).toMatchSnapshot();
   });
 });
