@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Collapsible from 'react-collapsible';
+import Pager from 'react-pager-component';
 
 import Spinner from '../../../components/Spinner';
 
@@ -14,14 +15,17 @@ class Enrichment extends React.Component {
     super();
 
     this.state = {
+      total: 0,
+      length: 0,
+      current: 1,
       isLoading: false,
       projects: [],
-      projectsTotal: 0,
     };
 
     this.loadData = this.loadData.bind(this);
     this.setResults = this.setResults.bind(this);
     this.emptyResults = this.emptyResults.bind(this);
+    this.handlePageChange = this.handlePageChange.bind(this);
   }
 
   componentDidMount() {
@@ -31,60 +35,64 @@ class Enrichment extends React.Component {
     this.loadData();
   }
 
+  handlePageChange(newPage) {
+    this.setState({ current: newPage }, this.loadData);
+  }
+
   loadData() {
     const { computedKey } = this.props;
     this.setState({ isLoading: true }, this.setResults(computedKey));
   }
 
   setResults(computedKey) {
-    (async () => {
-      try {
-        const exists = await this.clients.public.indices.exists({
-          index: indices.projects,
+    const size = 9;
+    const { current } = this.state;
+    const from = (Number(current) - 1) * size;
+
+    const params = {
+      index: indices.projects,
+      type: 'project',
+      q: `computed_key:"${computedKey}.ndjson"`,
+      from,
+      size,
+    };
+
+    this.clients.public
+      .search(params)
+      .then(data => {
+        const projects = data.hits && data.hits.hits ? data.hits.hits : [];
+        const { total } = data.hits;
+        const length = Math.ceil(Number(total) / size);
+
+        this.setState({
+          projects,
+          isLoading: false,
+          total,
+          length,
         });
-
-        if (exists) {
-          const data = await this.clients.public.search({
-            index: indices.projects,
-            type: 'project',
-            q: `computed_key:"${computedKey}.ndjson"`,
-            size: 200,
-          });
-
-          this.setState({
-            projects: data.hits.hits,
-            isLoading: false,
-            projectsTotal: data.hits.total,
-          });
-        } else {
-          this.emptyResults();
-        }
-      } catch (error) {
-        console.error(
-          'An error occured while trying to fetch information.',
-          error
-        );
+      })
+      .catch(error => {
+        console.error(`An error occured: ${error.message}`);
         this.emptyResults();
-      }
-    })();
+      });
   }
 
   emptyResults() {
     this.setState({
       projects: [],
       isLoading: false,
-      projectsTotal: 0,
+      total: 0,
     });
   }
 
   render() {
     let enrichedCount = 0;
-    const { projects, isLoading, projectsTotal } = this.state;
+    const { projects, isLoading, total, current, length } = this.state;
 
     if (isLoading) {
       return <Spinner />;
     }
-    if (!projects || projectsTotal === 0) {
+    if (!projects || total === 0) {
       return (
         <h1 className="ecl-heading ecl-heading--h1 ecl-u-mt-none">
           No projects found in current file.
@@ -101,8 +109,14 @@ class Enrichment extends React.Component {
 
     return (
       <Fragment>
-        <p>Total number of projects: {projectsTotal}</p>
-        <p>Enriched projects: {enrichedCount}</p>
+        <p>Total number of projects: {total}</p>
+        <p>Number of enriched projects on this page: {enrichedCount}</p>
+
+        <Pager
+          length={length}
+          current={current}
+          onChange={this.handlePageChange}
+        />
 
         {projectsDecorated.map(project => {
           const { _id: key, _source: doc } = project;
@@ -117,6 +131,12 @@ class Enrichment extends React.Component {
             </Collapsible>
           );
         })}
+
+        <Pager
+          length={length}
+          current={current}
+          onChange={this.handlePageChange}
+        />
       </Fragment>
     );
   }
