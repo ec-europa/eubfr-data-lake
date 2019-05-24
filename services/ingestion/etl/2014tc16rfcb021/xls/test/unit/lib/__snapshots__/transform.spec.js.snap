@@ -183,9 +183,9 @@ Percent (Own Contributions): 0.02
     },
   ],
   "timeframe": Object {
-    "from": "2016-02-03T00:00:00.000Z",
+    "from": "2016-03-01T22:00:00.000Z",
     "from_precision": "day",
-    "to": "2018-02-02T00:00:00.000Z",
+    "to": "2018-02-01T22:00:00.000Z",
     "to_precision": "day",
   },
   "title": "Investigation of opportunities for reducing the TEN-T network use within the cross-border region of Romania-Bulgaria through optimazition of the freight and passanger transport and the development of a joint mechanism foe support of the intermodal connection",

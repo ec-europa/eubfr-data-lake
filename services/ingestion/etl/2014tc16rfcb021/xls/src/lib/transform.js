@@ -8,8 +8,6 @@ import type { Project } from '@eubfr/types';
 import getCountryCode from '@eubfr/lib/location/getCountryCode';
 import sanitizeBudgetItem from '@eubfr/lib/budget/budgetFormatter';
 
-import isIsoDate from './isIsoDate';
-
 /**
  * Preprocess `budget`.
  *
@@ -243,15 +241,15 @@ const getTimeframe = record => {
   let from = null;
   let to = null;
 
-  if (isIsoDate(record['Start date'])) {
-    from = record['Start date'];
-  } else {
+  try {
+    from = new Date(record['Start date']).toISOString();
+  } catch (error) {
     from = formatDate(record['Start date']);
   }
 
-  if (isIsoDate(record['End date'])) {
-    to = record['End date'];
-  } else {
+  try {
+    to = new Date(record['End date']).toISOString();
+  } catch (error) {
     to = formatDate(record['End date']);
   }
 
