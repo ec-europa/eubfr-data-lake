@@ -1,3 +1,5 @@
+/* eslint camelcase: "off" */
+
 /**
  * Adds a new property to {Project} accumulating results of the enrichment loop.
  * @param {Array<Project>} projects
@@ -22,7 +24,9 @@ const enrichmentDecorator = projects =>
         },
         ...project,
       };
-    } else return project;
+    }
+
+    return project;
   });
 
 export default enrichmentDecorator;

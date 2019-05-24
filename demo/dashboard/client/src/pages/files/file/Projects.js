@@ -1,98 +1,156 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import Collapsible from 'react-collapsible';
+import Pager from 'react-pager-component';
+
 import Spinner from '../../../components/Spinner';
 
 import clients from '../../../clientFactory';
 import indices from '../../../clientFactory/esIndices';
+
+import enrichmentDecorator from '../../../lib/enrichmentDecorator';
 
 class Projects extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      relatedProjects: [],
-      projectsLoading: false,
-      projectsCount: 0,
+      current: 1,
+      isLoading: false,
+      length: 0,
+      projects: [],
+      projectsDecorated: [],
+      total: 0,
+      projectsEnriched: 0,
     };
 
-    this.loadProjects = this.loadProjects.bind(this);
-    this.setProjects = this.setProjects.bind(this);
-    this.setEmptyProjects = this.setEmptyProjects.bind(this);
+    this.emptyResults = this.emptyResults.bind(this);
+    this.handlePageChange = this.handlePageChange.bind(this);
+    this.loadData = this.loadData.bind(this);
+    this.setResults = this.setResults.bind(this);
   }
 
   componentDidMount() {
+    this._isMounted = true;
+
     this.clients = clients.Create();
-
-    this.loadProjects();
+    this.loadData();
   }
 
-  // Load related Projects
-  loadProjects() {
-    const { computedKey } = this.props;
-    this.setState({ projectsLoading: true }, this.setProjects(computedKey));
-  }
-
-  setProjects(computedKey) {
-    return () =>
-      this.clients.public.indices
-        .exists({
-          index: indices.projects,
-        })
-        .then(exists =>
-          exists
-            ? this.clients.public
-                .search({
-                  index: indices.projects,
-                  type: 'project',
-                  q: `computed_key:"${computedKey}.ndjson"`,
-                })
-                .then(data =>
-                  this.setState({
-                    projectsLoading: false,
-                    relatedProjects: data.hits.hits,
-                    projectsCount: data.hits.total,
-                  })
-                )
-                .catch(error => {
-                  this.setEmptyProjects();
-                  throw Error(`An error occured: ${error.message}`);
-                })
-            : this.setEmptyProjects()
-        )
-        .catch(() => {
-          this.setEmptyProjects();
-        });
-  }
-
-  setEmptyProjects() {
+  emptyResults() {
     this.setState({
-      projectsLoading: false,
-      relatedProjects: [],
-      projectsCount: 0,
+      projects: [],
+      isLoading: false,
+      total: 0,
     });
   }
 
-  render() {
-    const { relatedProjects, projectsLoading, projectsCount } = this.state;
+  handlePageChange(newPage) {
+    this.setState({ current: newPage }, this.loadData);
+  }
 
-    if (projectsLoading) {
+  loadData() {
+    const { computedKey } = this.props;
+    this.setState({ isLoading: true }, this.setResults(computedKey));
+  }
+
+  setResults(computedKey) {
+    let projectsEnriched = 0;
+    const size = 9;
+    const { current } = this.state;
+    const from = (Number(current) - 1) * size;
+
+    const params = {
+      index: indices.projects,
+      type: 'project',
+      q: `computed_key:"${computedKey}.ndjson"`,
+      from,
+      size,
+    };
+
+    this.clients.public
+      .search(params)
+      .then(data => {
+        const projects = data.hits && data.hits.hits ? data.hits.hits : [];
+        const projectsDecorated = enrichmentDecorator(projects);
+
+        const { total } = data.hits;
+        const length = Math.ceil(Number(total) / size);
+
+        projectsDecorated.forEach(p => {
+          if (p.enrichmentResults) {
+            projectsEnriched += 1;
+          }
+        });
+
+        this.setState({
+          isLoading: false,
+          length,
+          projects,
+          projectsDecorated,
+          total,
+          projectsEnriched,
+        });
+      })
+      .catch(error => {
+        console.error(`An error occured: ${error.message}`);
+        this.emptyResults();
+      });
+  }
+
+  render() {
+    const {
+      projects,
+      projectsDecorated,
+      projectsEnriched,
+      isLoading,
+      total,
+      current,
+      length,
+    } = this.state;
+
+    if (isLoading) {
       return <Spinner />;
     }
-
-    if (!relatedProjects || projectsCount === 0) {
+    if (!projects || total === 0) {
       return (
         <h1 className="ecl-heading ecl-heading--h1 ecl-u-mt-none">
-          No projects found
+          No projects found in current file.
         </h1>
       );
     }
 
     return (
-      <ul>
-        {relatedProjects.map(project => (
-          <li key={project._source.project_id}>{project._source.title}</li>
-        ))}
-      </ul>
+      <Fragment>
+        <p>Total: {total}</p>
+        <p>Enriched on this page: {projectsEnriched}</p>
+
+        <Pager
+          length={length}
+          current={current}
+          onChange={this.handlePageChange}
+        />
+
+        {projectsDecorated.map(project => {
+          const { _id: key, _source: doc } = project;
+          const { title } = doc;
+          const isEnriched = project.enrichmentResults
+            ? ' (has been enriched)'
+            : '';
+
+          return (
+            <Collapsible trigger={title + isEnriched} key={key}>
+              {JSON.stringify(project.enrichmentResults)}
+            </Collapsible>
+          );
+        })}
+
+        <Pager
+          length={length}
+          current={current}
+          onChange={this.handlePageChange}
+        />
+      </Fragment>
     );
   }
 }
