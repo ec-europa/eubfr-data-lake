@@ -66,7 +66,10 @@ export const handler = async (event, context) => {
 
         // Parse file
         const buffer = Buffer.concat(buffers);
-        const workbook = XLSX.read(buffer);
+        const workbook = XLSX.read(buffer, {
+          cellText: false,
+          cellDates: true,
+        });
         const sheets = workbook.SheetNames;
 
         sheets.forEach(sheet => {
