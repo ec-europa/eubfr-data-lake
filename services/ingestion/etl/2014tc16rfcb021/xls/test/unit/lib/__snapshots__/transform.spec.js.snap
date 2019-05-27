@@ -1,101 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`2014tc16rfcb021 XLS transformer Produces correct JSON output in case of Dates in an ISO format 1`] = `
-Object {
-  "action": "",
-  "budget": Object {
-    "eu_contrib": Object {
-      "currency": "EUR",
-      "raw": 6660192.21,
-      "value": 6660192.21,
-    },
-    "funding_area": Array [],
-    "mmf_heading": "",
-    "other_contrib": Object {
-      "currency": "",
-      "raw": "",
-      "value": 0,
-    },
-    "private_fund": Object {
-      "currency": "",
-      "raw": "",
-      "value": 0,
-    },
-    "public_fund": Object {
-      "currency": "",
-      "raw": "",
-      "value": 0,
-    },
-    "total_cost": Object {
-      "currency": "EUR",
-      "raw": 7835520.26,
-      "value": 7835520.26,
-    },
-  },
-  "call_year": "",
-  "complete": false,
-  "description": "Ranking: 13 
-Project code: N/A 
-Objectives: Objective: modernizing the road infrastructure that is part of TEN-T network or that represents direct road connections to TEN-T by modernizing 6 662 m of infrastructure in Giurgiu Municipality, and 4 300 m in Ruse. 
-Duration: 30 months, 1 day 
-Category of intervention: 34 
-Percent (ERDF): 0.85 
-National co-financing(euro): 1018539.3 
-Percent (National co-financing): 0.13 
-Own Contribution (euro): 156788.75 
-Percent (Own Contributions): 0.02 
-",
-  "ec_priorities": Array [],
-  "media": Array [],
-  "programme_name": "",
-  "project_id": "2f303693f960d7171230ae2664a8302b",
-  "project_locations": Array [
-    Object {
-      "address": "",
-      "centroid": null,
-      "country_code": "RO",
-      "location": null,
-      "nuts": Array [],
-      "postal_code": "",
-      "region": "Giurgiu",
-      "town": "",
-    },
-  ],
-  "project_website": "",
-  "related_links": Array [],
-  "reporting_organisation": "Member states",
-  "results": Object {
-    "available": "",
-    "result": "",
-  },
-  "status": "In implementation",
-  "sub_programme_name": "",
-  "success_story": "",
-  "themes": Array [],
-  "third_parties": Array [
-    Object {
-      "address": "",
-      "country": "Romania",
-      "email": "",
-      "name": "Territorial Administrative Unit - Giurgiu Town",
-      "phone": "",
-      "region": "Giurgiu",
-      "role": "coordinator",
-      "type": "",
-      "website": "",
-    },
-  ],
-  "timeframe": Object {
-    "from": "2018-09-07T00:00:00.000Z",
-    "from_precision": "day",
-    "to": "2021-03-07T00:00:00.000Z",
-    "to_precision": "day",
-  },
-  "title": "Well-developed transportation system in the Euroregion Ruse-Giurgiu for better connectivity with TEN-T network",
-  "type": Array [],
-}
-`;
-
 exports[`2014tc16rfcb021 XLS transformer Produces correct JSON output structure 1`] = `
 Object {
   "action": "",
@@ -183,9 +87,9 @@ Percent (Own Contributions): 0.02
     },
   ],
   "timeframe": Object {
-    "from": "2016-03-01T22:00:00.000Z",
+    "from": "2016-02-03T00:00:00.000Z",
     "from_precision": "day",
-    "to": "2018-02-01T22:00:00.000Z",
+    "to": "2018-02-02T00:00:00.000Z",
     "to_precision": "day",
   },
   "title": "Investigation of opportunities for reducing the TEN-T network use within the cross-border region of Romania-Bulgaria through optimazition of the freight and passanger transport and the development of a joint mechanism foe support of the intermodal connection",

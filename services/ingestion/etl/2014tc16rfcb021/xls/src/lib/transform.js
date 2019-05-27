@@ -241,15 +241,15 @@ const getTimeframe = record => {
   let from = null;
   let to = null;
 
-  try {
-    from = new Date(record['Start date']).toISOString();
-  } catch (error) {
+  if (typeof record['Start date'] === 'object') {
+    from = record['Start date'].toISOString();
+  } else {
     from = formatDate(record['Start date']);
   }
 
-  try {
-    to = new Date(record['End date']).toISOString();
-  } catch (error) {
+  if (typeof record['End date'] === 'object') {
+    to = record['End date'].toISOString();
+  } else {
     to = formatDate(record['End date']);
   }
 
