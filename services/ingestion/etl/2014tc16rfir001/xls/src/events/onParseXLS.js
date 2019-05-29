@@ -73,7 +73,6 @@ export const handler = async (event, context) => {
           'Total eligible expenditure allocated to the operation / Montant total éligible attribué au projet',
           "Union co-financing rate as per priority axes / Taux de cofinancement de l'UE selon le statut du bénéficiaire",
           'Operation post code / Code postal',
-          'Country / Pays',
         ];
 
         // Parse file
