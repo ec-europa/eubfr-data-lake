@@ -9,6 +9,7 @@ import Spinner from '../../../components/Spinner';
 import clients from '../../../clientFactory';
 import indices from '../../../clientFactory/esIndices';
 
+// The work of this utility is supposed to be gradually deprecated after EUBFR-268.
 import enrichmentDecorator from '../../../lib/enrichmentDecorator';
 
 class Projects extends React.Component {
@@ -16,15 +17,17 @@ class Projects extends React.Component {
     super();
 
     this.state = {
+      budgetItemsCount: 0,
+      budgetItemsEnrichedCount: 0,
       current: 1,
+      enrichmentResults: [],
       isLoading: false,
       length: 0,
-      projects: [],
-      projectsDecorated: [],
-      total: 0,
-      projectsEnriched: 0,
       locationsCount: 0,
       locationsEnrichedCount: 0,
+      projects: [],
+      projectsEnriched: 0,
+      total: 0,
     };
 
     this.emptyResults = this.emptyResults.bind(this);
@@ -42,8 +45,8 @@ class Projects extends React.Component {
 
   emptyResults() {
     this.setState({
-      projects: [],
       isLoading: false,
+      projects: [],
       total: 0,
     });
   }
@@ -55,9 +58,11 @@ class Projects extends React.Component {
   getEnrichmentReport() {
     (async () => {
       const { computedKey } = this.props;
-      let pagination = 0;
+      let budgetItemsCount = 0;
+      let budgetItemsEnrichedCount = 0;
       let locationsCount = 0;
       let locationsEnrichedCount = 0;
+      let pagination = 0;
 
       const params = {
         index: indices.projects,
@@ -67,9 +72,7 @@ class Projects extends React.Component {
         body: {
           size: 1000,
           query: {
-            exists: {
-              field: 'project_locations',
-            },
+            match_all: {},
           },
         },
       };
@@ -88,14 +91,34 @@ class Projects extends React.Component {
         // eslint-disable-next-line
         hits.hits.forEach(record => {
           const locations = record._source.project_locations;
+          const { budget } = record._source;
 
+          // Count occurences which contain useful data about locations and budget.
+
+          // Location is a nested document, so 1 project record can contain multiple sub-documents of a location sub-records.
           const locationsInRecord = locations.length;
           locationsCount += locationsInRecord;
 
+          // Budget enrichment happens in total_cost and eu_contrib.
+          if (budget.total_cost.value || budget.eu_contrib.value) {
+            budgetItemsCount += 1;
+          }
+
+          // Count how many items have been enriched.
+
+          // Location items are marked with a field "enriched".
           const enrichedLocationsInRecord = locations.filter(
             location => location.enriched
           ).length;
           locationsEnrichedCount += enrichedLocationsInRecord;
+
+          // Budget items are updated in-place, state before enrichment is stored in "_original" sub-field.
+          if (budget.total_cost._original) {
+            budgetItemsEnrichedCount += 1;
+          }
+          if (budget.eu_contrib._original) {
+            budgetItemsEnrichedCount += 1;
+          }
         });
 
         // eslint-disable-next-line
@@ -110,7 +133,12 @@ class Projects extends React.Component {
         _scroll_id = next._scroll_id;
       }
 
-      this.setState({ locationsCount, locationsEnrichedCount });
+      this.setState({
+        budgetItemsCount,
+        budgetItemsEnrichedCount,
+        locationsCount,
+        locationsEnrichedCount,
+      });
     })();
   }
 
@@ -137,24 +165,25 @@ class Projects extends React.Component {
       .search(params)
       .then(data => {
         const projects = data.hits && data.hits.hits ? data.hits.hits : [];
-        const projectsDecorated = enrichmentDecorator(projects);
+        // Take enrichmentResults directly from Elasticsearch when available.
+        const enrichmentResults = enrichmentDecorator(projects);
 
         const { total } = data.hits;
         const length = Math.ceil(Number(total) / size);
 
-        projectsDecorated.forEach(p => {
+        enrichmentResults.forEach(p => {
           if (p.enrichmentResults) {
             projectsEnriched += 1;
           }
         });
 
         this.setState({
+          enrichmentResults,
           isLoading: false,
           length,
           projects,
-          projectsDecorated,
-          total,
           projectsEnriched,
+          total,
         });
       })
       .catch(error => {
@@ -165,15 +194,17 @@ class Projects extends React.Component {
 
   render() {
     const {
-      projects,
-      projectsDecorated,
-      projectsEnriched,
+      budgetItemsCount,
+      budgetItemsEnrichedCount,
+      current,
+      enrichmentResults,
+      isLoading,
+      length,
       locationsCount,
       locationsEnrichedCount,
-      isLoading,
+      projects,
+      projectsEnriched,
       total,
-      current,
-      length,
     } = this.state;
 
     if (isLoading) {
@@ -193,6 +224,8 @@ class Projects extends React.Component {
         <p>Locations: {locationsCount}</p>
         <p>Enriched locations: {locationsEnrichedCount}</p>
         <p>Enriched on this page: {projectsEnriched}</p>
+        <p>Budget items: {budgetItemsCount}</p>
+        <p>Enriched budget items: {budgetItemsEnrichedCount}</p>
 
         <Pager
           length={length}
@@ -200,7 +233,7 @@ class Projects extends React.Component {
           onChange={this.handlePageChange}
         />
 
-        {projectsDecorated.map(project => {
+        {enrichmentResults.map(project => {
           const { _id: key, _source: doc } = project;
           const { title } = doc;
           const isEnriched = project.enrichmentResults
@@ -217,7 +250,12 @@ class Projects extends React.Component {
                 }
               />
               <Collapsible trigger={title} key={key}>
-                <ReactJson collapsed={true} src={project.enrichmentResults} />
+                <ReactJson
+                  name="enrichmentResults"
+                  displayObjectSize={false}
+                  collapsed={true}
+                  src={project.enrichmentResults}
+                />
               </Collapsible>
             </div>
           );
