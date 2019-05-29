@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Collapsible from 'react-collapsible';
 import Pager from 'react-pager-component';
+import ReactJson from 'react-json-view';
 
 import Spinner from '../../../components/Spinner';
 
@@ -22,18 +23,20 @@ class Projects extends React.Component {
       projectsDecorated: [],
       total: 0,
       projectsEnriched: 0,
+      locationsCount: 0,
+      locationsEnrichedCount: 0,
     };
 
     this.emptyResults = this.emptyResults.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
+    this.getEnrichmentReport = this.getEnrichmentReport.bind(this);
     this.loadData = this.loadData.bind(this);
     this.setResults = this.setResults.bind(this);
   }
 
   componentDidMount() {
-    this._isMounted = true;
-
     this.clients = clients.Create();
+    this.getEnrichmentReport();
     this.loadData();
   }
 
@@ -47,6 +50,68 @@ class Projects extends React.Component {
 
   handlePageChange(newPage) {
     this.setState({ current: newPage }, this.loadData);
+  }
+
+  getEnrichmentReport() {
+    (async () => {
+      const { computedKey } = this.props;
+      let pagination = 0;
+      let locationsCount = 0;
+      let locationsEnrichedCount = 0;
+
+      const params = {
+        index: indices.projects,
+        type: 'project',
+        scroll: '10m',
+        q: `computed_key:"${computedKey}.ndjson"`,
+        body: {
+          size: 1000,
+          query: {
+            exists: {
+              field: 'project_locations',
+            },
+          },
+        },
+      };
+
+      // @see https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference.html#_search
+      const results = await this.clients.public.search(params);
+
+      // eslint-disable-next-line
+      let { hits, _scroll_id } = results;
+
+      while (hits && hits.hits.length) {
+        pagination += hits.hits.length;
+        console.log(`Compiling reports about enrichment results ...`);
+        console.log(`${pagination} of ${hits.total}`);
+
+        // eslint-disable-next-line
+        hits.hits.forEach(record => {
+          const locations = record._source.project_locations;
+
+          const locationsInRecord = locations.length;
+          locationsCount += locationsInRecord;
+
+          const enrichedLocationsInRecord = locations.filter(
+            location => location.enriched
+          ).length;
+          locationsEnrichedCount += enrichedLocationsInRecord;
+        });
+
+        // eslint-disable-next-line
+        const next = await this.clients.public.scroll({
+          scroll_id: _scroll_id,
+          scroll: '10m',
+        });
+
+        // eslint-disable-next-line
+        hits = next.hits;
+        // eslint-disable-next-line
+        _scroll_id = next._scroll_id;
+      }
+
+      this.setState({ locationsCount, locationsEnrichedCount });
+    })();
   }
 
   loadData() {
@@ -103,6 +168,8 @@ class Projects extends React.Component {
       projects,
       projectsDecorated,
       projectsEnriched,
+      locationsCount,
+      locationsEnrichedCount,
       isLoading,
       total,
       current,
@@ -122,7 +189,9 @@ class Projects extends React.Component {
 
     return (
       <Fragment>
-        <p>Total: {total}</p>
+        <p>Records: {total}</p>
+        <p>Locations: {locationsCount}</p>
+        <p>Enriched locations: {locationsEnrichedCount}</p>
         <p>Enriched on this page: {projectsEnriched}</p>
 
         <Pager
@@ -139,9 +208,18 @@ class Projects extends React.Component {
             : '';
 
           return (
-            <Collapsible trigger={title + isEnriched} key={key}>
-              {JSON.stringify(project.enrichmentResults)}
-            </Collapsible>
+            <div key={key} className="ecl-u-d-flex ecl-u-align-items-center">
+              <span
+                className={
+                  isEnriched
+                    ? 'ecl-icon ecl-icon--data ecl-u-color-primary'
+                    : 'ecl-icon ecl-icon--data'
+                }
+              />
+              <Collapsible trigger={title} key={key}>
+                <ReactJson collapsed={true} src={project.enrichmentResults} />
+              </Collapsible>
+            </div>
           );
         })}
 
