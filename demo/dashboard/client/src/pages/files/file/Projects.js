@@ -276,7 +276,7 @@ class Projects extends React.Component {
     return (
       <div className="ecl-container">
         <div className="ecl-row">
-          <div className="ecl-col-md-4">
+          <div className="ecl-col-md-3">
             <p>Overall statistics</p>
             <ul>
               <li>Records: {total}</li>
@@ -291,56 +291,63 @@ class Projects extends React.Component {
             </ul>
             <p>Enriched on this page: {projectsEnriched}</p>
           </div>
-          <div className="ecl-col-md-8 ecl-u-d-flex ecl-u-align-items-center">
+          <div className="ecl-col-md-9">
             {!enrichmentReportsLoading ? (
-              <Fragment>
-                <PieChart width={200} height={200}>
-                  <Pie
-                    labelLine={false}
-                    label={this.renderCustomizedLabel}
-                    data={locationsData}
-                    dataKey="value"
-                    nameKey="name"
-                    outerRadius={50}
-                    fill="#9F9F9F"
-                  >
-                    {locationsData.map((entry, key) => (
-                      <Cell
-                        key={key}
-                        fill={
-                          entry.name.includes('enriched')
-                            ? '#467A39'
-                            : '#9F9F9F'
-                        }
-                      />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                </PieChart>
-                <PieChart width={200} height={200}>
-                  <Pie
-                    labelLine={false}
-                    label={this.renderCustomizedLabel}
-                    data={budgetData}
-                    dataKey="value"
-                    nameKey="name"
-                    outerRadius={50}
-                    fill="#9F9F9F"
-                  >
-                    {budgetData.map((entry, key) => (
-                      <Cell
-                        key={key}
-                        fill={
-                          entry.name.includes('enriched')
-                            ? '#467A39'
-                            : '#9F9F9F'
-                        }
-                      />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                </PieChart>
-              </Fragment>
+              <div className="ecl-container" style={{ textAlign: 'center' }}>
+                <div className="ecl-row">
+                  <div className="ecl-col-md-6">
+                    <h2>Locations</h2>
+                    <PieChart width={300} height={300}>
+                      <Pie
+                        labelLine={false}
+                        label={this.renderCustomizedLabel}
+                        data={locationsData}
+                        dataKey="value"
+                        nameKey="name"
+                        fill="#9F9F9F"
+                      >
+                        {locationsData.map((entry, key) => (
+                          <Cell
+                            key={key}
+                            fill={
+                              entry.name.includes('enriched')
+                                ? '#467A39'
+                                : '#9F9F9F'
+                            }
+                          />
+                        ))}
+                      </Pie>
+                      <Tooltip />
+                    </PieChart>
+                  </div>
+
+                  <div className="ecl-col-md-6">
+                    <h2>Budgetary</h2>
+                    <PieChart width={300} height={300}>
+                      <Pie
+                        labelLine={false}
+                        label={this.renderCustomizedLabel}
+                        data={budgetData}
+                        dataKey="value"
+                        nameKey="name"
+                        fill="#9F9F9F"
+                      >
+                        {budgetData.map((entry, key) => (
+                          <Cell
+                            key={key}
+                            fill={
+                              entry.name.includes('enriched')
+                                ? '#467A39'
+                                : '#9F9F9F'
+                            }
+                          />
+                        ))}
+                      </Pie>
+                      <Tooltip />
+                    </PieChart>
+                  </div>
+                </div>
+              </div>
             ) : (
               <Fragment>
                 <p>Compiling reports about enrichment results ...</p>
