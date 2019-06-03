@@ -1,0 +1,98 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`2014uk16rfop001 ODS transformer Produces correct JSON output structure 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "funding_area": Array [],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "GBP",
+      "raw": 3636525,
+      "value": 3636525,
+    },
+  },
+  "call_year": "",
+  "complete": false,
+  "description": "Beneficiary identifier (E-claims ref): 05R16P00351 
+Sector NACE group level: M71.20 Technical testing and analysis 
+SANI reference of the aid measure: SA 39161 
+Objective of the aid: Fundamental research (Art. 25(2)(a)) 
+",
+  "ec_priorities": Array [],
+  "media": Array [],
+  "programme_name": "",
+  "project_id": "3d3de125a4aa564b78a2979649ed587a",
+  "project_locations": Array [
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "GB",
+      "location": null,
+      "nuts": Array [
+        Object {
+          "code": "Cornwall and Isles of Scilly",
+          "level": 2,
+          "name": "",
+          "year": null,
+        },
+      ],
+      "postal_code": "",
+      "region": "",
+      "town": "",
+    },
+  ],
+  "project_website": "",
+  "related_links": Array [],
+  "reporting_organisation": "Member states",
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
+  "status": "",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [],
+  "third_parties": Array [
+    Object {
+      "address": "",
+      "country": "GB",
+      "email": "",
+      "name": "CETO Wave Energy UK Ltd",
+      "phone": "",
+      "region": "",
+      "role": "Beneficiary",
+      "type": "",
+      "website": "",
+    },
+  ],
+  "timeframe": Object {
+    "from": "2016-11-21T22:00:00.000Z",
+    "from_precision": "day",
+    "to": null,
+    "to_precision": "day",
+  },
+  "title": "European Regional Development Fund State Aid",
+  "type": Array [],
+}
+`;

@@ -1,0 +1,180 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`XLS transformers for 2014uk16rfop001 Type ESF: produces correct JSON output structure 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "GBP",
+      "raw": 0.5,
+      "value": 433332,
+    },
+    "funding_area": Array [],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "GBP",
+      "raw": 866664,
+      "value": 866664,
+    },
+  },
+  "call_year": "",
+  "complete": false,
+  "description": "To establish and manage a geographic or employer sector based Career Cluster that aims to improve the labour market relevance of education",
+  "ec_priorities": Array [],
+  "media": Array [],
+  "programme_name": "",
+  "project_id": "c4e03cd67eedb94a8ecf3df27f16dfbf",
+  "project_locations": Array [
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "GB",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "LONDON",
+      "town": "",
+    },
+  ],
+  "project_website": "",
+  "related_links": Array [],
+  "reporting_organisation": "Member states",
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
+  "status": "",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [
+    "02     Sustainable integration of young people not in employment, education or training in the labour market",
+  ],
+  "third_parties": Array [
+    Object {
+      "address": "",
+      "country": "GB",
+      "email": "",
+      "name": "15BILLION",
+      "phone": "",
+      "region": "",
+      "role": "Beneficiary",
+      "type": "",
+      "website": "",
+    },
+  ],
+  "timeframe": Object {
+    "from": "2016-06-30T22:00:00.000Z",
+    "from_precision": "day",
+    "to": "2019-03-30T21:00:00.000Z",
+    "to_precision": "day",
+  },
+  "title": "CAREERS CLUSTERS NORTH AND EAST LONDON",
+  "type": Array [],
+}
+`;
+
+exports[`XLS transformers for 2014uk16rfop001 Type ESIF: produces correct JSON output structure 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "GBP",
+      "raw": 598176,
+      "value": 598176,
+    },
+    "funding_area": Array [],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "GBP",
+      "raw": 1196352,
+      "value": 1196352,
+    },
+  },
+  "call_year": "",
+  "complete": false,
+  "description": "Type of fund: ERDF 
+Priority Axis: 1 
+Summary of project (max 100 words): BREAKTHROUGH creates unique environments that stimulate innovation, by leading diverse and cross-cutting teams on expeditions to new cross-cluster market opportunities.  
+",
+  "ec_priorities": Array [],
+  "media": Array [],
+  "programme_name": "",
+  "project_id": "176457b26915b02e6f2fc20b2b7af749",
+  "project_locations": Array [
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "GB",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "NR14 8FB",
+      "region": "New Anglia",
+      "town": "",
+    },
+  ],
+  "project_website": "",
+  "related_links": Array [],
+  "reporting_organisation": "Member states",
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
+  "status": "",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [
+    "065 Research and Innovation processes, technology transfer and c…",
+  ],
+  "third_parties": Array [
+    Object {
+      "address": "",
+      "country": "GB",
+      "email": "",
+      "name": "Hethel Innovation Ltd",
+      "phone": "",
+      "region": "",
+      "role": "Beneficiary",
+      "type": "",
+      "website": "",
+    },
+  ],
+  "timeframe": Object {
+    "from": "2018-12-31T21:00:00.000Z",
+    "from_precision": "day",
+    "to": "2021-12-30T21:00:00.000Z",
+    "to_precision": "day",
+  },
+  "title": "Breakthrough",
+  "type": Array [],
+}
+`;

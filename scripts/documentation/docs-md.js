@@ -25,6 +25,9 @@ const transforms = [
   '2014tc16rfir001-xls',
   '2014tc16rfpc001-xls',
   '2014tc16rftn002-xls',
+  '2014uk16rfop001-xls',
+  '2014uk16rfop001-csv',
+  '2014uk16rfop001-ods',
   'bulgaria-xls',
   'cordis-csv',
   'devco-xls',
@@ -41,10 +44,10 @@ const transforms = [
 ];
 
 transforms.forEach(transform => {
-  const etl = transform.split('-');
+  const [name, format] = transform.split('-');
 
   documentation
-    .build(`**/etl/${etl[0]}/${etl[1]}/**/transform.js`, {})
+    .build(`**/etl/${name}/${format}/**/transform.js`, {})
     .then(documentation.formats.md)
     .then(output => {
       fs.writeFileSync(
