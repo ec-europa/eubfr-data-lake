@@ -1,6 +1,7 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Collapsible from 'react-collapsible';
+import { PieChart, Pie, Cell, Tooltip } from 'recharts';
 import Pager from 'react-pager-component';
 import ReactJson from 'react-json-view';
 
@@ -31,8 +32,8 @@ class Projects extends React.Component {
     };
 
     this.emptyResults = this.emptyResults.bind(this);
-    this.handlePageChange = this.handlePageChange.bind(this);
     this.getEnrichmentReport = this.getEnrichmentReport.bind(this);
+    this.handlePageChange = this.handlePageChange.bind(this);
     this.loadData = this.loadData.bind(this);
     this.setResults = this.setResults.bind(this);
   }
@@ -192,6 +193,32 @@ class Projects extends React.Component {
       });
   }
 
+  renderCustomizedLabel = ({
+    cx,
+    cy,
+    midAngle,
+    innerRadius,
+    outerRadius,
+    percent,
+  }) => {
+    const RADIAN = Math.PI / 180;
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+    return (
+      <text
+        x={x}
+        y={y}
+        fill="white"
+        textAnchor={x > cx ? 'start' : 'end'}
+        dominantBaseline="central"
+      >
+        {`${(percent * 100).toFixed(0)}%`}
+      </text>
+    );
+  };
+
   render() {
     const {
       budgetItemsCount,
@@ -218,14 +245,85 @@ class Projects extends React.Component {
       );
     }
 
+    const locationsData = [
+      {
+        name: 'Locations without enrichment',
+        value: locationsCount - locationsEnrichedCount,
+      },
+      {
+        name: 'Locations which have been enriched',
+        value: locationsEnrichedCount,
+      },
+    ];
+
+    const budgetData = [
+      {
+        name: 'Budget items without enrichment',
+        value: budgetItemsCount - budgetItemsEnrichedCount,
+      },
+      {
+        name: 'Budget items which have been enriched',
+        value: budgetItemsEnrichedCount,
+      },
+    ];
+
     return (
-      <Fragment>
-        <p>Records: {total}</p>
-        <p>Locations: {locationsCount}</p>
-        <p>Enriched locations: {locationsEnrichedCount}</p>
-        <p>Enriched on this page: {projectsEnriched}</p>
-        <p>Budget items: {budgetItemsCount}</p>
-        <p>Enriched budget items: {budgetItemsEnrichedCount}</p>
+      <div className="ecl-container">
+        <div className="ecl-row">
+          <div className="ecl-col-md-4">
+            <p>Overall statistics</p>
+            <ul>
+              <li>Records: {total}</li>
+              <li>Locations: {locationsCount}</li>
+              <li>Budget items: {budgetItemsCount}</li>
+            </ul>
+            <p>Enriched on this page: {projectsEnriched}</p>
+          </div>
+          <div className="ecl-col-md-8 ecl-u-d-flex ecl-u-align-items-center">
+            <PieChart width={200} height={200}>
+              <Pie
+                labelLine={false}
+                label={this.renderCustomizedLabel}
+                data={locationsData}
+                dataKey="value"
+                nameKey="name"
+                outerRadius={50}
+                fill="#9F9F9F"
+              >
+                {locationsData.map((entry, key) => (
+                  <Cell
+                    key={key}
+                    fill={
+                      entry.name.includes('enriched') ? '#467A39' : '#9F9F9F'
+                    }
+                  />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+            <PieChart width={200} height={200}>
+              <Pie
+                labelLine={false}
+                label={this.renderCustomizedLabel}
+                data={budgetData}
+                dataKey="value"
+                nameKey="name"
+                outerRadius={50}
+                fill="#9F9F9F"
+              >
+                {budgetData.map((entry, key) => (
+                  <Cell
+                    key={key}
+                    fill={
+                      entry.name.includes('enriched') ? '#467A39' : '#9F9F9F'
+                    }
+                  />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </div>
+        </div>
 
         <Pager
           length={length}
@@ -266,7 +364,7 @@ class Projects extends React.Component {
           current={current}
           onChange={this.handlePageChange}
         />
-      </Fragment>
+      </div>
     );
   }
 }
