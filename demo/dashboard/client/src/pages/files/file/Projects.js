@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Collapsible from 'react-collapsible';
 import { PieChart, Pie, Cell, Tooltip } from 'recharts';
@@ -21,7 +21,9 @@ class Projects extends React.Component {
       budgetItemsCount: 0,
       budgetItemsEnrichedCount: 0,
       current: 1,
+      enrichmentReportsMessage: '',
       enrichmentResults: [],
+      enrichmentReportsLoading: true,
       isLoading: false,
       length: 0,
       locationsCount: 0,
@@ -47,6 +49,7 @@ class Projects extends React.Component {
   emptyResults() {
     this.setState({
       isLoading: false,
+      enrichmentReportsLoading: true,
       projects: [],
       total: 0,
     });
@@ -86,8 +89,9 @@ class Projects extends React.Component {
 
       while (hits && hits.hits.length) {
         pagination += hits.hits.length;
-        console.log(`Compiling reports about enrichment results ...`);
-        console.log(`${pagination} of ${hits.total}`);
+        this.setState({
+          enrichmentReportsMessage: `${pagination} of ${hits.total}`,
+        });
 
         // eslint-disable-next-line
         hits.hits.forEach(record => {
@@ -137,6 +141,7 @@ class Projects extends React.Component {
       this.setState({
         budgetItemsCount,
         budgetItemsEnrichedCount,
+        enrichmentReportsLoading: false,
         locationsCount,
         locationsEnrichedCount,
       });
@@ -224,6 +229,8 @@ class Projects extends React.Component {
       budgetItemsCount,
       budgetItemsEnrichedCount,
       current,
+      enrichmentReportsLoading,
+      enrichmentReportsMessage,
       enrichmentResults,
       isLoading,
       length,
@@ -255,7 +262,6 @@ class Projects extends React.Component {
         value: locationsEnrichedCount,
       },
     ];
-
     const budgetData = [
       {
         name: 'Budget items without enrichment',
@@ -274,54 +280,74 @@ class Projects extends React.Component {
             <p>Overall statistics</p>
             <ul>
               <li>Records: {total}</li>
-              <li>Locations: {locationsCount}</li>
-              <li>Budget items: {budgetItemsCount}</li>
+              <li>
+                Locations:{' '}
+                {enrichmentReportsLoading ? 'loading ...' : locationsCount}
+              </li>
+              <li>
+                Budget items:{' '}
+                {enrichmentReportsLoading ? 'loading ...' : budgetItemsCount}
+              </li>
             </ul>
             <p>Enriched on this page: {projectsEnriched}</p>
           </div>
           <div className="ecl-col-md-8 ecl-u-d-flex ecl-u-align-items-center">
-            <PieChart width={200} height={200}>
-              <Pie
-                labelLine={false}
-                label={this.renderCustomizedLabel}
-                data={locationsData}
-                dataKey="value"
-                nameKey="name"
-                outerRadius={50}
-                fill="#9F9F9F"
-              >
-                {locationsData.map((entry, key) => (
-                  <Cell
-                    key={key}
-                    fill={
-                      entry.name.includes('enriched') ? '#467A39' : '#9F9F9F'
-                    }
-                  />
-                ))}
-              </Pie>
-              <Tooltip />
-            </PieChart>
-            <PieChart width={200} height={200}>
-              <Pie
-                labelLine={false}
-                label={this.renderCustomizedLabel}
-                data={budgetData}
-                dataKey="value"
-                nameKey="name"
-                outerRadius={50}
-                fill="#9F9F9F"
-              >
-                {budgetData.map((entry, key) => (
-                  <Cell
-                    key={key}
-                    fill={
-                      entry.name.includes('enriched') ? '#467A39' : '#9F9F9F'
-                    }
-                  />
-                ))}
-              </Pie>
-              <Tooltip />
-            </PieChart>
+            {!enrichmentReportsLoading ? (
+              <Fragment>
+                <PieChart width={200} height={200}>
+                  <Pie
+                    labelLine={false}
+                    label={this.renderCustomizedLabel}
+                    data={locationsData}
+                    dataKey="value"
+                    nameKey="name"
+                    outerRadius={50}
+                    fill="#9F9F9F"
+                  >
+                    {locationsData.map((entry, key) => (
+                      <Cell
+                        key={key}
+                        fill={
+                          entry.name.includes('enriched')
+                            ? '#467A39'
+                            : '#9F9F9F'
+                        }
+                      />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                </PieChart>
+                <PieChart width={200} height={200}>
+                  <Pie
+                    labelLine={false}
+                    label={this.renderCustomizedLabel}
+                    data={budgetData}
+                    dataKey="value"
+                    nameKey="name"
+                    outerRadius={50}
+                    fill="#9F9F9F"
+                  >
+                    {budgetData.map((entry, key) => (
+                      <Cell
+                        key={key}
+                        fill={
+                          entry.name.includes('enriched')
+                            ? '#467A39'
+                            : '#9F9F9F'
+                        }
+                      />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                </PieChart>
+              </Fragment>
+            ) : (
+              <Fragment>
+                <p>Compiling reports about enrichment results ...</p>
+                <p>{enrichmentReportsMessage}</p>
+                <Spinner />
+              </Fragment>
+            )}
           </div>
         </div>
 
