@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`XLS transformer for 2014uk16rfop003 Produces correct JSON output structure 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "funding_area": Array [],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "GBP",
+      "raw": "£905,031.51",
+      "value": 905031.51,
+    },
+  },
+  "call_year": "",
+  "complete": false,
+  "description": "",
+  "ec_priorities": Array [],
+  "media": Array [],
+  "programme_name": "",
+  "project_id": "200048",
+  "project_locations": Array [
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "GB",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "BT2 8FD",
+      "region": "",
+      "town": "",
+    },
+  ],
+  "project_website": "",
+  "related_links": Array [],
+  "reporting_organisation": "Member states",
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
+  "status": "",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [],
+  "third_parties": Array [
+    Object {
+      "address": "",
+      "country": "GB",
+      "email": "",
+      "name": "ERDF Managing Authority",
+      "phone": "",
+      "region": "",
+      "role": "Lead organisation",
+      "type": "",
+      "website": "",
+    },
+  ],
+  "timeframe": Object {
+    "from": "2015-06-29T00:00:00.000Z",
+    "from_precision": "day",
+    "to": "2017-03-31T00:00:00.000Z",
+    "to_precision": "day",
+  },
+  "title": "MA Staff Salaries",
+  "type": Array [],
+}
+`;
