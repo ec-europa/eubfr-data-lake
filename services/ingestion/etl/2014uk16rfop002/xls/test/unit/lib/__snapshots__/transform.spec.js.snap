@@ -1,0 +1,94 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`XLS transformer for 2014uk16rfop002 Produces correct JSON output structure 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "GBP",
+      "raw": 118185.15,
+      "value": 118185.15,
+    },
+    "funding_area": Array [],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "GBP",
+      "raw": 393950.5,
+      "value": 393950.5,
+    },
+  },
+  "call_year": "",
+  "complete": false,
+  "description": "Project No.: 14-20/001 
+GOG (£): 275765.35 
+PS (£): -",
+  "ec_priorities": Array [],
+  "media": Array [],
+  "programme_name": "",
+  "project_id": "c6c3755c6e0164343f7ad050a0ce9e77",
+  "project_locations": Array [
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "GB",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "",
+      "town": "",
+    },
+  ],
+  "project_website": "",
+  "related_links": Array [],
+  "reporting_organisation": "Member states",
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
+  "status": "",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [
+    "Equipment",
+    "Materials",
+    "Installation",
+    "Labour",
+  ],
+  "third_parties": Array [
+    Object {
+      "address": "",
+      "country": "GB",
+      "email": "",
+      "name": "GSLA",
+      "phone": "",
+      "region": "",
+      "role": "Sponsor",
+      "type": "",
+      "website": "",
+    },
+  ],
+  "timeframe": Object {
+    "from": "2015-06-01T21:00:00.000Z",
+    "from_precision": "day",
+    "to": "2016-04-29T21:00:00.000Z",
+    "to_precision": "day",
+  },
+  "title": "Solar Panels Phase II",
+  "type": Array [],
+}
+`;
