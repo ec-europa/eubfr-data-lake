@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Collapsible from 'react-collapsible';
 import { PieChart, Pie, Cell, Tooltip } from 'recharts';
 import Pager from 'react-pager-component';
-import ReactJson from 'react-json-view';
+import JsonView from 'react-json-view';
 
 import Spinner from '../../../components/Spinner';
 
@@ -361,17 +361,41 @@ class Projects extends React.Component {
         <ul className="ecl-listing">
           {enrichmentResults.map((project, key) => {
             const { _source: doc } = project;
-            const { title } = doc;
+            const { title, description } = doc;
 
             return (
               <li className="ecl-list-item" key={key} tabIndex={key}>
                 <Collapsible trigger={title}>
-                  <ReactJson
-                    name="enrichmentResults"
-                    displayObjectSize={false}
-                    collapsed={true}
-                    src={project.enrichmentResults}
-                  />
+                  <Fragment>
+                    <p
+                      className="ecl-paragraph"
+                      dangerouslySetInnerHTML={{
+                        __html: description,
+                      }}
+                    />
+                    {project.enrichmentResults
+                      ? Object.keys(project.enrichmentResults).map(
+                          enrichedProperty => (
+                            <Fragment>
+                              <h3>
+                                Enrichment in <code>{enrichedProperty}</code>
+                              </h3>
+                              <p className="ecl-paragraph">
+                                <JsonView
+                                  name={enrichedProperty}
+                                  displayObjectSize={false}
+                                  collapsed={true}
+                                  src={
+                                    project.enrichmentResults[enrichedProperty]
+                                  }
+                                />
+                                )
+                              </p>
+                            </Fragment>
+                          )
+                        )
+                      : ''}
+                  </Fragment>
                 </Collapsible>
               </li>
             );
