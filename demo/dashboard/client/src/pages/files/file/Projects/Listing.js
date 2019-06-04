@@ -160,7 +160,6 @@ const Listing = ({
                             collapsed={true}
                             src={project.enrichmentResults[enrichedProperty]}
                           />
-                          )
                         </Fragment>
                       )
                     )
