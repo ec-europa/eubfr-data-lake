@@ -558,9 +558,9 @@ Union co-financing rate in % (average as in CP): 83;83;83;83;83;83;83;83;83;83;8
     },
   ],
   "timeframe": Object {
-    "from": "2016-01-06T00:00:00.000Z",
+    "from": "2016-06-01T00:00:00.000Z",
     "from_precision": "day",
-    "to": "2021-07-05T00:00:00.000Z",
+    "to": "2019-05-31T00:00:00.000Z",
     "to_precision": "day",
   },
   "title": "Focus IN CD",

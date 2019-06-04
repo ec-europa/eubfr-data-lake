@@ -263,24 +263,28 @@ const getThirdParties = record => {
 };
 
 /**
- * Format date
+ * Preprocess/format date.
  *
  * @memberof 2014tc16rftn003XlsTransform
- * @param {Date} date Date in "10/9/14" (MM/DD/YY) or "10/9/2014" (MM/DD/YYYY) format
+ * @param {Date} date Date
+ *
+ * Supported formats:
+ *
+ * - `DD/MM/YYYY`
+ *
  * @returns {Date} The date formatted into an ISO 8601 date format
  *
- * @example
- * input => "10/9/2014"
- * output => "2014-10-09T00:00:00.000Z"
  */
 const formatDate = date => {
   if (!date || typeof date !== 'string') return null;
+
   const d = date.split(/\//);
   if (d.length !== 3) return null;
-  // If year is given as 2 digits, make it 4 digits.
-  if (d[2].length === 2) d[2] = `20${d[2]}`;
-  const [month, day, year] = d;
+
+  const [day, month, year] = d;
+
   if (!day || !month || !year) return null;
+
   try {
     return new Date(Date.UTC(year, month - 1, day)).toISOString();
   } catch (e) {
