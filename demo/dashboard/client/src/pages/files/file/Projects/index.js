@@ -1,17 +1,14 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import Collapsible from 'react-collapsible';
-import { PieChart, Pie, Cell, Tooltip } from 'recharts';
-import Pager from 'react-pager-component';
-import JsonView from 'react-json-view';
+import Spinner from '../../../../components/Spinner';
 
-import Spinner from '../../../components/Spinner';
-
-import clients from '../../../clientFactory';
-import indices from '../../../clientFactory/esIndices';
+import clients from '../../../../clientFactory';
+import indices from '../../../../clientFactory/esIndices';
 
 // The work of this utility is supposed to be gradually deprecated after EUBFR-268.
-import enrichmentDecorator from '../../../lib/enrichmentDecorator';
+import enrichmentDecorator from '../../../../lib/enrichmentDecorator';
+
+import Listing from './Listing';
 
 class Projects extends React.Component {
   constructor() {
@@ -25,7 +22,7 @@ class Projects extends React.Component {
       enrichmentResults: [],
       enrichmentReportsLoading: true,
       isLoading: false,
-      length: 0,
+      pagerLength: 0,
       locationsCount: 0,
       locationsEnrichedCount: 0,
       projects: [],
@@ -175,7 +172,7 @@ class Projects extends React.Component {
         const enrichmentResults = enrichmentDecorator(projects);
 
         const { total } = data.hits;
-        const length = Math.ceil(Number(total) / size);
+        const pagerLength = Math.ceil(Number(total) / size);
 
         enrichmentResults.forEach(p => {
           if (p.enrichmentResults) {
@@ -186,7 +183,7 @@ class Projects extends React.Component {
         this.setState({
           enrichmentResults,
           isLoading: false,
-          length,
+          pagerLength,
           projects,
           projectsEnriched,
           total,
@@ -197,32 +194,6 @@ class Projects extends React.Component {
         this.emptyResults();
       });
   }
-
-  renderCustomizedLabel = ({
-    cx,
-    cy,
-    midAngle,
-    innerRadius,
-    outerRadius,
-    percent,
-  }) => {
-    const RADIAN = Math.PI / 180;
-    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-    const x = cx + radius * Math.cos(-midAngle * RADIAN);
-    const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
-    return (
-      <text
-        x={x}
-        y={y}
-        fill="white"
-        textAnchor={x > cx ? 'start' : 'end'}
-        dominantBaseline="central"
-      >
-        {`${(percent * 100).toFixed(0)}%`}
-      </text>
-    );
-  };
 
   render() {
     const {
@@ -236,6 +207,7 @@ class Projects extends React.Component {
       length,
       locationsCount,
       locationsEnrichedCount,
+      pagerLength,
       projects,
       projectsEnriched,
       total,
@@ -274,140 +246,20 @@ class Projects extends React.Component {
     ];
 
     return (
-      <div className="ecl-container">
-        <div className="ecl-row">
-          <div className="ecl-col-md-3">
-            <p>Overall statistics</p>
-            <ul>
-              <li>Records: {total}</li>
-              <li>
-                Locations:{' '}
-                {enrichmentReportsLoading ? 'loading ...' : locationsCount}
-              </li>
-              <li>
-                Budget items:{' '}
-                {enrichmentReportsLoading ? 'loading ...' : budgetItemsCount}
-              </li>
-            </ul>
-            <p>Enriched on this page: {projectsEnriched}</p>
-          </div>
-          <div className="ecl-col-md-9">
-            {!enrichmentReportsLoading ? (
-              <div className="ecl-container" style={{ textAlign: 'center' }}>
-                <div className="ecl-row">
-                  <div className="ecl-col-md-6">
-                    <h2>Locations</h2>
-                    <PieChart width={300} height={300}>
-                      <Pie
-                        labelLine={false}
-                        label={this.renderCustomizedLabel}
-                        data={locationsData}
-                        dataKey="value"
-                        nameKey="name"
-                        fill="#9F9F9F"
-                      >
-                        {locationsData.map((entry, key) => (
-                          <Cell
-                            key={key}
-                            fill={
-                              entry.name.includes('enriched')
-                                ? '#467A39'
-                                : '#9F9F9F'
-                            }
-                          />
-                        ))}
-                      </Pie>
-                      <Tooltip />
-                    </PieChart>
-                  </div>
-
-                  <div className="ecl-col-md-6">
-                    <h2>Budgetary</h2>
-                    <PieChart width={300} height={300}>
-                      <Pie
-                        labelLine={false}
-                        label={this.renderCustomizedLabel}
-                        data={budgetData}
-                        dataKey="value"
-                        nameKey="name"
-                        fill="#9F9F9F"
-                      >
-                        {budgetData.map((entry, key) => (
-                          <Cell
-                            key={key}
-                            fill={
-                              entry.name.includes('enriched')
-                                ? '#467A39'
-                                : '#9F9F9F'
-                            }
-                          />
-                        ))}
-                      </Pie>
-                      <Tooltip />
-                    </PieChart>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <Fragment>
-                <p>Compiling reports about enrichment results ...</p>
-                <p>{enrichmentReportsMessage}</p>
-                <Spinner />
-              </Fragment>
-            )}
-          </div>
-        </div>
-
-        <ul className="ecl-listing">
-          {enrichmentResults.map((project, key) => {
-            const { _source: doc } = project;
-            const { title, description } = doc;
-
-            return (
-              <li className="ecl-list-item" key={key} tabIndex={key}>
-                <Collapsible trigger={title}>
-                  <Fragment>
-                    <p
-                      className="ecl-paragraph"
-                      dangerouslySetInnerHTML={{
-                        __html: description,
-                      }}
-                    />
-                    {project.enrichmentResults
-                      ? Object.keys(project.enrichmentResults).map(
-                          enrichedProperty => (
-                            <Fragment>
-                              <h3>
-                                Enrichment in <code>{enrichedProperty}</code>
-                              </h3>
-                              <p className="ecl-paragraph">
-                                <JsonView
-                                  name={enrichedProperty}
-                                  displayObjectSize={false}
-                                  collapsed={true}
-                                  src={
-                                    project.enrichmentResults[enrichedProperty]
-                                  }
-                                />
-                                )
-                              </p>
-                            </Fragment>
-                          )
-                        )
-                      : ''}
-                  </Fragment>
-                </Collapsible>
-              </li>
-            );
-          })}
-        </ul>
-
-        <Pager
-          length={length}
-          current={current}
-          onChange={this.handlePageChange}
-        />
-      </div>
+      <Listing
+        budgetData={budgetData}
+        budgetItemsCount={budgetItemsCount}
+        current={current}
+        enrichmentReportsLoading={enrichmentReportsLoading}
+        enrichmentReportsMessage={enrichmentReportsMessage}
+        enrichmentResults={enrichmentResults}
+        length={length}
+        locationsCount={locationsCount}
+        locationsData={locationsData}
+        onHandlePageChange={this.handlePageChange}
+        pagerLength={pagerLength}
+        projectsEnriched={projectsEnriched}
+      />
     );
   }
 }

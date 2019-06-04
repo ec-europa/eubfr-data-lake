@@ -12,7 +12,7 @@ import Spinner from '../../components/Spinner';
 import FormUpload from '../../components/FormUpload';
 
 import LogsTab from './file/Logs';
-import ProjectsTab from './file/Projects';
+import ProjectsTab from './file/Projects/index';
 import ReportsTab from './file/Reports';
 
 import './File.css';
