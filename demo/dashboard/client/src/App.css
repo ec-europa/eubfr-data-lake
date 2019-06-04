@@ -69,6 +69,9 @@
 
 /* Collapsible assumes structure and does not get ECL too well */
 
+.Collapsible__contentInner {
+  padding: 0 0 20px 0;
+}
 .Collapsible__contentInner p {
   margin-bottom: 10px;
   font-size: 14px;

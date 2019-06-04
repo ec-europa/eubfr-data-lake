@@ -13,7 +13,7 @@ import FormUpload from '../../components/FormUpload';
 
 import LogsTab from './file/Logs';
 import ProjectsTab from './file/Projects/index';
-import ReportsTab from './file/Reports';
+import ReportsTab from './file/Reports/index';
 
 import './File.css';
 
@@ -282,20 +282,20 @@ class File extends React.Component {
             </li>
             <li className="ecl-navigation-list__item">
               <NavLink
+                to={`${match.url}/reports`}
+                className="ecl-navigation-list__link ecl-link"
+                activeClassName="ecl-navigation-list__link--active"
+              >
+                Reports
+              </NavLink>
+            </li>
+            <li className="ecl-navigation-list__item">
+              <NavLink
                 to={`${match.url}/logs`}
                 className="ecl-navigation-list__link ecl-link"
                 activeClassName="ecl-navigation-list__link--active"
               >
                 Logs
-              </NavLink>
-            </li>
-            <li className="ecl-navigation-list__item">
-              <NavLink
-                to={`${match.url}/reports`}
-                className="ecl-navigation-list__link ecl-link"
-                activeClassName="ecl-navigation-list__link--active"
-              >
-                Data quality report
               </NavLink>
             </li>
           </ul>
