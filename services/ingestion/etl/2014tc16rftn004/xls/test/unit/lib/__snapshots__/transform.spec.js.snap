@@ -357,7 +357,7 @@ Programme & operation specific objective: Increased innovation and transfer of n
   "timeframe": Object {
     "from": "2016-01-01T00:00:00.000Z",
     "from_precision": "day",
-    "to": "2020-07-12T00:00:00.000Z",
+    "to": "2018-12-31T00:00:00.000Z",
     "to_precision": "day",
   },
   "title": "FREED",
