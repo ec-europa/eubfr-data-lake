@@ -214,7 +214,7 @@ const getThemes = record =>
  * Input fields taken from the `record` are:
  *
  * - `Country`
- * - `Beneficiary name`
+ * - `Beneficiary name in English`
  * - `Has the lead of the operation (Y/N)`
  *
  * @memberof 2014tc16rftn003XlsTransform
@@ -225,8 +225,8 @@ const getThemes = record =>
 const getThirdParties = record => {
   const thirdParties = [];
 
-  const actors = record['Beneficiary name']
-    ? record['Beneficiary name']
+  const actors = record['Beneficiary name in English']
+    ? record['Beneficiary name in English']
         .split(';')
         .filter(a => a)
         .map(a => a.trim())
