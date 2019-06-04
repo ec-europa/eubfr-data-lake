@@ -258,6 +258,7 @@ class Projects extends React.Component {
         locationsData={locationsData}
         onHandlePageChange={this.handlePageChange}
         pagerLength={pagerLength}
+        total={total}
         projectsEnriched={projectsEnriched}
       />
     );
