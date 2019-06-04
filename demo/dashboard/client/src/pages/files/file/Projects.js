@@ -155,7 +155,7 @@ class Projects extends React.Component {
 
   setResults(computedKey) {
     let projectsEnriched = 0;
-    const size = 9;
+    const size = 10;
     const { current } = this.state;
     const from = (Number(current) - 1) * size;
 
@@ -358,39 +358,25 @@ class Projects extends React.Component {
           </div>
         </div>
 
-        <Pager
-          length={length}
-          current={current}
-          onChange={this.handlePageChange}
-        />
+        <ul className="ecl-listing">
+          {enrichmentResults.map((project, key) => {
+            const { _source: doc } = project;
+            const { title } = doc;
 
-        {enrichmentResults.map(project => {
-          const { _id: key, _source: doc } = project;
-          const { title } = doc;
-          const isEnriched = project.enrichmentResults
-            ? ' (has been enriched)'
-            : '';
-
-          return (
-            <div key={key} className="ecl-u-d-flex ecl-u-align-items-center">
-              <span
-                className={
-                  isEnriched
-                    ? 'ecl-icon ecl-icon--data ecl-u-color-primary'
-                    : 'ecl-icon ecl-icon--data'
-                }
-              />
-              <Collapsible trigger={title} key={key}>
-                <ReactJson
-                  name="enrichmentResults"
-                  displayObjectSize={false}
-                  collapsed={true}
-                  src={project.enrichmentResults}
-                />
-              </Collapsible>
-            </div>
-          );
-        })}
+            return (
+              <li className="ecl-list-item" key={key} tabIndex={key}>
+                <Collapsible trigger={title}>
+                  <ReactJson
+                    name="enrichmentResults"
+                    displayObjectSize={false}
+                    collapsed={true}
+                    src={project.enrichmentResults}
+                  />
+                </Collapsible>
+              </li>
+            );
+          })}
+        </ul>
 
         <Pager
           length={length}

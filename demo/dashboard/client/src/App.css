@@ -69,13 +69,6 @@
 
 /* Collapsible assumes structure and does not get ECL too well */
 
-.Collapsible {
-  background-color: white;
-}
-.Collapsible__contentInner {
-  border: 1px solid #ebebeb;
-  border-top: 0;
-}
 .Collapsible__contentInner p {
   margin-bottom: 10px;
   font-size: 14px;
@@ -89,24 +82,27 @@
   font-weight: 400;
   text-decoration: none;
   position: relative;
-  border: 1px solid white;
-  padding: 10px;
+  padding: 10px 30px 10px 0;
   color: black;
 }
 .Collapsible__trigger:hover {
   cursor: pointer;
 }
-
+.Collapsible__trigger:after {
+  font-family: 'EuropaIcons';
+  content: '\e81f';
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  display: block;
+  transition: transform 300ms;
+}
+.Collapsible__trigger.is-open:after {
+  transform: rotateZ(180deg);
+}
 .Collapsible__trigger.is-disabled {
   opacity: 0.5;
   background-color: grey;
-}
-.CustomTriggerCSS {
-  background-color: lightcoral;
-  transition: background-color 200ms ease;
-}
-.CustomTriggerCSS--open {
-  background-color: darkslateblue;
 }
 
 /* Pager */
@@ -147,4 +143,8 @@
 
 .Pager .PagerButton--GoLast {
   margin-left: 1.5rem;
+}
+
+.Pager .PagerButton.is-disabled {
+  display: none;
 }
