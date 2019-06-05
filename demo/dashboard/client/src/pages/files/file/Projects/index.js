@@ -21,7 +21,6 @@ class Projects extends React.Component {
       pagerLength: 0,
       projects: [],
       projectsEnriched: 0,
-      total: 0,
     };
 
     this.emptyResults = this.emptyResults.bind(this);
@@ -43,7 +42,6 @@ class Projects extends React.Component {
       pagerLength: 0,
       projects: [],
       projectsEnriched: 0,
-      total: 0,
     });
   }
 
@@ -92,7 +90,6 @@ class Projects extends React.Component {
           pagerLength,
           projects,
           projectsEnriched,
-          total,
         });
       })
       .catch(error => {
@@ -109,7 +106,6 @@ class Projects extends React.Component {
       pagerLength,
       projects,
       projectsEnriched,
-      total,
     } = this.state;
 
     if (isLoading) {
@@ -131,7 +127,6 @@ class Projects extends React.Component {
         onHandlePageChange={this.handlePageChange}
         pagerLength={pagerLength}
         projectsEnriched={projectsEnriched}
-        total={total}
       />
     );
   }

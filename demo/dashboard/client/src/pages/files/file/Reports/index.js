@@ -1,5 +1,3 @@
-/* eslint react/jsx-key: 0 */
-
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
@@ -11,7 +9,7 @@ import Spinner from '../../../../components/Spinner';
 import clients from '../../../../clientFactory';
 import indices from '../../../../clientFactory/esIndices';
 
-import formatReport from '../../../../lib/formatQualityReport';
+import formatQualityReport from '../../../../lib/formatQualityReport';
 
 class Reports extends React.Component {
   constructor() {
@@ -64,9 +62,7 @@ class Reports extends React.Component {
                   let report = [];
 
                   if (data._source && data._source.report) {
-                    // destructuring doesn't make sense here
-                    // eslint-disable-next-line
-                    report = data._source.report;
+                    report = formatQualityReport(data._source.report);
                   }
 
                   this.setState({ reportsLoading: false, report });
@@ -187,22 +183,17 @@ class Reports extends React.Component {
       budgetItemsEnrichedCount,
       enrichmentReportsLoading,
       enrichmentReportsMessage,
-      length,
       locationsCount,
       locationsEnrichedCount,
-      projectsEnriched,
       report,
       reportsLoading,
-      total,
     } = this.state;
-
-    const formattedReport = formatReport(report);
 
     if (reportsLoading) {
       return <Spinner />;
     }
 
-    if (formattedReport.length === 0) {
+    if (report.length === 0) {
       return (
         <h1 className="ecl-heading ecl-heading--h1 ecl-u-mt-none">
           No reports yet.
@@ -210,25 +201,6 @@ class Reports extends React.Component {
       );
     }
 
-    const qualityData = formattedReport.map(reportRow => {
-      const formatted = {
-        name: Object.keys(reportRow)[0],
-        coverage: Number(reportRow.coverage),
-      };
-
-      return formatted;
-    });
-
-    const locationsData = [
-      {
-        name: 'Locations without enrichment',
-        value: locationsCount - locationsEnrichedCount,
-      },
-      {
-        name: 'Locations which have been enriched',
-        value: locationsEnrichedCount,
-      },
-    ];
     const budgetData = [
       {
         name: 'Budget items without enrichment',
@@ -240,6 +212,17 @@ class Reports extends React.Component {
       },
     ];
 
+    const locationsData = [
+      {
+        name: 'Locations without enrichment',
+        value: locationsCount - locationsEnrichedCount,
+      },
+      {
+        name: 'Locations which have been enriched',
+        value: locationsEnrichedCount,
+      },
+    ];
+
     return (
       <Fragment>
         <h2>Enrichment</h2>
@@ -248,17 +231,11 @@ class Reports extends React.Component {
           budgetItemsCount={budgetItemsCount}
           enrichmentReportsLoading={enrichmentReportsLoading}
           enrichmentReportsMessage={enrichmentReportsMessage}
-          length={length}
           locationsCount={locationsCount}
           locationsData={locationsData}
-          projectsEnriched={projectsEnriched}
-          total={total}
         />
         <h2>Data quality</h2>
-        <DataQualityReport
-          formattedReport={formattedReport}
-          qualityData={qualityData}
-        />
+        <DataQualityReport report={report} />
       </Fragment>
     );
   }

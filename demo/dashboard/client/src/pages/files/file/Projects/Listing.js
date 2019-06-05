@@ -10,19 +10,9 @@ const Listing = ({
   onHandlePageChange,
   pagerLength,
   projectsEnriched,
-  total,
 }) => (
   <Fragment>
-    <div className="ecl-u-pa-s">
-      <div className="ecl-field">
-        <div className="ecl-field__label">Total number of projects:</div>
-        <div className="ecl-field__body">{total}</div>
-      </div>
-      <div className="ecl-field">
-        <div className="ecl-field__label">Enriched on this page:</div>
-        <div className="ecl-field__body">{projectsEnriched}</div>
-      </div>
-    </div>
+    <p>Enriched on this page: {projectsEnriched}</p>
     <ul className="ecl-listing">
       {enrichmentResults.map((project, key) => {
         const { _source: doc } = project;
@@ -76,7 +66,6 @@ Listing.propTypes = {
   pagerLength: PropTypes.number,
   projects: PropTypes.array,
   projectsEnriched: PropTypes.number,
-  total: PropTypes.number,
 };
 
 export default Listing;

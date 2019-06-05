@@ -47,14 +47,12 @@ const EnrichmentReport = ({
   enrichmentReportsMessage,
   locationsCount,
   locationsData,
-  total,
 }) => (
   <div className="ecl-container">
     <div className="ecl-row">
       <div className="ecl-col-md-3">
         <p>Overall statistics</p>
         <ul>
-          <li>Records: {total}</li>
           <li>
             Locations:{' '}
             {enrichmentReportsLoading ? 'loading ...' : locationsCount}
@@ -150,7 +148,6 @@ EnrichmentReport.propTypes = {
   locationsCount: PropTypes.number,
   locationsData: PropTypes.array,
   pagerLength: PropTypes.number,
-  total: PropTypes.number,
 };
 
 export default EnrichmentReport;
