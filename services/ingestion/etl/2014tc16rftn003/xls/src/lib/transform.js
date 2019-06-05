@@ -232,9 +232,27 @@ const getThirdParties = record => {
         .map(a => a.trim())
     : [];
 
-  const countries = record.Country.split(';')
-    .filter(c => c)
-    .map(c => c.trim());
+  const countries = record.Country
+    ? record.Country.split(';')
+        .filter(c => c)
+        .map(c => c.trim())
+        .map(parts => {
+          // Strings are in the following form: "UK United Kingdom / UNITED KINGDOM"
+          // Take the first part with the country name and code.
+          const firstPart = parts.split('/')[0];
+          // Remove the country code.
+          return firstPart.split(' ').slice(1);
+        })
+        .map(nameParts => {
+          return (
+            nameParts
+              // Remove useless items.
+              .filter(a => a)
+              // Build back the country name.
+              .join(' ')
+          );
+        })
+    : [];
 
   const isLeader = record['Has the lead of the operation (Y/N)']
     .split(';')
@@ -242,12 +260,11 @@ const getThirdParties = record => {
 
   if (actors.length) {
     actors.forEach((name, key) => {
-      const country = countries[key].split(' ')[1];
       const role = isLeader[key] === 'Y' ? 'Leader' : 'Partner';
 
       thirdParties.push({
         address: '',
-        country,
+        country: countries[key],
         email: '',
         name,
         phone: '',
