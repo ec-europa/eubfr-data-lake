@@ -41,112 +41,129 @@ renderCustomizedLabel.propTypes = {
 };
 
 const EnrichmentReport = ({
-  budgetData,
   budgetItemsCount,
-  enrichmentReportsLoading,
+  budgetItemsEnrichedCount,
   enrichmentReportsMessage,
+  isLoading,
   locationsCount,
-  locationsData,
-}) => (
-  <div className="ecl-container">
-    <div className="ecl-row">
-      <div className="ecl-col-md-3">
-        <p>Overall statistics</p>
-        <ul>
-          <li>
-            Locations:{' '}
-            {enrichmentReportsLoading ? 'loading ...' : locationsCount}
-          </li>
-          <li>
-            Budget items:{' '}
-            {enrichmentReportsLoading ? 'loading ...' : budgetItemsCount}
-          </li>
-        </ul>
-      </div>
-      <div className="ecl-col-md-9">
-        <p>
-          Please find below the percentage of items being enriched in green
-          colour.
-        </p>
-        {!enrichmentReportsLoading ? (
-          <div className="ecl-container" style={{ textAlign: 'center' }}>
-            <div className="ecl-row">
-              <div className="ecl-col-md-6">
-                <h3>Locations</h3>
-                <PieChart width={300} height={300}>
-                  <Pie
-                    data={locationsData}
-                    dataKey="value"
-                    fill="#9F9F9F"
-                    label={renderCustomizedLabel}
-                    labelLine={false}
-                    nameKey="name"
-                  >
-                    {locationsData.map((entry, key) => (
-                      <Cell
-                        key={key}
-                        fill={
-                          entry.name.includes('enriched')
-                            ? '#467A39'
-                            : '#9F9F9F'
-                        }
-                      />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                </PieChart>
-              </div>
+  locationsEnrichedCount,
+}) => {
+  // Structure data for visualization.
+  const budgetData = [
+    {
+      name: 'Budget items without enrichment',
+      value: budgetItemsCount - budgetItemsEnrichedCount,
+    },
+    {
+      name: 'Budget items which have been enriched',
+      value: budgetItemsEnrichedCount,
+    },
+  ];
 
-              <div className="ecl-col-md-6">
-                <h3>Budgetary</h3>
-                <PieChart width={300} height={300}>
-                  <Pie
-                    data={budgetData}
-                    dataKey="value"
-                    fill="#9F9F9F"
-                    label={renderCustomizedLabel}
-                    labelLine={false}
-                    nameKey="name"
-                  >
-                    {budgetData.map((entry, key) => (
-                      <Cell
-                        key={key}
-                        fill={
-                          entry.name.includes('enriched')
-                            ? '#467A39'
-                            : '#9F9F9F'
-                        }
-                      />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                </PieChart>
+  const locationsData = [
+    {
+      name: 'Locations without enrichment',
+      value: locationsCount - locationsEnrichedCount,
+    },
+    {
+      name: 'Locations which have been enriched',
+      value: locationsEnrichedCount,
+    },
+  ];
+
+  return (
+    <div className="ecl-container">
+      <div className="ecl-row">
+        <div className="ecl-col-md-3">
+          <p>Overall statistics</p>
+          <ul>
+            <li>Locations: {isLoading ? 'loading ...' : locationsCount}</li>
+            <li>
+              Budget items: {isLoading ? 'loading ...' : budgetItemsCount}
+            </li>
+          </ul>
+        </div>
+        <div className="ecl-col-md-9">
+          <p>
+            Please find below the percentage of items being enriched in green
+            colour.
+          </p>
+          {!isLoading ? (
+            <div className="ecl-container" style={{ textAlign: 'center' }}>
+              <div className="ecl-row">
+                <div className="ecl-col-md-6">
+                  <h3>Locations</h3>
+                  <PieChart width={300} height={300}>
+                    <Pie
+                      data={locationsData}
+                      dataKey="value"
+                      fill="#9F9F9F"
+                      label={renderCustomizedLabel}
+                      labelLine={false}
+                      nameKey="name"
+                    >
+                      {locationsData.map((entry, key) => (
+                        <Cell
+                          key={key}
+                          fill={
+                            entry.name.includes('enriched')
+                              ? '#467A39'
+                              : '#9F9F9F'
+                          }
+                        />
+                      ))}
+                    </Pie>
+                    <Tooltip />
+                  </PieChart>
+                </div>
+
+                <div className="ecl-col-md-6">
+                  <h3>Budgetary</h3>
+                  <PieChart width={300} height={300}>
+                    <Pie
+                      data={budgetData}
+                      dataKey="value"
+                      fill="#9F9F9F"
+                      label={renderCustomizedLabel}
+                      labelLine={false}
+                      nameKey="name"
+                    >
+                      {budgetData.map((entry, key) => (
+                        <Cell
+                          key={key}
+                          fill={
+                            entry.name.includes('enriched')
+                              ? '#467A39'
+                              : '#9F9F9F'
+                          }
+                        />
+                      ))}
+                    </Pie>
+                    <Tooltip />
+                  </PieChart>
+                </div>
               </div>
             </div>
-          </div>
-        ) : (
-          <Fragment>
-            <p>Compiling reports ...</p>
-            <p>{enrichmentReportsMessage}</p>
-            <Spinner />
-          </Fragment>
-        )}
+          ) : (
+            <Fragment>
+              <p>Compiling reports ...</p>
+              <p>{enrichmentReportsMessage}</p>
+              <Spinner />
+            </Fragment>
+          )}
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 EnrichmentReport.propTypes = {
-  budgetData: PropTypes.array,
   budgetItemsCount: PropTypes.number,
-  current: PropTypes.number,
-  cx: PropTypes.string,
-  cy: PropTypes.string,
-  enrichmentReportsLoading: PropTypes.bool,
+  budgetItemsEnrichedCount: PropTypes.number,
   enrichmentReportsMessage: PropTypes.string,
-  enrichmentResults: PropTypes.array,
+  isLoading: PropTypes.bool,
   locationsCount: PropTypes.number,
-  locationsData: PropTypes.array,
+  locationsEnrichedCount: PropTypes.number,
   pagerLength: PropTypes.number,
 };
 

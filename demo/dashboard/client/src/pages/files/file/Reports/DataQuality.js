@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-
 import Collapsible from 'react-collapsible';
 import {
   AreaChart,
@@ -11,11 +10,27 @@ import {
   Tooltip,
 } from 'recharts';
 
-const DataQualityReport = ({ report }) => {
-  const qualityData = report.map(row => ({
+import Spinner from '../../../../components/Spinner';
+
+const DataQualityReport = ({ reports, isLoading }) => {
+  // Structure data for visualization.
+  const qualityData = reports.map(row => ({
     name: Object.keys(row)[0],
     coverage: Number(row.coverage),
   }));
+
+  if (isLoading) {
+    return (
+      <Fragment>
+        <p>Loading reports about quality of data ...</p>
+        <Spinner />
+      </Fragment>
+    );
+  }
+
+  if (reports.length === 0) {
+    return <p>Reports about quality of data are not available.</p>;
+  }
 
   return (
     <Fragment>
@@ -59,7 +74,7 @@ const DataQualityReport = ({ report }) => {
             </tr>
           </thead>
           <tbody>
-            {report.map((reportItem, i) => {
+            {reports.map((reportItem, i) => {
               const r = Object.keys(reportItem);
               const property = r[0];
 
@@ -81,7 +96,8 @@ const DataQualityReport = ({ report }) => {
 };
 
 DataQualityReport.propTypes = {
-  report: PropTypes.array,
+  reports: PropTypes.array,
+  isLoading: PropTypes.bool,
 };
 
 export default DataQualityReport;

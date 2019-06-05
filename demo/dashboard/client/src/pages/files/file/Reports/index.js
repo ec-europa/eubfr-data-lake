@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 import EnrichmentReport from './Enrichment';
 import DataQualityReport from './DataQuality';
 
-import Spinner from '../../../../components/Spinner';
-
 import clients from '../../../../clientFactory';
 import indices from '../../../../clientFactory/esIndices';
 
@@ -18,33 +16,67 @@ class Reports extends React.Component {
     this.state = {
       budgetItemsCount: 0,
       budgetItemsEnrichedCount: 0,
-      enrichmentReportsLoading: true,
+      dataQualityReports: [],
+      dataQualityReportsAreLoading: false,
+      enrichmentReportsAreLoading: false,
       enrichmentReportsMessage: '',
       enrichmentResults: [],
       locationsCount: 0,
       locationsEnrichedCount: 0,
-      report: [],
-      reportsLoading: false,
     };
 
-    this.getEnrichmentReport = this.getEnrichmentReport.bind(this);
-    this.loadReport = this.loadReport.bind(this);
-    this.resetReportState = this.resetReportState.bind(this);
-    this.setReport = this.setReport.bind(this);
+    this.getDataQualityData = this.getDataQualityData.bind(this);
+    this.getEnrichmentData = this.getEnrichmentData.bind(this);
+    this.resetDataQualityReports = this.resetDataQualityReports.bind(this);
+    this.resetEnrichmentReports = this.resetEnrichmentReports.bind(this);
+    this.setDataQualityReports = this.setDataQualityReports.bind(this);
+    this.setEnrichmentReports = this.setEnrichmentReports.bind(this);
   }
 
   componentDidMount() {
     this.clients = clients.Create();
-    this.getEnrichmentReport();
-    this.loadReport();
+    this.getDataQualityData();
+    this.getEnrichmentData();
   }
 
-  loadReport() {
+  resetDataQualityReports() {
+    this.setState({
+      dataQualityReports: [],
+      dataQualityReportsAreLoading: false,
+    });
+  }
+
+  resetEnrichmentReports() {
+    this.setState({
+      budgetItemsCount: 0,
+      budgetItemsEnrichedCount: 0,
+      enrichmentReportsAreLoading: false,
+      enrichmentReportsMessage: '',
+      enrichmentResults: [],
+      locationsCount: 0,
+      locationsEnrichedCount: 0,
+    });
+  }
+
+  getDataQualityData() {
     const { computedKey } = this.props;
-    this.setState({ reportsLoading: true }, this.setReport(computedKey));
+
+    this.setState(
+      { dataQualityReportsAreLoading: true },
+      this.setDataQualityReports(computedKey)
+    );
   }
 
-  setReport(computedKey) {
+  getEnrichmentData() {
+    const { computedKey } = this.props;
+
+    this.setState(
+      { enrichmentReportsAreLoading: true },
+      this.setEnrichmentReports(computedKey)
+    );
+  }
+
+  setDataQualityReports(computedKey) {
     return () =>
       this.clients.public.indices
         .exists({
@@ -59,36 +91,32 @@ class Reports extends React.Component {
                   id: `${computedKey}.ndjson`,
                 })
                 .then(data => {
-                  let report = [];
+                  let dataQualityReports = [];
 
                   if (data._source && data._source.report) {
-                    report = formatQualityReport(data._source.report);
+                    dataQualityReports = formatQualityReport(
+                      data._source.report
+                    );
                   }
 
-                  this.setState({ reportsLoading: false, report });
+                  this.setState({
+                    dataQualityReportsAreLoading: false,
+                    dataQualityReports,
+                  });
                 })
                 .catch(error => {
-                  this.resetReportState();
+                  this.resetDataQualityReports();
                   throw Error(`An error occured: ${error.message}`);
                 })
-            : this.resetReportState()
+            : this.resetDataQualityReports()
         )
         .catch(() => {
-          this.resetReportState();
+          this.resetDataQualityReports();
         });
   }
 
-  resetReportState() {
-    this.setState({
-      enrichmentReportsLoading: true,
-      report: [],
-      reportsLoading: false,
-    });
-  }
-
-  getEnrichmentReport() {
+  setEnrichmentReports(computedKey) {
     (async () => {
-      const { computedKey } = this.props;
       let budgetItemsCount = 0;
       let budgetItemsEnrichedCount = 0;
       let locationsCount = 0;
@@ -115,65 +143,69 @@ class Reports extends React.Component {
       let { hits, _scroll_id } = results;
       const { total } = hits;
 
-      while (hits && hits.hits.length) {
-        pagination += hits.hits.length;
+      try {
+        while (hits && hits.hits.length) {
+          pagination += hits.hits.length;
+          this.setState({
+            enrichmentReportsMessage: `${pagination} of ${total}`,
+          });
+
+          // eslint-disable-next-line
+          hits.hits.forEach(record => {
+            const locations = record._source.project_locations;
+            const { budget } = record._source;
+
+            // Count occurences which contain useful data about locations and budget.
+
+            // Location is a nested document, so 1 project record can contain multiple sub-documents of a location sub-records.
+            const locationsInRecord = locations.length;
+            locationsCount += locationsInRecord;
+
+            // Budget enrichment happens in total_cost and eu_contrib.
+            if (budget.total_cost.value || budget.eu_contrib.value) {
+              budgetItemsCount += 1;
+            }
+
+            // Count how many items have been enriched.
+
+            // Location items are marked with a field "enriched".
+            const enrichedLocationsInRecord = locations.filter(
+              location => location.enriched
+            ).length;
+            locationsEnrichedCount += enrichedLocationsInRecord;
+
+            // Budget items are updated in-place, state before enrichment is stored in "_original" sub-field.
+            if (budget.total_cost._original) {
+              budgetItemsEnrichedCount += 1;
+            }
+            if (budget.eu_contrib._original) {
+              budgetItemsEnrichedCount += 1;
+            }
+          });
+
+          // eslint-disable-next-line
+          const next = await this.clients.public.scroll({
+            scroll_id: _scroll_id,
+            scroll: '10m',
+          });
+
+          // eslint-disable-next-line
+          hits = next.hits;
+          // eslint-disable-next-line
+          _scroll_id = next._scroll_id;
+        }
+
         this.setState({
-          enrichmentReportsMessage: `${pagination} of ${total}`,
+          budgetItemsCount,
+          budgetItemsEnrichedCount,
+          enrichmentReportsAreLoading: false,
+          locationsCount,
+          locationsEnrichedCount,
         });
-
-        // eslint-disable-next-line
-        hits.hits.forEach(record => {
-          const locations = record._source.project_locations;
-          const { budget } = record._source;
-
-          // Count occurences which contain useful data about locations and budget.
-
-          // Location is a nested document, so 1 project record can contain multiple sub-documents of a location sub-records.
-          const locationsInRecord = locations.length;
-          locationsCount += locationsInRecord;
-
-          // Budget enrichment happens in total_cost and eu_contrib.
-          if (budget.total_cost.value || budget.eu_contrib.value) {
-            budgetItemsCount += 1;
-          }
-
-          // Count how many items have been enriched.
-
-          // Location items are marked with a field "enriched".
-          const enrichedLocationsInRecord = locations.filter(
-            location => location.enriched
-          ).length;
-          locationsEnrichedCount += enrichedLocationsInRecord;
-
-          // Budget items are updated in-place, state before enrichment is stored in "_original" sub-field.
-          if (budget.total_cost._original) {
-            budgetItemsEnrichedCount += 1;
-          }
-          if (budget.eu_contrib._original) {
-            budgetItemsEnrichedCount += 1;
-          }
-        });
-
-        // eslint-disable-next-line
-        const next = await this.clients.public.scroll({
-          scroll_id: _scroll_id,
-          scroll: '10m',
-        });
-
-        // eslint-disable-next-line
-        hits = next.hits;
-        // eslint-disable-next-line
-        _scroll_id = next._scroll_id;
+      } catch (error) {
+        console.error(error);
+        this.resetEnrichmentReports();
       }
-
-      this.setState({
-        budgetItemsCount,
-        budgetItemsEnrichedCount,
-        enrichmentReportsLoading: false,
-        locationsCount,
-        locationsEnrichedCount,
-        total,
-      });
     })();
   }
 
@@ -181,61 +213,31 @@ class Reports extends React.Component {
     const {
       budgetItemsCount,
       budgetItemsEnrichedCount,
-      enrichmentReportsLoading,
+      dataQualityReports,
+      dataQualityReportsAreLoading,
+      enrichmentReportsAreLoading,
       enrichmentReportsMessage,
       locationsCount,
       locationsEnrichedCount,
-      report,
-      reportsLoading,
     } = this.state;
-
-    if (reportsLoading) {
-      return <Spinner />;
-    }
-
-    if (report.length === 0) {
-      return (
-        <h1 className="ecl-heading ecl-heading--h1 ecl-u-mt-none">
-          No reports yet.
-        </h1>
-      );
-    }
-
-    const budgetData = [
-      {
-        name: 'Budget items without enrichment',
-        value: budgetItemsCount - budgetItemsEnrichedCount,
-      },
-      {
-        name: 'Budget items which have been enriched',
-        value: budgetItemsEnrichedCount,
-      },
-    ];
-
-    const locationsData = [
-      {
-        name: 'Locations without enrichment',
-        value: locationsCount - locationsEnrichedCount,
-      },
-      {
-        name: 'Locations which have been enriched',
-        value: locationsEnrichedCount,
-      },
-    ];
 
     return (
       <Fragment>
         <h2>Enrichment</h2>
         <EnrichmentReport
-          budgetData={budgetData}
           budgetItemsCount={budgetItemsCount}
-          enrichmentReportsLoading={enrichmentReportsLoading}
+          budgetItemsEnrichedCount={budgetItemsEnrichedCount}
+          enrichmentReportsAreLoading={enrichmentReportsAreLoading}
           enrichmentReportsMessage={enrichmentReportsMessage}
           locationsCount={locationsCount}
-          locationsData={locationsData}
+          locationsEnrichedCount={locationsEnrichedCount}
+          isLoading={enrichmentReportsAreLoading}
         />
         <h2>Data quality</h2>
-        <DataQualityReport report={report} />
+        <DataQualityReport
+          reports={dataQualityReports}
+          isLoading={dataQualityReportsAreLoading}
+        />
       </Fragment>
     );
   }
