@@ -216,7 +216,6 @@ const getThemes = record =>
  * Input fields taken from the `record` are:
  *
  * - `Country`
- * - `Beneficiary name`
  * - `Beneficiary name in English`
  * - `Has the lead of the operation (Y/N)`
  *
@@ -228,14 +227,7 @@ const getThemes = record =>
 const getThirdParties = record => {
   const thirdParties = [];
 
-  const actors = record['Beneficiary name']
-    ? record['Beneficiary name']
-        .split(';')
-        .filter(a => a)
-        .map(a => a.trim())
-    : [];
-
-  const actorsEnglish = record['Beneficiary name in English']
+  const actors = record['Beneficiary name in English']
     ? record['Beneficiary name in English']
         .split(';')
         .filter(a => a)
@@ -246,6 +238,22 @@ const getThirdParties = record => {
     ? record.Country.split(';')
         .filter(c => c)
         .map(c => c.trim())
+        .map(parts => {
+          // Strings are in the following form: "UK United Kingdom / UNITED KINGDOM"
+          // Take the first part with the country name and code.
+          const firstPart = parts.split('/')[0];
+          // Remove the country code.
+          return firstPart.split(' ').slice(1);
+        })
+        .map(nameParts => {
+          return (
+            nameParts
+              // Remove useless items.
+              .filter(a => a)
+              // Build back the country name.
+              .join(' ')
+          );
+        })
     : [];
 
   const isLeader = record['Has the lead of the operation (Y/N)']
@@ -254,14 +262,13 @@ const getThirdParties = record => {
 
   if (actors.length) {
     actors.forEach((name, key) => {
-      const country = countries[key].split(' ')[1];
       const role = isLeader[key] === 'Y' ? 'Leader' : 'Partner';
 
       thirdParties.push({
         address: '',
-        country,
+        country: countries[key],
         email: '',
-        name: `${name} (${actorsEnglish[key]})`,
+        name,
         phone: '',
         region: '',
         role,

@@ -12,7 +12,7 @@ Model to compare with is available at: https://ec-europa.github.io/eubfr-data-la
 | Operation start date                                    | timeframe.from                   |
 | Operation end date                                      | timeframe.to                     |
 | Total eligible expenditure allocated to the operation   | budget.total_cost                |
-| Beneficiary name                                        | third_parties                    |
+| Beneficiary name                                        |                                  |
 | Beneficiary name in English                             | third_parties                    |
 | Total eligible expenditure allocated to the beneficiary |                                  |
 | Has the lead of the operation (Y/N)                     | third_parties                    |
