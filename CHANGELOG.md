@@ -1,5 +1,24 @@
 # Change Log
 
+## 0.8.0 (2019-06-24)
+
+#### :rocket: New Feature
+
+- [#216](https://github.com/ec-europa/eubfr-data-lake/pull/216) feat(etls): add interreg 2014TC16RFTN004 - EUBFR-258 ([@kalinchernev](https://github.com/kalinchernev))
+- [#215](https://github.com/ec-europa/eubfr-data-lake/pull/215) feat(etls): add interreg 2014TC16RFTN003 - EUBFR-258 ([@kalinchernev](https://github.com/kalinchernev))
+- [#214](https://github.com/ec-europa/eubfr-data-lake/pull/214) feat(etls): add interreg 2014TC16RFIR001 - EUBFR-258 ([@kalinchernev](https://github.com/kalinchernev))
+- [#212](https://github.com/ec-europa/eubfr-data-lake/pull/212) feat(etls): add interreg 2014TC16RFCB021 - EUBFR-258 ([@kalinchernev](https://github.com/kalinchernev))
+- [#213](https://github.com/ec-europa/eubfr-data-lake/pull/213) feat(etls): add interreg 2014TC16RFCB050 - EUBFR-258 ([@kalinchernev](https://github.com/kalinchernev))
+- [#210](https://github.com/ec-europa/eubfr-data-lake/pull/210) feat(etls): add interreg 2014TC16M4TN001 - EUBFR-258 ([@kalinchernev](https://github.com/kalinchernev))
+- [#209](https://github.com/ec-europa/eubfr-data-lake/pull/209) feat(etls): add interreg 2014TC16I5CB007 - EUBFR-258 ([@kalinchernev](https://github.com/kalinchernev))
+- [#208](https://github.com/ec-europa/eubfr-data-lake/pull/208) feat(etls): add interreg 2014TC16I5CB006 - EUBFR-258 ([@kalinchernev](https://github.com/kalinchernev))
+
+#### :nail_care: Enhancement
+
+- [#227](https://github.com/ec-europa/eubfr-data-lake/pull/227) refactor(demo): visualize enrichment results - EUBFR-267 ([@kalinchernev](https://github.com/kalinchernev))
+- [#225](https://github.com/ec-europa/eubfr-data-lake/pull/225) refactor(etls): improve euinvest - EUBFR-265 ([@kalinchernev](https://github.com/kalinchernev))
+- [#222](https://github.com/ec-europa/eubfr-data-lake/pull/222) chore(elasticsearch): upgrade to 6.5 - EUBFR-260 ([@kalinchernev](https://github.com/kalinchernev))
+
 ## 0.7.0 (2019-05-14)
 
 #### :rocket: New Feature
