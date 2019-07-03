@@ -1,0 +1,39 @@
+service: demo-dashboards
+
+plugins:
+  - serverless-finch
+  - serverless-export-env
+
+custom:
+  client:
+    bucketName: eubfr-${self:provider.stage}-demo-dashboard-client-${self:custom.EUBFR_USERNAME}
+    distributionFolder: build
+  eubfrEnvironment: ${opt:eubfr_env, env:EUBFR_ENV, file(../../../config.json):eubfr_env, 'dev'}
+  # EUBFR_USERNAME comes from cli parameter, but for spawn() and similar, it's from env var.
+  EUBFR_USERNAME: ${opt:username, env:EUBFR_USERNAME, file(../../../config.json):username, ''}
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: ${opt:stage, file(../../../config.json):stage, env:EUBFR_STAGE, 'dev'}
+  region: ${opt:region, file(../../../config.json):region, env:EUBFR_AWS_REGION, 'eu-central-1'}
+  deploymentBucket:
+    name: eubfr-${self:custom.eubfrEnvironment}-deploy
+  stackTags:
+    ENV: ${self:custom.eubfrEnvironment}
+  environment:
+    REACT_APP_STAGE: ${self:provider.stage}
+    REACT_APP_PRODUCER: ${self:custom.EUBFR_USERNAME}
+    REACT_APP_DEMO_SERVER:
+      Fn::ImportValue: ${self:provider.stage}:demo-dash-server-${self:custom.EUBFR_USERNAME}:ServiceEndpoint
+    REACT_APP_ES_PUBLIC_ENDPOINT:
+      Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
+    REACT_APP_ES_PRIVATE_ENDPOINT:
+      Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PrivateEndpoint
+
+resources:
+  Resources:
+    DeployBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.client.bucketName}
