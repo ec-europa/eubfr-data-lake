@@ -1,33 +1,20 @@
 // Utilities
-const getAllProducers = require('../../lib/getAllProducers');
 const deleteServerlessService = require('../../lib/deleteServerlessService');
 
-const deleteClient = async username => {
-  // Delete S3 buckets holding static assets (the React apps)
-  await deleteServerlessService('demo-dashboard-client', {
-    isClient: true,
-    username,
-  });
+const dashboardDeleteCommand = async () => {
+  const service = 'demo-dashboards';
 
-  // Delete also the CloudFormation stacks created by SLS
-  await deleteServerlessService('demo-dashboard-client', { username });
+  try {
+    // Delete website, S3 bucket needs to be empty before deleting the bucket itself.
+    await deleteServerlessService(service, { isClient: true });
+
+    // Delete assets created by serverless.yml file.
+    await deleteServerlessService(service, {});
+
+    return console.log('Dashboard: all deleted.');
+  } catch (error) {
+    return console.error(error);
+  }
 };
 
-const deleteServer = async username =>
-  deleteServerlessService('demo-dashboard-server', { username });
-
-const demoDeleteCommand = async ({ producer }) => {
-  const usernames = producer === '*' ? getAllProducers() : [producer];
-
-  const execute = async () =>
-    Promise.all([
-      ...usernames.map(async username =>
-        Promise.all([deleteClient(username), deleteServer(username)])
-      ),
-    ]);
-
-  // Start
-  execute();
-};
-
-module.exports = demoDeleteCommand;
+module.exports = dashboardDeleteCommand;

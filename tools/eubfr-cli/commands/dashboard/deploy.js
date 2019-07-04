@@ -15,27 +15,32 @@ const dashboardDeployCommand = async () => {
 
   console.time('dashboard');
 
-  console.log('Dashboard: cleaning previous build ...');
-  await shell('rm -rf build', { cwd });
+  try {
+    console.log('Dashboard: cleaning previous build ...');
+    await shell('rm -rf build', { cwd });
 
-  console.log('Dashboard: building ...');
+    console.log('Dashboard: building ...');
 
-  /**
-   * We are skipping preflight checks so that differences in packages' versions won't affect the building process.
-   * @see https://github.com/facebook/create-react-app/issues/5247
-   */
-  process.env.SKIP_PREFLIGHT_CHECK = true;
+    /**
+     * We are skipping preflight checks so that differences in packages' versions won't affect the building process.
+     * @see https://github.com/facebook/create-react-app/issues/5247
+     */
+    process.env.SKIP_PREFLIGHT_CHECK = true;
 
-  await shell('yarn run build', { cwd, env: process.env });
+    await shell('yarn run build', { cwd, env: process.env });
 
-  console.log('Dashboard: deploying ...');
+    console.log('Dashboard: deploying ...');
 
-  await shell(`yarn run sls client deploy --no-confirm`, { cwd });
+    await shell(`yarn run sls client deploy --no-confirm`, { cwd });
 
-  console.timeEnd('dashboard');
-  console.log(
-    `Dashboard at http://eubfr-${stage}-dashboard.s3-website.${region}.amazonaws.com`
-  );
+    console.timeEnd('dashboard');
+
+    return console.log(
+      `Dashboard: Ready at http://eubfr-${stage}-dashboard.s3-website.${region}.amazonaws.com`
+    );
+  } catch (error) {
+    return console.error(error);
+  }
 };
 
 module.exports = dashboardDeployCommand;

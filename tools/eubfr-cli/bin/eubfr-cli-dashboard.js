@@ -3,7 +3,6 @@
 const program = require('commander');
 
 // Utilities
-const hasValidOption = require('../lib/hasValidOption');
 const shouldProtectStage = require('../lib/shouldProtectStage');
 
 // Commands
@@ -67,7 +66,7 @@ program
  */
 program
   .command('delete')
-  .description('Delete the applications.')
+  .description('Delete dashboard.')
   .action(async () => {
     if (shouldProtectStage()) {
       console.log('You are on a protected stage!');
