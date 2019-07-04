@@ -2,14 +2,15 @@
 const deleteServerlessService = require('../../lib/deleteServerlessService');
 
 const dashboardDeleteCommand = async () => {
-  const service = 'demo-dashboards';
-
   try {
     // Delete website, S3 bucket needs to be empty before deleting the bucket itself.
-    await deleteServerlessService(service, { isClient: true });
+    await deleteServerlessService('demo-dashboards-client', { isClient: true });
 
-    // Delete assets created by serverless.yml file.
-    await deleteServerlessService(service, {});
+    // Delete client-side.
+    await deleteServerlessService('demo-dashboards-client', {});
+
+    // Delete server-side.
+    await deleteServerlessService('demo-dashboards-server', {});
 
     return console.log('Dashboard: all deleted.');
   } catch (error) {

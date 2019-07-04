@@ -1,5 +1,5 @@
 {
-  "name": "@eubfr/demo-dashboards",
+  "name": "@eubfr/demo-dashboards-client",
   "version": "0.8.0",
   "scripts": {
     "start": "run-s prepare react:start",

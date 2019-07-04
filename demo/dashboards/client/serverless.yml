@@ -1,4 +1,4 @@
-service: demo-dashboards
+service: dashboards-client
 
 plugins:
   - serverless-finch
@@ -21,6 +21,8 @@ provider:
     ENV: ${self:custom.eubfrEnvironment}
   environment:
     REACT_APP_STAGE: ${self:provider.stage}
+    REACT_APP_DASHBOARDS_SERVER:
+      Fn::ImportValue: ${self:provider.stage}:dashboards-server:ServiceEndpoint
     REACT_APP_ES_PUBLIC_ENDPOINT:
       Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
     REACT_APP_ES_PRIVATE_ENDPOINT:

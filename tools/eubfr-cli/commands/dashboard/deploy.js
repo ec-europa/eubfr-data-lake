@@ -11,15 +11,27 @@ const getServiceLocation = require('../../lib/getServiceLocation');
 const dashboardDeployCommand = async () => {
   const { stage, region } = getConfigurations();
 
-  const cwd = path.resolve(`${getServiceLocation('demo-dashboards')}`);
+  console.time('dashboard:server');
 
-  console.time('dashboard');
+  console.log('Dashboard (server): deploying ...');
+
+  let cwd = path.resolve(`${getServiceLocation('demo-dashboards-server')}`);
 
   try {
-    console.log('Dashboard: cleaning previous build ...');
+    await shell('yarn deploy', { cwd });
+
+    console.log('Dashboard (server): deployed.');
+
+    console.timeEnd('dashboard:server');
+
+    cwd = path.resolve(`${getServiceLocation('demo-dashboards-client')}`);
+
+    console.time('dashboard:client');
+
+    console.log('Dashboard (client): cleaning previous build ...');
     await shell('rm -rf build', { cwd });
 
-    console.log('Dashboard: building ...');
+    console.log('Dashboard (client): building ...');
 
     /**
      * We are skipping preflight checks so that differences in packages' versions won't affect the building process.
@@ -29,11 +41,11 @@ const dashboardDeployCommand = async () => {
 
     await shell('yarn run build', { cwd, env: process.env });
 
-    console.log('Dashboard: deploying ...');
+    console.log('Dashboard (client): deploying ...');
 
     await shell(`yarn run sls client deploy --no-confirm`, { cwd });
 
-    console.timeEnd('dashboard');
+    console.timeEnd('dashboard:client');
 
     return console.log(
       `Dashboard: Ready at http://eubfr-${stage}-dashboard.s3-website.${region}.amazonaws.com`
