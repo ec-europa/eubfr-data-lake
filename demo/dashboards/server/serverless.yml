@@ -27,7 +27,8 @@ provider:
   iamRoleStatements:
     - Effect: 'Allow'
       Action:
-        - 'secretsmanager:GetSecretValue'
+        - 's3:Get*'
+        - 's3:List*'
       Resource: '*'
 
 functions:
@@ -35,6 +36,9 @@ functions:
     handler: src/api/producers.handler
     name: ${self:provider.stage}-${self:service}-producers
     timeout: 120
+    environment:
+      EUBFR_ENV: ${self:custom.eubfrEnvironment}
+      EUBFR_STAGE: ${self:provider.stage}
     events:
       - http:
           path: producers
