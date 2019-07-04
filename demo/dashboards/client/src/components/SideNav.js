@@ -19,6 +19,15 @@ const SideNav = () => (
             Producers
           </NavLink>
         </li>
+        <li className="ecl-inpage-navigation__item">
+          <NavLink
+            className="ecl-link ecl-link--standalone ecl-inpage-navigation__link"
+            activeClassName="ecl-inpage-navigation__link--is-active"
+            to="/results"
+          >
+            Results
+          </NavLink>
+        </li>
       </ul>
     </div>
   </nav>
