@@ -39,7 +39,7 @@ class Producers extends React.Component {
         const files = filesAll.filter(file =>
           file._source.computed_key.includes(name)
         );
-        return { name, files };
+        return { name, files, bucket: item };
       });
 
       this.setState({ producers, isLoading: false });
@@ -59,7 +59,7 @@ class Producers extends React.Component {
         ) : (
           <ul>
             {producers.map((producer, key) => {
-              const { name, files } = producer;
+              const { name, files, bucket } = producer;
 
               return (
                 <li key={key}>
@@ -67,7 +67,9 @@ class Producers extends React.Component {
                     className="ecl-link ecl-link--external"
                     target="_blank"
                     rel="noopener noreferrer"
-                    href={`http://${name}.s3-website.eu-central-1.amazonaws.com`}
+                    href={`http://${
+                      bucket.Name
+                    }.s3-website.eu-central-1.amazonaws.com`}
                   >
                     {name} {files.length ? `(${files.length} files)` : ''}
                   </a>
