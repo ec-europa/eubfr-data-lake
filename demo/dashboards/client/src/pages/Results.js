@@ -14,24 +14,15 @@ import {
 import clients from '../clientFactory';
 import indices from '../clientFactory/esIndices';
 
-import Spinner from '../components/Spinner';
-import handleErrors from '../lib/handleErrors';
-
 class Results extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      isLoading: true,
-    };
-
-    this.clients = null;
-  }
+  state = {
+    isLoading: true,
+  };
 
   async componentDidMount() {
-    this.clients = clients.Create();
+    const client = clients.Create();
 
-    const results = await this.clients.private.search({
+    const results = await client.private.search({
       index: indices.meta,
       type: 'file',
     });
