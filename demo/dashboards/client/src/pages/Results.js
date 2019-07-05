@@ -35,19 +35,19 @@ class Results extends React.Component {
     const data = [
       {
         name: 'bulgaria',
-        projects: 1000,
-        locations: 1200,
-        locations_enriched: 1200,
-        budget_items: 1000,
-        budget_items_enriched: 800,
+        Projects: 1000,
+        Locations: 1200,
+        'Locations without enrichment': 0,
+        'Budget items': 1000,
+        'Budget items without enrichment': 1000,
       },
       {
         name: 'eac',
-        projects: 10000,
-        locations: 12000,
-        locations_enriched: 10000,
-        budget_items: 12000,
-        budget_items_enriched: 8000,
+        Projects: 10000,
+        Locations: 12000,
+        'Locations without enrichment': 2000,
+        'Budget items': 12000,
+        'Budget items without enrichment': 1000,
       },
     ];
 
@@ -63,11 +63,19 @@ class Results extends React.Component {
           <YAxis type="category" dataKey="name" />
           <Tooltip />
           <Legend />
-          <Bar dataKey="projects" fill="#467A39" />
-          <Bar dataKey="locations" stackId="a" fill="#4073AF" />
-          <Bar dataKey="locations_enriched" stackId="a" fill="#7FA1C9" />
-          <Bar dataKey="budget_items" stackId="b" fill="#FFDE39" />
-          <Bar dataKey="budget_items_enriched" stackId="b" fill="#FFE879" />
+          <Bar dataKey="Projects" fill="#467A39" />
+          <Bar dataKey="Locations" stackId="a" fill="#4073AF" />
+          <Bar
+            dataKey="Locations without enrichment"
+            stackId="a"
+            fill="#7FA1C9"
+          />
+          <Bar dataKey="Budget items" stackId="b" fill="#FFDE39" />
+          <Bar
+            dataKey="Budget items without enrichment"
+            stackId="b"
+            fill="#FFE879"
+          />
         </BarChart>
       </ResponsiveContainer>
     );
