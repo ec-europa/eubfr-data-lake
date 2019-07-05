@@ -22,9 +22,12 @@ class Producers extends React.Component {
       const results = await client.private.search({
         index: indices.meta,
         type: 'file',
+        size: 1000, // You are here and wonder: how did you decide this number? Ambition and goals!
       });
 
       const filesAll = results.hits.hits;
+
+      console.log(filesAll);
 
       const producers = buckets.map(bucket => {
         const name = bucket.Name.split('-').pop();
