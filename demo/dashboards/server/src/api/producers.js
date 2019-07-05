@@ -8,7 +8,7 @@ export const handler = async () => {
     const results = await s3.listBuckets().promise();
     const buckets = results.Buckets;
 
-    const dashboards = buckets.filter(bucket =>
+    const producers = buckets.filter(bucket =>
       bucket.Name.includes(`eubfr-${stage}-demo-dashboard-client-`)
     );
 
@@ -18,7 +18,7 @@ export const handler = async () => {
         'Access-Control-Allow-Origin': '*', // Required for CORS support
         'Access-Control-Allow-Credentials': true, // Required for cookies, authorization headers with HTTPS
       },
-      body: JSON.stringify({ data: { dashboards } }),
+      body: JSON.stringify({ data: { producers } }),
     };
   } catch (error) {
     return {

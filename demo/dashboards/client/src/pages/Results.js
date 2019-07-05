@@ -12,6 +12,7 @@ import {
 } from 'recharts';
 
 import clients from '../clientFactory';
+import indices from '../clientFactory/esIndices';
 
 import Spinner from '../components/Spinner';
 import handleErrors from '../lib/handleErrors';
@@ -27,8 +28,15 @@ class Results extends React.Component {
     this.clients = null;
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.clients = clients.Create();
+
+    const results = await this.clients.private.search({
+      index: indices.meta,
+      type: 'file',
+    });
+
+    console.log(results);
   }
 
   render() {

@@ -1,7 +1,9 @@
 import React from 'react';
 
+import clients from '../clientFactory';
+import indices from '../clientFactory/esIndices';
+
 import Spinner from '../components/Spinner';
-import handleErrors from '../lib/handleErrors';
 
 class Producers extends React.Component {
   state = {
@@ -9,30 +11,45 @@ class Producers extends React.Component {
     dashboards: [],
   };
 
-  componentDidMount() {
-    const { REACT_APP_DASHBOARDS_SERVER, NODE_ENV } = process.env;
+  async componentDidMount() {
     const resource = 'producers';
+    const client = clients.Create();
+    const { REACT_APP_DASHBOARDS_SERVER, NODE_ENV } = process.env;
 
     const endpoint =
       NODE_ENV === 'development'
         ? 'http://localhost:4000'
         : `https://${REACT_APP_DASHBOARDS_SERVER}`;
 
-    window
-      .fetch(`${endpoint}/${resource}`)
-      .then(handleErrors)
-      .then(response => response.json())
-      .then(data => {
-        const { dashboards } = data.data;
-        this.setState({ dashboards, isLoading: false });
-      })
-      .catch(error => {
-        console.error(`An error occured: ${error.message}`);
+    try {
+      const response = await window.fetch(`${endpoint}/${resource}`);
+
+      const data = await response.json();
+      const { producers: list } = data.data;
+
+      const results = await client.private.search({
+        index: indices.meta,
+        type: 'file',
       });
+
+      const filesAll = results.hits.hits;
+
+      const producers = list.map(item => {
+        const name = item.Name.split('-').pop();
+        const files = filesAll.filter(file =>
+          file._source.computed_key.includes(name)
+        );
+        return { name, files };
+      });
+
+      this.setState({ producers, isLoading: false });
+    } catch (error) {
+      console.error(`An error occured: ${error.message}`);
+    }
   }
 
   render() {
-    const { dashboards, isLoading } = this.state;
+    const { producers, isLoading } = this.state;
 
     return (
       <>
@@ -41,10 +58,8 @@ class Producers extends React.Component {
           <Spinner />
         ) : (
           <ul>
-            {dashboards.map((dashboard, key) => {
-              const name = dashboard.Name;
-              const producerParts = name.split('-');
-              const producer = producerParts.pop();
+            {producers.map((producer, key) => {
+              const { name, files } = producer;
 
               return (
                 <li key={key}>
@@ -54,7 +69,7 @@ class Producers extends React.Component {
                     rel="noopener noreferrer"
                     href={`http://${name}.s3-website.eu-central-1.amazonaws.com`}
                   >
-                    {producer}
+                    {name} {files.length ? `(${files.length} files)` : ''}
                   </a>
                 </li>
               );
