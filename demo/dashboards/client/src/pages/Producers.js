@@ -10,7 +10,7 @@ import Spinner from '../components/Spinner';
 class Producers extends React.Component {
   state = {
     isLoading: true,
-    dashboards: [],
+    producers: [],
   };
 
   async componentDidMount() {
