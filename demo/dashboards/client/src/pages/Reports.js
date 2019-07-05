@@ -27,13 +27,14 @@ class Reports extends React.Component {
     const files = [];
     const client = clients.Create();
 
-    // Get the list of available producers/ETLs.
+    // Get a list of S3 buckets hosting producers (ETLs) dashboards.
     const producersBuckets = await getProducersBuckets();
 
     // Get all available files.
     const results = await client.private.search({
       index: indices.meta,
       type: 'file',
+      size: 1000,
     });
 
     if (results && results.hits && results.hits.hits) {
@@ -102,11 +103,11 @@ class Reports extends React.Component {
         <BarChart
           layout="vertical"
           data={projects}
-          margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+          margin={{ top: 20, right: 30, left: 100, bottom: 5 }}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis type="number" />
-          <YAxis type="category" dataKey="name" />
+          <YAxis interval={0} type="category" dataKey="name" />
           <Tooltip />
           <Legend />
           <Bar dataKey="Projects" fill="#467A39" />
