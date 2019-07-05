@@ -27,8 +27,6 @@ class Producers extends React.Component {
 
       const filesAll = results.hits.hits;
 
-      console.log(filesAll);
-
       const producers = buckets.map(bucket => {
         const name = bucket.Name.split('-').pop();
         const files = filesAll.filter(file =>
