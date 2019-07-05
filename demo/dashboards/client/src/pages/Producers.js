@@ -3,6 +3,8 @@ import React from 'react';
 import clients from '../clientFactory';
 import indices from '../clientFactory/esIndices';
 
+import getProducersBuckets from '../lib/getProducersBuckets';
+
 import Spinner from '../components/Spinner';
 
 class Producers extends React.Component {
@@ -12,20 +14,10 @@ class Producers extends React.Component {
   };
 
   async componentDidMount() {
-    const resource = 'producers';
     const client = clients.Create();
-    const { REACT_APP_DASHBOARDS_SERVER, NODE_ENV } = process.env;
-
-    const endpoint =
-      NODE_ENV === 'development'
-        ? 'http://localhost:4000'
-        : `https://${REACT_APP_DASHBOARDS_SERVER}`;
 
     try {
-      const response = await window.fetch(`${endpoint}/${resource}`);
-
-      const data = await response.json();
-      const { producers: list } = data.data;
+      const buckets = await getProducersBuckets();
 
       const results = await client.private.search({
         index: indices.meta,
@@ -34,12 +26,12 @@ class Producers extends React.Component {
 
       const filesAll = results.hits.hits;
 
-      const producers = list.map(item => {
-        const name = item.Name.split('-').pop();
+      const producers = buckets.map(bucket => {
+        const name = bucket.Name.split('-').pop();
         const files = filesAll.filter(file =>
           file._source.computed_key.includes(name)
         );
-        return { name, files, bucket: item };
+        return { name, files, bucket };
       });
 
       this.setState({ producers, isLoading: false });
