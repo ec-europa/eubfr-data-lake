@@ -3,7 +3,7 @@ import { HashRouter, Route, Redirect } from 'react-router-dom';
 import '@ecl/ec-preset-website/dist/styles/ecl-ec-preset-website.css';
 
 import Producers from './pages/Producers';
-import Results from './pages/Results';
+import Reports from './pages/Reports';
 
 import Header from './components/Header';
 import PageHeader from './components/PageHeader';
@@ -25,7 +25,7 @@ const App = () => (
           <div className="ecl-col-md-9">
             <Route exact path="/" render={() => <Redirect to="/producers" />} />
             <Route path="/producers" component={Producers} />
-            <Route path="/results" component={Results} />
+            <Route path="/reports" component={Reports} />
           </div>
         </div>
       </div>

@@ -23,9 +23,9 @@ const SideNav = () => (
           <NavLink
             className="ecl-link ecl-link--standalone ecl-inpage-navigation__link"
             activeClassName="ecl-inpage-navigation__link--is-active"
-            to="/results"
+            to="/reports"
           >
-            Results
+            Reports
           </NavLink>
         </li>
       </ul>

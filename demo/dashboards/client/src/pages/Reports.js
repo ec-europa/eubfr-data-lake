@@ -17,7 +17,7 @@ import getProducersBuckets from '../lib/getProducersBuckets';
 
 import Spinner from '../components/Spinner';
 
-class Results extends React.Component {
+class Reports extends React.Component {
   state = {
     isLoading: true,
     projects: [],
@@ -64,7 +64,7 @@ class Results extends React.Component {
         const Projects = stats
           .filter(file => file.computedKey.includes(name))
           .map(item => item.count)
-          .reduce((acc, curr) => acc + curr);
+          .reduce((acc, curr) => acc + curr, 0);
 
         return { name, Projects };
       });
@@ -128,4 +128,4 @@ class Results extends React.Component {
   }
 }
 
-export default Results;
+export default Reports;
