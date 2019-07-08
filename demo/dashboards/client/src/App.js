@@ -4,6 +4,7 @@ import '@ecl/ec-preset-website/dist/styles/ecl-ec-preset-website.css';
 
 import Producers from './pages/Producers';
 import Reports from './pages/Reports';
+import Projects from './pages/Projects';
 
 import Header from './components/Header';
 import PageHeader from './components/PageHeader';
@@ -26,6 +27,7 @@ const App = () => (
             <Route exact path="/" render={() => <Redirect to="/producers" />} />
             <Route path="/producers" component={Producers} />
             <Route path="/reports" component={Reports} />
+            <Route path="/reports/projects" component={Projects} />
           </div>
         </div>
       </div>

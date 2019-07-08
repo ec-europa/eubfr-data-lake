@@ -50,7 +50,7 @@ class Producers extends React.Component {
         {isLoading ? (
           <Spinner />
         ) : (
-          <ul>
+          <ul className="ecl-list">
             {producers.map((producer, key) => {
               const { name, files, bucket } = producer;
 
