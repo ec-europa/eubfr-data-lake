@@ -76,25 +76,6 @@ class Projects extends React.Component {
   render() {
     const { isLoading, projects } = this.state;
 
-    // const data = [
-    //   {
-    //     name: 'bulgaria',
-    //     Projects: 1000,
-    //     Locations: 1200,
-    //     'Locations without enrichment': 0,
-    //     'Budget items': 1000,
-    //     'Budget items without enrichment': 1000,
-    //   },
-    //   {
-    //     name: 'eac',
-    //     Projects: 10000,
-    //     Locations: 12000,
-    //     'Locations without enrichment': 2000,
-    //     'Budget items': 12000,
-    //     'Budget items without enrichment': 1000,
-    //   },
-    // ];
-
     return isLoading ? (
       <Spinner />
     ) : (
@@ -110,18 +91,6 @@ class Projects extends React.Component {
           <Tooltip />
           <Legend />
           <Bar dataKey="Projects" fill="#467A39" />
-          {/* <Bar dataKey="Locations" stackId="a" fill="#4073AF" />
-          <Bar
-            dataKey="Locations without enrichment"
-            stackId="a"
-            fill="#7FA1C9"
-          />
-          <Bar dataKey="Budget items" stackId="b" fill="#FFDE39" />
-          <Bar
-            dataKey="Budget items without enrichment"
-            stackId="b"
-            fill="#FFE879"
-          /> */}
         </BarChart>
       </ResponsiveContainer>
     );

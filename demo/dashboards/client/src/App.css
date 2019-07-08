@@ -151,3 +151,8 @@
 .Pager .PagerButton.is-disabled {
   display: none;
 }
+
+.producers-form {
+  height: 10rem;
+  overflow-y: scroll;
+}
