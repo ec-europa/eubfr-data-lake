@@ -9,7 +9,7 @@ const Reports = () => (
         <Link to="/reports/projects">Projects</Link>
       </li>
       <li>
-        <Link to="/reports/locations">Locations</Link>
+        <Link to="/reports/enrichment">Enrichment</Link>
       </li>
     </ul>
   </>

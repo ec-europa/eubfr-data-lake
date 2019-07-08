@@ -1,5 +1,16 @@
 import React from 'react';
 
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts';
+
 import clients from '../clientFactory';
 import indices from '../clientFactory/esIndices';
 
@@ -7,13 +18,14 @@ import getProducersBuckets from '../lib/getProducersBuckets';
 
 import Spinner from '../components/Spinner';
 
-class Locations extends React.Component {
+class Enrichment extends React.Component {
   state = {
     // Page
     isLoading: true,
     producersSelected: [],
     producersAvailable: [],
     messages: [],
+    results: [],
   };
 
   getFileData = async computedKey => {
@@ -128,9 +140,7 @@ class Locations extends React.Component {
 
         return { producer, data };
       })
-    ).then(results => {
-      console.log(results);
-    });
+    ).then(results => this.setState({ results }));
   };
 
   handleInputChange = event => {
@@ -181,17 +191,45 @@ class Locations extends React.Component {
   }
 
   render() {
+    const data = [];
+
     const {
       producersAvailable,
       producersSelected,
       isLoading,
       messages,
+      results,
     } = this.state;
 
     const messagesDisplay =
       messages.length > 3
         ? messages.slice(messages.length - 3, messages.length)
         : messages;
+
+    results.forEach(producerResults => {
+      let locations = 0;
+      let locationsEnriched = 0;
+      let budgetItems = 0;
+      let budgetItemsEnriched = 0;
+
+      const { producer } = producerResults;
+      const files = producerResults.data;
+
+      files.forEach(file => {
+        locations += file.locationsCount;
+        locationsEnriched += file.locationsEnrichedCount;
+        budgetItems += file.budgetItemsCount;
+        budgetItemsEnriched += file.budgetItemsEnrichedCount;
+      });
+
+      data.push({
+        name: producer,
+        Locations: locations,
+        'Locations enriched': locationsEnriched,
+        'Budget items': budgetItems,
+        'Budget items enriched': budgetItemsEnriched,
+      });
+    });
 
     return (
       <>
@@ -255,6 +293,35 @@ class Locations extends React.Component {
               </button>
             </form>
             <br />
+            {results.length ? (
+              <ResponsiveContainer width="100%" height={600}>
+                <BarChart
+                  layout="vertical"
+                  data={data}
+                  margin={{ top: 20, right: 30, left: 100, bottom: 5 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis type="number" />
+                  <YAxis interval={0} type="category" dataKey="name" />
+                  <Tooltip />
+                  <Legend />
+                  <Bar dataKey="Locations" stackId="a" fill="#4073AF" />
+                  <Bar
+                    dataKey="Locations enriched"
+                    stackId="a"
+                    fill="#7FA1C9"
+                  />
+                  <Bar dataKey="Budget items" stackId="b" fill="#FFDE39" />
+                  <Bar
+                    dataKey="Budget items enriched"
+                    stackId="b"
+                    fill="#FFE879"
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            ) : (
+              ''
+            )}
           </>
         )}
       </>
@@ -262,4 +329,4 @@ class Locations extends React.Component {
   }
 }
 
-export default Locations;
+export default Enrichment;
