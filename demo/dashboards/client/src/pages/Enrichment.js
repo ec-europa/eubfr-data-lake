@@ -305,18 +305,10 @@ class Enrichment extends React.Component {
                   <YAxis interval={0} type="category" dataKey="name" />
                   <Tooltip />
                   <Legend />
-                  <Bar dataKey="Locations" stackId="a" fill="#4073AF" />
-                  <Bar
-                    dataKey="Locations enriched"
-                    stackId="a"
-                    fill="#7FA1C9"
-                  />
-                  <Bar dataKey="Budget items" stackId="b" fill="#FFDE39" />
-                  <Bar
-                    dataKey="Budget items enriched"
-                    stackId="b"
-                    fill="#FFE879"
-                  />
+                  <Bar dataKey="Locations" fill="#4073AF" />
+                  <Bar dataKey="Locations enriched" fill="#7FA1C9" />
+                  <Bar dataKey="Budget items" fill="#FFDE39" />
+                  <Bar dataKey="Budget items enriched" fill="#FFE879" />
                 </BarChart>
               </ResponsiveContainer>
             ) : (
