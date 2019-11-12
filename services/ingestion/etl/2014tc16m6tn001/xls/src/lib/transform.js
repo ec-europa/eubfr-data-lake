@@ -130,9 +130,7 @@ const getThirdParties = record => {
     address: '',
     country: '',
     email: '',
-    name: `${record['Beneficiary name in English']} (${
-      record['Beneficiary name']
-    })`,
+    name: `${record['Beneficiary name in English']} (${record['Beneficiary name']})`,
     phone: '',
     role: '',
     region: '',

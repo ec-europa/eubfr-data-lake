@@ -265,9 +265,7 @@ program
 
     if (typeProvided && mappingPath === false) {
       console.error(
-        `Please provide correct path to mapping document for ${
-          options.type
-        } type.`
+        `Please provide correct path to mapping document for ${options.type} type.`
       );
       process.exit(1);
     }

@@ -9,21 +9,21 @@
   "dependencies": {
     "@eubfr/lib": "^0.8.0",
     "@eubfr/logger-messenger": "^0.8.0",
-    "csv-parse": "4.3.4",
-    "stream-transform": "1.0.8"
+    "csv-parse": "4.6.5",
+    "stream-transform": "2.0.1"
   },
   "devDependencies": {
-    "@babel/core": "7.4.3",
-    "@babel/preset-env": "7.4.3",
+    "@babel/core": "7.7.2",
+    "@babel/core": "7.7.2",
     "@babel/preset-flow": "7.0.0",
     "@eubfr/types": "^0.8.0",
     "aws-sdk": "2.434.0",
-    "babel-jest": "24.7.0",
-    "babel-loader": "8.0.5",
-    "jest": "24.7.0",
+    "babel-jest": "24.9.0",
+    "babel-loader": "8.0.6",
+    "jest": "24.9.0",
     "serverless": "1.40.0",
-    "serverless-webpack": "5.2.0",
-    "webpack": "4.29.6"
+    "serverless-webpack": "5.3.1",
+    "webpack": "4.41.2"
   },
   "jest": {
     "transform": {

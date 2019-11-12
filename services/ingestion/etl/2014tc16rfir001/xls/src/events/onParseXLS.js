@@ -105,9 +105,9 @@ export const handler = async (event, context) => {
 
             mergeFields.forEach(field => {
               // Concatenate old and current values for the given field.
-              existing[field] = `${existing[field]}${separator}${
-                record[field]
-              }`;
+              existing[
+                field
+              ] = `${existing[field]}${separator}${record[field]}`;
             });
 
             recordsAgg.push(existing);

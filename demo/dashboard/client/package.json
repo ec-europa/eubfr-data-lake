@@ -16,21 +16,21 @@
     "@eubfr/logger-messenger": "^0.8.0",
     "elasticsearch": "15.4.1",
     "prop-types": "15.7.2",
-    "react": "16.8.6",
+    "react": "16.11.0",
     "react-collapsible": "2.6.0",
-    "react-dom": "16.8.6",
+    "react-dom": "16.11.0",
     "react-json-view": "1.19.1",
     "react-pager-component": "1.0.0",
-    "react-router": "5.0.0",
-    "react-router-dom": "5.0.0",
+    "react-router": "5.1.2",
+    "react-router-dom": "5.1.2",
     "react-s3-uploader": "4.8.0",
-    "react-scripts": "2.1.8",
-    "recharts": "1.5.0"
+    "react-scripts": "3.2.0",
+    "recharts": "1.8.5"
   },
   "devDependencies": {
     "serverless": "1.40.0",
     "serverless-export-env": "1.2.0",
-    "serverless-finch": "2.4.2"
+    "serverless-finch": "2.4.3"
   },
   "private": true,
   "browserslist": [

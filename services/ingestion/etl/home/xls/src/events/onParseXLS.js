@@ -119,9 +119,9 @@ export const handler = async (event, context) => {
             const recordTarget = combinedRecords[existingRecordIndex];
 
             accumulators.forEach(accumulatorField => {
-              recordTarget[accumulatorField] = `${
-                recordTarget[accumulatorField]
-              };${rawRecord[accumulatorField]}`;
+              recordTarget[
+                accumulatorField
+              ] = `${recordTarget[accumulatorField]};${rawRecord[accumulatorField]}`;
             });
           } else {
             combinedRecords.push(rawRecord);
