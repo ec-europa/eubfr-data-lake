@@ -9,7 +9,7 @@
   "dependencies": {
     "@eubfr/lib": "^0.8.0",
     "@eubfr/logger-messenger": "^0.8.0",
-    "csv-parse": "4.3.4",
+    "csv-parse": "4.6.5",
     "i18n-iso-countries": "3.7.8",
     "numeral": "2.0.6",
     "stream-transform": "1.0.8"
