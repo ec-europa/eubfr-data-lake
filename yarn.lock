@@ -7702,10 +7702,12 @@ cssstyle@^1.0.0:
   dependencies:
     cssom "0.3.x"
 
-csv-parse@4.3.4:
-  version "4.3.4"
-  resolved "https://registry.yarnpkg.com/csv-parse/-/csv-parse-4.3.4.tgz#fc896c170ebbdf6fb286de85c41bbaea4973d25f"
-  integrity sha512-M1R4WL+vt81+GnkKzi0s1qQM6WXvHQKDecNkpozzAEG8LHvIW9bq5eBnOKFQn50fTuAos7JodBh/07MK+J6G2Q==
+csv-parse@4.6.5:
+  version "4.6.5"
+  resolved "https://registry.yarnpkg.com/csv-parse/-/csv-parse-4.6.5.tgz#e5175166dd883d6d89e29ad8174a63224cb02182"
+  integrity sha512-tUohmlM5X1Wtn7aRA4FsJMmnvGo+GUknK/Dp+//ms7pvpXADda5HIi5vFYOvAs/WSn5JUM1bt2AT3TxtDFV3Cw==
+  dependencies:
+    pad "^3.2.0"
 
 currently-unhandled@^0.4.1:
   version "0.4.1"
@@ -14840,6 +14842,13 @@ pacote@^9.5.0:
     unique-filename "^1.1.1"
     which "^1.3.1"
 
+pad@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/pad/-/pad-3.2.0.tgz#be7a1d1cb6757049b4ad5b70e71977158fea95d1"
+  integrity sha512-2u0TrjcGbOjBTJpyewEl4hBO3OeX5wWue7eIFPzQTg6wFSvoaHcBTTUY5m+n0hd04gmTCPuY0kCpVIVuw5etwg==
+  dependencies:
+    wcwidth "^1.0.1"
+
 pako@~1.0.2, pako@~1.0.5:
   version "1.0.10"
   resolved "https://registry.yarnpkg.com/pako/-/pako-1.0.10.tgz#4328badb5086a426aa90f541977d4955da5c9732"
@@ -19963,7 +19972,7 @@ wbuf@^1.1.0, wbuf@^1.7.3:
   dependencies:
     minimalistic-assert "^1.0.0"
 
-wcwidth@^1.0.0:
+wcwidth@^1.0.0, wcwidth@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/wcwidth/-/wcwidth-1.0.1.tgz#f0b0dcf915bc5ff1528afadb2c0e17b532da2fe8"
   integrity sha1-8LDc+RW8X/FSivrbLA4XtTLaL+g=
