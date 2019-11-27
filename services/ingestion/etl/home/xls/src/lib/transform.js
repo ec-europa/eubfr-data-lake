@@ -1,5 +1,6 @@
 // @flow
 
+import numeral from 'numeral';
 import sanitizeBudgetItem from '@eubfr/lib/budget/budgetFormatter';
 import getCountryCode from '@eubfr/lib/location/getCountryCode';
 import type { Project } from '@eubfr/types';
@@ -54,10 +55,14 @@ const getFundingArea = record => {
  * @returns {Budget}
  */
 const getBudget = record => {
+  const { _value: euContribValue } = numeral(
+    record['Project Requested EU Contrib']
+  );
+
   const budgetObject = {
     total_cost: sanitizeBudgetItem(),
     eu_contrib: sanitizeBudgetItem({
-      value: record['Project Requested EU Contrib'],
+      value: Math.floor(euContribValue),
       currency: 'EUR',
       raw: record['Project Requested EU Contrib'],
     }),

@@ -20,6 +20,11 @@ describe('2014tc16rfcb047 XLS transformer', () => {
     expect(result).toMatchSnapshot();
   });
 
+  test('Budget values do not contain decimals', () => {
+    expect(result.budget.eu_contrib.value % 1).toBe(0);
+    expect(result.budget.total_cost.value % 1).toBe(0);
+  });
+
   test('Handles an exceptional date format DD.MM.YYYY', () => {
     const copy = JSON.parse(JSON.stringify(testRecord));
     copy['Operation Start Date'] = '31.12.2021';

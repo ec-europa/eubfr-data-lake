@@ -38,7 +38,7 @@ const getBudget = record => {
 
     // Assign values
     euContrib = {
-      value,
+      value: Math.floor(value),
       currency,
       raw,
     };

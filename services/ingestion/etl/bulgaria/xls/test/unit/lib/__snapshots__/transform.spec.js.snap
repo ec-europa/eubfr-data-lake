@@ -7,7 +7,7 @@ Object {
     "eu_contrib": Object {
       "currency": "BGN",
       "raw": 1465010.235,
-      "value": 1465010.235,
+      "value": 1465010,
     },
     "funding_area": Array [],
     "mmf_heading": "",
@@ -29,7 +29,7 @@ Object {
     "total_cost": Object {
       "currency": "BGN",
       "raw": "1 953 346.98",
-      "value": 1953346.98,
+      "value": 1953346,
     },
   },
   "call_year": "",

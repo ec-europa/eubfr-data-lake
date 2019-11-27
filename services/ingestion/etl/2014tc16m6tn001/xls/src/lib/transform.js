@@ -25,12 +25,12 @@ const getBudget = record => {
 
   return {
     total_cost: sanitizeBudgetItem({
-      value: total,
+      value: Math.floor(total),
       currency: 'EUR',
       raw: record['Total eligible expenditure allocated to the operation'],
     }),
     eu_contrib: sanitizeBudgetItem({
-      value: euContrib,
+      value: Math.floor(euContrib),
       currency: 'EUR',
       raw: record['Union co-financing rate in %'],
     }),
