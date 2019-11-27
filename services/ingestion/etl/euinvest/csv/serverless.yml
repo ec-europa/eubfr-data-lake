@@ -75,7 +75,7 @@ resources:
       Type: AWS::SNS::Topic
       Properties:
         TopicName: ${self:provider.stage}-etl-euinvest-csv
-        DisplayName: AGRI CSV ETL
+        DisplayName: EUINVEST CSV ETL
     SNSTopicEUINVESTCSVPolicy:
       Type: AWS::SNS::TopicPolicy
       Properties:

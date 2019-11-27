@@ -49,7 +49,11 @@ export const handler = async (event, context) => {
   const computedObjectKey = s3record.s3.object.key;
   const producerId = computedObjectKey.split('/')[0];
   const producer = path.dirname(computedObjectKey);
-  const extension = path.extname(computedObjectKey).slice(1);
+  // Convert extension to lowercase, as SNS topics are always named so.
+  const extension = path
+    .extname(computedObjectKey)
+    .slice(1)
+    .toLocaleLowerCase();
 
   const accountId = context.invokedFunctionArn.split(':')[4];
   const producerEtlSnsEndpointArn = `arn:aws:sns:${REGION}:${accountId}:${STAGE}-etl-${producer}-${extension}`;
@@ -135,7 +139,16 @@ export const handler = async (event, context) => {
       }),
     };
 
-    // Log success pinging an ETL
+    // Ping ETL.
+    await sns
+      .publish({
+        Message: JSON.stringify(snsMessage),
+        MessageStructure: 'json',
+        TargetArn: producerEtlSnsEndpointArn,
+      })
+      .promise();
+
+    // Log success.
     await messenger.send({
       message: {
         computed_key: computedObjectKey,
@@ -145,16 +158,7 @@ export const handler = async (event, context) => {
       to: ['logs'],
     });
 
-    // Send an sns message success pinging an ETL
-    await sns
-      .publish({
-        Message: JSON.stringify(snsMessage),
-        MessageStructure: 'json',
-        TargetArn: producerEtlSnsEndpointArn,
-      })
-      .promise();
-
-    return 'Everything is fine';
+    return `Sucessfully processed ${computedObjectKey} to ${producerEtlSnsEndpointArn}`;
   } catch (err) {
     // Log error pinging the right ETL topic.
     await messenger.send({
