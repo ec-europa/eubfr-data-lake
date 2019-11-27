@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@eubfr/resources-raw-storage",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "scripts": {
     "deploy": "sls deploy -v"
   },

@@ -1,6 +1,7 @@
 // @flow
 
 import countries from 'i18n-iso-countries';
+import numeral from 'numeral';
 import type { Project } from '@eubfr/types';
 import getCountryCode from '@eubfr/lib/location/getCountryCode';
 import sanitizeBudgetItem from '@eubfr/lib/budget/budgetFormatter';
@@ -69,10 +70,12 @@ const getBudget = record => {
   }
 
   const { currency, value } = extractBudgetData(record['Total amount']);
+  // The previously used utility formats values to be convenient for numeral under the hood.
+  const { _value: euContribValue } = numeral(value);
 
   const budget = {
     eu_contrib: sanitizeBudgetItem({
-      value,
+      value: Math.floor(euContribValue),
       currency,
       raw: record['Total amount'],
     }),

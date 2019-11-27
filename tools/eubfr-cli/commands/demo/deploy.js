@@ -2,7 +2,7 @@
  * Because current approach of creation of demo applications
  * depend on 1 folder (1 service) creating resources in 1 place,
  * which is not possible with tools such as webpack and serverless,
- * deployments have to wait for each other. Thus, async/await in for or loop.
+ * deployments have to wait for each other. Thus, async/await in for of loop.
  */
 
 /* eslint no-await-in-loop: 0 */
@@ -22,6 +22,7 @@ const getServiceLocation = require('../../lib/getServiceLocation');
 const demoDeployCommand = async ({ producer }) => {
   const { stage, region } = getConfigurations();
   const demos = ['demo-dashboard-server', 'demo-dashboard-client'];
+
   // EUBFR_USERNAME can override flags.
   const selectedProducer = process.env.EUBFR_USERNAME || producer;
   const usernames =

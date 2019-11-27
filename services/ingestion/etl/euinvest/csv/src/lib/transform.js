@@ -29,7 +29,7 @@ const getBudget = record => {
 
   if (record._eu_funding) {
     budget.eu_contrib = sanitizeBudgetItem({
-      value: record._eu_funding,
+      value: Math.floor(record._eu_funding),
       currency: 'EUR',
       raw: record._eu_funding,
     });

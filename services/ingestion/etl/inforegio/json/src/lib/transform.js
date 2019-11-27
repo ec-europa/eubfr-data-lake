@@ -1,5 +1,6 @@
 // @flow
 
+import numeral from 'numeral';
 import sanitizeBudgetItem from '@eubfr/lib/budget/budgetFormatter';
 import extractBudgetData from '@eubfr/lib/budget/extractBudgetData';
 import getCountryCode from '@eubfr/lib/location/getCountryCode';
@@ -208,9 +209,10 @@ const formatBudget = budget => {
   if (!budget || typeof budget !== 'string') return sanitizeBudgetItem();
 
   const { value, currency } = extractBudgetData(budget);
+  const { _value: valueFromatted } = numeral(value);
 
   return sanitizeBudgetItem({
-    value,
+    value: Math.floor(valueFromatted),
     currency,
     raw: budget,
   });

@@ -12,8 +12,8 @@ import Spinner from '../../components/Spinner';
 import FormUpload from '../../components/FormUpload';
 
 import LogsTab from './file/Logs';
-import ProjectsTab from './file/Projects';
-import ReportsTab from './file/Reports';
+import ProjectsTab from './file/Projects/index';
+import ReportsTab from './file/Reports/index';
 
 import './File.css';
 
@@ -239,7 +239,6 @@ class File extends React.Component {
           <span className="ecl-icon ecl-icon--left" />
           Go Back to My Files
         </Link>
-
         <div className="ecl-row ecl-u-mv-m">
           <div className="ecl-col-md-4 ecl-u-d-flex ecl-u-justify-content-center ecl-u-align-items-baseline">
             <span className="ecl-u-fs-xxl">
@@ -259,7 +258,6 @@ class File extends React.Component {
             </span>
           </div>
         </div>
-
         <nav className="ecl-navigation-list-wrapper">
           <h2 className="ecl-u-sr-only">Navigation Menu</h2>
           <ul className="ecl-navigation-list ecl-navigation-list--tabs">
@@ -284,15 +282,6 @@ class File extends React.Component {
             </li>
             <li className="ecl-navigation-list__item">
               <NavLink
-                to={`${match.url}/logs`}
-                className="ecl-navigation-list__link ecl-link"
-                activeClassName="ecl-navigation-list__link--active"
-              >
-                Logs
-              </NavLink>
-            </li>
-            <li className="ecl-navigation-list__item">
-              <NavLink
                 to={`${match.url}/reports`}
                 className="ecl-navigation-list__link ecl-link"
                 activeClassName="ecl-navigation-list__link--active"
@@ -300,9 +289,17 @@ class File extends React.Component {
                 Reports
               </NavLink>
             </li>
+            <li className="ecl-navigation-list__item">
+              <NavLink
+                to={`${match.url}/logs`}
+                className="ecl-navigation-list__link ecl-link"
+                activeClassName="ecl-navigation-list__link--active"
+              >
+                Logs
+              </NavLink>
+            </li>
           </ul>
         </nav>
-
         <Route
           exact
           path={`${match.url}`}

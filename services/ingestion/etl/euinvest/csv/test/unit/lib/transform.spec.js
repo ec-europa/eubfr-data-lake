@@ -32,6 +32,11 @@ describe('EU Invest CSV transformer', () => {
     expect(result).toMatchSnapshot();
   });
 
+  test('Budget values do not contain decimals', () => {
+    expect(result.budget.eu_contrib.value % 1).toBe(0);
+    expect(result.budget.total_cost.value % 1).toBe(0);
+  });
+
   test('Field project_locations: can work with a list of values which do not contain regions', () => {
     // Make a change in the copy, no need for another stub for testing a specific field.
     const copy = JSON.parse(JSON.stringify(testRecord));

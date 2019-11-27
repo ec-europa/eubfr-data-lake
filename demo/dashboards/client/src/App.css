@@ -1,0 +1,158 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+}
+@media (min-width: 992px) {
+  .dashboard {
+    flex-direction: row;
+  }
+}
+
+.ecl-site-header__banner {
+  justify-content: left;
+}
+
+.dashboard__item {
+  flex-basis: 0;
+  flex-grow: 1;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.dashboard__item:first-child {
+  padding-left: 0;
+}
+.dashboard__item:last-child {
+  padding-right: 0;
+}
+
+.ecl-message--clean {
+  display: none;
+}
+
+.ecl-file-upload__label {
+  text-align: center;
+  width: 100%;
+}
+
+.ecl-table td {
+  word-wrap: break-word;
+}
+
+.progress {
+  color: orange;
+}
+
+.error {
+  color: red;
+}
+
+.success {
+  color: green;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.eubfr-main-content {
+  flex-grow: 1;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+}
+
+/* Hacks */
+.ecl-button {
+  border-radius: 0;
+}
+
+/* Collapsible assumes structure and does not get ECL too well */
+
+.Collapsible__contentInner {
+  padding: 0 0 20px 0;
+}
+.Collapsible__contentInner p {
+  margin-bottom: 10px;
+  font-size: 14px;
+  line-height: 20px;
+}
+.Collapsible__contentInner p:last-child {
+  margin-bottom: 0;
+}
+.Collapsible__trigger {
+  display: block;
+  font-weight: 400;
+  text-decoration: none;
+  position: relative;
+  padding: 10px 30px 10px 0;
+  color: black;
+}
+.Collapsible__trigger:hover {
+  cursor: pointer;
+}
+.Collapsible__trigger:after {
+  font-family: 'EuropaIcons';
+  content: '\e81f';
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  display: block;
+  transition: transform 300ms;
+}
+.Collapsible__trigger.is-open:after {
+  transform: rotateZ(180deg);
+}
+.Collapsible__trigger.is-disabled {
+  opacity: 0.5;
+  background-color: grey;
+}
+
+/* Pager */
+.Pager {
+  border-top: 2px solid #000;
+  color: #004494;
+  font: normal normal 400 1rem/1.25rem Arial, sans-serif;
+  margin: 0;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+  justify-content: center;
+}
+
+.Pager .PagerButton {
+  display: flex;
+  flex-grow: 0;
+  margin-right: 1.5rem;
+}
+
+.Pager .PagerButton--Prev {
+  flex-basis: auto;
+}
+
+.PagerButton.is-active {
+  display: flex;
+  flex-grow: 0;
+  margin-right: 1.5rem;
+  border: 2px solid #000;
+  border-radius: 10rem;
+  justify-content: center;
+  min-width: 1.3rem;
+}
+
+.Pager .PagerButton--Next {
+  flex-basis: auto;
+  margin-right: 0;
+}
+
+.Pager .PagerButton--GoLast {
+  margin-left: 1.5rem;
+}
+
+.Pager .PagerButton.is-disabled {
+  display: none;
+}
+
+.producers-form {
+  height: 10rem;
+  overflow-y: scroll;
+}
