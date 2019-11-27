@@ -1,0 +1,61 @@
+service: dashboards-server
+
+plugins:
+  - serverless-webpack
+  - serverless-offline #serverless-offline needs to be last in the list
+
+custom:
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules:
+      forceExclude:
+        - aws-sdk
+    packager: yarn
+  eubfrEnvironment: ${opt:eubfr_env, file(../../../config.json):eubfr_env, env:EUBFR_ENV, 'dev'}
+  serverless-offline:
+    port: 4000
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: ${opt:stage, file(../../../config.json):stage, env:EUBFR_STAGE, 'dev'}
+  region: ${opt:region, file(../../../config.json):region, env:EUBFR_AWS_REGION, 'eu-central-1'}
+  deploymentBucket:
+    name: eubfr-${self:custom.eubfrEnvironment}-deploy
+  stackTags:
+    ENV: ${self:custom.eubfrEnvironment}
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - 's3:Get*'
+        - 's3:List*'
+      Resource: '*'
+
+functions:
+  producers:
+    handler: src/api/producers.handler
+    name: ${self:provider.stage}-${self:service}-producers
+    timeout: 120
+    environment:
+      EUBFR_ENV: ${self:custom.eubfrEnvironment}
+      EUBFR_STAGE: ${self:provider.stage}
+    events:
+      - http:
+          path: producers
+          method: get
+          cors: true
+
+resources:
+  Outputs:
+    PublicEndpoint:
+      Description: Endpoint for server side of the dasbhoard
+      Value:
+        Fn::Join:
+          - ''
+          - - Ref: ApiGatewayRestApi
+            - '.execute-api.'
+            - ${self:provider.region}
+            - '.amazonaws.com/'
+            - ${self:provider.stage}
+      Export:
+        Name: '${self:provider.stage}:${self:service}:ServiceEndpoint'

@@ -26,7 +26,7 @@ const demoDeployCommand = require('../commands/demo/deploy');
  * $ eubfr-cli demo deploy
  * ```
  *
- * Deploy all services, only for working with the EAC producer.
+ * Deploy an application only for working with the EAC producer.
  *
  * ```sh
  * $ eubfr-cli demo deploy -p eac
