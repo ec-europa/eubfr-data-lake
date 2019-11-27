@@ -24,8 +24,8 @@
     "react-router": "5.0.0",
     "react-router-dom": "5.0.0",
     "react-s3-uploader": "4.8.0",
-    "react-scripts": "2.1.8",
-    "recharts": "1.5.0"
+    "react-scripts": "3.0.1",
+    "recharts": "1.6.0"
   },
   "devDependencies": {
     "serverless": "1.40.0",

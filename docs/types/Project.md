@@ -12,9 +12,6 @@ Type: [BudgetItem][1]
 - `raw` **[string][2]**
 - `value` **[number][3]**
 - `_original` **{currency: [string][2], raw: [string][2], value: [number][3]}?**
-- `_original.currency` **[string][2]**
-- `_original.raw` **[string][2]**
-- `_original.value` **[number][3]**
 
 ## Budget
 

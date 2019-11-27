@@ -18,7 +18,7 @@ package:
 
 provider:
   name: aws
-  runtime: nodejs8.10
+  runtime: nodejs10.x
   timeout: 300
   stage: ${opt:stage, file(../../../config.json):stage, env:EUBFR_STAGE, 'dev'}
   region: ${opt:region, file(../../../config.json):region, env:EUBFR_AWS_REGION, 'eu-central-1'}

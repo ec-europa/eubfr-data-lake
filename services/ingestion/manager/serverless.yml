@@ -18,7 +18,7 @@ package:
 
 provider:
   name: aws
-  runtime: nodejs8.10
+  runtime: nodejs10.x
   timeout: 120
   memorySize: 512
   stage: ${opt:stage, file(../../../config.json):stage, env:EUBFR_STAGE, 'dev'}
