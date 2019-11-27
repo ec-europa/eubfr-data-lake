@@ -1,12 +1,12 @@
 {
   "private": true,
   "name": "@eubfr/ingestion-dead-letter-queue",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "scripts": {
     "deploy": "sls deploy -v"
   },
   "dependencies": {
-    "@eubfr/logger-messenger": "^0.8.0"
+    "@eubfr/logger-messenger": "^0.9.0"
   },
   "devDependencies": {
     "@babel/core": "7.4.4",

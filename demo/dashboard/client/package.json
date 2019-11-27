@@ -1,6 +1,6 @@
 {
   "name": "@eubfr/demo-dashboard-client",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "scripts": {
     "start": "run-s prepare react:start",
     "build": "npm run prepare && react-scripts build",
@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@ecl/ec-preset-website": "1.3.0",
-    "@eubfr/logger-messenger": "^0.8.0",
+    "@eubfr/logger-messenger": "^0.9.0",
     "elasticsearch": "15.4.1",
     "prop-types": "15.7.2",
     "react": "16.8.6",

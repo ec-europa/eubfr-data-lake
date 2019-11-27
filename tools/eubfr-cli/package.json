@@ -1,12 +1,12 @@
 {
   "private": true,
   "name": "@eubfr/cli",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "bin": {
     "eubfr-cli": "./bin/cli.js"
   },
   "dependencies": {
-    "@eubfr/lib": "^0.8.0",
+    "@eubfr/lib": "^0.9.0",
     "aws-sdk": "2.457.0",
     "aws4": "1.8.0",
     "awscred": "1.4.2",

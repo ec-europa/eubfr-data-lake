@@ -1,21 +1,21 @@
 {
   "private": true,
   "name": "@eubfr/ingestion-etl-2014tc16rftn004-xls",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "scripts": {
     "deploy": "sls deploy -v",
     "test:unit": "jest --testPathPattern=unit"
   },
   "dependencies": {
-    "@eubfr/lib": "^0.8.0",
-    "@eubfr/logger-messenger": "^0.8.0",
+    "@eubfr/lib": "^0.9.0",
+    "@eubfr/logger-messenger": "^0.9.0",
     "xlsx": "0.14.2"
   },
   "devDependencies": {
     "@babel/core": "7.4.3",
     "@babel/preset-env": "7.4.3",
     "@babel/preset-flow": "7.0.0",
-    "@eubfr/types": "^0.8.0",
+    "@eubfr/types": "^0.9.0",
     "aws-sdk": "2.434.0",
     "babel-jest": "24.7.0",
     "babel-loader": "8.0.5",

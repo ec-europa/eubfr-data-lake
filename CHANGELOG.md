@@ -1,5 +1,25 @@
 # Change Log
 
+## 0.9.0 (2019-11-27)
+
+#### :rocket: New Feature
+
+- [#230](https://github.com/ec-europa/eubfr-data-lake/pull/230) feat(dashboards): create a landing page/centralized dashboard of demo dashboards - EUBFR-272 ([@kalinchernev](https://github.com/kalinchernev))
+
+#### :bug: Bug Fix
+
+- [#228](https://github.com/ec-europa/eubfr-data-lake/pull/228) fix(etls): correct third_parties field in 2014tc16rftn003 - noissue ([@kalinchernev](https://github.com/kalinchernev))
+
+#### :nail_care: Enhancement
+
+- [#223](https://github.com/ec-europa/eubfr-data-lake/pull/223) refactor(ingestion-manager): allow flexible file extensions - EUBFR-261 ([@kalinchernev](https://github.com/kalinchernev))
+- [#224](https://github.com/ec-europa/eubfr-data-lake/pull/224) refactor(budget): normalize precision - EUBFR-262 ([@kalinchernev](https://github.com/kalinchernev))
+
+#### :house: Internal
+
+- [#226](https://github.com/ec-europa/eubfr-data-lake/pull/226) chore(nodejs): upgrade from 8 to 10 - EUBFR-263 ([@kalinchernev](https://github.com/kalinchernev))
+- [#234](https://github.com/ec-europa/eubfr-data-lake/pull/234) chore(deps): upgrade CSV parser - EUBFR-274 ([@kalinchernev](https://github.com/kalinchernev))
+
 ## 0.8.0 (2019-06-24)
 
 #### :rocket: New Feature
