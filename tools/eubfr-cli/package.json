@@ -17,8 +17,5 @@
     "http-aws-es": "6.0.0",
     "prettyjson": "1.2.1",
     "request-promise-native": "1.0.7"
-  },
-  "engines": {
-    "node": ">=10"
   }
 }
