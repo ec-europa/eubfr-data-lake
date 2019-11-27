@@ -66,6 +66,20 @@ program.command('services', 'Services management');
 program.command('demo', 'Demo applications management');
 
 /**
+ * Manage dashboard
+ *
+ * ### Usage
+ *
+ * ```sh
+ * $ eubfr-cli dashboard -h
+ * ```
+ *
+ * @name Dashboard
+ * @public
+ */
+program.command('dashboard', 'Dashboard management');
+
+/**
  *
  * Manage content
  *

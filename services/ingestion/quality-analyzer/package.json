@@ -1,14 +1,14 @@
 {
   "private": true,
   "name": "@eubfr/ingestion-quality-analyzer",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "scripts": {
     "deploy": "sls deploy -v",
     "test:unit": "jest --testPathPattern=unit",
     "test-write": "jest --watch"
   },
   "dependencies": {
-    "@eubfr/logger-messenger": "^0.7.0",
+    "@eubfr/logger-messenger": "^0.8.0",
     "elasticsearch": "15.4.1",
     "http-aws-es": "6.0.0",
     "split2": "3.1.1"
@@ -17,7 +17,7 @@
     "@babel/core": "7.4.4",
     "@babel/preset-env": "7.4.4",
     "@babel/preset-flow": "7.0.0",
-    "@eubfr/types": "^0.7.0",
+    "@eubfr/types": "^0.8.0",
     "aws-sdk": "2.457.0",
     "babel-jest": "24.8.0",
     "babel-loader": "8.0.6",

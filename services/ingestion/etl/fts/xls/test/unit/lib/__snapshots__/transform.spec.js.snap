@@ -7,7 +7,7 @@ Object {
     "eu_contrib": Object {
       "currency": "EUR",
       "raw": "158,295,972.07€",
-      "value": 158295972.07,
+      "value": 158295972,
     },
     "funding_area": Array [
       "Grants",

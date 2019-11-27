@@ -1,0 +1,42 @@
+{
+  "name": "@eubfr/demo-dashboards-client",
+  "version": "0.8.0",
+  "scripts": {
+    "start": "run-s prepare react:start",
+    "build": "npm run prepare && react-scripts build",
+    "deploy": "sls client deploy",
+    "eject": "react-scripts eject",
+    "prepare": "serverless deploy && serverless export-env",
+    "react:start": "react-scripts start",
+    "react:build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom"
+  },
+  "dependencies": {
+    "@ecl/ec-preset-website": "1.3.0",
+    "@eubfr/logger-messenger": "^0.8.0",
+    "elasticsearch": "15.4.1",
+    "prop-types": "15.7.2",
+    "react": "16.8.6",
+    "react-collapsible": "2.6.0",
+    "react-dom": "16.8.6",
+    "react-json-view": "1.19.1",
+    "react-pager-component": "1.0.0",
+    "react-router": "5.0.0",
+    "react-router-dom": "5.0.0",
+    "react-s3-uploader": "4.8.0",
+    "react-scripts": "2.1.8",
+    "recharts": "1.5.0"
+  },
+  "devDependencies": {
+    "serverless": "1.40.0",
+    "serverless-export-env": "1.2.0",
+    "serverless-finch": "2.4.2"
+  },
+  "private": true,
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}

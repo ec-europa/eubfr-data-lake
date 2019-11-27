@@ -1,0 +1,98 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`2014tc16rfcb021 XLS transformer Produces correct JSON output structure 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "EUR",
+      "raw": 1214450.87,
+      "value": 1214450.87,
+    },
+    "funding_area": Array [],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "EUR",
+      "raw": 1428765.73,
+      "value": 1428765.73,
+    },
+  },
+  "call_year": "",
+  "complete": false,
+  "description": "Ranking: 1 
+Project code: 15.1.1.010 
+Objectives: Objective: to significantly improve the planning, development and coordination of CBC transport systems for better connections with TEN-T network in CBC area                            
+ 
+Duration: 24 
+Category of intervention: 44 
+Percent (ERDF): 0.85 
+National co-financing(euro): 185739.5449 
+Percent (National co-financing): 0.13 
+Own Contribution (euro): 28575.3146 
+Percent (Own Contributions): 0.02 
+",
+  "ec_priorities": Array [],
+  "media": Array [],
+  "programme_name": "",
+  "project_id": "b1c6f005bfb0dff460a6f0331c7a1af2",
+  "project_locations": Array [
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "BG",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "Pleven",
+      "town": "",
+    },
+  ],
+  "project_website": "",
+  "related_links": Array [],
+  "reporting_organisation": "Member states",
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
+  "status": "Finalized",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [],
+  "third_parties": Array [
+    Object {
+      "address": "",
+      "country": "Bulgaria ",
+      "email": "",
+      "name": "Association of Danube River Municipalities \\"Danube\\" (ADRM)",
+      "phone": "",
+      "region": "Pleven",
+      "role": "coordinator",
+      "type": "",
+      "website": "",
+    },
+  ],
+  "timeframe": Object {
+    "from": "2016-02-03T00:00:00.000Z",
+    "from_precision": "day",
+    "to": "2018-02-02T00:00:00.000Z",
+    "to_precision": "day",
+  },
+  "title": "Investigation of opportunities for reducing the TEN-T network use within the cross-border region of Romania-Bulgaria through optimazition of the freight and passanger transport and the development of a joint mechanism foe support of the intermodal connection",
+  "type": Array [],
+}
+`;
