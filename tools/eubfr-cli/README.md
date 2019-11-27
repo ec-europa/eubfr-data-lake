@@ -12,29 +12,33 @@
   - [Usage][8]
   - [Deploy][9]
   - [Delete][10]
-- [Demo][11]
+- [Dashboard][11]
   - [Usage][12]
   - [Deploy][13]
   - [Delete][14]
-- [Services][15]
+- [Demo][15]
   - [Usage][16]
   - [Deploy][17]
   - [Delete][18]
-- [Content][19]
+- [Services][19]
   - [Usage][20]
-  - [Notes][21]
-  - [Download][22]
-  - [Upload][23]
-  - [Show][24]
-  - [Delete][25]
-- [Elasticsearch][26]
-  - [Usage][27]
-  - [SnapshotExec][28]
-  - [ShowDomains][29]
-  - [ShowCluster][30]
-  - [ShowIndices][31]
-  - [CreateIndex][32]
-  - [DeleteIndices][33]
+  - [Deploy][21]
+  - [Delete][22]
+- [Content][23]
+  - [Usage][24]
+  - [Notes][25]
+  - [Download][26]
+  - [Upload][27]
+  - [Show][28]
+  - [Delete][29]
+- [Elasticsearch][30]
+  - [Usage][31]
+  - [SnapshotExec][32]
+  - [ShowDomains][33]
+  - [ShowCluster][34]
+  - [ShowIndices][35]
+  - [CreateIndex][36]
+  - [DeleteIndices][37]
 
 ## Environment
 
@@ -89,7 +93,7 @@ EUBFR CLI
 
 Low-level utilities for managing assets of EUBFR data lake.
 
-Please refer to [Getting Started guide][34] before jumping into using the utility.
+Please refer to [Getting Started guide][38] before jumping into using the utility.
 
 Each command and sub-command has a help menu, which you can open by passing `-h` or `--help` flags without any arguments.
 
@@ -133,6 +137,56 @@ Usage:
 $ eubfr-cli resources delete
 ```
 
+## Dashboard
+
+Manage dashboard
+
+### Usage
+
+```sh
+$ eubfr-cli dashboard -h
+```
+
+### Deploy
+
+Usage:
+
+```sh
+$ eubfr-cli dashboard deploy -h
+```
+
+Examples:
+
+Deploy dashboard.
+
+```sh
+$ eubfr-cli dashboard deploy
+```
+
+Deploy all services, only for working with the EAC producer.
+
+```sh
+$ eubfr-cli dashboard deploy
+```
+
+### Delete
+
+Remove dashboard.
+
+Usage:
+
+```sh
+$ eubfr-cli dashboard delete -h
+```
+
+Examples:
+
+Delete the applications.
+
+```sh
+$ eubfr-cli dashboard delete
+```
+
 ## Demo
 
 Manage demo applications
@@ -159,7 +213,7 @@ Deploy all demo applications for all producers.
 $ eubfr-cli demo deploy
 ```
 
-Deploy all services, only for working with the EAC producer.
+Deploy an application only for working with the EAC producer.
 
 ```sh
 $ eubfr-cli demo deploy -p eac
@@ -263,7 +317,7 @@ $ eubfr-cli content -h
 
 ### Notes
 
-The [eubfr-content][35] S3 bucket is a central content repository which holds files which could be ingested by the data lake.
+The [eubfr-content][39] S3 bucket is a central content repository which holds files which could be ingested by the data lake.
 
 Content is a core resource for the data lake, and although it's not required to have it while working with the project, it's highly recommended that you have a local copy to work faster.
 
@@ -432,8 +486,8 @@ $ eubfr-cli es -h
 
 ### SnapshotExec
 
-- **See: [https://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-snapshots.html][36]**
-- **See: [https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-snapshot-create-6-2][37]**
+- **See: [https://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-snapshots.html][40]**
+- **See: [https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-snapshot-create-6-2][41]**
 
 Abstracted utility for making use of `snapshot` methods of ES JS SDK
 
@@ -621,30 +675,34 @@ Skipping the `user-index-1` will delete all indices in the given domain, so be e
 [8]: #usage-2
 [9]: #deploy
 [10]: #delete
-[11]: #demo
+[11]: #dashboard
 [12]: #usage-3
 [13]: #deploy-1
 [14]: #delete-1
-[15]: #services
+[15]: #demo
 [16]: #usage-4
 [17]: #deploy-2
 [18]: #delete-2
-[19]: #content
+[19]: #services
 [20]: #usage-5
-[21]: #notes
-[22]: #download
-[23]: #upload
-[24]: #show
-[25]: #delete-3
-[26]: #elasticsearch
-[27]: #usage-6
-[28]: #snapshotexec
-[29]: #showdomains
-[30]: #showcluster
-[31]: #showindices
-[32]: #createindex
-[33]: #deleteindices
-[34]: ./docs/GETTING_STARTED.md
-[35]: https://s3.console.aws.amazon.com/s3/buckets/eubfr-content/?region=eu-central-1&tab=overview
-[36]: https://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-snapshots.html
-[37]: https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-snapshot-create-6-2
+[21]: #deploy-3
+[22]: #delete-3
+[23]: #content
+[24]: #usage-6
+[25]: #notes
+[26]: #download
+[27]: #upload
+[28]: #show
+[29]: #delete-4
+[30]: #elasticsearch
+[31]: #usage-7
+[32]: #snapshotexec
+[33]: #showdomains
+[34]: #showcluster
+[35]: #showindices
+[36]: #createindex
+[37]: #deleteindices
+[38]: ./docs/GETTING_STARTED.md
+[39]: https://s3.console.aws.amazon.com/s3/buckets/eubfr-content/?region=eu-central-1&tab=overview
+[40]: https://www.elastic.co/guide/en/elasticsearch/reference/6.3/modules-snapshots.html
+[41]: https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/api-reference-6-2.html#api-snapshot-create-6-2

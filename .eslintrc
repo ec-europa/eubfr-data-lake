@@ -16,6 +16,7 @@
   rules:
     // Elasticsearch fields, as well as some producers have such conventions.
     no-underscore-dangle: off
+    class-methods-use-this: off
     prettier/prettier:
       - error
       -
