@@ -22,7 +22,7 @@ provider:
   environment:
     REACT_APP_STAGE: ${self:provider.stage}
     REACT_APP_DASHBOARDS_SERVER:
-      Fn::ImportValue: ${self:provider.stage}:dashboards-server:ServiceEndpoint
+      Fn::ImportValue: ${self:provider.stage}:dashboards-server:ServiceEndpointExport
     REACT_APP_ES_PUBLIC_ENDPOINT:
       Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
     REACT_APP_ES_PRIVATE_ENDPOINT:
