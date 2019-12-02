@@ -1,6 +1,7 @@
 [ignore]
 .*/__tests__/.*
 .*/node_modules/config-chain/.*
+.*/node_modules/ncjsm/test/*
 .*\.ignore\.js
 
 [include]
