@@ -25,7 +25,7 @@ provider:
     REGION: ${self:provider.region}
     BUCKET: eubfr-${self:provider.stage}
     # export this with serverless-export-env for other services
-    SIGNED_UPLOADS_API: '${self:resources.Outputs.ServiceEndpoint.Value}'
+    SIGNED_UPLOADS_API: '${self:resources.Outputs.ServiceEndpointExport.Value}'
   deploymentBucket:
     name: eubfr-${self:custom.eubfrEnvironment}-deploy
   stackTags:
@@ -85,7 +85,7 @@ functions:
 
 resources:
   Outputs:
-    ServiceEndpoint:
+    ServiceEndpointExport:
       Description: The service endpoint
       Value:
         Fn::Join:
@@ -96,4 +96,4 @@ resources:
             - '.amazonaws.com/'
             - ${self:provider.stage}
       Export:
-        Name: '${self:provider.stage}:${self:service}:ServiceEndpoint'
+        Name: '${self:provider.stage}:${self:service}:ServiceEndpointExport'

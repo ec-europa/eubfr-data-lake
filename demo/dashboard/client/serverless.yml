@@ -25,7 +25,7 @@ provider:
     REACT_APP_STAGE: ${self:provider.stage}
     REACT_APP_PRODUCER: ${self:custom.EUBFR_USERNAME}
     REACT_APP_DEMO_SERVER:
-      Fn::ImportValue: ${self:provider.stage}:demo-dash-server-${self:custom.EUBFR_USERNAME}:ServiceEndpoint
+      Fn::ImportValue: ${self:provider.stage}:demo-dash-server-${self:custom.EUBFR_USERNAME}:ServiceEndpointExport
     REACT_APP_ES_PUBLIC_ENDPOINT:
       Fn::ImportValue: ${self:custom.eubfrEnvironment}:resources-elasticsearch:PublicEndpoint
     REACT_APP_ES_PRIVATE_ENDPOINT:

@@ -16,9 +16,9 @@ custom:
   EUBFR_USERNAME: ${opt:username, env:EUBFR_USERNAME, file(../../../config.json):username, ''}
   PRODUCER_SECRET_NAME: producers/${self:custom.EUBFR_USERNAME}
   SIGNED_UPLOADS_API:
-    Fn::ImportValue: ${self:provider.stage}:storage-signed-uploads:ServiceEndpoint
+    Fn::ImportValue: ${self:provider.stage}:storage-signed-uploads:ServiceEndpointExport
   DELETER_API:
-    Fn::ImportValue: ${self:provider.stage}:storage-deleter:ServiceEndpoint
+    Fn::ImportValue: ${self:provider.stage}:storage-deleter:ServiceEndpointExport
   serverless-offline:
     port: 4000
 
@@ -113,4 +113,4 @@ resources:
             - '.amazonaws.com/'
             - ${self:provider.stage}
       Export:
-        Name: '${self:provider.stage}:${self:service}:ServiceEndpoint'
+        Name: '${self:provider.stage}:${self:service}:ServiceEndpointExport'

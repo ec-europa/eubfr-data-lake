@@ -53,9 +53,5 @@ resources:
         Fn::Join:
           - ''
           - - Ref: ApiGatewayRestApi
-            - '.execute-api.'
-            - ${self:provider.region}
-            - '.amazonaws.com/'
-            - ${self:provider.stage}
       Export:
-        Name: '${self:provider.stage}:${self:service}:ServiceEndpoint'
+        Name: '${self:provider.stage}:${self:service}:ServiceEndpointExport'
