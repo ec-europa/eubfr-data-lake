@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`2014uk16rfop005 XLS transformer Produces correct JSON output structure 1`] = `
+Object {
+  "action": "",
+  "budget": Object {
+    "eu_contrib": Object {
+      "currency": "GBP",
+      "raw": 3779021,
+      "value": 3779021,
+    },
+    "funding_area": Array [],
+    "mmf_heading": "",
+    "other_contrib": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "private_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "public_fund": Object {
+      "currency": "",
+      "raw": "",
+      "value": 0,
+    },
+    "total_cost": Object {
+      "currency": "GBP",
+      "raw": 7558043,
+      "value": 7558043,
+    },
+  },
+  "call_year": "",
+  "complete": false,
+  "description": "Project Description: Financial support for Welsh businesses to drive forward innovative ideas and turn them into new products, services and technologies ready to bring to the market.
+Sector: undefined
+Union co-financing rate, as per Priority Axis: 0.5
+Welsh Government Targeted Match Funding, Yes / No’: No
+",
+  "ec_priorities": Array [
+    "Research and Innovation",
+  ],
+  "media": Array [],
+  "programme_name": "East Wales ERDF",
+  "project_id": "80751",
+  "project_locations": Array [
+    Object {
+      "address": "",
+      "centroid": null,
+      "country_code": "GB",
+      "location": null,
+      "nuts": Array [],
+      "postal_code": "",
+      "region": "Part of a pan Wales project",
+      "town": "",
+    },
+  ],
+  "project_website": "",
+  "related_links": Array [],
+  "reporting_organisation": "Member states",
+  "results": Object {
+    "available": "",
+    "result": "",
+  },
+  "status": "",
+  "sub_programme_name": "",
+  "success_story": "",
+  "themes": Array [
+    "Research and innovation processes in SMEs (including voucher schemes, process, design, service and social innovation)",
+  ],
+  "third_parties": Array [],
+  "timeframe": Object {
+    "from": "2015-02-08T21:00:00.000Z",
+    "from_precision": "day",
+    "to": "2023-06-29T21:00:00.000Z",
+    "to_precision": "day",
+  },
+  "title": "SMART Innovation (East Wales)",
+  "type": Array [],
+}
+`;
